@@ -17,7 +17,8 @@ public class ActionInstance
 {
     private final ActionDef definition;
     private final Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
-    private final GoalDesc preCondition;
+ 
+	private final GoalDesc preCondition;
     private final Effect effect;
     
     public ActionInstance(ActionDef def, List<PDDLObject> actualArgs, Set<PDDLObject> objects) 
@@ -41,7 +42,10 @@ public class ActionInstance
     {
         return preCondition.evaluate(literals);
     }
-    
+    public Map<FormalArgument, PDDLObject> getArgMapping() {
+		return argMapping;
+	}
+ 
     public ConsistentLiteralSet perform(ConsistentLiteralSet startState) 
     {
         ConsistentLiteralSet endState = new ConsistentLiteralSet(startState);

@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 Pddl.g 2009-04-26 16:05:13
+// $ANTLR 3.1.1 Pddl.g 2009-05-07 16:13:14
 package edu.usu.cs.pddl.antlr;
 
 import org.antlr.runtime.*;
@@ -557,7 +557,7 @@ public class PddlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: typesDef, structureDef, domainName, constantsDef, requireDef, predicatesDef, functionsDef, constraints
+            // elements: constraints, requireDef, domainName, predicatesDef, constantsDef, structureDef, typesDef, functionsDef
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1199,7 +1199,7 @@ public class PddlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: t, NAME
+            // elements: NAME, t
             // token labels: 
             // rule labels: retval, t
             // token list labels: 
@@ -1212,10 +1212,10 @@ public class PddlParser extends Parser {
             root_0 = (Object)adaptor.nil();
             // 128:4: -> ( ^( NAME $t) )+
             {
-                if ( !(stream_t.hasNext()||stream_NAME.hasNext()) ) {
+                if ( !(stream_NAME.hasNext()||stream_t.hasNext()) ) {
                     throw new RewriteEarlyExitException();
                 }
-                while ( stream_t.hasNext()||stream_NAME.hasNext() ) {
+                while ( stream_NAME.hasNext()||stream_t.hasNext() ) {
                     // Pddl.g:128:7: ^( NAME $t)
                     {
                     Object root_1 = (Object)adaptor.nil();
@@ -1227,8 +1227,8 @@ public class PddlParser extends Parser {
                     }
 
                 }
-                stream_t.reset();
                 stream_NAME.reset();
+                stream_t.reset();
 
             }
 
@@ -2793,7 +2793,7 @@ public class PddlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: actionDefBody, actionSymbol, typedVariableList
+            // elements: actionSymbol, typedVariableList, actionDefBody
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -3100,7 +3100,7 @@ public class PddlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: effect, goalDesc
+            // elements: goalDesc, effect
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -3566,7 +3566,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: goalDesc, typedVariableList
+                    // elements: typedVariableList, goalDesc
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3627,7 +3627,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: goalDesc, typedVariableList
+                    // elements: typedVariableList, goalDesc
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -4058,7 +4058,7 @@ public class PddlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: daDefBody, actionSymbol, typedVariableList
+            // elements: daDefBody, typedVariableList, actionSymbol
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5196,7 +5196,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: fExp2, fExp, binaryOp
+                    // elements: fExp, fExp2, binaryOp
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -5456,7 +5456,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: term, functionSymbol
+                    // elements: functionSymbol, term
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -5847,7 +5847,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: typedVariableList, effect
+                    // elements: effect, typedVariableList
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -5902,7 +5902,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: condEffect, goalDesc
+                    // elements: goalDesc, condEffect
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -6080,7 +6080,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: assignOp, fExp, fHead
+                    // elements: fExp, fHead, assignOp
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -8051,7 +8051,7 @@ public class PddlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: problemDecl, problemDomain, init, goal, metricSpec, requireDef, probConstraints, objectDecl
+            // elements: probConstraints, metricSpec, goal, objectDecl, init, problemDomain, problemDecl, requireDef
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -8651,7 +8651,7 @@ public class PddlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: NUMBER, fHead
+                    // elements: fHead, NUMBER
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -9537,7 +9537,7 @@ public class PddlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: optimization, metricFExp
+            // elements: metricFExp, optimization
             // token labels: 
             // rule labels: retval
             // token list labels: 

@@ -74,12 +74,18 @@ public class PredicateHeader implements GoalDesc
 		if(this.definition.isDynamic())
 			return false;
 		
+		PDDLObject fo = new PDDLObject("DansFakeObjectForVariables");
+		
 		//"instantiate" predicate 
 		List<PDDLObject> instantiatedObjects = new ArrayList<PDDLObject>();
 		for(FormalArgument fa : arguments){
 			PDDLObject o = partialArgMap.get(fa);
 			if(o != null){
-			instantiatedObjects.add(o);
+				instantiatedObjects.add(o);
+			}
+			else{
+				
+				instantiatedObjects.add(fo);
 			}
 		}
 		
@@ -94,7 +100,7 @@ public class PredicateHeader implements GoalDesc
 			for(int i = 0; i< instantiatedObjects.size(); i++){
 				PDDLObject instObject = instantiatedObjects.get(i);
 				PDDLObject initObject = initPredObjects.get(i);
-				if(!instObject.equals(initObject)){
+				if(!instObject.equals(fo) && !instObject.equals(initObject)){
 					allMatch = false;
 					break;
 				}
