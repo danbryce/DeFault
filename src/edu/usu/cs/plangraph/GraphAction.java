@@ -98,18 +98,18 @@ public class GraphAction
         String sep = "";
         StringBuffer result = new StringBuffer();
         result.append(isMaintenanceAction ? "<maint>" : action.toString());
-        result.append("\n\t[");
-        for (Literal l : getPreconditions().getLiterals()) {
-            result.append(sep).append(l.toString());
-            sep = ", ";
-        }
-        result.append("] -> [");
-        sep = "";
-        for (Literal l : getEffects().getLiterals()) {
-            result.append(sep).append(l.toString());
-            sep = ", ";
-        }
-        result.append("]");
+//        result.append("\n\t[");
+//        for (Literal l : getPreconditions().getLiterals()) {
+//            result.append(sep).append(l.toString());
+//            sep = ", ";
+//        }
+//        result.append("] -> [");
+//        sep = "";
+//        for (Literal l : getEffects().getLiterals()) {
+//            result.append(sep).append(l.toString());
+//            sep = ", ";
+//        }
+//        result.append("]");
         
         return result.toString();
     }

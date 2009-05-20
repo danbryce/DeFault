@@ -20,7 +20,11 @@ public class ConjunctionGoalDesc implements GoalDesc
     private final boolean evaluable;
     private List<? extends GoalDesc> subGoals;
     
-    public ConjunctionGoalDesc(List<? extends GoalDesc> subGoals) {
+    public List<? extends GoalDesc> getSubGoals() {
+		return subGoals;
+	}
+
+	public ConjunctionGoalDesc(List<? extends GoalDesc> subGoals) {
         this.subGoals = subGoals;
         
         boolean tempEval = true;
