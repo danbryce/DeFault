@@ -15,13 +15,23 @@ import java.util.*;
  */
 public class ActionInstance
 {
-    private final ActionDef definition;
-    private final Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
+    protected final ActionDef definition;
+    protected final Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
  
-	private final GoalDesc preCondition;
-    private final Effect effect;
+    protected final GoalDesc preCondition;
+    protected final Effect effect;
     
-    public ActionInstance(ActionDef def, List<PDDLObject> actualArgs, Set<PDDLObject> objects) 
+    protected double cost = 0.0;
+    
+    public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	public ActionInstance(ActionDef def, List<PDDLObject> actualArgs, Set<PDDLObject> objects) 
     {
         definition = def;
         List<FormalArgument> args = definition.getArguments();
