@@ -23,6 +23,8 @@ public class GraphSolver
 {
     private static final Logger logger = Logger.getLogger(GraphSolver.class.getName());
 
+	private static final int MAX_NUM_LEVELS = 100;
+
     private final Domain domain;
     private final Problem problem;
     private final PreProcessingPlanGraph graph;
@@ -100,7 +102,8 @@ public class GraphSolver
         GoalDesc goal = problem.getGoal();
         Level currentLevel = graph.getLastLevel();
         
-        while (!currentLevel.goalLiteralsArePresent(goal)) {
+        while (!currentLevel.goalLiteralsArePresent(goal)  &&
+        		currentLevel.getLevelNum() < MAX_NUM_LEVELS) {
             currentLevel = graph.addLevel();
         }        
         

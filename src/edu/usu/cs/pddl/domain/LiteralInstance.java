@@ -19,6 +19,8 @@ public abstract class LiteralInstance
     private final MethodDef definition;
     private final List<PDDLObject> arguments;
     
+    private final int hashcode;
+    
     public LiteralInstance(final MethodDef definition, final List<PDDLObject> arguments) {
         if (definition == null) {
             throw new IllegalArgumentException("null function/predicate definition");
@@ -28,6 +30,13 @@ public abstract class LiteralInstance
         }
         this.definition = definition;
         this.arguments = arguments;
+        
+        final int PRIME = 31;
+        int result = 1;
+        result = PRIME * result + arguments.hashCode();
+        result = PRIME * result + definition.hashCode();
+        hashcode = result;
+
     }
 
     public MethodDef getDefinition() {
@@ -45,11 +54,12 @@ public abstract class LiteralInstance
 
     @Override
     public int hashCode() {
-        final int PRIME = 31;
-        int result = 1;
-        result = PRIME * result + arguments.hashCode();
-        result = PRIME * result + definition.hashCode();
-        return result;
+//        final int PRIME = 31;
+//        int result = 1;
+//        result = PRIME * result + arguments.hashCode();
+//        result = PRIME * result + definition.hashCode();
+//        return result;
+    	return hashcode;
     }
 
     @Override

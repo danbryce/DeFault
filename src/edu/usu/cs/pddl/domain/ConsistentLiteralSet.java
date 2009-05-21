@@ -20,20 +20,24 @@ public class ConsistentLiteralSet
 {
 	private Map<FunctionInstance, FunctionLiteral> functionValues;
 	private Map<PredicateInstance, PredicateLiteral> predicateValues;
+//	private final int hashcode;
 
 	public ConsistentLiteralSet() {
 		functionValues = new HashMap<FunctionInstance, FunctionLiteral>();
 		predicateValues = new HashMap<PredicateInstance, PredicateLiteral>();
+//		hashcode = createHashCode();
 	}
 
 	public ConsistentLiteralSet(ConsistentLiteralSet source) {
 		functionValues = new HashMap<FunctionInstance, FunctionLiteral>(source.functionValues);
 		predicateValues = new HashMap<PredicateInstance, PredicateLiteral>(source.predicateValues);
+//		hashcode = createHashCode();
 	}
 
 	public ConsistentLiteralSet(Collection<? extends Literal> literals) throws InconsistentLiteralException {
 		functionValues = new HashMap<FunctionInstance, FunctionLiteral>();
 		predicateValues = new HashMap<PredicateInstance, PredicateLiteral>();
+//		hashcode = createHashCode();
 
 		for (Literal l : literals) {
 			if (l instanceof PredicateLiteral) {
@@ -53,11 +57,12 @@ public class ConsistentLiteralSet
 	}
 
 	public void addPredicate(PredicateLiteral literal) throws InconsistentLiteralException {
-		LiteralInstance key = literal.getInstance();
-		if (predicateValues.containsKey(key)) {
-			throw new InconsistentLiteralException("literal " + key.getDefinition().getName());
-		}
-		predicateValues.put((PredicateInstance) key, literal);
+//		LiteralInstance key = literal.getInstance();
+//		if (predicateValues.containsKey(key)) {
+//			throw new InconsistentLiteralException("literal " + key.getDefinition().getName());
+//		}
+//		predicateValues.put((PredicateInstance) key, literal);
+		predicateValues.put((PredicateInstance)literal.getInstance(), literal);
 	}
 
 	public void addFunction(FunctionLiteral literal) throws InconsistentLiteralException {
@@ -82,8 +87,9 @@ public class ConsistentLiteralSet
 		return new HashSet<FunctionLiteral>(functionValues.values());
 	}
 
-	public Set<PredicateLiteral> getPredicateLiterals() {
-		return new HashSet<PredicateLiteral>(predicateValues.values());
+	public Collection<PredicateLiteral> getPredicateLiterals() {
+		return predicateValues.values();
+//		return new HashSet<PredicateLiteral>(predicateValues.values());
 	}
 
 	public Set<Literal> getLiterals()
@@ -104,7 +110,7 @@ public class ConsistentLiteralSet
 	public boolean getPredicateValue(PredicateInstance p) {
 		PredicateLiteral literal = predicateValues.get(p);
 		if (literal == null) {
-			throw new NoSuchElementException();
+			return false;
 		}
 		return literal.getValue();
 	}
@@ -131,8 +137,10 @@ public class ConsistentLiteralSet
 
 		for(PredicateInstance pi : predicateValues.keySet()){
 			PredicateLiteral pl = predicateValues.get(pi);
-			sw.append("   " + pl.toString());
-			sw.append("\n");
+			if(pl.getValue()) {
+				sw.append("   " + pl.toString());
+				sw.append("\n");
+			}
 		}
 		for(FunctionInstance fi : functionValues.keySet()){
 			FunctionLiteral fl = functionValues.get(fi);
@@ -142,6 +150,78 @@ public class ConsistentLiteralSet
 
 
 		return sw.toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		int sum = 0;
+		for(PredicateLiteral predicate : predicateValues.values()) {
+			// Only add true predicate values to the hash
+			if(predicate.getValue() == true)
+				sum += predicate.hashCode();
+		}
+		for(FunctionLiteral function : functionValues.values()) {
+			sum += function.hashCode();
+		}
+		return sum;
+//		return hashcode;
+	}
+	
+	private int createHashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		for(PredicateLiteral predicate : predicateValues.values()) {
+			// Only add true predicate values to the hash
+			if(predicate.getValue() == true) {
+				result = PRIME * result + predicate.hashCode();
+			}
+		}
+		for(FunctionLiteral function : functionValues.values()) {
+			result = PRIME * result + function.hashCode();
+		}
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof ConsistentLiteralSet)) {
+			return false;
+		}
+		ConsistentLiteralSet other = (ConsistentLiteralSet)obj;
+		
+		// Make sure all predicates are in both states
+		for(PredicateLiteral thisPredicate : predicateValues.values()) {
+			if(thisPredicate.getValue() == false) {
+				continue;
+			}
+			boolean predicateFoundInBothStates = false;
+			for(PredicateLiteral otherPredicate : other.predicateValues.values()) {
+				if(thisPredicate.equals(otherPredicate)) {
+					predicateFoundInBothStates = true;
+					break;
+				}
+			}
+			if(!predicateFoundInBothStates) {
+				return false;
+			}
+		}
+		for(PredicateLiteral otherPredicate : other.predicateValues.values()) {
+			if(otherPredicate.getValue() == false) {
+				continue;
+			}
+			boolean equalFound = false;
+			for(PredicateLiteral thisPredicate : predicateValues.values()) {
+				if(otherPredicate.equals(thisPredicate)) {
+					equalFound = true;
+					break;
+				}
+			}
+			if(!equalFound) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 }

@@ -17,10 +17,17 @@ package edu.usu.cs.pddl.domain;
 public class PredicateLiteral extends Literal 
 {
     private final boolean value; 
+    private final int hashcode;
     
     public PredicateLiteral(final PredicateInstance predicate, final boolean value) {
         super(predicate);
         this.value = value;
+        
+        // Cache hash
+        final int PRIME = 31;
+        int result = super.hashCode();
+        result = PRIME * result + (value ? 1231 : 1237);
+        hashcode = result;
     }
 
     public boolean getValue() {
@@ -30,10 +37,11 @@ public class PredicateLiteral extends Literal
     @Override
     public int hashCode()
     {
-        final int PRIME = 31;
-        int result = super.hashCode();
-        result = PRIME * result + (value ? 1231 : 1237);
-        return result;
+//        final int PRIME = 31;
+//        int result = super.hashCode();
+//        result = PRIME * result + (value ? 1231 : 1237);
+//        return result;
+    	return hashcode;
     }
 
     @Override
