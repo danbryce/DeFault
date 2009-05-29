@@ -206,7 +206,9 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
     private void addAction(Tree actionNode) throws InvalidPDDLElementException
     {        
         GoalDesc precond = null;
+        GoalDesc possPrecond = null;
         Effect effect = null;
+        Effect possEffect = null;
         List<FormalArgument> params = new ArrayList<FormalArgument>();
         ActionLookup lookup = new ActionLookup(params);
         
@@ -222,14 +224,28 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
                 case PRECONDITION:
                     precond = buildGoalDesc(child.getChild(0), lookup, "action " + name);
                     break;
+                case POSSPRECONDITION:
+                	if(!requirements.contains("incomplete-domain")){
+                		logger.fine("Implicit requirement: incomplete-domain");
+                	}
+                	if(child.getChildCount() > 0)
+                    possPrecond = buildGoalDesc(child.getChild(0), lookup, "action " + name);
+                    break;
                 case EFFECT:
                     effect = buildEffect(child.getChild(0), lookup, "action " + name);
+                    break;
+                case POSSEFFECT:
+                	if(!requirements.contains("incomplete-domain")){
+                		logger.fine("Implicit requirement: incomplete-domain");
+                	}
+                	if(child.getChildCount() > 0)
+                	possEffect = buildEffect(child.getChild(0), lookup, "action " + name);
                     break;
                 default:
                     throw new InvalidPDDLElementException("Invalid action child node: " + child.getText());
             }
         }
-        ActionDef action = new ActionDef(name, params, precond, effect);
+        ActionDef action = new ActionDef(name, params, precond, possPrecond, effect, possEffect);
         actions.add(action);
         logger.fine("Action=" + action);
     }

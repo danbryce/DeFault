@@ -31,7 +31,9 @@ tokens {
     INIT;
     FUNC_HEAD;
     PRECONDITION;
+    POSSPRECONDITION;
     EFFECT;
+    POSSEFFECT;
     AND_GD;
     OR_GD;
 	NOT_GD;
@@ -207,9 +209,14 @@ actionSymbol : NAME ;
 // This means 'preference' preconditions cannot be used
 actionDefBody
 	: ( ':precondition' (('(' ')') | goalDesc))?
+	  ( ':poss-precondition' (('(' ')') | goalDesc1))?
 	  ( ':effect' (('(' ')') | effect))?
-	  -> ^(PRECONDITION goalDesc?) ^(EFFECT effect?)
+	  ( ':poss-effect' (('(' ')') | effect1))?
+	  -> ^(PRECONDITION goalDesc?) ^(POSSPRECONDITION goalDesc1?) ^(EFFECT effect?) ^(POSSEFFECT effect1?)
 	;
+
+effect1 : effect;
+goalDesc1 : goalDesc;
 
 //preGD
 //	: prefGD
@@ -512,6 +519,7 @@ REQUIRE_KEY
     | ':timed-initial-literals'
     | ':preferences'
     | ':constraints'
+    | ':incomplete-domain'
     ;
 
 

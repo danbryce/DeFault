@@ -72,7 +72,51 @@ public class GraphPlannerTest {
 
 	}
 
+	@Test
+	public void test_IncompleteDomainTest() {
 
+		try {
+
+			File domainFileOut = getFile("/incomplete/blocks.pddl");
+			File problemFileOut = getFile("/incomplete/blocksprob1.pddl");
+
+			//			if (!domainFileOut.exists()) 
+			//				logger.debug("Unable to find PDDL domain file " + domainFileString);
+			//			if (!problemFileOut.exists())
+			//				logger.debug("Unable to find PDDL problem file " + problemFileString);
+
+			ANTLRDomainBuilder domBuilder = new ANTLRDomainBuilder(domainFileOut);
+			Domain domain = domBuilder.buildDomain();
+			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain, problemFileOut);
+			Problem problem = probBuilder.buildProblem();
+
+
+			AStarSolver solver = new AStarSolver(domain, problem);
+			List<ActionInstance> plan = solver.solve();
+			if (plan == null) {
+				System.out.println("No plan found");
+			} else {
+				System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+				for (ActionInstance action : plan) {
+					System.out.println(action.toString());
+				}
+			}
+
+			Assert.assertNotNull(plan);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PDDLSyntaxException e) {
+			e.printStackTrace();
+		} catch (InvalidPDDLElementException e) {
+			e.printStackTrace();
+		} catch (IllDefinedProblemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 	//Utils
 	private File getFile(String fileString){
 
