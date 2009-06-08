@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.logging.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.goalseffects.*;
-import edu.usu.cs.plangraph.*;
+import edu.usu.cs.search.plangraph.*;
 
 /**
  * Test class to set up the PDDL Blocks domain and problem programatically, rather than

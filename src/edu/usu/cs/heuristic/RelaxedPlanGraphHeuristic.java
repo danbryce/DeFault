@@ -2,9 +2,10 @@ package edu.usu.cs.heuristic;
 
 import java.util.List;
 
+import edu.usu.cs.heuristic.relaxedplangraph.*;
 import edu.usu.cs.pddl.domain.*;
-import edu.usu.cs.relaxedplangraph.*;
-import edu.usu.cs.plangraph.IllDefinedProblemException;
+import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class RelaxedPlanGraphHeuristic implements IHeuristic {
 	
@@ -18,9 +19,9 @@ public class RelaxedPlanGraphHeuristic implements IHeuristic {
 		this.problem = problem;
 	}
 
-	@Override
-	public double getValue(ConsistentLiteralSet state) {
-		
+	
+	public double getValue(StateNode node) {
+		ConsistentLiteralSet state = node.getState();
 		problem = new Problem(problem.getName(), problem.getDomain(), problem.getObjects(), state, problem.getGoal());
 		
 		try {

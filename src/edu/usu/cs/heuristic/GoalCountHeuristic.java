@@ -2,6 +2,7 @@ package edu.usu.cs.heuristic;
 
 import java.util.*;
 import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.search.StateNode;
 
 public class GoalCountHeuristic implements IHeuristic {
 	
@@ -14,8 +15,9 @@ public class GoalCountHeuristic implements IHeuristic {
 		goal.getLiteralsUsed(resultSet);
 	}
 
-	@Override
-	public double getValue(ConsistentLiteralSet state) {
+	
+	public double getValue(StateNode node) {
+		ConsistentLiteralSet state = node.getState();
 		// Figure out how many of the goals are actually achieved
 		int achievedPredicateCount = resultSet.size();
 

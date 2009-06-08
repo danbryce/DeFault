@@ -21,7 +21,7 @@ public class ActionInstance
     protected final GoalDesc preCondition;
     protected final Effect effect;
     
-    protected double cost = 0.0;
+    protected double cost = 1.0;
     
     public double getCost() {
 		return cost;
