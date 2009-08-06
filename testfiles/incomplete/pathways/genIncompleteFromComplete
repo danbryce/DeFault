@@ -1,0 +1,44 @@
+#!/bin/bash
+
+
+translate(){
+
+
+echo Translating $1 $2 $3
+
+if [ -f $2 ] ; then
+ echo DID $2
+else
+ java -cp ../../../target/classes/ edu.usu.cs.incomplete.pathways.ParserTest $1 $2 $3
+fi
+
+
+}
+
+
+for ((j=1; j<=10; j++)); do {
+
+for p in 0.25 0.5 0.75 1.0; do {
+
+for((i=1;i<=9;i++)); do {
+V="$i"_"$p"_"$j"
+OUTDOM="../../incomplete/pathways/domain_p0$V.pddl"
+INDOM="../../classical/pathways/domain_p0$i.pddl"
+
+translate $INDOM $OUTDOM $p
+
+};done
+
+
+#for((i=10;i<=30;i++)); do {
+#V="$i"_"$p"_"$j"
+#OUTDOM="../../incomplete/pathways/domain_p$V.pddl"
+#INDOM="../../classical/pathways/domain_p$i.pddl"
+#echo $OUTDOM
+#translate $INDOM $OUTDOM $p
+#};done
+
+
+
+}; done
+};done

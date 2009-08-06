@@ -173,7 +173,7 @@ predicate : NAME ;
 
 // If have any typed variables, they must come FIRST!
 typedVariableList
-    : (VARIABLE* | singleTypeVarList+ VARIABLE*)
+    :  (VARIABLE* | singleTypeVarList+ VARIABLE*)
     ;
 
 singleTypeVarList
@@ -196,9 +196,9 @@ structureDef
 
 actionDef
 	: '(' ':action' actionSymbol
-	      ':parameters' '(' typedVariableList ')'
+	      ( ':parameters' (('(' ')') | '(' typedVariableList ')' ))
            actionDefBody ')'
-       -> ^(ACTION actionSymbol typedVariableList actionDefBody)
+       -> ^(ACTION actionSymbol typedVariableList? actionDefBody)
     ;
 
 actionSymbol : NAME ;

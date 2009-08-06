@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.List;
 
 import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.parser.*;
+import edu.usu.cs.planner.pspvanilla.PSPSolver;
+import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class Main {
@@ -31,8 +34,10 @@ public class Main {
 	        ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain, problemFile);
 	        Problem problem = probBuilder.buildProblem();
 	        
-	        PSPSolver solver = new PSPSolver(domain, problem);
-	        List<ActionInstance> plan = solver.solve();
+	        SearchStatistics searchStatistics = new SearchStatistics();
+	        
+	        PSPSolver solver = new PSPSolver(domain, problem, searchStatistics);
+	        List<IncompleteActionInstance> plan = solver.solve();
 	        if (plan == null) {
 	            System.out.println("No plan found");
 	        } else {
@@ -40,7 +45,7 @@ public class Main {
 	           	System.out.println("Total time taken: " + solver.getTotalTimeTaken() + " milliseconds");
             	System.out.println("Time taken computing heuristic: " + solver.getHeuristicTimeTaken() + " milliseconds");
 	            System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-	            for (ActionInstance action : plan) {
+	            for (IncompleteActionInstance action : plan) {
 	                System.out.println(action.toString());
 	            }
 	        }

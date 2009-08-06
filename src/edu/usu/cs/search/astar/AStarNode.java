@@ -2,8 +2,10 @@ package edu.usu.cs.search.astar;
 
 import java.util.*;
 
-import edu.usu.cs.heuristic.IHeuristic;
+import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.AbstractStateNode;
 import edu.usu.cs.search.StateNode;
 
@@ -16,41 +18,42 @@ import edu.usu.cs.search.StateNode;
 public class AStarNode extends AbstractStateNode {
 
 
-	protected final Problem problem;
-
-	// Cost to get to this action
-	protected final double gvalue; // TODO: currently cost is just 1 per action and needs to change
-	protected double hvalue = -1; // -1 means unititialized
-
-	protected IHeuristic heuristic;
-
 	public AStarNode(
-			ConsistentLiteralSet currentState, 
-			ActionInstance actionToGetHere, 
+			Set<Proposition> currentState, 
+			IncompleteActionInstance actionToGetHere, 
 			AStarNode parent, 
 			Problem problem, 
-			IHeuristic heuristic) {
+			Heuristic heuristic) {
 		this.state = currentState;
 		this.action = actionToGetHere;
 		this.parent = parent;
 		this.problem = problem;
+		gvalue = new double[1];
 		if(this.parent == null) {
-			gvalue = 0;
+			gvalue[0] = 0;
 		} else {
-			gvalue = parent.gvalue + 1;
+			gvalue[0] = parent.gvalue[0] + 1;
 		}
 		this.heuristic = heuristic;
 	}
 
+	public AStarNode(){
 
-	protected List<StateNode> createSubsequentNodes(
-			List<ConsistentLiteralSet> subsequentStates,
-			List<ActionInstance> subsequentActions){
-		List<StateNode> subsequentNodes = new ArrayList<StateNode>();
-		for(int stateIndex = 0; stateIndex < subsequentStates.size(); stateIndex++){
+	}
+
+
+
+
+	public List<StateNode> createSubsequentNodes(
+				List<IncompleteActionInstance> subsequentActions){
+		subsequentNodes = new ArrayList<StateNode>();
+		for(IncompleteActionInstance action : subsequentActions){
+			Set<Proposition> newState = new HashSet<Proposition>(this.state);
+			newState.removeAll(action.getDeleteEffects());
+			newState.addAll(action.getAddEffects());
 			subsequentNodes.add(new AStarNode(
-					subsequentStates.get(stateIndex),
-					subsequentActions.get(stateIndex),
+					newState,
+					action,
 					this, 
 					problem, 
 					heuristic));
@@ -59,16 +62,8 @@ public class AStarNode extends AbstractStateNode {
 
 		return subsequentNodes;
 	}
-	public double getHeuristicValue() {
-		if(hvalue == -1)
-			hvalue = heuristic.getValue(this);
-		return hvalue;
-	}
-	public double getGValue() {
-		return gvalue;
-	}
-	public double getFValue() {
-		return gvalue + H_WEIGHT * getHeuristicValue();
-	}
+
+
+
 
 }

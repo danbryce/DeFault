@@ -101,7 +101,7 @@ public abstract class ANTLRBuilder
         public FormalArgument lookupParameter(String name, String context) throws InvalidPDDLElementException;
     }
 
-    protected GoalDesc buildGoalDesc(Tree gdNode, ExpressionContext lookup, String context) throws InvalidPDDLElementException
+    protected DefaultGoalDesc buildGoalDesc(Tree gdNode, ExpressionContext lookup, String context) throws InvalidPDDLElementException
     {
         final int type = gdNode.getType();
         switch (type) {
@@ -126,7 +126,7 @@ public abstract class ANTLRBuilder
         }
     }
 
-    protected GoalDesc buildPredicateGoal(Tree gdNode, ExpressionContext lookup, String context) throws InvalidPDDLElementException
+    protected DefaultGoalDesc buildPredicateGoal(Tree gdNode, ExpressionContext lookup, String context) throws InvalidPDDLElementException
     {
         String name = gdNode.getChild(0).getText();
         PredicateDef predicate = findPredicate(name, context);
@@ -215,7 +215,7 @@ public abstract class ANTLRBuilder
         return actualArgs;
     }
 
-    private GoalDesc buildComparisonGoalDesc(Tree node, ExpressionContext lookup, String context) 
+    private DefaultGoalDesc buildComparisonGoalDesc(Tree node, ExpressionContext lookup, String context) 
         throws InvalidPDDLElementException
     {
         String operator = node.getChild(0).getText();
@@ -224,10 +224,10 @@ public abstract class ANTLRBuilder
         return new ComparisonGoalDesc(operator, firstOperand, secondOperand);
     }
 
-    private GoalDesc buildConjuctionGoalDesc(Tree gdNode, ExpressionContext lookup, String context) 
+    private DefaultGoalDesc buildConjuctionGoalDesc(Tree gdNode, ExpressionContext lookup, String context) 
         throws InvalidPDDLElementException
     {
-        List<GoalDesc> subGoals = new ArrayList<GoalDesc>(gdNode.getChildCount());
+        List<DefaultGoalDesc> subGoals = new ArrayList<DefaultGoalDesc>(gdNode.getChildCount());
         for (int i = 0; i < gdNode.getChildCount(); i++) {
             final Tree subNode = gdNode.getChild(i);
             subGoals.add(buildGoalDesc(subNode, lookup, context));
@@ -235,8 +235,8 @@ public abstract class ANTLRBuilder
         return new ConjunctionGoalDesc(subGoals);
     }
     
-    private GoalDesc buildNegatedGoalDesc(Tree node, ExpressionContext lookup, String context) throws InvalidPDDLElementException{
-    	GoalDesc subGoal = buildGoalDesc(node.getChild(0), lookup, context);
+    private DefaultGoalDesc buildNegatedGoalDesc(Tree node, ExpressionContext lookup, String context) throws InvalidPDDLElementException{
+    	DefaultGoalDesc subGoal = buildGoalDesc(node.getChild(0), lookup, context);
     	return new NotGoalDesc(subGoal);
     }
 

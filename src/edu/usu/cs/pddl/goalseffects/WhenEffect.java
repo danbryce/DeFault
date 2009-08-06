@@ -19,10 +19,10 @@ public class WhenEffect implements Effect
 {
     private final boolean applicable;
     
-    private final GoalDesc condition;
+    private final DefaultGoalDesc condition;
     private final Effect effect;
     
-    public WhenEffect(final GoalDesc condition, final Effect effect) {
+    public WhenEffect(final DefaultGoalDesc condition, final Effect effect) {
         this.condition = condition;
         this.effect = effect;
         
@@ -44,7 +44,7 @@ public class WhenEffect implements Effect
         if (applicable) {
             return this;
         } else {
-            return new WhenEffect((GoalDesc) condition.instantiate(parameters, objects), 
+            return new WhenEffect((DefaultGoalDesc) condition.instantiate(parameters, objects), 
                                   (Effect) effect.instantiate(parameters, objects));
         }
     }

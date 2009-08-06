@@ -38,7 +38,7 @@ public class Level
      * @param problem the problem.
      * @throws IllDefinedProblemException 
      */
-    public static Level createStartLevel(List<ActionInstance> instances, Problem problem) 
+    public static Level createStartLevel(List<ActionInstance> instances, DefaultProblem problem) 
         throws IllDefinedProblemException
     {
         return new Level(instances, problem);
@@ -59,7 +59,7 @@ public class Level
      * @param problem the problem.
      * @throws IllDefinedProblemException 
      */
-    private Level(List<ActionInstance> instances, Problem problem) throws IllDefinedProblemException
+    private Level(List<ActionInstance> instances, DefaultProblem problem) throws IllDefinedProblemException
     {
         levelNum = 0;
         actions = Collections.emptyList();
@@ -71,7 +71,7 @@ public class Level
     }
 
     public Level(Level previousLevel, List<ActionInstance> instances,
-                 Domain domain, Problem problem)
+                 Domain domain, DefaultProblem problem)
     {
         if (previousLevel == null) {
             throw new IllegalArgumentException("null previous level");
@@ -133,7 +133,7 @@ public class Level
         logger.info("------------- End of level " + levelNum + " creation -----------");
     }
     
-    public boolean goalLiteralsArePresent(GoalDesc goal)
+    public boolean goalLiteralsArePresent(DefaultGoalDesc goal)
     {
         try {
             Set<LiteralInstance> litInstances = new HashSet<LiteralInstance>();

@@ -205,8 +205,8 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
 
     private void addAction(Tree actionNode) throws InvalidPDDLElementException
     {        
-        GoalDesc precond = null;
-        GoalDesc possPrecond = null;
+        DefaultGoalDesc precond = null;
+        DefaultGoalDesc possPrecond = null;
         Effect effect = null;
         Effect possEffect = null;
         List<FormalArgument> params = new ArrayList<FormalArgument>();
@@ -309,7 +309,7 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
     private Effect buildWhenEffect(Tree effectNode, ExpressionContext lookup, String context) 
         throws InvalidPDDLElementException
     {
-        GoalDesc condition = buildGoalDesc(effectNode.getChild(0), lookup, context);
+        DefaultGoalDesc condition = buildGoalDesc(effectNode.getChild(0), lookup, context);
         Effect condEffect = buildEffect(effectNode.getChild(1), lookup, context);
         return new WhenEffect(condition, condEffect);
     }

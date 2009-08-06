@@ -13,14 +13,18 @@ import org.junit.Test;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
-import edu.usu.cs.search.astar.AStarSolver;
+import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.ffvanilla.AStarSolver;
+import edu.usu.cs.planner.pspvanilla.PSPSolver;
+import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
-import edu.usu.cs.search.psp.PSPSolver;
 
 public class GraphPlannerTest {
 
@@ -47,14 +51,15 @@ public class GraphPlannerTest {
 			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain, problemFileOut);
 			Problem problem = probBuilder.buildProblem();
 
-
-			AStarSolver solver = new AStarSolver(domain, problem);
-			List<ActionInstance> plan = solver.solve();
+			SearchStatistics searchStatistics = new SearchStatistics();
+			
+			Solver solver = new AStarSolver(domain, problem, searchStatistics);
+			List<IncompleteActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
 			} else {
-				System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-				for (ActionInstance action : plan) {
+				//System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+				for (IncompleteActionInstance action : plan) {
 					System.out.println(action.toString());
 				}
 			}
@@ -92,14 +97,15 @@ public class GraphPlannerTest {
 			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain, problemFileOut);
 			Problem problem = probBuilder.buildProblem();
 
-
-			AStarSolver solver = new AStarSolver(domain, problem);
-			List<ActionInstance> plan = solver.solve();
+			SearchStatistics searchStatistics = new SearchStatistics();
+			
+			AStarSolver solver = new AStarSolver(domain, problem, searchStatistics);
+			List<IncompleteActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
 			} else {
-				System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-				for (ActionInstance action : plan) {
+//				System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+				for (IncompleteActionInstance action : plan) {
 					System.out.println(action.toString());
 				}
 			}
@@ -124,8 +130,8 @@ public class GraphPlannerTest {
 
 		try {
 
-			File domainFileOut = getFile("/PSP/blocks.pddl");
-			File problemFileOut = getFile("/PSP/blocksprob1.pddl");
+			File domainFileOut = getFile("/PSP/mable-control3.pddl");
+			File problemFileOut = getFile("/PSP/TBDName.pddl");
 
 			//			if (!domainFileOut.exists()) 
 			//				logger.debug("Unable to find PDDL domain file " + domainFileString);
@@ -137,14 +143,15 @@ public class GraphPlannerTest {
 			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain, problemFileOut);
 			Problem problem = probBuilder.buildProblem();
 
+			SearchStatistics searchStatistics = new SearchStatistics();
 
-			PSPSolver solver = new PSPSolver(domain, problem);
-			List<ActionInstance> plan = solver.solve();
+			Solver solver = new PSPSolver(domain, problem, searchStatistics);
+			List<IncompleteActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
 			} else {
-				System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-				for (ActionInstance action : plan) {
+				//System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+				for (IncompleteActionInstance action : plan) {
 					System.out.println(action.toString());
 				}
 			}

@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.logging.*;
 import org.antlr.runtime.tree.*;
 import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 
 /**
  * Builds a {@link edu.usu.cs.pddl.domain.Domain Domain} object by parsing a
@@ -29,7 +30,7 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
     
     private Map<String, PDDLObject> objects = new HashMap<String, PDDLObject>();
     private ConsistentLiteralSet startState = new ConsistentLiteralSet();
-    private GoalDesc goal;
+    private DefaultGoalDesc goal;
     
     private ExpressionContext objectLookup = new ExpressionContext() 
     {
@@ -98,11 +99,12 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
             } else {
                 throw new InvalidPDDLElementException("The file " + pddlFile + " does not contain a PDDL domain");
             }
+            problem.setGoalAction(PddlImporter.createGoal(problem.getGoal()));
         }
         return problem;
     }
 
-    private Problem buildPDDLProblem(Tree problemNode) throws InvalidPDDLElementException
+    private DefaultProblem buildPDDLProblem(Tree problemNode) throws InvalidPDDLElementException
     {
         logger.fine("Building a PDDL Problem");        
         
@@ -148,7 +150,7 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
                     throw new UnsupportedOperationException("Unsupported :problem child element - " + child.getText());
             }
         }
-        return new Problem(name, domain, new HashSet<PDDLObject>(objects.values()), startState, goal);
+        return new DefaultProblem(name, domain, new HashSet<PDDLObject>(objects.values()), startState, goal);
     }
 
     private void addObjects(Tree objectsNode) throws InvalidPDDLElementException

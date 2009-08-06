@@ -54,11 +54,6 @@ public abstract class LiteralInstance
 
     @Override
     public int hashCode() {
-//        final int PRIME = 31;
-//        int result = 1;
-//        result = PRIME * result + arguments.hashCode();
-//        result = PRIME * result + definition.hashCode();
-//        return result;
     	return hashcode;
     }
 

@@ -35,29 +35,29 @@ public class PreProcessingLevel extends Level
 	/**
 	 * Create the first level (level 0) in a plan graph. This level has no actions,
 	 * only the literals comprising the starting state.
-	 * @param problem the problem.
+	 * @param problem2 the problem.
 	 * @throws IllDefinedProblemException 
 	 */
-	public static PreProcessingLevel createStartLevel(List<ActionInstance> instances, Problem problem) 
+	public static PreProcessingLevel createStartLevel(List<ActionInstance> instances, Problem problem2) 
 	throws IllDefinedProblemException
 	{
-		return new PreProcessingLevel(instances, problem);
+		return new PreProcessingLevel(instances, problem2);
 	}
 
 	/**
 	 * Create the first level (level 0) in a plan graph. This level has no actions,
 	 * only the literals comprising the starting state.
-	 * @param problem the problem.
+	 * @param problem2 the problem.
 	 * @throws IllDefinedProblemException 
 	 */
-	private PreProcessingLevel(List<ActionInstance> instances, Problem problem) throws IllDefinedProblemException
+	private PreProcessingLevel(List<ActionInstance> instances, Problem problem2) throws IllDefinedProblemException
 	{
 		levelNum = 0;
 		actions = Collections.emptyList();
 		actionMutexes = Collections.emptySet();
 		literalMutexes = Collections.emptySet();
 
-		endLiterals = new HashSet<Literal>(problem.getStartState().getLiterals());
+		endLiterals = new HashSet<Literal>(problem2.getStartState().getLiterals());
 		createPredicateNegations(instances);
 	}
 
@@ -161,7 +161,7 @@ public class PreProcessingLevel extends Level
 		logger.info("------------- End of level " + levelNum + " creation -----------");
 	}
 
-	public boolean goalLiteralsArePresent(GoalDesc goal)
+	public boolean goalLiteralsArePresent(DefaultGoalDesc goal)
 	{
 		try {
 			Set<LiteralInstance> litInstances = new HashSet<LiteralInstance>();

@@ -15,20 +15,20 @@ import edu.usu.cs.pddl.domain.*;
 /**
  * An 'and' goal.
  */
-public class ConjunctionGoalDesc implements GoalDesc
+public class ConjunctionGoalDesc implements DefaultGoalDesc
 {
     private final boolean evaluable;
-    private List<? extends GoalDesc> subGoals;
+    private List<? extends DefaultGoalDesc> subGoals;
     
-    public List<? extends GoalDesc> getSubGoals() {
+    public List<? extends DefaultGoalDesc> getSubGoals() {
 		return subGoals;
 	}
 
-	public ConjunctionGoalDesc(List<? extends GoalDesc> subGoals) {
+	public ConjunctionGoalDesc(List<? extends DefaultGoalDesc> subGoals) {
         this.subGoals = subGoals;
         
         boolean tempEval = true;
-        for (GoalDesc sg : subGoals) {
+        for (DefaultGoalDesc sg : subGoals) {
             if (!sg.isEvaluable()) {
                 tempEval = false;
             }
@@ -40,13 +40,13 @@ public class ConjunctionGoalDesc implements GoalDesc
         return evaluable;
     }
     
-    public GoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
+    public DefaultGoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
         if (evaluable) {
             return this;
         } else {
-            List<GoalDesc> newSubs = new ArrayList<GoalDesc>(subGoals.size());
-            for (GoalDesc sg : subGoals) {
-                newSubs.add((GoalDesc) sg.instantiate(parameters, objects));
+            List<DefaultGoalDesc> newSubs = new ArrayList<DefaultGoalDesc>(subGoals.size());
+            for (DefaultGoalDesc sg : subGoals) {
+                newSubs.add((DefaultGoalDesc) sg.instantiate(parameters, objects));
             }
             return new ConjunctionGoalDesc(newSubs);
         }
@@ -56,7 +56,7 @@ public class ConjunctionGoalDesc implements GoalDesc
      * @see edu.usu.cs.pddl.domain.GoalDesc#evaluate(java.util.Collection)
      */
     public boolean evaluate(ConsistentLiteralSet literals) {
-        for (GoalDesc sg : subGoals) {
+        for (DefaultGoalDesc sg : subGoals) {
             if (!sg.evaluate(literals)) {
                 return false;
             }
@@ -69,7 +69,7 @@ public class ConjunctionGoalDesc implements GoalDesc
         if (!evaluable) {
             throw new IllegalStateException("Attempt to get literals used by non-evaluable goal desc");
         }
-        for (GoalDesc sg : subGoals) {
+        for (DefaultGoalDesc sg : subGoals) {
             sg.getLiteralsUsed(resultSet);
         }
     }
@@ -79,7 +79,7 @@ public class ConjunctionGoalDesc implements GoalDesc
         String sep = "";
         StringBuffer result = new StringBuffer();
         result.append("(and ");
-        for (GoalDesc goal : subGoals) {
+        for (DefaultGoalDesc goal : subGoals) {
             result.append(sep).append(goal);
             sep = " ";
         }
@@ -90,7 +90,7 @@ public class ConjunctionGoalDesc implements GoalDesc
 	
 	public void getMethods(List<MethodDef> preconditionMethods) {
 		// TODO Auto-generated method stub
-		for(GoalDesc g : subGoals)
+		for(DefaultGoalDesc g : subGoals)
 			g.getMethods(preconditionMethods);
 	}
 
@@ -99,7 +99,7 @@ public class ConjunctionGoalDesc implements GoalDesc
 			Map<FormalArgument, PDDLObject> partialArgMap,
 			ConsistentLiteralSet startState) {
 		//if any precondition is not satisfied then true, else false
-		for(GoalDesc sg :subGoals){
+		for(DefaultGoalDesc sg :subGoals){
 			if(sg.notSatisfiedBy(partialArgMap, startState)){
 				return true;
 			}

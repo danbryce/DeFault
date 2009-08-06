@@ -2,30 +2,34 @@ package edu.usu.cs.search.psp;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class AdditiveUtilityFunction implements UtilityFunction {
 
-	public Map<LiteralInstance, Double> getUtilities() {
+	public Map<Proposition, Double> getUtilities() {
 		return utilities;
 	}
 
-	Map<LiteralInstance, Double> utilities = null;
+	Map<Proposition, Double> utilities = null;
 	
-	public AdditiveUtilityFunction(Map<LiteralInstance, Double> utilities){
+	public AdditiveUtilityFunction(Map<Proposition, Double> utilities){
 		this.utilities = utilities;
 	}
 	
+
+
 	@Override
-	public double evaluate(HashMap<LiteralInstance, Boolean> goals) {
-		double utility = 0;
+	public double evaluate(Set<Proposition> goalsAchieved) {
+	double utility = 0;
 		
-		for(LiteralInstance li : goals.keySet()){
-			if(goals.get(li)){
+		for(Proposition li : goalsAchieved){
+			
 				utility += utilities.get(li);
-			}
+			
 		}
 		
 		return utility;

@@ -29,13 +29,13 @@ public class GraphSolver
     private final Problem problem;
     private final PreProcessingPlanGraph graph;
     
-    public GraphSolver(Domain dom, Problem prob) throws IllDefinedProblemException
+    public GraphSolver(Domain dom, Problem problem2) throws IllDefinedProblemException
     {
-        if (dom == null || prob == null) {
+        if (dom == null || problem2 == null) {
             throw new IllegalArgumentException("null domain/problem");
         }
         this.domain = dom;
-        this.problem = prob;
+        this.problem = problem2;
         
         //graph = new PlanGraph(domain, problem);
         graph = new PreProcessingPlanGraph(domain, problem);
@@ -99,7 +99,7 @@ public class GraphSolver
     public List<GraphAction> solve()
     {
         List<GraphAction> realPlan = null;
-        GoalDesc goal = problem.getGoal();
+        DefaultGoalDesc goal = problem.getGoal();
         Level currentLevel = graph.getLastLevel();
         
         while (!currentLevel.goalLiteralsArePresent(goal)  &&
@@ -135,7 +135,7 @@ public class GraphSolver
             Level finalLevel = graph.getLastLevel();
             List<Set<GraphAction>> plan = new ArrayList<Set<GraphAction>>();
             
-            GoalDesc goal = problem.getGoal();
+            DefaultGoalDesc goal = problem.getGoal();
             Set<LiteralInstance> litInstances = new HashSet<LiteralInstance>();
             goal.getLiteralsUsed(litInstances);
             List<Set<Literal>> possibleLitCombinations = finalLevel.getConsistentLitCombinations(litInstances);           

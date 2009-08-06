@@ -54,6 +54,15 @@ public class ConjunctionEffect implements Effect
             return new ConjunctionEffect(newEffects);
         }
     }
+    
+    public List<PredicateEffect> getSubEffectsAsPredicateEffects() {
+    	List<PredicateEffect> effects = new ArrayList<PredicateEffect>();
+    	
+    	for(Effect effect : subEffects) {
+    		effects.add((PredicateEffect)effect);
+    	}
+    	return effects;
+    }
 
     public void getLiteralsUsed(Set<LiteralInstance> resultSet)
     {

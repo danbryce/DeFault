@@ -13,17 +13,17 @@ import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.FormalArgument;
-import edu.usu.cs.pddl.domain.GoalDesc;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.MethodDef;
 import edu.usu.cs.pddl.domain.PDDLObject;
 
-public class NotGoalDesc implements GoalDesc {
+public class NotGoalDesc implements DefaultGoalDesc {
     
 	private final boolean evaluable;
-    private GoalDesc negatedGoal;
+    private DefaultGoalDesc negatedGoal;
 
-    public NotGoalDesc(GoalDesc negGoal){
+    public NotGoalDesc(DefaultGoalDesc negGoal){
     	this.negatedGoal = negGoal;
     	evaluable = negGoal.isEvaluable();
     }
@@ -42,11 +42,11 @@ public class NotGoalDesc implements GoalDesc {
 	}
 
 	//@Override
-	public GoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
+	public DefaultGoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
         if (evaluable) {
             return this;
         } else {
-        	GoalDesc newSub = (GoalDesc) negatedGoal.instantiate(parameters, objects);
+        	DefaultGoalDesc newSub = (DefaultGoalDesc) negatedGoal.instantiate(parameters, objects);
         	return new NotGoalDesc(newSub);
         }
 	}

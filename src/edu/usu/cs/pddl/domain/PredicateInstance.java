@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * A predicate with its arguments mapped to actual PDDL objects (but without a value).
  */
-public class PredicateInstance extends LiteralInstance implements GoalDesc
+public class PredicateInstance extends LiteralInstance implements DefaultGoalDesc
 {
     public PredicateInstance(final PredicateDef predicate, final List<PDDLObject> arguments) {
         super(predicate, arguments);
@@ -31,7 +31,7 @@ public class PredicateInstance extends LiteralInstance implements GoalDesc
         return true;
     }
     
-    public GoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
+    public DefaultGoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
         return this;
     }
 

@@ -16,14 +16,14 @@ public class ActionDef
 {
 	private String name = null;
 	private List<FormalArgument> arguments = null;
-	private GoalDesc preCondition = null;
+	private DefaultGoalDesc preCondition = null;
 	private Effect effect = null;
 	private List<MethodDef> preconditionMethods = null;
-	private GoalDesc possPreCondition = null;
+	private DefaultGoalDesc possPreCondition = null;
 	private Effect possEffect = null;
 
 	/** GoalDesc object to use for actions which don't have any preconditions */
-	private static final GoalDesc NULL_PRECOND = new GoalDesc() {
+	private static final DefaultGoalDesc NULL_PRECOND = new DefaultGoalDesc() {
 		public boolean evaluate(ConsistentLiteralSet literals) {
 			return true;
 		}
@@ -74,17 +74,17 @@ public class ActionDef
 	};
 
 	public ActionDef(final String name, List<FormalArgument> arguments, 
-			GoalDesc preCondition, Effect effect) {
+			DefaultGoalDesc preCondition, Effect effect) {
 		initActionDef(name, arguments, preCondition, null, effect, null);
 	}
 
 	public ActionDef(final String name, List<FormalArgument> arguments, 
-			GoalDesc preCondition, GoalDesc possPrecond, Effect effect, Effect possEffect) {
+			DefaultGoalDesc preCondition, DefaultGoalDesc possPrecond, Effect effect, Effect possEffect) {
 		initActionDef(name, arguments, preCondition, possPrecond, effect, possEffect);
 	}
 
 	public void initActionDef(final String name, List<FormalArgument> arguments, 
-			GoalDesc preCondition, GoalDesc possPrecond, Effect effect, Effect possEffect) {
+			DefaultGoalDesc preCondition, DefaultGoalDesc possPrecond, Effect effect, Effect possEffect) {
 
 		if (name == null) {
 			throw new IllegalArgumentException("null name");
@@ -123,13 +123,21 @@ public class ActionDef
 	public Effect getEffect() {
 		return effect;
 	}
+	
+	public Effect getPossEffect() {
+		return possEffect;
+	}
 
 	public String getName() {
 		return name;
 	}
 
-	public GoalDesc getPreCondition() {
+	public DefaultGoalDesc getPreCondition() {
 		return preCondition;
+	}
+	
+	public DefaultGoalDesc getPossPreCondition() {
+		return possPreCondition;
 	}
 
 	public String toString() {

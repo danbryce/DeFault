@@ -28,7 +28,7 @@ public class PlanGraph
 
     private final List<Level> levels = new ArrayList<Level>();
     private final Domain domain;
-    private final Problem problem;
+    private final DefaultProblem problem;
     private final List<ActionInstance> actionInstances;
 
     public PlanGraph(){
@@ -37,7 +37,7 @@ public class PlanGraph
     	actionInstances = null;
     }
     
-    public PlanGraph(Domain domain, Problem problem) throws IllDefinedProblemException
+    public PlanGraph(Domain domain, DefaultProblem problem) throws IllDefinedProblemException
     {
         if (domain == null || problem == null) {
             throw new IllegalArgumentException("null domain/problem");
@@ -59,7 +59,7 @@ public class PlanGraph
     }
 
     /** @numLevels number of levels, including the start state */
-    public PlanGraph(Domain domain, Problem problem, int numLevels) throws IllDefinedProblemException
+    public PlanGraph(Domain domain, DefaultProblem problem, int numLevels) throws IllDefinedProblemException
     {
         this(domain, problem);
         if (numLevels < 2) {
@@ -99,7 +99,7 @@ public class PlanGraph
         }
     }
 
-    private List<ActionInstance> createActionInstances(Domain domain, Problem problem)
+    private List<ActionInstance> createActionInstances(Domain domain, DefaultProblem problem)
                             throws IllDefinedProblemException
     {
         List<ActionInstance> instances = new ArrayList<ActionInstance>();

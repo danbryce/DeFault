@@ -1,0 +1,135 @@
+package edu.usu.cs.planner;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import edu.usu.cs.pddl.domain.ActionDef;
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.PDDLObject;
+import edu.usu.cs.pddl.domain.DefaultProblem;
+import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.planner.ffrisky.util.PddlImporter;
+import edu.usu.cs.planner.pspvanilla.PSPSolver;
+import edu.usu.cs.search.Search;
+import edu.usu.cs.search.SearchStatistics;
+import edu.usu.cs.search.plangraph.IllDefinedProblemException;
+import edu.usu.cs.search.psp.PSPSearch;
+
+public class DefaultSolver implements Solver {
+	
+
+	private static final Logger logger = Logger.getLogger(DefaultSolver.class.getName());
+
+
+	private  Domain domain = null;
+	private Problem problem = null;
+	protected  List<IncompleteActionInstance> actionInstances = null;
+	protected List<IncompleteActionInstance> plan = null;
+	protected Search search = null;
+	protected SearchStatistics searchStatistics = null;
+
+	public DefaultSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
+	{
+		if(domain == null || problem == null) {
+			throw new IllegalArgumentException("null domain/problem");
+		}
+		this.domain = domain;
+		this.problem = problem;
+		this.searchStatistics = searchStatistics;
+		this.actionInstances = PddlImporter.createActionInstances(domain, problem);//createActionInstances(domain, problem);
+		
+		logger.info("All action instances in problem:");
+		for(IncompleteActionInstance ai : actionInstances) {
+			logger.info(ai.toString());
+		}
+
+
+	}
+
+	public DefaultSolver(){
+		
+	}
+
+	private List<ActionInstance> createActionInstances(Domain domain, Problem problem) throws IllDefinedProblemException
+	{
+		List<ActionInstance> instances = new ArrayList<ActionInstance>();
+		Set<PDDLObject> allObjects = problem.getObjects();
+
+		// Iterate over all actions, creating multiple instances for each (probably)
+		List<ActionDef> actionDefs = domain.getActions();
+		for (ActionDef action : actionDefs) 
+		{
+			List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects, problem.getStartState());
+			for (List<PDDLObject> actualArgs : allowedActualArgs) 
+			{
+				ActionInstance instance = new ActionInstance(action, actualArgs, allObjects);
+				instances.add(instance);
+			}
+		}
+		return instances;
+	}
+
+	private List<List<PDDLObject>> getPossibleArguments(ActionDef action,
+			Set<PDDLObject> allObjects, 
+			ConsistentLiteralSet startState)
+			throws IllDefinedProblemException
+			{
+		final List<PDDLObject> noObjects = Collections.emptyList();
+		List<List<PDDLObject>> result = new ArrayList<List<PDDLObject>>();
+		List<FormalArgument> arguments = action.getArguments();
+
+		if (arguments.size() > allObjects.size()) {
+			throw new IllDefinedProblemException("Not enough objects for arguments of action " + action.getName());
+		} else if (arguments.size() == 0) {
+			result.add(noObjects);
+		} else {
+			// General case of 1 or more arguments
+
+			// Keep the results as a list of partial solutions, where each solution is a list of arguments
+			// First stage is one solution, with no arguments-so-far
+			result.add(noObjects);
+			final Set<PDDLObject> remainingObjs = new HashSet<PDDLObject>();
+
+			for (FormalArgument arg : arguments) {
+				// After dealing with argument one, newSolns will be a list of arrays of length one, etc
+				List<List<PDDLObject>> newSolns = new ArrayList<List<PDDLObject>>();
+
+				for (List<PDDLObject> argsSoFar : result) {
+					// Get correct set of all objects not used in the argument list so far
+					remainingObjs.clear();
+					remainingObjs.addAll(allObjects);
+					remainingObjs.removeAll(argsSoFar);
+
+					for (PDDLObject obj : remainingObjs) {
+						if (arg.typeMatches(obj)) {
+							final List<PDDLObject> newArgList = new ArrayList<PDDLObject>(argsSoFar);
+							newArgList.add(obj);
+							if(action.isLegalPartialInstantiation(newArgList, startState)){
+								newSolns.add(newArgList);
+							}
+						}
+					}
+				}
+				result = newSolns;
+			}
+		}
+		return result;
+			}
+	
+	public Search getSearch() {
+		return search;
+	}
+
+	@Override
+	public List<IncompleteActionInstance> run() {
+		return search.getPath();
+	}
+}

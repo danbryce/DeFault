@@ -18,8 +18,11 @@ public class ActionInstance
     protected final ActionDef definition;
     protected final Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
  
-    protected final GoalDesc preCondition;
+    protected final DefaultGoalDesc preCondition;
     protected final Effect effect;
+    
+    protected final DefaultGoalDesc possPreCondition;
+    protected final Effect possEffect;
     
     protected double cost = 1.0;
     
@@ -31,6 +34,15 @@ public class ActionInstance
 		this.cost = cost;
 	}
 
+	public ActionInstance(){
+		definition = null;
+		preCondition = null;
+		effect = null;
+		possPreCondition  =null;
+		possEffect = null;
+		
+	}
+	
 	public ActionInstance(ActionDef def, List<PDDLObject> actualArgs, Set<PDDLObject> objects) 
     {
         definition = def;
@@ -44,8 +56,10 @@ public class ActionInstance
         }
         
         // Need to 'instantiate' the action
-        preCondition = (GoalDesc) definition.getPreCondition().instantiate(argMapping, objects);
+        preCondition = (DefaultGoalDesc) definition.getPreCondition().instantiate(argMapping, objects);
         effect = (Effect) definition.getEffect().instantiate(argMapping, objects);
+        possPreCondition = (DefaultGoalDesc) definition.getPossPreCondition().instantiate(argMapping, objects);
+        possEffect = (Effect) definition.getPossEffect().instantiate(argMapping, objects);
     }
     
     public boolean preConditionSatisfied(ConsistentLiteralSet literals) 
@@ -79,8 +93,16 @@ public class ActionInstance
         return effect;
     }
 
-    public GoalDesc getPreCondition() {
+    public DefaultGoalDesc getPreCondition() {
         return preCondition;
+    }
+    
+    public Effect getPossEffect() {
+    	return possEffect;
+    }
+    
+    public DefaultGoalDesc getPossPreCondition() {
+    	return possPreCondition;
     }
     
     public String toString() {
@@ -93,4 +115,9 @@ public class ActionInstance
         result.append(")");
         return result.toString();
     }
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return toString();
+	}
 }

@@ -15,7 +15,7 @@ import edu.usu.cs.pddl.domain.*;
 /**
  * Binary comparison goal. Available operators are '>', '<', '=', '>=', and '<='.
  */
-public class ComparisonGoalDesc implements GoalDesc
+public class ComparisonGoalDesc implements DefaultGoalDesc
 {
     private final boolean evaluable;
     
@@ -40,7 +40,7 @@ public class ComparisonGoalDesc implements GoalDesc
         return evaluable;
     }
     
-    public GoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
+    public DefaultGoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
         if (evaluable) {
             return this;
         } else {

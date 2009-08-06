@@ -31,16 +31,16 @@ public class PreProcessingPlanGraph extends PlanGraph
     private final Problem problem;
     private final List<ActionInstance> actionInstances;
 
-    public PreProcessingPlanGraph(Domain domain, Problem problem) throws IllDefinedProblemException
+    public PreProcessingPlanGraph(Domain domain, Problem problem2) throws IllDefinedProblemException
     {
-        if (domain == null || problem == null) {
+        if (domain == null || problem2 == null) {
             throw new IllegalArgumentException("null domain/problem");
         }
         this.domain = domain;
-        this.problem = problem;
+        this.problem = problem2;
 
         // Create all the ActionInstance objects needed in the problem
-        actionInstances = createActionInstances(domain, problem);
+        actionInstances = createActionInstances(domain, problem2);
         //actionInstances = new ArrayList<ActionInstance>();
         
         logger.info("All action instances in problem:");
@@ -49,12 +49,12 @@ public class PreProcessingPlanGraph extends PlanGraph
         }
 
         // Construct "dummy" first level containing initial state
-        PreProcessingLevel startLevel = PreProcessingLevel.createStartLevel(actionInstances, problem);
+        PreProcessingLevel startLevel = PreProcessingLevel.createStartLevel(actionInstances, problem2);
         levels.add(startLevel);
     }
 
     /** @numLevels number of levels, including the start state */
-    public PreProcessingPlanGraph(Domain domain, Problem problem, int numLevels) throws IllDefinedProblemException
+    public PreProcessingPlanGraph(Domain domain, DefaultProblem problem, int numLevels) throws IllDefinedProblemException
     {
         this(domain, problem);
         if (numLevels < 2) {
@@ -94,16 +94,16 @@ public class PreProcessingPlanGraph extends PlanGraph
         }
     }
 
-    private List<ActionInstance> createActionInstances(Domain domain, Problem problem)
+    private List<ActionInstance> createActionInstances(Domain domain, Problem problem2)
                             throws IllDefinedProblemException
     {
         List<ActionInstance> instances = new ArrayList<ActionInstance>();
-        Set<PDDLObject> allObjects = problem.getObjects();
+        Set<PDDLObject> allObjects = problem2.getObjects();
 
         // Iterate over all actions, creating multiple instances for each (probably)
         List<ActionDef> actionDefs = domain.getActions();
         for (ActionDef action : actionDefs) {
-            List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects, problem.getStartState());
+            List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects, problem2.getStartState());
             for (List<PDDLObject> actualArgs : allowedActualArgs) {
                 ActionInstance instance = new ActionInstance(action, actualArgs, allObjects);
                 instances.add(instance);

@@ -3,8 +3,11 @@ package edu.usu.cs.search.psp;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
+import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
 
@@ -23,7 +26,7 @@ public class PSPSolutionEvaluator implements SolutionEvaluator {
 		}
 	}
 
-	@Override
+	
 	public boolean isSolution(Problem problem, StateNode node) {
 		return true;
 	}
@@ -41,7 +44,7 @@ public class PSPSolutionEvaluator implements SolutionEvaluator {
 		//is solution better than all those found so far
 		if(solutions.size() > 0){
 			for(StateNode solution : solutions){
-				if(currentNode.getGValue() <= solution.getGValue()){
+				if(currentNode.getGValue()[0] <= solution.getGValue()[0]){
 					keep = false;
 					break;
 				}
@@ -49,5 +52,29 @@ public class PSPSolutionEvaluator implements SolutionEvaluator {
 		}
 		return keep;
 	}
+
+
+	@Override
+	public boolean closedContains(Set<StateNode> closed, StateNode currentNode) {
+		for(StateNode node : closed){
+			if(node.getState().containsAll(currentNode.getState()) && currentNode.getState().containsAll(node.getState())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean isBetter(StateNode childNode, StateNode parentNode) {
+		return childNode.getHeuristicValue()[0] < parentNode.getHeuristicValue()[0];
+	}
+
+
+	@Override
+	public Search getFallBackSearch() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

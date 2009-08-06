@@ -15,7 +15,7 @@ import java.util.*;
  * have been matched to the action arguments. Replaced by an {@link PredicateInstance}
  * when objects are instantiated.
  */
-public class PredicateHeader implements GoalDesc
+public class PredicateHeader implements DefaultGoalDesc
 {
 	private final PredicateDef definition;
 	private final List<FormalArgument> arguments;
@@ -40,7 +40,7 @@ public class PredicateHeader implements GoalDesc
 		return false;
 	}
 
-	public GoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
+	public DefaultGoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
 		List<PDDLObject> actualArgs = new ArrayList<PDDLObject>(arguments.size());
 		for (FormalArgument a : arguments) {
 			PDDLObject obj = parameters.get(a);
