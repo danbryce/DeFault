@@ -1,13 +1,10 @@
 package edu.usu.cs.planner.ffvanilla;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.search.Search;
@@ -31,6 +28,7 @@ public class AStarSolver extends DefaultSolver
 	public AStarSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
 	{
 		super(domain, problem, searchStatistics);
+
 //		if(domain == null || problem == null)
 //		{
 //			throw new IllegalArgumentException("null domain/problem");
@@ -51,10 +49,10 @@ public class AStarSolver extends DefaultSolver
 		search.initialize();
 	}
 
-	public String getHeuristicTimeTaken() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	public String getHeuristicTimeTaken() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 
 	
@@ -79,9 +77,7 @@ public class AStarSolver extends DefaultSolver
 //
 	public List<IncompleteActionInstance> run()
 	{
-		plan = null;
-		
-		// Do the solving here
+			// Do the solving here
 		plan = search.getPath();
 		
 		return plan;

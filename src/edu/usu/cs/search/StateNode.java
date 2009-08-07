@@ -3,11 +3,8 @@ package edu.usu.cs.search;
 import java.util.List;
 import java.util.Set;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.search.psp.PSPNode;
 
 public interface StateNode extends Comparable<StateNode>{
 

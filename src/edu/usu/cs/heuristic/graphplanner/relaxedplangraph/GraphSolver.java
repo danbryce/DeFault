@@ -8,11 +8,27 @@
  */
 package edu.usu.cs.heuristic.graphplanner.relaxedplangraph;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import edu.usu.cs.pddl.domain.*;
-import edu.usu.cs.pddl.parser.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.InconsistentLiteralException;
+import edu.usu.cs.pddl.domain.Literal;
+import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
+import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
+import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
+import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 /**

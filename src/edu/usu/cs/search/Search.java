@@ -1,12 +1,9 @@
 package edu.usu.cs.search;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 
 public interface Search {
 //	public Node getNextNode();

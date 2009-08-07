@@ -8,9 +8,16 @@
  */
 package edu.usu.cs.pddl.goalseffects;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
+import edu.usu.cs.pddl.domain.Effect;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.MethodDef;
+import edu.usu.cs.pddl.domain.PDDLObject;
 
 /**
  * Conditional effect class.

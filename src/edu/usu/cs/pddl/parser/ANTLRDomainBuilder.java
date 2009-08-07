@@ -8,13 +8,50 @@
  */
 package edu.usu.cs.pddl.parser;
 
-import static edu.usu.cs.pddl.antlr.PddlParser.*;
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import org.antlr.runtime.tree.*;
-import edu.usu.cs.pddl.domain.*;
-import edu.usu.cs.pddl.goalseffects.*;
+import static edu.usu.cs.pddl.antlr.PddlParser.ACTION;
+import static edu.usu.cs.pddl.antlr.PddlParser.AND_EFFECT;
+import static edu.usu.cs.pddl.antlr.PddlParser.ASSIGN_EFFECT;
+import static edu.usu.cs.pddl.antlr.PddlParser.CONSTANTS;
+import static edu.usu.cs.pddl.antlr.PddlParser.DOMAIN;
+import static edu.usu.cs.pddl.antlr.PddlParser.DOMAIN_NAME;
+import static edu.usu.cs.pddl.antlr.PddlParser.EFFECT;
+import static edu.usu.cs.pddl.antlr.PddlParser.FORALL_EFFECT;
+import static edu.usu.cs.pddl.antlr.PddlParser.FUNCTIONS;
+import static edu.usu.cs.pddl.antlr.PddlParser.NOT_EFFECT;
+import static edu.usu.cs.pddl.antlr.PddlParser.POSSEFFECT;
+import static edu.usu.cs.pddl.antlr.PddlParser.POSSPRECONDITION;
+import static edu.usu.cs.pddl.antlr.PddlParser.PRECONDITION;
+import static edu.usu.cs.pddl.antlr.PddlParser.PREDICATES;
+import static edu.usu.cs.pddl.antlr.PddlParser.PRED_HEAD;
+import static edu.usu.cs.pddl.antlr.PddlParser.REQUIREMENTS;
+import static edu.usu.cs.pddl.antlr.PddlParser.TYPES;
+import static edu.usu.cs.pddl.antlr.PddlParser.VARIABLE;
+import static edu.usu.cs.pddl.antlr.PddlParser.WHEN_EFFECT;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import org.antlr.runtime.tree.Tree;
+
+import edu.usu.cs.pddl.domain.ActionDef;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.Effect;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.FunctionDef;
+import edu.usu.cs.pddl.domain.NumericExpr;
+import edu.usu.cs.pddl.domain.PDDLObject;
+import edu.usu.cs.pddl.domain.PDDLType;
+import edu.usu.cs.pddl.domain.PredicateDef;
+import edu.usu.cs.pddl.goalseffects.AssignEffect;
+import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
+import edu.usu.cs.pddl.goalseffects.PredicateEffect;
+import edu.usu.cs.pddl.goalseffects.WhenEffect;
 
 /**
  * Builds a {@link edu.usu.cs.pddl.domain.Domain Domain} object by parsing a

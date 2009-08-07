@@ -1,13 +1,13 @@
 package edu.usu.cs.heuristic.stanplangraph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import edu.usu.cs.incomplete.domain.*;
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
 
 public class FactSpike {
 	private final List<FactHeader> factHeaders = new ArrayList<FactHeader>();
@@ -136,15 +136,15 @@ public class FactSpike {
 		return true;
 	}
 	
-	public boolean isActionApplicable(ActionInstance action) {
-
-		for (LiteralInstance literal : ((List<LiteralInstance>)((ConjunctionGoalDesc)action.getPreCondition()).getSubGoals())) {
-			if (get(literal.toString()) == null) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	public boolean isActionApplicable(ActionInstance action) {
+//
+//		for (LiteralInstance literal : ((List<LiteralInstance>)((ConjunctionGoalDesc)action.getPreCondition()).getSubGoals())) {
+//			if (get(literal.toString()) == null) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	public boolean isActionApplicable(ActionHeader action) {
 

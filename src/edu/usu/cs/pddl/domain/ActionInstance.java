@@ -8,7 +8,11 @@
  */
 package edu.usu.cs.pddl.domain;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * An action with {@link PDDLObject}s as arguments, instead of variables.

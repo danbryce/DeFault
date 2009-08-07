@@ -1,16 +1,11 @@
 package edu.usu.cs.search.incomplete.psp;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -19,7 +14,6 @@ import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.astar.AStarSearch;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;

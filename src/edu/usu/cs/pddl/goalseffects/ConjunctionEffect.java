@@ -8,9 +8,17 @@
  */
 package edu.usu.cs.pddl.goalseffects;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.Effect;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.MethodDef;
+import edu.usu.cs.pddl.domain.PDDLObject;
 
 /**
  * An 'and' effect in PDDL. Just applies all of its child effects.

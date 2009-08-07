@@ -1,17 +1,12 @@
 package edu.usu.cs.search;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 
 public class AbstractStateNode implements StateNode {
 

@@ -11,18 +11,14 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
-import edu.usu.cs.planner.ffvanilla.AStarSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
-import edu.usu.cs.planner.pspvanilla.PSPSolver;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 

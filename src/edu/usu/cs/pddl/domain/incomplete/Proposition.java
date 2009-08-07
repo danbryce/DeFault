@@ -3,7 +3,7 @@ package edu.usu.cs.pddl.domain.incomplete;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.LiteralInstance;
 
 public class Proposition {
 	

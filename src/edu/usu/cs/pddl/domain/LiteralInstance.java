@@ -8,7 +8,8 @@
  */
 package edu.usu.cs.pddl.domain;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Base class for function/predicate instances, where concrete PDDL objects are mapped

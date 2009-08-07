@@ -8,9 +8,19 @@
  */
 package edu.usu.cs.search.plangraph;
 
-import java.util.*;
-import java.util.logging.*;
-import edu.usu.cs.pddl.domain.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import edu.usu.cs.pddl.domain.ActionDef;
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultProblem;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.PDDLObject;
 
 /**
  * Manages a planning graph, consisting of a sequence of {@link Level} objects.

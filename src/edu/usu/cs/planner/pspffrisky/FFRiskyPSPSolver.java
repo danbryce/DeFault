@@ -13,8 +13,6 @@ import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.SearchStatistics;
-import edu.usu.cs.search.incomplete.FFRiskySolutionEvaluator;
-import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.incomplete.psp.FFRiskyPSPSolutionEvaluator;
 import edu.usu.cs.search.incomplete.psp.FriskyPSPSearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;

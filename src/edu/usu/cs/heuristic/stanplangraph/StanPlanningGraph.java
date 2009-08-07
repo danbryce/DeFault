@@ -10,15 +10,11 @@ import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
-import edu.usu.cs.pddl.domain.LiteralInstance;
-import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 
 public class StanPlanningGraph {
 
@@ -430,9 +426,15 @@ public class StanPlanningGraph {
 		for(Proposition proposition : goalAsPropositions) {
 			//goal.add(factSpike.get(proposition.getName()));
 			FactHeader header = globalFactHeaders.get(proposition.getIndex());
+			if(header != null){
 			goal.add(header);
-		}
+			}
+			}
 
+		if(goal.size() == 0){
+			return Double.MAX_VALUE;
+		}
+		
 		// Get the relaxed plan as a parallel plan
 		List<Set<ActionHeader>> parallelPlan = new ArrayList<Set<ActionHeader>>();
 		for(int i = 0; i <= level; i++) {

@@ -1,21 +1,19 @@
 package edu.usu.cs.search.incomplete.psp;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.sql.rowset.Predicate;
-
-import edu.usu.cs.heuristic.*;
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.heuristic.FFRiskyPSPHeuristic;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
-
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
-import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarSearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 import edu.usu.cs.search.psp.AdditiveUtilityFunction;

@@ -1,8 +1,9 @@
 package edu.usu.cs.heuristic.stanplangraph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
 
-import edu.usu.cs.incomplete.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 /**

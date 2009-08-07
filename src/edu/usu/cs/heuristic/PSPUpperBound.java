@@ -3,8 +3,6 @@ package edu.usu.cs.heuristic;
 import java.util.Map;
 import java.util.Set;
 
-import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
-import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.StateNode;

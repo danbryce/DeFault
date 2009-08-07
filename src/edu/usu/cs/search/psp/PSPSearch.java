@@ -1,19 +1,18 @@
 package edu.usu.cs.search.psp;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.sql.rowset.Predicate;
-
-import edu.usu.cs.heuristic.*;
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.heuristic.PSPUpperBound;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
-
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
-import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.astar.AStarSearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -25,8 +24,8 @@ public class PSPSearch extends DefaultSearch implements Search {
 	protected UtilityFunction goalUtilities;
 
 	
-	public PSPSearch(Domain domain, Problem problem, List<IncompleteActionInstance> actionInstances) throws IllDefinedProblemException {
-		//super(domain, problem, actionInstances, new PSPSolutionEvaluator());
+	public PSPSearch(Domain domain, Problem problem, List<IncompleteActionInstance> actionInstances, SearchStatistics searchStatistics) throws IllDefinedProblemException {
+		super(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics);
 		search = new AStarSearch(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics);
 		
 		//TODO hack, should move this into the problem and parse it from problem file
@@ -36,7 +35,7 @@ public class PSPSearch extends DefaultSearch implements Search {
 				
 			}
 		this.goalUtilities = new AdditiveUtilityFunction(goalUtils);
-
+		this.heuristic = new PSPUpperBound();
 		
 	}
 

@@ -1,9 +1,17 @@
 package edu.usu.cs.pddl.domain.incomplete;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import edu.usu.cs.pddl.domain.*;
-import edu.usu.cs.pddl.goalseffects.*;
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
+import edu.usu.cs.pddl.goalseffects.PredicateEffect;
 
 /**
  * Set of preconditions, add effects, delete effects, possible preconditions,

@@ -8,16 +8,56 @@
  */
 package edu.usu.cs.pddl.parser;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import org.antlr.runtime.*;
-import org.antlr.runtime.tree.*;
-import edu.usu.cs.pddl.antlr.*;
-import edu.usu.cs.pddl.domain.*;
-import edu.usu.cs.pddl.goalseffects.*;
+import static edu.usu.cs.pddl.antlr.PddlParser.AND_GD;
+import static edu.usu.cs.pddl.antlr.PddlParser.BINARY_OP;
+import static edu.usu.cs.pddl.antlr.PddlParser.COMPARISON_GD;
+import static edu.usu.cs.pddl.antlr.PddlParser.EXISTS_GD;
+import static edu.usu.cs.pddl.antlr.PddlParser.FORALL_GD;
+import static edu.usu.cs.pddl.antlr.PddlParser.FUNC_HEAD;
+import static edu.usu.cs.pddl.antlr.PddlParser.IMPLY_GD;
+import static edu.usu.cs.pddl.antlr.PddlParser.NAME;
+import static edu.usu.cs.pddl.antlr.PddlParser.NOT_GD;
+import static edu.usu.cs.pddl.antlr.PddlParser.NUMBER;
+import static edu.usu.cs.pddl.antlr.PddlParser.OR_GD;
+import static edu.usu.cs.pddl.antlr.PddlParser.PRED_HEAD;
+import static edu.usu.cs.pddl.antlr.PddlParser.UNARY_MINUS;
+import static edu.usu.cs.pddl.antlr.PddlParser.VARIABLE;
 
-import static edu.usu.cs.pddl.antlr.PddlParser.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import org.antlr.runtime.ANTLRFileStream;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
+
+import edu.usu.cs.pddl.antlr.PddlLexer;
+import edu.usu.cs.pddl.antlr.PddlParser;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.FunctionDef;
+import edu.usu.cs.pddl.domain.FunctionHeader;
+import edu.usu.cs.pddl.domain.FunctionInstance;
+import edu.usu.cs.pddl.domain.NumericExpr;
+import edu.usu.cs.pddl.domain.PDDLNumber;
+import edu.usu.cs.pddl.domain.PDDLObject;
+import edu.usu.cs.pddl.domain.PDDLType;
+import edu.usu.cs.pddl.domain.PredicateDef;
+import edu.usu.cs.pddl.domain.PredicateHeader;
+import edu.usu.cs.pddl.domain.PredicateInstance;
+import edu.usu.cs.pddl.goalseffects.BinaryArithmeticExpr;
+import edu.usu.cs.pddl.goalseffects.ComparisonGoalDesc;
+import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
+import edu.usu.cs.pddl.goalseffects.NotGoalDesc;
+import edu.usu.cs.pddl.goalseffects.UnaryMinusExpr;
 
 /**
  * 

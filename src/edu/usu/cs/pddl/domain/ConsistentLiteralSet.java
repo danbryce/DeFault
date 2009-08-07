@@ -9,7 +9,12 @@
 package edu.usu.cs.pddl.domain;
 
 import java.io.StringWriter;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 
 

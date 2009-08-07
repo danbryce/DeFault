@@ -1,12 +1,12 @@
 package edu.usu.cs.search.astar;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
-import edu.usu.cs.heuristic.BFSHeuristic;
-import edu.usu.cs.heuristic.GoalCountHeuristic;
-import edu.usu.cs.heuristic.Heuristic;
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
@@ -77,7 +77,7 @@ public class AStarSearch extends DefaultSearch implements Search
 					// Apply the goal action
 					List<IncompleteActionInstance> goal = new ArrayList<IncompleteActionInstance>();
 					goal.add(this.problem.getGoalAction());
-					StateNode goalNode = currentNode.createSubsequentNodes(goal).get(0);
+					StateNode goalNode = currentNode;//currentNode.createSubsequentNodes(goal).get(0);
 					
 					System.out.print("Found Solution, g = ");
 					for(int i = 0; i < goalNode.getDimension(); i++){

@@ -3,7 +3,6 @@ package edu.usu.cs.search;
 import java.util.List;
 import java.util.Set;
 
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
 
 public interface SolutionEvaluator {

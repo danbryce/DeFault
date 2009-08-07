@@ -1,13 +1,11 @@
 package edu.usu.cs.heuristic.stanplangraph.classic;
 
-import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 

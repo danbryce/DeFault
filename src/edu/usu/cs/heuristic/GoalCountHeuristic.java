@@ -1,9 +1,8 @@
 package edu.usu.cs.heuristic;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import edu.usu.cs.pddl.antlr.PddlParser.problem_return;
-import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.StateNode;

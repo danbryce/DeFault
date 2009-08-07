@@ -1,11 +1,9 @@
 package edu.usu.cs.search.psp;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SolutionEvaluator;

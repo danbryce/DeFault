@@ -8,12 +8,43 @@
  */
 package edu.usu.cs.pddl.parser;
 
-import static edu.usu.cs.pddl.antlr.PddlParser.*;
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import org.antlr.runtime.tree.*;
-import edu.usu.cs.pddl.domain.*;
+import static edu.usu.cs.pddl.antlr.PddlParser.GOAL;
+import static edu.usu.cs.pddl.antlr.PddlParser.INIT;
+import static edu.usu.cs.pddl.antlr.PddlParser.INIT_AT;
+import static edu.usu.cs.pddl.antlr.PddlParser.INIT_EQ;
+import static edu.usu.cs.pddl.antlr.PddlParser.NOT_PRED_INIT;
+import static edu.usu.cs.pddl.antlr.PddlParser.OBJECTS;
+import static edu.usu.cs.pddl.antlr.PddlParser.PRED_INST;
+import static edu.usu.cs.pddl.antlr.PddlParser.PROBLEM;
+import static edu.usu.cs.pddl.antlr.PddlParser.PROBLEM_CONSTRAINT;
+import static edu.usu.cs.pddl.antlr.PddlParser.PROBLEM_DOMAIN;
+import static edu.usu.cs.pddl.antlr.PddlParser.PROBLEM_METRIC;
+import static edu.usu.cs.pddl.antlr.PddlParser.PROBLEM_NAME;
+import static edu.usu.cs.pddl.antlr.PddlParser.REQUIREMENTS;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import org.antlr.runtime.tree.Tree;
+
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
+import edu.usu.cs.pddl.domain.DefaultProblem;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.FunctionDef;
+import edu.usu.cs.pddl.domain.FunctionInstance;
+import edu.usu.cs.pddl.domain.FunctionLiteral;
+import edu.usu.cs.pddl.domain.PDDLObject;
+import edu.usu.cs.pddl.domain.PDDLType;
+import edu.usu.cs.pddl.domain.PredicateDef;
+import edu.usu.cs.pddl.domain.PredicateInstance;
+import edu.usu.cs.pddl.domain.PredicateLiteral;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 
 /**

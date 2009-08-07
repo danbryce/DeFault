@@ -8,7 +8,9 @@
  */
 package edu.usu.cs.pddl.domain;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Basic definition of a predicate or function, as in the PDDL domain description.

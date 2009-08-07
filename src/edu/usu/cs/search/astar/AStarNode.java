@@ -1,9 +1,12 @@
 package edu.usu.cs.search.astar;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.AbstractStateNode;
@@ -51,6 +54,7 @@ public class AStarNode extends AbstractStateNode {
 			Set<Proposition> newState = new HashSet<Proposition>(this.state);
 			newState.removeAll(action.getDeleteEffects());
 			newState.addAll(action.getAddEffects());
+			newState.addAll(action.getPossibleAddEffects());
 			subsequentNodes.add(new AStarNode(
 					newState,
 					action,

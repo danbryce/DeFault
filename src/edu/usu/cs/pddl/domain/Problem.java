@@ -8,8 +8,8 @@
  */
 package edu.usu.cs.pddl.domain;
 
-import java.io.StringWriter;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
@@ -63,5 +63,8 @@ public interface Problem
 	public Set<Proposition> getInitialState();
 
 	public void setGoalAction(IncompleteActionInstance createGoal);
+
+	public void setActionInstances(
+			List<IncompleteActionInstance> actionInstances);
     
 }

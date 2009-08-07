@@ -1,25 +1,8 @@
 package edu.usu.cs.plangraph;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.Test;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.Domain;
-import edu.usu.cs.pddl.domain.DefaultProblem;
-import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
-import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
-import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
-import edu.usu.cs.pddl.parser.PDDLSyntaxException;
-import edu.usu.cs.planner.ffvanilla.AStarSolver;
-import edu.usu.cs.search.plangraph.IllDefinedProblemException;
+import edu.usu.cs.search.SearchTest;
 
 
 public class FriskyVersusFF {

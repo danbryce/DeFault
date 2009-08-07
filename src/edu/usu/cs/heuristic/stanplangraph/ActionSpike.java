@@ -1,15 +1,13 @@
 package edu.usu.cs.heuristic.stanplangraph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import edu.usu.cs.incomplete.domain.*;
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.Effect;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
-import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
-import edu.usu.cs.pddl.goalseffects.PredicateEffect;
 
 public class ActionSpike {
 	private FactSpike factSpike = null;

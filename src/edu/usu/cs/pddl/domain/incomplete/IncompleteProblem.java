@@ -2,8 +2,6 @@ package edu.usu.cs.pddl.domain.incomplete;
 
 import java.util.List;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 
 public class IncompleteProblem {

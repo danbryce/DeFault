@@ -8,11 +8,12 @@
  */
 package edu.usu.cs.plangraph;
 
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import java.util.logging.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.text.MessageFormat;
+import java.util.Date;
 import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
 
 /**
  * Minimal output formatter, based on {@link java.util.logging.SimpleFormatter}.

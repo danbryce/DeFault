@@ -8,9 +8,20 @@
  */
 package edu.usu.cs.heuristic.graphplanner.relaxedplangraph;
 
-import java.util.*;
-import java.util.logging.*;
-import edu.usu.cs.pddl.domain.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import edu.usu.cs.pddl.domain.ActionDef;
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.DefaultProblem;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.PDDLObject;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 /**

@@ -8,7 +8,8 @@
  */
 package edu.usu.cs.search.plangraph;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 
 /**
  * Action plus metadata needed by the planning graph. Consists of an {@link ActionInstance}

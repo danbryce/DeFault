@@ -8,7 +8,6 @@ import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.FFRiskySolutionEvaluator;
 import edu.usu.cs.search.incomplete.FriskyEHCSearch;
-import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FFriskyEHCSolver extends DefaultSolver {

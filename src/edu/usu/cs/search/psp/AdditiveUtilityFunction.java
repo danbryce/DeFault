@@ -1,11 +1,8 @@
 package edu.usu.cs.search.psp;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
-import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class AdditiveUtilityFunction implements UtilityFunction {

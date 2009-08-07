@@ -8,7 +8,6 @@ import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.FFRiskyLengthSearch;
 import edu.usu.cs.search.incomplete.FFRiskySolutionEvaluator;
-import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FFriskyLengthSolver extends DefaultSolver {

@@ -13,15 +13,12 @@ import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.PDDLObject;
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
-import edu.usu.cs.planner.pspvanilla.PSPSolver;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
-import edu.usu.cs.search.psp.PSPSearch;
 
 public class DefaultSolver implements Solver {
 	
@@ -45,6 +42,7 @@ public class DefaultSolver implements Solver {
 		this.problem = problem;
 		this.searchStatistics = searchStatistics;
 		this.actionInstances = PddlImporter.createActionInstances(domain, problem);//createActionInstances(domain, problem);
+		this.problem.setActionInstances(this.actionInstances);
 		
 		logger.info("All action instances in problem:");
 		for(IncompleteActionInstance ai : actionInstances) {

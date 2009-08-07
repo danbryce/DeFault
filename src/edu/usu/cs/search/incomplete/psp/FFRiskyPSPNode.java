@@ -1,16 +1,16 @@
 package edu.usu.cs.search.incomplete.psp;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
-import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.astar.AStarNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
-import edu.usu.cs.search.psp.PSPNode;
 import edu.usu.cs.search.psp.UtilityFunction;
 
 /**

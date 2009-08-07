@@ -1,20 +1,13 @@
 package edu.usu.cs.search.incomplete;
 
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Set;
 
 import edu.usu.cs.heuristic.stanplangraph.classic.StanHeuristic;
-import edu.usu.cs.heuristic.stanplangraph.incomplete.FriskyHeuristic;
-import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
-import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarSearch;

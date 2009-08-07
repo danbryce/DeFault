@@ -8,7 +8,9 @@
  */
 package edu.usu.cs.pddl.domain;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A raw number (constant).

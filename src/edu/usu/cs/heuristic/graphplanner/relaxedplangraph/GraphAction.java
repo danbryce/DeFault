@@ -8,7 +8,9 @@
  */
 package edu.usu.cs.heuristic.graphplanner.relaxedplangraph;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.Literal;
 
 /**
  * Action plus metadata needed by the planning graph. Consists of an {@link ActionInstance}

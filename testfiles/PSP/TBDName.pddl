@@ -196,6 +196,12 @@
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByFeedback)
  )
 (:goal 
-(and (defSyntaxForTarget SetSegmentMovementTechnique-syntax SetSegmentMovementTechnique) (defCodeForTarget SetSegmentMovementTechnique-code SetSegmentMovementTechnique) (defCodeForTarget SetMovementTechnique-code SetMovementTechnique) (defSyntaxForTarget LBN-TOC-New-Concept-1-syntax LBN-TOC-New-Concept-1) (defCodeForTarget LBN-TOC-New-Concept-1-code LBN-TOC-New-Concept-1) (defSyntaxForTarget LBN-TOC-New-Concept-2-syntax LBN-TOC-New-Concept-2) (defCodeForTarget LBN-TOC-New-Concept-2-code LBN-TOC-New-Concept-2) (defSyntaxForTarget LBN-TOC-New-Concept-3-syntax LBN-TOC-New-Concept-3) (defCodeForTarget LBN-TOC-New-Concept-3-code LBN-TOC-New-Concept-3))
+(and (defSyntaxForTarget SetSegmentMovementTechnique-syntax SetSegmentMovementTechnique) 
+;(defCodeForTarget SetSegmentMovementTechnique-code SetSegmentMovementTechnique)
+; (defCodeForTarget SetMovementTechnique-code SetMovementTechnique) 
+;(defSyntaxForTarget LBN-TOC-New-Concept-1-syntax LBN-TOC-New-Concept-1) (defCodeForTarget LBN-TOC-New-Concept-1-code LBN-TOC-New-Concept-1) 
+;(defSyntaxForTarget LBN-TOC-New-Concept-2-syntax LBN-TOC-New-Concept-2) (defCodeForTarget LBN-TOC-New-Concept-2-code LBN-TOC-New-Concept-2) 
+;(defSyntaxForTarget LBN-TOC-New-Concept-3-syntax LBN-TOC-New-Concept-3) (defCodeForTarget LBN-TOC-New-Concept-3-code LBN-TOC-New-Concept-3)
+)
  )
 )

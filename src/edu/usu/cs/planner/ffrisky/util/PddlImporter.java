@@ -1,7 +1,5 @@
 package edu.usu.cs.planner.ffrisky.util;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -12,19 +10,15 @@ import edu.usu.cs.heuristic.stanplangraph.incomplete.FriskyHeuristic;
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
-import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
-import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
-import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
-import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -42,9 +36,11 @@ public class PddlImporter {
 		incompleteProblem.setGoal(createGoal(problem.getGoal()));
 
 		// Get actions
-		List<IncompleteActionInstance> actionInstances = null;
+		List<IncompleteActionInstance> actionInstances = problem.getActions();
 		try {
+			if(actionInstances == null){
 			actionInstances = createActionInstances(domain, problem);
+			}
 		} catch (IllDefinedProblemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

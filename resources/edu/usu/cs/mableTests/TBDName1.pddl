@@ -14,7 +14,7 @@
  )
 (:init 
    (NIM ExampleOfProcedure)
-   (defSyntaxForTarget AnnotateSegment-syntax AnnotateSegment AnnotateSegment-syntax)
+   (defSyntaxForTarget AnnotateSegment-syntax AnnotateSegment)
    (LESSON AnnotateSegmentEOPLearningLesson)
    (syntaxStrategy NoticingSyntaxStrategy)
    (templateHasNoNIM AnnotateSegment-codeTemplate)
@@ -27,7 +27,6 @@
    (NIM mableNoticingSyntax)
    (codeStrategy ExampleOfProcedureStrategy)
    (newDefCode AnnotateSegment-code)
-   (SYNTAX )
    (strategyNIM NoticingSyntaxStrategy mableNoticingSyntax)
    (TARGETCONCEPT AnnotateSegment)
    (TARGETCONCEPTTYPECODE AnnotateSegment)

@@ -8,9 +8,19 @@
  */
 package edu.usu.cs.pddl.goalseffects;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
+import edu.usu.cs.pddl.domain.Effect;
+import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.FunctionHeader;
+import edu.usu.cs.pddl.domain.FunctionInstance;
+import edu.usu.cs.pddl.domain.FunctionLiteral;
+import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.MethodDef;
+import edu.usu.cs.pddl.domain.NumericExpr;
+import edu.usu.cs.pddl.domain.PDDLObject;
 
 /**
  * Effect class covering assignments to a function literal (including increase and scale operations).

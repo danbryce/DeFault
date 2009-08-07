@@ -9,7 +9,12 @@
 package edu.usu.cs.pddl.domain;
 
 import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
@@ -26,11 +31,11 @@ public class DefaultProblem implements Problem
 //	private final GoalDesc goal;
 	private List<DefaultGoalDesc> goals = null;
 	IncompleteActionInstance goalAction = null;
-	private List<IncompleteActionInstance> actions = null;
+	private List<IncompleteActionInstance> actionInstances = null;
 	
 	private Map<PredicateDef, PredicateInstance> dynamicPredicates = null;
 	private Map<PredicateDef, PredicateInstance> staticPredicates = null;
-
+	
 	public DefaultProblem(){
 		
 	}
@@ -175,15 +180,15 @@ public class DefaultProblem implements Problem
 
 	@Override
 	public List<IncompleteActionInstance> getActions() {
-		if(actions == null){
+		if(actionInstances == null){
 			try {
-				actions = PddlImporter.createActionInstances(domain, this);
+				actionInstances = PddlImporter.createActionInstances(domain, this);
 			} catch (IllDefinedProblemException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		return actions;
+		return actionInstances;
 	}
 
 	@Override
@@ -203,6 +208,12 @@ public class DefaultProblem implements Problem
 	@Override
 	public void setGoalAction(IncompleteActionInstance createGoal) {
 		goalAction = createGoal;
+	}
+
+	@Override
+	public void setActionInstances(
+			List<IncompleteActionInstance> actionInstances) {
+		this.actionInstances = actionInstances;
 	}
     
 }

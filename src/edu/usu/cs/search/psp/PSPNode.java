@@ -1,18 +1,18 @@
 package edu.usu.cs.search.psp;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
-import edu.usu.cs.search.AbstractStateNode;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarNode;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 
-public class PSPNode extends FFRiskyNode {
+public class PSPNode extends AStarNode {
 
 
 	public UtilityFunction getGoalUtilityFunction() {
@@ -76,14 +76,19 @@ public class PSPNode extends FFRiskyNode {
 
 
 
-	protected List<StateNode> createSubsequentNodes(
-			List<Set<Proposition>> subsequentStates,
+	public List<StateNode> createSubsequentNodes(
 			List<IncompleteActionInstance> subsequentActions){
-		List<StateNode> subsequentNodes = new ArrayList<StateNode>();
-		for(int stateIndex = 0; stateIndex < subsequentStates.size(); stateIndex++){
+		subsequentNodes = new ArrayList<StateNode>();
+		for(IncompleteActionInstance action : subsequentActions){
+			if(!this.state.containsAll(action.getPreconditions()))
+				continue;
+			Set<Proposition> newState = new HashSet<Proposition>(this.state);
+			newState.removeAll(action.getDeleteEffects());
+			newState.addAll(action.getAddEffects());
+			//newState.addAll(action.getPossibleAddEffects());
 			subsequentNodes.add(new PSPNode(
-					subsequentStates.get(stateIndex),
-					subsequentActions.get(stateIndex),
+					newState,
+					action,
 					this, 
 					problem, 
 					goalUtilityFunction,

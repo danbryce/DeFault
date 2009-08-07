@@ -11,9 +11,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
@@ -39,7 +37,7 @@ public class GraphPlannerTest {
 		try {
 
 			File domainFileOut = getFile("/edu/usu/cs/mableTests/mable-control2.pddl");
-			File problemFileOut = getFile("/edu/usu/cs/mableTests/TBDName2.pddl");
+			File problemFileOut = getFile("/edu/usu/cs/mableTests/TBDName0.pddl");
 
 			//			if (!domainFileOut.exists()) 
 			//				logger.debug("Unable to find PDDL domain file " + domainFileString);

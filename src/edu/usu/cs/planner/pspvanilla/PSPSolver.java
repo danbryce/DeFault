@@ -1,9 +1,10 @@
 package edu.usu.cs.planner.pspvanilla;
 
-import java.util.*;
+import java.util.List;
 import java.util.logging.Logger;
 
-import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.search.SearchStatistics;
@@ -19,7 +20,7 @@ public class PSPSolver extends DefaultSolver {
 	{
 		super(domain, problem, searchStatistics);
 		
-		this.search = new PSPSearch(domain, problem, actionInstances);
+		this.search = new PSPSearch(domain, problem, actionInstances, searchStatistics);
 		this.search.initialize();
 	}
 	

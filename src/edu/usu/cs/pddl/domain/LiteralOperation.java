@@ -8,7 +8,8 @@
  */
 package edu.usu.cs.pddl.domain;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Interface representing goalDesc, functionExp and effect in PDDL, which all need to provide

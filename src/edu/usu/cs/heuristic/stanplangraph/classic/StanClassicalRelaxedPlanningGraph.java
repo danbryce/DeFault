@@ -1,18 +1,16 @@
 package edu.usu.cs.heuristic.stanplangraph.classic;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
 import edu.usu.cs.heuristic.stanplangraph.ActionLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.FactHeader;
 import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
-import edu.usu.cs.incomplete.domain.*;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
-import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.search.StateNode;
 
 public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 
