@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
@@ -59,7 +59,7 @@ public class PreProcessingLevel extends Level
 	 * @param problem2 the problem.
 	 * @throws IllDefinedProblemException 
 	 */
-	public static PreProcessingLevel createStartLevel(List<ActionInstance> instances, Problem problem2) 
+	public static PreProcessingLevel createStartLevel(List<DefaultActionInstance> instances, Problem problem2) 
 	throws IllDefinedProblemException
 	{
 		return new PreProcessingLevel(instances, problem2);
@@ -71,7 +71,7 @@ public class PreProcessingLevel extends Level
 	 * @param problem2 the problem.
 	 * @throws IllDefinedProblemException 
 	 */
-	private PreProcessingLevel(List<ActionInstance> instances, Problem problem2) throws IllDefinedProblemException
+	private PreProcessingLevel(List<DefaultActionInstance> instances, Problem problem2) throws IllDefinedProblemException
 	{
 		levelNum = 0;
 		actions = Collections.emptyList();
@@ -82,7 +82,7 @@ public class PreProcessingLevel extends Level
 		createPredicateNegations(instances);
 	}
 
-	public PreProcessingLevel(PreProcessingLevel previousLevel, List<ActionInstance> instances,
+	public PreProcessingLevel(PreProcessingLevel previousLevel, List<DefaultActionInstance> instances,
 			Domain domain, Problem problem)
 	{
 		if (previousLevel == null) {
@@ -255,10 +255,10 @@ public class PreProcessingLevel extends Level
 	 * @param instances the action instances for the problem.
 	 * @throws IllDefinedProblemException 
 	 */
-	private void createPredicateNegations(List<ActionInstance> instances) throws IllDefinedProblemException
+	private void createPredicateNegations(List<DefaultActionInstance> instances) throws IllDefinedProblemException
 	{
 		endLiteralLookup = buildLiteralLookup(endLiterals);
-		for (ActionInstance action : instances) {
+		for (DefaultActionInstance action : instances) {
 			Set<LiteralInstance> inputLitIntances = action.getInputLitInstances(); // ~= preconditions
 			for (LiteralInstance litInstance : inputLitIntances) {
 				// For each type of literal, check if there are any values present for it
@@ -282,7 +282,7 @@ public class PreProcessingLevel extends Level
 		}
 	}
 	
-	private List<GraphAction> getGraphActions(List<ActionInstance> instances,
+	private List<GraphAction> getGraphActions(List<DefaultActionInstance> instances,
 			Map<LiteralInstance, List<Literal>> literalLookup)
 			throws InconsistentLiteralException, IllDefinedProblemException {
 		if(!graphActionsInitialized) {
@@ -292,7 +292,7 @@ public class PreProcessingLevel extends Level
 		return graphActions;
 	}
 
-	private List<GraphAction> createGraphActions(List<ActionInstance> instances,
+	private List<GraphAction> createGraphActions(List<DefaultActionInstance> instances,
 			Map<LiteralInstance, List<Literal>> literalLookup)
 			throws InconsistentLiteralException, IllDefinedProblemException
 	{
@@ -300,7 +300,7 @@ public class PreProcessingLevel extends Level
 
 		// Need every possible combination of every literal-value for
 		// the literal-instances needed for each action
-		for (ActionInstance action : instances) {
+		for (DefaultActionInstance action : instances) {
 			List<List<Literal>> possibleLiteralCombinations = new ArrayList<List<Literal>>();
 			// One empty list to start with
 			possibleLiteralCombinations.add(new ArrayList<Literal>());

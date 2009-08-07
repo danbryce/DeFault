@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
@@ -28,8 +29,8 @@ public class DefaultSolver implements Solver {
 
 	private  Domain domain = null;
 	private Problem problem = null;
-	protected  List<IncompleteActionInstance> actionInstances = null;
-	protected List<IncompleteActionInstance> plan = null;
+	protected  List<ActionInstance> actionInstances = null;
+	protected List<ActionInstance> plan = null;
 	protected Search search = null;
 	protected SearchStatistics searchStatistics = null;
 
@@ -45,7 +46,7 @@ public class DefaultSolver implements Solver {
 		this.problem.setActionInstances(this.actionInstances);
 		
 		logger.info("All action instances in problem:");
-		for(IncompleteActionInstance ai : actionInstances) {
+		for(ActionInstance ai : actionInstances) {
 			logger.info(ai.toString());
 		}
 
@@ -56,9 +57,9 @@ public class DefaultSolver implements Solver {
 		
 	}
 
-	private List<ActionInstance> createActionInstances(Domain domain, Problem problem) throws IllDefinedProblemException
+	private List<DefaultActionInstance> createActionInstances(Domain domain, Problem problem) throws IllDefinedProblemException
 	{
-		List<ActionInstance> instances = new ArrayList<ActionInstance>();
+		List<DefaultActionInstance> instances = new ArrayList<DefaultActionInstance>();
 		Set<PDDLObject> allObjects = problem.getObjects();
 
 		// Iterate over all actions, creating multiple instances for each (probably)
@@ -68,7 +69,7 @@ public class DefaultSolver implements Solver {
 			List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects, problem.getStartState());
 			for (List<PDDLObject> actualArgs : allowedActualArgs) 
 			{
-				ActionInstance instance = new ActionInstance(action, actualArgs, allObjects);
+				DefaultActionInstance instance = new DefaultActionInstance(action, actualArgs, allObjects);
 				instances.add(instance);
 			}
 		}
@@ -127,7 +128,7 @@ public class DefaultSolver implements Solver {
 	}
 
 	@Override
-	public List<IncompleteActionInstance> run() {
+	public List<ActionInstance> run() {
 		return search.getPath();
 	}
 }

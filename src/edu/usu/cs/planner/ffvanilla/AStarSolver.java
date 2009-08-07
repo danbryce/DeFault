@@ -3,6 +3,7 @@ package edu.usu.cs.planner.ffvanilla;
 import java.util.List;
 import java.util.logging.Logger;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -75,7 +76,7 @@ public class AStarSolver extends DefaultSolver
 //		return astar.getTotalTimeTaken();
 //	}
 //
-	public List<IncompleteActionInstance> run()
+	public List<ActionInstance> run()
 	{
 			// Do the solving here
 		plan = search.getPath();

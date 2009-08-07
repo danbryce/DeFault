@@ -3,6 +3,7 @@ package edu.usu.cs.search.incomplete;
 import java.util.List;
 
 import edu.usu.cs.heuristic.stanplangraph.incomplete.FriskyHeuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -14,7 +15,7 @@ public class FriskyEHCSearch extends EnforcedHillClimbingSearch{
 	private FriskyHeuristic riskHeuristic;
 
 	public FriskyEHCSearch(Domain domain, Problem problem,
-			List<IncompleteActionInstance> actionInstances,
+			List<ActionInstance> actionInstances,
 			FFRiskySolutionEvaluator riskySolutionEvaluator,
 			SearchStatistics searchStatistics) throws IllDefinedProblemException {
 		super(domain,problem, actionInstances, riskySolutionEvaluator, searchStatistics);

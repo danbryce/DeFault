@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -23,14 +24,14 @@ public class StanPlanningGraph {
 	protected Map<String, Risk> globalRiskHeaders = new HashMap<String, Risk>();
 	//protected IncompleteProblem problem = null;
 	protected int currentFactIndex = 0;
-	protected List<IncompleteActionInstance> remainingActions;
+	protected List<ActionInstance> remainingActions;
 	// private final Set<Proposition> remainingPropositions;
 	protected FactSpike factSpike = null;
 	protected ActionSpike actionSpike = null;
 	private static final int MAX_LEVELS = 20;
 	protected Problem problem = null;
 	protected Domain domain = null;
-	protected Set<IncompleteActionInstance> helpfulActions = null;
+	protected Set<ActionInstance> helpfulActions = null;
 
 	//	public  StanPlanningGraph(IncompleteProblem problem1){
 	//		globalFactHeaders = new HashMap<Integer, FactHeader>();
@@ -77,10 +78,10 @@ public class StanPlanningGraph {
 
 
 	protected void initializePlanningGraph(StateNode node) {
-		this.remainingActions = new ArrayList<IncompleteActionInstance>(problem.getActions());
+		this.remainingActions = new ArrayList<ActionInstance>(problem.getActions());
 		this.factSpike = new FactSpike(globalFactHeaders, this);
 		this.actionSpike = new ActionSpike(factSpike, globalActionHeaders, globalFactHeaders, globalRiskHeaders, this);
-		this.helpfulActions = new HashSet<IncompleteActionInstance>();
+		this.helpfulActions = new HashSet<ActionInstance>();
 		//reset fact indices
 		currentFactIndex = 0;
 		for(Integer header : globalFactHeaders.keySet()){
@@ -107,7 +108,7 @@ public class StanPlanningGraph {
 		return factHeader;
 	}
 
-	public ActionHeader creatActionHeader(ActionInstance action, boolean noop) {
+	public ActionHeader creatActionHeader(DefaultActionInstance action, boolean noop) {
 		return null;
 
 	}
@@ -336,8 +337,8 @@ public class StanPlanningGraph {
 	 */
 	protected void addApplicableActionsAndFacts() {
 
-		List<IncompleteActionInstance> newActions = new ArrayList<IncompleteActionInstance>();
-		for (IncompleteActionInstance action : remainingActions) {
+		List<ActionInstance> newActions = new ArrayList<ActionInstance>();
+		for (ActionInstance action : remainingActions) {
 			ActionHeader header = globalActionHeaders.get(action);
 
 			if ((header != null && factSpike.isActionApplicable(header)) ||
@@ -352,7 +353,7 @@ public class StanPlanningGraph {
 		}
 
 		// Remove all the actions from remaining that were created.
-		for (IncompleteActionInstance action : newActions) {
+		for (ActionInstance action : newActions) {
 			remainingActions.remove(action);
 		}
 	}
@@ -506,7 +507,7 @@ public class StanPlanningGraph {
 
 
 
-	public Set<IncompleteActionInstance> getHelpfulActions() {
+	public Set<ActionInstance> getHelpfulActions() {
 		return helpfulActions;
 	}
 

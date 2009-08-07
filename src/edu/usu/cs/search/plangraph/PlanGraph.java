@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import edu.usu.cs.pddl.domain.ActionDef;
-import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
@@ -39,7 +39,7 @@ public class PlanGraph
     private final List<Level> levels = new ArrayList<Level>();
     private final Domain domain;
     private final DefaultProblem problem;
-    private final List<ActionInstance> actionInstances;
+    private final List<DefaultActionInstance> actionInstances;
 
     public PlanGraph(){
     	domain = null;
@@ -59,7 +59,7 @@ public class PlanGraph
         actionInstances = createActionInstances(domain, problem);
 
         logger.info("All action instances in problem:");
-        for (ActionInstance ai : actionInstances) {
+        for (DefaultActionInstance ai : actionInstances) {
             logger.info(ai.toString());
         }
 
@@ -109,10 +109,10 @@ public class PlanGraph
         }
     }
 
-    private List<ActionInstance> createActionInstances(Domain domain, DefaultProblem problem)
+    private List<DefaultActionInstance> createActionInstances(Domain domain, DefaultProblem problem)
                             throws IllDefinedProblemException
     {
-        List<ActionInstance> instances = new ArrayList<ActionInstance>();
+        List<DefaultActionInstance> instances = new ArrayList<DefaultActionInstance>();
         Set<PDDLObject> allObjects = problem.getObjects();
 
         // Iterate over all actions, creating multiple instances for each (probably)
@@ -120,7 +120,7 @@ public class PlanGraph
         for (ActionDef action : actionDefs) {
             List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects);
             for (List<PDDLObject> actualArgs : allowedActualArgs) {
-                ActionInstance instance = new ActionInstance(action, actualArgs, allObjects);
+                DefaultActionInstance instance = new DefaultActionInstance(action, actualArgs, allObjects);
                 instances.add(instance);
             }
         }

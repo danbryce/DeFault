@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
@@ -229,7 +230,7 @@ public class FFRiskyNode  extends AStarNode {
 
 
 	public List<StateNode> createSubsequentNodes(
-			List<IncompleteActionInstance> subsequentActions){
+			List<ActionInstance> subsequentActions){
 
 		boolean useHelpfulActions = false;
 
@@ -243,7 +244,7 @@ public class FFRiskyNode  extends AStarNode {
 
 		subsequentNodes = new ArrayList<StateNode>();
 
-		List<IncompleteActionInstance> actsToExpand = null;
+		List<ActionInstance> actsToExpand = null;
 
 		if(helpfulActions != null && useHelpfulActions){
 			actsToExpand =  new ArrayList(helpfulActions);
@@ -252,7 +253,7 @@ public class FFRiskyNode  extends AStarNode {
 			actsToExpand = subsequentActions;
 		}
 
-		for(IncompleteActionInstance act : actsToExpand){
+		for(ActionInstance act : actsToExpand){
 			FFRiskyNode node = getSuccessorNode(act);
 			if(node != null && !node.equals(this.parent)){
 				subsequentNodes.add(node);
@@ -311,8 +312,9 @@ public class FFRiskyNode  extends AStarNode {
 
 
 
-	public  FFRiskyNode getSuccessorNode(IncompleteActionInstance action) {
-
+	public  FFRiskyNode getSuccessorNode(ActionInstance action1) {
+		IncompleteActionInstance action = (IncompleteActionInstance)action1;
+		
 		// If the action isn't applicable to the node, return null
 		if (!isActionApplicable(action)) {
 			return null;

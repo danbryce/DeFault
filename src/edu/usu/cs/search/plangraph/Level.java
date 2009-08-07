@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.DefaultProblem;
@@ -56,7 +56,7 @@ public class Level
      * @param problem the problem.
      * @throws IllDefinedProblemException 
      */
-    public static Level createStartLevel(List<ActionInstance> instances, DefaultProblem problem) 
+    public static Level createStartLevel(List<DefaultActionInstance> instances, DefaultProblem problem) 
         throws IllDefinedProblemException
     {
         return new Level(instances, problem);
@@ -77,7 +77,7 @@ public class Level
      * @param problem the problem.
      * @throws IllDefinedProblemException 
      */
-    private Level(List<ActionInstance> instances, DefaultProblem problem) throws IllDefinedProblemException
+    private Level(List<DefaultActionInstance> instances, DefaultProblem problem) throws IllDefinedProblemException
     {
         levelNum = 0;
         actions = Collections.emptyList();
@@ -88,7 +88,7 @@ public class Level
         createPredicateNegations(instances);
     }
 
-    public Level(Level previousLevel, List<ActionInstance> instances,
+    public Level(Level previousLevel, List<DefaultActionInstance> instances,
                  Domain domain, DefaultProblem problem)
     {
         if (previousLevel == null) {
@@ -221,10 +221,10 @@ public class Level
      * @param instances the action instances for the problem.
      * @throws IllDefinedProblemException 
      */
-    private void createPredicateNegations(List<ActionInstance> instances) throws IllDefinedProblemException
+    private void createPredicateNegations(List<DefaultActionInstance> instances) throws IllDefinedProblemException
     {
         endLiteralLookup = buildLiteralLookup(endLiterals);
-        for (ActionInstance action : instances) {
+        for (DefaultActionInstance action : instances) {
             Set<LiteralInstance> inputLitIntances = action.getInputLitInstances(); // ~= preconditions
             for (LiteralInstance litInstance : inputLitIntances) {
                 // For each type of literal, check if there are any values present for it
@@ -248,7 +248,7 @@ public class Level
         }
     }
 
-    private List<GraphAction> createGraphActions(List<ActionInstance> instances,
+    private List<GraphAction> createGraphActions(List<DefaultActionInstance> instances,
                                                  Map<LiteralInstance, List<Literal>> literalLookup)
         throws InconsistentLiteralException, IllDefinedProblemException
 	{
@@ -256,7 +256,7 @@ public class Level
 
 		// Need every possible combination of every literal-value for
 		// the literal-instances needed for each action
-		for (ActionInstance action : instances) {
+		for (DefaultActionInstance action : instances) {
 			List<List<Literal>> possibleLiteralCombinations = new ArrayList<List<Literal>>();
 			// One empty list to start with
 			possibleLiteralCombinations.add(new ArrayList<Literal>());

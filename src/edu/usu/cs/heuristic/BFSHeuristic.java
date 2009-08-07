@@ -2,6 +2,7 @@ package edu.usu.cs.heuristic;
 
 import java.util.Set;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.search.StateNode;
 
@@ -12,7 +13,7 @@ public class BFSHeuristic implements Heuristic {
 		return h;
 	}
 	@Override
-	public Set<IncompleteActionInstance> getHelpfulActions() {
+	public Set<ActionInstance> getHelpfulActions() {
 		// TODO Auto-generated method stub
 		return null;
 	}

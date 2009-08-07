@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -43,7 +44,7 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 	 * @throws IllDefinedProblemException
 	 */
 	public EnforcedHillClimbingSearch(Domain domain, Problem problem,
-			List<IncompleteActionInstance> actionInstances,
+			List<ActionInstance> actionInstances,
 			SolutionEvaluator solutionEvaluator,
 			SearchStatistics searchStatistics)
 			throws IllDefinedProblemException {
@@ -53,7 +54,7 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 		
 	}
 
-	public List<IncompleteActionInstance> getPath(){
+	public List<ActionInstance> getPath(){
 		StateNode solution = greedyFindBetterNode(startNode);
 		
 		if(solution == null){
@@ -129,10 +130,10 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 		return null;
 	}
 
-	private List<IncompleteActionInstance> extractSolution(StateNode currentNode) {
+	private List<ActionInstance> extractSolution(StateNode currentNode) {
 
 		
-		List<IncompleteActionInstance> actionsToGoal = new ArrayList<IncompleteActionInstance>();
+		List<ActionInstance> actionsToGoal = new ArrayList<ActionInstance>();
 		
 		while(currentNode != null && currentNode.getAction() != null) {
 			actionsToGoal.add(0, currentNode.getAction());

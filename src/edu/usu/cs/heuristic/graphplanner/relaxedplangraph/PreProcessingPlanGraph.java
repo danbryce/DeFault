@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionDef;
-import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Domain;
@@ -41,7 +41,7 @@ public class PreProcessingPlanGraph extends PlanGraph
     private final List<PreProcessingLevel> levels = new ArrayList<PreProcessingLevel>();
     private final Domain domain;
     private final Problem problem;
-    private final List<ActionInstance> actionInstances;
+    private final List<DefaultActionInstance> actionInstances;
 
     public PreProcessingPlanGraph(Domain domain, Problem problem2) throws IllDefinedProblemException
     {
@@ -106,10 +106,10 @@ public class PreProcessingPlanGraph extends PlanGraph
         }
     }
 
-    private List<ActionInstance> createActionInstances(Domain domain, Problem problem2)
+    private List<DefaultActionInstance> createActionInstances(Domain domain, Problem problem2)
                             throws IllDefinedProblemException
     {
-        List<ActionInstance> instances = new ArrayList<ActionInstance>();
+        List<DefaultActionInstance> instances = new ArrayList<DefaultActionInstance>();
         Set<PDDLObject> allObjects = problem2.getObjects();
 
         // Iterate over all actions, creating multiple instances for each (probably)
@@ -117,7 +117,7 @@ public class PreProcessingPlanGraph extends PlanGraph
         for (ActionDef action : actionDefs) {
             List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects, problem2.getStartState());
             for (List<PDDLObject> actualArgs : allowedActualArgs) {
-                ActionInstance instance = new ActionInstance(action, actualArgs, allObjects);
+                DefaultActionInstance instance = new DefaultActionInstance(action, actualArgs, allObjects);
                 instances.add(instance);
             }
         }

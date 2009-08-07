@@ -5,6 +5,7 @@ package edu.usu.cs.planner.pspffrisky;
 
 import java.util.List;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -34,7 +35,7 @@ public class FFRiskyPSPSolver extends DefaultSolver implements Solver {
 
 	}
 
-	public List<IncompleteActionInstance> solve() {
+	public List<ActionInstance> solve() {
 		// TODO Auto-generated method stub
 		return search.getPath();
 	}

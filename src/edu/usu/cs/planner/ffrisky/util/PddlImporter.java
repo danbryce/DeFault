@@ -9,10 +9,12 @@ import java.util.Set;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.FriskyHeuristic;
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.Problem;
@@ -36,7 +38,7 @@ public class PddlImporter {
 		incompleteProblem.setGoal(createGoal(problem.getGoal()));
 
 		// Get actions
-		List<IncompleteActionInstance> actionInstances = problem.getActions();
+		List<ActionInstance> actionInstances = problem.getActions();
 		try {
 			if(actionInstances == null){
 			actionInstances = createActionInstances(domain, problem);
@@ -51,17 +53,17 @@ public class PddlImporter {
 		return incompleteProblem;
 	}
 
-	public static IncompleteActionInstance createGoal(DefaultGoalDesc goalDesc) {
+	public static IncompleteActionInstance createGoal (GoalDesc goalDesc) {
 		Set<Proposition> preconditions = new HashSet<Proposition>();
 		Set<LiteralInstance> resultSet = new HashSet<LiteralInstance>();
-		goalDesc.getLiteralsUsed(resultSet);
+		((DefaultGoalDesc)goalDesc).getLiteralsUsed(resultSet);
 		for (LiteralInstance literal : resultSet) {
 			preconditions.add(new Proposition(literal));
 		}
 		return new IncompleteActionInstance("goal", preconditions, null, null, null, null, null);
 	}
 
-	public static List<IncompleteActionInstance> createActionInstances(
+	public static List<ActionInstance> createActionInstances(
 			Domain domain,
 			Problem problem)
 			throws IllDefinedProblemException {
@@ -75,15 +77,15 @@ public class PddlImporter {
 			List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(
 					action, allObjects, problem.getStartState());
 			for (List<PDDLObject> actualArgs : allowedActualArgs) {
-				ActionInstance instance = new ActionInstance(action,
+				DefaultActionInstance instance = new DefaultActionInstance(action,
 						actualArgs, allObjects);
 				instances.add(instance);
 			}
 		}
 		
-		List<IncompleteActionInstance> actions = new ArrayList<IncompleteActionInstance>();
+		List<ActionInstance> actions = new ArrayList<ActionInstance>();
 		for (ActionInstance actionInstance : instances) {
-			actions.add(new IncompleteActionInstance(actionInstance));
+			actions.add(new IncompleteActionInstance((DefaultActionInstance)actionInstance));
 		}
 		return actions;
 	}

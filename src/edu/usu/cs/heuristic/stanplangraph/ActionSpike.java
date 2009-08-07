@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
@@ -41,7 +42,8 @@ public class ActionSpike {
 
 	
 	
-	public void addAction(IncompleteActionInstance action, boolean noop) {
+	public void addAction(ActionInstance maction, boolean noop) {
+		IncompleteActionInstance action = (IncompleteActionInstance)maction;
 		ActionHeader actionHeader = globalActionHeaders.get(action.getIndex());
 
 

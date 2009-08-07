@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import edu.usu.cs.heuristic.stanplangraph.classic.StanHeuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -19,7 +20,7 @@ public class FFRiskyLengthSearch extends AStarSearch {
 	private final StanHeuristic heuristic;
 	
 	public FFRiskyLengthSearch(Domain domain, Problem problem,
-			List<IncompleteActionInstance> actionInstances,
+			List<ActionInstance> actionInstances,
 			FFRiskySolutionEvaluator riskySolutionEvaluator,
 			SearchStatistics searchStatistics) throws IllDefinedProblemException {
 		super(domain,problem, actionInstances, riskySolutionEvaluator, searchStatistics);

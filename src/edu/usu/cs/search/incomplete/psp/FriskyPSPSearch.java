@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import edu.usu.cs.heuristic.FFRiskyPSPHeuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -27,7 +28,7 @@ public class FriskyPSPSearch extends DefaultSearch implements Search {
 	protected UtilityFunction goalUtilities;
 
 	
-	public FriskyPSPSearch(Domain domain, Problem problem, List<IncompleteActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics) throws IllDefinedProblemException {
+	public FriskyPSPSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics) throws IllDefinedProblemException {
 		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
 		search = new AStarSearch(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
 		
@@ -46,7 +47,7 @@ public class FriskyPSPSearch extends DefaultSearch implements Search {
 		search.getOpen().add(new FFRiskyPSPNode(problem.getInitialState(), goalUtilities, heuristic, problem));
 	}
 	
-	public List<IncompleteActionInstance> getPath() {
+	public List<ActionInstance> getPath() {
 		return search.getPath();
 	}
 	

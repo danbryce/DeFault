@@ -3,6 +3,7 @@ package edu.usu.cs.search;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 
 public interface Search {
@@ -15,7 +16,7 @@ public interface Search {
 
 	
 	public void initialize();
-	public List<IncompleteActionInstance> getPath();
+	public List<ActionInstance> getPath();
 	public int getNodesExpandedCount();
 	public long getTotalTimeTaken();
 	public long getHeuristicTimeTaken();

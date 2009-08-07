@@ -3,6 +3,7 @@ package edu.usu.cs.heuristic.stanplangraph.incomplete;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -73,7 +74,7 @@ public class FriskyHeuristic implements Heuristic {
 		return null;
 	}
 	@Override
-	public Set<IncompleteActionInstance> getHelpfulActions() {
+	public Set<ActionInstance> getHelpfulActions() {
 		// TODO Auto-generated method stub
 		return solver.getHelpfulActions();
 	}

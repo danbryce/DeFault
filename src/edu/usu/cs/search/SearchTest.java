@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -102,7 +103,7 @@ public class SearchTest {
 		}
 
 
-		List<IncompleteActionInstance> plan = solver.run();
+		List<ActionInstance> plan = solver.run();
 		//getPlan(search);
 
 
@@ -111,7 +112,7 @@ public class SearchTest {
 			return;
 		}
 		System.out.println("\nPlan found");
-		for (IncompleteActionInstance action : plan) {
+		for (ActionInstance action : plan) {
 			System.out.println(action.getName());
 		}
 

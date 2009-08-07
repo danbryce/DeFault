@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
@@ -18,7 +19,7 @@ import edu.usu.cs.pddl.goalseffects.PredicateEffect;
  * possible add effects, and possible delete effects. They transition the world
  * from one state to another.
  */
-public class IncompleteActionInstance {
+public class IncompleteActionInstance implements ActionInstance{
 	private final String name;
 	private final Set<Proposition> preconditions;
 	private final Set<Proposition> addEffects;
@@ -63,7 +64,7 @@ public class IncompleteActionInstance {
 	 * 
 	 * @param actionInstance
 	 */
-	public IncompleteActionInstance(ActionInstance actionInstance) {
+	public IncompleteActionInstance(DefaultActionInstance actionInstance) {
 		String name = actionInstance.getDefinition().getName();
 		
 		// Add the argument instances to name

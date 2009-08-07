@@ -11,6 +11,7 @@ import edu.usu.cs.heuristic.BFSHeuristic;
 import edu.usu.cs.heuristic.GoalCountHeuristic;
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.heuristic.stanplangraph.classic.StanHeuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -20,7 +21,7 @@ public class DefaultSearch implements Search {
 
 	protected Domain domain = null;
 	protected Problem problem = null;
-	protected List<IncompleteActionInstance> actionInstances = null;
+	protected List<ActionInstance> actionInstances = null;
 	
 	protected PriorityQueue<StateNode> open = null;
 	protected Set<StateNode> closed = null;
@@ -40,7 +41,7 @@ public class DefaultSearch implements Search {
 	public DefaultSearch(
 			Domain domain, 
 			Problem problem, 
-			List<IncompleteActionInstance> actionInstances, 
+			List<ActionInstance> actionInstances, 
 			SolutionEvaluator solutionEvaluator,
 			SearchStatistics searchStatistics
 			) 
@@ -111,7 +112,7 @@ public class DefaultSearch implements Search {
 	}
 
 	@Override
-	public List<IncompleteActionInstance> getPath() {
+	public List<ActionInstance> getPath() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -21,6 +21,7 @@ import java.util.Set;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.InconsistentLiteralException;
 import edu.usu.cs.pddl.domain.Literal;
 import edu.usu.cs.pddl.domain.LiteralInstance;
@@ -119,7 +120,7 @@ public class GraphSolver
     public List<GraphAction> solve()
     {
         List<GraphAction> realPlan = null;
-        DefaultGoalDesc goal = problem.getGoal();
+        GoalDesc goal = problem.getGoal();
         Level currentLevel = graph.getLastLevel();
         
         while (!currentLevel.goalLiteralsArePresent(goal) &&
@@ -159,7 +160,8 @@ public class GraphSolver
             Level finalLevel = graph.getLastLevel();
             List<Set<GraphAction>> plan = new ArrayList<Set<GraphAction>>();
             
-            DefaultGoalDesc goal = problem.getGoal();
+            GoalDesc mgoal = problem.getGoal();
+            DefaultGoalDesc goal = (DefaultGoalDesc)mgoal;
             Set<LiteralInstance> litInstances = new HashSet<LiteralInstance>();
             goal.getLiteralsUsed(litInstances);
             List<Set<Literal>> possibleLitCombinations = finalLevel.getConsistentLitCombinations(litInstances);           

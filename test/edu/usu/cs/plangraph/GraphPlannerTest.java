@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -52,12 +53,12 @@ public class GraphPlannerTest {
 			SearchStatistics searchStatistics = new SearchStatistics();
 			
 			Solver solver = new AStarSolver(domain, problem, searchStatistics);
-			List<IncompleteActionInstance> plan = solver.run();
+			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
 			} else {
 				//System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-				for (IncompleteActionInstance action : plan) {
+				for (ActionInstance action : plan) {
 					System.out.println(action.toString());
 				}
 			}
@@ -98,12 +99,12 @@ public class GraphPlannerTest {
 			SearchStatistics searchStatistics = new SearchStatistics();
 			
 			AStarSolver solver = new AStarSolver(domain, problem, searchStatistics);
-			List<IncompleteActionInstance> plan = solver.run();
+			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
 			} else {
 //				System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-				for (IncompleteActionInstance action : plan) {
+				for (ActionInstance action : plan) {
 					System.out.println(action.toString());
 				}
 			}
@@ -144,12 +145,12 @@ public class GraphPlannerTest {
 			SearchStatistics searchStatistics = new SearchStatistics();
 
 			Solver solver = new PSPSolver(domain, problem, searchStatistics);
-			List<IncompleteActionInstance> plan = solver.run();
+			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
 			} else {
 				//System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-				for (IncompleteActionInstance action : plan) {
+				for (ActionInstance action : plan) {
 					System.out.println(action.toString());
 				}
 			}

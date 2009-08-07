@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -24,7 +25,7 @@ public class AStarSearch extends DefaultSearch implements Search
 	public AStarSearch(
 			Domain domain, 
 			Problem problem, 
-			List<IncompleteActionInstance> actionInstances, 
+			List<ActionInstance> actionInstances, 
 			SolutionEvaluator solutionEvaluator,
 			SearchStatistics searchStatistics
 			) 
@@ -40,7 +41,7 @@ public class AStarSearch extends DefaultSearch implements Search
 	
 
 	
-	public List<IncompleteActionInstance> getPath(){
+	public List<ActionInstance> getPath(){
 //		System.out.println("G\tH\tF");
 		Date startTotal = new Date();
 //		System.out.println("Starting timer..." + start.getTime());
@@ -129,11 +130,11 @@ public class AStarSearch extends DefaultSearch implements Search
 		}
 	}
 
-	private List<IncompleteActionInstance> extractSolution(List<StateNode> solutions) {
+	private List<ActionInstance> extractSolution(List<StateNode> solutions) {
 
 		StateNode currentNode = solutionEvaluator.getBestSolution(solutions);
 		
-		List<IncompleteActionInstance> actionsToGoal = new ArrayList<IncompleteActionInstance>();
+		List<ActionInstance> actionsToGoal = new ArrayList<ActionInstance>();
 		
 		while(currentNode != null && currentNode.getAction() != null) {
 			actionsToGoal.add(0, currentNode.getAction());

@@ -34,9 +34,9 @@ public interface Problem
 	/*
 	 * Returns the first element of the goal array
 	 */
-	public DefaultGoalDesc getGoal();
+	public GoalDesc getGoal();
 	
-	public List<DefaultGoalDesc> getGoals();
+	public List<GoalDesc> getGoals();
 
 	public String getName();
 
@@ -56,7 +56,7 @@ public interface Problem
 	
     public String toString();
 
-	public List<IncompleteActionInstance> getActions();
+	public List<ActionInstance> getActions();
 
 	public IncompleteActionInstance getGoalAction();
 	
@@ -65,6 +65,6 @@ public interface Problem
 	public void setGoalAction(IncompleteActionInstance createGoal);
 
 	public void setActionInstances(
-			List<IncompleteActionInstance> actionInstances);
+			List<ActionInstance> actionInstances);
     
 }

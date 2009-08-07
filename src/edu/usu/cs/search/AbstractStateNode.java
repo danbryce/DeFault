@@ -4,33 +4,16 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class AbstractStateNode implements StateNode {
 
-	public Heuristic getHeuristic() {
-		return heuristic;
-	}
 
-	public void setHeuristic(Heuristic heuristic) {
-		this.heuristic = heuristic;
-	}
-
-	public void setAction(IncompleteActionInstance action2) {
-		this.action = action2;
-	}
-
-	public void setParent(StateNode parent) {
-		this.parent = parent;
-	}
-
-	public void setState(Set<Proposition> keySet) {
-		state=keySet;	
-	}
 	protected Set<Proposition> state = null;
-	protected IncompleteActionInstance action = null;
+	protected ActionInstance action = null;
 	protected StateNode parent = null;
 	
 	protected Problem problem = null;
@@ -41,7 +24,7 @@ public class AbstractStateNode implements StateNode {
 	protected double[] fvalue = null; 
 	protected Heuristic heuristic = null;
 	protected List<StateNode> subsequentNodes = null;
-	protected Set<IncompleteActionInstance> helpfulActions = null;
+	protected Set<ActionInstance> helpfulActions = null;
 	
 	protected double[] H_WEIGHT = null;
 	protected int dimension = 1;
@@ -95,7 +78,7 @@ public class AbstractStateNode implements StateNode {
 //		return state;
 //	}
 
-	public IncompleteActionInstance getAction() {
+	public ActionInstance getAction() {
 		// TODO Auto-generated method stub
 		return action;
 	}
@@ -118,9 +101,9 @@ public class AbstractStateNode implements StateNode {
 		return state;
 	}
 
-	@Override
+	
 	public List<StateNode> createSubsequentNodes(
-			List<IncompleteActionInstance> actionInstances) {
+			List<ActionInstance> actionInstances) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -131,6 +114,24 @@ public class AbstractStateNode implements StateNode {
 		return subsequentNodes;
 	}
 
-	
+	public Heuristic getHeuristic() {
+		return heuristic;
+	}
+
+	public void setHeuristic(Heuristic heuristic) {
+		this.heuristic = heuristic;
+	}
+
+	public void setAction(ActionInstance action2) {
+		this.action = action2;
+	}
+
+	public void setParent(StateNode parent) {
+		this.parent = parent;
+	}
+
+	public void setState(Set<Proposition> keySet) {
+		state=keySet;	
+	}	
 
 }

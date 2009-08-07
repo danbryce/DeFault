@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
@@ -77,9 +78,10 @@ public class PSPNode extends AStarNode {
 
 
 	public List<StateNode> createSubsequentNodes(
-			List<IncompleteActionInstance> subsequentActions){
+			List<ActionInstance> subsequentActions){
 		subsequentNodes = new ArrayList<StateNode>();
-		for(IncompleteActionInstance action : subsequentActions){
+		for(ActionInstance maction : subsequentActions){
+			IncompleteActionInstance action = (IncompleteActionInstance)maction;
 			if(!this.state.containsAll(action.getPreconditions()))
 				continue;
 			Set<Proposition> newState = new HashSet<Proposition>(this.state);

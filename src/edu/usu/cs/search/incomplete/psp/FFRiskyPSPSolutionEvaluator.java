@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -25,13 +26,13 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 	private SearchStatistics searchStatistics = null;
 	private Domain domain;
 	private Problem problem;
-	private List<IncompleteActionInstance> actionInstances;
+	private List<ActionInstance> actionInstances;
 	private final int MAX_NUM_SOLUTIONS = 10;
 
 	
 	public FFRiskyPSPSolutionEvaluator(Domain domain,
 									Problem problem,
-									List<IncompleteActionInstance> actionInstances,
+									List<ActionInstance> actionInstances,
 									IncompleteProblem incompleteProblem, 
 									SearchStatistics searchStatistics) {
 		this.domain = domain;

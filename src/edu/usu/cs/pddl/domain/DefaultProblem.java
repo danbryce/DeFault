@@ -29,9 +29,9 @@ public class DefaultProblem implements Problem
 	private ConsistentLiteralSet startState = null;
 	private Set<Proposition> initialState = null;
 //	private final GoalDesc goal;
-	private List<DefaultGoalDesc> goals = null;
+	private List<GoalDesc> goals = null;
 	IncompleteActionInstance goalAction = null;
-	private List<IncompleteActionInstance> actionInstances = null;
+	private List<ActionInstance> actionInstances = null;
 	
 	private Map<PredicateDef, PredicateInstance> dynamicPredicates = null;
 	private Map<PredicateDef, PredicateInstance> staticPredicates = null;
@@ -44,12 +44,12 @@ public class DefaultProblem implements Problem
 			final Domain domain, 
 			final Set<PDDLObject> objects, 
 			final ConsistentLiteralSet startState, 
-			final DefaultGoalDesc goal) {
+			final GoalDesc goal) {
 		this.name = name;
 		this.domain = domain;
 		this.objects = objects;
 		this.startState = startState;
-		goals = new ArrayList<DefaultGoalDesc>();
+		goals = new ArrayList<GoalDesc>();
 		goals.add(goal);
 			
 			Collection<PredicateLiteral> literals = startState.getPredicateLiterals();
@@ -65,7 +65,7 @@ public class DefaultProblem implements Problem
 			final Domain domain,
 			final Set<PDDLObject> objects,
 			final ConsistentLiteralSet startState,
-			final List<DefaultGoalDesc> goals) {
+			final List<GoalDesc> goals) {
 		this.name = name;
 		this.domain = domain;
 		this.objects = objects;
@@ -80,11 +80,11 @@ public class DefaultProblem implements Problem
 	/*
 	 * Returns the first element of the goal array
 	 */
-	public DefaultGoalDesc getGoal() {
+	public GoalDesc getGoal() {
 		return goals.get(0);
 	}
 	
-	public List<DefaultGoalDesc> getGoals() {
+	public List<GoalDesc> getGoals() {
 		return goals;
 	}
 
@@ -168,7 +168,7 @@ public class DefaultProblem implements Problem
     	sw.append(startState.toString());
     	sw.append(" )\n");
        	sw.append("(:goals \n");
-       	for(DefaultGoalDesc goal : goals) {
+       	for(GoalDesc goal : goals) {
        		sw.append(goal.toString());
        	}
        	sw.append("\n )\n");
@@ -179,7 +179,7 @@ public class DefaultProblem implements Problem
     }
 
 	@Override
-	public List<IncompleteActionInstance> getActions() {
+	public List<ActionInstance> getActions() {
 		if(actionInstances == null){
 			try {
 				actionInstances = PddlImporter.createActionInstances(domain, this);
@@ -205,14 +205,14 @@ public class DefaultProblem implements Problem
 		return initialState;
 	}
 
-	@Override
+	
 	public void setGoalAction(IncompleteActionInstance createGoal) {
 		goalAction = createGoal;
 	}
 
 	@Override
 	public void setActionInstances(
-			List<IncompleteActionInstance> actionInstances) {
+			List<ActionInstance> actionInstances) {
 		this.actionInstances = actionInstances;
 	}
     

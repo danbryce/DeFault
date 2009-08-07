@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import edu.usu.cs.heuristic.PSPUpperBound;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -24,7 +25,7 @@ public class PSPSearch extends DefaultSearch implements Search {
 	protected UtilityFunction goalUtilities;
 
 	
-	public PSPSearch(Domain domain, Problem problem, List<IncompleteActionInstance> actionInstances, SearchStatistics searchStatistics) throws IllDefinedProblemException {
+	public PSPSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SearchStatistics searchStatistics) throws IllDefinedProblemException {
 		super(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics);
 		search = new AStarSearch(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics);
 		
@@ -43,7 +44,7 @@ public class PSPSearch extends DefaultSearch implements Search {
 		search.getOpen().add(new PSPNode(problem.getInitialState(), null, null, problem, goalUtilities, heuristic));
 	}
 	
-	public List<IncompleteActionInstance> getPath() {
+	public List<ActionInstance> getPath() {
 		return search.getPath();
 	}
 	

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
@@ -126,9 +127,9 @@ public class FactSpike {
 				this.rankEnd.get(rank));
 	}
 
-	public boolean isActionApplicable(IncompleteActionInstance action) {
+	public boolean isActionApplicable(ActionInstance action) {
 
-		for (Proposition prec : action.getPreconditions()) {
+		for (Proposition prec : ((IncompleteActionInstance)action).getPreconditions()) {
 			if (get(prec.getName()) == null) {
 				return false;
 			}

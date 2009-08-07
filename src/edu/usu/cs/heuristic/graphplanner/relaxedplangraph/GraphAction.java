@@ -8,17 +8,17 @@
  */
 package edu.usu.cs.heuristic.graphplanner.relaxedplangraph;
 
-import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.Literal;
 
 /**
- * Action plus metadata needed by the planning graph. Consists of an {@link ActionInstance}
+ * Action plus metadata needed by the planning graph. Consists of an {@link DefaultActionInstance}
  * plus the literals that form the preconditions and effects of the action.
  */
 public class GraphAction
 {
-    private final ActionInstance action;
+    private final DefaultActionInstance action;
     private final ConsistentLiteralSet preconditions;
     private ConsistentLiteralSet effects;
     private final boolean isMaintenanceAction;
@@ -28,7 +28,7 @@ public class GraphAction
      * @param action
      * @param preconditions includes ALL literals used by this action
      */
-    public GraphAction(ActionInstance action, ConsistentLiteralSet preconditions)
+    public GraphAction(DefaultActionInstance action, ConsistentLiteralSet preconditions)
     {
         if (action == null) {
             throw new IllegalArgumentException("null action");
@@ -80,7 +80,7 @@ public class GraphAction
         }
     }
 
-    public ActionInstance getAction()
+    public DefaultActionInstance getAction()
     {
         return action;
     }

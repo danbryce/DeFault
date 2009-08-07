@@ -3,6 +3,7 @@ package edu.usu.cs.planner.pspvanilla;
 import java.util.List;
 import java.util.logging.Logger;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -24,7 +25,7 @@ public class PSPSolver extends DefaultSolver {
 		this.search.initialize();
 	}
 	
-	public List<IncompleteActionInstance> solve() {
+	public List<ActionInstance> solve() {
 		plan = null;
 		
 		plan = search.getPath();
