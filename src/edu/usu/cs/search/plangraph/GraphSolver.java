@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
@@ -81,12 +82,12 @@ public class GraphSolver
             Problem problem = probBuilder.buildProblem();
             
             GraphSolver solver = new GraphSolver(domain, problem);
-            List<GraphAction> plan = solver.solve();
+            List<ActionInstance> plan = solver.solve();
             if (plan == null) {
                 System.out.println("No plan found");
             } else {
                 System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
-                for (GraphAction action : plan) {
+                for (ActionInstance action : plan) {
                     System.out.println(action.toString());
                 }
             }
@@ -113,9 +114,9 @@ public class GraphSolver
     /** 
      * @return <code>null</code> if the problem cannot be solved 
      */
-    public List<GraphAction> solve()
+    public List<ActionInstance> solve()
     {
-        List<GraphAction> realPlan = null;
+        List<ActionInstance> realPlan = null;
         GoalDesc mgoal = problem.getGoal();
         DefaultGoalDesc goal = (DefaultGoalDesc)mgoal;
         Level currentLevel = graph.getLastLevel();
@@ -135,11 +136,11 @@ public class GraphSolver
         
         // Now remove the maintenance actions, and impose an arbitrary order TODO: also return POPs
         if (fullPlan != null) {
-            realPlan = new ArrayList<GraphAction>(fullPlan.size());
+            realPlan = new ArrayList<ActionInstance>(fullPlan.size());
             for (Set<GraphAction> actionsAtLevel : fullPlan) {
                 for (GraphAction action : actionsAtLevel) {
                     if (!action.isMaintenanceAction()) {
-                        realPlan.add(action);
+                        realPlan.add(action.getAction());
                     }
                 }
             }

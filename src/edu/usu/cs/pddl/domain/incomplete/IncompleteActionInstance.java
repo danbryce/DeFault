@@ -19,7 +19,7 @@ import edu.usu.cs.pddl.goalseffects.PredicateEffect;
  * possible add effects, and possible delete effects. They transition the world
  * from one state to another.
  */
-public class IncompleteActionInstance implements ActionInstance{
+public class IncompleteActionInstance extends DefaultActionInstance implements ActionInstance{
 	private final String name;
 	private final Set<Proposition> preconditions;
 	private final Set<Proposition> addEffects;
