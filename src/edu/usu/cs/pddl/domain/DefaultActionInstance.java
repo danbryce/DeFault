@@ -19,8 +19,8 @@ import java.util.Set;
  */
 public class DefaultActionInstance implements ActionInstance
 {
-    protected final ActionDef definition;
-    protected final Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
+    protected  ActionDef definition;
+    protected Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
  
     protected final DefaultGoalDesc preCondition;
     protected final Effect effect;

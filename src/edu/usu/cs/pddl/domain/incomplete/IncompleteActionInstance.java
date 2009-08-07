@@ -72,6 +72,9 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 			name += " " + actionInstance.getArgMapping().get(arg);
 		}
 		
+		this.argMapping = actionInstance.getArgMapping();
+		this.definition = actionInstance.getDefinition();
+		
 		this.name = name;
 		this.index = numActions++;
 		// Add the absolute preconditions
