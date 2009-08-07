@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
@@ -136,7 +137,7 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 		return this.gvalue;
 	}
 
-	public  FFRiskyPSPNode getSuccessorNode(IncompleteActionInstance action) {
+	public  FFRiskyPSPNode getSuccessorNode(ActionInstance action) {
 
 		FFRiskyNode ffnode = super.getSuccessorNode(action);
 		if(ffnode != null){
