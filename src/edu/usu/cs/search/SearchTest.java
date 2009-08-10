@@ -21,6 +21,7 @@ import edu.usu.cs.planner.ffrisky.FFriskyLengthSolver;
 import edu.usu.cs.planner.ffrisky.FFriskySolver;
 import edu.usu.cs.planner.ffrisky.UniformCostFFriskySolver;
 import edu.usu.cs.planner.ffvanilla.AStarSolver;
+import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -80,6 +81,11 @@ public class SearchTest {
 			else if(args.length == 3 || args[3].equalsIgnoreCase("friskylength")) {
 
 				solver = new FFriskyLengthSolver(domain, problem, searchStatistics);
+
+			}
+			else if(args.length == 3 || args[3].equalsIgnoreCase("friskypsp")) {
+
+				solver = new FFRiskyPSPSolver(domain, problem, searchStatistics);
 
 			}
 			else if(args.length == 3 || args[3].equalsIgnoreCase("friskyEHC")) {
