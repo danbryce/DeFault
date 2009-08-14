@@ -31,7 +31,7 @@ public class FFRiskyPSPEHCSolver extends DefaultSolver implements Solver {
 		super(domain, problem, searchStatistics);
 		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
-		search = new FriskyPSPEHCSearch(domain, problem, actionInstances, new FFRiskyPSPSolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics);
+		search = new FriskyPSPEHCSearch(domain, problem, actionInstances, new FFRiskyPSPSolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics, maxHeapUsageSize), searchStatistics);
 		search.initialize();
 
 	}

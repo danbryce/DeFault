@@ -28,18 +28,22 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 	private Problem problem;
 	private List<ActionInstance> actionInstances;
 	private final int MAX_NUM_SOLUTIONS = 10;
-
+	private long maxHeapUsageSize;
+	private long initialHeapSize;
 	
 	public FFRiskyPSPSolutionEvaluator(Domain domain,
 									Problem problem,
 									List<ActionInstance> actionInstances,
 									Problem incompleteProblem, 
-									SearchStatistics searchStatistics) {
+									SearchStatistics searchStatistics, 
+									long maxHeapUsageSize) {
 		this.domain = domain;
 		this.problem = problem;
 		this.actionInstances = actionInstances;
 		this.incompleteProblem = incompleteProblem;
 		this.searchStatistics  = searchStatistics;
+		this.maxHeapUsageSize = maxHeapUsageSize;
+		this.initialHeapSize = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 	}
 	
 	@Override
@@ -74,7 +78,10 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 
 	@Override
 	public boolean isSolutionSetComplete(List<StateNode> solutions) {
-		return solutions.size() >= MAX_NUM_SOLUTIONS;
+		
+		long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() - initialHeapSize;
+		boolean exhaustedMemory = usedMemory >= maxHeapUsageSize;
+		return (solutions.size() >= MAX_NUM_SOLUTIONS || exhaustedMemory);
 	}
 
 

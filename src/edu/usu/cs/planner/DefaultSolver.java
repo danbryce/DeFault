@@ -33,12 +33,19 @@ public class DefaultSolver implements Solver {
 	protected List<ActionInstance> plan = null;
 	protected Search search = null;
 	protected SearchStatistics searchStatistics = null;
+	protected long maxHeapUsageSize = 0;
+	private static final long DEFAULT_MAX_HEAP_USAGE = 1024*1024*200;
 
 	public DefaultSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
 	{
 		if(domain == null || problem == null) {
 			throw new IllegalArgumentException("null domain/problem");
-		}
+			}
+		
+		long availableMemory = Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
+		
+		setMaxHeapUsage(Math.min(DEFAULT_MAX_HEAP_USAGE, availableMemory));
+		
 		this.domain = domain;
 		this.problem = problem;
 		this.searchStatistics = searchStatistics;
@@ -51,6 +58,10 @@ public class DefaultSolver implements Solver {
 		}
 
 
+	}
+
+	public void setMaxHeapUsage(long defaultMaxHeapUsage) {
+		this.maxHeapUsageSize = defaultMaxHeapUsage;
 	}
 
 	public DefaultSolver(){
@@ -131,4 +142,5 @@ public class DefaultSolver implements Solver {
 	public List<ActionInstance> run() {
 		return search.getPath();
 	}
+
 }
