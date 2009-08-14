@@ -11,14 +11,14 @@ import edu.usu.cs.search.incomplete.FriskyEHCSearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FFriskyEHCSolver extends DefaultSolver {
-	private IncompleteProblem incompleteProblem;
+	//private IncompleteProblem incompleteProblem;
 
 	public FFriskyEHCSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
 	{
 		super(domain, problem, searchStatistics);
-		this.incompleteProblem = PddlImporter.getProblem(domain, problem);
+		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
-		search = new FriskyEHCSearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances, incompleteProblem,searchStatistics), searchStatistics);
+		search = new FriskyEHCSearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances, problem,searchStatistics), searchStatistics);
 		search.initialize();
 
 	}

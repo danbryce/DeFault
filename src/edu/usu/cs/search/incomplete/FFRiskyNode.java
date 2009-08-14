@@ -61,28 +61,6 @@ public class FFRiskyNode  extends AStarNode {
 
 	}
 
-//	/**
-//	 * Creates a Node from a ConsistentLiteralSet. Node has no risk sets or
-//	 * critical risks.
-//	 */
-//	public FFRiskyNode(ConsistentLiteralSet state, Heuristic heuristic) {
-//		Collection<PredicateLiteral> literals = state.getPredicateLiterals();
-//		Set<Proposition> propositions = new HashSet<Proposition>();
-//		this.propositions = new HashMap<Proposition, Set<Risk>>();
-//		for (PredicateLiteral literal : literals) {
-//			if (literal.getValue()) {
-//				Proposition p = new Proposition(literal.getInstance());
-//				propositions.add(p);
-//				this.propositions.put(p, null);
-//			}
-//		}
-//
-//		this.criticalRisks = new HashSet<Risk>();
-//		this.heuristic = heuristic;
-//		this.state = propositions;
-//		this.dimension = 2;
-//
-//	}
 
 	public FFRiskyNode(FFRiskyNode node) {
 
@@ -179,33 +157,33 @@ public class FFRiskyNode  extends AStarNode {
 		return true;
 	}
 
-	@Override
-	public int hashCode() {
-		if (!hashCodeInitialized) {
-			String str = "";
-
-			// Sort the propositions first
-			List<Proposition> props = new ArrayList<Proposition>(propositions
-					.keySet());
-			Collections.sort(props, new Comparator<Proposition>() {
-				public int compare(Proposition first, Proposition second) {
-					return first.getName().compareTo(second.getName());
-				}
-			});
-
-			// make them a big long string
-			for (Proposition proposition : props) {
-				str += proposition.toString() + " ";
-			}
-
-			// cache hash
-			hash = str.hashCode();
-			hashCodeInitialized = true;
-		}
-
-		return hash;
-	}
-
+//	@Override
+//	public int hashCode() {
+//		if (!hashCodeInitialized) {
+//			String str = "";
+//
+//			// Sort the propositions first
+//			List<Proposition> props = new ArrayList<Proposition>(propositions
+//					.keySet());
+//			Collections.sort(props, new Comparator<Proposition>() {
+//				public int compare(Proposition first, Proposition second) {
+//					return first.getName().compareTo(second.getName());
+//				}
+//			});
+//
+//			// make them a big long string
+//			for (Proposition proposition : props) {
+//				str += proposition.toString() + " ";
+//			}
+//
+//			// cache hash
+//			hash = str.hashCode();
+//			hashCodeInitialized = true;
+//		}
+//
+//		return hash;
+//	}
+//
 	public double[] getGValue() {
 		if(this.gvalue == null){
 			this.gvalue = new double[dimension];
@@ -232,7 +210,7 @@ public class FFRiskyNode  extends AStarNode {
 	public List<StateNode> createSubsequentNodes(
 			List<ActionInstance> subsequentActions){
 
-		boolean useHelpfulActions = false;
+		boolean useHelpfulActions = true;
 
 		if(subsequentNodes != null && useHelpfulActions){
 			//need to reset node after failing in local search
@@ -375,7 +353,7 @@ public class FFRiskyNode  extends AStarNode {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
 			if (!node.getPropositions().containsKey(possPrec)) {
-				precOpen.add(new Risk(Risk.PRECOPEN, action.getName(), possPrec
+				precOpen.add(Risk.getRiskFromIndex(Risk.PRECOPEN, action.getName(), possPrec
 						.getName()));
 			}
 		}
@@ -461,7 +439,7 @@ public class FFRiskyNode  extends AStarNode {
 
 			// Add possible clobbers to the risk set
 			propositions.get(effect).add(
-					new Risk(Risk.POSSCLOB, action.getName(), effect.getName()));
+					Risk.getRiskFromIndex(Risk.POSSCLOB, action.getName(), effect.getName()));
 		}
 	}
 
@@ -525,7 +503,7 @@ public class FFRiskyNode  extends AStarNode {
 				// If it was false before, risk set consists of any risk to the
 				// current action
 				Set<Risk> riskSet = new HashSet<Risk>(actRisks);
-				riskSet.add(new Risk(Risk.UNLISTEDEFFECT, action.getName(),
+				riskSet.add(Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, action.getName(),
 						effect.getName()));
 				
 				propositions.put(effect, riskSet);
@@ -542,7 +520,7 @@ public class FFRiskyNode  extends AStarNode {
 			Set<Risk> intersection = new HashSet<Risk>(actRisks);
 
 			// Also add the UnlistedEffect risk
-			intersection.add(new Risk(Risk.UNLISTEDEFFECT, action.getName(),
+			intersection.add(Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, action.getName(),
 					effect.getName()));
 
 			// Intersect these with risks in the proposition to get the new risk

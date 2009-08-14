@@ -20,6 +20,7 @@ public interface StateNode extends Comparable<StateNode>{
 	public List<StateNode> getSubsequentNodes();
 	public List<StateNode> createSubsequentNodes(
 			List<ActionInstance> actionInstances);
+	public List<ActionInstance> getRelevantActions();
 
 	
 	

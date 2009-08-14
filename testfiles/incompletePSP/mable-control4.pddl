@@ -15,6 +15,9 @@
    (newDefSyntax ?s)
    (defCodeForTarget ?c ?tc)
    (defSyntaxForTarget ?s ?tc)
+   (priorDefCodeForTarget ?c ?tc)
+   (priorDefSyntaxForTarget ?s ?tc)
+
    (lessonNIMDIMENSION ?l ?n)
    (targetCONCEPTDIMENSION ?tc ?d)
    (strategyNIMDIMENSION ?s ?n)
@@ -25,11 +28,15 @@
    (nimDimensionInTemplate ?n ?t)
    (conceptDimensionInTemplate ?c ?t)
    (targetInTemplate ?tc ?t)
+   
  
    (templateHasNIMDIMENSION ?t)
    (templateHasCONCEPTDIMENSION ?t)
    
    (composedOf ?tc ?tc1)
+   (learnedCode ?tc)
+   (learnedSyntax ?tc)
+   (newlyLearned ?tc)
  
    (templateHasTarget ?t)
    (templateComplete ?t)
@@ -61,7 +68,8 @@
    					  (strategyCONCEPTDIMENSION ?s ?cd)
    					  (newDefCode ?c)
    					  (defSyntaxForTarget ?sc ?tc) 
-   					  (untried ?s ?tc)  					     					  
+   					  (untried ?s ?tc)
+   					  (targetInTemplate ?tc ?t)  					     					  
    					  )
    :effect (and (not (untried ?s ?tc)))
    :poss-effect (and (defCodeForTarget ?c ?tc)
@@ -86,6 +94,7 @@
   					  (strategyCONCEPTDIMENSION ?s ?cd)
    					  (newDefSyntax ?c)
    					  (untried ?s ?tc)
+   					  (targetInTemplate ?tc ?t)
    					  )
    :effect (and (not (untried ?s ?tc)))
    :poss-effect (and (defSyntaxForTarget ?c ?tc)
@@ -111,6 +120,7 @@
    					  (newDefSyntax ?c1)
    					  (newDefCode ?c2)
    					  (untried ?s ?tc)
+   					  (targetInTemplate ?tc ?t)
    					  )
    :effect (and (not (untried ?s ?tc)))
    :poss-effect (and (defSyntaxForTarget ?c1 ?tc)
@@ -119,4 +129,44 @@
    				(not (newDefCode ?c2))
    				)
    )
+   
+   (:action reusePriorCode
+    :parameters (?tc ?c)
+    :precondition (and  (CODE ?c)
+     					(TARGETCONCEPT ?tc)
+    					(priorDefCodeForTarget ?c ?tc)
+ 				   )
+ 	:effect (and )
+    :poss-effect (and (learnedCode ?tc))
+   )
+
+   (:action reusePriorSyntax
+    :parameters (?tc ?c)
+    :precondition (and  (SYNTAX ?c)
+    					(TARGETCONCEPT ?tc)
+    					(priorDefSyntaxForTarget ?c ?tc)
+ 				   )
+ 	:effect (and )
+    :poss-effect (and (learnedSyntax ?tc))
+   )
+
+   
+   (:action satisfyCodeTarget
+    :parameters (?tc ?c)
+    :precondition (and  (TARGETCONCEPT ?tc)
+    					(CODE ?c)
+    					(defCodeForTarget ?c ?tc))
+    :effect (and (newlyLearned ?tc) 
+    			 (learnedCode ?tc))
+   )
+
+   (:action satisfySyntaxTarget
+    :parameters (?tc ?c)
+    :precondition (and  (TARGETCONCEPT ?tc)
+    					(SYNTAX ?c)
+ 						(defSyntaxForTarget ?c ?tc))
+    :effect (and (newlyLearned ?tc)
+    			 (learnedSyntax ?tc))
+   )
+
 )

@@ -1,5 +1,6 @@
 package edu.usu.cs.heuristic;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,6 +49,11 @@ public class PSPUpperBound implements Heuristic {
 	}
 	@Override
 	public Set<ActionInstance> getHelpfulActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<ActionInstance> getRelevantActions() {
 		// TODO Auto-generated method stub
 		return null;
 	}

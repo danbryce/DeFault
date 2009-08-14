@@ -27,7 +27,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 public class EnforcedHillClimbingSearch extends DefaultSearch implements Search {
 
 	protected StateNode startNode = null;
-	
+
 	/**
 	 * 
 	 */
@@ -47,74 +47,98 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 			List<ActionInstance> actionInstances,
 			SolutionEvaluator solutionEvaluator,
 			SearchStatistics searchStatistics)
-			throws IllDefinedProblemException {
+	throws IllDefinedProblemException {
 		super(domain, problem, actionInstances, solutionEvaluator,
 				searchStatistics);
 		open = null;
-		
+
 	}
 
 	public List<ActionInstance> getPath(){
-		StateNode solution = greedyFindBetterNode(startNode);
-		
-		if(solution == null){
-			Search fallBack = solutionEvaluator.getFallBackSearch();
-			fallBack.initialize();
-			return fallBack.getPath();
-		}
-		else {
-			searchStatistics.setSolutionNode(solution);
-		}
-		
-		
+
+		while(!solutionEvaluator.isSolutionSetComplete(solutions)){
+
+			StateNode solution = greedyFindBetterNode(startNode);
+
+
+			if(solution == null){
+				Search fallBack = solutionEvaluator.getFallBackSearch();
+				fallBack.initialize();
+				return fallBack.getPath();
+			}
+			else {
+				solutions.add(solution);
 				
+			}
+
+		}
+		StateNode solution = solutionEvaluator.getBestSolution(solutions);
+		searchStatistics.setSolutionNode(solution);
+
+
+
 		return extractSolution(solution);
 	}
 
 	private StateNode greedyFindBetterNode(StateNode parentNode) {
-		
-		if(solutionEvaluator.isSolution(problem, parentNode)){
+		System.out.println("Local EHC");
+		if(solutionEvaluator.isSolution(problem, parentNode) &&
+				solutionEvaluator.keepSolution(parentNode, solutions)){
 			return parentNode;
 		}
 
-					
+
 		List<StateNode> subsequentNodes = parentNode.createSubsequentNodes(actionInstances);
-		
+
 		searchStatistics.processNode(parentNode);
 		System.out.println(searchStatistics.toString());
-	for(StateNode childNode : subsequentNodes) {
+		for(StateNode childNode : subsequentNodes) {
 			if(solutionEvaluator.isBetter(childNode, parentNode)){
 				return greedyFindBetterNode(childNode);
 			}				
 		}
-		
+
 		//couldn't find a better node
 		return globalFindBetterNode(parentNode);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	private StateNode globalFindBetterNode(StateNode parentNode) {
+	System.out.println("Global EHC");
+		
 		LinkedList<StateNode> openBFS = new LinkedList<StateNode>();
 		openBFS.addAll(parentNode.getSubsequentNodes());
 		Set<StateNode> closedBFS = new HashSet<StateNode>();
-		
-		
+
+
 		while(openBFS.size() > 0){
 			StateNode currentNode = openBFS.getFirst();
 			openBFS.remove(currentNode);
-			
-			List<StateNode> subsequentNodes = currentNode.createSubsequentNodes(actionInstances);
+
+			//			if(solutionEvaluator.isSolution(problem, currentNode) &&
+			//					solutionEvaluator.keepSolution(currentNode, solutions)){
+			//				return currentNode;
+			//			}
+			List<StateNode> subsequentNodes = null;
+			if(currentNode.getSubsequentNodes() == null)
+				subsequentNodes = currentNode.createSubsequentNodes(actionInstances);
 			searchStatistics.processNode(currentNode);
 			System.out.println(searchStatistics.toString());
 			for(StateNode childNode : subsequentNodes) {
+				
 				if(solutionEvaluator.closedContains(closedBFS, childNode)){
 					continue;
 				}
-				if(solutionEvaluator.isSolution(problem, currentNode)){
-					return currentNode;
+				else if(solutionEvaluator.isSolution(problem, childNode) &&
+						solutionEvaluator.keepSolution(childNode, solutions)){
+					return childNode;
+				}
+				if(solutionEvaluator.isSolution(problem, childNode) &&
+						solutionEvaluator.keepSolution(childNode, solutions)){
+					return childNode;
 				}
 				else if(solutionEvaluator.isBetter(childNode, parentNode)){
 					return greedyFindBetterNode(childNode);
@@ -122,28 +146,28 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 				else{
 					openBFS.addLast(childNode);
 				}
-					
+
 			}
 
 		}
-		
+
 		return null;
 	}
 
 	private List<ActionInstance> extractSolution(StateNode currentNode) {
 
-		
+
 		List<ActionInstance> actionsToGoal = new ArrayList<ActionInstance>();
-		
+
 		while(currentNode != null && currentNode.getAction() != null) {
 			actionsToGoal.add(0, currentNode.getAction());
 			currentNode = currentNode.getParent();
 		}
-		
+
 		return actionsToGoal;
 	}
 
-	
-	
-	
+
+
+
 }

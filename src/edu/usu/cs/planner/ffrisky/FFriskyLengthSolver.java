@@ -11,14 +11,14 @@ import edu.usu.cs.search.incomplete.FFRiskySolutionEvaluator;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FFriskyLengthSolver extends DefaultSolver {
-	protected IncompleteProblem incompleteProblem = null; 
+	//protected IncompleteProblem incompleteProblem = null; 
 
 	public FFriskyLengthSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
 	{
 		super(domain, problem, searchStatistics);
-		this.incompleteProblem = PddlImporter.getProblem(domain, problem);
+		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
-		search = new FFRiskyLengthSearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,incompleteProblem,searchStatistics), searchStatistics);
+		search = new FFRiskyLengthSearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics);
 		search.initialize();
 
 	}

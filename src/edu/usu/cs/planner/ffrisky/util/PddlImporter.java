@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.FriskyHeuristic;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.FFRiskyHeuristic;
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.DefaultActionInstance;
@@ -25,33 +25,33 @@ import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class PddlImporter {
-	public static IncompleteProblem getProblem(Domain domain,
-			Problem problem) {
-
-		IncompleteProblem incompleteProblem = new IncompleteProblem();
-
-
-		// Create initial node
-		incompleteProblem.setInitialNode(new FFRiskyNode(problem.getInitialState(), new FriskyHeuristic(problem, domain)));
-
-		// Create goal node
-		incompleteProblem.setGoal(createGoal(problem.getGoal()));
-
-		// Get actions
-		List<ActionInstance> actionInstances = problem.getActions();
-		try {
-			if(actionInstances == null){
-			actionInstances = createActionInstances(domain, problem);
-			}
-		} catch (IllDefinedProblemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		incompleteProblem.setActions(actionInstances);
-
-		return incompleteProblem;
-	}
+//	public static IncompleteProblem getProblem(Domain domain,
+//			Problem problem) {
+//
+//		IncompleteProblem incompleteProblem = new IncompleteProblem();
+//
+//
+//		// Create initial node
+//		incompleteProblem.setInitialNode(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain)));
+//
+//		// Create goal node
+//		incompleteProblem.setGoal(createGoal(problem.getGoal()));
+//
+//		// Get actions
+//		List<ActionInstance> actionInstances = problem.getActions();
+//		try {
+//			if(actionInstances == null){
+//			actionInstances = createActionInstances(domain, problem);
+//			}
+//		} catch (IllDefinedProblemException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		incompleteProblem.setActions(actionInstances);
+//
+//		return incompleteProblem;
+//	}
 
 	public static IncompleteActionInstance createGoal (GoalDesc goalDesc) {
 		Set<Proposition> preconditions = new HashSet<Proposition>();
@@ -77,17 +77,18 @@ public class PddlImporter {
 			List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(
 					action, allObjects, problem.getStartState());
 			for (List<PDDLObject> actualArgs : allowedActualArgs) {
-				DefaultActionInstance instance = new DefaultActionInstance(action,
-						actualArgs, allObjects);
+//				DefaultActionInstance instance = new DefaultActionInstance(action,
+//						actualArgs, allObjects);
+				ActionInstance instance = new IncompleteActionInstance(action, actualArgs, allObjects, domain);
 				instances.add(instance);
 			}
 		}
 		
-		List<ActionInstance> actions = new ArrayList<ActionInstance>();
-		for (ActionInstance actionInstance : instances) {
-			actions.add(new IncompleteActionInstance((DefaultActionInstance)actionInstance));
-		}
-		return actions;
+//		List<ActionInstance> actions = new ArrayList<ActionInstance>();
+//		for (ActionInstance actionInstance : instances) {
+//			actions.add(new IncompleteActionInstance((DefaultActionInstance)actionInstance));
+//		}
+		return instances;
 	}
 
 	private static List<List<PDDLObject>> getPossibleArguments(

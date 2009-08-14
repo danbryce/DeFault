@@ -25,7 +25,16 @@ public class AbstractStateNode implements StateNode {
 	protected Heuristic heuristic = null;
 	protected List<StateNode> subsequentNodes = null;
 	protected Set<ActionInstance> helpfulActions = null;
+	protected List<ActionInstance> relevantActions = null;
 	
+	protected void setRelevantActions(List<ActionInstance> relevantActions) {
+		this.relevantActions = relevantActions;
+	}
+
+	public List<ActionInstance> getRelevantActions() {
+		return relevantActions;
+	}
+
 	protected double[] H_WEIGHT = null;
 	protected int dimension = 1;
 	
@@ -41,6 +50,12 @@ public class AbstractStateNode implements StateNode {
 		if(hvalue == null){
 			hvalue = heuristic.getValue(this);
 			helpfulActions = heuristic.getHelpfulActions();
+			if(parent == null){
+				List<ActionInstance> mRelevantActions = heuristic.getRelevantActions();
+				if(mRelevantActions != null){
+					relevantActions =  mRelevantActions;
+				}
+			}
 			H_WEIGHT = new double[dimension];
 			for(int i = 0; i < dimension; i++){
 				H_WEIGHT[i] = 1;
@@ -132,6 +147,7 @@ public class AbstractStateNode implements StateNode {
 
 	public void setState(Set<Proposition> keySet) {
 		state=keySet;	
-	}	
+	}
+
 
 }

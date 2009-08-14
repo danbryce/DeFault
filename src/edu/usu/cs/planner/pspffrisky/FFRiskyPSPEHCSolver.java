@@ -16,21 +16,22 @@ import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.psp.FFRiskyPSPSolutionEvaluator;
 import edu.usu.cs.search.incomplete.psp.FriskyPSPSearch;
+import edu.usu.cs.search.incomplete.psp.ehc.FriskyPSPEHCSearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 /**
  * @author dan
  *
  */
-public class FFRiskyPSPSolver extends DefaultSolver implements Solver {
+public class FFRiskyPSPEHCSolver extends DefaultSolver implements Solver {
 	//protected IncompleteProblem incompleteProblem = null; 
 
-	public FFRiskyPSPSolver(Domain domain, Problem problem,
+	public FFRiskyPSPEHCSolver(Domain domain, Problem problem,
 			SearchStatistics searchStatistics) throws IllDefinedProblemException {
 		super(domain, problem, searchStatistics);
 		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
-		search = new FriskyPSPSearch(domain, problem, actionInstances, new FFRiskyPSPSolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics);
+		search = new FriskyPSPEHCSearch(domain, problem, actionInstances, new FFRiskyPSPSolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics);
 		search.initialize();
 
 	}

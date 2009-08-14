@@ -3,6 +3,7 @@
  */
 package edu.usu.cs.heuristic;
 
+import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -39,6 +40,12 @@ public class FFRiskyPSPHeuristic implements Heuristic {
 		
 		
 		return hValue;
+	}
+
+	@Override
+	public List<ActionInstance> getRelevantActions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

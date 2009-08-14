@@ -11,13 +11,13 @@ import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class UniformCostFFriskySolver extends DefaultSolver {
-	protected IncompleteProblem incompleteProblem = null; 
+	//protected IncompleteProblem incompleteProblem = null; 
 	public UniformCostFFriskySolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
 	{
 		super(domain, problem,searchStatistics);
-		this.incompleteProblem = PddlImporter.getProblem(domain, problem);
+		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
-		search = new FriskySearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,incompleteProblem,searchStatistics), searchStatistics);
+		search = new FriskySearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics);
 		search.initialize();
 		
 //		System.out.println("Search algorithm: " + search.getClass().getSimpleName());

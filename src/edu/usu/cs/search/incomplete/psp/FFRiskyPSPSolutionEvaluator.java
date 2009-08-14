@@ -22,7 +22,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 
 	
-	IncompleteProblem incompleteProblem = null;
+	Problem incompleteProblem = null;
 	private SearchStatistics searchStatistics = null;
 	private Domain domain;
 	private Problem problem;
@@ -33,7 +33,7 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 	public FFRiskyPSPSolutionEvaluator(Domain domain,
 									Problem problem,
 									List<ActionInstance> actionInstances,
-									IncompleteProblem incompleteProblem, 
+									Problem incompleteProblem, 
 									SearchStatistics searchStatistics) {
 		this.domain = domain;
 		this.problem = problem;
@@ -127,8 +127,8 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 		
 		boolean strictlyBetter = false;
 		
-		for(int i = 0; i < childNode.getDimension(); i++){
-			diff[i] = childNode.getGValue()[i] - parentNode.getGValue()[i];
+		for(int i = 1; i < childNode.getDimension(); i++){
+			diff[i] = childNode.getHeuristicValue()[i] - parentNode.getHeuristicValue()[i];
 			if(i == 1){
 				diff[i] *= -1; //for net benefit, make it a minimiziation
 			}

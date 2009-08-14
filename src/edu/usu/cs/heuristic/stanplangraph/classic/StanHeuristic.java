@@ -1,8 +1,11 @@
 package edu.usu.cs.heuristic.stanplangraph.classic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
+import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -52,5 +55,15 @@ public class StanHeuristic implements Heuristic {
 	public Set<ActionInstance> getHelpfulActions() {
 		// TODO Auto-generated method stub
 		return solver.getHelpfulActions();
+	}
+
+	@Override
+	public List<ActionInstance> getRelevantActions() {
+		List<ActionHeader> headers = solver.getActionSpike().getActionsByRank(solver.getActionSpike().getCurrentRank()-1);
+		List<ActionInstance> returnActions = new ArrayList<ActionInstance>();
+		for(ActionHeader header: headers){
+			returnActions.add(header.getAction());
+		}
+		return returnActions;
 	}
 }

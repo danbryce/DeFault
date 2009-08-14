@@ -21,7 +21,7 @@ import edu.usu.cs.search.incomplete.FFRiskyNode;
 public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 
 	private List<IncompleteActionInstance> relaxedPlan = null;
-	private int levelsPastClassicalLevelOff= 0;
+	protected int levelsPastClassicalLevelOff= 0;
 
 
 	//	public FFriskyRelaxedPlanningGraph(IncompleteProblem problem) {
@@ -79,13 +79,13 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 					FactHeader factHeader = factSpike.get(possPre.getName());
 					if(factHeader == null){
 						//get any open precondition risks
-						String s = "PrecOpen " + actionHeader.getName() + " " + possPre.getName();
-						Risk r = null;
-						if(!globalRiskHeaders.containsKey(s)) {
-							r = new Risk(Risk.PRECOPEN, actionHeader.getName(), possPre.getName());
-							globalRiskHeaders.put(s, r);
-						}
-						r = globalRiskHeaders.get(s);
+						//String s = "PrecOpen " + actionHeader.getName() + " " + possPre.getName();
+						//Risk r = null;
+						//if(!globalRiskHeaders.containsKey(s)) {
+							Risk r = Risk.getRiskFromIndex(Risk.PRECOPEN, actionHeader.getName(), possPre.getName());
+//							globalRiskHeaders.put(s, r);
+//						}
+//						r = globalRiskHeaders.get(s);
 						criticalRisks.add(r);
 						//possibleRisks.add(r);
 					}
@@ -206,13 +206,13 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 
 			Set<ActionHeader> possSupporters = fli.getPossibleSupporters();
 			if(possSupporters.contains(actionWithFewestPossibleRisks)){
-				String s = "UnlistedEffect " + actionWithFewestPossibleRisks.getName() + " " + fact.getName();
-				Risk r = null;
-				if(!globalRiskHeaders.containsKey(s)) {
-					r = new Risk(Risk.UNLISTEDEFFECT, actionWithFewestPossibleRisks.getName(), fact.getName());
-					globalRiskHeaders.put(s, r);
-				}
-				r = globalRiskHeaders.get(s);
+//				String s = "UnlistedEffect " + actionWithFewestPossibleRisks.getName() + " " + fact.getName();
+//				Risk r = null;
+//				if(!globalRiskHeaders.containsKey(s)) {
+					Risk r = Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, actionWithFewestPossibleRisks.getName(), fact.getName());
+//					globalRiskHeaders.put(s, r);
+//				}
+//				r = globalRiskHeaders.get(s);
 				possibleRisks.add(r);
 			}
 

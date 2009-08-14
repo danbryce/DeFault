@@ -14,11 +14,10 @@ public class ActionSpike {
 	private FactSpike factSpike = null;
 	private List<ActionHeader> actionHeaders;
 	private List<Integer> rankEnd = new ArrayList<Integer>();
-	private Map<Integer, ActionHeader> globalActionHeaders;
+	protected Map<Integer, ActionHeader> globalActionHeaders;
 	private Map<Integer, FactHeader> globalFactHeaders;
-	private Map<String, Risk> globalRiskHeaders;
 	private StanPlanningGraph solver;
-	private Map<Integer, Map<Integer, ActionLevelInfo>> actionLevelInfos;
+	protected Map<Integer, Map<Integer, ActionLevelInfo>> actionLevelInfos;
 
 	//	public ActionSpike(FactSpike factSpike) {
 	//		this.setFactSpike(factSpike);
@@ -29,11 +28,9 @@ public class ActionSpike {
 	public ActionSpike(FactSpike factSpike, 
 			Map<Integer, ActionHeader> globalActionHeaders,
 			Map<Integer, FactHeader> globalFactHeaders,
-			Map<String, Risk> globalRiskHeaders,
 			StanPlanningGraph solver) {
 		this.globalActionHeaders = globalActionHeaders;
 		this.globalFactHeaders = globalFactHeaders;
-		this.globalRiskHeaders = globalRiskHeaders;
 		this.factSpike = factSpike;
 		this.solver = solver;
 		this.actionHeaders = new ArrayList<ActionHeader>();

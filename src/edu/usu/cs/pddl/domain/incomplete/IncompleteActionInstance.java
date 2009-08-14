@@ -3,14 +3,24 @@ package edu.usu.cs.pddl.domain.incomplete;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.DefaultActionInstance;
+import edu.usu.cs.pddl.domain.DefaultGoalDesc;
+import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.PDDLObject;
+import edu.usu.cs.pddl.domain.PredicateDef;
+import edu.usu.cs.pddl.domain.PredicateInstance;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
 import edu.usu.cs.pddl.goalseffects.PredicateEffect;
 
@@ -19,7 +29,7 @@ import edu.usu.cs.pddl.goalseffects.PredicateEffect;
  * possible add effects, and possible delete effects. They transition the world
  * from one state to another.
  */
-public class IncompleteActionInstance extends DefaultActionInstance implements ActionInstance{
+public class IncompleteActionInstance  implements ActionInstance{
 	private final String name;
 	private final Set<Proposition> preconditions;
 	private final Set<Proposition> addEffects;
@@ -29,6 +39,12 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 	private final Set<Proposition> possibleDeleteEffects;
 	private int hash;
 	private int index;
+
+	protected  ActionDef definition;
+	protected Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
+
+
+
 	public int getIndex() {
 		return index;
 	}
@@ -36,7 +52,7 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 	private boolean hashInitialized = false;
 
 	private static int numActions = 0;
-	
+
 	public IncompleteActionInstance(String name, Set<Proposition> preconditions,
 			Set<Proposition> addEffects, Set<Proposition> deleteEffects,
 			Set<Proposition> possiblePreconditions,
@@ -66,15 +82,15 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 	 */
 	public IncompleteActionInstance(DefaultActionInstance actionInstance) {
 		String name = actionInstance.getDefinition().getName();
-		
+
 		// Add the argument instances to name
 		for(FormalArgument arg : actionInstance.getDefinition().getArguments()) {
 			name += " " + actionInstance.getArgMapping().get(arg);
 		}
-		
+
 		this.argMapping = actionInstance.getArgMapping();
 		this.definition = actionInstance.getDefinition();
-		
+
 		this.name = name;
 		this.index = numActions++;
 		// Add the absolute preconditions
@@ -91,9 +107,9 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 
 		if (actionInstance.getEffect() instanceof ConjunctionEffect) {
 			ConjunctionEffect effects = (ConjunctionEffect) actionInstance
-					.getEffect();
+			.getEffect();
 			List<PredicateEffect> subEffects = effects
-					.getSubEffectsAsPredicateEffects();
+			.getSubEffectsAsPredicateEffects();
 			for (PredicateEffect effect : subEffects) {
 				if (effect.isTrue()) {
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
@@ -126,9 +142,9 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 		this.possibleDeleteEffects = new HashSet<Proposition>();
 		if (actionInstance.getPossEffect() instanceof ConjunctionEffect) {
 			ConjunctionEffect possibleEffects = (ConjunctionEffect) actionInstance
-					.getPossEffect();
+			.getPossEffect();
 			List<PredicateEffect> possibleSubEffects = possibleEffects
-					.getSubEffectsAsPredicateEffects();
+			.getSubEffectsAsPredicateEffects();
 			for (PredicateEffect effect : possibleSubEffects) {
 				if (effect.isTrue()) {
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
@@ -153,10 +169,109 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 	 * preconditions possible add effects possible delete effects
 	 */
 	public IncompleteActionInstance(String name, List<Set<Proposition>> actionProps) {
-		
+
 		this(name, actionProps.get(0), actionProps.get(1), actionProps.get(2),
 				actionProps.get(3), actionProps.get(4), actionProps.get(5));
-		
+
+	}
+
+	public IncompleteActionInstance(ActionDef action,
+			List<PDDLObject> actualArgs, Set<PDDLObject> allObjects, Domain domain) {
+
+		StringBuilder name = new StringBuilder();
+		name.append(action.getName());
+		for(PDDLObject arg : actualArgs) {
+			name.append(" ").append(arg.getName());
+		}
+		this.name = name.toString();
+
+		this.argMapping  = new HashMap<FormalArgument, PDDLObject>();
+		for(int i = 0; i < actualArgs.size(); i++){
+			argMapping.put(action.getArguments().get(i), actualArgs.get(i));
+		}
+		this.definition = action;
+		this.index = numActions++;
+
+		this.preconditions = new HashSet<Proposition>();
+		Set<LiteralInstance> preconditions = new HashSet<LiteralInstance>();
+		DefaultGoalDesc actPrecondition = (DefaultGoalDesc) action.getPreCondition().instantiate(argMapping, allObjects);
+		actPrecondition.getLiteralsUsed(preconditions);
+		for (LiteralInstance precondition : preconditions) {
+			if(domain.isDynamic((PredicateDef) precondition.getDefinition())){
+				Proposition p = Proposition.getPropositionFromIndex(precondition);			
+				this.preconditions.add(p);
+			}
+		}
+
+		// Add the absolute adds and deletes
+		this.addEffects = new HashSet<Proposition>();
+		this.deleteEffects = new HashSet<Proposition>();
+
+		if (action.getEffect() instanceof ConjunctionEffect) {
+			ConjunctionEffect effects = (ConjunctionEffect) action.getEffect().instantiate(this.argMapping, allObjects);
+			List<PredicateEffect> subEffects = effects.getSubEffectsAsPredicateEffects();
+			for (PredicateEffect effect : subEffects) {
+				if (effect.isTrue()) {
+					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
+					effect.getLiteralsUsed(results);
+					for (LiteralInstance result : results) {
+						this.addEffects.add(new Proposition(result));						
+					}
+				} else {
+					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
+					effect.getLiteralsUsed(results);
+					for (LiteralInstance result : results) {
+						this.deleteEffects.add(new Proposition(result));
+
+					}
+				}
+			}
+		}
+
+		// Add the possible preconditions
+	
+		this.possiblePreconditions = new HashSet<Proposition>();
+		Set<LiteralInstance> possiblePreconditions = new HashSet<LiteralInstance>();
+		DefaultGoalDesc actPossPrecondition = (DefaultGoalDesc) action.getPossPreCondition().instantiate(argMapping, allObjects);
+		actPossPrecondition.getLiteralsUsed(possiblePreconditions);
+		action.getPossPreCondition().getLiteralsUsed(
+				possiblePreconditions);
+		for (LiteralInstance precondition : possiblePreconditions) {
+			Proposition p = Proposition.getPropositionFromIndex(precondition);						
+			this.possiblePreconditions.add(p);
+		}
+
+		// Add the possible adds and deletes
+		// If posseffects aren't a conjunctionEffect, just continue
+		this.possibleAddEffects = new HashSet<Proposition>();
+		this.possibleDeleteEffects = new HashSet<Proposition>();
+		if (action.getPossEffect() instanceof ConjunctionEffect) {
+			ConjunctionEffect possibleEffects  = (ConjunctionEffect) action.getPossEffect().instantiate(this.argMapping, allObjects);
+			List<PredicateEffect> possibleSubEffects = possibleEffects
+			.getSubEffectsAsPredicateEffects();
+			for (PredicateEffect effect : possibleSubEffects) {
+				if (effect.isTrue()) {
+					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
+					effect.getLiteralsUsed(results);
+					for (LiteralInstance result : results) {
+						Proposition p = Proposition.getPropositionFromIndex(result);						
+						this.possibleAddEffects.add(p);
+					}
+				} else {
+					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
+					effect.getLiteralsUsed(results);
+					for (LiteralInstance result : results) {
+						Proposition p = Proposition.getPropositionFromIndex(result);						
+						this.possibleDeleteEffects.add(p);
+					}
+				}
+			}
+		}
+
+
+
+
+
 	}
 
 	public String getName() {
@@ -190,48 +305,48 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 	@Override
 	public String toString() {
 		String str = "Action: " + getName();
-//
-//		if (getPreconditions().size() > 0) {
-//			str += "\n\tAbsolute Preconditions:";
-//			for (Proposition prec : getPreconditions()) {
-//				str += " " + prec.getName();
-//			}
-//		}
-//
-//		if (getAddEffects().size() > 0) {
-//			str += "\n\tAbsolute Add Effects:";
-//			for (Proposition addEff : getAddEffects()) {
-//				str += " " + addEff.getName();
-//			}
-//		}
-//
-//		if (getDeleteEffects().size() > 0) {
-//			str += "\n\tAbsolute Delete Effects:";
-//			for (Proposition deleteEff : getDeleteEffects()) {
-//				str += " " + deleteEff.getName();
-//			}
-//		}
-//
-//		if (getPossiblePreconditions().size() > 0) {
-//			str += "\n\tPossible Preconditions:";
-//			for (Proposition possPrec : getPossiblePreconditions()) {
-//				str += " " + possPrec.getName();
-//			}
-//		}
-//
-//		if (getPossibleAddEffects().size() > 0) {
-//			str += "\n\tPossible Add Effects:";
-//			for (Proposition possAddEff : getPossibleAddEffects()) {
-//				str += " " + possAddEff.getName();
-//			}
-//		}
-//
-//		if (getPossibleDeleteEffects().size() > 0) {
-//			str += "\n\tPossible Delete Effects:";
-//			for (Proposition possDeleteEff : getPossibleDeleteEffects()) {
-//				str += " " + possDeleteEff.getName();
-//			}
-//		}
+		//
+		//		if (getPreconditions().size() > 0) {
+		//			str += "\n\tAbsolute Preconditions:";
+		//			for (Proposition prec : getPreconditions()) {
+		//				str += " " + prec.getName();
+		//			}
+		//		}
+		//
+		//		if (getAddEffects().size() > 0) {
+		//			str += "\n\tAbsolute Add Effects:";
+		//			for (Proposition addEff : getAddEffects()) {
+		//				str += " " + addEff.getName();
+		//			}
+		//		}
+		//
+		//		if (getDeleteEffects().size() > 0) {
+		//			str += "\n\tAbsolute Delete Effects:";
+		//			for (Proposition deleteEff : getDeleteEffects()) {
+		//				str += " " + deleteEff.getName();
+		//			}
+		//		}
+		//
+		//		if (getPossiblePreconditions().size() > 0) {
+		//			str += "\n\tPossible Preconditions:";
+		//			for (Proposition possPrec : getPossiblePreconditions()) {
+		//				str += " " + possPrec.getName();
+		//			}
+		//		}
+		//
+		//		if (getPossibleAddEffects().size() > 0) {
+		//			str += "\n\tPossible Add Effects:";
+		//			for (Proposition possAddEff : getPossibleAddEffects()) {
+		//				str += " " + possAddEff.getName();
+		//			}
+		//		}
+		//
+		//		if (getPossibleDeleteEffects().size() > 0) {
+		//			str += "\n\tPossible Delete Effects:";
+		//			for (Proposition possDeleteEff : getPossibleDeleteEffects()) {
+		//				str += " " + possDeleteEff.getName();
+		//			}
+		//		}
 
 		//str += "\n";
 		return str;
@@ -359,7 +474,19 @@ public class IncompleteActionInstance extends DefaultActionInstance implements A
 	}
 
 	public double getCost() {
-		
+
 		return 1;
+	}
+
+	@Override
+	public Map<FormalArgument, PDDLObject> getArgMapping() {
+		// TODO Auto-generated method stub
+		return argMapping;
+	}
+
+	@Override
+	public ActionDef getDefinition() {
+		// TODO Auto-generated method stub
+		return definition;
 	}
 }

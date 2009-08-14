@@ -9,6 +9,7 @@ public class Proposition {
 	
 	private static int propositionIndex = 0; 
 	private static Map<String, Integer> propositionIndices = new HashMap<String, Integer>();
+	private static Map<Integer, Proposition> propositionIndexMap = new HashMap<Integer, Proposition>();
 	
 	private String name;
 	
@@ -24,9 +25,28 @@ public class Proposition {
 		return index;
 	}
 	
+	
+	
 	public Integer getIndex(){
 		return getPropositionIndicex(name);
 	}
+	
+	public static Proposition getPropositionFromIndex(LiteralInstance literalInstance) {
+		String name = literalInstance.toString().replace('(', ' ').replace(')', ' ').trim();
+		return getPropositionFromIndex(name);
+	}
+	public static Proposition getPropositionFromIndex(String name) {
+		Integer index = propositionIndices.get(name); 
+		if(index != null){
+			return propositionIndexMap.get(index);		
+		}
+		else{
+			Proposition p = new Proposition(name);
+			propositionIndexMap.put(getPropositionIndicex(name), p);
+			return p;
+		}
+	}		
+	
 
 	/**
 	 * Creates a proposition from a literal instance.

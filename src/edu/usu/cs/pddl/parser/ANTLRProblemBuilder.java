@@ -45,6 +45,7 @@ import edu.usu.cs.pddl.domain.PredicateDef;
 import edu.usu.cs.pddl.domain.PredicateInstance;
 import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 
 /**
@@ -135,7 +136,7 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
         return problem;
     }
 
-    private DefaultProblem buildPDDLProblem(Tree problemNode) throws InvalidPDDLElementException
+    private Problem buildPDDLProblem(Tree problemNode) throws InvalidPDDLElementException
     {
         logger.fine("Building a PDDL Problem");        
         
@@ -181,7 +182,7 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
                     throw new UnsupportedOperationException("Unsupported :problem child element - " + child.getText());
             }
         }
-        return new DefaultProblem(name, domain, new HashSet<PDDLObject>(objects.values()), startState, goal);
+        return new IncompleteProblem(name, domain, new HashSet<PDDLObject>(objects.values()), startState, goal);
     }
 
     private void addObjects(Tree objectsNode) throws InvalidPDDLElementException

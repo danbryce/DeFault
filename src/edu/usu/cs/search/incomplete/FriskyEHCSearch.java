@@ -2,7 +2,7 @@ package edu.usu.cs.search.incomplete;
 
 import java.util.List;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.FriskyHeuristic;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.FFRiskyHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -12,7 +12,7 @@ import edu.usu.cs.search.ehc.EnforcedHillClimbingSearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FriskyEHCSearch extends EnforcedHillClimbingSearch{
-	private FriskyHeuristic riskHeuristic;
+	private FFRiskyHeuristic riskHeuristic;
 
 	public FriskyEHCSearch(Domain domain, Problem problem,
 			List<ActionInstance> actionInstances,
@@ -21,14 +21,14 @@ public class FriskyEHCSearch extends EnforcedHillClimbingSearch{
 		super(domain,problem, actionInstances, riskySolutionEvaluator, searchStatistics);
 		//this.searchStatistics = searchStatistics;
 
-		this.riskHeuristic = new FriskyHeuristic(problem, domain);
+		this.riskHeuristic = new FFRiskyHeuristic(problem, domain);
 	}
 
 
 
 	@Override
 	public void initialize() {
-		startNode =  new FFRiskyNode(problem.getInitialState(), new FriskyHeuristic(problem, domain));
+		startNode =  new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain));
 	}
 
 

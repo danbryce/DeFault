@@ -13,9 +13,9 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 public class FactSpike {
 	private final List<FactHeader> factHeaders = new ArrayList<FactHeader>();
 	private List<Integer> rankEnd = new ArrayList<Integer>();
-	private Map<Integer, FactHeader> globalFactHeaders;
+	protected Map<Integer, FactHeader> globalFactHeaders;
 	private StanPlanningGraph solver;
-	private Map<Integer, Map<Integer, FactLevelInfo>> factLevelInfos;
+	protected Map<Integer, Map<Integer, FactLevelInfo>> factLevelInfos;
 	private BitSet mask = new BitSet();
 
 	public FactSpike(Map<Integer, FactHeader> globalFactHeaders, StanPlanningGraph solver) {
@@ -37,7 +37,7 @@ public class FactSpike {
 		if(factHeader == null){
 		factHeader = new FactHeader(proposition,
 				proposition.getIndex(), 
-				solver.getAndIncrementFactIndex(proposition),
+				(getCurrentRank() > 0 ? solver.getAndIncrementFactIndex(proposition) : -1),
 				-1);
 		}
 
@@ -128,8 +128,10 @@ public class FactSpike {
 	}
 
 	public boolean isActionApplicable(ActionInstance action) {
-
+		
 		for (Proposition prec : ((IncompleteActionInstance)action).getPreconditions()) {
+			
+			
 			if (get(prec.getName()) == null) {
 				return false;
 			}

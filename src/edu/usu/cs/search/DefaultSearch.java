@@ -122,4 +122,11 @@ public class DefaultSearch implements Search {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void setRelevantActions(List<ActionInstance> actions) {
+		//actionInstances.retainAll(actions);
+		actionInstances = actions;
+	}
 }

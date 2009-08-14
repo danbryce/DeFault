@@ -1,4 +1,4 @@
-package edu.usu.cs.search.incomplete.psp;
+package edu.usu.cs.search.incomplete.psp.ehc;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import edu.usu.cs.heuristic.FFRiskyPSPHeuristic;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.FFRiskyHeuristic;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.psp.FFRiskyPSPRelaxedPlanHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -18,21 +19,24 @@ import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarSearch;
+import edu.usu.cs.search.ehc.EnforcedHillClimbingSearch;
+import edu.usu.cs.search.incomplete.FFRiskyNode;
+import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 import edu.usu.cs.search.psp.AdditiveUtilityFunction;
 import edu.usu.cs.search.psp.UtilityFunction;
 
-public class FriskyPSPSearch extends DefaultSearch implements Search {
+public class FriskyPSPEHCSearch extends EnforcedHillClimbingSearch implements Search {
 	
-	protected static Logger logger = Logger.getLogger(FriskyPSPSearch.class.getName());
+	protected static Logger logger = Logger.getLogger(FriskyPSPEHCSearch.class.getName());
 	
-	protected final Search search;
+	//protected final Search search;
 	protected UtilityFunction goalUtilities;
 
 	
-	public FriskyPSPSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics) throws IllDefinedProblemException {
+	public FriskyPSPEHCSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics) throws IllDefinedProblemException {
 		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
-		search = new AStarSearch(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
+		//search = new EnforcedHillClimbingSearch(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
 		
 		//TODO hack, should move this into the problem and parse it from problem file
 		Map<Proposition, Double> goalUtils = new HashMap<Proposition, Double>();
@@ -49,14 +53,15 @@ public class FriskyPSPSearch extends DefaultSearch implements Search {
 		
 		StateNode startNode = new FFRiskyPSPNode(problem.getInitialState(), goalUtilities, heuristic, problem);
 		startNode.getFValue();
-		search.setRelevantActions(startNode.getRelevantActions());
+		setRelevantActions(startNode.getRelevantActions());
 		logger.info("# acts = " + startNode.getRelevantActions().size());
-		search.getOpen().add(startNode);
+		this.startNode =  startNode;
+
 	}
 	
-	public List<ActionInstance> getPath() {
-		return search.getPath();
-	}
+//	public List<ActionInstance> getPath() {
+//		return search.getPath();
+//	}
 	
 	
 	

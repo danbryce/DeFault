@@ -36,6 +36,8 @@ public class DefaultProblem implements Problem
 	private Map<PredicateDef, PredicateInstance> dynamicPredicates = null;
 	private Map<PredicateDef, PredicateInstance> staticPredicates = null;
 	
+	
+	
 	public DefaultProblem(){
 		
 	}

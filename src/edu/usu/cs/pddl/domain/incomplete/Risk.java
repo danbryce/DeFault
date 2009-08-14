@@ -1,5 +1,8 @@
 package edu.usu.cs.pddl.domain.incomplete;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * A risk is a potential source of execution failure due to incompleteness of the action model.
  */
@@ -18,6 +21,11 @@ public class Risk {
 	public static final String POSSCLOB = "PossClob";
 	public static final String UNLISTEDEFFECT = "UnlistedEffect";
 
+	private static Map<String, Risk> preconditionOpenRisks = new HashMap<String, Risk>();
+	private static Map<String, Risk> possibleClobberRisks = new HashMap<String, Risk>();
+	private static Map<String, Risk> unlistedEffectRisks = new HashMap<String, Risk>();
+	
+	
 	private final String riskName;
 	private final String action;
 	private final String proposition;
@@ -26,13 +34,38 @@ public class Risk {
 
 	// private int id;
 
-	public Risk(String riskName, String action, String proposition) {
+	private Risk(String riskName, String action, String proposition) {
 		this.riskName = riskName;
 		this.action = action;
 		this.proposition = proposition;
 		// this.id = getNextID();
 	}
 
+	public static Risk getRiskFromIndex(String name, String action, String proposition){
+		Map<String, Risk> index = null;
+		if(name.equals(PRECOPEN)){
+			index = preconditionOpenRisks;
+		}
+		else if(name.equals(POSSCLOB)){
+			index = possibleClobberRisks;
+		}
+		else if(name.equals(UNLISTEDEFFECT)){
+			index = unlistedEffectRisks;
+		}
+		StringBuilder builder = new StringBuilder();
+		builder.append(action).append(" ").append(proposition);
+		String s = builder.toString();
+		Risk risk = index.get(s);
+		if(risk == null){
+			risk = new Risk(name, action, proposition);
+			index.put(s, risk);
+		}
+		return risk;
+		
+		
+	}
+	
+	
 	public String getRiskName() {
 		return riskName;
 	}

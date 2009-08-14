@@ -18,7 +18,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 public class FFRiskySolutionEvaluator implements SolutionEvaluator {
 
 	
-	IncompleteProblem incompleteProblem = null;
+	Problem incompleteProblem = null;
 	private SearchStatistics searchStatistics = null;
 	private Domain domain;
 	private Problem problem;
@@ -28,7 +28,7 @@ public class FFRiskySolutionEvaluator implements SolutionEvaluator {
 	public FFRiskySolutionEvaluator(Domain domain,
 									Problem problem,
 									List<ActionInstance> actionInstances,
-									IncompleteProblem incompleteProblem, 
+									Problem incompleteProblem, 
 									SearchStatistics searchStatistics) {
 		this.domain = domain;
 		this.problem = problem;

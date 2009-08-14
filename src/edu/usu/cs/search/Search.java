@@ -21,5 +21,6 @@ public interface Search {
 	public long getTotalTimeTaken();
 	public long getHeuristicTimeTaken();
 	public PriorityQueue<StateNode> getOpen();
+	public void setRelevantActions(List<ActionInstance> actions);
 	
 }

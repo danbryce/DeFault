@@ -37,6 +37,8 @@ public class Domain
     private final List<FunctionDef> functions;
     private final List<PredicateDef> predicates;
     private final List<ActionDef> actions;
+    private Set<PredicateDef> dynamicPredicates;
+    
     
     private final Map<String, FunctionDef> funcsByName;
     private final Map<String, PredicateDef> predsByName;
@@ -78,19 +80,22 @@ public class Domain
             predsByName.put(p.getName(), p);
         }
         
+        dynamicPredicates = new HashSet<PredicateDef>();
         //Set which predicates are dynamic or static
         for(PredicateDef pd : predicates){
         	boolean dynamic = false;
         	for(ActionDef ad : actions){
         		Set<MethodDef> resultSet = new HashSet<MethodDef>();
         		ad.getEffect().getMethodDefs(resultSet);
+        		ad.getPossEffect().getMethodDefs(resultSet);
 //        		ad.getEffect().getLiteralsUsed(resultSet);
         		if(resultSet.contains(pd)){
         			dynamic = true;
+        			dynamicPredicates.add(pd);
         			break;
         		}
         	}
-        	pd.setDynamic(dynamic);
+        	pd.setDynamic(dynamic);        	
         }
         
     }
@@ -126,4 +131,9 @@ public class Domain
     public List<PDDLType> getTypes() {
         return types;
     }
+    
+    public boolean isDynamic(PredicateDef p){
+    	return dynamicPredicates.contains(p);
+    }
+    
 }

@@ -21,7 +21,7 @@ public class StanPlanningGraph {
 
 	protected  Map<Integer, FactHeader> globalFactHeaders = null; 
 	protected  Map<Integer, ActionHeader> globalActionHeaders = null;
-	protected Map<String, Risk> globalRiskHeaders = new HashMap<String, Risk>();
+	//protected Map<String, Risk> globalRiskHeaders = new HashMap<String, Risk>();
 	//protected IncompleteProblem problem = null;
 	protected int currentFactIndex = 0;
 	protected List<ActionInstance> remainingActions;
@@ -80,7 +80,7 @@ public class StanPlanningGraph {
 	protected void initializePlanningGraph(StateNode node) {
 		this.remainingActions = new ArrayList<ActionInstance>(problem.getActions());
 		this.factSpike = new FactSpike(globalFactHeaders, this);
-		this.actionSpike = new ActionSpike(factSpike, globalActionHeaders, globalFactHeaders, globalRiskHeaders, this);
+		this.actionSpike = new ActionSpike(factSpike, globalActionHeaders, globalFactHeaders, this);
 		this.helpfulActions = new HashSet<ActionInstance>();
 		//reset fact indices
 		currentFactIndex = 0;
@@ -347,13 +347,13 @@ public class StanPlanningGraph {
 				// Add the applicable action to the newActions list to be
 				// removed from remainingActions.
 				newActions.add(action);
-				// Add the applicable action to the actionSpike
-				actionSpike.addAction(action, false);
 			}
 		}
 
 		// Remove all the actions from remaining that were created.
 		for (ActionInstance action : newActions) {
+			// Add the applicable action to the actionSpike
+			actionSpike.addAction(action, false);
 			remainingActions.remove(action);
 		}
 	}
@@ -483,7 +483,7 @@ public class StanPlanningGraph {
 
 			FactLevelInfo fli = factSpike.getFactLevelInfo(level, subGoal.getPropositionIndex());
 
-			if(level == 1){
+			if(level == 0){
 				for(ActionHeader act : fli.getAllSupporters()){
 					if(!act.isNoop()){
 						helpfulActions.add(act.getAction());
@@ -530,4 +530,83 @@ public class StanPlanningGraph {
 	//		return null;
 	//	}
 
+	
+	public List<ActionInstance> getRelevantActions() {
+		int level = this.getFactSpike().getCurrentRank()-1;
+		Set<Proposition> goalAsPropositions = this.getProblem().getGoalAction().getPreconditions();
+		Set<FactHeader> goal = new HashSet<FactHeader>();
+
+		// Convert the goal from propositions to factHeaders
+		for(Proposition proposition : goalAsPropositions) {
+			FactHeader header = globalFactHeaders.get(proposition.getIndex());
+			if(header != null){
+				goal.add(header); 
+			}
+		}
+
+		// Get the relaxed plan as a parallel plan
+		List<Set<ActionHeader>> parallelPlan = new ArrayList<Set<ActionHeader>>();
+		for(int i = 0; i <= level; i++) {
+			parallelPlan.add(new HashSet<ActionHeader>());
+		}
+		parallelPlan = relevantActionExtraction(goal, level, parallelPlan);
+
+		// Testing only - output the parallel plan
+		//		System.out.println("\nOutputting parallel plan");
+
+		// Convert it from a parallel ActionHeader plan to a sequence of Actions
+
+		Set<IncompleteActionInstance> plan = new HashSet<IncompleteActionInstance>();
+		for(int l = 0; l < parallelPlan.size(); l++) {
+			//		for (Set<ActionHeader> parallelActions : parallelPlan) {
+			//			System.out.print("rank " + l + " ");
+			for (ActionHeader actionHeader : parallelPlan.get(l)) {
+				if(!actionHeader.isNoop()) {
+					IncompleteActionInstance action = actionHeaderToAction(actionHeader);
+					//					System.out.print(action.getName() + " ");
+					plan.add(action);
+				}
+			}
+			//			System.out.println();
+		}
+
+		List<ActionInstance> actList = new ArrayList<ActionInstance>();
+		actList.addAll(plan);
+		return actList;
+
+	}
+
+	private List<Set<ActionHeader>> relevantActionExtraction(Set<FactHeader> goal, int level, List<Set<ActionHeader>> parallelPlan) {
+		if(level == 0) {
+			//			Collections.reverse(parallelPlan);
+			return parallelPlan;
+		}
+
+		//System.out.println("extract from: " + level);
+
+		Set<FactHeader> subGoalsToBeAdded = new HashSet<FactHeader>();
+
+		for (FactHeader subGoal : goal) {
+			boolean hasNoop = false;
+
+			FactLevelInfo fli = factSpike.getFactLevelInfo(level, subGoal.getPropositionIndex());
+
+			
+
+			for(ActionHeader actionHeader : fli.getAllSupporters()){
+				// Add the actions to the plan
+				parallelPlan.get(level).add(actionHeader);
+
+				// Add the preconditions of the actions to the goal
+				ActionLevelInfo ali = actionSpike.getActionLevelInfo(level-1, actionHeader.getIndex());
+				subGoalsToBeAdded.addAll(ali.getSupportingFacts());
+				//System.out.println("# crisks: " + ali.getCriticalRisks().size());
+			}
+		}
+
+		return relevantActionExtraction(subGoalsToBeAdded, level - 1, parallelPlan);
+	}
+
+
+	
 }
