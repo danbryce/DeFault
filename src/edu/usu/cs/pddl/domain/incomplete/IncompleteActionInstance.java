@@ -198,8 +198,10 @@ public class IncompleteActionInstance  implements ActionInstance{
 		actPrecondition.getLiteralsUsed(preconditions);
 		for (LiteralInstance precondition : preconditions) {
 			if(domain.isDynamic((PredicateDef) precondition.getDefinition())){
-				Proposition p = Proposition.getPropositionFromIndex(precondition);			
+				Proposition p = Proposition.getPropositionFromIndex(precondition);		
+				if(p != null){
 				this.preconditions.add(p);
+				}
 			}
 		}
 
@@ -254,8 +256,10 @@ public class IncompleteActionInstance  implements ActionInstance{
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
 					effect.getLiteralsUsed(results);
 					for (LiteralInstance result : results) {
-						Proposition p = Proposition.getPropositionFromIndex(result);						
+						Proposition p = Proposition.getPropositionFromIndex(result);	
+						if(p != null){
 						this.possibleAddEffects.add(p);
+						}
 					}
 				} else {
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();

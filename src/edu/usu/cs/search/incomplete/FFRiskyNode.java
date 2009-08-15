@@ -149,7 +149,7 @@ public class FFRiskyNode  extends AStarNode {
 		for(Proposition p : propositions.keySet()){
 			Set<Risk> risks = propositions.get(p);
 			Set<Risk> objRisks = objNode.getPropositions().get(p);
-			if(!risks.containsAll(objRisks) && !objRisks.containsAll(risks)){
+			if(!risks.containsAll(objRisks) || !objRisks.containsAll(risks)){
 				return false;
 			}
 		}
@@ -210,7 +210,7 @@ public class FFRiskyNode  extends AStarNode {
 	public List<StateNode> createSubsequentNodes(
 			List<ActionInstance> subsequentActions){
 
-		boolean useHelpfulActions = true;
+		boolean useHelpfulActions = false;
 
 		if(subsequentNodes != null && useHelpfulActions){
 			//need to reset node after failing in local search

@@ -49,7 +49,7 @@ public class FriskyPSPSearch extends DefaultSearch implements Search {
 		
 		StateNode startNode = new FFRiskyPSPNode(problem.getInitialState(), goalUtilities, heuristic, problem);
 		startNode.getFValue();
-		search.setRelevantActions(startNode.getRelevantActions());
+		//search.setRelevantActions(startNode.getRelevantActions());
 		logger.info("# acts = " + startNode.getRelevantActions().size());
 		search.getOpen().add(startNode);
 	}

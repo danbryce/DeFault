@@ -27,7 +27,7 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 	private Domain domain;
 	private Problem problem;
 	private List<ActionInstance> actionInstances;
-	private final int MAX_NUM_SOLUTIONS = 10;
+	private final int MAX_NUM_SOLUTIONS = 5;
 	private long maxHeapUsageSize;
 	private long initialHeapSize;
 	
