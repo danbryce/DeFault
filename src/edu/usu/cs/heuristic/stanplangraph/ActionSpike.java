@@ -125,15 +125,18 @@ public class ActionSpike {
 			// factSpike, so it needs to be added
 			// Also an UnlistedEffect risk need to be added
 			if (factHeader == null) {
-				//getFactSpike().addFact(possAdd);
-
-				factHeader = globalFactHeader;
+				
+				if(globalFactHeader == null){
+					FactHeader newFactHeader = new FactHeader(possAdd, possAdd.getIndex(),0, 0);
+					globalFactHeaders.put(possAdd.getIndex(), newFactHeader);
+				}
+				globalFactHeader = globalFactHeaders.get(possAdd.getIndex());
+				
+				//globalFactHeaders.put(add.getIndex(), add);
 				globalFactHeader.setIndex(solver.getAndIncrementFactIndex(possAdd));
-				//				String s = "UnlistedEffect " + action.getName() + " " + possAdd.getName();
-				//				if(!globalRiskHeaders.containsKey(s)) {
-				//					globalRiskHeaders.put(s, new Risk(Risk.UNLISTEDEFFECT, action.getName(), possAdd.getName()));
-				//				}
-				//				possibleRisks.add(globalRiskHeaders.get(s));
+				getFactSpike().addFact(globalFactHeader);
+
+				
 			}
 			FactLevelInfo fli = factSpike.getFactLevelInfo(getCurrentRank()+1, possAdd.getIndex());
 			fli.getPossibleSupporters().add(actionHeader);

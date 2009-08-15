@@ -200,7 +200,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 			if(domain.isDynamic((PredicateDef) precondition.getDefinition())){
 				Proposition p = Proposition.getPropositionFromIndex(precondition);		
 				if(p != null){
-				this.preconditions.add(p);
+					this.preconditions.add(p);
 				}
 			}
 		}
@@ -231,16 +231,19 @@ public class IncompleteActionInstance  implements ActionInstance{
 		}
 
 		// Add the possible preconditions
-	
+
 		this.possiblePreconditions = new HashSet<Proposition>();
 		Set<LiteralInstance> possiblePreconditions = new HashSet<LiteralInstance>();
 		DefaultGoalDesc actPossPrecondition = (DefaultGoalDesc) action.getPossPreCondition().instantiate(argMapping, allObjects);
-		actPossPrecondition.getLiteralsUsed(possiblePreconditions);
-		action.getPossPreCondition().getLiteralsUsed(
-				possiblePreconditions);
-		for (LiteralInstance precondition : possiblePreconditions) {
-			Proposition p = Proposition.getPropositionFromIndex(precondition);						
-			this.possiblePreconditions.add(p);
+		if(actPossPrecondition != null){
+			actPossPrecondition.getLiteralsUsed(possiblePreconditions);
+			
+			actPossPrecondition.getLiteralsUsed(
+					possiblePreconditions);
+			for (LiteralInstance precondition : possiblePreconditions) {
+				Proposition p = Proposition.getPropositionFromIndex(precondition);						
+				this.possiblePreconditions.add(p);
+			}
 		}
 
 		// Add the possible adds and deletes
@@ -258,7 +261,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 					for (LiteralInstance result : results) {
 						Proposition p = Proposition.getPropositionFromIndex(result);	
 						if(p != null){
-						this.possibleAddEffects.add(p);
+							this.possibleAddEffects.add(p);
 						}
 					}
 				} else {
