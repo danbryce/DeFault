@@ -30,13 +30,16 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 	private final int MAX_NUM_SOLUTIONS = 5;
 	private long maxHeapUsageSize;
 	private long initialHeapSize;
+	private long maxRunTime;
+	private long startTime;
 	
 	public FFRiskyPSPSolutionEvaluator(Domain domain,
 									Problem problem,
 									List<ActionInstance> actionInstances,
 									Problem incompleteProblem, 
 									SearchStatistics searchStatistics, 
-									long maxHeapUsageSize) {
+									long maxHeapUsageSize,
+									long maxRunTime) {
 		this.domain = domain;
 		this.problem = problem;
 		this.actionInstances = actionInstances;
@@ -44,6 +47,8 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 		this.searchStatistics  = searchStatistics;
 		this.maxHeapUsageSize = maxHeapUsageSize;
 		this.initialHeapSize = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		this.startTime = System.currentTimeMillis();
+		this.maxRunTime = maxRunTime;
 	}
 	
 	@Override
@@ -78,10 +83,12 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 
 	@Override
 	public boolean isSolutionSetComplete(List<StateNode> solutions) {
-		
+		long currentRunTime = System.currentTimeMillis( ) - this.startTime;
+		boolean exhaustedTime = currentRunTime > this.maxRunTime; 
+
 		long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() - initialHeapSize;
 		boolean exhaustedMemory = usedMemory >= maxHeapUsageSize;
-		return (solutions.size() >= MAX_NUM_SOLUTIONS || exhaustedMemory);
+		return (solutions.size() >= MAX_NUM_SOLUTIONS || exhaustedMemory || exhaustedTime);
 	}
 
 

@@ -34,8 +34,11 @@ public class DefaultSolver implements Solver {
 	protected Search search = null;
 	protected SearchStatistics searchStatistics = null;
 	protected long maxHeapUsageSize = 0;
+	protected long maxRunTime = 0;
 	private static final long DEFAULT_MAX_HEAP_USAGE = 1024*1024*200;
+	private static final long DEFAULT_MAX_RUNTIME = 1000*60*1;
 
+	
 	public DefaultSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
 	{
 		if(domain == null || problem == null) {
@@ -45,6 +48,7 @@ public class DefaultSolver implements Solver {
 		long availableMemory = Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
 		
 		setMaxHeapUsage(Math.min(DEFAULT_MAX_HEAP_USAGE, availableMemory));
+		setMaxRunTime(DEFAULT_MAX_RUNTIME);
 		
 		this.domain = domain;
 		this.problem = problem;
@@ -58,6 +62,10 @@ public class DefaultSolver implements Solver {
 		}
 
 
+	}
+
+	private void setMaxRunTime(long defaultMaxRuntime) {
+		this.maxRunTime = defaultMaxRuntime;
 	}
 
 	public void setMaxHeapUsage(long defaultMaxHeapUsage) {
