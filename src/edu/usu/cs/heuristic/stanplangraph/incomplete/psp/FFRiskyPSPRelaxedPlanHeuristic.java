@@ -13,6 +13,7 @@ import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
+import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.psp.UtilityFunction;
 
 public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
@@ -28,26 +29,27 @@ public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
 	}
 
 	
-	public double[] getValue(FFRiskyNode node) {
-		double[] values = new double[2];
+	public double[] getValue(FFRiskyPSPNode node) {
+		double[] values = new double[node.getDimension()];
 
 		solver.reachFixedPoint(node);
-		Set<Risk> goalRiskSet = solver.getGoalRiskSet();
-		double netBenefit = solver.getRelaxedPlanNetBenefit();
+		Set<Risk> goalRiskSet = solver.getGoalRiskSet(node.getGoalsAchieved());
+		
+		double benefit = solver.getRelaxedPlanBenefit(node.getGoalsAchieved());
+		double cost = solver.getRelaxedPlanCost(node.getGoalsAchieved());
 
 		// If goalRiskSet returns null, there is no solution in this path so return infinity
 		if(goalRiskSet == null) {
 			values[0] = Double.MAX_VALUE;
 			values[1] = 0;
-
+			values[2] = 0;
 		}
 		else{
 			// Remove all critical risks that have been added already
 			goalRiskSet.removeAll(node.getCriticalRisks());
-			values[0] = goalRiskSet.size();
-
-
-			values[1] = netBenefit;
+			values[0] = benefit;
+			values[1] = goalRiskSet.size();
+			values[2] = cost;
 		}
 		//System.out.println("\t\t" + values[0] + " " + values[1] );
 
@@ -57,8 +59,8 @@ public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
 
 	@Override
 	public double[] getValue(StateNode abstractStateNode) {
-		if(abstractStateNode instanceof FFRiskyNode)
-			return getValue((FFRiskyNode)abstractStateNode);
+		if(abstractStateNode instanceof FFRiskyPSPNode)
+			return getValue((FFRiskyPSPNode)abstractStateNode);
 		return null;
 	}
 	@Override

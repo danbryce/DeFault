@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -22,10 +24,14 @@ import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPEHCSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.SearchStatistics;
+import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FFRiskyPSPTest {
+	private static Logger logger = LoggerFactory
+	.getLogger(FFRiskyPSPTest.class);
 
+	
 	@Test
 	public void testPlanner() {
 		Assert.assertTrue(true);
@@ -57,11 +63,11 @@ public class FFRiskyPSPTest {
 			FFRiskyPSPSolver solver = new FFRiskyPSPSolver(domain, problem, searchStatistics);
 			List<ActionInstance> plan = solver.solve();
 			if (plan == null) {
-				System.out.println("No plan found");
+				logger.debug("No plan found");
 			} else {
 				//System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
 				for (ActionInstance action : plan) {
-					System.out.println(action.toString());
+					logger.debug(action.toString());
 				}
 			}
 

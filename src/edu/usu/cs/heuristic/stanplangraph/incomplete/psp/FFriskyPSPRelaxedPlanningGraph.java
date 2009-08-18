@@ -3,6 +3,7 @@ package edu.usu.cs.heuristic.stanplangraph.incomplete.psp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
@@ -27,8 +28,10 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 
 	UtilityFunction utilityFunction = null;
-
-
+	private List<IncompleteActionInstance> plan = null;
+	double benefit = Double.MAX_VALUE;
+	double cost = 0;
+	
 	public FFriskyPSPRelaxedPlanningGraph(Problem problem, Domain domain, UtilityFunction utilityFunction) {
 		super(problem, domain);
 		this.utilityFunction = utilityFunction;
@@ -57,12 +60,14 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			for (Proposition proposition : fn.getPropositions().keySet()) {
 				Set<Risk> priorRisks = fn.getPropositions().get(proposition);
 				if(priorRisks.size() > 0){
-				this.getFactSpike().getFactLevelInfo(0, proposition.getIndex()).setPossibleRisks(priorRisks);
+					this.getFactSpike().getFactLevelInfo(0, proposition.getIndex()).setPossibleRisks(priorRisks);
 				}
 			}
 		}
 		levelsPastClassicalLevelOff = 0;
-
+		this.benefit = Double.MAX_VALUE;
+		this.cost = 0;
+		this.plan = null;
 	}
 
 	protected void setActionLevelInfo() {
@@ -194,7 +199,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 			Set<ActionHeader> possSupporters = fli.getPossibleSupporters();
 			if(possSupporters.contains(actionWithFewestPossibleRisks)){
-					Risk r = Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, actionWithFewestPossibleRisks.getName(), fact.getName());
+				Risk r = Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, actionWithFewestPossibleRisks.getName(), fact.getName());
 				possibleRisks.add(r);
 			}
 
@@ -301,10 +306,10 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 	}
 
 
-	public Set<Risk> getGoalRiskSet() {
+	public Set<Risk> getGoalRiskSet(Map<Proposition, Set<Risk>> goalsAchieved) {
 		// Once it has converged, we're almost done
 		// We just need to get all the critical risks in the goal action preconditions
-		Set<Risk> goalCriticalRisks = new HashSet<Risk>();
+		Set<Risk> allGoalsCriticalRisks = new HashSet<Risk>();
 		for(Proposition subgoal : this.getProblem().getGoalAction().getPreconditions()) {
 			FactHeader precHeader = this.getFactSpike().get(subgoal.getName());
 
@@ -317,15 +322,22 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			//			goalCriticalRisks.addAll(precHeader.getCriticalRisks(this.getActionSpike().getCurrentRank()));
 			//			goalCriticalRisks.addAll(precHeader.getPossibleRisks(this.getActionSpike().getCurrentRank()));
 			FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-1, precHeader.getPropositionIndex());
+			
+			Set<Risk> goalCriticalRisks = new HashSet<Risk>();			
 			goalCriticalRisks.addAll(fli.getCriticalRisks());
 			goalCriticalRisks.addAll(fli.getPossibleRisks());
+			Set<Risk> priorRisks = goalsAchieved.get(subgoal);
+			if(priorRisks != null){
+				goalCriticalRisks.removeAll(priorRisks); //don't count risks already committed to goals
+			}
+			allGoalsCriticalRisks.addAll(goalCriticalRisks);
 		}
 
-		return goalCriticalRisks;
+		return allGoalsCriticalRisks;
 	}
 
 
-	public double getRelaxedPlanNetBenefit() {
+	private void getRelaxedPlan(Map<Proposition, Set<Risk>> goalsAcheived) {
 
 		int level = this.getFactSpike().getCurrentRank()-1;
 		Set<Proposition> goalAsPropositions = this.getProblem().getGoalAction().getPreconditions();
@@ -340,17 +352,16 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 		Set<Proposition> achievedGoals = new HashSet<Proposition>(); 
 		for(Proposition proposition : goalAsPropositions) {
 			//goal.add(factSpike.get(proposition.getName()));
-			FactHeader header = globalFactHeaders.get(proposition.getIndex());
-			if(header != null){
-				goal.add(header); 
-				achievedGoals.add(proposition);
+			if(!goalsAcheived.keySet().contains(proposition)){
+				FactHeader header = globalFactHeaders.get(proposition.getIndex());
+				if(header != null){
+					goal.add(header); 
+					achievedGoals.add(proposition);
+				}
 			}
 		}
-		utility = utilityFunction.evaluate(achievedGoals);
+		this.benefit = utilityFunction.evaluate(achievedGoals);
 
-		if(goal.size() == 0){
-			return 0.0; //no netbenefit
-		}
 
 		// Get the relaxed plan as a parallel plan
 		List<Set<ActionHeader>> parallelPlan = new ArrayList<Set<ActionHeader>>();
@@ -364,7 +375,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 		// Convert it from a parallel ActionHeader plan to a sequence of Actions
 
-		List<IncompleteActionInstance> plan = new ArrayList<IncompleteActionInstance>();
+		plan = new ArrayList<IncompleteActionInstance>();
 		for(int l = 0; l < parallelPlan.size(); l++) {
 			//		for (Set<ActionHeader> parallelActions : parallelPlan) {
 			//			System.out.print("rank " + l + " ");
@@ -378,14 +389,14 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			//			System.out.println();
 		}
 
-		double cost = 0;
+		
 		for(IncompleteActionInstance act : plan){
-			cost += act.getCost();
+			this.cost += act.getCost();
 		}
 
 		//	System.out.println(plan.size());
 
-		return utility-cost;
+		
 
 	}
 
@@ -406,7 +417,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 			if(level == 1){
 				for(ActionHeader act : fli.getAllSupporters()){
-					
+
 					if(!act.isNoop()){
 						helpfulActions.add(act.getAction());
 					}
@@ -425,6 +436,23 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 		}
 
 		return solutionExtraction(subGoalsToBeAdded, level - 1, parallelPlan);
+	}
+
+
+	public double getRelaxedPlanBenefit(
+			Map<Proposition, Set<Risk>> goalsAchieved) {
+		if(plan == null){
+			getRelaxedPlan(goalsAchieved);
+		}
+		return benefit;
+	}
+
+
+	public double getRelaxedPlanCost(Map<Proposition, Set<Risk>> goalsAchieved) {
+		if(plan == null){
+			getRelaxedPlan(goalsAchieved);
+		}
+		return cost;
 	}
 
 

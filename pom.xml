@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.usu.cs</groupId>
   <artifactId>graphplanner</artifactId>
-  <version>1.2.5</version>
+  <version>1.2.6</version>
 
   <!-- To Release -->
   <!-- mvn clean deploy -DperformRelease -->
 
   <scm>
-    <developerConnection>scm:svn:https://cmext.sri.com/svn/bl/graphplanner/tags/graphplanner-1.2.5</developerConnection>
+    <developerConnection>scm:svn:https://cmext.sri.com/svn/bl/graphplanner/tags/graphplanner-1.2.6</developerConnection>
   </scm>
 
   <build>
@@ -64,7 +64,28 @@
       <version>4.4</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
+
+  <properties>
+    <slf4j.version>1.5.3</slf4j.version>
+  </properties>
+
 
   <profiles>
     <profile>

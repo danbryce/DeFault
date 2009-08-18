@@ -3,7 +3,8 @@ package edu.usu.cs.search.astar;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -42,30 +43,30 @@ public class AStarSearch extends DefaultSearch implements Search
 
 	
 	public List<ActionInstance> getPath(){
-//		System.out.println("G\tH\tF");
+//		logger.debug("G\tH\tF");
 		Date startTotal = new Date();
-//		System.out.println("Starting timer..." + start.getTime());
+//		logger.debug("Starting timer..." + start.getTime());
 		while(true){
 			
-//			System.out.println("\n\n*************************************************");
+//			logger.debug("\n\n*************************************************");
 			
 			// If there are no actions left in the priority queue, there's no solution
 			if(open.isEmpty()){
-				//System.out.println("Open List Empty");
+				logger.debug("Open List Empty");
 				return extractSolution(solutions);
 			}
 			
 			// Try the next available action in the queue
-//			System.out.println("\nPulling state from queue...");
+//			logger.debug("\nPulling state from queue...");
 			StateNode currentNode = open.remove();
 			
 			// If we have already tested this node, ignore it and keep trying.
 			if(solutionEvaluator.closedContains(closed, currentNode)){
-				//System.out.println("State already visited:\n" + currentNode.getState().toString());
+				//logger.debug("State already visited:\n" + currentNode.getState().toString());
 				continue;
 			}
 //			else {
-//				System.out.println("New state:\n" + currentNode.getState().toString());
+//				logger.debug("New state:\n" + currentNode.getState().toString());
 //			}
 			closed.add(currentNode);
 			
@@ -76,24 +77,23 @@ public class AStarSearch extends DefaultSearch implements Search
 
 				if(solutionEvaluator.keepSolution(currentNode, solutions)){
 					// Apply the goal action
-					List<IncompleteActionInstance> goal = new ArrayList<IncompleteActionInstance>();
-					goal.add(this.problem.getGoalAction());
-					StateNode goalNode = currentNode;//currentNode.createSubsequentNodes(goal).get(0);
+//					List<IncompleteActionInstance> goal = new ArrayList<IncompleteActionInstance>();
+//					goal.add(this.problem.getGoalAction());
 					
-					System.out.print("Found Solution, g = ");
-					for(int i = 0; i < goalNode.getDimension(); i++){
-						System.out.print(goalNode.getGValue()[i] + "\t");
-					}
-					System.out.println("");
-					
-					solutions.add(goalNode);
+					logger.debug("Found Solution: " + currentNode);
+//					for(int i = 0; i < goalNode.getDimension(); i++){
+//						logger.debug();
+//					}
+//					logger.debug("");
+//					
+					solutions.add(currentNode);
 				}
 
 				if(solutionEvaluator.isSolutionSetComplete(solutions)){
 					Date stopTotal = new Date();
-//					System.out.println("Stopping timer..." + stop.getTime());
+//					logger.debug("Stopping timer..." + stop.getTime());
 					totalTimeTaken = stopTotal.getTime() - startTotal.getTime();
-//					System.out.println("Soultion Set Complete");
+//					logger.debug("Soultion Set Complete");
 					return extractSolution(solutions);
 				}
 
@@ -104,20 +104,20 @@ public class AStarSearch extends DefaultSearch implements Search
 			// Add subsequent nodes to the queue if they aren't a repeated state
 			List<StateNode> subsequentNodes = currentNode.createSubsequentNodes(actionInstances);
 			for(int nodeIndex = 0; nodeIndex < subsequentNodes.size(); nodeIndex++) {
-//				System.out.println("\nCreated State ready to be added to queue...");
+//				logger.debug("\nCreated State ready to be added to queue...");
 //				if(!closed.contains(subsequentNodes.get(nodeIndex).getState())) {
 					//Date startHeuristic = new Date();
 					open.add(subsequentNodes.get(nodeIndex));
 					//Date stopHeuristic = new Date();
 					//heuristicTimeTaken += (stopHeuristic.getTime() - startHeuristic.getTime());
-//					System.out.println("State added to queue:\n" + subsequentNodes.get(nodeIndex).getState().toString());
+//					logger.debug("State added to queue:\n" + subsequentNodes.get(nodeIndex).getState().toString());
 //				}
 //				else {
-//					System.out.println("State already visited:\n" + subsequentNodes.get(nodeIndex).getState().toString());
+//					logger.debug("State already visited:\n" + subsequentNodes.get(nodeIndex).getState().toString());
 //				}
 			}
 			
-//						System.out.println(
+//						logger.debug(
 //					searchStatistics.getTimeSinceStart() + "\t" + 
 //					subsequentNodes.size() + "\t" +
 //					nodesExpandedCount + "\t" + 
@@ -125,7 +125,7 @@ public class AStarSearch extends DefaultSearch implements Search
 //					currentNode.getHeuristicValue()[0] + "\t" + 
 //					currentNode.getFValue()[0] );
 			searchStatistics.processNode(currentNode);
-			System.out.println(searchStatistics.toString());
+			logger.debug(searchStatistics.toString());
 			
 		}
 	}

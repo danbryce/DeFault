@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -23,6 +26,7 @@ import edu.usu.cs.planner.ffrisky.UniformCostFFriskySolver;
 import edu.usu.cs.planner.ffvanilla.AStarSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
+import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class SearchTest {
@@ -30,6 +34,8 @@ public class SearchTest {
 	private static FFRiskyNode finalNode;
 	private static IncompleteProblem problem;
 	private static double goalMin = Double.MAX_VALUE; // Once solution is found, this is used to keep track of the best solution found so far
+	private static Logger logger = LoggerFactory
+	.getLogger(SearchTest.class);
 
 
 
@@ -114,12 +120,12 @@ public class SearchTest {
 
 
 		if (plan == null) {
-			System.out.println("\nNo plan found");
+			logger.debug("\nNo plan found");
 			return;
 		}
-		System.out.println("\nPlan found");
+		logger.debug("\nPlan found");
 		for (ActionInstance action : plan) {
-			System.out.println(action.getName());
+			logger.debug(action.getName());
 		}
 
 		//		// Output the state sequence and actions in the plan
@@ -142,12 +148,12 @@ public class SearchTest {
 		//			System.out.println(risk);
 		//		}
 
-		System.out.println("\nFinal Stats:\n");
-		System.out.println("Plan length: " + plan.size());
-		System.out.println("Elapsed time: " + searchStatistics.getElapsedTime() + " milliseconds");
-		System.out.println("Nodes expanded: " + searchStatistics.getNodesExpanded());
+		logger.debug("\nFinal Stats:\n");
+		logger.debug("Plan length: " + plan.size());
+		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime() + " milliseconds");
+		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
 		if(searchStatistics.getSolutionNode() != null && searchStatistics.getSolutionNode() instanceof FFRiskyNode){
-		System.out.println("Risk count: " + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size());
+			logger.debug("Risk count: " + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size());
 		}
 		try {
 			FileWriter fstream = new FileWriter("Output/" + args[2], true);

@@ -18,10 +18,16 @@ import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 
-	
+	private static Logger logger = LoggerFactory
+	.getLogger(FFRiskyPSPSolutionEvaluator.class);
+
+
 	Problem incompleteProblem = null;
 	private SearchStatistics searchStatistics = null;
 	private Domain domain;
@@ -55,18 +61,22 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 	public StateNode getBestSolution(List<StateNode> solutions) {
 		if(solutions.size() > 0){
 
-			Queue<FFRiskyPSPNode> sols = new PriorityQueue<FFRiskyPSPNode>(20,
-					new Comparator<FFRiskyPSPNode>(){
-						public int compare(FFRiskyPSPNode first, FFRiskyPSPNode second){
-							return -1*(int)(first.getFValue()[1] - 
-									second.getFValue()[1]);
+			Queue<StateNode> sols = new PriorityQueue<StateNode>(20,
+					new Comparator<StateNode>(){
+						public int compare(StateNode first, StateNode second){
+							return compareToG(first, second);
 						}
 					}
 					);
 			for(StateNode node : solutions)
-				sols.add((FFRiskyPSPNode)node);
+				sols.add(node);
 			
-			return sols.poll();
+			
+			StateNode solution = sols.poll();
+			
+			logger.debug("Returning Solution: " + searchStatistics.toString());
+			
+			return solution;
 			
 			//			List<FFRiskyPSPNode> mySolutions = new ArrayList<FFRiskyPSPNode>();
 //			for(StateNode node : solutions)
@@ -85,10 +95,28 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 	public boolean isSolutionSetComplete(List<StateNode> solutions) {
 		long currentRunTime = System.currentTimeMillis( ) - this.startTime;
 		boolean exhaustedTime = currentRunTime > this.maxRunTime; 
-
 		long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() - initialHeapSize;
 		boolean exhaustedMemory = usedMemory >= maxHeapUsageSize;
-		return (solutions.size() >= MAX_NUM_SOLUTIONS || exhaustedMemory || exhaustedTime);
+		boolean maxedOutNumSolutions = solutions.size() >= MAX_NUM_SOLUTIONS;
+		
+		boolean exit = (maxedOutNumSolutions || exhaustedMemory || exhaustedTime); 
+		
+		if(exit){
+			String reason = "";
+			if(maxedOutNumSolutions){
+				reason = "maxed out the number of solutions " + MAX_NUM_SOLUTIONS;
+			}
+			else if (exhaustedMemory){
+				reason = "exhausted memory " + maxHeapUsageSize;
+			}
+			else if (exhaustedTime) {
+				reason = "exhausted time " + this.maxRunTime;
+			}
+				
+			logger.debug("Exiting Search with " + solutions.size() + " solutions because " + reason);
+		}
+		
+		return exit;
 	}
 
 
@@ -101,7 +129,10 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 		//is solution better than all those found so far
 		if(solutions.size() > 0){
 			for(StateNode solution : solutions){
-				if(currentNode.getGValue()[1] <= solution.getGValue()[1]){
+				int comp = compareToG(currentNode, solution);  
+				
+				if(comp >= 0){
+			//	if(isBetterG(solution, currentNode)){
 					keep = false;
 					break;
 				}
@@ -110,6 +141,27 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 		return keep;
 	}
 
+	
+	public int compareToG(StateNode first, StateNode second){
+		Double[] diffs = new Double[first.getDimension()];
+		for(int i = 0; i < first.getDimension(); i++){
+			diffs[i] = first.getGValue()[i] - second.getGValue()[i];
+			//logger.debug("diff["+i+"]="+diffs[i] + " " + first.getFValue()[i] + " " + second.getFValue()[i]);
+		}
+		if(diffs[0] == 0.0) {
+			if(diffs[1] != 0.0){  
+				return diffs[1].intValue(); //risk
+			}
+			else{
+				return diffs[2].intValue(); //cost
+			}
+		}
+		else{
+			return -1*diffs[0].intValue(); //benefit 
+		}
+
+	}
+	
 	@Override
 	public boolean isSolution(Problem problem, StateNode node) {
 //		// TODO Auto-generated method stub
@@ -135,6 +187,29 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 		return false;
 	}
 
+	
+	public boolean isBetterG(StateNode childNode, StateNode parentNode) {
+		double[]  diff = new double[childNode.getDimension()];
+		
+		boolean strictlyBetter = false;
+		
+		for(int i = 1; i < childNode.getDimension(); i++){
+			diff[i] = childNode.getGValue()[i] - parentNode.getGValue()[i];
+			if(i == 0){
+				diff[i] *= -1; //for benefit, make it a minimiziation
+			}
+			if(diff[i] > 0){
+				return false;
+			}
+			else if(diff[i] < 0.0 ){
+				strictlyBetter = true;
+			}
+		}
+				
+		return strictlyBetter;
+	}
+
+	
 	@Override
 	public boolean isBetter(StateNode childNode, StateNode parentNode) {
 		double[]  diff = new double[childNode.getDimension()];
@@ -143,8 +218,8 @@ public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 		
 		for(int i = 1; i < childNode.getDimension(); i++){
 			diff[i] = childNode.getHeuristicValue()[i] - parentNode.getHeuristicValue()[i];
-			if(i == 1){
-				diff[i] *= -1; //for net benefit, make it a minimiziation
+			if(i == 0){
+				diff[i] *= -1; //for benefit, make it a minimiziation
 			}
 			if(diff[i] > 0){
 				return false;

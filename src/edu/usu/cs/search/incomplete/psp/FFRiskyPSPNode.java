@@ -5,12 +5,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.psp.UtilityFunction;
 
@@ -24,6 +28,9 @@ import edu.usu.cs.search.psp.UtilityFunction;
  */
 public class FFRiskyPSPNode  extends FFRiskyNode {
 
+	private static Logger logger = LoggerFactory
+	.getLogger(FFRiskyPSPNode.class);
+
 	protected double utilityUpToNow = 0.0;
 	protected double costUpToNow = 0.0;
 
@@ -31,7 +38,9 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 	protected UtilityFunction goalUtilityFunction = null;
 
 	public FFRiskyPSPNode(Set<Proposition> propositions, UtilityFunction goalUtilityFunction, Heuristic heuristic, Problem problem) {
+
 		super(propositions, heuristic);
+		dimension = 3;
 		this.problem = problem;
 
 		this.goalUtilityFunction = goalUtilityFunction;
@@ -117,19 +126,27 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 			this.gvalue = new double[dimension];
 			for(int i =0 ; i < dimension ; i++){
 				if(parent == null){
-					this.gvalue[i] = 0.0;
+					if(i == 0){
+						this.gvalue[i] = utilityUpToNow;
+					}
+					else
+						this.gvalue[i] = 0.0;
+
 				}
 				else{
-					if(i == 1){
-						this.gvalue[i] = utilityUpToNow - costUpToNow;
+					if(i == 0){
+						this.gvalue[i] = utilityUpToNow;
 					}
-					else if (i==0){
+					else if(i == 1){
 						Set<Risk> risks = new HashSet<Risk>(this.getCriticalRisks());
 						for(Proposition p : goalsAchieved.keySet()){
 							risks.addAll(goalsAchieved.get(p));
 						}
 						//risks.removeAll(((FFRiskyNode)parent).getCriticalRisks());
 						this.gvalue[i] = risks.size();
+					}
+					else if (i==2){
+						this.gvalue[i] = costUpToNow;
 					}
 				}
 			}
@@ -166,23 +183,43 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 	}
 
 
-	protected Map<Proposition, Set<Risk>> getGoalsAchieved() {
+	public Map<Proposition, Set<Risk>> getGoalsAchieved() {
 		return goalsAchieved;
 	}
 
-	public int compareTo(FFRiskyPSPNode second){
+	public String toString(){
+		StringBuilder builder = new StringBuilder();
+
+		if(this.gvalue == null){
+			this.getGValue();
+		}
+	
+		for(int i = 0; i < this.dimension; i++){
+			builder.append(this.gvalue[i]).append(" ");
+		}
+		return builder.toString();
+	}
+	
+	public int compareTo(StateNode second) {
+
 		FFRiskyPSPNode first = this;
 		boolean alphaCombo = false;
 		if(!alphaCombo){
-			Double[] diffs = new Double[2];
-			for(int i = 0; i < 2; i++){
+			Double[] diffs = new Double[this.dimension];
+			for(int i = 0; i < this.dimension; i++){
 				diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+				//logger.debug("diff["+i+"]="+diffs[i] + " " + first.getFValue()[i] + " " + second.getFValue()[i]);
 			}
-			if(diffs[1] != 0) {
-				return -1*diffs[1].intValue();
+			if(diffs[0] == 0.0) {
+				if(diffs[1] != 0.0){  
+					return diffs[1].intValue(); //risk
+				}
+				else{
+					return diffs[2].intValue(); //cost
+				}
 			}
 			else{
-				return diffs[1].intValue(); 
+				return -1*diffs[0].intValue(); //benefit 
 			}
 		}
 		else{

@@ -57,19 +57,19 @@ public class DefaultSearch implements Search {
 		this.solutionEvaluator = solutionEvaluator;
 		this.searchStatistics = searchStatistics;
 		
-		System.out.print("Heuristic: ");
+		//System.out.print("Heuristic: ");
 		switch(whichHeuristic) {
 		case 0:
 			heuristic = new BFSHeuristic();
-			System.out.println("Breadth First Search");
+			//System.out.println("Breadth First Search");
 			break;
 		case 1:
 			heuristic = new StanHeuristic(problem, domain);
-			System.out.println("Relaxed Plan Graph");
+			//System.out.println("Relaxed Plan Graph");
 			break;
 		case 2:
 			heuristic = new GoalCountHeuristic(problem.getGoalAction());
-			System.out.println("Goal Count");
+			//System.out.println("Goal Count");
 			break;
 		default:
 			heuristic = new BFSHeuristic();
@@ -77,14 +77,7 @@ public class DefaultSearch implements Search {
 		}
 		
 		// Create queue and add comparator
-		open = new PriorityQueue<StateNode>(20,
-				new Comparator<StateNode>(){
-					public int compare(StateNode first, StateNode second){
-						return (int)(first.getFValue()[0] - 
-								second.getFValue()[0]);
-					}
-				}
-				);
+		open = new PriorityQueue<StateNode>();
 		
 		closed = new HashSet<StateNode>();
 		solutions = new ArrayList<StateNode>();
