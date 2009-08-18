@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -19,7 +20,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class AStarSearch extends DefaultSearch implements Search 
 {
-	private static Logger logger = Logger.getLogger(AStarSearch.class.getName());
+	private static Logger logger = LoggerFactory.getLogger(AStarSearch.class.getName());
 	
 	public AStarSearch(){}
 	
