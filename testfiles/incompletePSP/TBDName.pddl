@@ -3,157 +3,138 @@
 (:objects 
    ByExample
    EBEByFeedbackStrategy
-   Full-syntax
    HowToDo
    DefinitionOf
    PredicatesByExampleStrategy
+   AnnotateSegment-code
    FunctionsByExampleStrategy
+   t360d9271-8c59-466d-bb63-e87cae8019f0
    ByTelling
    ConditionWhenToCalculate
-   Full
    HowToCalculate
-   Full-code
+   tbd191aee-9142-46f8-9e2a-5cf6d9817f4f
+   AnnotateSegment-syntax
    EBELearningStrategy
    ConditionEffectsOf
-   TellingOfConditionsStrategy
    ExampleOfProcedureStrategy
+   TellingOfConditionsStrategy
    ConditionWhenTrue
    TellingOfProceduresStrategy
    ByFeedback
-   t9461ae21-ebb4-48ba-a35c-f30462bcbd09
+   t119b1903-79e0-4607-baf2-15b1c2f81904
    PredicatesByFeedbackStrategy
    ByDefinition
+   tb35139c6-aafa-4f4d-9fc1-646183e4b244
    NoticingSyntaxStrategy
+   AnnotateSegment
    FunctionsByFeedbackStrategy
-   t08c496ae-26d1-4c82-a1f4-da0633895a7a
+   SetSegmentMovementTechnique
    mableNoticingSyntax
+   t6c5c51a6-a161-4700-8b8c-7462d8f4d54d
    ConditionWhenToDo
+   t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc
    TellingOfSyntaxStrategy
  )
 (:init 
-   (CONCEPTDIMENSION ConditionWhenTrue)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax ConditionEffectsOf)
-   (interpretationForTarget Full-code Full)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax ConditionWhenToDo)
-   (untried NoticingSyntaxStrategy Full ByFeedback ConditionWhenToDo)
+   (nimDimensionInTemplate ByTelling t119b1903-79e0-4607-baf2-15b1c2f81904)
+   (TEMPLATE t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
+   (conceptDimensionInTemplate HowToDo t360d9271-8c59-466d-bb63-e87cae8019f0)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenTrue)
-   (untried NoticingSyntaxStrategy Full ByFeedback DefinitionOf)
+   (interpretationForTarget AnnotateSegment-syntax AnnotateSegment)
+   (conceptDimensionInTemplate HowToDo t119b1903-79e0-4607-baf2-15b1c2f81904)
    (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
+   (TEMPLATE tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToDo)
    (codeStrategy FunctionsByFeedbackStrategy)
-   (nimDimensionInTemplate ByExample t9461ae21-ebb4-48ba-a35c-f30462bcbd09)
-   (SYNTAX Full-syntax)
    (strategyNIMDIMENSION PredicatesByExampleStrategy ByExample)
-   (conceptDimensionInTemplate ConditionWhenTrue t08c496ae-26d1-4c82-a1f4-da0633895a7a)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToCalculate)
-   (untried NoticingSyntaxStrategy Full ByExample HowToCalculate)
+   (nimDimensionInTemplate ByExample tb35139c6-aafa-4f4d-9fc1-646183e4b244)
+   (nimDimensionInTemplate ByTelling t360d9271-8c59-466d-bb63-e87cae8019f0)
+   (targetInTemplate AnnotateSegment t119b1903-79e0-4607-baf2-15b1c2f81904)
    (strategyCONCEPTDIMENSION TellingOfSyntaxStrategy DefinitionOf)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy DefinitionOf)
-   (untried ExampleOfProcedureStrategy Full ByFeedback HowToDo)
-   (targetInTemplate Full t9461ae21-ebb4-48ba-a35c-f30462bcbd09)
-   (untried FunctionsByExampleStrategy Full ByExample HowToCalculate)
    (strategyNIMDIMENSION NoticingSyntaxStrategy mableNoticingSyntax)
-   (untried ExampleOfProcedureStrategy Full ByExample HowToDo)
    (STRATEGY NoticingSyntaxStrategy)
-   (untried NoticingSyntaxStrategy Full ByFeedback HowToDo)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax DefinitionOf)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax ConditionWhenToCalculate)
+   (nimDimensionInTemplate ByExample tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
+   (NIMDIMENSION ByTelling)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToCalculate)
    (strategyNIMDIMENSION PredicatesByFeedbackStrategy ByFeedback)
-   (untried TellingOfProceduresStrategy Full ByTelling HowToCalculate)
    (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
-   (TEMPLATE t08c496ae-26d1-4c82-a1f4-da0633895a7a)
-   (untried NoticingSyntaxStrategy Full ByExample ConditionWhenTrue)
-   (untried NoticingSyntaxStrategy Full ByExample ByDefinition)
-   (untried NoticingSyntaxStrategy Full ByFeedback HowToCalculate)
+   (conceptDimensionInTemplate HowToDo tb35139c6-aafa-4f4d-9fc1-646183e4b244)
    (STRATEGY PredicatesByFeedbackStrategy)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax ByDefinition)
-   (TARGETCONCEPT Full)
-   (untried NoticingSyntaxStrategy Full ByTelling HowToDo)
+   (interpretationForTarget AnnotateSegment-code AnnotateSegment)
    (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToDo)
    (STRATEGY EBELearningStrategy)
-   (untried NoticingSyntaxStrategy Full ByFeedback ConditionWhenToCalculate)
    (strategyNIMDIMENSION ExampleOfProcedureStrategy ByExample)
+   (newDefCode AnnotateSegment-code)
    (STRATEGY EBEByFeedbackStrategy)
-   (untried EBEByFeedbackStrategy Full ByFeedback ConditionEffectsOf)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax HowToCalculate)
-   (syntaxStrategy NoticingSyntaxStrategy)
+   (TEMPLATE t119b1903-79e0-4607-baf2-15b1c2f81904)
    (STRATEGY TellingOfSyntaxStrategy)
+   (syntaxStrategy NoticingSyntaxStrategy)
    (codeStrategy TellingOfConditionsStrategy)
    (syntaxStrategy TellingOfConditionsStrategy)
-   (untried TellingOfConditionsStrategy Full ByTelling ConditionWhenToDo)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByExample)
    (strategyNIMDIMENSION ExampleOfProcedureStrategy ByFeedback)
+   (conceptDimensionInTemplate HowToDo tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
+   (targetInTemplate AnnotateSegment tb35139c6-aafa-4f4d-9fc1-646183e4b244)
    (STRATEGY PredicatesByExampleStrategy)
-   (untried NoticingSyntaxStrategy Full ByTelling ConditionWhenToDo)
    (codeStrategy ExampleOfProcedureStrategy)
-   (untried PredicatesByFeedbackStrategy Full ByFeedback ConditionWhenTrue)
-   (untried NoticingSyntaxStrategy Full ByExample ConditionWhenToCalculate)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax HowToDo)
+   (targetInTemplate AnnotateSegment t360d9271-8c59-466d-bb63-e87cae8019f0)
+   (TARGETCONCEPT AnnotateSegment)
    (STRATEGY TellingOfConditionsStrategy)
-   (untried NoticingSyntaxStrategy Full mableNoticingSyntax ConditionWhenTrue)
    (STRATEGY FunctionsByFeedbackStrategy)
+   (CONCEPTDIMENSION HowToDo)
    (codeStrategy PredicatesByExampleStrategy)
+   (TEMPLATE tb35139c6-aafa-4f4d-9fc1-646183e4b244)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToDo)
    (codeStrategy FunctionsByExampleStrategy)
    (strategyNIMDIMENSION FunctionsByExampleStrategy ByExample)
-   (untried NoticingSyntaxStrategy Full ByExample ConditionWhenToDo)
-   (untried NoticingSyntaxStrategy Full ByTelling ConditionWhenToCalculate)
-   (untried NoticingSyntaxStrategy Full ByFeedback ConditionEffectsOf)
+   (TEMPLATE t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
+   (targetInTemplate AnnotateSegment tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION FunctionsByExampleStrategy HowToCalculate)
-   (nimDimensionInTemplate ByFeedback t08c496ae-26d1-4c82-a1f4-da0633895a7a)
-   (untried NoticingSyntaxStrategy Full ByTelling DefinitionOf)
+   (TEMPLATE t360d9271-8c59-466d-bb63-e87cae8019f0)
+   (targetInTemplate AnnotateSegment t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
    (NIMDIMENSION ByFeedback)
-   (untried NoticingSyntaxStrategy Full ByExample ConditionEffectsOf)
-   (untried TellingOfConditionsStrategy Full ByTelling ConditionEffectsOf)
+   (untried ExampleOfProcedureStrategy AnnotateSegment ByFeedback HowToDo)
+   (untried NoticingSyntaxStrategy AnnotateSegment ByFeedback HowToDo)
    (strategyCONCEPTDIMENSION FunctionsByFeedbackStrategy HowToCalculate)
    (codeStrategy PredicatesByFeedbackStrategy)
-   (untried NoticingSyntaxStrategy Full ByTelling ConditionWhenTrue)
-   (untried TellingOfSyntaxStrategy Full ByTelling DefinitionOf)
-   (targetInTemplate Full t08c496ae-26d1-4c82-a1f4-da0633895a7a)
+   (CODE AnnotateSegment-code)
    (NIMDIMENSION ByExample)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
-   (untried TellingOfConditionsStrategy Full ByTelling ConditionWhenTrue)
-   (CODE Full-code)
    (STRATEGY ExampleOfProcedureStrategy)
-   (untried NoticingSyntaxStrategy Full ByExample HowToDo)
    (codeStrategy EBEByFeedbackStrategy)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ByDefinition)
-   (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
+   (nimDimensionInTemplate ByFeedback t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByTelling)
+   (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
    (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
-   (TEMPLATE t9461ae21-ebb4-48ba-a35c-f30462bcbd09)
+   (nimDimensionInTemplate ByFeedback t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
    (strategyCONCEPTDIMENSION PredicatesByFeedbackStrategy ConditionWhenTrue)
    (strategyNIMDIMENSION EBEByFeedbackStrategy ByFeedback)
-   (untried NoticingSyntaxStrategy Full ByTelling HowToCalculate)
-   (untried NoticingSyntaxStrategy Full ByFeedback ByDefinition)
-   (strategyNIMDIMENSION EBELearningStrategy ByExample)
+   (newDefSyntax AnnotateSegment-syntax)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToCalculate)
-   (untried PredicatesByExampleStrategy Full ByExample ConditionWhenTrue)
+   (strategyNIMDIMENSION EBELearningStrategy ByExample)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenTrue)
    (syntaxStrategy TellingOfSyntaxStrategy)
-   (untried NoticingSyntaxStrategy Full ByExample DefinitionOf)
-   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
    (codeStrategy TellingOfProceduresStrategy)
-   (newDefCode Full-code)
-   (untried EBELearningStrategy Full ByExample ConditionEffectsOf)
+   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
+   (targetInTemplate AnnotateSegment t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
+   (SYNTAX AnnotateSegment-syntax)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenToDo)
-   (untried TellingOfProceduresStrategy Full ByTelling HowToDo)
+   (priorDefSyntaxForTarget AnnotateSegment-syntax AnnotateSegment)
    (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
    (codeStrategy EBELearningStrategy)
-   (conceptDimensionInTemplate ConditionWhenTrue t9461ae21-ebb4-48ba-a35c-f30462bcbd09)
+   (conceptDimensionInTemplate HowToDo t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
    (strategyNIMDIMENSION FunctionsByFeedbackStrategy ByFeedback)
    (STRATEGY FunctionsByExampleStrategy)
-   (untried NoticingSyntaxStrategy Full ByFeedback ConditionWhenTrue)
-   (priorDefSyntaxForTarget Full-syntax Full)
-   (untried NoticingSyntaxStrategy Full ByTelling ConditionEffectsOf)
    (STRATEGY TellingOfProceduresStrategy)
+   (conceptDimensionInTemplate HowToDo t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByFeedback)
-   (untried FunctionsByFeedbackStrategy Full ByFeedback HowToCalculate)
  )
-(:goal 
-(and (learnedCode Full) (newlyLearnedCode Full))
+(:goal
+(and (learnedCode AnnotateSegment) (newlyLearnedCode AnnotateSegment) (learnedCode SetSegmentMovementTechnique) (newlyLearnedCode SetSegmentMovementTechnique) (learnedSyntax AnnotateSegment) (newlyLearnedSyntax AnnotateSegment))
  )
 )

@@ -182,9 +182,17 @@ public class IncompleteProblem implements Problem
 			sw.append("   " + o.toString() + "\n");
 		sw.append(" )\n");
 		sw.append("(:init \n");
-		sw.append(startState.toString());
+		boolean partial = false;
+		if(partial){
+			for(Proposition p : initialState)
+				sw.append("\t").append(p.toString()).append("\n");
+		}
+		else{
+			sw.append(startState.toString());	
+		}
+
 		sw.append(" )\n");
-		sw.append("(:goals \n");
+		sw.append("(:goal \n");
 		for(GoalDesc goal : goals) {
 			sw.append(goal.toString());
 		}
