@@ -16,8 +16,10 @@ public class Proposition {
 	
 	public Proposition(String name) {
 		this.name = name;
-		if(propositionIndices.get(name) == null)
+		if(propositionIndices.get(name) == null){
 			propositionIndices.put(name, propositionIndex++);
+			propositionIndexMap.put(propositionIndex-1, this);
+		}
 	}
 	
 	public static Integer getPropositionIndicex(String name) {
@@ -54,8 +56,10 @@ public class Proposition {
 	 */
 	public Proposition(LiteralInstance literalInstance) {
 		this.setName(literalInstance.toString().replace('(', ' ').replace(')', ' ').trim());
-		if(propositionIndices.get(this.name) == null)
+		if(propositionIndices.get(this.name) == null){
 			propositionIndices.put(this.name, propositionIndex++);
+			propositionIndexMap.put(propositionIndex-1, this);
+		}
 	}
 	
 	public String getName() {

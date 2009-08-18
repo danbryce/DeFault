@@ -1,19 +1,17 @@
-(define (problem TBDName)
+ (define (problem TBDName)
  (:domain mable-control)
 (:objects 
-   ByExample
    EBEByFeedbackStrategy
+   ByExample
    HowToDo
    DefinitionOf
    PredicatesByExampleStrategy
-   AnnotateSegment-code
    FunctionsByExampleStrategy
-   t360d9271-8c59-466d-bb63-e87cae8019f0
+   CallsForEchelonLFormation
    ByTelling
    ConditionWhenToCalculate
    HowToCalculate
-   tbd191aee-9142-46f8-9e2a-5cf6d9817f4f
-   AnnotateSegment-syntax
+   t7e01e982-e475-4811-83b3-caa23ed68ccf
    EBELearningStrategy
    ConditionEffectsOf
    ExampleOfProcedureStrategy
@@ -21,120 +19,99 @@
    ConditionWhenTrue
    TellingOfProceduresStrategy
    ByFeedback
-   t119b1903-79e0-4607-baf2-15b1c2f81904
+   CallsForEchelonLFormation-syntax
    PredicatesByFeedbackStrategy
    ByDefinition
-   tb35139c6-aafa-4f4d-9fc1-646183e4b244
    NoticingSyntaxStrategy
-   AnnotateSegment
    FunctionsByFeedbackStrategy
-   SetSegmentMovementTechnique
    mableNoticingSyntax
-   t6c5c51a6-a161-4700-8b8c-7462d8f4d54d
    ConditionWhenToDo
-   t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc
    TellingOfSyntaxStrategy
+   CallsForEchelonLFormation-code
+   taab479ee-142d-4ee8-9d49-5256facbc80f
  )
 (:init 
-   (nimDimensionInTemplate ByTelling t119b1903-79e0-4607-baf2-15b1c2f81904)
-   (TEMPLATE t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
-   (conceptDimensionInTemplate HowToDo t360d9271-8c59-466d-bb63-e87cae8019f0)
+   (CONCEPTDIMENSION ConditionWhenTrue)
+   (codeStrategy PredicatesByExampleStrategy)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToDo)
+   (strategyNIMDIMENSION FunctionsByExampleStrategy ByExample)
+   (codeStrategy FunctionsByExampleStrategy)
+   (TEMPLATE taab479ee-142d-4ee8-9d49-5256facbc80f)
+   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionEffectsOf)
+   (strategyCONCEPTDIMENSION FunctionsByExampleStrategy HowToCalculate)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenTrue)
-   (interpretationForTarget AnnotateSegment-syntax AnnotateSegment)
-   (conceptDimensionInTemplate HowToDo t119b1903-79e0-4607-baf2-15b1c2f81904)
    (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
-   (TEMPLATE tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToDo)
    (codeStrategy FunctionsByFeedbackStrategy)
    (strategyNIMDIMENSION PredicatesByExampleStrategy ByExample)
+   (SYNTAX CallsForEchelonLFormation-syntax)
+   (strategyCONCEPTDIMENSION FunctionsByFeedbackStrategy HowToCalculate)
+   (priorDefSyntaxForTarget CallsForEchelonLFormation-syntax CallsForEchelonLFormation)
+   (TEMPLATE t7e01e982-e475-4811-83b3-caa23ed68ccf)
+   (codeStrategy PredicatesByFeedbackStrategy)
+   (conceptDimensionInTemplate ConditionWhenTrue taab479ee-142d-4ee8-9d49-5256facbc80f)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToCalculate)
-   (nimDimensionInTemplate ByExample tb35139c6-aafa-4f4d-9fc1-646183e4b244)
-   (nimDimensionInTemplate ByTelling t360d9271-8c59-466d-bb63-e87cae8019f0)
-   (targetInTemplate AnnotateSegment t119b1903-79e0-4607-baf2-15b1c2f81904)
-   (strategyCONCEPTDIMENSION TellingOfSyntaxStrategy DefinitionOf)
+   (NIMDIMENSION ByExample)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy DefinitionOf)
+   (strategyCONCEPTDIMENSION TellingOfSyntaxStrategy DefinitionOf)
    (strategyNIMDIMENSION NoticingSyntaxStrategy mableNoticingSyntax)
+   (conceptDimensionInTemplate ConditionWhenTrue t7e01e982-e475-4811-83b3-caa23ed68ccf)
    (STRATEGY NoticingSyntaxStrategy)
-   (nimDimensionInTemplate ByExample tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
-   (NIMDIMENSION ByTelling)
+   (STRATEGY ExampleOfProcedureStrategy)
+   (codeStrategy EBEByFeedbackStrategy)
+   (untried NoticingSyntaxStrategy CallsForEchelonLFormation ByExample ConditionWhenTrue)
+   (newDefSyntax CallsForEchelonLFormation-syntax)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ByDefinition)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToCalculate)
+   (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
+   (strategyNIMDIMENSION NoticingSyntaxStrategy ByTelling)
    (strategyNIMDIMENSION PredicatesByFeedbackStrategy ByFeedback)
    (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
-   (conceptDimensionInTemplate HowToDo tb35139c6-aafa-4f4d-9fc1-646183e4b244)
+   (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
+   (strategyCONCEPTDIMENSION PredicatesByFeedbackStrategy ConditionWhenTrue)
+   (strategyNIMDIMENSION EBEByFeedbackStrategy ByFeedback)
    (STRATEGY PredicatesByFeedbackStrategy)
-   (interpretationForTarget AnnotateSegment-code AnnotateSegment)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToCalculate)
+   (strategyNIMDIMENSION EBELearningStrategy ByExample)
+   (CODE CallsForEchelonLFormation-code)
+   (nimDimensionInTemplate ByExample t7e01e982-e475-4811-83b3-caa23ed68ccf)
+   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenTrue)
+   (syntaxStrategy TellingOfSyntaxStrategy)
+   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
+   (interpretationForTarget CallsForEchelonLFormation-syntax CallsForEchelonLFormation)
+   (codeStrategy TellingOfProceduresStrategy)
    (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToDo)
    (STRATEGY EBELearningStrategy)
    (strategyNIMDIMENSION ExampleOfProcedureStrategy ByExample)
-   (newDefCode AnnotateSegment-code)
+   (targetInTemplate CallsForEchelonLFormation taab479ee-142d-4ee8-9d49-5256facbc80f)
+   (untried PredicatesByExampleStrategy CallsForEchelonLFormation ByExample ConditionWhenTrue)
+   (nimDimensionInTemplate ByExample taab479ee-142d-4ee8-9d49-5256facbc80f)
    (STRATEGY EBEByFeedbackStrategy)
-   (TEMPLATE t119b1903-79e0-4607-baf2-15b1c2f81904)
-   (STRATEGY TellingOfSyntaxStrategy)
-   (syntaxStrategy NoticingSyntaxStrategy)
-   (codeStrategy TellingOfConditionsStrategy)
-   (syntaxStrategy TellingOfConditionsStrategy)
-   (strategyNIMDIMENSION NoticingSyntaxStrategy ByExample)
-   (strategyNIMDIMENSION ExampleOfProcedureStrategy ByFeedback)
-   (conceptDimensionInTemplate HowToDo tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
-   (targetInTemplate AnnotateSegment tb35139c6-aafa-4f4d-9fc1-646183e4b244)
-   (STRATEGY PredicatesByExampleStrategy)
-   (codeStrategy ExampleOfProcedureStrategy)
-   (targetInTemplate AnnotateSegment t360d9271-8c59-466d-bb63-e87cae8019f0)
-   (TARGETCONCEPT AnnotateSegment)
-   (STRATEGY TellingOfConditionsStrategy)
-   (STRATEGY FunctionsByFeedbackStrategy)
-   (CONCEPTDIMENSION HowToDo)
-   (codeStrategy PredicatesByExampleStrategy)
-   (TEMPLATE tb35139c6-aafa-4f4d-9fc1-646183e4b244)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToDo)
-   (codeStrategy FunctionsByExampleStrategy)
-   (strategyNIMDIMENSION FunctionsByExampleStrategy ByExample)
-   (TEMPLATE t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
-   (targetInTemplate AnnotateSegment tbd191aee-9142-46f8-9e2a-5cf6d9817f4f)
-   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionEffectsOf)
-   (strategyCONCEPTDIMENSION FunctionsByExampleStrategy HowToCalculate)
-   (TEMPLATE t360d9271-8c59-466d-bb63-e87cae8019f0)
-   (targetInTemplate AnnotateSegment t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
-   (NIMDIMENSION ByFeedback)
-   (untried ExampleOfProcedureStrategy AnnotateSegment ByFeedback HowToDo)
-   (untried NoticingSyntaxStrategy AnnotateSegment ByFeedback HowToDo)
-   (strategyCONCEPTDIMENSION FunctionsByFeedbackStrategy HowToCalculate)
-   (codeStrategy PredicatesByFeedbackStrategy)
-   (CODE AnnotateSegment-code)
-   (NIMDIMENSION ByExample)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
-   (STRATEGY ExampleOfProcedureStrategy)
-   (codeStrategy EBEByFeedbackStrategy)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ByDefinition)
-   (nimDimensionInTemplate ByFeedback t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
-   (strategyNIMDIMENSION NoticingSyntaxStrategy ByTelling)
-   (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
-   (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
-   (nimDimensionInTemplate ByFeedback t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
-   (strategyCONCEPTDIMENSION PredicatesByFeedbackStrategy ConditionWhenTrue)
-   (strategyNIMDIMENSION EBEByFeedbackStrategy ByFeedback)
-   (newDefSyntax AnnotateSegment-syntax)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToCalculate)
-   (strategyNIMDIMENSION EBELearningStrategy ByExample)
-   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenTrue)
-   (syntaxStrategy TellingOfSyntaxStrategy)
-   (codeStrategy TellingOfProceduresStrategy)
-   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
-   (targetInTemplate AnnotateSegment t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
-   (SYNTAX AnnotateSegment-syntax)
+   (TARGETCONCEPT CallsForEchelonLFormation)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenToDo)
-   (priorDefSyntaxForTarget AnnotateSegment-syntax AnnotateSegment)
+   (syntaxStrategy NoticingSyntaxStrategy)
+   (STRATEGY TellingOfSyntaxStrategy)
+   (codeStrategy TellingOfConditionsStrategy)
+   (newDefCode CallsForEchelonLFormation-code)
+   (syntaxStrategy TellingOfConditionsStrategy)
    (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
+   (targetInTemplate CallsForEchelonLFormation t7e01e982-e475-4811-83b3-caa23ed68ccf)
+   (strategyNIMDIMENSION NoticingSyntaxStrategy ByExample)
    (codeStrategy EBELearningStrategy)
-   (conceptDimensionInTemplate HowToDo t6c5c51a6-a161-4700-8b8c-7462d8f4d54d)
+   (strategyNIMDIMENSION ExampleOfProcedureStrategy ByFeedback)
+   (STRATEGY PredicatesByExampleStrategy)
    (strategyNIMDIMENSION FunctionsByFeedbackStrategy ByFeedback)
    (STRATEGY FunctionsByExampleStrategy)
+   (codeStrategy ExampleOfProcedureStrategy)
+   (interpretationForTarget CallsForEchelonLFormation-code CallsForEchelonLFormation)
+   (STRATEGY TellingOfConditionsStrategy)
    (STRATEGY TellingOfProceduresStrategy)
-   (conceptDimensionInTemplate HowToDo t18bbcaa2-8f0b-41e1-8856-cf022cc97cfc)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByFeedback)
+   (STRATEGY FunctionsByFeedbackStrategy)
  )
 (:goal
-(and (learnedCode AnnotateSegment) (newlyLearnedCode AnnotateSegment) (learnedCode SetSegmentMovementTechnique) (newlyLearnedCode SetSegmentMovementTechnique) (learnedSyntax AnnotateSegment) (newlyLearnedSyntax AnnotateSegment))
+(and (learnedCode CallsForEchelonLFormation) (newlyLearnedCode CallsForEchelonLFormation) (learnedSyntax CallsForEchelonLFormation) (newlyLearnedSyntax CallsForEchelonLFormation))
  )
 )
