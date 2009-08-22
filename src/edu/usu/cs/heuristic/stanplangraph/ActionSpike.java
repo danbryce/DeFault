@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.search.astar.AStarSearch;
 
 public class ActionSpike {
 	private FactSpike factSpike = null;
@@ -18,6 +22,8 @@ public class ActionSpike {
 	private Map<Integer, FactHeader> globalFactHeaders;
 	private StanPlanningGraph solver;
 	protected Map<Integer, Map<Integer, ActionLevelInfo>> actionLevelInfos;
+
+	private static Logger logger = LoggerFactory.getLogger(ActionSpike.class.getName());
 
 	//	public ActionSpike(FactSpike factSpike) {
 	//		this.setFactSpike(factSpike);
@@ -43,6 +49,7 @@ public class ActionSpike {
 		IncompleteActionInstance action = (IncompleteActionInstance)maction;
 		ActionHeader actionHeader = globalActionHeaders.get(action.getIndex());
 
+		
 
 		if(actionHeader == null){
 			actionHeader = solver.creatActionHeader(action, noop);
@@ -81,6 +88,7 @@ public class ActionSpike {
 				getFactSpike().addFact(globalFactHeader);
 			}
 			FactLevelInfo fli = factSpike.getFactLevelInfo(getCurrentRank()+1, add.getIndex());
+			logger.debug("Adding " + actionHeader.getIndex() + " " + actionHeader.getName() + " as supporter of " + fli.getFact().getName());
 			fli.getTrueSupporters().add(actionHeader);
 			fli.getAllSupporters().add(actionHeader);
 
@@ -89,29 +97,6 @@ public class ActionSpike {
 		// Get delete effects
 
 
-		//		// Get possible preconditions
-		//		for (Proposition possPrec : action.getPossiblePreconditions()) {
-		//			// factSpike index of the possible precondition
-		//			FactHeader globalFactHeader = globalFactHeaders.get(possPrec.getIndex()); 
-		//			FactHeader factHeader = getFactSpike().get(possPrec.getName());
-		//				//this.getFactSpike().get(possPrec.getName());
-		//			FactLevelInfo fli = factSpike.getFactLevelInfo(getCurrentRank()-1, possPrec.getIndex());
-		//			
-		//			criticalRisks.addAll(fli.getCriticalRisks());
-		//			criticalRisks.addAll(fli.getPossibleRisks());
-		//
-		//			// If factHeader is null, the precondition doesn't exist and a possible risk needs to be added
-		//			if(factHeader == null || factHeader.getIndex() >= this.getFactSpike().getMaxRankEnd()) {
-		//				String s = "PrecOpen " + action.getName() + " " + possPrec.getName();
-		//				Risk newRisk = new Risk(Risk.PRECOPEN, action.getName(), possPrec.getName());
-		//				if(!globalRiskHeaders.containsKey(s)) {
-		//					globalRiskHeaders.put(s, newRisk);
-		//				}
-		//				criticalRisks.add(newRisk);
-		//				possibleRisks.add(newRisk);
-		//				factHeader = globalFactHeader;
-		//			} 		
-		//		}
 
 		// Get possible add effects
 		for (Proposition possAdd : action.getPossibleAddEffects()) {
@@ -141,7 +126,8 @@ public class ActionSpike {
 			FactLevelInfo fli = factSpike.getFactLevelInfo(getCurrentRank()+1, possAdd.getIndex());
 			fli.getPossibleSupporters().add(actionHeader);
 			fli.getAllSupporters().add(actionHeader);
-			getFactSpike().addFact(globalFactHeader);
+			logger.debug("Adding " + actionHeader.getIndex() + " " + actionHeader.getName() + " as supporter of " + fli.getFact().getName());
+			//getFactSpike().addFact(globalFactHeader);
 
 		}
 
@@ -169,7 +155,7 @@ public class ActionSpike {
 		ActionHeader noop = solver.getNoopForFact(factHeader);
 		if(noop == null){
 			noop = solver.createNoopActionHeader(factHeader);
-			int index = solver.problem.getActions().size()+factHeader.getPropositionIndex();
+			int index = solver.problem.getActions().size()+factHeader.getPropositionIndex()+1;
 			globalActionHeaders.put(index, noop);
 			//System.out.println("Storing header for " + index);
 		}
@@ -179,7 +165,7 @@ public class ActionSpike {
 		FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank(), factHeader.getPropositionIndex());
 		fli.getAllSupporters().add(noop);
 		fli.getTrueSupporters().add(noop);
-
+		logger.debug("Adding Noop " + noop.getIndex() + " " + noop.getName() + " as supporter of " + fli.getFact().getName());
 		// Add the critical risks
 		//		Set<Risk> criticalRisks = new HashSet<Risk>();
 		//		criticalRisks.addAll(factHeader.getLastCriticalRisks());

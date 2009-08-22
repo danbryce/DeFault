@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -16,9 +19,12 @@ import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.astar.AStarSearch;
+import edu.usu.cs.search.incomplete.psp.FriskyPSPSearch;
 
 public class StanPlanningGraph {
-
+	protected static Logger logger = LoggerFactory.getLogger(StanPlanningGraph.class.getName());
+	
 	protected  Map<Integer, FactHeader> globalFactHeaders = null; 
 	protected  Map<Integer, ActionHeader> globalActionHeaders = null;
 	//protected Map<String, Risk> globalRiskHeaders = new HashMap<String, Risk>();
@@ -59,6 +65,8 @@ public class StanPlanningGraph {
 
 		boolean addedLevel = true;
 		while (!reachedFixedPoint(addedLevel)) {
+			logger.debug("************* Current Level = " + factSpike.getCurrentRank() + "**********");
+
 			addedLevel = addLevel();
 
 			int currentRank = this.getFactSpike().getCurrentRank();
@@ -285,9 +293,9 @@ public class StanPlanningGraph {
 		mList.add(new HashSet<Proposition>());
 		mList.add(new HashSet<Proposition>());
 		IncompleteActionInstance noopAction = new IncompleteActionInstance(
-				factHeader.getName(), mList);
+				factHeader.getName(), mList, problem.getActions().size()+factHeader.getPropositionIndex()+1);
 
-		ActionHeader noop = new ActionHeader(noopAction, factHeader.getName(), problem.getActions().size()+factHeader.getPropositionIndex(), true, preconditions,
+		ActionHeader noop = new ActionHeader(noopAction, factHeader.getName(), noopAction.getIndex(), true, preconditions,
 				addEffects, null, null, null, null);
 
 		//this.copyActionHeader(noop);
@@ -308,7 +316,7 @@ public class StanPlanningGraph {
 	}
 
 	public ActionHeader getNoopForFact(FactHeader factHeader) {
-		int index = problem.getActions().size()+factHeader.getPropositionIndex();
+		int index = problem.getActions().size()+factHeader.getPropositionIndex()+1;
 		ActionHeader header = globalActionHeaders.get(index); 
 		return header;
 	}
@@ -352,6 +360,7 @@ public class StanPlanningGraph {
 
 		// Remove all the actions from remaining that were created.
 		for (ActionInstance action : newActions) {
+			logger.debug("Adding Action: " + action.getName());
 			// Add the applicable action to the actionSpike
 			actionSpike.addAction(action, false);
 			remainingActions.remove(action);
@@ -541,6 +550,7 @@ public class StanPlanningGraph {
 			FactHeader header = globalFactHeaders.get(proposition.getIndex());
 			if(header != null){
 				goal.add(header); 
+				logger.debug("Goal Reachable: " + header.getName());
 			}
 		}
 
@@ -562,7 +572,7 @@ public class StanPlanningGraph {
 			//			System.out.print("rank " + l + " ");
 			for (ActionHeader actionHeader : parallelPlan.get(l)) {
 				if(!actionHeader.isNoop()) {
-					IncompleteActionInstance action = actionHeaderToAction(actionHeader);
+					IncompleteActionInstance action = actionHeader.getAction();//actionHeaderToAction(actionHeader);
 					//					System.out.print(action.getName() + " ");
 					plan.add(action);
 				}
@@ -584,6 +594,8 @@ public class StanPlanningGraph {
 
 		//System.out.println("extract from: " + level);
 
+		logger.debug("=======Time: " + level + "========");
+		
 		Set<FactHeader> subGoalsToBeAdded = new HashSet<FactHeader>();
 
 		for (FactHeader subGoal : goal) {
@@ -591,12 +603,15 @@ public class StanPlanningGraph {
 
 			FactLevelInfo fli = factSpike.getFactLevelInfo(level, subGoal.getPropositionIndex());
 
-			
+			logger.debug("Subgoal: " + fli.getFact().getName());
 
 			for(ActionHeader actionHeader : fli.getAllSupporters()){
 				// Add the actions to the plan
 				parallelPlan.get(level).add(actionHeader);
 
+				logger.debug("Supported By: " + actionHeader.getName());
+
+				
 				// Add the preconditions of the actions to the goal
 				ActionLevelInfo ali = actionSpike.getActionLevelInfo(level-1, actionHeader.getIndex());
 				subGoalsToBeAdded.addAll(ali.getSupportingFacts());

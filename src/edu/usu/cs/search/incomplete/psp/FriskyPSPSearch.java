@@ -3,7 +3,9 @@ package edu.usu.cs.search.incomplete.psp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.usu.cs.heuristic.FFRiskyPSPHeuristic;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.psp.FFRiskyPSPRelaxedPlanHeuristic;
@@ -24,7 +26,7 @@ import edu.usu.cs.search.psp.UtilityFunction;
 
 public class FriskyPSPSearch extends DefaultSearch implements Search {
 	
-	protected static Logger logger = Logger.getLogger(FriskyPSPSearch.class.getName());
+	protected static Logger logger = LoggerFactory.getLogger(FriskyPSPSearch.class.getName());
 	
 	protected final Search search;
 	protected UtilityFunction goalUtilities;

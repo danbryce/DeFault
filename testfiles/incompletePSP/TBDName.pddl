@@ -1,4 +1,4 @@
- (define (problem TBDName)
+(define (problem TBDName)
  (:domain mable-control)
 (:objects 
    EBEByFeedbackStrategy
@@ -7,111 +7,115 @@
    DefinitionOf
    PredicatesByExampleStrategy
    FunctionsByExampleStrategy
-   CallsForEchelonLFormation
    ByTelling
    ConditionWhenToCalculate
+   t0
    HowToCalculate
-   t7e01e982-e475-4811-83b3-caa23ed68ccf
+   SuspiciousTruck-code
    EBELearningStrategy
    ConditionEffectsOf
-   ExampleOfProcedureStrategy
    TellingOfConditionsStrategy
+   SuspiciousTruck
+   ExampleOfProcedureStrategy
    ConditionWhenTrue
    TellingOfProceduresStrategy
    ByFeedback
-   CallsForEchelonLFormation-syntax
+   t1
+   SuspiciousTruck-syntax
    PredicatesByFeedbackStrategy
    ByDefinition
    NoticingSyntaxStrategy
    FunctionsByFeedbackStrategy
    mableNoticingSyntax
+   ProcedureByFeedbackStrategy
    ConditionWhenToDo
    TellingOfSyntaxStrategy
-   CallsForEchelonLFormation-code
-   taab479ee-142d-4ee8-9d49-5256facbc80f
  )
 (:init 
    (CONCEPTDIMENSION ConditionWhenTrue)
    (codeStrategy PredicatesByExampleStrategy)
+   (TARGETCONCEPT SuspiciousTruck)
+   (interpretationForTarget SuspiciousTruck-syntax SuspiciousTruck)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToDo)
    (strategyNIMDIMENSION FunctionsByExampleStrategy ByExample)
    (codeStrategy FunctionsByExampleStrategy)
-   (TEMPLATE taab479ee-142d-4ee8-9d49-5256facbc80f)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionEffectsOf)
+   (targetInTemplate SuspiciousTruck t0)
    (strategyCONCEPTDIMENSION FunctionsByExampleStrategy HowToCalculate)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenTrue)
    (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToDo)
+   (TEMPLATE t0)
    (codeStrategy FunctionsByFeedbackStrategy)
+   (strategyNIMDIMENSION ProcedureByFeedbackStrategy ByFeedback)
    (strategyNIMDIMENSION PredicatesByExampleStrategy ByExample)
-   (SYNTAX CallsForEchelonLFormation-syntax)
+   (untried NoticingSyntaxStrategy SuspiciousTruck ByTelling ConditionWhenTrue)
+   (CODE SuspiciousTruck-code)
    (strategyCONCEPTDIMENSION FunctionsByFeedbackStrategy HowToCalculate)
-   (priorDefSyntaxForTarget CallsForEchelonLFormation-syntax CallsForEchelonLFormation)
-   (TEMPLATE t7e01e982-e475-4811-83b3-caa23ed68ccf)
+   (conceptDimensionInTemplate ConditionWhenTrue t1)
    (codeStrategy PredicatesByFeedbackStrategy)
-   (conceptDimensionInTemplate ConditionWhenTrue taab479ee-142d-4ee8-9d49-5256facbc80f)
+   (strategyCONCEPTDIMENSION ProcedureByFeedbackStrategy HowToDo)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToCalculate)
-   (NIMDIMENSION ByExample)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy DefinitionOf)
    (strategyCONCEPTDIMENSION TellingOfSyntaxStrategy DefinitionOf)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
    (strategyNIMDIMENSION NoticingSyntaxStrategy mableNoticingSyntax)
-   (conceptDimensionInTemplate ConditionWhenTrue t7e01e982-e475-4811-83b3-caa23ed68ccf)
+   (untried TellingOfConditionsStrategy SuspiciousTruck ByTelling ConditionWhenTrue)
    (STRATEGY NoticingSyntaxStrategy)
    (STRATEGY ExampleOfProcedureStrategy)
+   (nimDimensionInTemplate ByTelling t1)
    (codeStrategy EBEByFeedbackStrategy)
-   (untried NoticingSyntaxStrategy CallsForEchelonLFormation ByExample ConditionWhenTrue)
-   (newDefSyntax CallsForEchelonLFormation-syntax)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ByDefinition)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToCalculate)
+   (NIMDIMENSION ByTelling)
    (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByTelling)
    (strategyNIMDIMENSION PredicatesByFeedbackStrategy ByFeedback)
    (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
+   (targetInTemplate SuspiciousTruck t1)
+   (interpretationForTarget SuspiciousTruck-code SuspiciousTruck)
    (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
+   (nimDimensionInTemplate ByTelling t0)
    (strategyCONCEPTDIMENSION PredicatesByFeedbackStrategy ConditionWhenTrue)
    (strategyNIMDIMENSION EBEByFeedbackStrategy ByFeedback)
+   (codeStrategy ProcedureByFeedbackStrategy)
    (STRATEGY PredicatesByFeedbackStrategy)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToCalculate)
    (strategyNIMDIMENSION EBELearningStrategy ByExample)
-   (CODE CallsForEchelonLFormation-code)
-   (nimDimensionInTemplate ByExample t7e01e982-e475-4811-83b3-caa23ed68ccf)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenTrue)
    (syntaxStrategy TellingOfSyntaxStrategy)
-   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
-   (interpretationForTarget CallsForEchelonLFormation-syntax CallsForEchelonLFormation)
    (codeStrategy TellingOfProceduresStrategy)
+   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
+   (STRATEGY ProcedureByFeedbackStrategy)
    (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToDo)
    (STRATEGY EBELearningStrategy)
    (strategyNIMDIMENSION ExampleOfProcedureStrategy ByExample)
-   (targetInTemplate CallsForEchelonLFormation taab479ee-142d-4ee8-9d49-5256facbc80f)
-   (untried PredicatesByExampleStrategy CallsForEchelonLFormation ByExample ConditionWhenTrue)
-   (nimDimensionInTemplate ByExample taab479ee-142d-4ee8-9d49-5256facbc80f)
+   (SYNTAX SuspiciousTruck-syntax)
+   (newDefCode SuspiciousTruck-code)
    (STRATEGY EBEByFeedbackStrategy)
-   (TARGETCONCEPT CallsForEchelonLFormation)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenToDo)
+   (TEMPLATE t1)
+   (newDefSyntax SuspiciousTruck-syntax)
    (syntaxStrategy NoticingSyntaxStrategy)
    (STRATEGY TellingOfSyntaxStrategy)
    (codeStrategy TellingOfConditionsStrategy)
-   (newDefCode CallsForEchelonLFormation-code)
    (syntaxStrategy TellingOfConditionsStrategy)
    (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
-   (targetInTemplate CallsForEchelonLFormation t7e01e982-e475-4811-83b3-caa23ed68ccf)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByExample)
    (codeStrategy EBELearningStrategy)
-   (strategyNIMDIMENSION ExampleOfProcedureStrategy ByFeedback)
    (STRATEGY PredicatesByExampleStrategy)
+   (priorDefSyntaxForTarget SuspiciousTruck-syntax SuspiciousTruck)
    (strategyNIMDIMENSION FunctionsByFeedbackStrategy ByFeedback)
    (STRATEGY FunctionsByExampleStrategy)
    (codeStrategy ExampleOfProcedureStrategy)
-   (interpretationForTarget CallsForEchelonLFormation-code CallsForEchelonLFormation)
+   (conceptDimensionInTemplate ConditionWhenTrue t0)
    (STRATEGY TellingOfConditionsStrategy)
    (STRATEGY TellingOfProceduresStrategy)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByFeedback)
    (STRATEGY FunctionsByFeedbackStrategy)
  )
-(:goal
-(and (learnedCode CallsForEchelonLFormation) (newlyLearnedCode CallsForEchelonLFormation) (learnedSyntax CallsForEchelonLFormation) (newlyLearnedSyntax CallsForEchelonLFormation))
+(:goal 
+(and (learnedCode SuspiciousTruck) (newlyLearnedCode SuspiciousTruck) (learnedSyntax SuspiciousTruck) (newlyLearnedSyntax SuspiciousTruck))
  )
 )

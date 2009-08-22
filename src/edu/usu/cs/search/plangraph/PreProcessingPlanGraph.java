@@ -114,10 +114,11 @@ public class PreProcessingPlanGraph extends PlanGraph
 
         // Iterate over all actions, creating multiple instances for each (probably)
         List<ActionDef> actionDefs = domain.getActions();
+        int actIndex = 1;
         for (ActionDef action : actionDefs) {
             List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects, problem2.getStartState());
             for (List<PDDLObject> actualArgs : allowedActualArgs) {
-                DefaultActionInstance instance = new DefaultActionInstance(action, actualArgs, allObjects);
+                DefaultActionInstance instance = new DefaultActionInstance(action, actualArgs, allObjects, actIndex++);
                 instances.add(instance);
             }
         }

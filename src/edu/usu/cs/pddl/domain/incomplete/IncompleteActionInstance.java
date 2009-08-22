@@ -51,15 +51,16 @@ public class IncompleteActionInstance  implements ActionInstance{
 
 	private boolean hashInitialized = false;
 
-	private static int numActions = 0;
+//	private static int numActions = 0;
 
 	public IncompleteActionInstance(String name, Set<Proposition> preconditions,
 			Set<Proposition> addEffects, Set<Proposition> deleteEffects,
 			Set<Proposition> possiblePreconditions,
 			Set<Proposition> possiblePositiveEffects,
-			Set<Proposition> possibleNegativeEffects) {
+			Set<Proposition> possibleNegativeEffects,
+			int index) {
 		this.name = name;
-		this.index = numActions++;
+		this.index = index; //numActions++;
 		this.preconditions = preconditions == null ? new HashSet<Proposition>()
 				: preconditions;
 		this.addEffects = addEffects == null ? new HashSet<Proposition>()
@@ -92,7 +93,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 		this.definition = actionInstance.getDefinition();
 
 		this.name = name;
-		this.index = numActions++;
+		this.index = actionInstance.getIndex();//numActions++;
 		// Add the absolute preconditions
 		this.preconditions = new HashSet<Proposition>();
 		Set<LiteralInstance> preconditions = new HashSet<LiteralInstance>();
@@ -168,15 +169,15 @@ public class IncompleteActionInstance  implements ActionInstance{
 	 * preconditions absolute add effects absolute delete effects possible
 	 * preconditions possible add effects possible delete effects
 	 */
-	public IncompleteActionInstance(String name, List<Set<Proposition>> actionProps) {
+	public IncompleteActionInstance(String name, List<Set<Proposition>> actionProps, int index) {
 
 		this(name, actionProps.get(0), actionProps.get(1), actionProps.get(2),
-				actionProps.get(3), actionProps.get(4), actionProps.get(5));
+				actionProps.get(3), actionProps.get(4), actionProps.get(5), index);
 
 	}
 
 	public IncompleteActionInstance(ActionDef action,
-			List<PDDLObject> actualArgs, Set<PDDLObject> allObjects, Domain domain) {
+			List<PDDLObject> actualArgs, Set<PDDLObject> allObjects, Domain domain, int index) {
 
 		StringBuilder name = new StringBuilder();
 		name.append(action.getName());
@@ -190,7 +191,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 			argMapping.put(action.getArguments().get(i), actualArgs.get(i));
 		}
 		this.definition = action;
-		this.index = numActions++;
+		this.index = index;//numActions++;
 
 		this.preconditions = new HashSet<Proposition>();
 		Set<LiteralInstance> preconditions = new HashSet<LiteralInstance>();
@@ -311,7 +312,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 
 	@Override
 	public String toString() {
-		String str = "Action: " + getName();
+		String str = "Action: " + index + " " + getName();
 		//
 		//		if (getPreconditions().size() > 0) {
 		//			str += "\n\tAbsolute Preconditions:";

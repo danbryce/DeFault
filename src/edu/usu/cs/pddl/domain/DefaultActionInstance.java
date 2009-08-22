@@ -27,7 +27,8 @@ public class DefaultActionInstance implements ActionInstance
     
     protected final DefaultGoalDesc possPreCondition;
     protected final Effect possEffect;
-    
+
+    protected final int index;
     protected double cost = 1.0;
     
     public double getCost() {
@@ -38,17 +39,19 @@ public class DefaultActionInstance implements ActionInstance
 		this.cost = cost;
 	}
 
-	public DefaultActionInstance(){
-		definition = null;
-		preCondition = null;
-		effect = null;
-		possPreCondition  =null;
-		possEffect = null;
-		
-	}
+//	public DefaultActionInstance(){
+//		definition = null;
+//		preCondition = null;
+//		effect = null;
+//		possPreCondition  =null;
+//		possEffect = null;
+//		ind
+//		
+//	}
 	
-	public DefaultActionInstance(ActionDef def, List<PDDLObject> actualArgs, Set<PDDLObject> objects) 
+	public DefaultActionInstance(ActionDef def, List<PDDLObject> actualArgs, Set<PDDLObject> objects, int index) 
     {
+		this.index = index;
         definition = def;
         List<FormalArgument> args = definition.getArguments();
         if (args.size() != actualArgs.size()) {
@@ -123,5 +126,10 @@ public class DefaultActionInstance implements ActionInstance
 	public String getName() {
 		// TODO Auto-generated method stub
 		return toString();
+	}
+
+	public int getIndex() {
+
+		return index;
 	}
 }

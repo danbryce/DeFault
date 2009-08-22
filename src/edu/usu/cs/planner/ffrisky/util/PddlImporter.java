@@ -60,7 +60,7 @@ public class PddlImporter {
 		for (LiteralInstance literal : resultSet) {
 			preconditions.add(new Proposition(literal));
 		}
-		return new IncompleteActionInstance("goal", preconditions, null, null, null, null, null);
+		return new IncompleteActionInstance("goal", preconditions, null, null, null, null, null, 0);
 	}
 
 	public static List<ActionInstance> createActionInstances(
@@ -73,13 +73,14 @@ public class PddlImporter {
 		// Iterate over all actions, creating multiple instances for each
 		// (probably)
 		List<ActionDef> actionDefs = domain.getActions();
+		int actIndex = 1;
 		for (ActionDef action : actionDefs) {
 			List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(
 					action, allObjects, problem.getStartState());
 			for (List<PDDLObject> actualArgs : allowedActualArgs) {
 //				DefaultActionInstance instance = new DefaultActionInstance(action,
 //						actualArgs, allObjects);
-				ActionInstance instance = new IncompleteActionInstance(action, actualArgs, allObjects, domain);
+				ActionInstance instance = new IncompleteActionInstance(action, actualArgs, allObjects, domain, actIndex++);
 				instances.add(instance);
 			}
 		}
