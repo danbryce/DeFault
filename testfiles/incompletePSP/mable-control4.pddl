@@ -50,7 +50,17 @@
  )
   
    
-  
+  (:action checkPrerequisitesLearned
+   :parameters (?tc)
+   :precondition (and (TARGETCONCEPT ?tc)
+                      (forall (?tc1) 
+                              (implies (composedOf ?tc ?tc1) 
+                                       (learned ?tc)))
+                              )
+                      ) 
+   				 )
+   :effect (and (havePrerequisiteCIs ?tc))
+  )
   
   (:action invokeCodeStrategyOnTemplate
    :parameters (?s ?t ?n ?cd ?c ?tc ?sc)
@@ -71,9 +81,10 @@
    					  (strategyCONCEPTDIMENSION ?s ?cd)
    					  ;(newDefCode ?c)
    					  ;(defSyntaxForTarget ?sc ?tc)
-   					  (learnedSyntax ?tc) 
+   					  ;(learnedSyntax ?tc) 
    					  (untried ?s ?tc ?n ?cd)
-   					  (targetInTemplate ?tc ?t)  					     					  
+   					  (targetInTemplate ?tc ?t)  	
+   					  (havePrerequisiteCIs ?tc)				     					  
    					  )
    :effect (and (not (untried ?s ?tc ?n ?cd)))
    :poss-effect (and (defCodeForTarget ?c ?tc)
