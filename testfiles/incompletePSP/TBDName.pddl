@@ -1,56 +1,54 @@
 (define (problem TBDName)
  (:domain mable-control)
 (:objects 
-   EBEByFeedbackStrategy
-   ByExample
-   HowToDo
-   DefinitionOf
-   PredicatesByExampleStrategy
-   FunctionsByExampleStrategy
-   ByTelling
-   ConditionWhenToCalculate
-   t0
-   HowToCalculate
-   SuspiciousTruck-code
-   EBELearningStrategy
-   ConditionEffectsOf
-   TellingOfConditionsStrategy
-   SuspiciousTruck
-   ExampleOfProcedureStrategy
-   ConditionWhenTrue
-   TellingOfProceduresStrategy
-   ByFeedback
-   t1
-   SuspiciousTruck-syntax
-   PredicatesByFeedbackStrategy
-   ByDefinition
-   NoticingSyntaxStrategy
-   FunctionsByFeedbackStrategy
-   mableNoticingSyntax
-   ProcedureByFeedbackStrategy
-   ConditionWhenToDo
-   TellingOfSyntaxStrategy
+   c1 - target 
+   EBEByFeedbackStrategy - strategy
+   ByExample - nimdimension
+   HowToDo - conceptdimension
+   DefinitionOf - conceptdimension
+   PredicatesByExampleStrategy - strategy
+   FunctionsByExampleStrategy - strategy
+   ByTelling - nimdimension
+   ConditionWhenToCalculate - conceptdimension
+   t0 - template
+   HowToCalculate - conceptdimension
+   SuspiciousTruck-code-interp - interpretation
+   EBELearningStrategy - strategy
+   ConditionEffectsOf - conceptdimension
+   TellingOfConditionsStrategy - strategy
+   SuspiciousTruck-syntax - target
+   SuspiciousTruck-code - target
+   ExampleOfProcedureStrategy - strategy
+   ConditionWhenTrue - conceptdimension
+   TellingOfProceduresStrategy - strategy
+   ByFeedback - nimdimension
+   t1 - template
+   SuspiciousTruck-syntax-interp - interpretation
+   PredicatesByFeedbackStrategy - strategy
+   ByDefinition - conceptdimension
+   NoticingSyntaxStrategy - strategy
+   FunctionsByFeedbackStrategy - strategy
+   mableNoticingSyntax - nimdimension
+   ProcedureByFeedbackStrategy - strategy
+   ConditionWhenToDo - conceptdimension
+   TellingOfSyntaxStrategy - strategy
  )
 (:init 
-   (CONCEPTDIMENSION ConditionWhenTrue)
    (codeStrategy PredicatesByExampleStrategy)
-   (TARGETCONCEPT SuspiciousTruck)
-   (interpretationForTarget SuspiciousTruck-syntax SuspiciousTruck)
+   (interpretationForTarget SuspiciousTruck-syntax-interp SuspiciousTruck-syntax)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToDo)
    (strategyNIMDIMENSION FunctionsByExampleStrategy ByExample)
    (codeStrategy FunctionsByExampleStrategy)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionEffectsOf)
-   (targetInTemplate SuspiciousTruck t0)
+   (targetInTemplate SuspiciousTruck-code t0)
    (strategyCONCEPTDIMENSION FunctionsByExampleStrategy HowToCalculate)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenTrue)
    (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToDo)
-   (TEMPLATE t0)
    (codeStrategy FunctionsByFeedbackStrategy)
    (strategyNIMDIMENSION ProcedureByFeedbackStrategy ByFeedback)
    (strategyNIMDIMENSION PredicatesByExampleStrategy ByExample)
-   (untried NoticingSyntaxStrategy SuspiciousTruck ByTelling ConditionWhenTrue)
-   (CODE SuspiciousTruck-code)
+   (untried NoticingSyntaxStrategy SuspiciousTruck-syntax ByTelling ConditionWhenTrue)
    (strategyCONCEPTDIMENSION FunctionsByFeedbackStrategy HowToCalculate)
    (conceptDimensionInTemplate ConditionWhenTrue t1)
    (codeStrategy PredicatesByFeedbackStrategy)
@@ -60,62 +58,48 @@
    (strategyCONCEPTDIMENSION TellingOfSyntaxStrategy DefinitionOf)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
    (strategyNIMDIMENSION NoticingSyntaxStrategy mableNoticingSyntax)
-   (untried TellingOfConditionsStrategy SuspiciousTruck ByTelling ConditionWhenTrue)
-   (STRATEGY NoticingSyntaxStrategy)
-   (STRATEGY ExampleOfProcedureStrategy)
+   (untried TellingOfConditionsStrategy SuspiciousTruck-code ByTelling ConditionWhenTrue)
    (nimDimensionInTemplate ByTelling t1)
    (codeStrategy EBEByFeedbackStrategy)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ByDefinition)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToCalculate)
-   (NIMDIMENSION ByTelling)
    (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByTelling)
    (strategyNIMDIMENSION PredicatesByFeedbackStrategy ByFeedback)
    (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
-   (targetInTemplate SuspiciousTruck t1)
-   (interpretationForTarget SuspiciousTruck-code SuspiciousTruck)
+   (targetInTemplate SuspiciousTruck-code t1)
+   (interpretationForTarget SuspiciousTruck-code-interp SuspiciousTruck-code)
    (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
    (nimDimensionInTemplate ByTelling t0)
    (strategyCONCEPTDIMENSION PredicatesByFeedbackStrategy ConditionWhenTrue)
    (strategyNIMDIMENSION EBEByFeedbackStrategy ByFeedback)
    (codeStrategy ProcedureByFeedbackStrategy)
-   (STRATEGY PredicatesByFeedbackStrategy)
    (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToCalculate)
    (strategyNIMDIMENSION EBELearningStrategy ByExample)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenTrue)
    (syntaxStrategy TellingOfSyntaxStrategy)
    (codeStrategy TellingOfProceduresStrategy)
    (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
-   (STRATEGY ProcedureByFeedbackStrategy)
    (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
    (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToDo)
-   (STRATEGY EBELearningStrategy)
    (strategyNIMDIMENSION ExampleOfProcedureStrategy ByExample)
-   (SYNTAX SuspiciousTruck-syntax)
-   (newDefCode SuspiciousTruck-code)
-   (STRATEGY EBEByFeedbackStrategy)
    (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenToDo)
-   (TEMPLATE t1)
-   (newDefSyntax SuspiciousTruck-syntax)
    (syntaxStrategy NoticingSyntaxStrategy)
-   (STRATEGY TellingOfSyntaxStrategy)
    (codeStrategy TellingOfConditionsStrategy)
    (syntaxStrategy TellingOfConditionsStrategy)
    (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByExample)
    (codeStrategy EBELearningStrategy)
-   (STRATEGY PredicatesByExampleStrategy)
-   (priorDefSyntaxForTarget SuspiciousTruck-syntax SuspiciousTruck)
+   (priorInterpretationForTarget SuspiciousTruck-syntax-interp SuspiciousTruck-syntax)
    (strategyNIMDIMENSION FunctionsByFeedbackStrategy ByFeedback)
-   (STRATEGY FunctionsByExampleStrategy)
    (codeStrategy ExampleOfProcedureStrategy)
    (conceptDimensionInTemplate ConditionWhenTrue t0)
-   (STRATEGY TellingOfConditionsStrategy)
-   (STRATEGY TellingOfProceduresStrategy)
    (strategyNIMDIMENSION NoticingSyntaxStrategy ByFeedback)
-   (STRATEGY FunctionsByFeedbackStrategy)
+   (composedOf SuspiciousTruck-code c1)
+   (composedOf SuspiciousTruck-code SuspiciousTruck-syntax)
+   (learned c1)
  )
 (:goal 
-(and (learnedCode SuspiciousTruck) (newlyLearnedCode SuspiciousTruck) (learnedSyntax SuspiciousTruck) (newlyLearnedSyntax SuspiciousTruck))
+(and (learned SuspiciousTruck-syntax) (newlyLearned SuspiciousTruck-syntax) (learned SuspiciousTruck-code) (newlyLearned SuspiciousTruck-code))
  )
 )

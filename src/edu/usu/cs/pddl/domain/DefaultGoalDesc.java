@@ -17,7 +17,7 @@ import java.util.Map;
  * Interface representing goals and preconditions in PDDL, which have a
  * boolean value associated with them.
  */
-public interface DefaultGoalDesc extends LiteralOperation, GoalDesc 
+public interface DefaultGoalDesc extends  GoalDesc 
 {
     public boolean evaluate(ConsistentLiteralSet literals);
 	public void getMethods(List<MethodDef> preconditionMethods);

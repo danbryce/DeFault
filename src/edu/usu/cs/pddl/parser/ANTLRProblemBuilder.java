@@ -39,6 +39,7 @@ import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.FunctionDef;
 import edu.usu.cs.pddl.domain.FunctionInstance;
 import edu.usu.cs.pddl.domain.FunctionLiteral;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.PDDLType;
 import edu.usu.cs.pddl.domain.PredicateDef;
@@ -62,7 +63,7 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
     
     private Map<String, PDDLObject> objects = new HashMap<String, PDDLObject>();
     private ConsistentLiteralSet startState = new ConsistentLiteralSet();
-    private DefaultGoalDesc goal;
+    private GoalDesc goal;
     
     private ExpressionContext objectLookup = new ExpressionContext() 
     {
@@ -84,6 +85,16 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
         {
             throw new IllegalStateException("Attempt to lookup a parameter in a PDDL Problem file");
         }
+		@Override
+		public void popQuantifiedParam(FormalArgument arg, String context) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void pushQuantifiedParam(FormalArgument arg, String context) {
+			// TODO Auto-generated method stub
+			
+		}
     };
     
 

@@ -15,7 +15,9 @@ import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Effect;
 import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.LiteralOperation;
 import edu.usu.cs.pddl.domain.MethodDef;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.PredicateHeader;
@@ -29,10 +31,10 @@ public class PredicateEffect implements Effect
 {
     private final boolean applicable;
     
-    private final DefaultGoalDesc target; // Must be PredicateHeader or PredicateInstance
+    private final GoalDesc target; // Must be PredicateHeader or PredicateInstance
     private final boolean value;
 
-    public PredicateEffect(final DefaultGoalDesc target, final boolean value) 
+    public PredicateEffect(final GoalDesc target, final boolean value) 
     {
         if (!(target instanceof PredicateHeader) && !(target instanceof PredicateInstance)) {
             throw new IllegalArgumentException("Invalid predicate target " + target);
@@ -58,7 +60,7 @@ public class PredicateEffect implements Effect
         if (applicable) {
             return this;
         } else {
-            return new PredicateEffect((DefaultGoalDesc) target.instantiate(parameters, objects), 
+            return new PredicateEffect( target.instantiate(parameters, objects), 
                                        value);
         }
     }
@@ -88,4 +90,6 @@ public class PredicateEffect implements Effect
 	public void getMethodDefs(Set<MethodDef> resultSet) {
 		resultSet.add(((PredicateHeader)target).getDefinition());
 	}
+
+
 }

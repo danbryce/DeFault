@@ -15,7 +15,9 @@ import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Effect;
 import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
+import edu.usu.cs.pddl.domain.LiteralOperation;
 import edu.usu.cs.pddl.domain.MethodDef;
 import edu.usu.cs.pddl.domain.PDDLObject;
 
@@ -26,14 +28,14 @@ public class WhenEffect implements Effect
 {
     private final boolean applicable;
     
-    private final DefaultGoalDesc condition;
+    private final GoalDesc condition;
     private final Effect effect;
     
-    public WhenEffect(final DefaultGoalDesc condition, final Effect effect) {
-        this.condition = condition;
+    public WhenEffect(final GoalDesc goalDesc, final Effect effect) {
+        this.condition = goalDesc;
         this.effect = effect;
         
-        applicable = condition.isEvaluable() && effect.isEvaluable();
+        applicable = goalDesc.isEvaluable() && effect.isEvaluable();
     }
 
     public void apply(ConsistentLiteralSet startState,
@@ -47,11 +49,12 @@ public class WhenEffect implements Effect
     }
 
     public Effect instantiate(Map<FormalArgument, PDDLObject> parameters,
-                              Set<PDDLObject> objects) {
+                              Set<PDDLObject> objects,
+                  			Set<PDDLObject> allObjects) {
         if (applicable) {
             return this;
         } else {
-            return new WhenEffect((DefaultGoalDesc) condition.instantiate(parameters, objects), 
+            return new WhenEffect(condition.instantiate(parameters, objects), 
                                   (Effect) effect.instantiate(parameters, objects));
         }
     }
@@ -77,5 +80,12 @@ public class WhenEffect implements Effect
 	
 	public void getMethodDefs(Set<MethodDef> resultSet) {
 		effect.getMethodDefs(resultSet);
+	}
+
+	@Override
+	public LiteralOperation instantiate(
+			Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

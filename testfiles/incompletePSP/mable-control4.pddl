@@ -1,190 +1,145 @@
 (define (domain mable-control)
+ (:types target 
+ 		 template
+ 		 nimdimension
+ 		 strategy
+ 		 interpretation
+ 		 conceptdimension)
  (:predicates
-   (LESSON ?l)
-   (TEMPLATE ?t)
-   (NIMDIMENSION ?n) ;nimDimension 
-   (TARGETCONCEPT ?tc)
-   (TARGETCONCEPTTYPECODE ?tc)
-   (TARGETCONCEPTTYPESYNTAX ?tc)
-   (STRATEGY ?s)
-   (CODE ?c)
-   (SYNTAX ?s)
-   (CONCEPTDIMENSION ?c)
-   
-   (newDefCode ?c)
-   (newDefSyntax ?s)
-   (defCodeForTarget ?c ?tc)
-   (defSyntaxForTarget ?s ?tc)
-   (priorDefCodeForTarget ?c ?tc)
-   (priorDefSyntaxForTarget ?s ?tc)
-   (interpretationForTarget ?c ?tc) ;;earmarked, but unlearned interpretation for target
 
-   (lessonNIMDIMENSION ?l ?n)
-   (targetCONCEPTDIMENSION ?tc ?d)
-   (strategyNIMDIMENSION ?s ?n)
-   (strategyCONCEPTDIMENSION ?c ?n)
-   (lessonMessagesInTemplate ?l ?t)
-   (templateHasLesson ?t)
+   (interpretationForTarget ?i - interpretation ?tc - target)
+   (priorInterpretationForTarget ?i - interpretation ?tc - target)
+   (interpretationForTarget ?i - interpretation ?tc - target) ;;earmarked, but unlearned interpretation for target
+   (learnedInterpretation ?i - interpretation ?tc - target)
+
+   (targetCONCEPTDIMENSION ?tc - target ?d - conceptdimension)
+   (strategyNIMDIMENSION ?s - strategy ?n - nimdimension)
+   (strategyCONCEPTDIMENSION ?s - strategy ?c - conceptdimension)
  
-   (nimDimensionInTemplate ?n ?t)
-   (conceptDimensionInTemplate ?c ?t)
-   (targetInTemplate ?tc ?t)
+   (nimDimensionInTemplate ?n - nimdimension ?t - template)
+   (conceptDimensionInTemplate ?c - conceptdimension ?t - template)
+   (targetInTemplate ?tc - target ?t - template)
    
+    
+   (composedOf ?tc ?tc1 - target)
+   (learned ?tc - target)
+   (newlyLearned ?tc - target)
+   (havePrerequisitesCIs ?tc - target)
  
-   (templateHasNIMDIMENSION ?t)
-   (templateHasCONCEPTDIMENSION ?t)
-   
-   (composedOf ?tc ?tc1)
-   (learnedCode ?tc)
-   (learnedSyntax ?tc)
-   (newlyLearnedCode ?tc)
-   (newlyLearnedSyntax ?tc)
- 
-   (templateHasTarget ?t)
-   (templateComplete ?t)
-   (templateHasNoNIMDIMENSION ?t)
-   (templateHasNoCONCEPTDIMENSION ?t)
-   (codeStrategy ?s)
-   (syntaxStrategy ?s)
-   (untried ?s ?tc ?nim ?cd) ;;indicates if tried strategy on target !!Not contextual, need to generalize!!
+   (codeStrategy ?s - strategy)
+   (syntaxStrategy ?s - strategy)
+   (codeTarget ?t - target)
+   (syntaxTarget ?t - target)
+   (untried ?s - strategy ?tc - target ?nim - nimdimension ?cd - conceptdimension) ;;indicates if tried strategy on target !!Not contextual, need to generalize!!
  )
   
    
   (:action checkPrerequisitesLearned
-   :parameters (?tc)
-   :precondition (and (TARGETCONCEPT ?tc)
-                      (forall (?tc1) 
-                              (implies (composedOf ?tc ?tc1) 
-                                       (learned ?tc)))
+   :parameters (?tc - target)
+   :precondition (and (forall (?tc1 - target)
+                              (imply (composedOf ?tc ?tc1) 
+                                       (learned ?tc1)
                               )
                       ) 
    				 )
-   :effect (and (havePrerequisiteCIs ?tc))
+   :effect (and (havePrerequisitesCIs ?tc))
   )
   
   (:action invokeCodeStrategyOnTemplate
-   :parameters (?s ?t ?n ?cd ?c ?tc ?sc)
-   :precondition (and (STRATEGY ?s)
-   					  (TEMPLATE ?t)
-   					  (NIMDIMENSION ?n)
-   					  (CONCEPTDIMENSION ?cd)
-   					  (TARGETCONCEPT ?tc)
-   					  ;;(TARGETCONCEPTTYPECODE ?tc)
-   					  (SYNTAX ?sc)
-   					  (CODE ?c)
+   :parameters (?s - strategy
+                ?t - template
+                ?n - nimdimension
+                ?cd - conceptdimension
+                ?c  - interpretation
+                ?tc - target
+                )
+   :precondition (and 
    					  (codeStrategy ?s)					  
-   					  ;;(templateComplete ?t)
    					  (interpretationForTarget ?c ?tc)
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
    					  (conceptDimensionInTemplate ?cd ?t)
    					  (strategyCONCEPTDIMENSION ?s ?cd)
-   					  ;(newDefCode ?c)
-   					  ;(defSyntaxForTarget ?sc ?tc)
-   					  ;(learnedSyntax ?tc) 
    					  (untried ?s ?tc ?n ?cd)
    					  (targetInTemplate ?tc ?t)  	
-   					  (havePrerequisiteCIs ?tc)				     					  
+   					  (havePrerequisitesCIs ?tc)				     					  
    					  )
    :effect (and (not (untried ?s ?tc ?n ?cd)))
-   :poss-effect (and (defCodeForTarget ?c ?tc)
+   :poss-effect (and (learnedInterpretation ?c ?tc)
    				;(not (newDefCode ?c))
    				)
    )
    
    (:action invokeSyntaxStrategyOnTemplate
-   :parameters (?s ?t ?n ?cd ?c ?tc)
-   :precondition (and (STRATEGY ?s)
-   					  (TEMPLATE ?t)
-   					  (NIMDIMENSION ?n)
-   					  (CONCEPTDIMENSION ?cd)
-   					  (SYNTAX ?c) ;;
-   					  (TARGETCONCEPT ?tc)
-   					  ;;(TARGETCONCEPTTYPESYNTAX ?tc)
-   					  (syntaxStrategy ?s)
-   					  ;;(templateComplete ?t)
+   :parameters (?s - strategy
+                ?t - template
+                ?n - nimdimension
+                ?cd - conceptdimension
+                ?c  - interpretation
+                ?tc - target
+                )
+   :precondition (and (syntaxStrategy ?s)
    					  (interpretationForTarget ?c ?tc)
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
    					  (conceptDimensionInTemplate ?cd ?t)
   					  (strategyCONCEPTDIMENSION ?s ?cd)
-   					  ;(newDefSyntax ?c)
    					  (untried ?s ?tc ?n ?cd)
    					  (targetInTemplate ?tc ?t)
+   					  (havePrerequisitesCIs ?tc)
    					  )
    :effect (and (not (untried ?s ?tc ?n ?cd)))
-   :poss-effect (and (defSyntaxForTarget ?c ?tc)
-   				;(not (newDefSyntax ?c))
+   :poss-effect (and (learnedInterpretation ?c ?tc)
    				)
    )
 
    (:action invokeSyntaxAndCodeStrategyOnTemplate
-   :parameters (?s ?t ?n ?cd ?c1 ?c2 ?tc)
-   :precondition (and (STRATEGY ?s)
-   					  (TEMPLATE ?t)
-   					  (NIMDIMENSION ?n)
-   					  (CONCEPTDIMENSION ?cd)
-   					  (SYNTAX ?c1) 
-   					  (CODE ?c2)
-   					  (TARGETCONCEPT ?tc)
-   					  (syntaxStrategy ?s)
+   :parameters (?s - strategy
+                ?t - template
+                ?n - nimdimension
+                ?cd - conceptdimension
+                ?c1  - interpretation
+                ?c2  - interpretation  
+                ?tc1 - target
+                ?tc2 - target
+                )
+   :precondition (and (syntaxStrategy ?s)
    					  (codeStrategy ?s)			  
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
-   					  (interpretationForTarget ?c1 ?tc)
-   					  (interpretationForTarget ?c2 ?tc)
+   					  (interpretationForTarget ?c1 ?tc1)
+   					  (interpretationForTarget ?c2 ?tc2)
    					  (conceptDimensionInTemplate ?cd ?t)
   					  (strategyCONCEPTDIMENSION ?s ?cd)
-   					  ;(newDefSyntax ?c1)
-   					  ;(newDefCode ?c2)
-   					  (untried ?s ?tc ?n ?cd)
-   					  (targetInTemplate ?tc ?t)
+   					  (untried ?s ?tc1 ?n ?cd)
+   					  (untried ?s ?tc2 ?n ?cd)
+   					  (targetInTemplate ?tc1 ?t)
+   					  (havePrerequisitesCIs ?tc1)
+   					  (havePrerequisitesCIs ?tc2)
    					  )
-   :effect (and (not (untried ?s ?tc ?n ?cd)))
-   :poss-effect (and (defSyntaxForTarget ?c1 ?tc)
+   :effect (and (not (untried ?s ?tc1 ?n ?cd))(not (untried ?s ?tc2 ?n ?cd)))
+   :poss-effect (and (learnedInterpretation ?c1 ?tc1)
    				;(not (newDefSyntax ?c1))
-   				(defCodeForTarget ?c2 ?tc)
+   				(learnedInterpretation ?c2 ?tc2)
    				;(not (newDefCode ?c2))
    				)
    )
    
-   (:action reusePriorCode
-    :parameters (?tc ?c)
-    :precondition (and  (TARGETCONCEPT ?tc)
-    					(priorDefCodeForTarget ?c ?tc)
+   (:action reusePrior
+    :parameters (?tc - target  ?c - interpretation)
+    :precondition (and  (priorInterpretationForTarget ?c ?tc)
  				   )
  	:effect (and )
-    :poss-effect (and (learnedCode ?tc))
+    :poss-effect (and (learned ?tc))
    )
-
-   (:action reusePriorSyntax
-    :parameters (?tc ?c)
-    :precondition (and  (TARGETCONCEPT ?tc)
-    					(priorDefSyntaxForTarget ?c ?tc)
- 				   )
- 	:effect (and )
-    :poss-effect (and (learnedSyntax ?tc))
-   )
-
    
-   (:action satisfyCodeTarget
-    :parameters (?tc ?c)
-    :precondition (and  (TARGETCONCEPT ?tc)
-    					(CODE ?c)
-    					(interpretationForTarget ?c ?tc)
-    					(defCodeForTarget ?c ?tc))
-    :effect (and (newlyLearnedCode ?tc) 
-    			 (learnedCode ?tc))
+   (:action satisfyTarget
+    :parameters (?tc - target ?c - interpretation)
+    :precondition (and  (interpretationForTarget ?c ?tc)
+    					(learnedInterpretation ?c ?tc))
+    :effect (and (newlyLearned ?tc) 
+    			 (learned ?tc))
    )
 
-   (:action satisfySyntaxTarget
-    :parameters (?tc ?c)
-    :precondition (and  (TARGETCONCEPT ?tc)
-    					(SYNTAX ?c)
-    					(interpretationForTarget ?c ?tc)
- 						(defSyntaxForTarget ?c ?tc))
-    :effect (and (newlyLearnedSyntax ?tc)
-    			 (learnedSyntax ?tc))
-   )
 
 )

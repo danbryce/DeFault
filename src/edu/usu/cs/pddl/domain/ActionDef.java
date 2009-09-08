@@ -14,24 +14,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
 public class ActionDef
 {
 	private String name = null;
 	private List<FormalArgument> arguments = null;
-	private DefaultGoalDesc preCondition = null;
+	private GoalDesc preCondition = null;
 	private Effect effect = null;
 	private List<MethodDef> preconditionMethods = null;
-	private DefaultGoalDesc possPreCondition = null;
+	private GoalDesc possPreCondition = null;
 	private Effect possEffect = null;
+	private Map<FormalArgument, PDDLObject> quantifiedVariablesMap = null;
 
 	/** GoalDesc object to use for actions which don't have any preconditions */
-	private static final DefaultGoalDesc NULL_PRECOND = new DefaultGoalDesc() {
+	private static final GoalDesc NULL_PRECOND = new GoalDesc() {
 		public boolean evaluate(ConsistentLiteralSet literals) {
 			return true;
 		}
 		public void getLiteralsUsed(Set<LiteralInstance> resultSet) {
 		}
-		public LiteralOperation instantiate(Map<FormalArgument, PDDLObject> parameters,
+		public GoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters,
 				Set<PDDLObject> objects) {
 			return this;
 		}
@@ -42,14 +44,32 @@ public class ActionDef
 			return "<none>";
 		}
 
+		@Override
 		public void getMethods(List<MethodDef> preconditionMethods) {
 			//none
 		}
 
 		public boolean notSatisfiedBy(
 				Map<FormalArgument, PDDLObject> partialArgMap,
-				ConsistentLiteralSet startState) {
+				ConsistentLiteralSet startState,
+				Set<PDDLObject> allObjects) {
 			return false;
+		}
+		@Override
+		public GoalDesc toDNF(Map<FormalArgument, PDDLObject> quantifiedVariableMap, Set<PDDLObject> objects, ConsistentLiteralSet startState) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public void renameVariables(Map<FormalArgument, FormalArgument> nameMap)
+				throws Exception {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public GoalDesc deepCopy() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	};
 
@@ -76,17 +96,17 @@ public class ActionDef
 	};
 
 	public ActionDef(final String name, List<FormalArgument> arguments, 
-			DefaultGoalDesc preCondition, Effect effect) {
+			GoalDesc preCondition, Effect effect) {
 		initActionDef(name, arguments, preCondition, null, effect, null);
 	}
 
 	public ActionDef(final String name, List<FormalArgument> arguments, 
-			DefaultGoalDesc preCondition, DefaultGoalDesc possPrecond, Effect effect, Effect possEffect) {
+			GoalDesc preCondition, GoalDesc possPrecond, Effect effect, Effect possEffect) {
 		initActionDef(name, arguments, preCondition, possPrecond, effect, possEffect);
 	}
 
 	public void initActionDef(final String name, List<FormalArgument> arguments, 
-			DefaultGoalDesc preCondition, DefaultGoalDesc possPrecond, Effect effect, Effect possEffect) {
+			GoalDesc preCondition, GoalDesc possPrecond, Effect effect, Effect possEffect) {
 
 		if (name == null) {
 			throw new IllegalArgumentException("null name");
@@ -134,11 +154,11 @@ public class ActionDef
 		return name;
 	}
 
-	public DefaultGoalDesc getPreCondition() {
+	public GoalDesc getPreCondition() {
 		return preCondition;
 	}
 	
-	public DefaultGoalDesc getPossPreCondition() {
+	public GoalDesc getPossPreCondition() {
 		return possPreCondition;
 	}
 
@@ -150,8 +170,12 @@ public class ActionDef
 		return preconditionMethods;
 	}
 
+	public Map<FormalArgument, PDDLObject> getQuantifiedVariablesMap() {
+		return quantifiedVariablesMap;
+	}
+
 	public boolean isLegalPartialInstantiation(List<PDDLObject> newArgList,
-			ConsistentLiteralSet startState) {
+			ConsistentLiteralSet startState, Set<PDDLObject> allObjects) {
 		//does partial instantiation make action unexecutable, given
 		// known static predicates and startState (i.e., can all static
 		// predicates in precondition satisfied by initial state).
@@ -159,6 +183,6 @@ public class ActionDef
 		for(int i = 0; i < newArgList.size(); i++){
 			partialArgMap.put(arguments.get(i), newArgList.get(i));
 		}
-		return !preCondition.notSatisfiedBy(partialArgMap, startState);
+		return !preCondition.notSatisfiedBy(partialArgMap, startState, allObjects);
 	}
 }

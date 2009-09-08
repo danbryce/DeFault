@@ -11,6 +11,7 @@ import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
@@ -22,6 +23,8 @@ import edu.usu.cs.pddl.domain.PredicateDef;
 import edu.usu.cs.pddl.domain.PredicateInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
+import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
+import edu.usu.cs.pddl.goalseffects.NotGoalDesc;
 import edu.usu.cs.pddl.goalseffects.PredicateEffect;
 
 /**
@@ -177,7 +180,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 	}
 
 	public IncompleteActionInstance(ActionDef action,
-			List<PDDLObject> actualArgs, Set<PDDLObject> allObjects, Domain domain, int index) {
+			List<PDDLObject> actualArgs, Set<PDDLObject> allObjects, Domain domain, int index, ConsistentLiteralSet startState) throws Exception {
 
 		StringBuilder name = new StringBuilder();
 		name.append(action.getName());
@@ -195,15 +198,51 @@ public class IncompleteActionInstance  implements ActionInstance{
 
 		this.preconditions = new HashSet<Proposition>();
 		Set<LiteralInstance> preconditions = new HashSet<LiteralInstance>();
-		DefaultGoalDesc actPrecondition = (DefaultGoalDesc) action.getPreCondition().instantiate(argMapping, allObjects);
-		actPrecondition.getLiteralsUsed(preconditions);
-		for (LiteralInstance precondition : preconditions) {
-			if(domain.isDynamic((PredicateDef) precondition.getDefinition())){
-				Proposition p = Proposition.getPropositionFromIndex(precondition);		
-				if(p != null){
-					this.preconditions.add(p);
+		GoalDesc actPrecondition = action.getPreCondition().instantiate(argMapping, allObjects);
+		//actPrecondition.getLiteralsUsed(preconditions);
+		List<GoalDesc> precondList = new ArrayList<GoalDesc>();
+		if(actPrecondition instanceof ConjunctionGoalDesc){
+			precondList.addAll(((ConjunctionGoalDesc)actPrecondition).getSubGoals());
+		}
+		else{
+			precondList.add(actPrecondition);
+		}
+		
+		
+//		for (LiteralInstance precondition : preconditions) {
+		for(GoalDesc g : precondList){
+			if(g instanceof PredicateInstance){
+				PredicateInstance pi = (PredicateInstance)g;
+				if(domain.isDynamic((PredicateDef) pi.getDefinition())){
+					Proposition p = Proposition.getPropositionFromIndex(pi);		
+					if(p != null){
+						this.preconditions.add(p);
+					}
 				}
+				else { //static
+					if(g.notSatisfiedBy(argMapping, startState, allObjects)){
+						throw new Exception("Static precondition not satisfied by initial state");
+					}
+				}
+				
 			}
+			else if(g instanceof NotGoalDesc){
+				NotGoalDesc ng = (NotGoalDesc)g;
+				PredicateInstance pi = (PredicateInstance)ng.getNegatedGoal();
+				if(domain.isDynamic((PredicateDef) pi.getDefinition())){
+					Proposition p = Proposition.getPropositionFromIndex(pi);		
+					if(p != null){
+						throw new Exception("Got negative precondition");
+					}
+				}
+				else { //static
+					if(g.notSatisfiedBy(argMapping, startState, allObjects)){
+						throw new Exception("Static negative precondition not satisfied by initial state");
+					}
+				}
+				
+			}
+			
 		}
 
 		// Add the absolute adds and deletes
@@ -235,7 +274,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 
 		this.possiblePreconditions = new HashSet<Proposition>();
 		Set<LiteralInstance> possiblePreconditions = new HashSet<LiteralInstance>();
-		DefaultGoalDesc actPossPrecondition = (DefaultGoalDesc) action.getPossPreCondition().instantiate(argMapping, allObjects);
+		GoalDesc actPossPrecondition = action.getPossPreCondition().instantiate(argMapping, allObjects);
 		if(actPossPrecondition != null){
 			actPossPrecondition.getLiteralsUsed(possiblePreconditions);
 			

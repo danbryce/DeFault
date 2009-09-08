@@ -11,7 +11,7 @@ package edu.usu.cs.pddl.domain;
 /**
  * A variable or parameter with a type. Names will always start with '?' in PDDL.
  */
-public class FormalArgument
+public class FormalArgument implements Term
 {
     private final String name; // May be an object or a variable
     private final PDDLType type;
@@ -52,6 +52,10 @@ public class FormalArgument
         } else {
             return type.equalsOrIsParentOf(var.getType());
         }
+    }
+    
+    public boolean equalTo(FormalArgument f){
+    	return f.getName().equals(name) && f.getType().equals(type); 
     }
     
     public String toString() {

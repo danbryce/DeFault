@@ -44,6 +44,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Effect;
 import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.FunctionDef;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.NumericExpr;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.PDDLType;
@@ -71,6 +72,7 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
     private class ActionLookup implements ExpressionContext
     {
         private List<FormalArgument> params;
+        private List<FormalArgument> quantifiedParams = new ArrayList<FormalArgument>();
 
         public ActionLookup(List<FormalArgument> params)
         {
@@ -80,6 +82,13 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
         {
             return false;
         }
+        public void pushQuantifiedParam(FormalArgument name, String context) {
+        	quantifiedParams.add(name);
+        }
+        public void popQuantifiedParam(FormalArgument name, String context) {
+        	quantifiedParams.remove(name);
+        }
+        
         public PDDLObject lookupObject(String name, String context) throws InvalidPDDLElementException
         {
             throw new IllegalStateException("Attempt to lookup a parameter in a PDDL Problem file");
@@ -87,6 +96,15 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
         public FormalArgument lookupParameter(String name, String context) throws InvalidPDDLElementException
         {
             for (FormalArgument arg : params) {
+                if (Domain.CASE_SENSITIVE) {
+                    if (arg.getName().equals(name)) {
+                        return arg;
+                    }
+                } else if (arg.getName().equalsIgnoreCase(name)) {
+                    return arg;
+                }
+            }
+            for (FormalArgument arg : quantifiedParams) {
                 if (Domain.CASE_SENSITIVE) {
                     if (arg.getName().equals(name)) {
                         return arg;
@@ -242,8 +260,8 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
 
     private void addAction(Tree actionNode) throws InvalidPDDLElementException
     {        
-        DefaultGoalDesc precond = null;
-        DefaultGoalDesc possPrecond = null;
+        GoalDesc precond = null;
+        GoalDesc possPrecond = null;
         Effect effect = null;
         Effect possEffect = null;
         List<FormalArgument> params = new ArrayList<FormalArgument>();
@@ -346,7 +364,7 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
     private Effect buildWhenEffect(Tree effectNode, ExpressionContext lookup, String context) 
         throws InvalidPDDLElementException
     {
-        DefaultGoalDesc condition = buildGoalDesc(effectNode.getChild(0), lookup, context);
+        GoalDesc condition = buildGoalDesc(effectNode.getChild(0), lookup, context);
         Effect condEffect = buildEffect(effectNode.getChild(1), lookup, context);
         return new WhenEffect(condition, condEffect);
     }

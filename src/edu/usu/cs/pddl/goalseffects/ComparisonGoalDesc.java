@@ -15,6 +15,7 @@ import java.util.Set;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.FormalArgument;
+import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.MethodDef;
 import edu.usu.cs.pddl.domain.NumericExpr;
@@ -23,7 +24,7 @@ import edu.usu.cs.pddl.domain.PDDLObject;
 /**
  * Binary comparison goal. Available operators are '>', '<', '=', '>=', and '<='.
  */
-public class ComparisonGoalDesc implements DefaultGoalDesc
+public class ComparisonGoalDesc implements GoalDesc
 {
     private final boolean evaluable;
     
@@ -48,7 +49,7 @@ public class ComparisonGoalDesc implements DefaultGoalDesc
         return evaluable;
     }
     
-    public DefaultGoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
+    public GoalDesc instantiate(Map<FormalArgument, PDDLObject> parameters, Set<PDDLObject> objects) {
         if (evaluable) {
             return this;
         } else {
@@ -106,8 +107,27 @@ public class ComparisonGoalDesc implements DefaultGoalDesc
 	
 	public boolean notSatisfiedBy(
 			Map<FormalArgument, PDDLObject> partialArgMap,
-			ConsistentLiteralSet startState) {
+			ConsistentLiteralSet startState,
+			Set<PDDLObject> allObjects) {
 		// TODO work this out, for now assume its satisfied
 		return false;
+	}
+
+	@Override
+	public GoalDesc toDNF(Map<FormalArgument, PDDLObject> quantifiedVariableMap, Set<PDDLObject> objects, ConsistentLiteralSet startState) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void renameVariables(Map<FormalArgument, FormalArgument> nameMap)
+			throws Exception {
+		throw new Exception("Not implemneted yet");
+	}
+
+	@Override
+	public GoalDesc deepCopy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

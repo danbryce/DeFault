@@ -13,7 +13,7 @@ package edu.usu.cs.pddl.domain;
 /**
  * Represents PDDL Objects from the problem definition.
  */
-public class PDDLObject {
+public class PDDLObject implements Term {
     private final String name;
     private final PDDLType type;
     

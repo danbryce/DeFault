@@ -160,7 +160,7 @@ public class PreProcessingPlanGraph extends PlanGraph
                         if (arg.typeMatches(obj)) {
                             final List<PDDLObject> newArgList = new ArrayList<PDDLObject>(argsSoFar);
                             newArgList.add(obj);
-                            if(action.isLegalPartialInstantiation(newArgList, startState)){
+                            if(action.isLegalPartialInstantiation(newArgList, startState, allObjects)){
                             	newSolns.add(newArgList);
                             }
                         }
