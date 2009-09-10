@@ -51,4 +51,10 @@ public class FunctionInstance extends LiteralInstance implements NumericExpr
 	public void getMethods(List<MethodDef> preconditionMethods) {
 		preconditionMethods.add(this.getDefinition());
 	}
+
+	@Override
+	public int compareTo(Object o) {
+		return this.toString().compareTo(((FunctionInstance)o).toString());
+		
+	}
 }

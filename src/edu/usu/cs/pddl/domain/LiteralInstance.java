@@ -15,7 +15,7 @@ import java.util.Set;
  * Base class for function/predicate instances, where concrete PDDL objects are mapped
  * to the arguments.
  */
-public abstract class LiteralInstance
+public abstract class LiteralInstance implements Comparable
 {
     private final MethodDef definition;
     private final List<PDDLObject> arguments;
@@ -79,4 +79,9 @@ public abstract class LiteralInstance
         }
         return "(" + definition.getName() + " "+  argString + ")"; 
     }
+    
+	public int compareTo(LiteralInstance p){
+		return this.toString().compareTo(p.toString());
+			
+	}
 }

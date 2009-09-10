@@ -11,6 +11,7 @@ package edu.usu.cs.pddl.domain.incomplete;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.PDDLObject;
+import edu.usu.cs.pddl.domain.PDDLType;
 import edu.usu.cs.pddl.domain.PredicateDef;
 import edu.usu.cs.pddl.domain.PredicateInstance;
 import edu.usu.cs.pddl.domain.PredicateLiteral;
@@ -178,8 +180,32 @@ public class IncompleteProblem implements Problem
 		sw.append("(define (problem "); sw.append(name); sw.append(")\n");
 		sw.append(" (:domain "); sw.append(domain.getName()); sw.append(")\n");
 		sw.append("(:objects \n");
-		for(PDDLObject o : objects)
-			sw.append("   " + o.toString() + "\n");
+		
+		Map<PDDLType, Set<PDDLObject>> typeMap = new HashMap<PDDLType, Set<PDDLObject>>();
+		
+		for(PDDLObject o : objects){
+			PDDLType oType = o.getType();
+			Set<PDDLObject> oset = typeMap.get(oType);
+			if(oset == null){
+				oset = new HashSet<PDDLObject>();
+				typeMap.put(oType, oset);
+			}
+			oset.add(o);
+		}
+		for(PDDLType t : typeMap.keySet()){
+			Set<PDDLObject> oset = typeMap.get(t);
+			sw.append("   ");
+			for(PDDLObject o : oset){
+				sw.append(o.toString()).append(" ");	
+			}
+			if(t != null)
+			sw.append("- ").append(t.toString()).append("\n");
+			else
+				sw.append("- ").append("object").append("\n");
+		}
+			
+			
+			
 		sw.append(" )\n");
 		sw.append("(:init \n");
 		boolean partial = false;

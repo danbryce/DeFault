@@ -81,9 +81,18 @@ public class PredicateInstance extends LiteralInstance implements GoalDesc
 
 	}
 
+	
+
+	
 	@Override
 	public GoalDesc deepCopy() {
 		// TODO Auto-generated method stub
 		return this;
+	}
+
+	@Override
+	public int compareTo(Object p) {
+		return this.toString().compareTo(((LiteralInstance)p).toString());
+		
 	}
 }

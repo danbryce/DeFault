@@ -9,9 +9,12 @@
 package edu.usu.cs.pddl.domain;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -140,7 +143,13 @@ public class ConsistentLiteralSet
 	public String toString(){
 		StringWriter sw = new StringWriter();
 
+		List<PredicateInstance> sortedPredicates = new ArrayList<PredicateInstance>();
 		for(PredicateInstance pi : predicateValues.keySet()){
+			sortedPredicates.add(pi);	
+		}
+		Collections.sort(sortedPredicates);
+		
+		for(PredicateInstance pi : sortedPredicates){
 			PredicateLiteral pl = predicateValues.get(pi);
 			if(pl.getValue()) {
 				sw.append("   " + pl.toString());
@@ -156,6 +165,8 @@ public class ConsistentLiteralSet
 
 		return sw.toString();
 	}
+	
+	
 	
 	@Override
 	public int hashCode() {
