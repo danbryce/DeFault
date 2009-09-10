@@ -1,105 +1,79 @@
-(define (problem TBDName)
+ (define (problem TBDName)
  (:domain mable-control)
 (:objects 
-   c1 - target 
-   EBEByFeedbackStrategy - strategy
-   ByExample - nimdimension
-   HowToDo - conceptdimension
-   DefinitionOf - conceptdimension
-   PredicatesByExampleStrategy - strategy
-   FunctionsByExampleStrategy - strategy
-   ByTelling - nimdimension
-   ConditionWhenToCalculate - conceptdimension
-   t0 - template
-   HowToCalculate - conceptdimension
-   SuspiciousTruck-code-interp - interpretation
-   EBELearningStrategy - strategy
-   ConditionEffectsOf - conceptdimension
-   TellingOfConditionsStrategy - strategy
-   SuspiciousTruck-syntax - target
-   SuspiciousTruck-code - target
-   ExampleOfProcedureStrategy - strategy
-   ConditionWhenTrue - conceptdimension
-   TellingOfProceduresStrategy - strategy
-   ByFeedback - nimdimension
-   t1 - template
-   SuspiciousTruck-syntax-interp - interpretation
-   PredicatesByFeedbackStrategy - strategy
-   ByDefinition - conceptdimension
-   NoticingSyntaxStrategy - strategy
-   FunctionsByFeedbackStrategy - strategy
-   mableNoticingSyntax - nimdimension
-   ProcedureByFeedbackStrategy - strategy
-   ConditionWhenToDo - conceptdimension
-   TellingOfSyntaxStrategy - strategy
+   t3 t2 t1 t0 - template
+   TruckIsAtIntersection-syntax - syntaxtarget
+   ByDefinition ConditionWhenToCalculate ConditionEffectsOf HowToDo ConditionWhenTrue HowToCalculate DefinitionOf ConditionWhenToDo - conceptdimension
+   PredicatesByFeedbackStrategy EBEByFeedbackStrategy EBELearningStrategy FunctionsByFeedbackStrategy ExampleOfProcedureStrategy ProcedureByFeedbackStrategy TellingOfProceduresStrategy PredicatesByExampleStrategy FunctionsByExampleStrategy - codestrategy
+   TellingOfConditionsStrategy - uberstrategy
+   TruckIsAtIntersection-code - codetarget
+   NoticingSyntaxStrategy TellingOfSyntaxStrategy - syntaxstrategy
+   TruckIsAtIntersection-code-interpretation TruckIsAtIntersection-syntax-interpretation - interpretation
+   ByExample ByTelling mableNoticingSyntax ByFeedback - nimdimension
  )
 (:init 
-   (codeStrategy PredicatesByExampleStrategy)
-   (interpretationForTarget SuspiciousTruck-syntax-interp SuspiciousTruck-syntax)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToDo)
-   (strategyNIMDIMENSION FunctionsByExampleStrategy ByExample)
-   (codeStrategy FunctionsByExampleStrategy)
-   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionEffectsOf)
-   (targetInTemplate SuspiciousTruck-code t0)
-   (strategyCONCEPTDIMENSION FunctionsByExampleStrategy HowToCalculate)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenTrue)
-   (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToDo)
-   (codeStrategy FunctionsByFeedbackStrategy)
-   (strategyNIMDIMENSION ProcedureByFeedbackStrategy ByFeedback)
-   (strategyNIMDIMENSION PredicatesByExampleStrategy ByExample)
-   (untried NoticingSyntaxStrategy SuspiciousTruck-syntax ByTelling ConditionWhenTrue)
-   (strategyCONCEPTDIMENSION FunctionsByFeedbackStrategy HowToCalculate)
-   (conceptDimensionInTemplate ConditionWhenTrue t1)
-   (codeStrategy PredicatesByFeedbackStrategy)
-   (strategyCONCEPTDIMENSION ProcedureByFeedbackStrategy HowToDo)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToCalculate)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy DefinitionOf)
-   (strategyCONCEPTDIMENSION TellingOfSyntaxStrategy DefinitionOf)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
-   (strategyNIMDIMENSION NoticingSyntaxStrategy mableNoticingSyntax)
-   (untried TellingOfConditionsStrategy SuspiciousTruck-code ByTelling ConditionWhenTrue)
-   (nimDimensionInTemplate ByTelling t1)
-   (codeStrategy EBEByFeedbackStrategy)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ByDefinition)
-   (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToCalculate)
-   (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
-   (strategyNIMDIMENSION NoticingSyntaxStrategy ByTelling)
-   (strategyNIMDIMENSION PredicatesByFeedbackStrategy ByFeedback)
-   (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
-   (targetInTemplate SuspiciousTruck-code t1)
-   (interpretationForTarget SuspiciousTruck-code-interp SuspiciousTruck-code)
-   (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
-   (nimDimensionInTemplate ByTelling t0)
-   (strategyCONCEPTDIMENSION PredicatesByFeedbackStrategy ConditionWhenTrue)
-   (strategyNIMDIMENSION EBEByFeedbackStrategy ByFeedback)
-   (codeStrategy ProcedureByFeedbackStrategy)
-   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToCalculate)
-   (strategyNIMDIMENSION EBELearningStrategy ByExample)
-   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenTrue)
-   (syntaxStrategy TellingOfSyntaxStrategy)
-   (codeStrategy TellingOfProceduresStrategy)
-   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
-   (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
-   (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToDo)
-   (strategyNIMDIMENSION ExampleOfProcedureStrategy ByExample)
-   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenToDo)
-   (syntaxStrategy NoticingSyntaxStrategy)
-   (codeStrategy TellingOfConditionsStrategy)
-   (syntaxStrategy TellingOfConditionsStrategy)
-   (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
-   (strategyNIMDIMENSION NoticingSyntaxStrategy ByExample)
-   (codeStrategy EBELearningStrategy)
-   (priorInterpretationForTarget SuspiciousTruck-syntax-interp SuspiciousTruck-syntax)
-   (strategyNIMDIMENSION FunctionsByFeedbackStrategy ByFeedback)
-   (codeStrategy ExampleOfProcedureStrategy)
+   (composedOf TruckIsAtIntersection-code TruckIsAtIntersection-syntax)
    (conceptDimensionInTemplate ConditionWhenTrue t0)
-   (strategyNIMDIMENSION NoticingSyntaxStrategy ByFeedback)
-   (composedOf SuspiciousTruck-code c1)
-   (composedOf SuspiciousTruck-code SuspiciousTruck-syntax)
-   (learned c1)
+   (conceptDimensionInTemplate ConditionWhenTrue t1)
+   (conceptDimensionInTemplate DefinitionOf t2)
+   (conceptDimensionInTemplate DefinitionOf t3)
+   (havePrerequisitesCIs TruckIsAtIntersection-syntax)
+   (interpretationForTarget TruckIsAtIntersection-code-interpretation TruckIsAtIntersection-code)
+   (interpretationForTarget TruckIsAtIntersection-syntax-interpretation TruckIsAtIntersection-syntax)
+   (nimDimensionInTemplate ByTelling t0)
+   (nimDimensionInTemplate ByTelling t2)
+   (nimDimensionInTemplate mableNoticingSyntax t1)
+   (nimDimensionInTemplate mableNoticingSyntax t3)
+   (priorInterpretationForTarget TruckIsAtIntersection-syntax-interpretation TruckIsAtIntersection-syntax)
+   (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
+   (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
+   (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
+   (strategyCONCEPTDIMENSION FunctionsByExampleStrategy HowToCalculate)
+   (strategyCONCEPTDIMENSION FunctionsByFeedbackStrategy HowToCalculate)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ByDefinition)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionEffectsOf)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToCalculate)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenToDo)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy ConditionWhenTrue)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy DefinitionOf)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToCalculate)
+   (strategyCONCEPTDIMENSION NoticingSyntaxStrategy HowToDo)
+   (strategyCONCEPTDIMENSION PredicatesByExampleStrategy ConditionWhenTrue)
+   (strategyCONCEPTDIMENSION PredicatesByFeedbackStrategy ConditionWhenTrue)
+   (strategyCONCEPTDIMENSION ProcedureByFeedbackStrategy HowToDo)
+   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionEffectsOf)
+   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenToDo)
+   (strategyCONCEPTDIMENSION TellingOfConditionsStrategy ConditionWhenTrue)
+   (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToCalculate)
+   (strategyCONCEPTDIMENSION TellingOfProceduresStrategy HowToDo)
+   (strategyCONCEPTDIMENSION TellingOfSyntaxStrategy DefinitionOf)
+   (strategyNIMDIMENSION EBEByFeedbackStrategy ByFeedback)
+   (strategyNIMDIMENSION EBELearningStrategy ByExample)
+   (strategyNIMDIMENSION ExampleOfProcedureStrategy ByExample)
+   (strategyNIMDIMENSION FunctionsByExampleStrategy ByExample)
+   (strategyNIMDIMENSION FunctionsByFeedbackStrategy ByFeedback)
+   (strategyNIMDIMENSION NoticingSyntaxStrategy mableNoticingSyntax)
+   (strategyNIMDIMENSION PredicatesByExampleStrategy ByExample)
+   (strategyNIMDIMENSION PredicatesByFeedbackStrategy ByFeedback)
+   (strategyNIMDIMENSION ProcedureByFeedbackStrategy ByFeedback)
+   (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
+   (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
+   (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
+   (targetInTemplate TruckIsAtIntersection-code t0)
+   (targetInTemplate TruckIsAtIntersection-code t1)
+   (targetInTemplate TruckIsAtIntersection-syntax t2)
+   (targetInTemplate TruckIsAtIntersection-syntax t3)
+   (untried NoticingSyntaxStrategy TruckIsAtIntersection-code mableNoticingSyntax ConditionWhenTrue)
+   (untried NoticingSyntaxStrategy TruckIsAtIntersection-code mableNoticingSyntax DefinitionOf)
+   (untried NoticingSyntaxStrategy TruckIsAtIntersection-syntax mableNoticingSyntax ConditionWhenTrue)
+   (untried NoticingSyntaxStrategy TruckIsAtIntersection-syntax mableNoticingSyntax DefinitionOf)
+   (untried TellingOfConditionsStrategy TruckIsAtIntersection-code ByTelling ConditionWhenTrue)
+   (untried TellingOfConditionsStrategy TruckIsAtIntersection-syntax ByTelling ConditionWhenTrue)
+   (untried TellingOfSyntaxStrategy TruckIsAtIntersection-code ByTelling DefinitionOf)
+   (untried TellingOfSyntaxStrategy TruckIsAtIntersection-syntax ByTelling DefinitionOf)
  )
 (:goal 
-(and (learned SuspiciousTruck-syntax) (newlyLearned SuspiciousTruck-syntax) (learned SuspiciousTruck-code) (newlyLearned SuspiciousTruck-code))
+(and (learned TruckIsAtIntersection-code) (newlyLearned TruckIsAtIntersection-code) (learned TruckIsAtIntersection-syntax) (newlyLearned TruckIsAtIntersection-syntax))
  )
 )
+

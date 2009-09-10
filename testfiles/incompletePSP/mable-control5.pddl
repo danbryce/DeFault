@@ -1,15 +1,17 @@
 (define (domain mable-control)
- (:types target 
- 		 template
- 		 nimdimension
- 		 strategy
- 		 interpretation
- 		 conceptdimension)
+ (:types target - object
+ 		 codetarget syntaxtarget - target 
+ 		 template - object
+ 		 nimdimension - object
+ 		 strategy - object
+ 		 uberstrategy syntaxstrategy codestrategy - strategy 
+ 		 interpretation - object
+ 		 conceptdimension - object
+ 		 )
  (:predicates
 
    (interpretationForTarget ?i - interpretation ?tc - target)
    (priorInterpretationForTarget ?i - interpretation ?tc - target)
-   (interpretationForTarget ?i - interpretation ?tc - target) ;;earmarked, but unlearned interpretation for target
    (learnedInterpretation ?i - interpretation ?tc - target)
 
    (targetCONCEPTDIMENSION ?tc - target ?d - conceptdimension)
@@ -26,10 +28,10 @@
    (newlyLearned ?tc - target)
    (havePrerequisitesCIs ?tc - target)
  
-   (codeStrategy ?s - strategy)
-   (syntaxStrategy ?s - strategy)
-   (codeTarget ?t - target)
-   (syntaxTarget ?t - target)
+;   (codeStrategy ?s - strategy)
+;   (syntaxStrategy ?s - strategy)
+   (target ?t - target)
+ ;  (syntaxTarget ?t - target)
    (untried ?s - strategy ?tc - target ?nim - nimdimension ?cd - conceptdimension) ;;indicates if tried strategy on target !!Not contextual, need to generalize!!
  )
   
@@ -45,16 +47,32 @@
    :effect (and (havePrerequisitesCIs ?tc))
   )
   
+  (:action checkAllButSyntaxPrequisiteLearned
+   :parameters (?tc - target 
+   				?sc - syntaxtarget
+   				)
+   :precondition (and (composedOf ?tc ?sc)
+   					  (forall (?tc1 - target)
+   					          (imply (and (composedOf ?tc ?tc1) 
+   					          			  (not (= ?tc1 ?sc))
+   					          	      )
+   					          	      (learned ?tc1)
+   					          )
+   					   )
+   				 )
+   :effect (and (havePrerequisitesCIs ?tc))
+   )
+  
   (:action invokeCodeStrategyOnTemplate
-   :parameters (?s - strategy
+   :parameters (?s - codestrategy
                 ?t - template
                 ?n - nimdimension
                 ?cd - conceptdimension
                 ?c  - interpretation
-                ?tc - target
+                ?tc - codetarget
                 )
    :precondition (and 
-   					  (codeStrategy ?s)					  
+   					  ;(codeStrategy ?s)					  
    					  (interpretationForTarget ?c ?tc)
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
@@ -71,14 +89,15 @@
    )
    
    (:action invokeSyntaxStrategyOnTemplate
-   :parameters (?s - strategy
+   :parameters (?s - syntaxstrategy
                 ?t - template
                 ?n - nimdimension
                 ?cd - conceptdimension
                 ?c  - interpretation
-                ?tc - target
+                ?tc - syntaxtarget
                 )
-   :precondition (and (syntaxStrategy ?s)
+   :precondition (and 
+   ;(syntaxStrategy ?s)
    					  (interpretationForTarget ?c ?tc)
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
@@ -94,17 +113,17 @@
    )
 
    (:action invokeSyntaxAndCodeStrategyOnTemplate
-   :parameters (?s - strategy
+   :parameters (?s - uberstrategy
                 ?t - template
                 ?n - nimdimension
                 ?cd - conceptdimension
                 ?c1  - interpretation
                 ?c2  - interpretation  
-                ?tc1 - target
-                ?tc2 - target
+                ?tc1 - syntaxtarget
+                ?tc2 - codetarget
                 )
-   :precondition (and (syntaxStrategy ?s)
-   					  (codeStrategy ?s)			  
+   :precondition (and ;(syntaxStrategy ?s)
+   					  ;(codeStrategy ?s)			  
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
    					  (interpretationForTarget ?c1 ?tc1)
@@ -115,7 +134,7 @@
    					  (untried ?s ?tc2 ?n ?cd)
    					  (targetInTemplate ?tc1 ?t)
    					  (havePrerequisitesCIs ?tc1)
-   					  (havePrerequisitesCIs ?tc2)
+   					  (composedOf ?tc2 ?tc1)
    					  )
    :effect (and (not (untried ?s ?tc1 ?n ?cd))(not (untried ?s ?tc2 ?n ?cd)))
    :poss-effect (and (learnedInterpretation ?c1 ?tc1)

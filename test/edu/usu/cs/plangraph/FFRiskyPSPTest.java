@@ -45,7 +45,7 @@ public class FFRiskyPSPTest {
 
 		try {
 
-			File domainFileOut = getFile("/incompletePSP/mable-control4.pddl");
+			File domainFileOut = getFile("/incompletePSP/mable-control5.pddl");
 			File problemFileOut = getFile("/incompletePSP/TBDName.pddl");
 
 			//			if (!domainFileOut.exists()) 
