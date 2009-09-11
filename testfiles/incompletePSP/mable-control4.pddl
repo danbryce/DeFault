@@ -1,10 +1,11 @@
 (define (domain mable-control)
- (:types target 
- 		 template
- 		 nimdimension
- 		 strategy
- 		 interpretation
- 		 conceptdimension)
+ (:types target - object
+ 		 template - object
+ 		 nimdimension - object
+ 		 strategy - object
+ 		 syntaxstrategy codestrategy - strategy
+ 		 interpretation - object
+ 		 conceptdimension - object )
  (:predicates
 
    (interpretationForTarget ?i - interpretation ?tc - target)
@@ -26,8 +27,8 @@
    (newlyLearned ?tc - target)
    (havePrerequisitesCIs ?tc - target)
  
-   (codeStrategy ?s - strategy)
-   (syntaxStrategy ?s - strategy)
+;   (codeStrategy ?s - strategy)
+;   (syntaxStrategy ?s - strategy)
    (codeTarget ?t - target)
    (syntaxTarget ?t - target)
    (untried ?s - strategy ?tc - target ?nim - nimdimension ?cd - conceptdimension) ;;indicates if tried strategy on target !!Not contextual, need to generalize!!
@@ -46,7 +47,7 @@
   )
   
   (:action invokeCodeStrategyOnTemplate
-   :parameters (?s - strategy
+   :parameters (?s - codestrategy
                 ?t - template
                 ?n - nimdimension
                 ?cd - conceptdimension
@@ -54,7 +55,7 @@
                 ?tc - target
                 )
    :precondition (and 
-   					  (codeStrategy ?s)					  
+   					  ;(codeStrategy ?s)					  
    					  (interpretationForTarget ?c ?tc)
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
@@ -71,14 +72,14 @@
    )
    
    (:action invokeSyntaxStrategyOnTemplate
-   :parameters (?s - strategy
+   :parameters (?s - syntaxstrategy
                 ?t - template
                 ?n - nimdimension
                 ?cd - conceptdimension
                 ?c  - interpretation
                 ?tc - target
                 )
-   :precondition (and (syntaxStrategy ?s)
+   :precondition (and ;(syntaxStrategy ?s)
    					  (interpretationForTarget ?c ?tc)
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
@@ -103,8 +104,8 @@
                 ?tc1 - target
                 ?tc2 - target
                 )
-   :precondition (and (syntaxStrategy ?s)
-   					  (codeStrategy ?s)			  
+   :precondition (and ;(syntaxStrategy ?s)
+   					  ;(codeStrategy ?s)			  
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
    					  (interpretationForTarget ?c1 ?tc1)

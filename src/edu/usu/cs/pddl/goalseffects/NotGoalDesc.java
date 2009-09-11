@@ -121,7 +121,7 @@ public class NotGoalDesc implements GoalDesc {
 				disjuncts.add(new NotGoalDesc(g));
 			}
 			DisjunctionGoalDesc deMorganResult = new DisjunctionGoalDesc(disjuncts);
-			result = deMorganResult.toDNF(quantifiedVariableMap, null, null);
+			result = deMorganResult.toDNF(quantifiedVariableMap, objects, startState);
 		}
 		else if(negatedGoal instanceof DisjunctionGoalDesc){
 			//use de morgan's on disjunction and call toDNF()
@@ -131,19 +131,19 @@ public class NotGoalDesc implements GoalDesc {
 				conjuncts.add(new NotGoalDesc(g));
 			}
 			ConjunctionGoalDesc deMorganResult = new ConjunctionGoalDesc(conjuncts);
-			result = deMorganResult.toDNF(quantifiedVariableMap, null, null);
+			result = deMorganResult.toDNF(quantifiedVariableMap, objects, startState);
 		}
 		else if(negatedGoal instanceof ForAllGoalDesc){
 			//turn negated forall into exists negation, and then get DNF for negation
 			ForAllGoalDesc g = (ForAllGoalDesc)negatedGoal;
 			GoalDesc ng = new ThereExistsGoalDesc(g.getVariables(), new NotGoalDesc(g.getGoal()));
-			result = ng.toDNF(quantifiedVariableMap, null, null);			
+			result = ng.toDNF(quantifiedVariableMap, objects, startState);			
 		}
 		else if(negatedGoal instanceof ThereExistsGoalDesc){
 			//turn negated exits into forall negation, and then get DNF for negation
 			ThereExistsGoalDesc g = (ThereExistsGoalDesc)negatedGoal;
 			GoalDesc ng = new ForAllGoalDesc(g.getVariables(), new NotGoalDesc(g.getGoal()));
-			result = ng.toDNF(quantifiedVariableMap, null, null);			
+			result = ng.toDNF(quantifiedVariableMap, objects, startState);			
 
 		}
 

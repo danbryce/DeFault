@@ -71,7 +71,7 @@ public class ForAllGoalDesc extends QuantifiedGoal implements GoalDesc {
 				}
 			}
 			if(conjuncts.size() == 0){
-				result = new TrueGoal();
+				return new TrueGoal();
 			}
 			else{
 				result = new ConjunctionGoalDesc(conjuncts);

@@ -48,15 +48,13 @@
   )
   
   (:action checkAllButSyntaxPrequisiteLearned
-   :parameters (?tc - target 
+   :parameters (?tc - codetarget 
    				?sc - syntaxtarget
    				)
    :precondition (and (composedOf ?tc ?sc)
-   					  (forall (?tc1 - target)
-   					          (imply (and (composedOf ?tc ?tc1) 
-   					          			  (not (= ?tc1 ?sc))
-   					          	      )
-   					          	      (learned ?tc1)
+   					  (forall (?tc1 - codetarget)
+   					          (imply (composedOf ?tc ?tc1) 
+   					          		 (learned ?tc1)
    					          )
    					   )
    				 )
@@ -64,23 +62,22 @@
    )
   
   (:action invokeCodeStrategyOnTemplate
-   :parameters (?s - codestrategy
-                ?t - template
-                ?n - nimdimension
-                ?cd - conceptdimension
-                ?c  - interpretation
+   :parameters (?c  - interpretation
                 ?tc - codetarget
+   				?t - template
+                ?n - nimdimension
+                ?s - codestrategy
+                ?cd - conceptdimension
                 )
    :precondition (and 
-   					  ;(codeStrategy ?s)					  
    					  (interpretationForTarget ?c ?tc)
-   					  (nimDimensionInTemplate ?n ?t)
+   					  (targetInTemplate ?tc ?t)  	
    					  (strategyNIMDIMENSION ?s ?n)
+   					  (nimDimensionInTemplate ?n ?t)
    					  (conceptDimensionInTemplate ?cd ?t)
    					  (strategyCONCEPTDIMENSION ?s ?cd)
-   					  (untried ?s ?tc ?n ?cd)
-   					  (targetInTemplate ?tc ?t)  	
    					  (havePrerequisitesCIs ?tc)				     					  
+   					  (untried ?s ?tc ?n ?cd)
    					  )
    :effect (and (not (untried ?s ?tc ?n ?cd)))
    :poss-effect (and (learnedInterpretation ?c ?tc)
@@ -89,22 +86,21 @@
    )
    
    (:action invokeSyntaxStrategyOnTemplate
-   :parameters (?s - syntaxstrategy
+   :parameters (?c  - interpretation
+                ?tc - syntaxtarget
                 ?t - template
+   				?s - syntaxstrategy
                 ?n - nimdimension
                 ?cd - conceptdimension
-                ?c  - interpretation
-                ?tc - syntaxtarget
                 )
    :precondition (and 
-   ;(syntaxStrategy ?s)
    					  (interpretationForTarget ?c ?tc)
-   					  (nimDimensionInTemplate ?n ?t)
+   					  (targetInTemplate ?tc ?t)
    					  (strategyNIMDIMENSION ?s ?n)
+   					  (nimDimensionInTemplate ?n ?t)
    					  (conceptDimensionInTemplate ?cd ?t)
   					  (strategyCONCEPTDIMENSION ?s ?cd)
    					  (untried ?s ?tc ?n ?cd)
-   					  (targetInTemplate ?tc ?t)
    					  (havePrerequisitesCIs ?tc)
    					  )
    :effect (and (not (untried ?s ?tc ?n ?cd)))
@@ -113,28 +109,28 @@
    )
 
    (:action invokeSyntaxAndCodeStrategyOnTemplate
-   :parameters (?s - uberstrategy
-                ?t - template
-                ?n - nimdimension
-                ?cd - conceptdimension
-                ?c1  - interpretation
+   :parameters (?c1  - interpretation
                 ?c2  - interpretation  
                 ?tc1 - syntaxtarget
                 ?tc2 - codetarget
+                ?t - template
+   				?s - uberstrategy
+                ?n - nimdimension
+                ?cd - conceptdimension
                 )
-   :precondition (and ;(syntaxStrategy ?s)
-   					  ;(codeStrategy ?s)			  
+   :precondition (and 		  
+   					  (composedOf ?tc2 ?tc1)
    					  (nimDimensionInTemplate ?n ?t)
    					  (strategyNIMDIMENSION ?s ?n)
    					  (interpretationForTarget ?c1 ?tc1)
    					  (interpretationForTarget ?c2 ?tc2)
    					  (conceptDimensionInTemplate ?cd ?t)
   					  (strategyCONCEPTDIMENSION ?s ?cd)
+   					  (targetInTemplate ?tc2 ?t)
    					  (untried ?s ?tc1 ?n ?cd)
    					  (untried ?s ?tc2 ?n ?cd)
-   					  (targetInTemplate ?tc1 ?t)
    					  (havePrerequisitesCIs ?tc1)
-   					  (composedOf ?tc2 ?tc1)
+   					  (havePrerequisitesCIs ?tc2)
    					  )
    :effect (and (not (untried ?s ?tc1 ?n ?cd))(not (untried ?s ?tc2 ?n ?cd)))
    :poss-effect (and (learnedInterpretation ?c1 ?tc1)

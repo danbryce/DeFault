@@ -204,7 +204,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 		if(actPrecondition instanceof ConjunctionGoalDesc){
 			precondList.addAll(((ConjunctionGoalDesc)actPrecondition).getSubGoals());
 		}
-		else{
+		else if (actPrecondition != null){
 			precondList.add(actPrecondition);
 		}
 		
