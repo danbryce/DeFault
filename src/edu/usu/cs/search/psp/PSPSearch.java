@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
@@ -25,9 +26,9 @@ public class PSPSearch extends DefaultSearch implements Search {
 	protected UtilityFunction goalUtilities;
 
 	
-	public PSPSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SearchStatistics searchStatistics) throws IllDefinedProblemException {
-		super(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics);
-		search = new AStarSearch(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics);
+	public PSPSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException {
+		super(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics, solverOptions);
+		search = new AStarSearch(domain, problem, actionInstances, new PSPSolutionEvaluator(), searchStatistics, solverOptions);
 		
 		//TODO hack, should move this into the problem and parse it from problem file
 		Map<Proposition, Double> goalUtils = new HashMap<Proposition, Double>();

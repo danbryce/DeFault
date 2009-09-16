@@ -15,6 +15,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class DefaultSearch implements Search {
@@ -32,6 +33,7 @@ public class DefaultSearch implements Search {
 	protected SolutionEvaluator solutionEvaluator = null;
 	protected List<StateNode> solutions = null;
 	protected SearchStatistics searchStatistics = null;
+	protected SolverOptions solverOptions = null;
 	
 	public DefaultSearch(){
 		
@@ -43,7 +45,8 @@ public class DefaultSearch implements Search {
 			Problem problem, 
 			List<ActionInstance> actionInstances, 
 			SolutionEvaluator solutionEvaluator,
-			SearchStatistics searchStatistics
+			SearchStatistics searchStatistics, 
+			SolverOptions solverOptions
 			) 
 	throws IllDefinedProblemException
 	{
@@ -56,7 +59,7 @@ public class DefaultSearch implements Search {
 		this.actionInstances = actionInstances;
 		this.solutionEvaluator = solutionEvaluator;
 		this.searchStatistics = searchStatistics;
-		
+		this.solverOptions = solverOptions;
 		//System.out.print("Heuristic: ");
 		switch(whichHeuristic) {
 		case 0:
@@ -64,7 +67,7 @@ public class DefaultSearch implements Search {
 			//System.out.println("Breadth First Search");
 			break;
 		case 1:
-			heuristic = new StanHeuristic(problem, domain);
+			heuristic = new StanHeuristic(problem, domain, solverOptions);
 			//System.out.println("Relaxed Plan Graph");
 			break;
 		case 2:

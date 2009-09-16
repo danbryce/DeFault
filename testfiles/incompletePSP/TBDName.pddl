@@ -1,30 +1,30 @@
  (define (problem TBDName)
  (:domain mable-control)
 (:objects 
-   t3 t2 t1 t0 - template
-   TruckIsAtIntersection-syntax - syntaxtarget
+   t2 t1 t0 - template
+   AnnotateSegment-syntax SetCompanySegmentTraversalTime-syntax - syntaxtarget
    ByDefinition ConditionWhenToCalculate ConditionEffectsOf HowToDo ConditionWhenTrue HowToCalculate DefinitionOf ConditionWhenToDo - conceptdimension
    PredicatesByFeedbackStrategy EBEByFeedbackStrategy EBELearningStrategy FunctionsByFeedbackStrategy ExampleOfProcedureStrategy ProcedureByFeedbackStrategy TellingOfProceduresStrategy PredicatesByExampleStrategy FunctionsByExampleStrategy - codestrategy
    TellingOfConditionsStrategy - uberstrategy
-   TruckIsAtIntersection-code - codetarget
+   SetAllSegmentTraversalTime-code SetAllSegmentTraversalTime-syntax - codetarget
    NoticingSyntaxStrategy TellingOfSyntaxStrategy - syntaxstrategy
-   TruckIsAtIntersection-code-interpretation TruckIsAtIntersection-syntax-interpretation - interpretation
+   SetAllSegmentTraversalTime-syntax-interpretation SetAllSegmentTraversalTime-code-interpretation AnnotateSegment-syntax-interpretation SetCompanySegmentTraversalTime-syntax-interpretation - interpretation
    ByExample ByTelling mableNoticingSyntax ByFeedback - nimdimension
  )
 (:init 
-   (composedOf TruckIsAtIntersection-code TruckIsAtIntersection-syntax)
-   (conceptDimensionInTemplate ConditionWhenTrue t0)
-   (conceptDimensionInTemplate ConditionWhenTrue t1)
+   (composedOf SetAllSegmentTraversalTime-code SetAllSegmentTraversalTime-syntax)
+   (conceptDimensionInTemplate DefinitionOf t0)
+   (conceptDimensionInTemplate DefinitionOf t1)
    (conceptDimensionInTemplate DefinitionOf t2)
-   (conceptDimensionInTemplate DefinitionOf t3)
-   (havePrerequisitesCIs TruckIsAtIntersection-syntax)
-   (interpretationForTarget TruckIsAtIntersection-code-interpretation TruckIsAtIntersection-code)
-   (interpretationForTarget TruckIsAtIntersection-syntax-interpretation TruckIsAtIntersection-syntax)
-   (nimDimensionInTemplate ByTelling t0)
-   (nimDimensionInTemplate ByTelling t2)
+   (havePrerequisitesCIs AnnotateSegment-syntax)
+   (havePrerequisitesCIs SetCompanySegmentTraversalTime-syntax)
+   (interpretationForTarget AnnotateSegment-syntax-interpretation AnnotateSegment-syntax)
+   (interpretationForTarget SetAllSegmentTraversalTime-code-interpretation SetAllSegmentTraversalTime-code)
+   (interpretationForTarget SetCompanySegmentTraversalTime-syntax-interpretation SetCompanySegmentTraversalTime-syntax)
+   (nimDimensionInTemplate mableNoticingSyntax t0)
    (nimDimensionInTemplate mableNoticingSyntax t1)
-   (nimDimensionInTemplate mableNoticingSyntax t3)
-   (priorInterpretationForTarget TruckIsAtIntersection-syntax-interpretation TruckIsAtIntersection-syntax)
+   (nimDimensionInTemplate mableNoticingSyntax t2)
+   (priorInterpretationForTarget SetAllSegmentTraversalTime-syntax-interpretation SetAllSegmentTraversalTime-syntax)
    (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
@@ -59,21 +59,17 @@
    (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
    (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
    (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
-   (targetInTemplate TruckIsAtIntersection-code t0)
-   (targetInTemplate TruckIsAtIntersection-code t1)
-   (targetInTemplate TruckIsAtIntersection-syntax t2)
-   (targetInTemplate TruckIsAtIntersection-syntax t3)
-   (untried NoticingSyntaxStrategy TruckIsAtIntersection-code mableNoticingSyntax ConditionWhenTrue)
-   (untried NoticingSyntaxStrategy TruckIsAtIntersection-code mableNoticingSyntax DefinitionOf)
-   (untried NoticingSyntaxStrategy TruckIsAtIntersection-syntax mableNoticingSyntax ConditionWhenTrue)
-   (untried NoticingSyntaxStrategy TruckIsAtIntersection-syntax mableNoticingSyntax DefinitionOf)
-   (untried TellingOfConditionsStrategy TruckIsAtIntersection-code ByTelling ConditionWhenTrue)
-   (untried TellingOfConditionsStrategy TruckIsAtIntersection-syntax ByTelling ConditionWhenTrue)
-   (untried TellingOfSyntaxStrategy TruckIsAtIntersection-code ByTelling DefinitionOf)
-   (untried TellingOfSyntaxStrategy TruckIsAtIntersection-syntax ByTelling DefinitionOf)
+   (strategyRequiresPriorCILearnedByStrategy ProcedureByFeedbackStrategy ExampleOfProcedureStrategy)
+   (templateIncludesPriorInterpretationByStrategy t0 ExampleOfProcedureStrategy)
+   (strategyNeedsPriorCI ProcedureByFeedbackStrategy)
+   (strategyRequiresPriorCILearnedByStrategy ProcedureByFeedbackStrategy ProcedureByFeedbackStrategy)
+   (targetInTemplate AnnotateSegment-syntax t1)
+   (targetInTemplate SetAllSegmentTraversalTime-code t0)
+   (targetInTemplate SetCompanySegmentTraversalTime-syntax t2)
+   (untried NoticingSyntaxStrategy AnnotateSegment-syntax mableNoticingSyntax DefinitionOf)
+   (untried NoticingSyntaxStrategy SetCompanySegmentTraversalTime-syntax mableNoticingSyntax DefinitionOf)
  )
 (:goal 
-(and (learned TruckIsAtIntersection-code) (newlyLearned TruckIsAtIntersection-code) (learned TruckIsAtIntersection-syntax) (newlyLearned TruckIsAtIntersection-syntax))
+(and (learned SetAllSegmentTraversalTime-code) (newlyLearned SetAllSegmentTraversalTime-code) (learned AnnotateSegment-syntax) (newlyLearned AnnotateSegment-syntax) (learned SetCompanySegmentTraversalTime-syntax) (newlyLearned SetCompanySegmentTraversalTime-syntax))
  )
 )
-

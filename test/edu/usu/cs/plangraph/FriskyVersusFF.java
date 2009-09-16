@@ -19,36 +19,51 @@ public class FriskyVersusFF {
 				"friskylength",
 				//"friskyEHC",
 				"frisky",
+				"friskyMS"
 		};
 
-		for(int j = 0; j < algorithms.length; j++){
 
-			int numPfiles = 2;
+		int numPfiles = 30;
+		//each random instance of the domain
 
-			for(int i = 1; i < numPfiles; i++){
+		for(int i = 1; i < numPfiles; i++){
 
-				String problem = null;
-				String extension = ".pddl";
-				if(i < 10){
-					problem = "p0" + i;
-				}
-				else{
-					problem = "p" + i;
-				}
+			String problem = null;
+			String extension = ".pddl";
+			if(i < 10){
+				problem = "p0" + i;
+			}
+			else{
+				problem = "p" + i;
+			}
+			
+			
+//			if(
+//					problem.equals("p01")
+//					||
+//					problem.equals("p02") ||
+//					problem.equals("p03")
+//			){
+//				continue;
+//			}
 
-				//each random instance of the domain
-				for(int k = 1; k < 10; k++){
-					
-					//each probability of being incomplete
-					for(double p = 0.25; p <= 1.0; p+= 0.25){
-				
-				String[] args = {pathToDomains+"domain_"+problem+"_"+p+"_"+k+extension, 
-						pathToProblems+problem+extension, 
-						//outputNum.toString(),
-						"output_pathways.txt",
-						algorithms[j]};
 
-				SearchTest.main(args);
+			//each probability of being incomplete
+			for(double p = 0.25; p <= 1.0; p+= 0.25){
+
+
+					for(int j = 0; j < algorithms.length; j++){
+						for(int k = 1; k <= 10; k++){
+
+						String[] args = {pathToDomains+"domain_"+problem+"_"+p+"_"+k+extension, 
+								pathToProblems+problem+extension, 
+								//outputNum.toString(),
+								"output_pathways.txt",
+								algorithms[j], 
+								String.valueOf(p),
+								String.valueOf(k)};
+
+						SearchTest.main(args);
 					}
 				}
 			}
@@ -60,17 +75,17 @@ public class FriskyVersusFF {
 
 		String[][] instances = { 
 				//{"testfiles/incomplete/DriverLog/driverlogDan.pddl", "testfiles/incomplete/DriverLog/pfileDan"},
-				//			{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile1"},
-				//			{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile2"},
-				//				{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile3"},
-				//				{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile4"},			
-				//				{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile5"},
+							{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile1"},
+				{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile2"},
+								{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile3"},
+								{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile4"},			
+								{"testfiles/incomplete/DriverLog/driverlog.pddl", "testfiles/incomplete/DriverLog/pfile5"},
 				//			
-				//				{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob1.pddl"},	
-				//				{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob2.pddl"},	
-				//				{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob3.pddl"},	
-				//				{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob4.pddl"},	
-				//				{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob5.pddl"},	
+								{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob1.pddl"},	
+								{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob2.pddl"},	
+								{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob3.pddl"},	
+								{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob4.pddl"},	
+								{"testfiles/incomplete/Rover/rover.pddl", "testfiles/incomplete/Rover/roverprob5.pddl"},	
 
 				//	{"testfiles/incomplete/pathways/domain_p01_risky.pddl", "testfiles/incomplete/pathways/p01_risky.pddl"},	
 				//	{"testfiles/incomplete/pathways/domain_p01.pddl", "testfiles/incomplete/pathways/p01.pddl"},	
@@ -88,9 +103,10 @@ public class FriskyVersusFF {
 
 		String[] algorithms = {
 
-				"friskylength",
+			//	"friskylength",
 				//"friskyEHC",
 				//"frisky",
+				"friskyMS"
 		};
 
 		Integer outputNum = 0;

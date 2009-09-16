@@ -41,8 +41,7 @@
     ?truck - truck
     ?loc - location)
   :precondition
-   (and (atLocation ?truck ?loc) (atLocation ?driver ?loc) )
-  :poss-precondition (and (empty ?truck))
+   (and (atLocation ?truck ?loc) (atLocation ?driver ?loc) (empty ?truck) )
   :effect
    (and (not (atLocation ?driver ?loc)) (driving ?driver ?truck) )
   :poss-effect (and (not (empty ?truck)))

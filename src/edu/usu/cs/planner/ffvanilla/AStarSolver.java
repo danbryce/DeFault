@@ -8,6 +8,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.astar.AStarSearch;
@@ -26,9 +27,9 @@ public class AStarSolver extends DefaultSolver
 //	
 //	private List<ActionInstance> plan;
 	
-	public AStarSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
+	public AStarSolver(Domain domain, Problem problem, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException
 	{
-		super(domain, problem, searchStatistics);
+		super(domain, problem, searchStatistics, solverOptions);
 
 //		if(domain == null || problem == null)
 //		{
@@ -46,7 +47,7 @@ public class AStarSolver extends DefaultSolver
 //			logger.info(ai.toString());
 //		}
 		
-		search = new AStarSearch(domain, problem, actionInstances, new ClassicalSolutionEvaluator(), searchStatistics);
+		search = new AStarSearch(domain, problem, actionInstances, new ClassicalSolutionEvaluator(), searchStatistics, solverOptions);
 		search.initialize();
 	}
 

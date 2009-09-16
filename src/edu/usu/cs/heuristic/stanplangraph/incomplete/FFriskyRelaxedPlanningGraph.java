@@ -15,6 +15,7 @@ import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 
@@ -24,13 +25,14 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 	protected int levelsPastClassicalLevelOff= 0;
 
 
+
 	//	public FFriskyRelaxedPlanningGraph(IncompleteProblem problem) {
 	//		super(problem);
 	//
 	//	}
 
-	public FFriskyRelaxedPlanningGraph(Problem problem, Domain domain) {
-		super(problem, domain);
+	public FFriskyRelaxedPlanningGraph(Problem problem, Domain domain, SolverOptions solverOptions) {
+		super(problem, domain, solverOptions);
 	}
 
 
@@ -59,10 +61,12 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 				ali.setCriticalRisks(new HashSet<Risk>(criticalRisks));
 				ali.setPossibleRisks(new HashSet<Risk>(possibleRisks));
 				ali.getSupportingFacts().add(prec);
+				 
+				
 
-				//				if(ali.getCriticalRisks().size() > 0 || ali.getPossibleRisks().size() > 0){
-				//					System.out.println("noop" + fli.fact.getName() + " " + ali.criticalRisks.size() + " " + ali.possibleRisks.size());
-				//				}
+								if(ali.getCriticalRisks().size() > 0 || ali.getPossibleRisks().size() > 0){
+									logger.debug("Noop " + actionHeader + " has risks: " + criticalRisks.size() +  " " + possibleRisks.size());
+								}
 			}
 			else{
 				Set<Risk> criticalRisks = new HashSet<Risk>();
@@ -100,9 +104,9 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 				ali.setCriticalRisks(criticalRisks);
 				//ali.getCriticalRisks().addAll(possibleRisks); //all precondition possible risks become critical because action is executed 
 				//ali.setPossibleRisks(possibleRisks); 
-				//				if(ali.getCriticalRisks().size() > 0 || ali.getPossibleRisks().size() > 0){
-				//					System.out.println("Act " + actionHeader.getName() + " " + ali.criticalRisks.size() + " " + ali.possibleRisks.size());
-				//				}
+								if(ali.getCriticalRisks().size() > 0 || ali.getPossibleRisks().size() > 0){
+									logger.debug("Act " + actionHeader.getName() + " " + ali.getCriticalRisks().size() + " " + ali.getPossibleRisks().size());
+								}
 			}
 			//			System.out.println("Act Supported by: " + ali.getActionHeader().getName());
 			//			for(FactHeader fh : ali.getSupportingFacts()){
@@ -217,55 +221,55 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			}
 
 
-
-			//			// If there are any actionsWithFewestCriticalRisks that have the
-			//			// same critical risk set as actionsWithFewestPossibleRisks, the
-			//			// possible risks are the intersection of all these possible risk
-			//			// sets
-			//			for (ActionHeader actionHeader : actionsWithFewestCriticalRisks) {
-			//				ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
-			//		
-			//				Set<Risk> actPossRisks = new HashSet<Risk>(ali.getPossibleRisks());
-			//				if(fli.getPossibleSupporters().contains(actionHeader)){
-			//					String s = "UnlistedEffect " + actionHeader.getName() + " " + fact.getName();
-			//					Risk r = null;
-			//					if(!globalRiskHeaders.containsKey(s)) {
-			//						r = new Risk(Risk.UNLISTEDEFFECT, actionHeader.getName(), fact.getName());
-			//						globalRiskHeaders.put(s, r);
-			//					}
-			//					r = globalRiskHeaders.get(s);
-			//					actPossRisks.add(r);
-			//				}
-			//				
-			//				Set<Risk> intersectRisks = new HashSet<Risk>();
-			//				intersectRisks.addAll(actPossRisks);
-			//				intersectRisks.retainAll(possibleRisks);
-			//				
-			//				Set<Risk> interSectCriticalRisk = new HashSet<Risk>(criticalRisks);
-			//				interSectCriticalRisk.retainAll(ali.getCriticalRisks());
-			//				
-			//				if (criticalRisks.size() == interSectCriticalRisk.size() &&
-			//						intersectRisks.size() < possibleRisks.size()) {
-			//
-			//					
-			//
-			//					possibleRisks.retainAll(intersectRisks);
-			//					//criticalRisks.addAll(criticalRisks);
-			//					chosenSupportingActions.add(actionHeader);
-			//				}
-			//			}
-			//			
-
+			if(solverOptions.isUseMultipleSupportersInPlanningGraph()){
+						// If there are any actionsWithFewestCriticalRisks that have the
+						// same critical risk set as actionsWithFewestPossibleRisks, the
+						// possible risks are the intersection of all these possible risk
+						// sets
+						for (ActionHeader actionHeader : actionsWithFewestCriticalRisks) {
+							ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
+					
+							Set<Risk> actPossRisks = new HashSet<Risk>(ali.getPossibleRisks());
+							if(fli.getPossibleSupporters().contains(actionHeader)){
+								Risk r = Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, actionHeader.getName(), fact.getName());
+								actPossRisks.add(r);
+							}
+							
+							Set<Risk> intersectRisks = new HashSet<Risk>();
+							intersectRisks.addAll(actPossRisks);
+							intersectRisks.retainAll(possibleRisks);
+							
+							Set<Risk> interSectCriticalRisk = new HashSet<Risk>(criticalRisks);
+							interSectCriticalRisk.retainAll(ali.getCriticalRisks());
+							
+							if (criticalRisks.size() == interSectCriticalRisk.size() &&
+									intersectRisks.size() < possibleRisks.size()) {
+			
+								
+			
+								possibleRisks.retainAll(intersectRisks);
+								//criticalRisks.addAll(criticalRisks);
+								chosenSupportingActions.add(actionHeader);
+							}
+						}
+						
+			}
 
 			// Add the critical/possible risks to the fact
 			fli.setCriticalRisks(criticalRisks);
 			fli.setPossibleRisks(possibleRisks);
 			fli.setChosenSupporters(chosenSupportingActions);
 
+			for(ActionHeader a : chosenSupportingActions){
+				if(!a.isNoop()){
+					logger.debug("Fact " + fact.getName() + " supported by " + a.getName());
+				}
+			}
+			
 
-			//			if(fli.getCriticalRisks().size() > 0 || fli.getPossibleRisks().size() > 0){
-			//				System.out.println("Fact " + fli.fact.getName() + " " + fli.criticalRisks.size() + " " + fli.possibleRisks.size());
-			//			}
+						if(fli.getCriticalRisks().size() > 0 || fli.getPossibleRisks().size() > 0){
+							logger.debug("Fact " + fli.getFact().getName() + " " + fli.getCriticalRisks().size() + " " + fli.getPossibleRisks().size());
+						}
 
 		}
 	}

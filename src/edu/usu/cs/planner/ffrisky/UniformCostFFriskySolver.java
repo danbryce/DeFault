@@ -4,6 +4,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.planner.DefaultSolver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.FFRiskySolutionEvaluator;
@@ -12,12 +13,12 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class UniformCostFFriskySolver extends DefaultSolver {
 	//protected IncompleteProblem incompleteProblem = null; 
-	public UniformCostFFriskySolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
+	public UniformCostFFriskySolver(Domain domain, Problem problem, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException
 	{
-		super(domain, problem,searchStatistics);
+		super(domain, problem,searchStatistics, solverOptions);
 		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
-		search = new FriskySearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics);
+		search = new FriskySearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics, solverOptions);
 		search.initialize();
 		
 //		System.out.println("Search algorithm: " + search.getClass().getSimpleName());

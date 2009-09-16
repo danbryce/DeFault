@@ -37,9 +37,10 @@ public class DefaultSolver implements Solver {
 	protected long maxRunTime = 0;
 	private static final long DEFAULT_MAX_HEAP_USAGE = 1024*1024*200;
 	private static final long DEFAULT_MAX_RUNTIME = 1000*60*1;
+	protected SolverOptions solverOptions = null;
 
 	
-	public DefaultSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
+	public DefaultSolver(Domain domain, Problem problem, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException
 	{
 		if(domain == null || problem == null) {
 			throw new IllegalArgumentException("null domain/problem");
@@ -52,6 +53,7 @@ public class DefaultSolver implements Solver {
 		
 		this.domain = domain;
 		this.problem = problem;
+		this.solverOptions = solverOptions;
 		this.searchStatistics = searchStatistics;
 		this.actionInstances = PddlImporter.createActionInstances(domain, problem);//createActionInstances(domain, problem);
 		this.problem.setActionInstances(this.actionInstances);

@@ -21,6 +21,7 @@ import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPEHCSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.SearchStatistics;
@@ -59,8 +60,8 @@ public class FFRiskyPSPTest {
 			Problem problem = probBuilder.buildProblem();
 
 			SearchStatistics searchStatistics = new SearchStatistics();
-			
-			FFRiskyPSPSolver solver = new FFRiskyPSPSolver(domain, problem, searchStatistics);
+			SolverOptions solverOptions = new SolverOptions();
+			FFRiskyPSPSolver solver = new FFRiskyPSPSolver(domain, problem, searchStatistics, solverOptions);
 			List<ActionInstance> plan = solver.solve();
 			if (plan == null) {
 				logger.debug("No plan found");

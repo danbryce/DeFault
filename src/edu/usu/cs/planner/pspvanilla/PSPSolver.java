@@ -8,6 +8,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 import edu.usu.cs.search.psp.PSPSearch;
@@ -17,11 +18,11 @@ public class PSPSolver extends DefaultSolver {
 
 	
 	
-	public PSPSolver(Domain domain, Problem problem, SearchStatistics searchStatistics) throws IllDefinedProblemException
+	public PSPSolver(Domain domain, Problem problem, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException
 	{
-		super(domain, problem, searchStatistics);
+		super(domain, problem, searchStatistics, solverOptions);
 		
-		this.search = new PSPSearch(domain, problem, actionInstances, searchStatistics);
+		this.search = new PSPSearch(domain, problem, actionInstances, searchStatistics, solverOptions);
 		this.search.initialize();
 	}
 	

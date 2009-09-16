@@ -14,6 +14,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
@@ -32,9 +33,12 @@ public class FriskyPSPSearch extends DefaultSearch implements Search {
 	protected UtilityFunction goalUtilities;
 
 	
-	public FriskyPSPSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics) throws IllDefinedProblemException {
-		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
-		search = new AStarSearch(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
+	public FriskyPSPSearch(
+			Domain domain, Problem problem, List<ActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics,
+			SolverOptions solverOptions
+			) throws IllDefinedProblemException {
+		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solverOptions);
+		search = new AStarSearch(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solverOptions);
 		
 		//TODO hack, should move this into the problem and parse it from problem file
 		Map<Proposition, Double> goalUtils = new HashMap<Proposition, Double>();
@@ -43,13 +47,13 @@ public class FriskyPSPSearch extends DefaultSearch implements Search {
 				
 			}
 		this.goalUtilities = new AdditiveUtilityFunction(goalUtils);
-		this.heuristic = new FFRiskyPSPRelaxedPlanHeuristic(problem, domain, goalUtilities);
+		this.heuristic = new FFRiskyPSPRelaxedPlanHeuristic(problem, domain, goalUtilities, solverOptions);
 		
 	}
 
 	public void initialize(){
 		
-		StateNode startNode = new FFRiskyPSPNode(problem.getInitialState(), goalUtilities, heuristic, problem);
+		StateNode startNode = new FFRiskyPSPNode(problem.getInitialState(), goalUtilities, heuristic, problem, solverOptions);
 		startNode.getFValue();
 		search.setRelevantActions(startNode.getRelevantActions());
 		logger.info("# acts = " + startNode.getRelevantActions().size());

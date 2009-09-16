@@ -12,6 +12,7 @@ import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.pspvanilla.PSPSolver;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
@@ -40,8 +41,8 @@ public class Main {
 	        Problem problem = probBuilder.buildProblem();
 	        
 	        SearchStatistics searchStatistics = new SearchStatistics();
-	        
-	        PSPSolver solver = new PSPSolver(domain, problem, searchStatistics);
+	        SolverOptions solverOptions = new SolverOptions();
+	        PSPSolver solver = new PSPSolver(domain, problem, searchStatistics, solverOptions);
 	        List<ActionInstance> plan = solver.solve();
 	        if (plan == null) {
 	            System.out.println("No plan found");

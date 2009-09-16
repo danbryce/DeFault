@@ -19,6 +19,7 @@ import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffrisky.FFriskyEHCSolver;
 import edu.usu.cs.planner.ffrisky.FFriskyLengthSolver;
 import edu.usu.cs.planner.ffrisky.FFriskySolver;
@@ -40,7 +41,7 @@ public class SearchTest {
 
 
 	public static void main(String[] args) {
-		if (!(args.length == 3 || args.length == 4)) {
+		if (!(args.length == 3 || args.length == 4 || args.length == 6)) {
 			usage();
 		}
 		File domainFile = new File(args[0]);
@@ -76,35 +77,42 @@ public class SearchTest {
 
 		Solver solver = null;
 		SearchStatistics searchStatistics = new SearchStatistics();
+		SolverOptions solverOptions = new SolverOptions();
 		try {
 			// Initialize search algorithm
 			
 			if(args.length == 3 || args[3].equalsIgnoreCase("frisky")) {
 
-				solver = new FFriskySolver(domain, problem, searchStatistics);
+				solver = new FFriskySolver(domain, problem, searchStatistics, solverOptions);
 
 			}
+			else if(args.length == 3 || args[3].equalsIgnoreCase("friskyMS")) {
+				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+				solver = new FFriskySolver(domain, problem, searchStatistics, solverOptions);
+
+			}
+			
 			else if(args.length == 3 || args[3].equalsIgnoreCase("friskylength")) {
 
-				solver = new FFriskyLengthSolver(domain, problem, searchStatistics);
+				solver = new FFriskyLengthSolver(domain, problem, searchStatistics, solverOptions);
 
 			}
 			else if(args.length == 3 || args[3].equalsIgnoreCase("friskypsp")) {
 
-				solver = new FFRiskyPSPSolver(domain, problem, searchStatistics);
+				solver = new FFRiskyPSPSolver(domain, problem, searchStatistics, solverOptions);
 
 			}
 			else if(args.length == 3 || args[3].equalsIgnoreCase("friskyEHC")) {
 
-				solver = new FFriskyEHCSolver(domain, problem, searchStatistics);
+				solver = new FFriskyEHCSolver(domain, problem, searchStatistics, solverOptions);
 
 			}
 			else if(args[3].equalsIgnoreCase("uniformcost") || 
 					args[3].equalsIgnoreCase("uniform")) {
-				solver = new UniformCostFFriskySolver(domain, problem, searchStatistics);
+				solver = new UniformCostFFriskySolver(domain, problem, searchStatistics, solverOptions);
 			}
 			else if(args[3].equalsIgnoreCase("length")) {
-				solver = new AStarSolver(domain, problem, searchStatistics);
+				solver = new AStarSolver(domain, problem, searchStatistics, solverOptions);
 			}
 			else {
 				usage();
@@ -159,10 +167,10 @@ public class SearchTest {
 			FileWriter fstream = new FileWriter("Output/" + args[2], true);
 			BufferedWriter out = new BufferedWriter(fstream);
 			if(searchStatistics.getSolutionNode() != null && searchStatistics.getSolutionNode() instanceof FFRiskyNode){
-					out.append(problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size() + "\r\n");
+					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t" : "") + problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size() + "\r\n");
 			}
 			else{
-				out.append(problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + 0 + "\r\n");
+				out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t" : "") +problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + 0 + "\r\n");
 				
 			}
 			out.close();

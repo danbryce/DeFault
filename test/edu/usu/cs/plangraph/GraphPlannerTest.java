@@ -20,6 +20,7 @@ import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffvanilla.AStarSolver;
 import edu.usu.cs.planner.pspvanilla.PSPSolver;
 import edu.usu.cs.search.SearchStatistics;
@@ -51,8 +52,8 @@ public class GraphPlannerTest {
 			Problem problem = probBuilder.buildProblem();
 
 			SearchStatistics searchStatistics = new SearchStatistics();
-			
-			Solver solver = new AStarSolver(domain, problem, searchStatistics);
+			SolverOptions solverOptions = new SolverOptions();
+			Solver solver = new AStarSolver(domain, problem, searchStatistics, solverOptions);
 			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
@@ -97,8 +98,8 @@ public class GraphPlannerTest {
 			Problem problem = probBuilder.buildProblem();
 
 			SearchStatistics searchStatistics = new SearchStatistics();
-			
-			AStarSolver solver = new AStarSolver(domain, problem, searchStatistics);
+			SolverOptions solverOptions = new SolverOptions();
+			AStarSolver solver = new AStarSolver(domain, problem, searchStatistics, solverOptions);
 			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");
@@ -143,8 +144,8 @@ public class GraphPlannerTest {
 			Problem problem = probBuilder.buildProblem();
 
 			SearchStatistics searchStatistics = new SearchStatistics();
-
-			Solver solver = new PSPSolver(domain, problem, searchStatistics);
+			SolverOptions solverOptions = new SolverOptions();
+			Solver solver = new PSPSolver(domain, problem, searchStatistics, solverOptions);
 			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
 				System.out.println("No plan found");

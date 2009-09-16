@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 
@@ -20,10 +21,10 @@ public class FFRiskyHeuristic implements Heuristic {
 	FFriskyRelaxedPlanningGraph solver;
 	private int planLength = -1;
 
-	public FFRiskyHeuristic(Problem problem, Domain domain) {
+	public FFRiskyHeuristic(Problem problem, Domain domain, SolverOptions solverOptions) {
 		this.problem = problem;
 		this.domain = domain;
-		solver = new FFriskyRelaxedPlanningGraph(problem, domain);
+		solver = new FFriskyRelaxedPlanningGraph(problem, domain, solverOptions);
 	}
 
 	//	public int getValue(FFRiskyNode node) {
@@ -51,7 +52,7 @@ public class FFRiskyHeuristic implements Heuristic {
 		double relaxedPlanLength = solver.getRelaxedPlanLength();
 
 		// If goalRiskSet returns null, there is no solution in this path so return infinity
-		if(goalRiskSet == null) {
+		if(goalRiskSet == null || relaxedPlanLength == Double.MAX_VALUE) {
 			values[0] = Double.MAX_VALUE;
 			values[1] = Double.MAX_VALUE;
 

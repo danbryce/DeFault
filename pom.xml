@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.usu.cs</groupId>
   <artifactId>graphplanner</artifactId>
-  <version>1.3.1</version>
+  <version>1.3.2</version>
 
   <!-- To Release -->
   <!-- mvn clean deploy -DperformRelease -->
 
   <scm>
-    <developerConnection>scm:svn:https://cmext.sri.com/svn/bl/graphplanner/tags/graphplanner-1.3.1</developerConnection>
+    <developerConnection>scm:svn:https://cmext.sri.com/svn/bl/graphplanner/tags/graphplanner-1.3.2</developerConnection>
   </scm>
 
   <build>

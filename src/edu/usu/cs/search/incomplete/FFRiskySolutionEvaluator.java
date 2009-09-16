@@ -9,6 +9,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
@@ -107,7 +108,7 @@ public class FFRiskySolutionEvaluator implements SolutionEvaluator {
 	@Override
 	public Search getFallBackSearch() {
 		try {
-			return new FriskySearch(domain, problem, actionInstances, this, searchStatistics);
+			return new FriskySearch(domain, problem, actionInstances, this, searchStatistics, new SolverOptions());
 		} catch (IllDefinedProblemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

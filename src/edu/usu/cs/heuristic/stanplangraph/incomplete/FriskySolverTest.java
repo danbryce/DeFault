@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
+import edu.usu.cs.planner.SolverOptions;
 
 public class FriskySolverTest {
 	
@@ -53,7 +54,7 @@ public class FriskySolverTest {
 		//IncompleteProblem incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
 		//FriskySolver friskySolver = new FriskySolver(problem, problem.getInitialNode());
-		FFriskyRelaxedPlanningGraph friskySolver = new FFriskyRelaxedPlanningGraph(problem, domain);
+		FFriskyRelaxedPlanningGraph friskySolver = new FFriskyRelaxedPlanningGraph(problem, domain, new SolverOptions());
 		System.out.println(friskySolver.toString());
 		
 		Set<Risk> goalRiskSet = friskySolver.getGoalRiskSet();

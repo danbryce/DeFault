@@ -13,6 +13,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
@@ -41,15 +42,16 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 	 * @param actionInstances
 	 * @param solutionEvaluator
 	 * @param searchStatistics
+	 * @param solverOptions 
 	 * @throws IllDefinedProblemException
 	 */
 	public EnforcedHillClimbingSearch(Domain domain, Problem problem,
 			List<ActionInstance> actionInstances,
 			SolutionEvaluator solutionEvaluator,
-			SearchStatistics searchStatistics)
+			SearchStatistics searchStatistics, SolverOptions solverOptions)
 	throws IllDefinedProblemException {
 		super(domain, problem, actionInstances, solutionEvaluator,
-				searchStatistics);
+				searchStatistics, solverOptions);
 		open = null;
 
 	}

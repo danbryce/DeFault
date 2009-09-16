@@ -14,6 +14,7 @@ import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.psp.UtilityFunction;
@@ -37,9 +38,9 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 	protected Map<Proposition, Set<Risk>> goalsAchieved = null;
 	protected UtilityFunction goalUtilityFunction = null;
 
-	public FFRiskyPSPNode(Set<Proposition> propositions, UtilityFunction goalUtilityFunction, Heuristic heuristic, Problem problem) {
+	public FFRiskyPSPNode(Set<Proposition> propositions, UtilityFunction goalUtilityFunction, Heuristic heuristic, Problem problem, SolverOptions solverOptions) {
 
-		super(propositions, heuristic);
+		super(propositions, heuristic, solverOptions);
 		dimension = 3;
 		this.problem = problem;
 

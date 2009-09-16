@@ -10,6 +10,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 
@@ -17,9 +18,9 @@ public class StanHeuristic implements Heuristic {
 	Problem problem;
 	StanClassicalRelaxedPlanningGraph solver;
 	
-	public StanHeuristic(Problem problem, Domain domain) {
+	public StanHeuristic(Problem problem, Domain domain, SolverOptions solverOptions) {
 		this.problem = problem;
-		solver = new StanClassicalRelaxedPlanningGraph(this.problem, domain);
+		solver = new StanClassicalRelaxedPlanningGraph(this.problem, domain, solverOptions);
 
 	}
 	

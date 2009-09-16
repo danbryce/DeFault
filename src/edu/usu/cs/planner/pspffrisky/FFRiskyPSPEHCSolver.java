@@ -12,6 +12,7 @@ import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.psp.FFRiskyPSPSolutionEvaluator;
@@ -27,11 +28,11 @@ public class FFRiskyPSPEHCSolver extends DefaultSolver implements Solver {
 	//protected IncompleteProblem incompleteProblem = null; 
 
 	public FFRiskyPSPEHCSolver(Domain domain, Problem problem,
-			SearchStatistics searchStatistics) throws IllDefinedProblemException {
-		super(domain, problem, searchStatistics);
+			SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException {
+		super(domain, problem, searchStatistics, solverOptions);
 		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
 		
-		search = new FriskyPSPEHCSearch(domain, problem, actionInstances, new FFRiskyPSPSolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics, maxHeapUsageSize, maxRunTime), searchStatistics);
+		search = new FriskyPSPEHCSearch(domain, problem, actionInstances, new FFRiskyPSPSolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics, maxHeapUsageSize, maxRunTime), searchStatistics, solverOptions);
 		search.initialize();
 
 	}

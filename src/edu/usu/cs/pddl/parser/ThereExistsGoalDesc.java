@@ -42,7 +42,7 @@ public class ThereExistsGoalDesc extends QuantifiedGoal implements GoalDesc  {
 	public GoalDesc toDNF(Map<FormalArgument, PDDLObject> quantifiedVariableMap, Set<PDDLObject> objects, ConsistentLiteralSet startState) {
 		//turn exist into disjunction
 		if(variables.size() == 0){
-			return goal.toDNF(quantifiedVariableMap, objects, null);
+			return goal.toDNF(quantifiedVariableMap, objects, startState);
 		}
 		else{
 			GoalDesc result = null;
@@ -72,7 +72,7 @@ public class ThereExistsGoalDesc extends QuantifiedGoal implements GoalDesc  {
 			else{
 				result = new DisjunctionGoalDesc(conjuncts);
 			}
-			return result.toDNF(quantifiedVariableMap, objects, null);
+			return result.toDNF(quantifiedVariableMap, objects, startState);
 			
 		}
 	}

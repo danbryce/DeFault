@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
@@ -22,10 +23,10 @@ public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
 	FFriskyPSPRelaxedPlanningGraph solver;
 	private int planLength = -1;
 
-	public FFRiskyPSPRelaxedPlanHeuristic(Problem problem, Domain domain, UtilityFunction utilityFunction) {
+	public FFRiskyPSPRelaxedPlanHeuristic(Problem problem, Domain domain, UtilityFunction utilityFunction, SolverOptions solverOptions) {
 		this.problem = problem;
 		this.domain = domain;
-		solver = new FFriskyPSPRelaxedPlanningGraph(problem, domain, utilityFunction);
+		solver = new FFriskyPSPRelaxedPlanningGraph(problem, domain, utilityFunction, solverOptions);
 	}
 
 	

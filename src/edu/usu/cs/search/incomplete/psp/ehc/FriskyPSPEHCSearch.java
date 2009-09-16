@@ -13,6 +13,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
@@ -34,8 +35,8 @@ public class FriskyPSPEHCSearch extends EnforcedHillClimbingSearch implements Se
 	protected UtilityFunction goalUtilities;
 
 	
-	public FriskyPSPEHCSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics) throws IllDefinedProblemException {
-		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
+	public FriskyPSPEHCSearch(Domain domain, Problem problem, List<ActionInstance> actionInstances, SolutionEvaluator solutionEvaluator, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException {
+		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solverOptions);
 		//search = new EnforcedHillClimbingSearch(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
 		
 		//TODO hack, should move this into the problem and parse it from problem file
@@ -45,13 +46,13 @@ public class FriskyPSPEHCSearch extends EnforcedHillClimbingSearch implements Se
 				
 			}
 		this.goalUtilities = new AdditiveUtilityFunction(goalUtils);
-		this.heuristic = new FFRiskyPSPRelaxedPlanHeuristic(problem, domain, goalUtilities);
+		this.heuristic = new FFRiskyPSPRelaxedPlanHeuristic(problem, domain, goalUtilities, solverOptions);
 		
 	}
 
 	public void initialize(){
 		
-		StateNode startNode = new FFRiskyPSPNode(problem.getInitialState(), goalUtilities, heuristic, problem);
+		StateNode startNode = new FFRiskyPSPNode(problem.getInitialState(), goalUtilities, heuristic, problem, solverOptions);
 		startNode.getFValue();
 		setRelevantActions(startNode.getRelevantActions());
 		logger.info("# acts = " + startNode.getRelevantActions().size());

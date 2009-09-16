@@ -13,6 +13,8 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarNode;
 
@@ -30,6 +32,7 @@ public class FFRiskyNode  extends AStarNode {
 	//protected IncompleteActionInstance action = null;
 	private int hash;
 	private boolean hashCodeInitialized = false;
+	protected SolverOptions solverOptions = null;
 
 
 
@@ -38,7 +41,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * 
 	 * @param propositions
 	 */
-	public FFRiskyNode(Set<Proposition> propositions, Heuristic heuristic) {
+	public FFRiskyNode(Set<Proposition> propositions, Heuristic heuristic, SolverOptions solverOptions) {
 		this.propositions = new HashMap<Proposition, Set<Risk>>();
 		for (Proposition proposition: propositions) {
 			this.propositions.put(proposition,new HashSet<Risk>());
@@ -48,6 +51,7 @@ public class FFRiskyNode  extends AStarNode {
 		this.heuristic = heuristic;
 		this.criticalRisks = new HashSet<Risk>();
 		this.state = propositions;
+		this.solverOptions = solverOptions;
 	}
 
 	//	public FFRiskyNode(HashMap<Proposition, Set<Risk>> propositions,
@@ -150,6 +154,7 @@ public class FFRiskyNode  extends AStarNode {
 			Set<Risk> risks = propositions.get(p);
 			Set<Risk> objRisks = objNode.getPropositions().get(p);
 			if(!risks.containsAll(objRisks) || !objRisks.containsAll(risks)){
+			//if(risks.equals(objRisks)){
 				return false;
 			}
 		}
@@ -210,7 +215,7 @@ public class FFRiskyNode  extends AStarNode {
 	public List<StateNode> createSubsequentNodes(
 			List<ActionInstance> subsequentActions){
 
-		boolean useHelpfulActions = false;
+		boolean useHelpfulActions = solverOptions.isUseHelpfulActions();
 
 		if(subsequentNodes != null && useHelpfulActions){
 			//need to reset node after failing in local search
@@ -324,8 +329,15 @@ public class FFRiskyNode  extends AStarNode {
 
 		node.setHeuristic(this.getHeuristic());
 		node.setState(node.getPropositions().keySet());
+		
+		node.setSolverOptions(solverOptions);
 
 		return node;
+	}
+
+	private void setSolverOptions(SolverOptions solverOptions2) {
+		solverOptions = solverOptions2;
+		
 	}
 
 	/**

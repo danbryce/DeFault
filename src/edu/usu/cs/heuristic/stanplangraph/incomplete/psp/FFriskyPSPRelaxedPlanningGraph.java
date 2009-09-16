@@ -20,6 +20,7 @@ import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.psp.UtilityFunction;
@@ -32,8 +33,8 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 	double benefit = Double.MAX_VALUE;
 	double cost = 0;
 	
-	public FFriskyPSPRelaxedPlanningGraph(Problem problem, Domain domain, UtilityFunction utilityFunction) {
-		super(problem, domain);
+	public FFriskyPSPRelaxedPlanningGraph(Problem problem, Domain domain, UtilityFunction utilityFunction, SolverOptions solverOptions) {
+		super(problem, domain, solverOptions);
 		this.utilityFunction = utilityFunction;
 	}
 

@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.DefaultSearch;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
@@ -29,11 +30,12 @@ public class AStarSearch extends DefaultSearch implements Search
 			Problem problem, 
 			List<ActionInstance> actionInstances, 
 			SolutionEvaluator solutionEvaluator,
-			SearchStatistics searchStatistics
+			SearchStatistics searchStatistics,
+			SolverOptions solverOptions
 			) 
 	throws IllDefinedProblemException
 	{
-		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics);
+		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solverOptions);
 	}
 	
 	
@@ -62,10 +64,10 @@ public class AStarSearch extends DefaultSearch implements Search
 			StateNode currentNode = open.remove();
 			
 			// If we have already tested this node, ignore it and keep trying.
-			if(solutionEvaluator.closedContains(closed, currentNode)){
-				//logger.debug("State already visited:\n" + currentNode.getState().toString());
-				continue;
-			}
+//			if(solutionEvaluator.closedContains(closed, currentNode)){
+//				//logger.debug("State already visited:\n" + currentNode.getState().toString());
+//				continue;
+//			}
 //			else {
 //				logger.debug("New state:\n" + currentNode.getState().toString());
 //			}
@@ -108,10 +110,14 @@ public class AStarSearch extends DefaultSearch implements Search
 //				logger.debug("\nCreated State ready to be added to queue...");
 //				if(!closed.contains(subsequentNodes.get(nodeIndex).getState())) {
 					//Date startHeuristic = new Date();
+				if(!currentNode.equals(subsequentNodes.get(nodeIndex)) &&
+						(currentNode.getParent() == null || 
+						!subsequentNodes.get(nodeIndex).equals(currentNode.getParent()))){
 					open.add(subsequentNodes.get(nodeIndex));
 					//Date stopHeuristic = new Date();
 					//heuristicTimeTaken += (stopHeuristic.getTime() - startHeuristic.getTime());
 //					logger.debug("State added to queue:\n" + subsequentNodes.get(nodeIndex).getState().toString());
+				}
 //				}
 //				else {
 //					logger.debug("State already visited:\n" + subsequentNodes.get(nodeIndex).getState().toString());

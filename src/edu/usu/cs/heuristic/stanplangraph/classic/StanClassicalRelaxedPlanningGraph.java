@@ -11,6 +11,7 @@ import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.planner.SolverOptions;
 
 public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 
@@ -82,8 +83,8 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 
 
 
-	public StanClassicalRelaxedPlanningGraph(Problem problem, Domain domain) {
-		super(problem, domain);
+	public StanClassicalRelaxedPlanningGraph(Problem problem, Domain domain, SolverOptions solverOptions) {
+		super(problem, domain, solverOptions);
 	}
 
 

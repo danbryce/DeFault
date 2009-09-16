@@ -18,6 +18,7 @@ import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarSearch;
 import edu.usu.cs.search.incomplete.psp.FriskyPSPSearch;
@@ -38,7 +39,8 @@ public class StanPlanningGraph {
 	protected Problem problem = null;
 	protected Domain domain = null;
 	protected Set<ActionInstance> helpfulActions = null;
-
+	protected SolverOptions solverOptions;
+	
 	//	public  StanPlanningGraph(IncompleteProblem problem1){
 	//		globalFactHeaders = new HashMap<Integer, FactHeader>();
 	//		globalActionHeaders = new HashMap<Integer, ActionHeader>();
@@ -49,11 +51,12 @@ public class StanPlanningGraph {
 
 	}
 
-	public StanPlanningGraph(Problem problem2, Domain domain2) {
+	public StanPlanningGraph(Problem problem2, Domain domain2, SolverOptions solverOptions) {
 		globalFactHeaders = new HashMap<Integer, FactHeader>();
 		globalActionHeaders = new HashMap<Integer, ActionHeader>();
 		problem = problem2;
 		domain = domain2;
+		this.solverOptions = solverOptions;
 	}
 	public Integer getAndIncrementFactIndex(Proposition p){
 		return currentFactIndex++;
@@ -425,6 +428,11 @@ public class StanPlanningGraph {
 
 	public double getRelaxedPlanLength() {
 
+		if(!containsSolution()){
+			return Double.MAX_VALUE;
+		}
+		
+		
 		int level = this.getFactSpike().getCurrentRank()-1;
 		Set<Proposition> goalAsPropositions = this.getProblem().getGoalAction().getPreconditions();
 		Set<FactHeader> goal = new HashSet<FactHeader>();

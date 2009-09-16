@@ -9,6 +9,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarSearch;
@@ -22,8 +23,10 @@ public class FFRiskyLengthSearch extends AStarSearch {
 	public FFRiskyLengthSearch(Domain domain, Problem problem,
 			List<ActionInstance> actionInstances,
 			FFRiskySolutionEvaluator riskySolutionEvaluator,
-			SearchStatistics searchStatistics) throws IllDefinedProblemException {
-		super(domain,problem, actionInstances, riskySolutionEvaluator, searchStatistics);
+			SearchStatistics searchStatistics,
+			SolverOptions solverOptions
+	) throws IllDefinedProblemException {
+		super(domain,problem, actionInstances, riskySolutionEvaluator, searchStatistics, solverOptions);
 		open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
 			public int compare(StateNode first, StateNode second) {
 				double f = first.getFValue()[1];
@@ -32,13 +35,13 @@ public class FFRiskyLengthSearch extends AStarSearch {
 			}
 		});
 		
-		this.heuristic = new StanHeuristic(problem, domain);
+		this.heuristic = new StanHeuristic(problem, domain, solverOptions);
 	}
 
 
 	@Override
 	public void initialize() {
-		open.add(new FFRiskyNode(problem.getInitialState(), new StanHeuristic(problem, domain)));
+		open.add(new FFRiskyNode(problem.getInitialState(), new StanHeuristic(problem, domain, solverOptions), solverOptions));
 
 	}
 	
