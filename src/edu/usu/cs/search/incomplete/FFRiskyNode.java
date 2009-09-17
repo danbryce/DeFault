@@ -86,6 +86,7 @@ public class FFRiskyNode  extends AStarNode {
 		this.action = node.action;		
 		this.dimension = node.dimension;
 		this.heuristic = node.heuristic;
+		this.solverOptions = node.solverOptions;
 	}
 	public HashMap<Proposition, Set<Risk>> getPropositions() {
 		return propositions;

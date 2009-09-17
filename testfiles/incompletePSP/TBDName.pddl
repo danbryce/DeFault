@@ -1,30 +1,29 @@
  (define (problem TBDName)
  (:domain mable-control)
 (:objects 
-   t2 t1 t0 - template
-   AnnotateSegment-syntax SetCompanySegmentTraversalTime-syntax - syntaxtarget
+   t3 t2 t1 t0 - template
+   SetSegmentFormation-syntax - syntaxtarget
    ByDefinition ConditionWhenToCalculate ConditionEffectsOf HowToDo ConditionWhenTrue HowToCalculate DefinitionOf ConditionWhenToDo - conceptdimension
    PredicatesByFeedbackStrategy EBEByFeedbackStrategy EBELearningStrategy FunctionsByFeedbackStrategy ExampleOfProcedureStrategy ProcedureByFeedbackStrategy TellingOfProceduresStrategy PredicatesByExampleStrategy FunctionsByExampleStrategy - codestrategy
    TellingOfConditionsStrategy - uberstrategy
-   SetAllSegmentTraversalTime-code SetAllSegmentTraversalTime-syntax - codetarget
+   SetSegmentFormation-code - codetarget
    NoticingSyntaxStrategy TellingOfSyntaxStrategy - syntaxstrategy
-   SetAllSegmentTraversalTime-syntax-interpretation SetAllSegmentTraversalTime-code-interpretation AnnotateSegment-syntax-interpretation SetCompanySegmentTraversalTime-syntax-interpretation - interpretation
+   SetSegmentFormation-code-interpretation SetSegmentFormation-syntax-interpretation - interpretation
    ByExample ByTelling mableNoticingSyntax ByFeedback - nimdimension
  )
 (:init 
-   (composedOf SetAllSegmentTraversalTime-code SetAllSegmentTraversalTime-syntax)
+   (composedOf SetSegmentFormation-code SetSegmentFormation-syntax)
    (conceptDimensionInTemplate DefinitionOf t0)
    (conceptDimensionInTemplate DefinitionOf t1)
-   (conceptDimensionInTemplate DefinitionOf t2)
-   (havePrerequisitesCIs AnnotateSegment-syntax)
-   (havePrerequisitesCIs SetCompanySegmentTraversalTime-syntax)
-   (interpretationForTarget AnnotateSegment-syntax-interpretation AnnotateSegment-syntax)
-   (interpretationForTarget SetAllSegmentTraversalTime-code-interpretation SetAllSegmentTraversalTime-code)
-   (interpretationForTarget SetCompanySegmentTraversalTime-syntax-interpretation SetCompanySegmentTraversalTime-syntax)
-   (nimDimensionInTemplate mableNoticingSyntax t0)
+   (conceptDimensionInTemplate HowToDo t2)
+   (conceptDimensionInTemplate HowToDo t3)
+   (havePrerequisitesCIs SetSegmentFormation-syntax)
+   (interpretationForTarget SetSegmentFormation-code-interpretation SetSegmentFormation-code)
+   (interpretationForTarget SetSegmentFormation-syntax-interpretation SetSegmentFormation-syntax)
+   (nimDimensionInTemplate ByTelling t0)
+   (nimDimensionInTemplate ByTelling t2)
    (nimDimensionInTemplate mableNoticingSyntax t1)
-   (nimDimensionInTemplate mableNoticingSyntax t2)
-   (priorInterpretationForTarget SetAllSegmentTraversalTime-syntax-interpretation SetAllSegmentTraversalTime-syntax)
+   (nimDimensionInTemplate mableNoticingSyntax t3)
    (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
@@ -59,17 +58,23 @@
    (strategyNIMDIMENSION TellingOfConditionsStrategy ByTelling)
    (strategyNIMDIMENSION TellingOfProceduresStrategy ByTelling)
    (strategyNIMDIMENSION TellingOfSyntaxStrategy ByTelling)
-   (strategyRequiresPriorCILearnedByStrategy ProcedureByFeedbackStrategy ExampleOfProcedureStrategy)
-   (templateIncludesPriorInterpretationByStrategy t0 ExampleOfProcedureStrategy)
    (strategyNeedsPriorCI ProcedureByFeedbackStrategy)
+   (strategyRequiresPriorCILearnedByStrategy ProcedureByFeedbackStrategy ExampleOfProcedureStrategy)
    (strategyRequiresPriorCILearnedByStrategy ProcedureByFeedbackStrategy ProcedureByFeedbackStrategy)
-   (targetInTemplate AnnotateSegment-syntax t1)
-   (targetInTemplate SetAllSegmentTraversalTime-code t0)
-   (targetInTemplate SetCompanySegmentTraversalTime-syntax t2)
-   (untried NoticingSyntaxStrategy AnnotateSegment-syntax mableNoticingSyntax DefinitionOf)
-   (untried NoticingSyntaxStrategy SetCompanySegmentTraversalTime-syntax mableNoticingSyntax DefinitionOf)
+   (targetInTemplate SetSegmentFormation-code t2)
+   (targetInTemplate SetSegmentFormation-code t3)
+   (targetInTemplate SetSegmentFormation-syntax t0)
+   (targetInTemplate SetSegmentFormation-syntax t1)
+   (untried NoticingSyntaxStrategy SetSegmentFormation-code mableNoticingSyntax DefinitionOf)
+   (untried NoticingSyntaxStrategy SetSegmentFormation-code mableNoticingSyntax HowToDo)
+   (untried NoticingSyntaxStrategy SetSegmentFormation-syntax mableNoticingSyntax DefinitionOf)
+   (untried NoticingSyntaxStrategy SetSegmentFormation-syntax mableNoticingSyntax HowToDo)
+   (untried TellingOfProceduresStrategy SetSegmentFormation-code ByTelling HowToDo)
+   (untried TellingOfProceduresStrategy SetSegmentFormation-syntax ByTelling HowToDo)
+   (untried TellingOfSyntaxStrategy SetSegmentFormation-code ByTelling DefinitionOf)
+   (untried TellingOfSyntaxStrategy SetSegmentFormation-syntax ByTelling DefinitionOf)
  )
 (:goal 
-(and (learned SetAllSegmentTraversalTime-code) (newlyLearned SetAllSegmentTraversalTime-code) (learned AnnotateSegment-syntax) (newlyLearned AnnotateSegment-syntax) (learned SetCompanySegmentTraversalTime-syntax) (newlyLearned SetCompanySegmentTraversalTime-syntax))
+(and (learned SetSegmentFormation-syntax) (newlyLearned SetSegmentFormation-syntax) (learned SetSegmentFormation-code) (newlyLearned SetSegmentFormation-code))
  )
-)
+ )
