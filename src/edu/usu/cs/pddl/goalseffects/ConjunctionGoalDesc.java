@@ -44,8 +44,11 @@ public class ConjunctionGoalDesc implements GoalDesc
 	}
 
 	public ConjunctionGoalDesc(List<GoalDesc> subGoals2) {
-		this.subGoals = subGoals2;
-
+		
+		this.subGoals = new ArrayList<GoalDesc>();
+		for(GoalDesc g : subGoals2)
+			this.subGoals.add(g.deepCopy());
+		
 		boolean tempEval = true;
 		for (GoalDesc sg : subGoals2) {
 			if (!sg.isEvaluable()) {

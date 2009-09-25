@@ -23,7 +23,9 @@ public class DisjunctionGoalDesc  implements GoalDesc {
 	private final List<GoalDesc> disjuncts;
 	
 	public DisjunctionGoalDesc(List<GoalDesc> subGoals) {
-		this.disjuncts = subGoals;
+		this.disjuncts = new ArrayList<GoalDesc>();
+		for(GoalDesc g : subGoals)
+			this.disjuncts.add(g.deepCopy());
 	}
 
 	@Override

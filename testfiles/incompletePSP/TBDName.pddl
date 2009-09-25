@@ -1,29 +1,34 @@
  (define (problem TBDName)
  (:domain mable-control)
 (:objects 
-   t3 t2 t1 t0 - template
-   SetSegmentFormation-syntax - syntaxtarget
+   t3 t2 t1 t0 t4 t5 - template
+   ExpandNodes-syntax - syntaxtarget
    ByDefinition ConditionWhenToCalculate ConditionEffectsOf HowToDo ConditionWhenTrue HowToCalculate DefinitionOf ConditionWhenToDo - conceptdimension
    PredicatesByFeedbackStrategy EBEByFeedbackStrategy EBELearningStrategy FunctionsByFeedbackStrategy ExampleOfProcedureStrategy ProcedureByFeedbackStrategy TellingOfProceduresStrategy PredicatesByExampleStrategy FunctionsByExampleStrategy - codestrategy
    TellingOfConditionsStrategy - uberstrategy
-   SetSegmentFormation-code - codetarget
+   ExpandNodes-code - codetarget
    NoticingSyntaxStrategy TellingOfSyntaxStrategy - syntaxstrategy
-   SetSegmentFormation-code-interpretation SetSegmentFormation-syntax-interpretation - interpretation
+   ExpandNodes-syntax-interpretation ExpandNodes-code-interpretation - interpretation
    ByExample ByTelling mableNoticingSyntax ByFeedback - nimdimension
  )
 (:init 
-   (composedOf SetSegmentFormation-code SetSegmentFormation-syntax)
+   (composedOf ExpandNodes-code ExpandNodes-syntax)
    (conceptDimensionInTemplate DefinitionOf t0)
    (conceptDimensionInTemplate DefinitionOf t1)
-   (conceptDimensionInTemplate HowToDo t2)
+   (conceptDimensionInTemplate DefinitionOf t2)
    (conceptDimensionInTemplate HowToDo t3)
-   (havePrerequisitesCIs SetSegmentFormation-syntax)
-   (interpretationForTarget SetSegmentFormation-code-interpretation SetSegmentFormation-code)
-   (interpretationForTarget SetSegmentFormation-syntax-interpretation SetSegmentFormation-syntax)
-   (nimDimensionInTemplate ByTelling t0)
-   (nimDimensionInTemplate ByTelling t2)
+   (conceptDimensionInTemplate HowToDo t4)
+   (conceptDimensionInTemplate HowToDo t5)
+   (havePrerequisitesCIs ExpandNodes-syntax)
+   (interpretationForTarget ExpandNodes-code-interpretation ExpandNodes-code)
+   (interpretationForTarget ExpandNodes-syntax-interpretation ExpandNodes-syntax)
+   (nimDimensionInTemplate ByExample t0)
+   (nimDimensionInTemplate ByExample t3)
+   (nimDimensionInTemplate ByFeedback t2)
+   (nimDimensionInTemplate ByFeedback t5)
    (nimDimensionInTemplate mableNoticingSyntax t1)
-   (nimDimensionInTemplate mableNoticingSyntax t3)
+   (nimDimensionInTemplate mableNoticingSyntax t4)
+   (priorInterpretationForTarget ExpandNodes-syntax-interpretation ExpandNodes-syntax)
    (strategyCONCEPTDIMENSION EBEByFeedbackStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION EBELearningStrategy ConditionEffectsOf)
    (strategyCONCEPTDIMENSION ExampleOfProcedureStrategy HowToDo)
@@ -61,20 +66,20 @@
    (strategyNeedsPriorCI ProcedureByFeedbackStrategy)
    (strategyRequiresPriorCILearnedByStrategy ProcedureByFeedbackStrategy ExampleOfProcedureStrategy)
    (strategyRequiresPriorCILearnedByStrategy ProcedureByFeedbackStrategy ProcedureByFeedbackStrategy)
-   (targetInTemplate SetSegmentFormation-code t2)
-   (targetInTemplate SetSegmentFormation-code t3)
-   (targetInTemplate SetSegmentFormation-syntax t0)
-   (targetInTemplate SetSegmentFormation-syntax t1)
-   (untried NoticingSyntaxStrategy SetSegmentFormation-code mableNoticingSyntax DefinitionOf)
-   (untried NoticingSyntaxStrategy SetSegmentFormation-code mableNoticingSyntax HowToDo)
-   (untried NoticingSyntaxStrategy SetSegmentFormation-syntax mableNoticingSyntax DefinitionOf)
-   (untried NoticingSyntaxStrategy SetSegmentFormation-syntax mableNoticingSyntax HowToDo)
-   (untried TellingOfProceduresStrategy SetSegmentFormation-code ByTelling HowToDo)
-   (untried TellingOfProceduresStrategy SetSegmentFormation-syntax ByTelling HowToDo)
-   (untried TellingOfSyntaxStrategy SetSegmentFormation-code ByTelling DefinitionOf)
-   (untried TellingOfSyntaxStrategy SetSegmentFormation-syntax ByTelling DefinitionOf)
+   (targetInTemplate ExpandNodes-code t3)
+   (targetInTemplate ExpandNodes-code t4)
+   (targetInTemplate ExpandNodes-code t5)
+   (targetInTemplate ExpandNodes-syntax t0)
+   (targetInTemplate ExpandNodes-syntax t1)
+   (targetInTemplate ExpandNodes-syntax t2)
+   (untried ExampleOfProcedureStrategy ExpandNodes-code ByExample HowToDo)
+   (untried ExampleOfProcedureStrategy ExpandNodes-syntax ByExample HowToDo)
+   (untried NoticingSyntaxStrategy ExpandNodes-code mableNoticingSyntax HowToDo)
+   (untried NoticingSyntaxStrategy ExpandNodes-syntax mableNoticingSyntax HowToDo)
+   (untried ProcedureByFeedbackStrategy ExpandNodes-code ByFeedback HowToDo)
+   (untried ProcedureByFeedbackStrategy ExpandNodes-syntax ByFeedback HowToDo)
  )
 (:goal 
-(and (learned SetSegmentFormation-syntax) (newlyLearned SetSegmentFormation-syntax) (learned SetSegmentFormation-code) (newlyLearned SetSegmentFormation-code))
+(and (learned ExpandNodes-syntax) (newlyLearned ExpandNodes-syntax) (learned ExpandNodes-code) (newlyLearned ExpandNodes-code))
  )
- )
+)

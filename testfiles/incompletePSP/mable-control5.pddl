@@ -13,7 +13,7 @@
    (interpretationForTarget ?i - interpretation ?tc - target)
    (priorInterpretationForTarget ?i - interpretation ?tc - target)
    (learnedInterpretation ?i - interpretation ?tc - target)
-
+   (strategyNeedsPriorCI ?s - strategy)
    (templateIncludesPriorInterpretationByStrategy ?t - template ?s - strategy)
    (strategyRequiresPriorCILearnedByStrategy ?s - strategy ?s1 - strategy)
 
@@ -24,7 +24,7 @@
    (nimDimensionInTemplate ?n - nimdimension ?t - template)
    (conceptDimensionInTemplate ?c - conceptdimension ?t - template)
    (targetInTemplate ?tc - target ?t - template)
-   (strategyNeedsPriorCI ?s - strategy)
+    
    (composedOf ?tc ?tc1 - target)
    (learned ?tc - target)
    (newlyLearned ?tc - target)
@@ -79,7 +79,7 @@
    					  (strategyCONCEPTDIMENSION ?s ?cd)
    					  (havePrerequisitesCIs ?tc)				     					  
    					  (untried ?s ?tc ?n ?cd)
-   					  (imply (strategyNeedsPriorCI ?s)
+					  (imply (strategyNeedsPriorCI ?s)
    					    	 (exists (?s1 - strategy)
 					  		         (and (strategyRequiresPriorCILearnedByStrategy ?s ?s1)
 					  		  	          (templateIncludesPriorInterpretationByStrategy ?t ?s1)
@@ -118,12 +118,14 @@
    					  (untried ?s ?tc2 ?n ?cd)
    					  (havePrerequisitesCIs ?tc1)
    					  (havePrerequisitesCIs ?tc2)
-   					  (exists (?s1 - strategy)
-					  		  (imply
-								   (strategyRequiresPriorCILearnedByStrategy ?s ?s1)
-					  		  	   (templateIncludesPriorInterpretationByStrategy ?t ?s1)
+					  (imply (strategyNeedsPriorCI ?s)
+   					    	 (exists (?s1 - strategy)
+					  		         (and (strategyRequiresPriorCILearnedByStrategy ?s ?s1)
+					  		  	          (templateIncludesPriorInterpretationByStrategy ?t ?s1)
+					  		  	     )
 					  		  ) 
 					  )	
+
    					  
    					  )
    :effect (and (not (untried ?s ?tc1 ?n ?cd))(not (untried ?s ?tc2 ?n ?cd)))

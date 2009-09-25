@@ -61,7 +61,7 @@ public class FalseGoal implements GoalDesc {
 	@Override
 	public GoalDesc toDNF(Map<FormalArgument, PDDLObject> quantifiedVariableMap, Set<PDDLObject> objects, ConsistentLiteralSet startState) {
 		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 }
