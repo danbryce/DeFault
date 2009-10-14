@@ -4,10 +4,11 @@ public class SolverOptions {
 
 	private boolean useHelpfulActions = false;
 	private boolean useMultipleSupportersInPlanningGraph = false;
+	private boolean useDeferredEvaluation = false;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}
-	protected void setUseHelpfulActions(boolean useHelpfulActions) {
+	public void setUseHelpfulActions(boolean useHelpfulActions) {
 		this.useHelpfulActions = useHelpfulActions;
 	}
 	public boolean isUseMultipleSupportersInPlanningGraph() {
@@ -17,7 +18,10 @@ public class SolverOptions {
 			boolean useMultipleSupportersInPlanningGraph) {
 		this.useMultipleSupportersInPlanningGraph = useMultipleSupportersInPlanningGraph;
 	}
-	
-	
-	
+	public boolean isUseDeferredEvaluation() {
+		return useDeferredEvaluation;
+	}
+	public void setUseDeferredEvaluation(boolean useDeferredEvaluation) {
+		this.useDeferredEvaluation = useDeferredEvaluation;
+	}
 }

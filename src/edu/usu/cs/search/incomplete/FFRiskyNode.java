@@ -246,6 +246,18 @@ public class FFRiskyNode  extends AStarNode {
 		return subsequentNodes;
 	}
 
+	public List<StateNode> createSubsequentNodesIgnoreHelpfulActions(
+			List<ActionInstance> subsequentActions) {
+		if(solverOptions.isUseHelpfulActions()) {
+			return createSubsequentNodes(subsequentActions);
+		}
+		
+		solverOptions.setUseHelpfulActions(true);
+		List<StateNode> subsequentNodes = createSubsequentNodes(subsequentActions);
+		solverOptions.setUseHelpfulActions(true);
+		
+		return subsequentNodes;
+	}
 
 
 	//	private int planLength = -1;

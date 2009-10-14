@@ -55,7 +55,7 @@ public class DefaultSolver implements Solver {
 		this.problem = problem;
 		this.solverOptions = solverOptions;
 		this.searchStatistics = searchStatistics;
-		this.actionInstances = PddlImporter.createActionInstances(domain, problem);//createActionInstances(domain, problem);
+ 		this.actionInstances = PddlImporter.createActionInstances(domain, problem);//createActionInstances(domain, problem);
 		this.problem.setActionInstances(this.actionInstances);
 		
 		logger.info("All action instances in problem:");

@@ -257,13 +257,21 @@ public class IncompleteActionInstance  implements ActionInstance{
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
 					effect.getLiteralsUsed(results);
 					for (LiteralInstance result : results) {
-						this.addEffects.add(new Proposition(result));						
+						Proposition p = Proposition.getPropositionFromIndex(result);
+						if(p != null) {
+							this.addEffects.add(p);
+						}
+//						this.addEffects.add(new Proposition(result));						
 					}
 				} else {
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
 					effect.getLiteralsUsed(results);
 					for (LiteralInstance result : results) {
-						this.deleteEffects.add(new Proposition(result));
+						Proposition p = Proposition.getPropositionFromIndex(result);
+						if(p != null) {
+							this.deleteEffects.add(p);
+						}
+//						this.deleteEffects.add(new Proposition(result));
 
 					}
 				}

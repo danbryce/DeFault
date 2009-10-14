@@ -23,6 +23,7 @@ import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffrisky.FFriskyEHCSolver;
 import edu.usu.cs.planner.ffrisky.FFriskyLengthSolver;
 import edu.usu.cs.planner.ffrisky.FFriskySolver;
+import edu.usu.cs.planner.ffrisky.GreedyBestFirstFFriskySolver;
 import edu.usu.cs.planner.ffrisky.UniformCostFFriskySolver;
 import edu.usu.cs.planner.ffvanilla.AStarSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
@@ -113,6 +114,11 @@ public class SearchTest {
 			}
 			else if(args[3].equalsIgnoreCase("length")) {
 				solver = new AStarSolver(domain, problem, searchStatistics, solverOptions);
+			}
+			else if(args[3].equalsIgnoreCase("pode")) {
+				solverOptions.setUseHelpfulActions(true);
+				solverOptions.setUseDeferredEvaluation(true);
+				solver = new GreedyBestFirstFFriskySolver(domain, problem, searchStatistics, solverOptions);
 			}
 			else {
 				usage();

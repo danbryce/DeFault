@@ -16,10 +16,11 @@ public class FriskyVersusFF {
 
 		String[] algorithms = {
 
-				"friskylength",
-				//"friskyEHC",
 				"frisky",
-				"friskyMS"
+				"pode",
+				"friskylength",
+//				"friskyEHC",
+//				"friskyMS"
 		};
 
 
