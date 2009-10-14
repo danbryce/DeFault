@@ -39,6 +39,7 @@ public class StanPlanningGraph {
 	protected Problem problem = null;
 	protected Domain domain = null;
 	protected Set<ActionInstance> helpfulActions = null;
+	protected Set<ActionInstance> preferredActions = null;
 	protected SolverOptions solverOptions;
 	
 	//	public  StanPlanningGraph(IncompleteProblem problem1){
@@ -93,6 +94,7 @@ public class StanPlanningGraph {
 		this.factSpike = new FactSpike(globalFactHeaders, this);
 		this.actionSpike = new ActionSpike(factSpike, globalActionHeaders, globalFactHeaders, this);
 		this.helpfulActions = new HashSet<ActionInstance>();
+		this.preferredActions = new HashSet<ActionInstance>();
 		//reset fact indices
 		currentFactIndex = 0;
 		for(Integer header : globalFactHeaders.keySet()){
@@ -506,6 +508,12 @@ public class StanPlanningGraph {
 						helpfulActions.add(act.getAction());
 					}
 				}
+				for(ActionHeader act : fli.getChosenSupporters()){
+					if(!act.isNoop()){
+						preferredActions.add(act.getAction());
+					}
+				}
+				
 			}
 
 			for(ActionHeader actionHeader : fli.getChosenSupporters()){
@@ -528,6 +536,10 @@ public class StanPlanningGraph {
 		return helpfulActions;
 	}
 
+	public Set<ActionInstance> getPreferredActions() {
+		return preferredActions;
+	}
+	
 	public boolean containsSolution() {
 
 		// Iterate through each subgoal
