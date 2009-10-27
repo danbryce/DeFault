@@ -84,4 +84,9 @@ public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
 //		}
 //		return returnActions;
 	}
+	
+	@Override
+	public Set<ActionInstance> getPreferredOperators() {
+		return solver.getPreferredActions();
+	}
 }

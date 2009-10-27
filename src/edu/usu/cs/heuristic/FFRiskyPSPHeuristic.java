@@ -48,4 +48,10 @@ public class FFRiskyPSPHeuristic implements Heuristic {
 		return null;
 	}
 
+	@Override
+	public Set<ActionInstance> getPreferredOperators() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

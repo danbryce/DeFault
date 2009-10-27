@@ -24,7 +24,7 @@ public class AbstractStateNode implements StateNode {
 	protected double[] fvalue = null; 
 	protected Heuristic heuristic = null;
 	protected List<StateNode> subsequentNodes = null;
-	protected Set<ActionInstance> helpfulActions = null;
+	protected Set<ActionInstance> preferredOperators = null;
 	protected List<ActionInstance> relevantActions = null;
 	
 	protected void setRelevantActions(List<ActionInstance> relevantActions) {
@@ -49,7 +49,7 @@ public class AbstractStateNode implements StateNode {
 	public double[] getHeuristicValue() {
 		if(hvalue == null){
 			hvalue = heuristic.getValue(this);
-			helpfulActions = heuristic.getHelpfulActions();
+			preferredOperators = heuristic.getHelpfulActions();
 			if(parent == null){
 				List<ActionInstance> mRelevantActions = heuristic.getRelevantActions();
 				if(mRelevantActions != null){

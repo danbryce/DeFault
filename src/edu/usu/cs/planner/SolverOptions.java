@@ -5,6 +5,7 @@ public class SolverOptions {
 	private boolean useHelpfulActions = false;
 	private boolean useMultipleSupportersInPlanningGraph = false;
 	private boolean useDeferredEvaluation = false;
+	private boolean usePreferredOperators = false;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}
@@ -23,5 +24,11 @@ public class SolverOptions {
 	}
 	public void setUseDeferredEvaluation(boolean useDeferredEvaluation) {
 		this.useDeferredEvaluation = useDeferredEvaluation;
+	}
+	public boolean isUsePreferredOperators() {
+		return usePreferredOperators;
+	}
+	public void setUsePreferredOperators(boolean usePreferredOperators) {
+		this.usePreferredOperators = usePreferredOperators;
 	}
 }

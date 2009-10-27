@@ -67,4 +67,10 @@ public class StanHeuristic implements Heuristic {
 		}
 		return returnActions;
 	}
+
+	@Override
+	public Set<ActionInstance> getPreferredOperators() {
+		// TODO Auto-generated method stub
+		return solver.getPreferredActions();
+	}
 }

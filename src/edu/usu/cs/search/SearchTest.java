@@ -116,7 +116,7 @@ public class SearchTest {
 				solver = new AStarSolver(domain, problem, searchStatistics, solverOptions);
 			}
 			else if(args[3].equalsIgnoreCase("pode")) {
-				solverOptions.setUseHelpfulActions(true);
+				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
 				solver = new GreedyBestFirstFFriskySolver(domain, problem, searchStatistics, solverOptions);
 			}

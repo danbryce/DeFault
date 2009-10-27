@@ -28,7 +28,7 @@ import edu.usu.cs.search.astar.AStarNode;
  */
 public class FFRiskyNode  extends AStarNode {
 	protected HashMap<Proposition, Set<Risk>> propositions = null;
-	private Set<Risk> criticalRisks = null;
+	protected Set<Risk> criticalRisks = null;
 	//protected IncompleteActionInstance action = null;
 	private int hash;
 	private boolean hashCodeInitialized = false;
@@ -220,7 +220,7 @@ public class FFRiskyNode  extends AStarNode {
 
 		if(subsequentNodes != null && useHelpfulActions){
 			//need to reset node after failing in local search
-			helpfulActions = null;
+			preferredOperators = null;
 			subsequentNodes = null;
 		}
 
@@ -230,8 +230,8 @@ public class FFRiskyNode  extends AStarNode {
 
 		List<ActionInstance> actsToExpand = null;
 
-		if(helpfulActions != null && useHelpfulActions){
-			actsToExpand =  new ArrayList(helpfulActions);
+		if(preferredOperators != null && useHelpfulActions){
+			actsToExpand =  new ArrayList(preferredOperators);
 		}
 		else{
 			actsToExpand = subsequentActions;
@@ -246,18 +246,6 @@ public class FFRiskyNode  extends AStarNode {
 		return subsequentNodes;
 	}
 
-	public List<StateNode> createSubsequentNodesIgnoreHelpfulActions(
-			List<ActionInstance> subsequentActions) {
-		if(solverOptions.isUseHelpfulActions()) {
-			return createSubsequentNodes(subsequentActions);
-		}
-		
-		solverOptions.setUseHelpfulActions(true);
-		List<StateNode> subsequentNodes = createSubsequentNodes(subsequentActions);
-		solverOptions.setUseHelpfulActions(true);
-		
-		return subsequentNodes;
-	}
 
 
 	//	private int planLength = -1;
@@ -348,7 +336,7 @@ public class FFRiskyNode  extends AStarNode {
 		return node;
 	}
 
-	private void setSolverOptions(SolverOptions solverOptions2) {
+	protected void setSolverOptions(SolverOptions solverOptions2) {
 		solverOptions = solverOptions2;
 		
 	}
@@ -437,7 +425,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * Removes the specified action's delete effects from the specified node's
 	 * propositions.
 	 */
-	private  void applyDeleteEffects(FFRiskyNode initialNode, IncompleteActionInstance action) {
+	protected  void applyDeleteEffects(FFRiskyNode initialNode, IncompleteActionInstance action) {
 		for (Proposition effect : action.getDeleteEffects()) {
 			if (initialNode.getPropositions().containsKey(effect)) {
 				propositions.remove(effect);
@@ -449,7 +437,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * Applies the possible delete effects of the specified action to the
 	 * specified node.
 	 */
-	private  void applyPossibleDeleteEffects(FFRiskyNode initialNode,
+	protected  void applyPossibleDeleteEffects(FFRiskyNode initialNode,
 			IncompleteActionInstance action) {
 		for (Proposition effect : action.getPossibleDeleteEffects()) {
 			// If the proposition isn't in the node, continue
@@ -472,7 +460,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * Applies the absolute add effects of the specified action to the specified
 	 * node
 	 */
-	private  void applyAddEffects(FFRiskyNode initialNode, IncompleteActionInstance action) {
+	protected  void applyAddEffects(FFRiskyNode initialNode, IncompleteActionInstance action) {
 
 		Set<Risk> openPrecRisks = getPrecOpen(initialNode, action);
 		Set<Risk> precRisks = getPrecRisks(initialNode, action);
@@ -513,7 +501,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * Applies the possible add effects of the specified action to the specified
 	 * node
 	 */
-	private  void applyPossibleAddEffects(FFRiskyNode initialNode,
+	protected  void applyPossibleAddEffects(FFRiskyNode initialNode,
 			IncompleteActionInstance action) {
 
 		Set<Risk> openPrecRisks = getPrecOpen(initialNode, action);
@@ -561,7 +549,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * Unions critical risks from the node with new critical risks from the
 	 * action
 	 */
-	private  void addCriticalRisks(IncompleteActionInstance action, FFRiskyNode initialNode) {
+	protected  void addCriticalRisks(IncompleteActionInstance action, FFRiskyNode initialNode) {
 		// Union the action's precondition risks with the node's critical risks
 		criticalRisks.addAll(getPrecRisks(initialNode, action));
 

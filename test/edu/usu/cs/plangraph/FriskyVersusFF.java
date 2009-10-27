@@ -7,6 +7,59 @@ import edu.usu.cs.search.SearchTest;
 
 public class FriskyVersusFF {
 
+	@Test
+	public void runTestPathwaysClassical() {
+		String pathToDomains = "testfiles/classical/pathways/";
+		String pathToProblems = "testfiles/classical/pathways/";
+		
+		String[] algorithms = {
+				"frisky",
+				"pode",
+//				"friskylength",
+//				"friskyEHC",
+//				"friskyMS"
+		};
+
+		int numPfiles = 10;
+		//each random instance of the domain
+
+		for(int i = 1; i < numPfiles; i++){
+
+			String problem = null;
+			String extension = ".pddl";
+			if(i < 10){
+				problem = "p0" + i;
+			}
+			else{
+				problem = "p" + i;
+			}
+			
+			
+//			if(
+//					problem.equals("p01")
+//					||
+//					problem.equals("p02") ||
+//					problem.equals("p03")
+//			){
+//				continue;
+//			}
+
+
+			//each probability of being incomplete
+
+
+				for(int j = 0; j < algorithms.length; j++){
+
+				String[] args = {pathToDomains+"domain_"+problem+extension, 
+						pathToProblems+problem+extension, 
+						//outputNum.toString(),
+						"output_pathways.txt",
+						algorithms[j]};
+
+				SearchTest.main(args);
+			}
+		}
+	}
 
 	@Test
 	public void runTestPathways() {
@@ -18,13 +71,13 @@ public class FriskyVersusFF {
 
 				"frisky",
 				"pode",
-				"friskylength",
+//				"friskylength",
 //				"friskyEHC",
 //				"friskyMS"
 		};
 
 
-		int numPfiles = 30;
+		int numPfiles = 10;
 		//each random instance of the domain
 
 		for(int i = 1; i < numPfiles; i++){

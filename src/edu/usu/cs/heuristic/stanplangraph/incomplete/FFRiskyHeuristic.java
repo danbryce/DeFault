@@ -79,8 +79,12 @@ public class FFRiskyHeuristic implements Heuristic {
 	}
 	@Override
 	public Set<ActionInstance> getHelpfulActions() {
-		// TODO Auto-generated method stub
 		return solver.getHelpfulActions();
+	}
+	
+	@Override
+	public Set<ActionInstance> getPreferredOperators() {
+		return solver.getPreferredActions();
 	}
 
 	@Override

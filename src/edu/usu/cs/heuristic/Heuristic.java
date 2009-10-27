@@ -13,4 +13,6 @@ public interface Heuristic {
 	public Set<ActionInstance> getHelpfulActions();
 
 	public List<ActionInstance> getRelevantActions();
+
+	public Set<ActionInstance> getPreferredOperators();
 }

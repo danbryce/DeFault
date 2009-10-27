@@ -57,5 +57,10 @@ public class PSPUpperBound implements Heuristic {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public Set<ActionInstance> getPreferredOperators() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
