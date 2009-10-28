@@ -537,6 +537,7 @@ public class StanPlanningGraph {
 	}
 
 	public Set<ActionInstance> getPreferredActions() {
+//		System.out.println("getPreferredActions()");
 		return preferredActions;
 	}
 	

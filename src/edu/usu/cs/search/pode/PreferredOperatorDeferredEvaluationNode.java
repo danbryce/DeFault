@@ -43,6 +43,25 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 		this.heuristic = node.heuristic;
 		this.solverOptions = node.solverOptions;
 	}
+	
+	@Override
+	public double[] getHeuristicValue() {
+		if(hvalue == null){
+			hvalue = heuristic.getValue(this);
+			preferredOperators = heuristic.getPreferredOperators( );
+			if(parent == null){
+				List<ActionInstance> mRelevantActions = heuristic.getRelevantActions();
+				if(mRelevantActions != null){
+					relevantActions =  mRelevantActions;
+				}
+			}
+			H_WEIGHT = new double[dimension];
+			for(int i = 0; i < dimension; i++){
+				H_WEIGHT[i] = 1;
+			} 
+		}
+		return hvalue;
+	}
 
 	@Override
 	public List<StateNode> createSubsequentNodes(List<ActionInstance> subsequentActions) {
@@ -57,16 +76,16 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 
 		subsequentNodes = new ArrayList<StateNode>();
 
-		List<ActionInstance> actsToExpand = null;
+		List<ActionInstance> actionsToExpand = null;
 
 		if(preferredOperators != null && usePreferredOperators){
-			actsToExpand =  new ArrayList(preferredOperators);
+			actionsToExpand =  new ArrayList<ActionInstance>(preferredOperators);
 		}
 		else{
-			actsToExpand = subsequentActions;
+			actionsToExpand = subsequentActions;
 		}
 
-		for(ActionInstance act : actsToExpand){
+		for(ActionInstance act : actionsToExpand){
 			PreferredOperatorDeferredEvaluationNode node = getSuccessorNode(act);
 			if(node != null && !node.equals(this.parent)){
 				subsequentNodes.add(node);
@@ -75,6 +94,7 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 		return subsequentNodes;
 	}
 	
+	@Override
 	public  PreferredOperatorDeferredEvaluationNode getSuccessorNode(ActionInstance action1) {
 		IncompleteActionInstance action = (IncompleteActionInstance)action1;
 		
