@@ -163,33 +163,33 @@ public class FFRiskyNode  extends AStarNode {
 		return true;
 	}
 
-//	@Override
-//	public int hashCode() {
-//		if (!hashCodeInitialized) {
-//			String str = "";
-//
-//			// Sort the propositions first
-//			List<Proposition> props = new ArrayList<Proposition>(propositions
-//					.keySet());
-//			Collections.sort(props, new Comparator<Proposition>() {
-//				public int compare(Proposition first, Proposition second) {
-//					return first.getName().compareTo(second.getName());
-//				}
-//			});
-//
-//			// make them a big long string
-//			for (Proposition proposition : props) {
-//				str += proposition.toString() + " ";
-//			}
-//
-//			// cache hash
-//			hash = str.hashCode();
-//			hashCodeInitialized = true;
-//		}
-//
-//		return hash;
-//	}
-//
+	@Override
+	public int hashCode() {
+		if (!hashCodeInitialized) {
+			String str = "";
+
+			// Sort the propositions first
+			List<Proposition> props = new ArrayList<Proposition>(propositions
+					.keySet());
+			Collections.sort(props, new Comparator<Proposition>() {
+				public int compare(Proposition first, Proposition second) {
+					return first.getName().compareTo(second.getName());
+				}
+			});
+
+			// make them a big long string
+			for (Proposition proposition : props) {
+				str += proposition.toString() + " ";
+			}
+
+			// cache hash
+			hash = str.hashCode();
+			hashCodeInitialized = true;
+		}
+
+		return hash;
+	}
+
 	public double[] getGValue() {
 		if(this.gvalue == null){
 			this.gvalue = new double[dimension];

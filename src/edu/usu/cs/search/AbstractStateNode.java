@@ -1,16 +1,18 @@
 package edu.usu.cs.search;
 
+import java.util.BitSet;
 import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.Domain;
+import edu.usu.cs.pddl.domain.PredicateDef;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class AbstractStateNode implements StateNode {
-
 
 	protected Set<Proposition> state = null;
 	protected ActionInstance action = null;
@@ -26,6 +28,8 @@ public class AbstractStateNode implements StateNode {
 	protected List<StateNode> subsequentNodes = null;
 	protected Set<ActionInstance> preferredOperators = null;
 	protected List<ActionInstance> relevantActions = null;
+	protected int hash;
+	protected boolean hashInitialized = false;
 	
 	protected void setRelevantActions(List<ActionInstance> relevantActions) {
 		this.relevantActions = relevantActions;
@@ -149,5 +153,43 @@ public class AbstractStateNode implements StateNode {
 		state=keySet;	
 	}
 
-
+//	@Override
+//	public int hashCode() {
+//		if(hashInitialized) {
+//			return hash;
+//		}
+//		
+//		BitSet bitSet = new BitSet(32);
+//		
+//		// Get the first 32 propositions
+//		List<PredicateDef> predicates = problem.getDomain().getPredicates();
+//		for(int i = 0; i < 32; i++) {
+//			if(state.contains(predicates.get(i))) {
+//				bitSet.set(i);
+//			}
+//		}
+//		
+//		hash = bitSetToInt(bitSet);
+//		
+//		hashInitialized = true;
+//		return hash;
+//	}
+//	
+//	private int bitSetToInt(BitSet bitSet) {
+//	    int temp = 0;
+//
+//	    for (int i = 0; i < 32; i++) {
+//	    	if (bitSet.get(i)) {
+//	    		temp |= 1 << i;
+//	    	}
+//	    }
+//
+//	    return temp;
+//	}
+//	
+//	@Override
+//	public boolean equals(Object o) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
 }

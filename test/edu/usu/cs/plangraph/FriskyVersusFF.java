@@ -13,7 +13,7 @@ public class FriskyVersusFF {
 		String pathToProblems = "testfiles/classical/pathways/";
 		
 		String[] algorithms = {
-				"frisky",
+//				"frisky",
 				"pode",
 //				"friskylength",
 //				"friskyEHC",
@@ -69,7 +69,7 @@ public class FriskyVersusFF {
 
 		String[] algorithms = {
 
-				"frisky",
+//				"frisky",
 				"pode",
 //				"friskylength",
 //				"friskyEHC",
@@ -80,7 +80,7 @@ public class FriskyVersusFF {
 		int numPfiles = 10;
 		//each random instance of the domain
 
-		for(int i = 1; i < numPfiles; i++){
+		for(int i = 7; i < numPfiles; i++){
 
 			String problem = null;
 			String extension = ".pddl";

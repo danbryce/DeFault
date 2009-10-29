@@ -457,7 +457,7 @@ public class StanPlanningGraph {
 		
 		// Get the relaxed plan as a parallel plan
 		List<Set<ActionHeader>> parallelPlan = new ArrayList<Set<ActionHeader>>();
-		for(int i = 0; i <= level; i++) {
+		for(int i = 0; i < level; i++) {
 			parallelPlan.add(new HashSet<ActionHeader>());
 		}
 		parallelPlan = solutionExtraction(goal, level, parallelPlan);
@@ -502,7 +502,7 @@ public class StanPlanningGraph {
 
 			FactLevelInfo fli = factSpike.getFactLevelInfo(level, subGoal.getPropositionIndex());
 
-			if(level == 0){
+			if(level == 1){
 				for(ActionHeader act : fli.getAllSupporters()){
 					if(!act.isNoop()){
 						helpfulActions.add(act.getAction());
@@ -518,7 +518,7 @@ public class StanPlanningGraph {
 
 			for(ActionHeader actionHeader : fli.getChosenSupporters()){
 				// Add the actions to the plan
-				parallelPlan.get(level).add(actionHeader);
+				parallelPlan.get(level-1).add(actionHeader);
 
 				// Add the preconditions of the actions to the goal
 				ActionLevelInfo ali = actionSpike.getActionLevelInfo(level-1, actionHeader.getIndex());
