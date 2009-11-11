@@ -9,6 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.usu.cs.conformant.TranslationToCPP;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -120,6 +121,12 @@ public class SearchTest {
 				solverOptions.setUseDeferredEvaluation(true);
 				solver = new GreedyBestFirstFFriskySolver(domain, problem, searchStatistics, solverOptions);
 			}
+			else if(args[2].contains(".pddl") && args[3].contains(".pddl")){
+				// Convert domain and problem files to ppddl.
+				TranslationToCPP.ConvertToCPP(domain, problem, args[2], args[3]);
+				
+				System.exit(0);
+			}
 			else {
 				usage();
 			}
@@ -191,6 +198,4 @@ public class SearchTest {
 		.println("usage: java GraphSolver <domain-pddl-file> <problem-pddl-file> <output file> <Search type (optional: either frisky(default), length, or uniformcost)>");
 		System.exit(1);
 	}
-
-
 }

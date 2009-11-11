@@ -17,20 +17,20 @@ public class AbstractStateNode implements StateNode {
 	protected Set<Proposition> state = null;
 	protected ActionInstance action = null;
 	protected StateNode parent = null;
-	
+
 	protected Problem problem = null;
-	
+
 	// Cost to get to this action
 	protected double[] gvalue = null;
-	protected double[] hvalue = null; 
-	protected double[] fvalue = null; 
+	protected double[] hvalue = null;
+	protected double[] fvalue = null;
 	protected Heuristic heuristic = null;
 	protected List<StateNode> subsequentNodes = null;
 	protected Set<ActionInstance> preferredOperators = null;
 	protected List<ActionInstance> relevantActions = null;
 	protected int hash;
 	protected boolean hashInitialized = false;
-	
+
 	protected void setRelevantActions(List<ActionInstance> relevantActions) {
 		this.relevantActions = relevantActions;
 	}
@@ -41,7 +41,7 @@ public class AbstractStateNode implements StateNode {
 
 	protected double[] H_WEIGHT = null;
 	protected int dimension = 1;
-	
+
 	public int getDimension() {
 		return dimension;
 	}
@@ -51,41 +51,42 @@ public class AbstractStateNode implements StateNode {
 	}
 
 	public double[] getHeuristicValue() {
-		if(hvalue == null){
+		if (hvalue == null) {
 			hvalue = heuristic.getValue(this);
 			preferredOperators = heuristic.getHelpfulActions();
-			if(parent == null){
-				List<ActionInstance> mRelevantActions = heuristic.getRelevantActions();
-				if(mRelevantActions != null){
-					relevantActions =  mRelevantActions;
+			if (parent == null) {
+				List<ActionInstance> mRelevantActions = heuristic
+						.getRelevantActions();
+				if (mRelevantActions != null) {
+					relevantActions = mRelevantActions;
 				}
 			}
 			H_WEIGHT = new double[dimension];
-			for(int i = 0; i < dimension; i++){
+			for (int i = 0; i < dimension; i++) {
 				H_WEIGHT[i] = 1;
-			} 
+			}
 		}
 		return hvalue;
 	}
-	
+
 	public double[] getFValue() {
-		if(fvalue == null){
+		if (fvalue == null) {
 			fvalue = new double[dimension];
-			for(int i = 0; i < dimension; i++){
-				fvalue[i] = getGValue()[i] + getHeuristicValue()[i] * H_WEIGHT[i];
+			for (int i = 0; i < dimension; i++) {
+				fvalue[i] = getGValue()[i] + getHeuristicValue()[i]
+						* H_WEIGHT[i];
 			}
 		}
 		return fvalue;
 	}
-	
+
 	public double[] getGValue() {
-		if(gvalue == null){
+		if (gvalue == null) {
 			gvalue = new double[dimension];
-			for(int i =0 ; i < dimension ; i++){
-				if(parent == null){
+			for (int i = 0; i < dimension; i++) {
+				if (parent == null) {
 					gvalue[i] = 0.0;
-				}
-				else{
+				} else {
 					gvalue[i] = parent.getGValue()[i] + action.getCost();
 				}
 			}
@@ -93,9 +94,9 @@ public class AbstractStateNode implements StateNode {
 		return gvalue;
 	}
 
-//	public ConsistentLiteralSet getState() {		
-//		return state;
-//	}
+	// public ConsistentLiteralSet getState() {
+	// return state;
+	// }
 
 	public ActionInstance getAction() {
 		// TODO Auto-generated method stub
@@ -107,8 +108,6 @@ public class AbstractStateNode implements StateNode {
 		return parent;
 	}
 
-
-	
 	public int compareTo(StateNode o) {
 		double cmp = this.getFValue()[0] - o.getFValue()[0];
 		return (cmp < 0 ? -1 : (cmp > 0 ? 1 : 0));
@@ -120,7 +119,6 @@ public class AbstractStateNode implements StateNode {
 		return state;
 	}
 
-	
 	public List<StateNode> createSubsequentNodes(
 			List<ActionInstance> actionInstances) {
 		// TODO Auto-generated method stub
@@ -150,46 +148,26 @@ public class AbstractStateNode implements StateNode {
 	}
 
 	public void setState(Set<Proposition> keySet) {
-		state=keySet;	
+		state = keySet;
 	}
 
-//	@Override
-//	public int hashCode() {
-//		if(hashInitialized) {
-//			return hash;
-//		}
-//		
-//		BitSet bitSet = new BitSet(32);
-//		
-//		// Get the first 32 propositions
-//		List<PredicateDef> predicates = problem.getDomain().getPredicates();
-//		for(int i = 0; i < 32; i++) {
-//			if(state.contains(predicates.get(i))) {
-//				bitSet.set(i);
-//			}
-//		}
-//		
-//		hash = bitSetToInt(bitSet);
-//		
-//		hashInitialized = true;
-//		return hash;
-//	}
-//	
-//	private int bitSetToInt(BitSet bitSet) {
-//	    int temp = 0;
-//
-//	    for (int i = 0; i < 32; i++) {
-//	    	if (bitSet.get(i)) {
-//	    		temp |= 1 << i;
-//	    	}
-//	    }
-//
-//	    return temp;
-//	}
-//	
-//	@Override
-//	public boolean equals(Object o) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
+	@Override
+	public int hashCode() {
+		if (hashInitialized) {
+			return hash;
+		}
+
+		hash = Proposition.getNodeHash(this.getState());
+
+		hashInitialized = true;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof AbstractStateNode))
+			return false;
+
+		return state.equals(((AbstractStateNode) o).state);
+	}
 }

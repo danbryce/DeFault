@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import antlr.debug.NewLineEvent;
+
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -28,6 +30,7 @@ import edu.usu.cs.search.astar.AStarNode;
  */
 public class FFRiskyNode  extends AStarNode {
 	protected HashMap<Proposition, Set<Risk>> propositions = null;
+	protected HashMap<Proposition, Integer> riskSetHash = null;
 	protected Set<Risk> criticalRisks = null;
 	//protected IncompleteActionInstance action = null;
 	private int hash;
@@ -46,6 +49,7 @@ public class FFRiskyNode  extends AStarNode {
 		for (Proposition proposition: propositions) {
 			this.propositions.put(proposition,new HashSet<Risk>());
 		}
+		this.riskSetHash = new HashMap<Proposition, Integer>();
 		this.criticalRisks = new HashSet<Risk>();
 		this.dimension = 2;
 		this.heuristic = heuristic;
@@ -78,6 +82,10 @@ public class FFRiskyNode  extends AStarNode {
 			this.propositions.put(prop, risks);
 		}
 
+		this.riskSetHash = new HashMap<Proposition, Integer>();
+		for(Proposition p : node.riskSetHash.keySet()) {
+			this.riskSetHash.put(p, node.riskSetHash.get(p));
+		}
 		// Copy the critical risks that were used to get to this node
 		this.criticalRisks = new HashSet<Risk>();
 		this.criticalRisks.addAll(node.getCriticalRisks());
@@ -150,12 +158,25 @@ public class FFRiskyNode  extends AStarNode {
 		}
 
 		//otherwise need to check risks
-
-		for(Proposition p : propositions.keySet()){
+		for(Proposition p : propositions.keySet()) {
+			
+//			// Check to see if the risk hashes are the same
+//			if(riskSetHash.get(p) == null) {
+//				riskSetHash.put(p, Risk.getRiskHash(propositions.get(p)));
+//			}
+//			if(objNode.riskSetHash.get(p) == null) {
+//				objNode.riskSetHash.put(p, Risk.getRiskHash(objNode.getPropositions().get(p)));
+//			}
+//			int riskHash = riskSetHash.get(p);
+//			int otherRiskHash = objNode.riskSetHash.get(p);
+//			if(riskHash != otherRiskHash) {
+//				return false;
+//			}
+			
+			// Check to see if the risks are the same
 			Set<Risk> risks = propositions.get(p);
 			Set<Risk> objRisks = objNode.getPropositions().get(p);
 			if(!risks.containsAll(objRisks) || !objRisks.containsAll(risks)){
-			//if(risks.equals(objRisks)){
 				return false;
 			}
 		}

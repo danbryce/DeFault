@@ -57,18 +57,15 @@ public class ActionDef
 		}
 		@Override
 		public GoalDesc toDNF(Map<FormalArgument, PDDLObject> quantifiedVariableMap, Set<PDDLObject> objects, ConsistentLiteralSet startState) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
 		public void renameVariables(Map<FormalArgument, FormalArgument> nameMap)
 				throws Exception {
-			// TODO Auto-generated method stub
 			
 		}
 		@Override
 		public GoalDesc deepCopy() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	};

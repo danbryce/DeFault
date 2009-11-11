@@ -23,6 +23,7 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 	
 	public PreferredOperatorDeferredEvaluationNode(
 			PreferredOperatorDeferredEvaluationNode node) {
+		super(node);
 		// Copy the propositions with their associated risks
 		this.propositions = new HashMap<Proposition, Set<Risk>>();
 		for (Proposition prop : node.getPropositions().keySet()) {

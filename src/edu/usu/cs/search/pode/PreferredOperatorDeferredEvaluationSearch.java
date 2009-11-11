@@ -18,7 +18,6 @@ import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.astar.AStarSearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class PreferredOperatorDeferredEvaluationSearch extends DefaultSearch implements Search {

@@ -82,7 +82,7 @@ public class DefaultSearch implements Search {
 		// Create queue and add comparator
 		open = new PriorityQueue<StateNode>();
 		
-		closed = new HashSet<StateNode>();
+		closed = new HashSet<StateNode>(5000);
 		solutions = new ArrayList<StateNode>();
 	}
 	

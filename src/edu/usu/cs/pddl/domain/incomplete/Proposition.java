@@ -1,7 +1,9 @@
 package edu.usu.cs.pddl.domain.incomplete;
 
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import edu.usu.cs.pddl.domain.LiteralInstance;
 
@@ -12,7 +14,8 @@ public class Proposition {
 	private static Map<Integer, Proposition> propositionIndexMap = new HashMap<Integer, Proposition>();
 	
 	private String name;
-	
+	private int hash;
+	private boolean hashInitialized = false;
 	
 	public Proposition(String name) {
 		this.name = name;
@@ -22,7 +25,7 @@ public class Proposition {
 		}
 	}
 	
-	public static Integer getPropositionIndicex(String name) {
+	public static Integer getPropositionIndex(String name) {
 		Integer index =propositionIndices.get(name); 
 		return index;
 	}
@@ -30,7 +33,7 @@ public class Proposition {
 	
 	
 	public Integer getIndex(){
-		return getPropositionIndicex(name);
+		return getPropositionIndex(name);
 	}
 	
 	public static Proposition getPropositionFromIndex(LiteralInstance literalInstance) {
@@ -44,7 +47,7 @@ public class Proposition {
 		}
 		else{
 			Proposition p = new Proposition(name);
-			propositionIndexMap.put(getPropositionIndicex(name), p);
+			propositionIndexMap.put(getPropositionIndex(name), p);
 			return p;
 		}
 	}		
@@ -84,6 +87,39 @@ public class Proposition {
 	
 	@Override
 	public int hashCode() {
-		return getName().hashCode();
+		if(hashInitialized) {
+			return hash;
+		}
+		
+		hash = getName().hashCode();
+		hashInitialized = true;
+		
+		return hash;
+	}
+	
+	public static int getNodeHash(Set<Proposition> props) {
+		BitSet bitSet = new BitSet(32);
+		
+		int size = Math.min(propositionIndexMap.size(), 32);
+		
+		for(int i = 0; i < size; i++) {
+			if(props.contains(propositionIndexMap.get(i))) {
+				bitSet.set(i);
+			}
+		}
+		
+		return bitSetToInt(bitSet);
+	}
+	
+	private static int bitSetToInt(BitSet bitSet) {
+	    int temp = 0;
+
+	    for (int i = 0; i < 32; i++) {
+	    	if (bitSet.get(i)) {
+	    		temp |= 1 << i;
+	    	}
+	    }
+
+	    return temp;
 	}
 }
