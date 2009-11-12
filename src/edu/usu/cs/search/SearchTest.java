@@ -124,8 +124,7 @@ public class SearchTest {
 			else if(args[2].contains(".pddl") && args[3].contains(".pddl")){
 				// Convert domain and problem files to ppddl.
 				TranslationToCPP.ConvertToCPP(domain, problem, args[2], args[3]);
-				
-				System.exit(0);
+				return;
 			}
 			else {
 				usage();

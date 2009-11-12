@@ -62,6 +62,7 @@ public class TranslationToCPP {
 				}
 			}
 		}
+		output.append(getValid());
 		output.append(")\n");
 		
 		// Actions
