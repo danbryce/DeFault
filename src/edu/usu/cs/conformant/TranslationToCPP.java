@@ -32,8 +32,6 @@ public class TranslationToCPP {
 		
 		convertDomain(problem, outputDomainFile);
 		convertProblem(problem, outputProblemFile);
-		
-		// Do the problem file first because it's easier
 	}
 	
 	// Translates domain and writes it to a file
@@ -63,14 +61,15 @@ public class TranslationToCPP {
 			}
 		}
 		output.append(getValid());
+		output.append(" (done)");
 		output.append(")\n");
 		
 		// Actions
-		output.append("\n");
 		for(ActionInstance a : problem.getActions()) {
 			if(!(a instanceof IncompleteActionInstance)) {
 				continue;
 			}
+			output.append("\n");
 			IncompleteActionInstance action = (IncompleteActionInstance)a;
 			output.append(" (:action " + action.getName() + "\n");
 			
@@ -118,6 +117,13 @@ public class TranslationToCPP {
 			output.append("  )\n");
 			output.append(" )\n");
 		}
+		
+		// Add the goal action
+		output.append("\n (:action cpp_goal\n  :precondition ");
+		output.append(problem.getGoal());
+		int lastParen = output.lastIndexOf(")");
+		output.insert(lastParen, getValid());
+		output.append("\n  :effect (and (done))\n )\n");
 		
 		// Close
 		output.append(")\n");
@@ -211,11 +217,12 @@ public class TranslationToCPP {
 		output.append(" )\n");
 		
 		// Goal state
-		output.append(" (:goal " + problem.getGoal());
-		// Remove the last ")"
-		int lastParen = output.lastIndexOf(")");
-		output.insert(lastParen, getValid());
-		output.append("\n )\n");
+		output.append(" (:goal (and (done)))\n");
+//		output.append(" (:goal " + problem.getGoal());
+//		// Remove the last ")"
+//		int lastParen = output.lastIndexOf(")");
+//		output.insert(lastParen, getValid());
+//		output.append("\n )\n");
 		
 		// Close
 		output.append(")\n");
