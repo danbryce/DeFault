@@ -69,18 +69,18 @@ public class FriskyVersusFF {
 
 		String[] algorithms = {
 
-//				"frisky",
-				"pode",
-//				"friskylength",
+				"frisky",
+//				"pode",
+				"friskylength",
 //				"friskyEHC",
 //				"friskyMS"
 		};
 
 
-		int numPfiles = 10;
+		int numPfiles = 6;
 		//each random instance of the domain
 
-		for(int i = 7; i < numPfiles; i++){
+		for(int i = 1; i <= numPfiles; i++){
 
 			String problem = null;
 			String extension = ".pddl";

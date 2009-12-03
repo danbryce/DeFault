@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.usu.cs.conformant.TranslationToCPP;
+import edu.usu.cs.conformant.TranslationToCPP.TranslationType;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -43,7 +44,7 @@ public class SearchTest {
 
 
 	public static void main(String[] args) {
-		if (!(args.length == 3 || args.length == 4 || args.length == 6)) {
+		if (!(args.length == 3 || args.length == 4 || args.length == 5 || args.length == 6)) {
 			usage();
 		}
 		File domainFile = new File(args[0]);
@@ -123,14 +124,18 @@ public class SearchTest {
 			}
 			else if(args[2].contains(".pddl") && args[3].contains(".pddl")){
 				// Convert domain and problem files to ppddl.
-				TranslationToCPP.ConvertToCPP(domain, problem, args[2], args[3]);
+				if("pond".equals(args[4])) {
+					TranslationToCPP.ConvertToCPP(domain, problem, args[2], args[3], TranslationType.pond);
+				}
+				else if("pff".equals(args[4])) {
+					TranslationToCPP.ConvertToCPP(domain, problem, args[2], args[3], TranslationType.pff);
+				}
 				return;
 			}
 			else {
 				usage();
 			}
 		} catch (IllDefinedProblemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -20,6 +20,11 @@ import edu.usu.cs.search.incomplete.FFRiskyNode;
 
 public class TranslationToCPP {
 	
+	public enum TranslationType {
+		pond,
+		pff,
+	}
+	
 	private enum RiskType{OpenPrec, PossClob, UnlistedEffect};
 	
 	// Converts a domain and problem ffrisky pddl file to conformant 
@@ -28,18 +33,21 @@ public class TranslationToCPP {
 			Domain domain, 
 			Problem problem, 
 			String outputDomainFile,
-			String outputProblemFile) {
+			String outputProblemFile,
+			TranslationType type) {
 		
-		convertDomain(problem, outputDomainFile);
-		convertProblem(problem, outputProblemFile);
+		convertDomain(problem, outputDomainFile, type);
+		convertProblem(problem, outputProblemFile, type);
 	}
 	
 	// Translates domain and writes it to a file
-	protected static void convertDomain(Problem problem, String outputFile) {
+	protected static void convertDomain(Problem problem, String outputFile, TranslationType type) {
 		Domain domain = problem.getDomain();
 		StringBuilder output = new StringBuilder();
 		output.append("(define (domain " + domain.getName() + ")\n");
-		output.append(" (:requirements :probabilistic-effects)\n");
+		if(type == TranslationType.pond) {
+			output.append(" (:requirements :probabilistic-effects)\n");
+		}
 		
 		// Predicates
 		output.append(" (:predicates");
@@ -74,11 +82,11 @@ public class TranslationToCPP {
 			output.append(" (:action " + action.getName() + "\n");
 			
 			// Preconditions
-			output.append("  :precondition (and");
-			for(Proposition prop : action.getPreconditions()) {
-				output.append(" (" + prop.getName() + ")");
-			}
-			output.append(")\n");
+//			output.append("  :precondition (and");
+//			for(Proposition prop : action.getPreconditions()) {
+//				output.append(" (" + prop.getName() + ")");
+//			}
+//			output.append(")\n");
 			
 			// Effects
 			output.append("  :effect (and\n");
@@ -119,11 +127,12 @@ public class TranslationToCPP {
 		}
 		
 		// Add the goal action
-		output.append("\n (:action cpp_goal\n  :precondition ");
+		output.append("\n (:action cpp_goal\n  :precondition (and )");
+		output.append("\n  :effect (when ");
 		output.append(problem.getGoal());
 		int lastParen = output.lastIndexOf(")");
 		output.insert(lastParen, getValid());
-		output.append("\n  :effect (and (done))\n )\n");
+		output.append(" (done))\n )\n");
 		
 		// Close
 		output.append(")\n");
@@ -162,6 +171,9 @@ public class TranslationToCPP {
 	private static StringBuilder getOP(IncompleteActionInstance action) {
 		// when ((possprec OR !possprecrisk) AND)
 		StringBuilder output = new StringBuilder();
+		for(Proposition prec : action.getPreconditions()) {
+			output.append(" (" + prec.getName() + ")");
+		}
 		for(Proposition possprec : action.getPossiblePreconditions()) {
 			output.append(" (or (" + possprec.getName() + ") (not " + getRiskName(RiskType.OpenPrec, action, possprec) + "))");
 		}
@@ -183,7 +195,7 @@ public class TranslationToCPP {
 	}
 	
 	// Translates problem and writes it to a file
-	protected static void convertProblem(Problem problem, String outputFile) {
+	protected static void convertProblem(Problem problem, String outputFile, TranslationType type) {
 		StringBuilder output = new StringBuilder();
 		output.append("(define (problem " + problem.getName() + ")\n");
 		output.append(" (:domain " + problem.getDomain().getName() + ")\n");
@@ -198,26 +210,52 @@ public class TranslationToCPP {
 			if(actionInstance instanceof IncompleteActionInstance) {
 				IncompleteActionInstance action = (IncompleteActionInstance)actionInstance;
 				for(Proposition pre : action.getPossiblePreconditions()) {
-					output.append("  (probabilistic 0.5 " + 
-							getRiskName(RiskType.OpenPrec, action, pre)
-							+ ")\n");
+					if(type == TranslationType.pond) {
+						output.append("  (probabilistic 0.5 " + 
+								getRiskName(RiskType.OpenPrec, action, pre) + 
+								")\n");
+					}
+					else if(type == TranslationType.pff) {
+						output.append("  (cpt " + 
+								getRiskName(RiskType.OpenPrec, action, pre) + 
+								" 0.5)\n");
+					}
 				}
 				for(Proposition add : action.getPossibleAddEffects()) {
-					output.append("  (probabilistic 0.5 " + 
-							getRiskName(RiskType.UnlistedEffect, action, add)
-							+ ")\n");
+					if(type == TranslationType.pond) {
+						output.append("  (probabilistic 0.5 " + 
+								getRiskName(RiskType.UnlistedEffect, action, add) + 
+								")\n");
+					}
+					else if(type == TranslationType.pff) {
+						output.append("  (cpt " +
+								getRiskName(RiskType.UnlistedEffect, action, add) +
+								" 0.5)\n");
+					}
 				}
 				for(Proposition del : action.getPossibleDeleteEffects()) {
-					output.append("  (probabilistic 0.5 " + 
-							getRiskName(RiskType.PossClob, action, del)
-							+ ")\n");
+					if(type == TranslationType.pond) {
+						output.append("  (probabilistic 0.5 " + 
+								getRiskName(RiskType.PossClob, action, del) + 
+								")\n");
+					}
+					else if(type == TranslationType.pff) {
+						output.append("  (cpt " +
+								getRiskName(RiskType.PossClob, action, del) +
+								" 0.5)\n");
+					}
 				}
 			}
 		}
 		output.append(" )\n");
 		
 		// Goal state
-		output.append(" (:goal (and (done)))\n");
+		if(type == TranslationType.pond) {
+			output.append(" (:goal (and (done)))\n");
+		}
+		else if(type == TranslationType.pff) {
+			output.append(" (:goal 0.000001\n (and (done)))\n");
+		}
 //		output.append(" (:goal " + problem.getGoal());
 //		// Remove the last ")"
 //		int lastParen = output.lastIndexOf(")");

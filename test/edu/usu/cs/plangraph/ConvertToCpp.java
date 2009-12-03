@@ -8,14 +8,15 @@ public class ConvertToCpp {
 	@Test
 	public void runConvertPathwaysToCpp() {
 		
+		String translationType = "pff";
 		String pathToDomains = "testfiles/incomplete/pathways/";
 		String pathToProblems = "testfiles/classical/pathways/";
-		String pathToCppDomains = "testfiles/conformant/";
-		String pathToCppProblems = "testfiles/conformant/";
+		String pathToCppDomains = "testfiles/conformant/" + translationType + "/";
+		String pathToCppProblems = "testfiles/conformant/" + translationType + "/";
 		
 		int numPfiles = 10;
 		String extension = ".pddl";
-		String[] args = new String[4];
+		String[] args = new String[5];
 		
 		for(int i = 1; i <= numPfiles; i++) {
 			String problem = null;
@@ -31,7 +32,8 @@ public class ConvertToCpp {
 					args[0] = pathToDomains + "domain_" + problem + "_" + p + "_" + k + extension;
 					args[1] = pathToProblems + problem + extension;
 					args[2] = pathToCppDomains + "cpp_domain_" + problem + "_" + p + "_" + k + extension;
-					args[3] = pathToCppProblems + "cpp_problem" + problem + "_" + p + "_" + k + extension;
+					args[3] = pathToCppProblems + "cpp_problem_" + problem + "_" + p + "_" + k + extension;
+					args[4] = translationType;
 					
 //					for(String str : args) {
 //						System.out.print(str + " ");
