@@ -30,7 +30,7 @@ public class BridgesDomainCreator {
 		actionCount = (gridSize * (gridSize - 1) * 4);
 		
 		// The total number of bridges
-		// I halved it because if we find one action with 
+		// I halved it because if we find one action with a bridge, the opposite action should have a bridge as well.
 		int bridgeCount = (int)(actionCount * density / 2 + 0.5);
 		
 		Set<String> bridges = new HashSet<String>();
@@ -267,10 +267,13 @@ public class BridgesDomainCreator {
 	}
 	
 	private static void usage() {
-		System.out.println("usage: java BridgesCreator [Grid Size] [Bridge Density] [Output File] [Optional: Number of Domain Files]");
-		System.out.println("\tGrid Size\tInteger value from 1 to many.");
-		System.out.println("\tBridge Density\tdecimal from 0 to 1 representing the percentage of connections that are bridges.");
-		System.out.println("\tOutput Dir\tThe directory where the files will be created.");
-		System.out.println("\tOptional\tNumber of domain files to be created. Integer value from 1 to many. Default is 1.");
+		System.out.println("usage:\tjava BridgesCreator [Risk Type] [Grid Size] [Bridge Density] [% of bridges where all treasure may be lost - for risk types 2 and 3] [% chance each corner will hold each item - for risk type 3] [Output File] [Optional: Number of Domain Files]");
+		System.out.println("\tRisk Type\t\t1 for PrecOpen only; 2 for PrecOpen and PossClob; 3 for PrecOpen, PossClob, and UnlistedEffect.");
+		System.out.println("\tGrid Size\t\tInteger value from 1 to many.");
+		System.out.println("\tBridge Density\t\tdecimal from 0 to 1 representing the percentage of connections that are bridges.");
+		System.out.println("\tPercent of Bridges \n\tthat may lose treasure\tOnly for Risk Types 2 and 3. Of all the bridges in the domain, the percent chance that a given bridge will have a PossClob risk that removes all treasure.");
+		System.out.println("\tPercent Chance each \n\ttreasure location will \n\thold a given treasure\tOnly for Risk Type 3. For each of the treasure location and for each treasure not normally held there, the percent chance that an UnlistedEffect risk will be there for the specified treasure.");
+		System.out.println("\tOutput Dir\t\tThe directory where the files will be created.");
+		System.out.println("\tOptional\t\tNumber of domain files to be created. Integer value from 1 to many. Default is 1.");
 	}
 }
