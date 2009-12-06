@@ -14,6 +14,8 @@ public class BridgesDomainCreator {
 	private static int fileCount = 1;
 	private static Random random = new Random();
 	private static int actionCount;
+	private static Set<String> bridgePredicates;
+	private static Set<String> treasurePredicates;
 	
 	public static void main(String[] args) {
 		if(!IsInputValid(args)) {
@@ -33,13 +35,13 @@ public class BridgesDomainCreator {
 		// I halved it because if we find one action with a bridge, the opposite action should have a bridge as well.
 		int bridgeCount = (int)(actionCount * density / 2 + 0.5);
 		
-		Set<String> bridges = new HashSet<String>();
+		bridgePredicates = new HashSet<String>();
 				
 		for(int fileIndex = 1; fileIndex <= fileCount; fileIndex++) {
 			
 			// Create the bridges
-			bridges.clear();
-			while(bridges.size() < bridgeCount) {
+			bridgePredicates.clear();
+			while(bridgePredicates.size() < bridgeCount) {
 				// Pick a direction
 				boolean xDirection = random.nextBoolean();
 				
@@ -53,8 +55,8 @@ public class BridgesDomainCreator {
 					String bridge = "bridge_" + xBridgeIndex + "_" + yBridgeIndex + "_" + (xBridgeIndex + 1) + "_" + yBridgeIndex;
 					
 					// If there is no bridge here, put it in
-					if(!bridges.contains(bridge)) {
-						bridges.add(bridge);
+					if(!bridgePredicates.contains(bridge)) {
+						bridgePredicates.add(bridge);
 					}
 				}
 				else {
@@ -67,8 +69,8 @@ public class BridgesDomainCreator {
 					String bridge = "bridge_" + xBridgeIndex + "_" + yBridgeIndex + "_" + xBridgeIndex + "_" + (yBridgeIndex + 1);
 					
 					// If there is no bridge here, put it in
-					if(!bridges.contains(bridge)) {
-						bridges.add(bridge);
+					if(!bridgePredicates.contains(bridge)) {
+						bridgePredicates.add(bridge);
 					}
 				}
 			}
@@ -85,8 +87,18 @@ public class BridgesDomainCreator {
 			}
 			
 			// Create the bridge predicates
-			for(String bridge : bridges) {
+			for(String bridge : bridgePredicates) {
 				output.append(" (" + bridge + ")");
+			}
+			output.append("\n");
+			
+			// Create the treasure predicates
+			treasurePredicates = new HashSet<String>(3);
+			treasurePredicates.add("holding_treasure_1");
+			treasurePredicates.add("holding_treasure_2");
+			treasurePredicates.add("holding_treasure_3");
+			for(String treasure : treasurePredicates) {
+				output.append(" (" + treasure + ")");
 			}
 			
 			output.append(")\n\n");
@@ -108,7 +120,7 @@ public class BridgesDomainCreator {
 						
 						// Add possprec
 						String bridge = "bridge_" + (x - 1) + "_" + y + "_" + x + "_" + y;
-						if(bridges.contains(bridge)) {
+						if(bridgePredicates.contains(bridge)) {
 							output.append(" :poss-precondition (and (" + bridge + "))\n");
 						}
 						
@@ -127,7 +139,7 @@ public class BridgesDomainCreator {
 						
 						// Add possprec
 						String bridge = "bridge_" + x + "_" + y + "_" + (x + 1) + "_" + y;
-						if(bridges.contains(bridge)) {
+						if(bridgePredicates.contains(bridge)) {
 							output.append(" :poss-precondition (and (" + bridge + "))\n");
 						}
 						
@@ -146,7 +158,7 @@ public class BridgesDomainCreator {
 						
 						// Add possprec
 						String bridge = "bridge_" + x + "_" + (y - 1) + "_" + x + "_" + y;
-						if(bridges.contains(bridge)) {
+						if(bridgePredicates.contains(bridge)) {
 							output.append(" :poss-precondition (and (" + bridge + "))\n");
 						}
 
@@ -165,7 +177,7 @@ public class BridgesDomainCreator {
 						
 						// Add possprec
 						String bridge = "bridge_" + x + "_" + y + "_" + x + "_" + (y + 1);
-						if(bridges.contains(bridge)) {
+						if(bridgePredicates.contains(bridge)) {
 							output.append(" :poss-precondition (and (" + bridge + "))\n");
 						}
 
@@ -176,6 +188,17 @@ public class BridgesDomainCreator {
 				}
 			}
 			
+			// Add the pick-up actions for the treasure
+			output.append("(:action pickup_treasure1\n :parameters ()\n");
+			output.append(" :precondition (and (at_" + (gridSize - 1) + "_0))\n");
+			output.append(" :effect (and (holding_treasure_1))\n)\n\n");
+			output.append("(:action pickup_treasure2\n :parameters ()\n");
+			output.append(" :precondition (and (at_" + (gridSize - 1) + "_" + (gridSize - 1) + "))\n");
+			output.append(" :effect (and (holding_treasure_2))\n)\n\n");
+			output.append("(:action pickup_treasure3\n :parameters ()\n");
+			output.append(" :precondition (and (at_0_" + (gridSize - 1) + "))\n");
+			output.append(" :effect (and (holding_treasure_3))\n)\n\n");
+			
 			// Close off the domain file
 			output.append(")");
 			
@@ -183,7 +206,7 @@ public class BridgesDomainCreator {
 			
 			// Create the file
 			try {
-				String outputFile = args[2] + "/bridges_" + density + "_" + fileIndex + ".pddl";
+				String outputFile = args[2] + "/bridges_" + gridSize + "_" + density + "_" + fileIndex + ".pddl";
 				FileWriter fstream = new FileWriter(outputFile, false);
 				BufferedWriter out = new BufferedWriter(fstream);
 				out.write(output.toString());
@@ -199,14 +222,14 @@ public class BridgesDomainCreator {
 		StringBuilder output = new StringBuilder("(define (problem bridges)\n");
 		output.append("    (:domain Bridges)\n\n");
 		output.append("    (:init (at_0_0))\n\n");
-		output.append("    (:goal (and (at_" + (gridSize - 1) + "_" + (gridSize - 1) + ")))\n");
+		output.append("    (:goal\n     (and\n      (at_0_0)\n      (holding_treasure_1)\n      (holding_treasure_2)\n      (holding_treasure_3)\n     )\n    )\n");
 		output.append(")");
 		
 //		System.out.println(output);
 		
 		// Create the file
 		try {
-			String outputFile = outputFileDestination + "/bridges_" + density + "_problem.pddl";
+			String outputFile = outputFileDestination + "/bridges_" + gridSize + "_" + density + "_problem.pddl";
 			FileWriter fstream = new FileWriter(outputFile, false);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(output.toString());

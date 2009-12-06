@@ -38,8 +38,8 @@ public class BridgesTest {
 			for(int alg = 0; alg < algorithms.length; alg++) {
 				for(int k = 1; k <= numFiles; k++) {
 					args = new String[6];
-					args[0] = pathToDomains + "bridges_" + density + "_" + k + extension;
-					args[1] = pathToProblems + "bridges_" + density + "_problem" + extension;
+					args[0] = pathToDomains + "bridges_" + gridSize + "_" + density + "_" + k + extension;
+					args[1] = pathToProblems + "bridges_" + gridSize + "_" + density + "_problem" + extension;
 					args[2] = "output_bridges.txt";
 					args[3] = algorithms[alg];
 					args[4] = Double.toString(density);
