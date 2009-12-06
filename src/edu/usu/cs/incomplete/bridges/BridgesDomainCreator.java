@@ -302,7 +302,7 @@ public class BridgesDomainCreator {
 		
 		// Create the file
 		try {
-			String outputFile = outputFileDestination + "/bridges_" + gridSize + "_" + bridgeDensity + "_problem.pddl";
+			String outputFile = outputFileDestination + "/bridges_problem.pddl";
 			FileWriter fstream = new FileWriter(outputFile, false);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(output.toString());

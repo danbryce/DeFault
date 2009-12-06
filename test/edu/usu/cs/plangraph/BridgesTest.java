@@ -21,7 +21,7 @@ public class BridgesTest {
 		args[3] = Double.toString(0.5);
 		args[4] = Double.toString(0.5);
 		args[5] = Integer.toString(numFiles);
-		for(double bridgeDensity = 0.25; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
+		for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
 			args[2] = Double.toString(bridgeDensity);
 			BridgesDomainCreator.main(args);
 		}
@@ -42,11 +42,11 @@ public class BridgesTest {
 //				"friskyMS"
 		};
 
-		for(double bridgeDensity = 0.25; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
+		for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
 			for(int alg = 0; alg < algorithms.length; alg++) {
 				for(int k = 1; k <= numFiles; k++) {
 					args[0] = pathToDomains + "bridges_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
-					args[1] = pathToProblems + "bridges_" + gridSize + "_" + bridgeDensity + "_problem" + extension;
+					args[1] = pathToProblems + "bridges_problem" + extension;
 					args[2] = "output_bridges.txt";
 					args[3] = algorithms[alg];
 					args[4] = Double.toString(bridgeDensity);
