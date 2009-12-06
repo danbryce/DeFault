@@ -9,7 +9,9 @@ import java.util.Set;
 
 public class BridgesDomainCreator {
 	private static int gridSize;
-	private static double density;
+	private static double bridgeDensity;
+	private static double loserBridgeDensity = 0.0;
+	private static double treasureInOtherLocationsDensity = 0.0;
 	private static String outputFileDestination;
 	private static int fileCount = 1;
 	private static Random random = new Random();
@@ -33,7 +35,7 @@ public class BridgesDomainCreator {
 		
 		// The total number of bridges
 		// I halved it because if we find one action with a bridge, the opposite action should have a bridge as well.
-		int bridgeCount = (int)(actionCount * density / 2 + 0.5);
+		int bridgeCount = (int)(actionCount * bridgeDensity / 2 + 0.5);
 		
 		bridgePredicates = new HashSet<String>();
 				
@@ -125,8 +127,14 @@ public class BridgesDomainCreator {
 						}
 						
 						// Add effect
-						output.append(" :effect (and (not " + prec + ") " + add + ")");
-						output.append("\n)\n\n");
+						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						
+						// Poss effect - determine if one exists
+						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
+							output.append(" :poss-effect\n    (and\n     (not (holding_treasure_1))\n     (not (holding_treasure_2))\n     (not (holding_treasure_3))\n    )\n");
+						}
+						
+						output.append(")\n\n");
 					}
 					
 					// Create a move down action
@@ -144,8 +152,14 @@ public class BridgesDomainCreator {
 						}
 						
 						// Add effect
-						output.append(" :effect (and (not " + prec + ")" + add + ")");
-						output.append("\n)\n\n");
+						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						
+						// Poss effect - determine if one exists
+						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
+							output.append(" :poss-effect\n    (and\n     (not (holding_treasure_1))\n     (not (holding_treasure_2))\n     (not (holding_treasure_3))\n    )\n");
+						}
+						
+						output.append(")\n\n");
 					}
 					
 					// Create a move left action
@@ -163,8 +177,14 @@ public class BridgesDomainCreator {
 						}
 
 						// Add effect
-						output.append(" :effect (and (not " + prec + ")" + add + ")");
-						output.append("\n)\n\n");
+						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						
+						// Poss effect - determine if one exists
+						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
+							output.append(" :poss-effect\n    (and\n     (not (holding_treasure_1))\n     (not (holding_treasure_2))\n     (not (holding_treasure_3))\n    )\n");
+						}
+						
+						output.append(")\n\n");
 					}
 					
 					// Create a move right action
@@ -182,22 +202,75 @@ public class BridgesDomainCreator {
 						}
 
 						// Add effect
-						output.append(" :effect (and (not " + prec + ")" + add + ")");
-						output.append("\n)\n\n");
+						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						
+						// Poss effect - determine if one exists
+						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
+							output.append(" :poss-effect\n    (and\n     (not (holding_treasure_1))\n     (not (holding_treasure_2))\n     (not (holding_treasure_3))\n    )\n");
+						}
+						
+						output.append(")\n\n");
 					}
 				}
 			}
 			
-			// Add the pick-up actions for the treasure
+			boolean possAddTreasure1 = false;
+			boolean possAddTreasure2 = false;
+			boolean possAddTreasure3 = false;
+			
+			// pick-up action for treasure 1
 			output.append("(:action pickup_treasure1\n :parameters ()\n");
 			output.append(" :precondition (and (at_" + (gridSize - 1) + "_0))\n");
-			output.append(" :effect (and (holding_treasure_1))\n)\n\n");
+			output.append(" :effect (and (holding_treasure_1))\n");
+			possAddTreasure2 = (random.nextDouble() < treasureInOtherLocationsDensity);
+			possAddTreasure3 = (random.nextDouble() < treasureInOtherLocationsDensity);
+			if(possAddTreasure2 || possAddTreasure3) {
+				output.append(" :poss-effect (and");
+				if(possAddTreasure2) {
+					output.append(" (holding_treasure_2)");
+				}
+				if(possAddTreasure3) {
+					output.append(" (holding_treasure_3)");
+				}
+				output.append(")\n");
+			}
+			output.append(")\n\n");
+			
+			// pick-up action for treasure 2
 			output.append("(:action pickup_treasure2\n :parameters ()\n");
 			output.append(" :precondition (and (at_" + (gridSize - 1) + "_" + (gridSize - 1) + "))\n");
-			output.append(" :effect (and (holding_treasure_2))\n)\n\n");
+			output.append(" :effect (and (holding_treasure_2))\n");
+			possAddTreasure1 = (random.nextDouble() < treasureInOtherLocationsDensity);
+			possAddTreasure3 = (random.nextDouble() < treasureInOtherLocationsDensity);
+			if(possAddTreasure1 || possAddTreasure3) {
+				output.append(" :poss-effect (and");
+				if(possAddTreasure1) {
+					output.append(" (holding_treasure_1)");
+				}
+				if(possAddTreasure3) {
+					output.append(" (holding_treasure_3)");
+				}
+				output.append(")\n");
+			}
+			output.append(")\n\n");
+			
+			// pick-up action for treasure 3
 			output.append("(:action pickup_treasure3\n :parameters ()\n");
 			output.append(" :precondition (and (at_0_" + (gridSize - 1) + "))\n");
-			output.append(" :effect (and (holding_treasure_3))\n)\n\n");
+			output.append(" :effect (and (holding_treasure_3))\n");
+			possAddTreasure1 = (random.nextDouble() < treasureInOtherLocationsDensity);
+			possAddTreasure2 = (random.nextDouble() < treasureInOtherLocationsDensity);
+			if(possAddTreasure1 || possAddTreasure2) {
+				output.append(" :poss-effect (and");
+				if(possAddTreasure1) {
+					output.append(" (holding_treasure_1)");
+				}
+				if(possAddTreasure2) {
+					output.append(" (holding_treasure_2)");
+				}
+				output.append(")\n");
+			}
+			output.append(")\n\n");
 			
 			// Close off the domain file
 			output.append(")");
@@ -206,7 +279,7 @@ public class BridgesDomainCreator {
 			
 			// Create the file
 			try {
-				String outputFile = args[2] + "/bridges_" + gridSize + "_" + density + "_" + fileIndex + ".pddl";
+				String outputFile = outputFileDestination + "/bridges_" + gridSize + "_" + bridgeDensity + "_" + fileIndex + ".pddl";
 				FileWriter fstream = new FileWriter(outputFile, false);
 				BufferedWriter out = new BufferedWriter(fstream);
 				out.write(output.toString());
@@ -229,7 +302,7 @@ public class BridgesDomainCreator {
 		
 		// Create the file
 		try {
-			String outputFile = outputFileDestination + "/bridges_" + gridSize + "_" + density + "_problem.pddl";
+			String outputFile = outputFileDestination + "/bridges_" + gridSize + "_" + bridgeDensity + "_problem.pddl";
 			FileWriter fstream = new FileWriter(outputFile, false);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(output.toString());
@@ -241,12 +314,13 @@ public class BridgesDomainCreator {
 	}
 
 	private static boolean IsInputValid(String[] args) {
-		if(args.length < 3 || args.length > 4) {
+		
+		if(args.length < 3 || args.length > 6) {
 			usage();
 			return false;
 		}
 		
-		// Verify that args[0] is an integer > 0
+		// Verify that gridSize is an integer > 0
 		try {
 			gridSize = Integer.parseInt(args[0]);
 			if(gridSize <= 0) {
@@ -258,10 +332,13 @@ public class BridgesDomainCreator {
 			return false;
 		}
 		
-		// Verify that args[1] is a double from between 0 and 1 inclusive
+		// Set the output directory destination
+		outputFileDestination = args[1];
+		
+		// Verify that bridge density is a double from between 0 and 1 inclusive
 		try {
-			density = Double.parseDouble(args[1]);
-			if(density < 0 || density > 1) {
+			bridgeDensity = Double.parseDouble(args[2]);
+			if(bridgeDensity < 0 || bridgeDensity > 1) {
 				throw new NumberFormatException();
 			}
 		} catch(NumberFormatException e) {
@@ -270,10 +347,40 @@ public class BridgesDomainCreator {
 			return false;
 		}
 		
-		// Verify that the number of domain files is correct
-		if(args.length == 4) {
+		if(args.length >= 4) {
+			// Verify that the percentage of bridges that may lose treasure is between 0.0 and 1.0 inclusive
 			try {
-				fileCount = Integer.parseInt(args[3]);
+				loserBridgeDensity = Double.parseDouble(args[3]);
+				if(loserBridgeDensity < 0 || loserBridgeDensity > 1) {
+					throw new NumberFormatException();
+				}
+			} catch(NumberFormatException e) {
+				System.out.println("Percentage of bad bridges must be between 0.0 and 1.0.");
+				usage();
+				return false;
+			}
+		} else {
+			loserBridgeDensity = 0.0;
+		}
+		
+		if(args.length >= 5) {
+			// Verify that the percentage of possible treasure adds is between 0.0 and 1.0
+			try {
+				treasureInOtherLocationsDensity = Double.parseDouble(args[4]);
+				if(treasureInOtherLocationsDensity < 0 || treasureInOtherLocationsDensity > 1) {
+					throw new NumberFormatException();
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Percentage Change of treasure being in other locations must be between 0.0 and 1.0.");
+				usage();
+				return false;
+			}
+		}
+		
+		if(args.length == 6) {
+			// Verify that the number of domain files is correct
+			try {
+				fileCount = Integer.parseInt(args[5]);
 				if(fileCount < 1) {
 					throw new NumberFormatException();
 				}
@@ -284,19 +391,16 @@ public class BridgesDomainCreator {
 			}
 		}
 		
-		outputFileDestination = args[2];
-		
 		return true;
 	}
 	
 	private static void usage() {
-		System.out.println("usage:\tjava BridgesCreator [Risk Type] [Grid Size] [Bridge Density] [% of bridges where all treasure may be lost - for risk types 2 and 3] [% chance each corner will hold each item - for risk type 3] [Output File] [Optional: Number of Domain Files]");
-		System.out.println("\tRisk Type\t\t1 for PrecOpen only; 2 for PrecOpen and PossClob; 3 for PrecOpen, PossClob, and UnlistedEffect.");
+		System.out.println("usage:\tjava BridgesCreator [Grid Size] [Output Directory] [Bridge Density] [Optional: % of bridges where all treasure may be lost] [Optional: % chance each corner will hold each item] [Optional: Number of Domain Files]");
 		System.out.println("\tGrid Size\t\tInteger value from 1 to many.");
+		System.out.println("\tOutput Dir\t\tThe directory where the files will be created.");
 		System.out.println("\tBridge Density\t\tdecimal from 0 to 1 representing the percentage of connections that are bridges.");
 		System.out.println("\tPercent of Bridges \n\tthat may lose treasure\tOnly for Risk Types 2 and 3. Of all the bridges in the domain, the percent chance that a given bridge will have a PossClob risk that removes all treasure.");
 		System.out.println("\tPercent Chance each \n\ttreasure location will \n\thold a given treasure\tOnly for Risk Type 3. For each of the treasure location and for each treasure not normally held there, the percent chance that an UnlistedEffect risk will be there for the specified treasure.");
-		System.out.println("\tOutput Dir\t\tThe directory where the files will be created.");
-		System.out.println("\tOptional\t\tNumber of domain files to be created. Integer value from 1 to many. Default is 1.");
+		System.out.println("\tNumber of domain \n\tfiles to be created\tInteger value from 1 to many. Default is 1.");
 	}
 }
