@@ -11,8 +11,8 @@ public class ConvertToCpp {
 		String translationType = "pff";
 		String pathToDomains = "testfiles/incomplete/pathways/";
 		String pathToProblems = "testfiles/classical/pathways/";
-		String pathToCppDomains = "testfiles/conformant/" + translationType + "/";
-		String pathToCppProblems = "testfiles/conformant/" + translationType + "/";
+		String pathToCppDomains = "testfiles/conformant/pathways/" + translationType + "/";
+		String pathToCppProblems = "testfiles/conformant/pathways/" + translationType + "/";
 		
 		int numPfiles = 10;
 		String extension = ".pddl";

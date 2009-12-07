@@ -1,7 +1,6 @@
 package edu.usu.cs.plangraph;
 
 import org.junit.Test;
-
 import edu.usu.cs.incomplete.bridges.BridgesDomainCreator;
 import edu.usu.cs.search.SearchTest;
 
