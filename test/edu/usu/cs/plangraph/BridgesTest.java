@@ -12,6 +12,7 @@ public class BridgesTest {
 	public void CreateBridges() {
 		
 		String outputFileLocation = "testfiles/incomplete/bridges";
+		int maxGridSize = 32;
 		
 		// Create Bridges
 		String[] args = new String[6];
@@ -20,41 +21,44 @@ public class BridgesTest {
 		args[3] = Double.toString(0.5);
 		args[4] = Double.toString(0.5);
 		args[5] = Integer.toString(numFiles);
-		for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
-			args[2] = Double.toString(bridgeDensity);
-			BridgesDomainCreator.main(args);
-		}
-	}
-	
-	@Test
-	public void RunBridges() {
-		// Run Bridges
-		String[] args = new String[6];
-		String pathToDomains = "testfiles/incomplete/bridges/";
-		String pathToProblems = "testfiles/incomplete/bridges/";
-		String extension = ".pddl";
-		String[] algorithms = {
-				"frisky",
-//				"pode",
-//				"friskylength",
-//				"friskyEHC",
-//				"friskyMS"
-		};
-
-		for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
-			for(int alg = 0; alg < algorithms.length; alg++) {
-				for(int k = 1; k <= numFiles; k++) {
-					args[0] = pathToDomains + "bridges_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
-					args[1] = pathToProblems + "bridges_problem" + extension;
-					args[2] = "output_bridges.txt";
-					args[3] = algorithms[alg];
-					args[4] = Double.toString(bridgeDensity);
-					args[5] = Integer.toString(k);
-					SearchTest.main(args);
-				}
+		for(int gs = 2; gs <= maxGridSize; gs *= 2) {
+			for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
+				args[0] = Integer.toString(gs);
+				args[2] = Double.toString(bridgeDensity);
+				BridgesDomainCreator.main(args);
 			}
 		}
 	}
+	
+//	@Test
+//	public void RunBridges() {
+//		// Run Bridges
+//		String[] args = new String[6];
+//		String pathToDomains = "testfiles/incomplete/bridges/";
+//		String pathToProblems = "testfiles/incomplete/bridges/";
+//		String extension = ".pddl";
+//		String[] algorithms = {
+//				"frisky",
+////				"pode",
+////				"friskylength",
+////				"friskyEHC",
+////				"friskyMS"
+//		};
+//
+//		for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
+//			for(int alg = 0; alg < algorithms.length; alg++) {
+//				for(int k = 1; k <= numFiles; k++) {
+//					args[0] = pathToDomains + "bridges_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
+//					args[1] = pathToProblems + "bridges_problem" + extension;
+//					args[2] = "output_bridges.txt";
+//					args[3] = algorithms[alg];
+//					args[4] = Double.toString(bridgeDensity);
+//					args[5] = Integer.toString(k);
+//					SearchTest.main(args);
+//				}
+//			}
+//		}
+//	}
 }
 
 //String[] args = {pathToDomains+"domain_"+problem+"_"+p+"_"+k+extension, 

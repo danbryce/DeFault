@@ -24,12 +24,12 @@ public class BridgesDomainCreator {
 			return;
 		}
 		
-		createDomains(args);
+		createDomains();
 		
 		createProblem();
 	}
 
-	private static void createDomains(String[] args) {
+	private static void createDomains() {
 		// The total number of actions
 		actionCount = (gridSize * (gridSize - 1) * 4);
 		
@@ -279,7 +279,14 @@ public class BridgesDomainCreator {
 			
 			// Create the file
 			try {
-				String outputFile = outputFileDestination + "/bridges_" + gridSize + "_" + bridgeDensity + "_" + fileIndex + ".pddl";
+				int problemType = 1; // 1 for precopen only, 2 for precopen and possclob, 3 for all
+				if(loserBridgeDensity > 0.0) {
+					problemType = 2;
+				}
+				if(treasureInOtherLocationsDensity > 0.0) {
+					problemType = 3;
+				}
+				String outputFile = outputFileDestination + "/bridges_v" + problemType + "_" + gridSize + "_" + bridgeDensity + "_" + fileIndex + ".pddl";
 				FileWriter fstream = new FileWriter(outputFile, false);
 				BufferedWriter out = new BufferedWriter(fstream);
 				out.write(output.toString());

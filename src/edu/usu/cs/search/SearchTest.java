@@ -181,7 +181,7 @@ public class SearchTest {
 			logger.debug("Risk count: " + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size());
 		}
 		try {
-			FileWriter fstream = new FileWriter("Output/" + args[2], true);
+			FileWriter fstream = new FileWriter(args[2], true);
 			BufferedWriter out = new BufferedWriter(fstream);
 			if(searchStatistics.getSolutionNode() != null && searchStatistics.getSolutionNode() instanceof FFRiskyNode){
 					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t" : "") + problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size() + "\r\n");

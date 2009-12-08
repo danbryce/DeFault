@@ -117,7 +117,11 @@ public class FriskyVersusFF {
 								String.valueOf(p),
 								String.valueOf(k)};
 
-						SearchTest.main(args);
+						for(String arg : args) {
+							System.out.print(arg + " ");
+						}
+						System.out.println();
+//						SearchTest.main(args);
 					}
 				}
 			}
