@@ -18,9 +18,10 @@ import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
-public class PreferredOperatorDeferredEvaluationSearch extends DefaultSearch implements Search {
+public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 
 	private static Logger logger = LoggerFactory.getLogger(PreferredOperatorDeferredEvaluationSearch.class.getName());
 

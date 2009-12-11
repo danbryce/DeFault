@@ -6,6 +6,7 @@ public class SolverOptions {
 	private boolean useMultipleSupportersInPlanningGraph = false;
 	private boolean useDeferredEvaluation = false;
 	private boolean usePreferredOperators = false;
+	private boolean riskHeuristicFirst = true;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}
@@ -30,5 +31,11 @@ public class SolverOptions {
 	}
 	public void setUsePreferredOperators(boolean usePreferredOperators) {
 		this.usePreferredOperators = usePreferredOperators;
+	}
+	public boolean isRiskHeuristicFirst() {
+		return riskHeuristicFirst;
+	}
+	public void setRiskHeuristicFirst(boolean riskHeuristicFirst) {
+		this.riskHeuristicFirst = riskHeuristicFirst;
 	}
 }

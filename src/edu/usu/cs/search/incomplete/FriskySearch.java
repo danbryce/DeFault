@@ -31,6 +31,16 @@ public class FriskySearch extends AStarSearch{
 			) throws IllDefinedProblemException {
 		super(domain,problem, actionInstances, riskySolutionEvaluator, searchStatistics, solverOptions);
 		//this.searchStatistics = searchStatistics;
+		
+		// There was a lot of debate on whether we should make risk count have 
+		// first priority and length the tiebreaker of vice versa. This flag 
+		// in SolverOptions determines it.
+		final int main, tiebreaker;
+		if(solverOptions.isRiskHeuristicFirst()) {
+			main = 0; tiebreaker = 1;
+		} else {
+			main = 1; tiebreaker = 0;
+		}
 		open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
 			public int compare(StateNode first, StateNode second) {
 				boolean alphaCombo = false;
@@ -39,11 +49,11 @@ public class FriskySearch extends AStarSearch{
 					for(int i = 0; i < 2; i++){
 						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
 					}
-					if(diffs[1] != 0) {
-						return diffs[1].intValue();
+					if(diffs[main] != 0) {
+						return diffs[main].intValue(); //same num risks, so compare length
 					}
 					else{
-						return diffs[0].intValue(); //same num risks, so compare length
+						return diffs[tiebreaker].intValue();
 					}
 				}
 				else{

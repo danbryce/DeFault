@@ -86,10 +86,20 @@ public class SearchTest {
 			
 			if(args.length == 3 || args[3].equalsIgnoreCase("frisky")) {
 
+				if(args.length >= 5 && "length".equalsIgnoreCase(args[4])) {
+					solverOptions.setRiskHeuristicFirst(false);
+				} else if(args.length >= 5 && "risk".equalsIgnoreCase(args[4])) {
+					solverOptions.setRiskHeuristicFirst(true);
+				}
 				solver = new FFriskySolver(domain, problem, searchStatistics, solverOptions);
 
 			}
 			else if(args.length == 3 || args[3].equalsIgnoreCase("friskyMS")) {
+				if(args.length >= 5 && "length".equalsIgnoreCase(args[4])) {
+					solverOptions.setRiskHeuristicFirst(false);
+				} else if(args.length >= 5 && "risk".equalsIgnoreCase(args[4])) {
+					solverOptions.setRiskHeuristicFirst(true);
+				}
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solver = new FFriskySolver(domain, problem, searchStatistics, solverOptions);
 
@@ -108,7 +118,6 @@ public class SearchTest {
 			else if(args.length == 3 || args[3].equalsIgnoreCase("friskyEHC")) {
 
 				solver = new FFriskyEHCSolver(domain, problem, searchStatistics, solverOptions);
-
 			}
 			else if(args[3].equalsIgnoreCase("uniformcost") || 
 					args[3].equalsIgnoreCase("uniform")) {
@@ -184,11 +193,10 @@ public class SearchTest {
 			FileWriter fstream = new FileWriter(args[2], true);
 			BufferedWriter out = new BufferedWriter(fstream);
 			if(searchStatistics.getSolutionNode() != null && searchStatistics.getSolutionNode() instanceof FFRiskyNode){
-					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t" : "") + problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size() + "\r\n");
+					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t" : "") + domainFile.getName() + problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + ((FFRiskyNode)searchStatistics.getSolutionNode()).getCriticalRisks().size() + "\r\n");
 			}
 			else{
-				out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t" : "") +problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + 0 + "\r\n");
-				
+				out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t" : "") + domainFile.getName() + problemFile.getName() + "\t" + args[3] + "\t" + plan.size() + "\t" + searchStatistics.getElapsedTime() + "\t" + searchStatistics.getNodesExpanded() + "\t" + 0 + "\r\n");
 			}
 			out.close();
 			System.out.println("\ninformation written to Output/" + args[2]);
