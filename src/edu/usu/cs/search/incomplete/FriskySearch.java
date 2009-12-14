@@ -1,5 +1,6 @@
 package edu.usu.cs.search.incomplete;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -32,16 +33,81 @@ public class FriskySearch extends AStarSearch{
 		super(domain,problem, actionInstances, riskySolutionEvaluator, searchStatistics, solverOptions);
 		//this.searchStatistics = searchStatistics;
 		
-		// There was a lot of debate on whether we should make risk count have 
-		// first priority and length the tiebreaker of vice versa. This flag 
-		// in SolverOptions determines it.
-		final int main, tiebreaker;
-		if(solverOptions.isRiskHeuristicFirst()) {
-			main = 0; tiebreaker = 1;
+		if(!solverOptions.isUseQuadQueue()) {
+			// There was a lot of debate on whether we should make risk count have 
+			// first priority and length the tiebreaker of vice versa. This flag 
+			// in SolverOptions determines it.
+			final int main, tiebreaker;
+			if(solverOptions.isRiskHeuristicFirst()) {
+				main = 0; tiebreaker = 1;
+			} else {
+				main = 1; tiebreaker = 0;
+			}
+		
+			open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+				public int compare(StateNode first, StateNode second) {
+					boolean alphaCombo = false;
+					if(!alphaCombo){
+						Double[] diffs = new Double[2];
+						for(int i = 0; i < 2; i++){
+							diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+						}
+						if(diffs[main] != 0) {
+							return diffs[main].intValue(); //same num risks, so compare length
+						}
+						else{
+							return diffs[tiebreaker].intValue();
+						}
+					}
+					else{
+						double alpha = 0.6;
+						Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+						(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+						return value.intValue();
+					}
+
+
+
+				}
+			});
 		} else {
-			main = 1; tiebreaker = 0;
+			quadQueue = new ArrayList<PriorityQueue<StateNode>>();
+
+			// Create each of the queues
+			// 1. risk + non-preferred
+			initializeRiskNonPreferred();
+			
+			// 2. risk + preferred
+			initializeRiskPreferred();
+			
+			// 3. length + non-preferred
+			initializeLengthNotPreferred();
+			
+			// 4. length + preferred
+			initializeLengthPreferred();
+			
+			currentQueue = 0;
+			open = quadQueue.get(currentQueue);
+			
 		}
-		open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+
+
+		this.riskHeuristic = new FFRiskyHeuristic(problem, domain, solverOptions);
+		//this.lengthHeuristic = new StanHeuristic(problem);
+	}
+
+
+
+
+	@Override
+	public void initialize() {
+		if(!solverOptions.isUseQuadQueue()) {
+			open.add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
+		}
+	}
+
+	private void initializeRiskNonPreferred() {
+		quadQueue.add(new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
 			public int compare(StateNode first, StateNode second) {
 				boolean alphaCombo = false;
 				if(!alphaCombo){
@@ -49,11 +115,11 @@ public class FriskySearch extends AStarSearch{
 					for(int i = 0; i < 2; i++){
 						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
 					}
-					if(diffs[main] != 0) {
-						return diffs[main].intValue(); //same num risks, so compare length
+					if(diffs[0] != 0) {
+						return diffs[0].intValue(); //same num risks, so compare length
 					}
 					else{
-						return diffs[tiebreaker].intValue();
+						return diffs[1].intValue();
 					}
 				}
 				else{
@@ -66,21 +132,151 @@ public class FriskySearch extends AStarSearch{
 
 
 			}
-		});
-
-		this.riskHeuristic = new FFRiskyHeuristic(problem, domain, solverOptions);
-		//this.lengthHeuristic = new StanHeuristic(problem);
+		}));
+		
+		quadQueue.get(quadQueue.size()-1).add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
 	}
+	
+	private void initializeRiskPreferred() {
+		riskQueue = new ArrayList<PriorityQueue<StateNode>>();
+		riskQueue.add(new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+			public int compare(StateNode first, StateNode second) {
+				boolean alphaCombo = false;
+				if(!alphaCombo){
+					Double[] diffs = new Double[2];
+					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
+					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
+					if(diffs[0] != 0) {
+						return diffs[0].intValue();
+					}
+					else{
+						return diffs[1].intValue();
+					}
+				}
+				else{
+					double alpha = 0.6;
+					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+					return value.intValue();
+				}
+			}
+		}));
 
-
-
-
-	@Override
-	public void initialize() {
-		open.add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
+		// Comparisons are based on the parent heuristic only
+		riskQueue.add(new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+			public int compare(StateNode first, StateNode second) {
+				boolean alphaCombo = false;
+				if(!alphaCombo){
+					Double[] diffs = new Double[2];
+					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
+					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
+					if(diffs[0] != 0) {
+						return diffs[0].intValue();
+					}
+					else{
+						return diffs[1].intValue();
+					}
+				}
+				else{
+					double alpha = 0.6;
+					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+					return value.intValue();
+				}
+			}
+		}));
+		
+		quadQueue.add(riskQueue.get(1));
+		quadQueue.get(quadQueue.size()-1).add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
 	}
+	
+	private void initializeLengthNotPreferred() {
+		quadQueue.add(new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+			public int compare(StateNode first, StateNode second) {
+				boolean alphaCombo = false;
+				if(!alphaCombo){
+					Double[] diffs = new Double[2];
+					for(int i = 0; i < 2; i++){
+						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+					}
+					if(diffs[1] != 0) {
+						return diffs[1].intValue();
+					}
+					else{
+						return diffs[0].intValue(); //same num risks, so compare length
+					}
+				}
+				else{
+					double alpha = 0.6;
+					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+					return value.intValue();
+				}
 
 
 
+			}
+		}));
+		
+		quadQueue.get(quadQueue.size()-1).add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
+	}
+	
+	private void initializeLengthPreferred() {
+		lengthQueue = new ArrayList<PriorityQueue<StateNode>>();
+		lengthQueue.add(new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+			public int compare(StateNode first, StateNode second) {
+				boolean alphaCombo = false;
+				if(!alphaCombo){
+					Double[] diffs = new Double[2];
+//					for(int i = 0; i < 2; i++) {
+//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+//					}
+					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
+					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
+					if(diffs[1] != 0) {
+						return diffs[1].intValue();
+					}
+					else{
+						return diffs[0].intValue(); //same num risks, so compare length
+					}
+				}
+				else{
+					double alpha = 0.6;
+					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+					return value.intValue();
+				}
+			}
+		}));
 
+		// Comparisons are based on the parent heuristic only
+		lengthQueue.add(new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+			public int compare(StateNode first, StateNode second) {
+				boolean alphaCombo = false;
+				if(!alphaCombo){
+					Double[] diffs = new Double[2];
+//					for(int i = 0; i < 2; i++){
+//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+//					}
+					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
+					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
+					if(diffs[1] != 0) {
+						return diffs[1].intValue();
+					}
+					else{
+						return diffs[0].intValue(); //same num risks, so compare length
+					}
+				}
+				else{
+					double alpha = 0.6;
+					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+					return value.intValue();
+				}
+			}
+		}));
+		
+		quadQueue.add(lengthQueue.get(1));
+		quadQueue.get(quadQueue.size()-1).add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
+	}
 }

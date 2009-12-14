@@ -137,15 +137,15 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 	}
 
 	public List<StateNode> createSubsequentNodesIgnorePreferredOperators(
-			List<ActionInstance> subsequentActions) {
+			List<ActionInstance> actionInstances) {
 		if(solverOptions.isUsePreferredOperators()) {
-			return createSubsequentNodes(subsequentActions);
+			return createSubsequentNodes(actionInstances);
 		}
 		
 		solverOptions.setUsePreferredOperators(false);
-		List<StateNode> subsequentNodes = createSubsequentNodes(subsequentActions);
+		List<StateNode> notPreferredNodes = createSubsequentNodes(actionInstances);
 		solverOptions.setUsePreferredOperators(true);
 		
-		return subsequentNodes;
+		return notPreferredNodes;
 	}
 }

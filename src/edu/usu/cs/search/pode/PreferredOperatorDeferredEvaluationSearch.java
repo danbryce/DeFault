@@ -113,7 +113,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			// Don't remove anything from an empty queue
 			if(open.size() == 0) {
 				node = (PreferredOperatorDeferredEvaluationNode)openPreferred.remove();
-				preferredPriority--;				
+				preferredPriority--;
 			} else if(openPreferred.size() == 0) {
 				node = (PreferredOperatorDeferredEvaluationNode)open.remove();
 				notPreferredPriority--;
