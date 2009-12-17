@@ -117,8 +117,15 @@ public class FFRiskyNode  extends AStarNode {
 
 	@Override
 	public String toString() {
+		double[] fv = new double[2];
+		if(fvalue == null || hvalue == null) {
+			fv[0] = 0;
+			fv[1] = 0;
+		} else {
+			fv = fvalue;
+		}
 		String str = "Node:\n";
-		str += "\tF: " + fvalue[0] + " " + fvalue[1] + //" G: " + gValues[0] + " H: " + hValues  +
+		str += "\tF: " + fv[0] + " " + fv[1] + //" G: " + gValues[0] + " H: " + hValues  +
 		"\n";
 		str += "\tState:\n";
 		for (Proposition prop : propositions.keySet()) {

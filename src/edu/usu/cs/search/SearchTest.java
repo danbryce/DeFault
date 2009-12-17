@@ -120,6 +120,7 @@ public class SearchTest {
 						searchStatistics, solverOptions);
 			} else if (args[3].equalsIgnoreCase("uniformcost")
 					|| args[3].equalsIgnoreCase("uniform")) {
+				solverOptions.setUCS(true);
 				solver = new UniformCostFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
 			} else if (args[3].equalsIgnoreCase("length")) {

@@ -44,32 +44,41 @@ public class FriskySearch extends AStarSearch{
 				main = 1; tiebreaker = 0;
 			}
 		
-			open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
-				public int compare(StateNode first, StateNode second) {
-					boolean alphaCombo = false;
-					if(!alphaCombo){
-						Double[] diffs = new Double[2];
-						for(int i = 0; i < 2; i++){
-							diffs[i] = first.getFValue()[i] - second.getFValue()[i];
-						}
-						if(diffs[main] != 0) {
-							return diffs[main].intValue(); //same num risks, so compare length
+			if(!solverOptions.isUCS()) {
+				open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+					public int compare(StateNode first, StateNode second) {
+						boolean alphaCombo = false;
+						if(!alphaCombo){
+							Double[] diffs = new Double[2];
+							for(int i = 0; i < 2; i++){
+								diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+							}
+							if(diffs[main] != 0) {
+								return diffs[main].intValue(); //same num risks, so compare length
+							}
+							else{
+								return diffs[tiebreaker].intValue();
+							}
 						}
 						else{
-							return diffs[tiebreaker].intValue();
+							double alpha = 0.6;
+							Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+							(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+							return value.intValue();
 						}
+	
+	
+	
 					}
-					else{
-						double alpha = 0.6;
-						Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
-						(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
-						return value.intValue();
+				});
+			}
+			else {
+				open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+					public int compare(StateNode first, StateNode second) {
+						return (int)(first.getGValue()[1] - second.getGValue()[1]);
 					}
-
-
-
-				}
-			});
+				});
+			}
 		} else {
 			quadQueue = new ArrayList<PriorityQueue<StateNode>>();
 

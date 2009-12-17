@@ -8,6 +8,7 @@ public class SolverOptions {
 	private boolean usePreferredOperators = false;
 	private boolean riskHeuristicFirst = false;
 	private boolean useQuadQueue = false;
+	private boolean ucs = false;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}
@@ -44,5 +45,11 @@ public class SolverOptions {
 	}
 	public void setUseQuadQueue(boolean useQuadQueue) {
 		this.useQuadQueue = useQuadQueue;
+	}
+	public boolean isUCS() {
+		return ucs;
+	}
+	public void setUCS(boolean ucs) {
+		this.ucs = ucs;
 	}
 }
