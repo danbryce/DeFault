@@ -94,6 +94,7 @@ public class IncompleteToConformantProbabilistic {
 											 domain.getRequirements(),
 											 domain.getTypes(),
 											 domain.getFunctions(),
+											 domain.getConstants(),
 											 translatedPredicates,
 											 translatedActions);
 		

@@ -103,7 +103,6 @@ public class SearchTest {
 						solverOptions);				
 			} else if (args.length == 3
 					|| args[3].equalsIgnoreCase("friskylength")) {
-
 				solver = new FFriskyLengthSolver(domain, problem,
 						searchStatistics, solverOptions);
 

@@ -35,6 +35,7 @@ public class Domain
     private final List<String> requirements;
     private final List<PDDLType> types;
     private final List<FunctionDef> functions;
+    private final List<PDDLObject> constants;
     private final List<PredicateDef> predicates;
     private final List<ActionDef> actions;
     private Set<PredicateDef> dynamicPredicates;
@@ -48,6 +49,7 @@ public class Domain
                   final List<String> requirements, 
                        List<PDDLType> types, 
                        List<FunctionDef> functions, 
+                  final List<PDDLObject> constants,
                   final List<PredicateDef> predicates, 
                   final List<ActionDef> actions) {
         super();
@@ -59,6 +61,7 @@ public class Domain
         this.requirements = requirements;
         this.types = types;
         this.functions = functions;
+        this.constants = constants;
         this.predicates = predicates;
         this.actions = actions;
         
@@ -86,6 +89,7 @@ public class Domain
         	boolean dynamic = false;
         	for(ActionDef ad : actions){
         		Set<MethodDef> resultSet = new HashSet<MethodDef>();
+//        		resultSet.addAll(ad.getPreconditionMethods());
         		ad.getEffect().getMethodDefs(resultSet);
         		ad.getPossEffect().getMethodDefs(resultSet);
 //        		ad.getEffect().getLiteralsUsed(resultSet);
@@ -114,6 +118,10 @@ public class Domain
 
     public String getName() {
         return name;
+    }
+    
+    public List<PDDLObject> getConstants() {
+    	return constants;
     }
 
     public List<PredicateDef> getPredicates() {

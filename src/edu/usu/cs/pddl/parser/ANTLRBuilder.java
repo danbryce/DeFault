@@ -243,9 +243,9 @@ public abstract class ANTLRBuilder
 		List<FormalArgument> actualArgs = new ArrayList<FormalArgument>(formalArgs.size());
 		for (int i = 0; i < formalArgs.size(); i++) {
 			Tree varNode = methodNode.getChild(i + 1);
-			if (varNode.getType() != VARIABLE) {
+			if (!(varNode.getType() == VARIABLE || varNode.getType() == NAME)) {
 				throw new InvalidPDDLElementException("Parameter " + varNode.getText() + " of function/predicate "
-						+ methodName + " should be a variable (in " + context + ")");
+						+ methodName + " should be a variable or constant (in " + context + ")");
 			}
 			FormalArgument param = lookup.lookupParameter(varNode.getText(), context);
 			FormalArgument formalArg = formalArgs.get(i);

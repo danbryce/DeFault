@@ -160,7 +160,7 @@ public class ActionDef
 	}
 
 	public String toString() {
-		return name + arguments + "\nPRECOND: " + preCondition + "\nEFFECT: " + effect;
+		return "\n" + name + arguments + "\nPRECOND: " + preCondition + "\nEFFECT: " + effect;
 	}
 
 	public List<MethodDef> getPreconditionMethods() {

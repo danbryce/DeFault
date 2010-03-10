@@ -39,6 +39,7 @@ import java.util.logging.Logger;
 import org.antlr.runtime.tree.Tree;
 
 import edu.usu.cs.pddl.domain.ActionDef;
+import edu.usu.cs.pddl.domain.ConstantDef;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Effect;
@@ -66,6 +67,7 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
     private Domain domain;
 
     private Map<String, FunctionDef> functions = new HashMap<String, FunctionDef>();
+    private Map<String, FormalArgument> constants = new HashMap<String, FormalArgument>();
     private Map<String, PredicateDef> predicates = new HashMap<String, PredicateDef>();
     private List<ActionDef> actions = new ArrayList<ActionDef>();
     
@@ -112,6 +114,15 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
                 } else if (arg.getName().equalsIgnoreCase(name)) {
                     return arg;
                 }
+            }
+            for (FormalArgument arg : constants.values()) {
+            	if (Domain.CASE_SENSITIVE) {
+            		if(arg.getName().equals(name)) {
+            			return arg;
+            		}
+            	} else if (arg.getName().equalsIgnoreCase(name)) {
+            		return arg;
+            	}
             }
             throw new InvalidPDDLElementException("Parameter " + name 
                                                   + " (used by " + context + ") is not declared");
@@ -161,7 +172,9 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
                     addTypes(child);
                     break;
                 case CONSTANTS:
-                    throw new UnsupportedOperationException("Constants not supported yet");
+                    //throw new UnsupportedOperationException("Constants not supported yet");
+                	addConstants(child);
+                	break;
                 case PREDICATES:
                     addPredicates(child);
                     break;
@@ -176,10 +189,15 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
                     throw new UnsupportedOperationException("Unsupported :domain child element - " + child.getText());
             }
         }
+        List<PDDLObject> consts = new ArrayList<PDDLObject>();
+        for(FormalArgument fa : constants.values()) {
+        	consts.add(new PDDLObject(fa.getName(), fa.getType()));
+        }
         return new Domain(name, 
                           requirements, 
                           new ArrayList<PDDLType>(types.values()), 
                           new ArrayList<FunctionDef>(functions.values()),
+                          consts,
                           new ArrayList<PredicateDef>(predicates.values()),
                           actions);
     }
@@ -222,6 +240,28 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
                       + " (used by " + context + ") is not declared");
         }
         return func;
+    }
+    
+    private void addConstants(Tree consts) throws InvalidPDDLElementException
+    {
+    	for(int i = 0; i < consts.getChildCount(); i++) {
+    		final Tree con = consts.getChild(i);
+    		final String constantName = con.getText();
+    		final String lookupName = Domain.CASE_SENSITIVE ? constantName : constantName.toLowerCase();
+    		
+    		List<FormalArgument> args = new ArrayList<FormalArgument>(con.getChildCount());
+    		if(con.getChildCount() == 0) {
+    			constants.put(lookupName, new ConstantDef(constantName));
+    		}
+    		else {
+    			final Tree arg = con.getChild(0);
+    			addArgument(arg, args, "constant " + constantName);
+	            final String typeName = arg.getText();
+    			final PDDLType paramType = findType(typeName, "constant " + constantName);
+	    		constants.put(lookupName, new ConstantDef(constantName, paramType));
+    		}
+    	}
+    	logger.fine("Constants=" + constants.values());
     }
 
     private void addPredicates(Tree preds) throws InvalidPDDLElementException

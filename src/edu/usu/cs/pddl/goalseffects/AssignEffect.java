@@ -8,6 +8,8 @@
  */
 package edu.usu.cs.pddl.goalseffects;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -121,6 +123,14 @@ public class AssignEffect implements Effect
 
 	
 	public void getMethodDefs(Set<MethodDef> resultSet) {
-		resultSet.add(((FunctionInstance)target).getDefinition()); 
+		if(target instanceof FunctionHeader) {
+			System.out.print("");
+			FunctionHeader fh = (FunctionHeader)target;
+			List<MethodDef> mdl = new ArrayList<MethodDef>();
+			fh.getMethods(mdl);
+			resultSet.addAll(mdl);
+		} else {
+			resultSet.add(((FunctionInstance)target).getDefinition());
+		}
 	}
 }

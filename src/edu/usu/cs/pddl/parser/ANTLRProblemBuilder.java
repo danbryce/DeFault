@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -212,6 +213,21 @@ public class ANTLRProblemBuilder extends ANTLRBuilder
                 objects.put(lookupName, new PDDLObject(objectName, type));
             }
         }
+        
+        // If there are any constants in the domain, add them in now as objects
+        List<PDDLObject> constants = domain.getConstants();
+        for(PDDLObject object : constants) {
+        	
+        	final String objectName = object.getName();
+        	final String lookupName = Domain.CASE_SENSITIVE ? objectName : objectName.toLowerCase();
+        	
+        	if(object.getType() == null) {
+        		objects.put(lookupName, new PDDLObject(objectName));
+        	} else {
+        		objects.put(lookupName, new PDDLObject(objectName, object.getType()));
+        	}
+        }
+        
         logger.fine("Objects=" + objects.values());
     }
 

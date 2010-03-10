@@ -20,6 +20,7 @@ import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.PredicateDef;
+import edu.usu.cs.pddl.domain.PredicateHeader;
 import edu.usu.cs.pddl.domain.PredicateInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
@@ -197,7 +198,6 @@ public class IncompleteActionInstance  implements ActionInstance{
 		this.index = index;//numActions++;
 
 		this.preconditions = new HashSet<Proposition>();
-		Set<LiteralInstance> preconditions = new HashSet<LiteralInstance>();
 		GoalDesc actPrecondition = action.getPreCondition().instantiate(argMapping, allObjects);
 		//actPrecondition.getLiteralsUsed(preconditions);
 		List<GoalDesc> precondList = new ArrayList<GoalDesc>();
@@ -224,7 +224,6 @@ public class IncompleteActionInstance  implements ActionInstance{
 						throw new Exception("Static precondition not satisfied by initial state");
 					}
 				}
-				
 			}
 			else if(g instanceof NotGoalDesc){
 				NotGoalDesc ng = (NotGoalDesc)g;
@@ -240,9 +239,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 						throw new Exception("Static negative precondition not satisfied by initial state");
 					}
 				}
-				
 			}
-			
 		}
 
 		// Add the absolute adds and deletes

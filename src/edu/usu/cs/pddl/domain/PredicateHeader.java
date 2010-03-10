@@ -54,6 +54,9 @@ public class PredicateHeader implements GoalDesc
 			if(a instanceof PDDLObject){
 				obj = (PDDLObject)a;
 			}
+			else if(a instanceof ConstantDef) {
+				obj = new PDDLObject(((ConstantDef) a).getName(), ((ConstantDef) a).getType());
+			}
 			else {
 				obj = parameters.get(a);
 				if (obj == null) {
@@ -91,6 +94,10 @@ public class PredicateHeader implements GoalDesc
 
 	public MethodDef getDefinition() {
 		return definition;
+	}
+	
+	public List<? extends Term> getArguments() {
+		return arguments;
 	}
 
 	//returns false if literal is dynamic or an initial proposition unifies with predicate (and predicate is ground)
