@@ -1,0 +1,31776 @@
+(define (domain Bridges)
+ (:requirements :probabilistic-effects)
+ (:predicates (at_31_3) (at_31_4) (at_31_1) (at_31_2) (at_31_0) (at_31_9) (at_31_6) (at_31_5) (at_31_8) (at_31_7) (at_26_20) (at_26_22) (at_26_21) (at_26_27) (at_26_28) (at_26_29) (at_26_23) (at_26_24) (at_26_25) (at_26_26) (at_26_31) (at_24_0) (at_26_30) (at_6_31) (at_6_30) (at_4_0) (at_4_2) (at_4_1) (at_4_4) (at_4_3) (at_4_6) (at_4_5) (at_0_29) (at_0_28) (at_0_27) (at_8_0) (at_8_1) (at_8_2) (at_6_20) (at_0_30) (at_0_31) (at_6_23) (at_6_24) (at_6_21) (at_6_22) (at_6_27) (at_6_28) (at_6_25) (at_6_26) (at_29_31) (at_29_30) (at_6_29) (at_8_6) (at_0_5) (at_8_5) (at_0_6) (at_8_4) (at_0_3) (at_8_3) (at_0_4) (at_6_10) (at_0_9) (at_8_9) (at_6_11) (at_8_8) (at_6_12) (at_0_7) (at_8_7) (at_6_13) (at_0_8) (at_6_14) (at_4_9) (at_6_15) (at_6_16) (at_4_7) (at_6_17) (at_4_8) (at_6_18) (at_0_1) (at_6_19) (at_0_2) (at_0_0) (at_29_17) (at_17_15) (at_29_18) (at_17_14) (at_29_15) (at_17_17) (at_29_16) (at_17_16) (at_17_19) (at_17_18) (at_29_19) (at_0_14) (at_0_15) (at_0_12) (at_0_13) (at_0_10) (at_0_11) (at_29_10) (at_29_14) (at_17_10) (at_29_13) (at_17_11) (at_29_12) (at_17_12) (at_29_11) (at_17_13) (at_29_26) (at_17_28) (at_29_27) (at_17_27) (at_29_28) (at_17_26) (at_29_29) (at_17_25) (at_17_29) (at_0_17) (at_0_16) (at_0_19) (at_0_18) (at_0_23) (at_0_24) (at_0_25) (at_0_26) (at_0_20) (at_0_21) (at_0_22) (at_17_20) (at_29_21) (at_29_20) (at_29_23) (at_17_23) (at_29_22) (at_17_24) (at_29_25) (at_17_21) (at_29_24) (at_17_22) (at_12_15) (at_12_16) (at_12_13) (at_12_14) (at_12_11) (at_12_12) (at_12_10) (at_12_19) (at_12_17) (at_12_18) (at_4_29) (at_4_27) (at_4_28) (at_4_25) (at_18_27) (at_2_0) (at_4_26) (at_18_26) (at_4_23) (at_18_29) (at_4_24) (at_18_28) (at_2_3) (at_4_21) (at_2_4) (at_4_22) (at_2_1) (at_28_20) (at_2_2) (at_4_20) (at_28_21) (at_2_7) (at_28_22) (at_2_8) (at_28_23) (at_2_5) (at_28_24) (at_2_6) (at_28_26) (at_28_25) (at_28_28) (at_28_27) (at_28_29) (at_18_22) (at_18_23) (at_18_24) (at_18_25) (at_18_20) (at_18_21) (at_26_13) (at_4_16) (at_26_12) (at_4_17) (at_26_15) (at_4_18) (at_26_14) (at_4_19) (at_26_17) (at_4_12) (at_26_16) (at_4_13) (at_26_19) (at_24_19) (at_4_14) (at_26_18) (at_24_18) (at_4_15) (at_28_30) (at_24_17) (at_28_31) (at_24_16) (at_24_15) (at_4_10) (at_24_14) (at_4_11) (at_24_13) (at_24_12) (at_24_11) (at_24_10) (at_31_30) (at_31_31) (at_2_9) (at_18_31) (at_26_10) (at_26_11) (at_18_30) (at_24_29) (at_24_22) (at_24_21) (at_24_24) (at_24_23) (at_24_26) (at_24_25) (at_24_28) (at_24_27) (at_31_21) (at_31_22) (at_31_23) (at_31_24) (at_31_20) (at_24_20) (at_31_29) (at_31_25) (at_31_26) (at_31_27) (at_31_28) (at_18_18) (at_18_17) (at_18_16) (at_18_15) (at_18_19) (at_28_12) (at_28_13) (at_28_10) (at_28_11) (at_4_30) (at_4_31) (at_31_12) (at_31_13) (at_31_10) (at_28_19) (at_31_11) (at_28_18) (at_28_17) (at_24_30) (at_28_16) (at_24_31) (at_28_15) (at_28_14) (at_18_10) (at_31_18) (at_31_19) (at_31_16) (at_18_13) (at_31_17) (at_18_14) (at_31_14) (at_18_11) (at_31_15) (at_18_12) (at_9_18) (at_9_17) (at_9_19) (at_9_14) (at_9_13) (at_9_16) (at_9_15) (at_9_10) (at_9_12) (at_9_11) (at_16_10) (at_16_12) (at_16_11) (at_10_18) (at_10_17) (at_10_16) (at_10_15) (at_10_19) (at_10_10) (at_16_13) (at_16_14) (at_16_15) (at_16_16) (at_10_14) (at_16_17) (at_10_13) (at_16_18) (at_10_12) (at_16_19) (at_10_11) (at_13_31) (at_13_30) (at_10_27) (at_10_26) (at_10_29) (at_10_28) (at_10_23) (at_10_22) (at_10_25) (at_10_24) (at_10_21) (at_10_20) (at_20_0) (at_20_3) (at_20_4) (at_20_1) (at_20_2) (at_10_31) (at_10_30) (at_13_8) (at_13_7) (at_13_6) (at_13_5) (at_3_20) (at_13_4) (at_3_21) (at_13_3) (at_12_29) (at_13_2) (at_12_28) (at_13_1) (at_3_24) (at_12_27) (at_3_25) (at_12_26) (at_3_22) (at_12_25) (at_3_23) (at_12_24) (at_3_28) (at_12_23) (at_3_29) (at_12_22) (at_3_26) (at_12_21) (at_3_27) (at_12_20) (at_13_9) (at_3_19) (at_7_28) (at_15_9) (at_7_29) (at_7_26) (at_13_19) (at_15_7) (at_7_27) (at_13_18) (at_15_8) (at_7_24) (at_13_17) (at_15_5) (at_7_25) (at_13_16) (at_15_6) (at_7_22) (at_13_15) (at_15_3) (at_7_23) (at_13_14) (at_15_4) (at_7_20) (at_13_13) (at_15_1) (at_7_21) (at_13_12) (at_15_2) (at_13_11) (at_13_10) (at_15_0) (at_19_8) (at_19_7) (at_13_20) (at_19_9) (at_19_4) (at_3_30) (at_19_3) (at_3_31) (at_19_6) (at_19_5) (at_19_0) (at_19_2) (at_19_1) (at_12_31) (at_17_1) (at_17_2) (at_17_3) (at_12_30) (at_17_4) (at_13_29) (at_17_0) (at_13_26) (at_17_9) (at_13_25) (at_13_28) (at_13_0) (at_13_27) (at_13_22) (at_17_5) (at_7_30) (at_13_21) (at_17_6) (at_7_31) (at_13_24) (at_17_7) (at_13_23) (at_17_8) (at_11_6) (at_16_22) (at_11_5) (at_16_23) (at_11_4) (at_16_20) (at_11_3) (at_16_21) (at_11_9) (at_11_8) (at_9_30) (at_11_7) (at_9_31) (at_16_29) (at_16_28) (at_16_27) (at_16_26) (at_16_25) (at_16_24) (at_3_10) (at_3_15) (at_16_31) (at_3_16) (at_3_17) (at_3_18) (at_3_11) (at_3_12) (at_3_13) (at_3_14) (at_16_30) (at_9_22) (at_7_15) (at_9_23) (at_7_16) (at_9_20) (at_7_17) (at_9_21) (at_7_18) (at_9_26) (at_7_19) (at_11_0) (at_9_27) (at_11_1) (at_9_24) (at_11_2) (at_9_25) (at_9_28) (at_9_29) (at_7_10) (at_7_11) (at_7_12) (at_7_13) (at_7_14) (at_7_4) (at_7_5) (at_7_6) (at_7_7) (at_7_8) (at_22_1) (at_7_9) (at_22_2) (at_22_0) (at_7_3) (at_7_2) (at_7_1) (at_7_0) (at_20_9) (at_20_7) (at_20_8) (at_20_5) (at_20_6) (at_20_30) (at_20_31) (at_24_6) (at_24_5) (at_24_8) (at_24_7) (at_24_2) (at_24_1) (at_24_4) (at_24_3) (at_24_9) (at_20_25) (at_20_26) (at_20_27) (at_20_28) (at_20_29) (at_22_7) (at_22_8) (at_22_9) (at_20_20) (at_20_21) (at_22_3) (at_20_22) (at_22_4) (at_20_23) (at_22_5) (at_20_24) (at_22_6) (at_20_18) (at_20_19) (at_20_16) (at_20_17) (at_20_14) (at_20_15) (at_20_12) (at_20_13) (at_20_10) (at_20_11) (at_26_8) (at_26_7) (at_26_9) (at_26_0) (at_26_2) (at_26_1) (at_26_4) (at_26_3) (at_26_6) (at_26_5) (at_28_0) (at_28_1) (at_28_2) (at_28_3) (at_28_4) (at_28_5) (at_28_6) (at_28_7) (at_28_8) (at_28_9) (at_30_0) (at_30_1) (at_30_4) (at_30_5) (at_30_2) (at_30_3) (at_9_0) (at_9_1) (at_27_31) (at_27_30) (at_9_9) (at_9_8) (at_9_7) (at_9_6) (at_9_5) (at_9_4) (at_9_3) (at_9_2) (at_30_7) (at_30_6) (at_30_9) (at_30_8) (at_23_30) (at_23_31) (at_5_3) (at_5_2) (at_5_5) (at_5_4) (at_5_1) (at_5_0) (at_11_30) (at_11_31) (at_1_0) (at_1_1) (at_5_8) (at_5_9) (at_5_6) (at_5_7) (at_1_8) (at_1_9) (at_1_6) (at_1_7) (at_1_4) (at_1_5) (at_1_2) (at_1_3) (at_11_21) (at_11_22) (at_11_20) (at_11_25) (at_11_26) (at_11_23) (at_11_24) (at_27_13) (at_11_29) (at_27_14) (at_27_15) (at_11_27) (at_27_16) (at_11_28) (at_27_17) (at_27_18) (at_27_19) (at_27_10) (at_27_12) (at_27_11) (at_11_10) (at_11_11) (at_11_12) (at_11_13) (at_11_14) (at_11_15) (at_27_26) (at_11_16) (at_27_27) (at_11_17) (at_27_24) (at_11_18) (at_27_25) (at_11_19) (at_27_28) (at_27_29) (at_27_23) (at_27_22) (at_27_21) (at_27_20) (at_12_1) (at_12_0) (at_25_21) (at_25_20) (holding_treasure_2) (holding_treasure_3) (holding_treasure_1) (at_25_26) (at_25_27) (at_25_28) (at_25_29) (at_25_22) (at_25_23) (at_25_24) (at_25_25) (at_25_10) (at_25_17) (at_12_6) (at_25_18) (at_12_7) (at_25_15) (at_12_8) (at_25_16) (at_12_9) (at_25_13) (at_12_2) (at_25_14) (at_12_3) (at_25_11) (at_12_4) (at_25_12) (at_12_5) (at_25_19) (at_2_14) (at_2_15) (at_2_16) (at_2_17) (at_2_10) (at_22_19) (at_2_11) (at_22_18) (at_2_12) (at_22_17) (at_2_13) (at_22_16) (at_22_15) (at_22_14) (at_22_13) (at_22_12) (at_22_11) (at_22_10) (at_25_31) (at_25_30) (at_2_19) (at_2_18) (at_2_27) (at_2_28) (at_2_25) (at_2_26) (at_2_23) (at_2_24) (at_2_21) (at_2_22) (at_2_20) (at_3_6) (at_3_7) (at_3_4) (at_3_5) (at_3_2) (at_3_3) (at_3_0) (at_3_1) (at_22_30) (at_22_31) (at_22_20) (at_22_21) (at_22_22) (at_22_23) (at_22_24) (at_22_25) (at_22_26) (at_22_27) (at_22_28) (at_22_29) (at_3_9) (at_3_8) (at_21_13) (at_21_14) (at_1_30) (at_21_11) (at_21_12) (at_21_10) (at_21_19) (at_21_17) (at_1_31) (at_21_18) (at_21_15) (at_21_16) (at_5_20) (at_5_21) (at_5_22) (at_14_9) (at_5_23) (at_14_8) (at_1_28) (at_1_29) (at_5_28) (at_14_3) (at_5_29) (at_14_2) (at_14_1) (at_14_0) (at_5_24) (at_14_7) (at_5_25) (at_14_6) (at_5_26) (at_14_5) (at_5_27) (at_14_4) (at_18_4) (at_21_22) (at_18_5) (at_21_23) (at_18_6) (at_21_24) (at_18_7) (at_21_25) (at_18_8) (at_18_9) (at_21_20) (at_21_21) (at_1_27) (at_1_26) (at_1_25) (at_1_24) (at_1_23) (at_18_0) (at_21_26) (at_1_22) (at_18_1) (at_21_27) (at_1_21) (at_18_2) (at_21_28) (at_1_20) (at_18_3) (at_21_29) (at_5_31) (at_1_19) (at_5_30) (at_1_17) (at_1_18) (at_21_31) (at_21_30) (at_10_8) (at_10_9) (at_10_6) (at_10_7) (at_10_4) (at_10_5) (at_10_1) (at_10_0) (at_10_3) (at_10_2) (at_8_18) (at_14_12) (at_8_19) (at_14_11) (at_8_16) (at_14_14) (at_8_17) (at_14_13) (at_14_16) (at_14_15) (at_14_18) (at_14_17) (at_8_10) (at_19_17) (at_8_11) (at_14_19) (at_19_16) (at_19_19) (at_19_18) (at_8_14) (at_8_15) (at_8_12) (at_8_13) (at_19_10) (at_19_11) (at_19_12) (at_19_13) (at_19_14) (at_19_15) (at_14_10) (at_8_27) (at_2_31) (at_8_28) (at_2_30) (at_8_29) (at_8_20) (at_19_29) (at_8_21) (at_19_28) (at_8_22) (at_19_27) (at_8_23) (at_8_24) (at_8_25) (at_8_26) (at_19_21) (at_19_22) (at_19_20) (at_19_25) (at_19_26) (at_2_29) (at_19_23) (at_19_24) (at_1_10) (at_1_11) (at_1_12) (at_1_13) (at_1_14) (at_1_15) (at_1_16) (at_8_30) (at_8_31) (at_19_30) (at_19_31) (at_14_30) (at_14_31) (at_14_29) (at_14_28) (at_14_27) (at_14_26) (at_14_25) (at_14_24) (at_14_23) (at_14_22) (at_14_20) (at_14_21) (at_30_24) (at_30_25) (at_30_26) (at_30_27) (at_30_28) (at_30_29) (at_30_20) (at_30_21) (at_30_22) (at_30_23) (at_16_1) (at_16_0) (at_16_5) (at_16_4) (at_16_3) (at_16_2) (at_16_9) (at_16_8) (at_16_7) (at_16_6) (at_30_30) (at_30_31) (at_6_9) (at_6_5) (at_6_6) (at_6_7) (at_6_8) (at_30_19) (at_30_17) (at_30_18) (at_30_15) (at_30_16) (at_30_13) (at_30_14) (at_30_11) (at_6_4) (at_30_12) (at_6_3) (at_6_2) (at_30_10) (at_6_1) (at_6_0) (at_23_24) (at_23_25) (at_23_26) (at_23_27) (at_23_20) (at_23_21) (at_23_22) (at_23_23) (at_15_18) (at_15_19) (at_15_16) (at_15_17) (at_15_14) (at_23_28) (at_15_15) (at_23_29) (at_15_12) (at_15_13) (at_15_11) (at_15_10) (at_23_15) (at_23_16) (at_23_13) (at_23_14) (at_23_11) (at_23_12) (at_23_10) (at_15_27) (at_23_3) (at_15_28) (at_23_2) (at_15_29) (at_23_5) (at_23_4) (at_15_23) (at_23_7) (at_23_19) (at_15_24) (at_23_6) (at_15_25) (at_23_9) (at_23_17) (at_15_26) (at_23_8) (at_23_18) (at_15_20) (at_21_4) (at_21_5) (at_15_22) (at_21_6) (at_15_21) (at_21_7) (at_21_8) (at_21_9) (at_21_3) (at_21_2) (at_21_1) (at_21_0) (at_29_2) (at_23_0) (at_29_3) (at_23_1) (at_29_0) (at_29_1) (at_15_31) (at_15_30) (at_29_8) (at_29_9) (at_29_6) (at_29_7) (at_29_4) (at_29_5) (at_25_5) (at_5_14) (at_25_4) (at_5_13) (at_25_7) (at_5_16) (at_25_6) (at_5_15) (at_25_1) (at_5_18) (at_25_0) (at_5_17) (at_25_3) (at_25_2) (at_5_19) (at_25_9) (at_5_10) (at_25_8) (at_5_12) (at_5_11) (at_27_6) (at_27_7) (at_27_8) (at_27_9) (at_27_2) (at_17_31) (at_27_3) (at_17_30) (at_27_4) (at_27_5) (at_27_0) (at_27_1) (unlistedeffect_pickup_treasure1_holding_treasure_3) (unlistedeffect_pickup_treasure3_holding_treasure_2) (valid) (done))
+
+ (:action move_0_0_1_0
+  :effect (and
+    (when (and (at_0_0) (valid)) (at_1_0))
+    (when (and (at_0_0) (valid)) (not (at_0_0)))
+    (when (not (and (at_0_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_0_0_1
+  :effect (and
+    (when (and (at_0_0) (valid)) (at_0_1))
+    (when (and (at_0_0) (valid)) (not (at_0_0)))
+    (when (not (and (at_0_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_1_1_1
+  :effect (and
+    (when (and (at_0_1) (valid)) (at_1_1))
+    (when (and (at_0_1) (valid)) (not (at_0_1)))
+    (when (not (and (at_0_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_1_0_0
+  :effect (and
+    (when (and (at_0_1) (valid)) (at_0_0))
+    (when (and (at_0_1) (valid)) (not (at_0_1)))
+    (when (not (and (at_0_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_1_0_2
+  :effect (and
+    (when (and (at_0_1) (valid)) (at_0_2))
+    (when (and (at_0_1) (valid)) (not (at_0_1)))
+    (when (not (and (at_0_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_2_1_2
+  :effect (and
+    (when (and (at_0_2) (valid)) (at_1_2))
+    (when (and (at_0_2) (valid)) (not (at_0_2)))
+    (when (not (and (at_0_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_2_0_1
+  :effect (and
+    (when (and (at_0_2) (valid)) (at_0_1))
+    (when (and (at_0_2) (valid)) (not (at_0_2)))
+    (when (not (and (at_0_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_2_0_3
+  :effect (and
+    (when (and (at_0_2) (valid)) (at_0_3))
+    (when (and (at_0_2) (valid)) (not (at_0_2)))
+    (when (not (and (at_0_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_3_1_3
+  :effect (and
+    (when (and (at_0_3) (valid)) (at_1_3))
+    (when (and (at_0_3) (valid)) (not (at_0_3)))
+    (when (not (and (at_0_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_3_0_2
+  :effect (and
+    (when (and (at_0_3) (valid)) (at_0_2))
+    (when (and (at_0_3) (valid)) (not (at_0_3)))
+    (when (not (and (at_0_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_3_0_4
+  :effect (and
+    (when (and (at_0_3) (valid)) (at_0_4))
+    (when (and (at_0_3) (valid)) (not (at_0_3)))
+    (when (not (and (at_0_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_4_1_4
+  :effect (and
+    (when (and (at_0_4) (valid)) (at_1_4))
+    (when (and (at_0_4) (valid)) (not (at_0_4)))
+    (when (not (and (at_0_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_4_0_3
+  :effect (and
+    (when (and (at_0_4) (valid)) (at_0_3))
+    (when (and (at_0_4) (valid)) (not (at_0_4)))
+    (when (not (and (at_0_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_4_0_5
+  :effect (and
+    (when (and (at_0_4) (valid)) (at_0_5))
+    (when (and (at_0_4) (valid)) (not (at_0_4)))
+    (when (not (and (at_0_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_5_1_5
+  :effect (and
+    (when (and (at_0_5) (valid)) (at_1_5))
+    (when (and (at_0_5) (valid)) (not (at_0_5)))
+    (when (not (and (at_0_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_5_0_4
+  :effect (and
+    (when (and (at_0_5) (valid)) (at_0_4))
+    (when (and (at_0_5) (valid)) (not (at_0_5)))
+    (when (not (and (at_0_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_5_0_6
+  :effect (and
+    (when (and (at_0_5) (valid)) (at_0_6))
+    (when (and (at_0_5) (valid)) (not (at_0_5)))
+    (when (not (and (at_0_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_6_1_6
+  :effect (and
+    (when (and (at_0_6) (valid)) (at_1_6))
+    (when (and (at_0_6) (valid)) (not (at_0_6)))
+    (when (not (and (at_0_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_6_0_5
+  :effect (and
+    (when (and (at_0_6) (valid)) (at_0_5))
+    (when (and (at_0_6) (valid)) (not (at_0_6)))
+    (when (not (and (at_0_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_6_0_7
+  :effect (and
+    (when (and (at_0_6) (valid)) (at_0_7))
+    (when (and (at_0_6) (valid)) (not (at_0_6)))
+    (when (not (and (at_0_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_7_1_7
+  :effect (and
+    (when (and (at_0_7) (valid)) (at_1_7))
+    (when (and (at_0_7) (valid)) (not (at_0_7)))
+    (when (not (and (at_0_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_7_0_6
+  :effect (and
+    (when (and (at_0_7) (valid)) (at_0_6))
+    (when (and (at_0_7) (valid)) (not (at_0_7)))
+    (when (not (and (at_0_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_7_0_8
+  :effect (and
+    (when (and (at_0_7) (valid)) (at_0_8))
+    (when (and (at_0_7) (valid)) (not (at_0_7)))
+    (when (not (and (at_0_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_8_1_8
+  :effect (and
+    (when (and (at_0_8) (valid)) (at_1_8))
+    (when (and (at_0_8) (valid)) (not (at_0_8)))
+    (when (not (and (at_0_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_8_0_7
+  :effect (and
+    (when (and (at_0_8) (valid)) (at_0_7))
+    (when (and (at_0_8) (valid)) (not (at_0_8)))
+    (when (not (and (at_0_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_8_0_9
+  :effect (and
+    (when (and (at_0_8) (valid)) (at_0_9))
+    (when (and (at_0_8) (valid)) (not (at_0_8)))
+    (when (not (and (at_0_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_9_1_9
+  :effect (and
+    (when (and (at_0_9) (valid)) (at_1_9))
+    (when (and (at_0_9) (valid)) (not (at_0_9)))
+    (when (not (and (at_0_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_9_0_8
+  :effect (and
+    (when (and (at_0_9) (valid)) (at_0_8))
+    (when (and (at_0_9) (valid)) (not (at_0_9)))
+    (when (not (and (at_0_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_9_0_10
+  :effect (and
+    (when (and (at_0_9) (valid)) (at_0_10))
+    (when (and (at_0_9) (valid)) (not (at_0_9)))
+    (when (not (and (at_0_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_10_1_10
+  :effect (and
+    (when (and (at_0_10) (valid)) (at_1_10))
+    (when (and (at_0_10) (valid)) (not (at_0_10)))
+    (when (not (and (at_0_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_10_0_9
+  :effect (and
+    (when (and (at_0_10) (valid)) (at_0_9))
+    (when (and (at_0_10) (valid)) (not (at_0_10)))
+    (when (not (and (at_0_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_10_0_11
+  :effect (and
+    (when (and (at_0_10) (valid)) (at_0_11))
+    (when (and (at_0_10) (valid)) (not (at_0_10)))
+    (when (not (and (at_0_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_11_1_11
+  :effect (and
+    (when (and (at_0_11) (valid)) (at_1_11))
+    (when (and (at_0_11) (valid)) (not (at_0_11)))
+    (when (not (and (at_0_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_11_0_10
+  :effect (and
+    (when (and (at_0_11) (valid)) (at_0_10))
+    (when (and (at_0_11) (valid)) (not (at_0_11)))
+    (when (not (and (at_0_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_11_0_12
+  :effect (and
+    (when (and (at_0_11) (valid)) (at_0_12))
+    (when (and (at_0_11) (valid)) (not (at_0_11)))
+    (when (not (and (at_0_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_12_1_12
+  :effect (and
+    (when (and (at_0_12) (valid)) (at_1_12))
+    (when (and (at_0_12) (valid)) (not (at_0_12)))
+    (when (not (and (at_0_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_12_0_11
+  :effect (and
+    (when (and (at_0_12) (valid)) (at_0_11))
+    (when (and (at_0_12) (valid)) (not (at_0_12)))
+    (when (not (and (at_0_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_12_0_13
+  :effect (and
+    (when (and (at_0_12) (valid)) (at_0_13))
+    (when (and (at_0_12) (valid)) (not (at_0_12)))
+    (when (not (and (at_0_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_13_1_13
+  :effect (and
+    (when (and (at_0_13) (valid)) (at_1_13))
+    (when (and (at_0_13) (valid)) (not (at_0_13)))
+    (when (not (and (at_0_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_13_0_12
+  :effect (and
+    (when (and (at_0_13) (valid)) (at_0_12))
+    (when (and (at_0_13) (valid)) (not (at_0_13)))
+    (when (not (and (at_0_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_13_0_14
+  :effect (and
+    (when (and (at_0_13) (valid)) (at_0_14))
+    (when (and (at_0_13) (valid)) (not (at_0_13)))
+    (when (not (and (at_0_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_14_1_14
+  :effect (and
+    (when (and (at_0_14) (valid)) (at_1_14))
+    (when (and (at_0_14) (valid)) (not (at_0_14)))
+    (when (not (and (at_0_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_14_0_13
+  :effect (and
+    (when (and (at_0_14) (valid)) (at_0_13))
+    (when (and (at_0_14) (valid)) (not (at_0_14)))
+    (when (not (and (at_0_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_14_0_15
+  :effect (and
+    (when (and (at_0_14) (valid)) (at_0_15))
+    (when (and (at_0_14) (valid)) (not (at_0_14)))
+    (when (not (and (at_0_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_15_1_15
+  :effect (and
+    (when (and (at_0_15) (valid)) (at_1_15))
+    (when (and (at_0_15) (valid)) (not (at_0_15)))
+    (when (not (and (at_0_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_15_0_14
+  :effect (and
+    (when (and (at_0_15) (valid)) (at_0_14))
+    (when (and (at_0_15) (valid)) (not (at_0_15)))
+    (when (not (and (at_0_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_15_0_16
+  :effect (and
+    (when (and (at_0_15) (valid)) (at_0_16))
+    (when (and (at_0_15) (valid)) (not (at_0_15)))
+    (when (not (and (at_0_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_16_1_16
+  :effect (and
+    (when (and (at_0_16) (valid)) (at_1_16))
+    (when (and (at_0_16) (valid)) (not (at_0_16)))
+    (when (not (and (at_0_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_16_0_15
+  :effect (and
+    (when (and (at_0_16) (valid)) (at_0_15))
+    (when (and (at_0_16) (valid)) (not (at_0_16)))
+    (when (not (and (at_0_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_16_0_17
+  :effect (and
+    (when (and (at_0_16) (valid)) (at_0_17))
+    (when (and (at_0_16) (valid)) (not (at_0_16)))
+    (when (not (and (at_0_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_17_1_17
+  :effect (and
+    (when (and (at_0_17) (valid)) (at_1_17))
+    (when (and (at_0_17) (valid)) (not (at_0_17)))
+    (when (not (and (at_0_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_17_0_16
+  :effect (and
+    (when (and (at_0_17) (valid)) (at_0_16))
+    (when (and (at_0_17) (valid)) (not (at_0_17)))
+    (when (not (and (at_0_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_17_0_18
+  :effect (and
+    (when (and (at_0_17) (valid)) (at_0_18))
+    (when (and (at_0_17) (valid)) (not (at_0_17)))
+    (when (not (and (at_0_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_18_1_18
+  :effect (and
+    (when (and (at_0_18) (valid)) (at_1_18))
+    (when (and (at_0_18) (valid)) (not (at_0_18)))
+    (when (not (and (at_0_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_18_0_17
+  :effect (and
+    (when (and (at_0_18) (valid)) (at_0_17))
+    (when (and (at_0_18) (valid)) (not (at_0_18)))
+    (when (not (and (at_0_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_18_0_19
+  :effect (and
+    (when (and (at_0_18) (valid)) (at_0_19))
+    (when (and (at_0_18) (valid)) (not (at_0_18)))
+    (when (not (and (at_0_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_19_1_19
+  :effect (and
+    (when (and (at_0_19) (valid)) (at_1_19))
+    (when (and (at_0_19) (valid)) (not (at_0_19)))
+    (when (not (and (at_0_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_19_0_18
+  :effect (and
+    (when (and (at_0_19) (valid)) (at_0_18))
+    (when (and (at_0_19) (valid)) (not (at_0_19)))
+    (when (not (and (at_0_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_19_0_20
+  :effect (and
+    (when (and (at_0_19) (valid)) (at_0_20))
+    (when (and (at_0_19) (valid)) (not (at_0_19)))
+    (when (not (and (at_0_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_20_1_20
+  :effect (and
+    (when (and (at_0_20) (valid)) (at_1_20))
+    (when (and (at_0_20) (valid)) (not (at_0_20)))
+    (when (not (and (at_0_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_20_0_19
+  :effect (and
+    (when (and (at_0_20) (valid)) (at_0_19))
+    (when (and (at_0_20) (valid)) (not (at_0_20)))
+    (when (not (and (at_0_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_20_0_21
+  :effect (and
+    (when (and (at_0_20) (valid)) (at_0_21))
+    (when (and (at_0_20) (valid)) (not (at_0_20)))
+    (when (not (and (at_0_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_21_1_21
+  :effect (and
+    (when (and (at_0_21) (valid)) (at_1_21))
+    (when (and (at_0_21) (valid)) (not (at_0_21)))
+    (when (not (and (at_0_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_21_0_20
+  :effect (and
+    (when (and (at_0_21) (valid)) (at_0_20))
+    (when (and (at_0_21) (valid)) (not (at_0_21)))
+    (when (not (and (at_0_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_21_0_22
+  :effect (and
+    (when (and (at_0_21) (valid)) (at_0_22))
+    (when (and (at_0_21) (valid)) (not (at_0_21)))
+    (when (not (and (at_0_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_22_1_22
+  :effect (and
+    (when (and (at_0_22) (valid)) (at_1_22))
+    (when (and (at_0_22) (valid)) (not (at_0_22)))
+    (when (not (and (at_0_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_22_0_21
+  :effect (and
+    (when (and (at_0_22) (valid)) (at_0_21))
+    (when (and (at_0_22) (valid)) (not (at_0_22)))
+    (when (not (and (at_0_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_22_0_23
+  :effect (and
+    (when (and (at_0_22) (valid)) (at_0_23))
+    (when (and (at_0_22) (valid)) (not (at_0_22)))
+    (when (not (and (at_0_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_23_1_23
+  :effect (and
+    (when (and (at_0_23) (valid)) (at_1_23))
+    (when (and (at_0_23) (valid)) (not (at_0_23)))
+    (when (not (and (at_0_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_23_0_22
+  :effect (and
+    (when (and (at_0_23) (valid)) (at_0_22))
+    (when (and (at_0_23) (valid)) (not (at_0_23)))
+    (when (not (and (at_0_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_23_0_24
+  :effect (and
+    (when (and (at_0_23) (valid)) (at_0_24))
+    (when (and (at_0_23) (valid)) (not (at_0_23)))
+    (when (not (and (at_0_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_24_1_24
+  :effect (and
+    (when (and (at_0_24) (valid)) (at_1_24))
+    (when (and (at_0_24) (valid)) (not (at_0_24)))
+    (when (not (and (at_0_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_24_0_23
+  :effect (and
+    (when (and (at_0_24) (valid)) (at_0_23))
+    (when (and (at_0_24) (valid)) (not (at_0_24)))
+    (when (not (and (at_0_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_24_0_25
+  :effect (and
+    (when (and (at_0_24) (valid)) (at_0_25))
+    (when (and (at_0_24) (valid)) (not (at_0_24)))
+    (when (not (and (at_0_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_25_1_25
+  :effect (and
+    (when (and (at_0_25) (valid)) (at_1_25))
+    (when (and (at_0_25) (valid)) (not (at_0_25)))
+    (when (not (and (at_0_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_25_0_24
+  :effect (and
+    (when (and (at_0_25) (valid)) (at_0_24))
+    (when (and (at_0_25) (valid)) (not (at_0_25)))
+    (when (not (and (at_0_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_25_0_26
+  :effect (and
+    (when (and (at_0_25) (valid)) (at_0_26))
+    (when (and (at_0_25) (valid)) (not (at_0_25)))
+    (when (not (and (at_0_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_26_1_26
+  :effect (and
+    (when (and (at_0_26) (valid)) (at_1_26))
+    (when (and (at_0_26) (valid)) (not (at_0_26)))
+    (when (not (and (at_0_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_26_0_25
+  :effect (and
+    (when (and (at_0_26) (valid)) (at_0_25))
+    (when (and (at_0_26) (valid)) (not (at_0_26)))
+    (when (not (and (at_0_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_26_0_27
+  :effect (and
+    (when (and (at_0_26) (valid)) (at_0_27))
+    (when (and (at_0_26) (valid)) (not (at_0_26)))
+    (when (not (and (at_0_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_27_1_27
+  :effect (and
+    (when (and (at_0_27) (valid)) (at_1_27))
+    (when (and (at_0_27) (valid)) (not (at_0_27)))
+    (when (not (and (at_0_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_27_0_26
+  :effect (and
+    (when (and (at_0_27) (valid)) (at_0_26))
+    (when (and (at_0_27) (valid)) (not (at_0_27)))
+    (when (not (and (at_0_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_27_0_28
+  :effect (and
+    (when (and (at_0_27) (valid)) (at_0_28))
+    (when (and (at_0_27) (valid)) (not (at_0_27)))
+    (when (not (and (at_0_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_28_1_28
+  :effect (and
+    (when (and (at_0_28) (valid)) (at_1_28))
+    (when (and (at_0_28) (valid)) (not (at_0_28)))
+    (when (not (and (at_0_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_28_0_27
+  :effect (and
+    (when (and (at_0_28) (valid)) (at_0_27))
+    (when (and (at_0_28) (valid)) (not (at_0_28)))
+    (when (not (and (at_0_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_28_0_29
+  :effect (and
+    (when (and (at_0_28) (valid)) (at_0_29))
+    (when (and (at_0_28) (valid)) (not (at_0_28)))
+    (when (not (and (at_0_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_29_1_29
+  :effect (and
+    (when (and (at_0_29) (valid)) (at_1_29))
+    (when (and (at_0_29) (valid)) (not (at_0_29)))
+    (when (not (and (at_0_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_29_0_28
+  :effect (and
+    (when (and (at_0_29) (valid)) (at_0_28))
+    (when (and (at_0_29) (valid)) (not (at_0_29)))
+    (when (not (and (at_0_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_29_0_30
+  :effect (and
+    (when (and (at_0_29) (valid)) (at_0_30))
+    (when (and (at_0_29) (valid)) (not (at_0_29)))
+    (when (not (and (at_0_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_30_1_30
+  :effect (and
+    (when (and (at_0_30) (valid)) (at_1_30))
+    (when (and (at_0_30) (valid)) (not (at_0_30)))
+    (when (not (and (at_0_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_30_0_29
+  :effect (and
+    (when (and (at_0_30) (valid)) (at_0_29))
+    (when (and (at_0_30) (valid)) (not (at_0_30)))
+    (when (not (and (at_0_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_30_0_31
+  :effect (and
+    (when (and (at_0_30) (valid)) (at_0_31))
+    (when (and (at_0_30) (valid)) (not (at_0_30)))
+    (when (not (and (at_0_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_31_1_31
+  :effect (and
+    (when (and (at_0_31) (valid)) (at_1_31))
+    (when (and (at_0_31) (valid)) (not (at_0_31)))
+    (when (not (and (at_0_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_0_31_0_30
+  :effect (and
+    (when (and (at_0_31) (valid)) (at_0_30))
+    (when (and (at_0_31) (valid)) (not (at_0_31)))
+    (when (not (and (at_0_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_0_0_0
+  :effect (and
+    (when (and (at_1_0) (valid)) (at_0_0))
+    (when (and (at_1_0) (valid)) (not (at_1_0)))
+    (when (not (and (at_1_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_0_2_0
+  :effect (and
+    (when (and (at_1_0) (valid)) (at_2_0))
+    (when (and (at_1_0) (valid)) (not (at_1_0)))
+    (when (not (and (at_1_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_0_1_1
+  :effect (and
+    (when (and (at_1_0) (valid)) (at_1_1))
+    (when (and (at_1_0) (valid)) (not (at_1_0)))
+    (when (not (and (at_1_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_1_0_1
+  :effect (and
+    (when (and (at_1_1) (valid)) (at_0_1))
+    (when (and (at_1_1) (valid)) (not (at_1_1)))
+    (when (not (and (at_1_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_1_2_1
+  :effect (and
+    (when (and (at_1_1) (valid)) (at_2_1))
+    (when (and (at_1_1) (valid)) (not (at_1_1)))
+    (when (not (and (at_1_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_1_1_0
+  :effect (and
+    (when (and (at_1_1) (valid)) (at_1_0))
+    (when (and (at_1_1) (valid)) (not (at_1_1)))
+    (when (not (and (at_1_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_1_1_2
+  :effect (and
+    (when (and (at_1_1) (valid)) (at_1_2))
+    (when (and (at_1_1) (valid)) (not (at_1_1)))
+    (when (not (and (at_1_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_2_0_2
+  :effect (and
+    (when (and (at_1_2) (valid)) (at_0_2))
+    (when (and (at_1_2) (valid)) (not (at_1_2)))
+    (when (not (and (at_1_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_2_2_2
+  :effect (and
+    (when (and (at_1_2) (valid)) (at_2_2))
+    (when (and (at_1_2) (valid)) (not (at_1_2)))
+    (when (not (and (at_1_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_2_1_1
+  :effect (and
+    (when (and (at_1_2) (valid)) (at_1_1))
+    (when (and (at_1_2) (valid)) (not (at_1_2)))
+    (when (not (and (at_1_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_2_1_3
+  :effect (and
+    (when (and (at_1_2) (valid)) (at_1_3))
+    (when (and (at_1_2) (valid)) (not (at_1_2)))
+    (when (not (and (at_1_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_3_0_3
+  :effect (and
+    (when (and (at_1_3) (valid)) (at_0_3))
+    (when (and (at_1_3) (valid)) (not (at_1_3)))
+    (when (not (and (at_1_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_3_2_3
+  :effect (and
+    (when (and (at_1_3) (valid)) (at_2_3))
+    (when (and (at_1_3) (valid)) (not (at_1_3)))
+    (when (not (and (at_1_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_3_1_2
+  :effect (and
+    (when (and (at_1_3) (valid)) (at_1_2))
+    (when (and (at_1_3) (valid)) (not (at_1_3)))
+    (when (not (and (at_1_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_3_1_4
+  :effect (and
+    (when (and (at_1_3) (valid)) (at_1_4))
+    (when (and (at_1_3) (valid)) (not (at_1_3)))
+    (when (not (and (at_1_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_4_0_4
+  :effect (and
+    (when (and (at_1_4) (valid)) (at_0_4))
+    (when (and (at_1_4) (valid)) (not (at_1_4)))
+    (when (not (and (at_1_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_4_2_4
+  :effect (and
+    (when (and (at_1_4) (valid)) (at_2_4))
+    (when (and (at_1_4) (valid)) (not (at_1_4)))
+    (when (not (and (at_1_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_4_1_3
+  :effect (and
+    (when (and (at_1_4) (valid)) (at_1_3))
+    (when (and (at_1_4) (valid)) (not (at_1_4)))
+    (when (not (and (at_1_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_4_1_5
+  :effect (and
+    (when (and (at_1_4) (valid)) (at_1_5))
+    (when (and (at_1_4) (valid)) (not (at_1_4)))
+    (when (not (and (at_1_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_5_0_5
+  :effect (and
+    (when (and (at_1_5) (valid)) (at_0_5))
+    (when (and (at_1_5) (valid)) (not (at_1_5)))
+    (when (not (and (at_1_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_5_2_5
+  :effect (and
+    (when (and (at_1_5) (valid)) (at_2_5))
+    (when (and (at_1_5) (valid)) (not (at_1_5)))
+    (when (not (and (at_1_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_5_1_4
+  :effect (and
+    (when (and (at_1_5) (valid)) (at_1_4))
+    (when (and (at_1_5) (valid)) (not (at_1_5)))
+    (when (not (and (at_1_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_5_1_6
+  :effect (and
+    (when (and (at_1_5) (valid)) (at_1_6))
+    (when (and (at_1_5) (valid)) (not (at_1_5)))
+    (when (not (and (at_1_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_6_0_6
+  :effect (and
+    (when (and (at_1_6) (valid)) (at_0_6))
+    (when (and (at_1_6) (valid)) (not (at_1_6)))
+    (when (not (and (at_1_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_6_2_6
+  :effect (and
+    (when (and (at_1_6) (valid)) (at_2_6))
+    (when (and (at_1_6) (valid)) (not (at_1_6)))
+    (when (not (and (at_1_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_6_1_5
+  :effect (and
+    (when (and (at_1_6) (valid)) (at_1_5))
+    (when (and (at_1_6) (valid)) (not (at_1_6)))
+    (when (not (and (at_1_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_6_1_7
+  :effect (and
+    (when (and (at_1_6) (valid)) (at_1_7))
+    (when (and (at_1_6) (valid)) (not (at_1_6)))
+    (when (not (and (at_1_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_7_0_7
+  :effect (and
+    (when (and (at_1_7) (valid)) (at_0_7))
+    (when (and (at_1_7) (valid)) (not (at_1_7)))
+    (when (not (and (at_1_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_7_2_7
+  :effect (and
+    (when (and (at_1_7) (valid)) (at_2_7))
+    (when (and (at_1_7) (valid)) (not (at_1_7)))
+    (when (not (and (at_1_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_7_1_6
+  :effect (and
+    (when (and (at_1_7) (valid)) (at_1_6))
+    (when (and (at_1_7) (valid)) (not (at_1_7)))
+    (when (not (and (at_1_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_7_1_8
+  :effect (and
+    (when (and (at_1_7) (valid)) (at_1_8))
+    (when (and (at_1_7) (valid)) (not (at_1_7)))
+    (when (not (and (at_1_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_8_0_8
+  :effect (and
+    (when (and (at_1_8) (valid)) (at_0_8))
+    (when (and (at_1_8) (valid)) (not (at_1_8)))
+    (when (not (and (at_1_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_8_2_8
+  :effect (and
+    (when (and (at_1_8) (valid)) (at_2_8))
+    (when (and (at_1_8) (valid)) (not (at_1_8)))
+    (when (not (and (at_1_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_8_1_7
+  :effect (and
+    (when (and (at_1_8) (valid)) (at_1_7))
+    (when (and (at_1_8) (valid)) (not (at_1_8)))
+    (when (not (and (at_1_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_8_1_9
+  :effect (and
+    (when (and (at_1_8) (valid)) (at_1_9))
+    (when (and (at_1_8) (valid)) (not (at_1_8)))
+    (when (not (and (at_1_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_9_0_9
+  :effect (and
+    (when (and (at_1_9) (valid)) (at_0_9))
+    (when (and (at_1_9) (valid)) (not (at_1_9)))
+    (when (not (and (at_1_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_9_2_9
+  :effect (and
+    (when (and (at_1_9) (valid)) (at_2_9))
+    (when (and (at_1_9) (valid)) (not (at_1_9)))
+    (when (not (and (at_1_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_9_1_8
+  :effect (and
+    (when (and (at_1_9) (valid)) (at_1_8))
+    (when (and (at_1_9) (valid)) (not (at_1_9)))
+    (when (not (and (at_1_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_9_1_10
+  :effect (and
+    (when (and (at_1_9) (valid)) (at_1_10))
+    (when (and (at_1_9) (valid)) (not (at_1_9)))
+    (when (not (and (at_1_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_10_0_10
+  :effect (and
+    (when (and (at_1_10) (valid)) (at_0_10))
+    (when (and (at_1_10) (valid)) (not (at_1_10)))
+    (when (not (and (at_1_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_10_2_10
+  :effect (and
+    (when (and (at_1_10) (valid)) (at_2_10))
+    (when (and (at_1_10) (valid)) (not (at_1_10)))
+    (when (not (and (at_1_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_10_1_9
+  :effect (and
+    (when (and (at_1_10) (valid)) (at_1_9))
+    (when (and (at_1_10) (valid)) (not (at_1_10)))
+    (when (not (and (at_1_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_10_1_11
+  :effect (and
+    (when (and (at_1_10) (valid)) (at_1_11))
+    (when (and (at_1_10) (valid)) (not (at_1_10)))
+    (when (not (and (at_1_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_11_0_11
+  :effect (and
+    (when (and (at_1_11) (valid)) (at_0_11))
+    (when (and (at_1_11) (valid)) (not (at_1_11)))
+    (when (not (and (at_1_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_11_2_11
+  :effect (and
+    (when (and (at_1_11) (valid)) (at_2_11))
+    (when (and (at_1_11) (valid)) (not (at_1_11)))
+    (when (not (and (at_1_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_11_1_10
+  :effect (and
+    (when (and (at_1_11) (valid)) (at_1_10))
+    (when (and (at_1_11) (valid)) (not (at_1_11)))
+    (when (not (and (at_1_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_11_1_12
+  :effect (and
+    (when (and (at_1_11) (valid)) (at_1_12))
+    (when (and (at_1_11) (valid)) (not (at_1_11)))
+    (when (not (and (at_1_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_12_0_12
+  :effect (and
+    (when (and (at_1_12) (valid)) (at_0_12))
+    (when (and (at_1_12) (valid)) (not (at_1_12)))
+    (when (not (and (at_1_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_12_2_12
+  :effect (and
+    (when (and (at_1_12) (valid)) (at_2_12))
+    (when (and (at_1_12) (valid)) (not (at_1_12)))
+    (when (not (and (at_1_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_12_1_11
+  :effect (and
+    (when (and (at_1_12) (valid)) (at_1_11))
+    (when (and (at_1_12) (valid)) (not (at_1_12)))
+    (when (not (and (at_1_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_12_1_13
+  :effect (and
+    (when (and (at_1_12) (valid)) (at_1_13))
+    (when (and (at_1_12) (valid)) (not (at_1_12)))
+    (when (not (and (at_1_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_13_0_13
+  :effect (and
+    (when (and (at_1_13) (valid)) (at_0_13))
+    (when (and (at_1_13) (valid)) (not (at_1_13)))
+    (when (not (and (at_1_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_13_2_13
+  :effect (and
+    (when (and (at_1_13) (valid)) (at_2_13))
+    (when (and (at_1_13) (valid)) (not (at_1_13)))
+    (when (not (and (at_1_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_13_1_12
+  :effect (and
+    (when (and (at_1_13) (valid)) (at_1_12))
+    (when (and (at_1_13) (valid)) (not (at_1_13)))
+    (when (not (and (at_1_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_13_1_14
+  :effect (and
+    (when (and (at_1_13) (valid)) (at_1_14))
+    (when (and (at_1_13) (valid)) (not (at_1_13)))
+    (when (not (and (at_1_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_14_0_14
+  :effect (and
+    (when (and (at_1_14) (valid)) (at_0_14))
+    (when (and (at_1_14) (valid)) (not (at_1_14)))
+    (when (not (and (at_1_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_14_2_14
+  :effect (and
+    (when (and (at_1_14) (valid)) (at_2_14))
+    (when (and (at_1_14) (valid)) (not (at_1_14)))
+    (when (not (and (at_1_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_14_1_13
+  :effect (and
+    (when (and (at_1_14) (valid)) (at_1_13))
+    (when (and (at_1_14) (valid)) (not (at_1_14)))
+    (when (not (and (at_1_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_14_1_15
+  :effect (and
+    (when (and (at_1_14) (valid)) (at_1_15))
+    (when (and (at_1_14) (valid)) (not (at_1_14)))
+    (when (not (and (at_1_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_15_0_15
+  :effect (and
+    (when (and (at_1_15) (valid)) (at_0_15))
+    (when (and (at_1_15) (valid)) (not (at_1_15)))
+    (when (not (and (at_1_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_15_2_15
+  :effect (and
+    (when (and (at_1_15) (valid)) (at_2_15))
+    (when (and (at_1_15) (valid)) (not (at_1_15)))
+    (when (not (and (at_1_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_15_1_14
+  :effect (and
+    (when (and (at_1_15) (valid)) (at_1_14))
+    (when (and (at_1_15) (valid)) (not (at_1_15)))
+    (when (not (and (at_1_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_15_1_16
+  :effect (and
+    (when (and (at_1_15) (valid)) (at_1_16))
+    (when (and (at_1_15) (valid)) (not (at_1_15)))
+    (when (not (and (at_1_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_16_0_16
+  :effect (and
+    (when (and (at_1_16) (valid)) (at_0_16))
+    (when (and (at_1_16) (valid)) (not (at_1_16)))
+    (when (not (and (at_1_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_16_2_16
+  :effect (and
+    (when (and (at_1_16) (valid)) (at_2_16))
+    (when (and (at_1_16) (valid)) (not (at_1_16)))
+    (when (not (and (at_1_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_16_1_15
+  :effect (and
+    (when (and (at_1_16) (valid)) (at_1_15))
+    (when (and (at_1_16) (valid)) (not (at_1_16)))
+    (when (not (and (at_1_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_16_1_17
+  :effect (and
+    (when (and (at_1_16) (valid)) (at_1_17))
+    (when (and (at_1_16) (valid)) (not (at_1_16)))
+    (when (not (and (at_1_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_17_0_17
+  :effect (and
+    (when (and (at_1_17) (valid)) (at_0_17))
+    (when (and (at_1_17) (valid)) (not (at_1_17)))
+    (when (not (and (at_1_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_17_2_17
+  :effect (and
+    (when (and (at_1_17) (valid)) (at_2_17))
+    (when (and (at_1_17) (valid)) (not (at_1_17)))
+    (when (not (and (at_1_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_17_1_16
+  :effect (and
+    (when (and (at_1_17) (valid)) (at_1_16))
+    (when (and (at_1_17) (valid)) (not (at_1_17)))
+    (when (not (and (at_1_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_17_1_18
+  :effect (and
+    (when (and (at_1_17) (valid)) (at_1_18))
+    (when (and (at_1_17) (valid)) (not (at_1_17)))
+    (when (not (and (at_1_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_18_0_18
+  :effect (and
+    (when (and (at_1_18) (valid)) (at_0_18))
+    (when (and (at_1_18) (valid)) (not (at_1_18)))
+    (when (not (and (at_1_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_18_2_18
+  :effect (and
+    (when (and (at_1_18) (valid)) (at_2_18))
+    (when (and (at_1_18) (valid)) (not (at_1_18)))
+    (when (not (and (at_1_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_18_1_17
+  :effect (and
+    (when (and (at_1_18) (valid)) (at_1_17))
+    (when (and (at_1_18) (valid)) (not (at_1_18)))
+    (when (not (and (at_1_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_18_1_19
+  :effect (and
+    (when (and (at_1_18) (valid)) (at_1_19))
+    (when (and (at_1_18) (valid)) (not (at_1_18)))
+    (when (not (and (at_1_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_19_0_19
+  :effect (and
+    (when (and (at_1_19) (valid)) (at_0_19))
+    (when (and (at_1_19) (valid)) (not (at_1_19)))
+    (when (not (and (at_1_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_19_2_19
+  :effect (and
+    (when (and (at_1_19) (valid)) (at_2_19))
+    (when (and (at_1_19) (valid)) (not (at_1_19)))
+    (when (not (and (at_1_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_19_1_18
+  :effect (and
+    (when (and (at_1_19) (valid)) (at_1_18))
+    (when (and (at_1_19) (valid)) (not (at_1_19)))
+    (when (not (and (at_1_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_19_1_20
+  :effect (and
+    (when (and (at_1_19) (valid)) (at_1_20))
+    (when (and (at_1_19) (valid)) (not (at_1_19)))
+    (when (not (and (at_1_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_20_0_20
+  :effect (and
+    (when (and (at_1_20) (valid)) (at_0_20))
+    (when (and (at_1_20) (valid)) (not (at_1_20)))
+    (when (not (and (at_1_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_20_2_20
+  :effect (and
+    (when (and (at_1_20) (valid)) (at_2_20))
+    (when (and (at_1_20) (valid)) (not (at_1_20)))
+    (when (not (and (at_1_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_20_1_19
+  :effect (and
+    (when (and (at_1_20) (valid)) (at_1_19))
+    (when (and (at_1_20) (valid)) (not (at_1_20)))
+    (when (not (and (at_1_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_20_1_21
+  :effect (and
+    (when (and (at_1_20) (valid)) (at_1_21))
+    (when (and (at_1_20) (valid)) (not (at_1_20)))
+    (when (not (and (at_1_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_21_0_21
+  :effect (and
+    (when (and (at_1_21) (valid)) (at_0_21))
+    (when (and (at_1_21) (valid)) (not (at_1_21)))
+    (when (not (and (at_1_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_21_2_21
+  :effect (and
+    (when (and (at_1_21) (valid)) (at_2_21))
+    (when (and (at_1_21) (valid)) (not (at_1_21)))
+    (when (not (and (at_1_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_21_1_20
+  :effect (and
+    (when (and (at_1_21) (valid)) (at_1_20))
+    (when (and (at_1_21) (valid)) (not (at_1_21)))
+    (when (not (and (at_1_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_21_1_22
+  :effect (and
+    (when (and (at_1_21) (valid)) (at_1_22))
+    (when (and (at_1_21) (valid)) (not (at_1_21)))
+    (when (not (and (at_1_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_22_0_22
+  :effect (and
+    (when (and (at_1_22) (valid)) (at_0_22))
+    (when (and (at_1_22) (valid)) (not (at_1_22)))
+    (when (not (and (at_1_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_22_2_22
+  :effect (and
+    (when (and (at_1_22) (valid)) (at_2_22))
+    (when (and (at_1_22) (valid)) (not (at_1_22)))
+    (when (not (and (at_1_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_22_1_21
+  :effect (and
+    (when (and (at_1_22) (valid)) (at_1_21))
+    (when (and (at_1_22) (valid)) (not (at_1_22)))
+    (when (not (and (at_1_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_22_1_23
+  :effect (and
+    (when (and (at_1_22) (valid)) (at_1_23))
+    (when (and (at_1_22) (valid)) (not (at_1_22)))
+    (when (not (and (at_1_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_23_0_23
+  :effect (and
+    (when (and (at_1_23) (valid)) (at_0_23))
+    (when (and (at_1_23) (valid)) (not (at_1_23)))
+    (when (not (and (at_1_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_23_2_23
+  :effect (and
+    (when (and (at_1_23) (valid)) (at_2_23))
+    (when (and (at_1_23) (valid)) (not (at_1_23)))
+    (when (not (and (at_1_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_23_1_22
+  :effect (and
+    (when (and (at_1_23) (valid)) (at_1_22))
+    (when (and (at_1_23) (valid)) (not (at_1_23)))
+    (when (not (and (at_1_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_23_1_24
+  :effect (and
+    (when (and (at_1_23) (valid)) (at_1_24))
+    (when (and (at_1_23) (valid)) (not (at_1_23)))
+    (when (not (and (at_1_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_24_0_24
+  :effect (and
+    (when (and (at_1_24) (valid)) (at_0_24))
+    (when (and (at_1_24) (valid)) (not (at_1_24)))
+    (when (not (and (at_1_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_24_2_24
+  :effect (and
+    (when (and (at_1_24) (valid)) (at_2_24))
+    (when (and (at_1_24) (valid)) (not (at_1_24)))
+    (when (not (and (at_1_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_24_1_23
+  :effect (and
+    (when (and (at_1_24) (valid)) (at_1_23))
+    (when (and (at_1_24) (valid)) (not (at_1_24)))
+    (when (not (and (at_1_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_24_1_25
+  :effect (and
+    (when (and (at_1_24) (valid)) (at_1_25))
+    (when (and (at_1_24) (valid)) (not (at_1_24)))
+    (when (not (and (at_1_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_25_0_25
+  :effect (and
+    (when (and (at_1_25) (valid)) (at_0_25))
+    (when (and (at_1_25) (valid)) (not (at_1_25)))
+    (when (not (and (at_1_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_25_2_25
+  :effect (and
+    (when (and (at_1_25) (valid)) (at_2_25))
+    (when (and (at_1_25) (valid)) (not (at_1_25)))
+    (when (not (and (at_1_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_25_1_24
+  :effect (and
+    (when (and (at_1_25) (valid)) (at_1_24))
+    (when (and (at_1_25) (valid)) (not (at_1_25)))
+    (when (not (and (at_1_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_25_1_26
+  :effect (and
+    (when (and (at_1_25) (valid)) (at_1_26))
+    (when (and (at_1_25) (valid)) (not (at_1_25)))
+    (when (not (and (at_1_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_26_0_26
+  :effect (and
+    (when (and (at_1_26) (valid)) (at_0_26))
+    (when (and (at_1_26) (valid)) (not (at_1_26)))
+    (when (not (and (at_1_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_26_2_26
+  :effect (and
+    (when (and (at_1_26) (valid)) (at_2_26))
+    (when (and (at_1_26) (valid)) (not (at_1_26)))
+    (when (not (and (at_1_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_26_1_25
+  :effect (and
+    (when (and (at_1_26) (valid)) (at_1_25))
+    (when (and (at_1_26) (valid)) (not (at_1_26)))
+    (when (not (and (at_1_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_26_1_27
+  :effect (and
+    (when (and (at_1_26) (valid)) (at_1_27))
+    (when (and (at_1_26) (valid)) (not (at_1_26)))
+    (when (not (and (at_1_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_27_0_27
+  :effect (and
+    (when (and (at_1_27) (valid)) (at_0_27))
+    (when (and (at_1_27) (valid)) (not (at_1_27)))
+    (when (not (and (at_1_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_27_2_27
+  :effect (and
+    (when (and (at_1_27) (valid)) (at_2_27))
+    (when (and (at_1_27) (valid)) (not (at_1_27)))
+    (when (not (and (at_1_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_27_1_26
+  :effect (and
+    (when (and (at_1_27) (valid)) (at_1_26))
+    (when (and (at_1_27) (valid)) (not (at_1_27)))
+    (when (not (and (at_1_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_27_1_28
+  :effect (and
+    (when (and (at_1_27) (valid)) (at_1_28))
+    (when (and (at_1_27) (valid)) (not (at_1_27)))
+    (when (not (and (at_1_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_28_0_28
+  :effect (and
+    (when (and (at_1_28) (valid)) (at_0_28))
+    (when (and (at_1_28) (valid)) (not (at_1_28)))
+    (when (not (and (at_1_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_28_2_28
+  :effect (and
+    (when (and (at_1_28) (valid)) (at_2_28))
+    (when (and (at_1_28) (valid)) (not (at_1_28)))
+    (when (not (and (at_1_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_28_1_27
+  :effect (and
+    (when (and (at_1_28) (valid)) (at_1_27))
+    (when (and (at_1_28) (valid)) (not (at_1_28)))
+    (when (not (and (at_1_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_28_1_29
+  :effect (and
+    (when (and (at_1_28) (valid)) (at_1_29))
+    (when (and (at_1_28) (valid)) (not (at_1_28)))
+    (when (not (and (at_1_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_29_0_29
+  :effect (and
+    (when (and (at_1_29) (valid)) (at_0_29))
+    (when (and (at_1_29) (valid)) (not (at_1_29)))
+    (when (not (and (at_1_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_29_2_29
+  :effect (and
+    (when (and (at_1_29) (valid)) (at_2_29))
+    (when (and (at_1_29) (valid)) (not (at_1_29)))
+    (when (not (and (at_1_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_29_1_28
+  :effect (and
+    (when (and (at_1_29) (valid)) (at_1_28))
+    (when (and (at_1_29) (valid)) (not (at_1_29)))
+    (when (not (and (at_1_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_29_1_30
+  :effect (and
+    (when (and (at_1_29) (valid)) (at_1_30))
+    (when (and (at_1_29) (valid)) (not (at_1_29)))
+    (when (not (and (at_1_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_30_0_30
+  :effect (and
+    (when (and (at_1_30) (valid)) (at_0_30))
+    (when (and (at_1_30) (valid)) (not (at_1_30)))
+    (when (not (and (at_1_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_30_2_30
+  :effect (and
+    (when (and (at_1_30) (valid)) (at_2_30))
+    (when (and (at_1_30) (valid)) (not (at_1_30)))
+    (when (not (and (at_1_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_30_1_29
+  :effect (and
+    (when (and (at_1_30) (valid)) (at_1_29))
+    (when (and (at_1_30) (valid)) (not (at_1_30)))
+    (when (not (and (at_1_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_30_1_31
+  :effect (and
+    (when (and (at_1_30) (valid)) (at_1_31))
+    (when (and (at_1_30) (valid)) (not (at_1_30)))
+    (when (not (and (at_1_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_31_0_31
+  :effect (and
+    (when (and (at_1_31) (valid)) (at_0_31))
+    (when (and (at_1_31) (valid)) (not (at_1_31)))
+    (when (not (and (at_1_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_31_2_31
+  :effect (and
+    (when (and (at_1_31) (valid)) (at_2_31))
+    (when (and (at_1_31) (valid)) (not (at_1_31)))
+    (when (not (and (at_1_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_1_31_1_30
+  :effect (and
+    (when (and (at_1_31) (valid)) (at_1_30))
+    (when (and (at_1_31) (valid)) (not (at_1_31)))
+    (when (not (and (at_1_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_0_1_0
+  :effect (and
+    (when (and (at_2_0) (valid)) (at_1_0))
+    (when (and (at_2_0) (valid)) (not (at_2_0)))
+    (when (not (and (at_2_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_0_3_0
+  :effect (and
+    (when (and (at_2_0) (valid)) (at_3_0))
+    (when (and (at_2_0) (valid)) (not (at_2_0)))
+    (when (not (and (at_2_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_0_2_1
+  :effect (and
+    (when (and (at_2_0) (valid)) (at_2_1))
+    (when (and (at_2_0) (valid)) (not (at_2_0)))
+    (when (not (and (at_2_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_1_1_1
+  :effect (and
+    (when (and (at_2_1) (valid)) (at_1_1))
+    (when (and (at_2_1) (valid)) (not (at_2_1)))
+    (when (not (and (at_2_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_1_3_1
+  :effect (and
+    (when (and (at_2_1) (valid)) (at_3_1))
+    (when (and (at_2_1) (valid)) (not (at_2_1)))
+    (when (not (and (at_2_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_1_2_0
+  :effect (and
+    (when (and (at_2_1) (valid)) (at_2_0))
+    (when (and (at_2_1) (valid)) (not (at_2_1)))
+    (when (not (and (at_2_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_1_2_2
+  :effect (and
+    (when (and (at_2_1) (valid)) (at_2_2))
+    (when (and (at_2_1) (valid)) (not (at_2_1)))
+    (when (not (and (at_2_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_2_1_2
+  :effect (and
+    (when (and (at_2_2) (valid)) (at_1_2))
+    (when (and (at_2_2) (valid)) (not (at_2_2)))
+    (when (not (and (at_2_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_2_3_2
+  :effect (and
+    (when (and (at_2_2) (valid)) (at_3_2))
+    (when (and (at_2_2) (valid)) (not (at_2_2)))
+    (when (not (and (at_2_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_2_2_1
+  :effect (and
+    (when (and (at_2_2) (valid)) (at_2_1))
+    (when (and (at_2_2) (valid)) (not (at_2_2)))
+    (when (not (and (at_2_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_2_2_3
+  :effect (and
+    (when (and (at_2_2) (valid)) (at_2_3))
+    (when (and (at_2_2) (valid)) (not (at_2_2)))
+    (when (not (and (at_2_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_3_1_3
+  :effect (and
+    (when (and (at_2_3) (valid)) (at_1_3))
+    (when (and (at_2_3) (valid)) (not (at_2_3)))
+    (when (not (and (at_2_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_3_3_3
+  :effect (and
+    (when (and (at_2_3) (valid)) (at_3_3))
+    (when (and (at_2_3) (valid)) (not (at_2_3)))
+    (when (not (and (at_2_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_3_2_2
+  :effect (and
+    (when (and (at_2_3) (valid)) (at_2_2))
+    (when (and (at_2_3) (valid)) (not (at_2_3)))
+    (when (not (and (at_2_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_3_2_4
+  :effect (and
+    (when (and (at_2_3) (valid)) (at_2_4))
+    (when (and (at_2_3) (valid)) (not (at_2_3)))
+    (when (not (and (at_2_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_4_1_4
+  :effect (and
+    (when (and (at_2_4) (valid)) (at_1_4))
+    (when (and (at_2_4) (valid)) (not (at_2_4)))
+    (when (not (and (at_2_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_4_3_4
+  :effect (and
+    (when (and (at_2_4) (valid)) (at_3_4))
+    (when (and (at_2_4) (valid)) (not (at_2_4)))
+    (when (not (and (at_2_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_4_2_3
+  :effect (and
+    (when (and (at_2_4) (valid)) (at_2_3))
+    (when (and (at_2_4) (valid)) (not (at_2_4)))
+    (when (not (and (at_2_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_4_2_5
+  :effect (and
+    (when (and (at_2_4) (valid)) (at_2_5))
+    (when (and (at_2_4) (valid)) (not (at_2_4)))
+    (when (not (and (at_2_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_5_1_5
+  :effect (and
+    (when (and (at_2_5) (valid)) (at_1_5))
+    (when (and (at_2_5) (valid)) (not (at_2_5)))
+    (when (not (and (at_2_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_5_3_5
+  :effect (and
+    (when (and (at_2_5) (valid)) (at_3_5))
+    (when (and (at_2_5) (valid)) (not (at_2_5)))
+    (when (not (and (at_2_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_5_2_4
+  :effect (and
+    (when (and (at_2_5) (valid)) (at_2_4))
+    (when (and (at_2_5) (valid)) (not (at_2_5)))
+    (when (not (and (at_2_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_5_2_6
+  :effect (and
+    (when (and (at_2_5) (valid)) (at_2_6))
+    (when (and (at_2_5) (valid)) (not (at_2_5)))
+    (when (not (and (at_2_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_6_1_6
+  :effect (and
+    (when (and (at_2_6) (valid)) (at_1_6))
+    (when (and (at_2_6) (valid)) (not (at_2_6)))
+    (when (not (and (at_2_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_6_3_6
+  :effect (and
+    (when (and (at_2_6) (valid)) (at_3_6))
+    (when (and (at_2_6) (valid)) (not (at_2_6)))
+    (when (not (and (at_2_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_6_2_5
+  :effect (and
+    (when (and (at_2_6) (valid)) (at_2_5))
+    (when (and (at_2_6) (valid)) (not (at_2_6)))
+    (when (not (and (at_2_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_6_2_7
+  :effect (and
+    (when (and (at_2_6) (valid)) (at_2_7))
+    (when (and (at_2_6) (valid)) (not (at_2_6)))
+    (when (not (and (at_2_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_7_1_7
+  :effect (and
+    (when (and (at_2_7) (valid)) (at_1_7))
+    (when (and (at_2_7) (valid)) (not (at_2_7)))
+    (when (not (and (at_2_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_7_3_7
+  :effect (and
+    (when (and (at_2_7) (valid)) (at_3_7))
+    (when (and (at_2_7) (valid)) (not (at_2_7)))
+    (when (not (and (at_2_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_7_2_6
+  :effect (and
+    (when (and (at_2_7) (valid)) (at_2_6))
+    (when (and (at_2_7) (valid)) (not (at_2_7)))
+    (when (not (and (at_2_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_7_2_8
+  :effect (and
+    (when (and (at_2_7) (valid)) (at_2_8))
+    (when (and (at_2_7) (valid)) (not (at_2_7)))
+    (when (not (and (at_2_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_8_1_8
+  :effect (and
+    (when (and (at_2_8) (valid)) (at_1_8))
+    (when (and (at_2_8) (valid)) (not (at_2_8)))
+    (when (not (and (at_2_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_8_3_8
+  :effect (and
+    (when (and (at_2_8) (valid)) (at_3_8))
+    (when (and (at_2_8) (valid)) (not (at_2_8)))
+    (when (not (and (at_2_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_8_2_7
+  :effect (and
+    (when (and (at_2_8) (valid)) (at_2_7))
+    (when (and (at_2_8) (valid)) (not (at_2_8)))
+    (when (not (and (at_2_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_8_2_9
+  :effect (and
+    (when (and (at_2_8) (valid)) (at_2_9))
+    (when (and (at_2_8) (valid)) (not (at_2_8)))
+    (when (not (and (at_2_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_9_1_9
+  :effect (and
+    (when (and (at_2_9) (valid)) (at_1_9))
+    (when (and (at_2_9) (valid)) (not (at_2_9)))
+    (when (not (and (at_2_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_9_3_9
+  :effect (and
+    (when (and (at_2_9) (valid)) (at_3_9))
+    (when (and (at_2_9) (valid)) (not (at_2_9)))
+    (when (not (and (at_2_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_9_2_8
+  :effect (and
+    (when (and (at_2_9) (valid)) (at_2_8))
+    (when (and (at_2_9) (valid)) (not (at_2_9)))
+    (when (not (and (at_2_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_9_2_10
+  :effect (and
+    (when (and (at_2_9) (valid)) (at_2_10))
+    (when (and (at_2_9) (valid)) (not (at_2_9)))
+    (when (not (and (at_2_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_10_1_10
+  :effect (and
+    (when (and (at_2_10) (valid)) (at_1_10))
+    (when (and (at_2_10) (valid)) (not (at_2_10)))
+    (when (not (and (at_2_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_10_3_10
+  :effect (and
+    (when (and (at_2_10) (valid)) (at_3_10))
+    (when (and (at_2_10) (valid)) (not (at_2_10)))
+    (when (not (and (at_2_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_10_2_9
+  :effect (and
+    (when (and (at_2_10) (valid)) (at_2_9))
+    (when (and (at_2_10) (valid)) (not (at_2_10)))
+    (when (not (and (at_2_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_10_2_11
+  :effect (and
+    (when (and (at_2_10) (valid)) (at_2_11))
+    (when (and (at_2_10) (valid)) (not (at_2_10)))
+    (when (not (and (at_2_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_11_1_11
+  :effect (and
+    (when (and (at_2_11) (valid)) (at_1_11))
+    (when (and (at_2_11) (valid)) (not (at_2_11)))
+    (when (not (and (at_2_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_11_3_11
+  :effect (and
+    (when (and (at_2_11) (valid)) (at_3_11))
+    (when (and (at_2_11) (valid)) (not (at_2_11)))
+    (when (not (and (at_2_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_11_2_10
+  :effect (and
+    (when (and (at_2_11) (valid)) (at_2_10))
+    (when (and (at_2_11) (valid)) (not (at_2_11)))
+    (when (not (and (at_2_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_11_2_12
+  :effect (and
+    (when (and (at_2_11) (valid)) (at_2_12))
+    (when (and (at_2_11) (valid)) (not (at_2_11)))
+    (when (not (and (at_2_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_12_1_12
+  :effect (and
+    (when (and (at_2_12) (valid)) (at_1_12))
+    (when (and (at_2_12) (valid)) (not (at_2_12)))
+    (when (not (and (at_2_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_12_3_12
+  :effect (and
+    (when (and (at_2_12) (valid)) (at_3_12))
+    (when (and (at_2_12) (valid)) (not (at_2_12)))
+    (when (not (and (at_2_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_12_2_11
+  :effect (and
+    (when (and (at_2_12) (valid)) (at_2_11))
+    (when (and (at_2_12) (valid)) (not (at_2_12)))
+    (when (not (and (at_2_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_12_2_13
+  :effect (and
+    (when (and (at_2_12) (valid)) (at_2_13))
+    (when (and (at_2_12) (valid)) (not (at_2_12)))
+    (when (not (and (at_2_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_13_1_13
+  :effect (and
+    (when (and (at_2_13) (valid)) (at_1_13))
+    (when (and (at_2_13) (valid)) (not (at_2_13)))
+    (when (not (and (at_2_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_13_3_13
+  :effect (and
+    (when (and (at_2_13) (valid)) (at_3_13))
+    (when (and (at_2_13) (valid)) (not (at_2_13)))
+    (when (not (and (at_2_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_13_2_12
+  :effect (and
+    (when (and (at_2_13) (valid)) (at_2_12))
+    (when (and (at_2_13) (valid)) (not (at_2_13)))
+    (when (not (and (at_2_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_13_2_14
+  :effect (and
+    (when (and (at_2_13) (valid)) (at_2_14))
+    (when (and (at_2_13) (valid)) (not (at_2_13)))
+    (when (not (and (at_2_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_14_1_14
+  :effect (and
+    (when (and (at_2_14) (valid)) (at_1_14))
+    (when (and (at_2_14) (valid)) (not (at_2_14)))
+    (when (not (and (at_2_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_14_3_14
+  :effect (and
+    (when (and (at_2_14) (valid)) (at_3_14))
+    (when (and (at_2_14) (valid)) (not (at_2_14)))
+    (when (not (and (at_2_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_14_2_13
+  :effect (and
+    (when (and (at_2_14) (valid)) (at_2_13))
+    (when (and (at_2_14) (valid)) (not (at_2_14)))
+    (when (not (and (at_2_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_14_2_15
+  :effect (and
+    (when (and (at_2_14) (valid)) (at_2_15))
+    (when (and (at_2_14) (valid)) (not (at_2_14)))
+    (when (not (and (at_2_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_15_1_15
+  :effect (and
+    (when (and (at_2_15) (valid)) (at_1_15))
+    (when (and (at_2_15) (valid)) (not (at_2_15)))
+    (when (not (and (at_2_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_15_3_15
+  :effect (and
+    (when (and (at_2_15) (valid)) (at_3_15))
+    (when (and (at_2_15) (valid)) (not (at_2_15)))
+    (when (not (and (at_2_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_15_2_14
+  :effect (and
+    (when (and (at_2_15) (valid)) (at_2_14))
+    (when (and (at_2_15) (valid)) (not (at_2_15)))
+    (when (not (and (at_2_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_15_2_16
+  :effect (and
+    (when (and (at_2_15) (valid)) (at_2_16))
+    (when (and (at_2_15) (valid)) (not (at_2_15)))
+    (when (not (and (at_2_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_16_1_16
+  :effect (and
+    (when (and (at_2_16) (valid)) (at_1_16))
+    (when (and (at_2_16) (valid)) (not (at_2_16)))
+    (when (not (and (at_2_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_16_3_16
+  :effect (and
+    (when (and (at_2_16) (valid)) (at_3_16))
+    (when (and (at_2_16) (valid)) (not (at_2_16)))
+    (when (not (and (at_2_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_16_2_15
+  :effect (and
+    (when (and (at_2_16) (valid)) (at_2_15))
+    (when (and (at_2_16) (valid)) (not (at_2_16)))
+    (when (not (and (at_2_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_16_2_17
+  :effect (and
+    (when (and (at_2_16) (valid)) (at_2_17))
+    (when (and (at_2_16) (valid)) (not (at_2_16)))
+    (when (not (and (at_2_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_17_1_17
+  :effect (and
+    (when (and (at_2_17) (valid)) (at_1_17))
+    (when (and (at_2_17) (valid)) (not (at_2_17)))
+    (when (not (and (at_2_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_17_3_17
+  :effect (and
+    (when (and (at_2_17) (valid)) (at_3_17))
+    (when (and (at_2_17) (valid)) (not (at_2_17)))
+    (when (not (and (at_2_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_17_2_16
+  :effect (and
+    (when (and (at_2_17) (valid)) (at_2_16))
+    (when (and (at_2_17) (valid)) (not (at_2_17)))
+    (when (not (and (at_2_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_17_2_18
+  :effect (and
+    (when (and (at_2_17) (valid)) (at_2_18))
+    (when (and (at_2_17) (valid)) (not (at_2_17)))
+    (when (not (and (at_2_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_18_1_18
+  :effect (and
+    (when (and (at_2_18) (valid)) (at_1_18))
+    (when (and (at_2_18) (valid)) (not (at_2_18)))
+    (when (not (and (at_2_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_18_3_18
+  :effect (and
+    (when (and (at_2_18) (valid)) (at_3_18))
+    (when (and (at_2_18) (valid)) (not (at_2_18)))
+    (when (not (and (at_2_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_18_2_17
+  :effect (and
+    (when (and (at_2_18) (valid)) (at_2_17))
+    (when (and (at_2_18) (valid)) (not (at_2_18)))
+    (when (not (and (at_2_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_18_2_19
+  :effect (and
+    (when (and (at_2_18) (valid)) (at_2_19))
+    (when (and (at_2_18) (valid)) (not (at_2_18)))
+    (when (not (and (at_2_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_19_1_19
+  :effect (and
+    (when (and (at_2_19) (valid)) (at_1_19))
+    (when (and (at_2_19) (valid)) (not (at_2_19)))
+    (when (not (and (at_2_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_19_3_19
+  :effect (and
+    (when (and (at_2_19) (valid)) (at_3_19))
+    (when (and (at_2_19) (valid)) (not (at_2_19)))
+    (when (not (and (at_2_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_19_2_18
+  :effect (and
+    (when (and (at_2_19) (valid)) (at_2_18))
+    (when (and (at_2_19) (valid)) (not (at_2_19)))
+    (when (not (and (at_2_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_19_2_20
+  :effect (and
+    (when (and (at_2_19) (valid)) (at_2_20))
+    (when (and (at_2_19) (valid)) (not (at_2_19)))
+    (when (not (and (at_2_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_20_1_20
+  :effect (and
+    (when (and (at_2_20) (valid)) (at_1_20))
+    (when (and (at_2_20) (valid)) (not (at_2_20)))
+    (when (not (and (at_2_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_20_3_20
+  :effect (and
+    (when (and (at_2_20) (valid)) (at_3_20))
+    (when (and (at_2_20) (valid)) (not (at_2_20)))
+    (when (not (and (at_2_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_20_2_19
+  :effect (and
+    (when (and (at_2_20) (valid)) (at_2_19))
+    (when (and (at_2_20) (valid)) (not (at_2_20)))
+    (when (not (and (at_2_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_20_2_21
+  :effect (and
+    (when (and (at_2_20) (valid)) (at_2_21))
+    (when (and (at_2_20) (valid)) (not (at_2_20)))
+    (when (not (and (at_2_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_21_1_21
+  :effect (and
+    (when (and (at_2_21) (valid)) (at_1_21))
+    (when (and (at_2_21) (valid)) (not (at_2_21)))
+    (when (not (and (at_2_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_21_3_21
+  :effect (and
+    (when (and (at_2_21) (valid)) (at_3_21))
+    (when (and (at_2_21) (valid)) (not (at_2_21)))
+    (when (not (and (at_2_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_21_2_20
+  :effect (and
+    (when (and (at_2_21) (valid)) (at_2_20))
+    (when (and (at_2_21) (valid)) (not (at_2_21)))
+    (when (not (and (at_2_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_21_2_22
+  :effect (and
+    (when (and (at_2_21) (valid)) (at_2_22))
+    (when (and (at_2_21) (valid)) (not (at_2_21)))
+    (when (not (and (at_2_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_22_1_22
+  :effect (and
+    (when (and (at_2_22) (valid)) (at_1_22))
+    (when (and (at_2_22) (valid)) (not (at_2_22)))
+    (when (not (and (at_2_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_22_3_22
+  :effect (and
+    (when (and (at_2_22) (valid)) (at_3_22))
+    (when (and (at_2_22) (valid)) (not (at_2_22)))
+    (when (not (and (at_2_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_22_2_21
+  :effect (and
+    (when (and (at_2_22) (valid)) (at_2_21))
+    (when (and (at_2_22) (valid)) (not (at_2_22)))
+    (when (not (and (at_2_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_22_2_23
+  :effect (and
+    (when (and (at_2_22) (valid)) (at_2_23))
+    (when (and (at_2_22) (valid)) (not (at_2_22)))
+    (when (not (and (at_2_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_23_1_23
+  :effect (and
+    (when (and (at_2_23) (valid)) (at_1_23))
+    (when (and (at_2_23) (valid)) (not (at_2_23)))
+    (when (not (and (at_2_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_23_3_23
+  :effect (and
+    (when (and (at_2_23) (valid)) (at_3_23))
+    (when (and (at_2_23) (valid)) (not (at_2_23)))
+    (when (not (and (at_2_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_23_2_22
+  :effect (and
+    (when (and (at_2_23) (valid)) (at_2_22))
+    (when (and (at_2_23) (valid)) (not (at_2_23)))
+    (when (not (and (at_2_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_23_2_24
+  :effect (and
+    (when (and (at_2_23) (valid)) (at_2_24))
+    (when (and (at_2_23) (valid)) (not (at_2_23)))
+    (when (not (and (at_2_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_24_1_24
+  :effect (and
+    (when (and (at_2_24) (valid)) (at_1_24))
+    (when (and (at_2_24) (valid)) (not (at_2_24)))
+    (when (not (and (at_2_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_24_3_24
+  :effect (and
+    (when (and (at_2_24) (valid)) (at_3_24))
+    (when (and (at_2_24) (valid)) (not (at_2_24)))
+    (when (not (and (at_2_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_24_2_23
+  :effect (and
+    (when (and (at_2_24) (valid)) (at_2_23))
+    (when (and (at_2_24) (valid)) (not (at_2_24)))
+    (when (not (and (at_2_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_24_2_25
+  :effect (and
+    (when (and (at_2_24) (valid)) (at_2_25))
+    (when (and (at_2_24) (valid)) (not (at_2_24)))
+    (when (not (and (at_2_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_25_1_25
+  :effect (and
+    (when (and (at_2_25) (valid)) (at_1_25))
+    (when (and (at_2_25) (valid)) (not (at_2_25)))
+    (when (not (and (at_2_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_25_3_25
+  :effect (and
+    (when (and (at_2_25) (valid)) (at_3_25))
+    (when (and (at_2_25) (valid)) (not (at_2_25)))
+    (when (not (and (at_2_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_25_2_24
+  :effect (and
+    (when (and (at_2_25) (valid)) (at_2_24))
+    (when (and (at_2_25) (valid)) (not (at_2_25)))
+    (when (not (and (at_2_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_25_2_26
+  :effect (and
+    (when (and (at_2_25) (valid)) (at_2_26))
+    (when (and (at_2_25) (valid)) (not (at_2_25)))
+    (when (not (and (at_2_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_26_1_26
+  :effect (and
+    (when (and (at_2_26) (valid)) (at_1_26))
+    (when (and (at_2_26) (valid)) (not (at_2_26)))
+    (when (not (and (at_2_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_26_3_26
+  :effect (and
+    (when (and (at_2_26) (valid)) (at_3_26))
+    (when (and (at_2_26) (valid)) (not (at_2_26)))
+    (when (not (and (at_2_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_26_2_25
+  :effect (and
+    (when (and (at_2_26) (valid)) (at_2_25))
+    (when (and (at_2_26) (valid)) (not (at_2_26)))
+    (when (not (and (at_2_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_26_2_27
+  :effect (and
+    (when (and (at_2_26) (valid)) (at_2_27))
+    (when (and (at_2_26) (valid)) (not (at_2_26)))
+    (when (not (and (at_2_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_27_1_27
+  :effect (and
+    (when (and (at_2_27) (valid)) (at_1_27))
+    (when (and (at_2_27) (valid)) (not (at_2_27)))
+    (when (not (and (at_2_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_27_3_27
+  :effect (and
+    (when (and (at_2_27) (valid)) (at_3_27))
+    (when (and (at_2_27) (valid)) (not (at_2_27)))
+    (when (not (and (at_2_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_27_2_26
+  :effect (and
+    (when (and (at_2_27) (valid)) (at_2_26))
+    (when (and (at_2_27) (valid)) (not (at_2_27)))
+    (when (not (and (at_2_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_27_2_28
+  :effect (and
+    (when (and (at_2_27) (valid)) (at_2_28))
+    (when (and (at_2_27) (valid)) (not (at_2_27)))
+    (when (not (and (at_2_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_28_1_28
+  :effect (and
+    (when (and (at_2_28) (valid)) (at_1_28))
+    (when (and (at_2_28) (valid)) (not (at_2_28)))
+    (when (not (and (at_2_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_28_3_28
+  :effect (and
+    (when (and (at_2_28) (valid)) (at_3_28))
+    (when (and (at_2_28) (valid)) (not (at_2_28)))
+    (when (not (and (at_2_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_28_2_27
+  :effect (and
+    (when (and (at_2_28) (valid)) (at_2_27))
+    (when (and (at_2_28) (valid)) (not (at_2_28)))
+    (when (not (and (at_2_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_28_2_29
+  :effect (and
+    (when (and (at_2_28) (valid)) (at_2_29))
+    (when (and (at_2_28) (valid)) (not (at_2_28)))
+    (when (not (and (at_2_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_29_1_29
+  :effect (and
+    (when (and (at_2_29) (valid)) (at_1_29))
+    (when (and (at_2_29) (valid)) (not (at_2_29)))
+    (when (not (and (at_2_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_29_3_29
+  :effect (and
+    (when (and (at_2_29) (valid)) (at_3_29))
+    (when (and (at_2_29) (valid)) (not (at_2_29)))
+    (when (not (and (at_2_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_29_2_28
+  :effect (and
+    (when (and (at_2_29) (valid)) (at_2_28))
+    (when (and (at_2_29) (valid)) (not (at_2_29)))
+    (when (not (and (at_2_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_29_2_30
+  :effect (and
+    (when (and (at_2_29) (valid)) (at_2_30))
+    (when (and (at_2_29) (valid)) (not (at_2_29)))
+    (when (not (and (at_2_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_30_1_30
+  :effect (and
+    (when (and (at_2_30) (valid)) (at_1_30))
+    (when (and (at_2_30) (valid)) (not (at_2_30)))
+    (when (not (and (at_2_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_30_3_30
+  :effect (and
+    (when (and (at_2_30) (valid)) (at_3_30))
+    (when (and (at_2_30) (valid)) (not (at_2_30)))
+    (when (not (and (at_2_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_30_2_29
+  :effect (and
+    (when (and (at_2_30) (valid)) (at_2_29))
+    (when (and (at_2_30) (valid)) (not (at_2_30)))
+    (when (not (and (at_2_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_30_2_31
+  :effect (and
+    (when (and (at_2_30) (valid)) (at_2_31))
+    (when (and (at_2_30) (valid)) (not (at_2_30)))
+    (when (not (and (at_2_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_31_1_31
+  :effect (and
+    (when (and (at_2_31) (valid)) (at_1_31))
+    (when (and (at_2_31) (valid)) (not (at_2_31)))
+    (when (not (and (at_2_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_31_3_31
+  :effect (and
+    (when (and (at_2_31) (valid)) (at_3_31))
+    (when (and (at_2_31) (valid)) (not (at_2_31)))
+    (when (not (and (at_2_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_2_31_2_30
+  :effect (and
+    (when (and (at_2_31) (valid)) (at_2_30))
+    (when (and (at_2_31) (valid)) (not (at_2_31)))
+    (when (not (and (at_2_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_0_2_0
+  :effect (and
+    (when (and (at_3_0) (valid)) (at_2_0))
+    (when (and (at_3_0) (valid)) (not (at_3_0)))
+    (when (not (and (at_3_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_0_4_0
+  :effect (and
+    (when (and (at_3_0) (valid)) (at_4_0))
+    (when (and (at_3_0) (valid)) (not (at_3_0)))
+    (when (not (and (at_3_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_0_3_1
+  :effect (and
+    (when (and (at_3_0) (valid)) (at_3_1))
+    (when (and (at_3_0) (valid)) (not (at_3_0)))
+    (when (not (and (at_3_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_1_2_1
+  :effect (and
+    (when (and (at_3_1) (valid)) (at_2_1))
+    (when (and (at_3_1) (valid)) (not (at_3_1)))
+    (when (not (and (at_3_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_1_4_1
+  :effect (and
+    (when (and (at_3_1) (valid)) (at_4_1))
+    (when (and (at_3_1) (valid)) (not (at_3_1)))
+    (when (not (and (at_3_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_1_3_0
+  :effect (and
+    (when (and (at_3_1) (valid)) (at_3_0))
+    (when (and (at_3_1) (valid)) (not (at_3_1)))
+    (when (not (and (at_3_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_1_3_2
+  :effect (and
+    (when (and (at_3_1) (valid)) (at_3_2))
+    (when (and (at_3_1) (valid)) (not (at_3_1)))
+    (when (not (and (at_3_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_2_2_2
+  :effect (and
+    (when (and (at_3_2) (valid)) (at_2_2))
+    (when (and (at_3_2) (valid)) (not (at_3_2)))
+    (when (not (and (at_3_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_2_4_2
+  :effect (and
+    (when (and (at_3_2) (valid)) (at_4_2))
+    (when (and (at_3_2) (valid)) (not (at_3_2)))
+    (when (not (and (at_3_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_2_3_1
+  :effect (and
+    (when (and (at_3_2) (valid)) (at_3_1))
+    (when (and (at_3_2) (valid)) (not (at_3_2)))
+    (when (not (and (at_3_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_2_3_3
+  :effect (and
+    (when (and (at_3_2) (valid)) (at_3_3))
+    (when (and (at_3_2) (valid)) (not (at_3_2)))
+    (when (not (and (at_3_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_3_2_3
+  :effect (and
+    (when (and (at_3_3) (valid)) (at_2_3))
+    (when (and (at_3_3) (valid)) (not (at_3_3)))
+    (when (not (and (at_3_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_3_4_3
+  :effect (and
+    (when (and (at_3_3) (valid)) (at_4_3))
+    (when (and (at_3_3) (valid)) (not (at_3_3)))
+    (when (not (and (at_3_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_3_3_2
+  :effect (and
+    (when (and (at_3_3) (valid)) (at_3_2))
+    (when (and (at_3_3) (valid)) (not (at_3_3)))
+    (when (not (and (at_3_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_3_3_4
+  :effect (and
+    (when (and (at_3_3) (valid)) (at_3_4))
+    (when (and (at_3_3) (valid)) (not (at_3_3)))
+    (when (not (and (at_3_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_4_2_4
+  :effect (and
+    (when (and (at_3_4) (valid)) (at_2_4))
+    (when (and (at_3_4) (valid)) (not (at_3_4)))
+    (when (not (and (at_3_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_4_4_4
+  :effect (and
+    (when (and (at_3_4) (valid)) (at_4_4))
+    (when (and (at_3_4) (valid)) (not (at_3_4)))
+    (when (not (and (at_3_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_4_3_3
+  :effect (and
+    (when (and (at_3_4) (valid)) (at_3_3))
+    (when (and (at_3_4) (valid)) (not (at_3_4)))
+    (when (not (and (at_3_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_4_3_5
+  :effect (and
+    (when (and (at_3_4) (valid)) (at_3_5))
+    (when (and (at_3_4) (valid)) (not (at_3_4)))
+    (when (not (and (at_3_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_5_2_5
+  :effect (and
+    (when (and (at_3_5) (valid)) (at_2_5))
+    (when (and (at_3_5) (valid)) (not (at_3_5)))
+    (when (not (and (at_3_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_5_4_5
+  :effect (and
+    (when (and (at_3_5) (valid)) (at_4_5))
+    (when (and (at_3_5) (valid)) (not (at_3_5)))
+    (when (not (and (at_3_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_5_3_4
+  :effect (and
+    (when (and (at_3_5) (valid)) (at_3_4))
+    (when (and (at_3_5) (valid)) (not (at_3_5)))
+    (when (not (and (at_3_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_5_3_6
+  :effect (and
+    (when (and (at_3_5) (valid)) (at_3_6))
+    (when (and (at_3_5) (valid)) (not (at_3_5)))
+    (when (not (and (at_3_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_6_2_6
+  :effect (and
+    (when (and (at_3_6) (valid)) (at_2_6))
+    (when (and (at_3_6) (valid)) (not (at_3_6)))
+    (when (not (and (at_3_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_6_4_6
+  :effect (and
+    (when (and (at_3_6) (valid)) (at_4_6))
+    (when (and (at_3_6) (valid)) (not (at_3_6)))
+    (when (not (and (at_3_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_6_3_5
+  :effect (and
+    (when (and (at_3_6) (valid)) (at_3_5))
+    (when (and (at_3_6) (valid)) (not (at_3_6)))
+    (when (not (and (at_3_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_6_3_7
+  :effect (and
+    (when (and (at_3_6) (valid)) (at_3_7))
+    (when (and (at_3_6) (valid)) (not (at_3_6)))
+    (when (not (and (at_3_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_7_2_7
+  :effect (and
+    (when (and (at_3_7) (valid)) (at_2_7))
+    (when (and (at_3_7) (valid)) (not (at_3_7)))
+    (when (not (and (at_3_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_7_4_7
+  :effect (and
+    (when (and (at_3_7) (valid)) (at_4_7))
+    (when (and (at_3_7) (valid)) (not (at_3_7)))
+    (when (not (and (at_3_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_7_3_6
+  :effect (and
+    (when (and (at_3_7) (valid)) (at_3_6))
+    (when (and (at_3_7) (valid)) (not (at_3_7)))
+    (when (not (and (at_3_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_7_3_8
+  :effect (and
+    (when (and (at_3_7) (valid)) (at_3_8))
+    (when (and (at_3_7) (valid)) (not (at_3_7)))
+    (when (not (and (at_3_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_8_2_8
+  :effect (and
+    (when (and (at_3_8) (valid)) (at_2_8))
+    (when (and (at_3_8) (valid)) (not (at_3_8)))
+    (when (not (and (at_3_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_8_4_8
+  :effect (and
+    (when (and (at_3_8) (valid)) (at_4_8))
+    (when (and (at_3_8) (valid)) (not (at_3_8)))
+    (when (not (and (at_3_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_8_3_7
+  :effect (and
+    (when (and (at_3_8) (valid)) (at_3_7))
+    (when (and (at_3_8) (valid)) (not (at_3_8)))
+    (when (not (and (at_3_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_8_3_9
+  :effect (and
+    (when (and (at_3_8) (valid)) (at_3_9))
+    (when (and (at_3_8) (valid)) (not (at_3_8)))
+    (when (not (and (at_3_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_9_2_9
+  :effect (and
+    (when (and (at_3_9) (valid)) (at_2_9))
+    (when (and (at_3_9) (valid)) (not (at_3_9)))
+    (when (not (and (at_3_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_9_4_9
+  :effect (and
+    (when (and (at_3_9) (valid)) (at_4_9))
+    (when (and (at_3_9) (valid)) (not (at_3_9)))
+    (when (not (and (at_3_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_9_3_8
+  :effect (and
+    (when (and (at_3_9) (valid)) (at_3_8))
+    (when (and (at_3_9) (valid)) (not (at_3_9)))
+    (when (not (and (at_3_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_9_3_10
+  :effect (and
+    (when (and (at_3_9) (valid)) (at_3_10))
+    (when (and (at_3_9) (valid)) (not (at_3_9)))
+    (when (not (and (at_3_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_10_2_10
+  :effect (and
+    (when (and (at_3_10) (valid)) (at_2_10))
+    (when (and (at_3_10) (valid)) (not (at_3_10)))
+    (when (not (and (at_3_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_10_4_10
+  :effect (and
+    (when (and (at_3_10) (valid)) (at_4_10))
+    (when (and (at_3_10) (valid)) (not (at_3_10)))
+    (when (not (and (at_3_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_10_3_9
+  :effect (and
+    (when (and (at_3_10) (valid)) (at_3_9))
+    (when (and (at_3_10) (valid)) (not (at_3_10)))
+    (when (not (and (at_3_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_10_3_11
+  :effect (and
+    (when (and (at_3_10) (valid)) (at_3_11))
+    (when (and (at_3_10) (valid)) (not (at_3_10)))
+    (when (not (and (at_3_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_11_2_11
+  :effect (and
+    (when (and (at_3_11) (valid)) (at_2_11))
+    (when (and (at_3_11) (valid)) (not (at_3_11)))
+    (when (not (and (at_3_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_11_4_11
+  :effect (and
+    (when (and (at_3_11) (valid)) (at_4_11))
+    (when (and (at_3_11) (valid)) (not (at_3_11)))
+    (when (not (and (at_3_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_11_3_10
+  :effect (and
+    (when (and (at_3_11) (valid)) (at_3_10))
+    (when (and (at_3_11) (valid)) (not (at_3_11)))
+    (when (not (and (at_3_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_11_3_12
+  :effect (and
+    (when (and (at_3_11) (valid)) (at_3_12))
+    (when (and (at_3_11) (valid)) (not (at_3_11)))
+    (when (not (and (at_3_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_12_2_12
+  :effect (and
+    (when (and (at_3_12) (valid)) (at_2_12))
+    (when (and (at_3_12) (valid)) (not (at_3_12)))
+    (when (not (and (at_3_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_12_4_12
+  :effect (and
+    (when (and (at_3_12) (valid)) (at_4_12))
+    (when (and (at_3_12) (valid)) (not (at_3_12)))
+    (when (not (and (at_3_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_12_3_11
+  :effect (and
+    (when (and (at_3_12) (valid)) (at_3_11))
+    (when (and (at_3_12) (valid)) (not (at_3_12)))
+    (when (not (and (at_3_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_12_3_13
+  :effect (and
+    (when (and (at_3_12) (valid)) (at_3_13))
+    (when (and (at_3_12) (valid)) (not (at_3_12)))
+    (when (not (and (at_3_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_13_2_13
+  :effect (and
+    (when (and (at_3_13) (valid)) (at_2_13))
+    (when (and (at_3_13) (valid)) (not (at_3_13)))
+    (when (not (and (at_3_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_13_4_13
+  :effect (and
+    (when (and (at_3_13) (valid)) (at_4_13))
+    (when (and (at_3_13) (valid)) (not (at_3_13)))
+    (when (not (and (at_3_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_13_3_12
+  :effect (and
+    (when (and (at_3_13) (valid)) (at_3_12))
+    (when (and (at_3_13) (valid)) (not (at_3_13)))
+    (when (not (and (at_3_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_13_3_14
+  :effect (and
+    (when (and (at_3_13) (valid)) (at_3_14))
+    (when (and (at_3_13) (valid)) (not (at_3_13)))
+    (when (not (and (at_3_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_14_2_14
+  :effect (and
+    (when (and (at_3_14) (valid)) (at_2_14))
+    (when (and (at_3_14) (valid)) (not (at_3_14)))
+    (when (not (and (at_3_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_14_4_14
+  :effect (and
+    (when (and (at_3_14) (valid)) (at_4_14))
+    (when (and (at_3_14) (valid)) (not (at_3_14)))
+    (when (not (and (at_3_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_14_3_13
+  :effect (and
+    (when (and (at_3_14) (valid)) (at_3_13))
+    (when (and (at_3_14) (valid)) (not (at_3_14)))
+    (when (not (and (at_3_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_14_3_15
+  :effect (and
+    (when (and (at_3_14) (valid)) (at_3_15))
+    (when (and (at_3_14) (valid)) (not (at_3_14)))
+    (when (not (and (at_3_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_15_2_15
+  :effect (and
+    (when (and (at_3_15) (valid)) (at_2_15))
+    (when (and (at_3_15) (valid)) (not (at_3_15)))
+    (when (not (and (at_3_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_15_4_15
+  :effect (and
+    (when (and (at_3_15) (valid)) (at_4_15))
+    (when (and (at_3_15) (valid)) (not (at_3_15)))
+    (when (not (and (at_3_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_15_3_14
+  :effect (and
+    (when (and (at_3_15) (valid)) (at_3_14))
+    (when (and (at_3_15) (valid)) (not (at_3_15)))
+    (when (not (and (at_3_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_15_3_16
+  :effect (and
+    (when (and (at_3_15) (valid)) (at_3_16))
+    (when (and (at_3_15) (valid)) (not (at_3_15)))
+    (when (not (and (at_3_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_16_2_16
+  :effect (and
+    (when (and (at_3_16) (valid)) (at_2_16))
+    (when (and (at_3_16) (valid)) (not (at_3_16)))
+    (when (not (and (at_3_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_16_4_16
+  :effect (and
+    (when (and (at_3_16) (valid)) (at_4_16))
+    (when (and (at_3_16) (valid)) (not (at_3_16)))
+    (when (not (and (at_3_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_16_3_15
+  :effect (and
+    (when (and (at_3_16) (valid)) (at_3_15))
+    (when (and (at_3_16) (valid)) (not (at_3_16)))
+    (when (not (and (at_3_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_16_3_17
+  :effect (and
+    (when (and (at_3_16) (valid)) (at_3_17))
+    (when (and (at_3_16) (valid)) (not (at_3_16)))
+    (when (not (and (at_3_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_17_2_17
+  :effect (and
+    (when (and (at_3_17) (valid)) (at_2_17))
+    (when (and (at_3_17) (valid)) (not (at_3_17)))
+    (when (not (and (at_3_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_17_4_17
+  :effect (and
+    (when (and (at_3_17) (valid)) (at_4_17))
+    (when (and (at_3_17) (valid)) (not (at_3_17)))
+    (when (not (and (at_3_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_17_3_16
+  :effect (and
+    (when (and (at_3_17) (valid)) (at_3_16))
+    (when (and (at_3_17) (valid)) (not (at_3_17)))
+    (when (not (and (at_3_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_17_3_18
+  :effect (and
+    (when (and (at_3_17) (valid)) (at_3_18))
+    (when (and (at_3_17) (valid)) (not (at_3_17)))
+    (when (not (and (at_3_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_18_2_18
+  :effect (and
+    (when (and (at_3_18) (valid)) (at_2_18))
+    (when (and (at_3_18) (valid)) (not (at_3_18)))
+    (when (not (and (at_3_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_18_4_18
+  :effect (and
+    (when (and (at_3_18) (valid)) (at_4_18))
+    (when (and (at_3_18) (valid)) (not (at_3_18)))
+    (when (not (and (at_3_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_18_3_17
+  :effect (and
+    (when (and (at_3_18) (valid)) (at_3_17))
+    (when (and (at_3_18) (valid)) (not (at_3_18)))
+    (when (not (and (at_3_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_18_3_19
+  :effect (and
+    (when (and (at_3_18) (valid)) (at_3_19))
+    (when (and (at_3_18) (valid)) (not (at_3_18)))
+    (when (not (and (at_3_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_19_2_19
+  :effect (and
+    (when (and (at_3_19) (valid)) (at_2_19))
+    (when (and (at_3_19) (valid)) (not (at_3_19)))
+    (when (not (and (at_3_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_19_4_19
+  :effect (and
+    (when (and (at_3_19) (valid)) (at_4_19))
+    (when (and (at_3_19) (valid)) (not (at_3_19)))
+    (when (not (and (at_3_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_19_3_18
+  :effect (and
+    (when (and (at_3_19) (valid)) (at_3_18))
+    (when (and (at_3_19) (valid)) (not (at_3_19)))
+    (when (not (and (at_3_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_19_3_20
+  :effect (and
+    (when (and (at_3_19) (valid)) (at_3_20))
+    (when (and (at_3_19) (valid)) (not (at_3_19)))
+    (when (not (and (at_3_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_20_2_20
+  :effect (and
+    (when (and (at_3_20) (valid)) (at_2_20))
+    (when (and (at_3_20) (valid)) (not (at_3_20)))
+    (when (not (and (at_3_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_20_4_20
+  :effect (and
+    (when (and (at_3_20) (valid)) (at_4_20))
+    (when (and (at_3_20) (valid)) (not (at_3_20)))
+    (when (not (and (at_3_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_20_3_19
+  :effect (and
+    (when (and (at_3_20) (valid)) (at_3_19))
+    (when (and (at_3_20) (valid)) (not (at_3_20)))
+    (when (not (and (at_3_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_20_3_21
+  :effect (and
+    (when (and (at_3_20) (valid)) (at_3_21))
+    (when (and (at_3_20) (valid)) (not (at_3_20)))
+    (when (not (and (at_3_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_21_2_21
+  :effect (and
+    (when (and (at_3_21) (valid)) (at_2_21))
+    (when (and (at_3_21) (valid)) (not (at_3_21)))
+    (when (not (and (at_3_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_21_4_21
+  :effect (and
+    (when (and (at_3_21) (valid)) (at_4_21))
+    (when (and (at_3_21) (valid)) (not (at_3_21)))
+    (when (not (and (at_3_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_21_3_20
+  :effect (and
+    (when (and (at_3_21) (valid)) (at_3_20))
+    (when (and (at_3_21) (valid)) (not (at_3_21)))
+    (when (not (and (at_3_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_21_3_22
+  :effect (and
+    (when (and (at_3_21) (valid)) (at_3_22))
+    (when (and (at_3_21) (valid)) (not (at_3_21)))
+    (when (not (and (at_3_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_22_2_22
+  :effect (and
+    (when (and (at_3_22) (valid)) (at_2_22))
+    (when (and (at_3_22) (valid)) (not (at_3_22)))
+    (when (not (and (at_3_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_22_4_22
+  :effect (and
+    (when (and (at_3_22) (valid)) (at_4_22))
+    (when (and (at_3_22) (valid)) (not (at_3_22)))
+    (when (not (and (at_3_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_22_3_21
+  :effect (and
+    (when (and (at_3_22) (valid)) (at_3_21))
+    (when (and (at_3_22) (valid)) (not (at_3_22)))
+    (when (not (and (at_3_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_22_3_23
+  :effect (and
+    (when (and (at_3_22) (valid)) (at_3_23))
+    (when (and (at_3_22) (valid)) (not (at_3_22)))
+    (when (not (and (at_3_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_23_2_23
+  :effect (and
+    (when (and (at_3_23) (valid)) (at_2_23))
+    (when (and (at_3_23) (valid)) (not (at_3_23)))
+    (when (not (and (at_3_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_23_4_23
+  :effect (and
+    (when (and (at_3_23) (valid)) (at_4_23))
+    (when (and (at_3_23) (valid)) (not (at_3_23)))
+    (when (not (and (at_3_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_23_3_22
+  :effect (and
+    (when (and (at_3_23) (valid)) (at_3_22))
+    (when (and (at_3_23) (valid)) (not (at_3_23)))
+    (when (not (and (at_3_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_23_3_24
+  :effect (and
+    (when (and (at_3_23) (valid)) (at_3_24))
+    (when (and (at_3_23) (valid)) (not (at_3_23)))
+    (when (not (and (at_3_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_24_2_24
+  :effect (and
+    (when (and (at_3_24) (valid)) (at_2_24))
+    (when (and (at_3_24) (valid)) (not (at_3_24)))
+    (when (not (and (at_3_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_24_4_24
+  :effect (and
+    (when (and (at_3_24) (valid)) (at_4_24))
+    (when (and (at_3_24) (valid)) (not (at_3_24)))
+    (when (not (and (at_3_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_24_3_23
+  :effect (and
+    (when (and (at_3_24) (valid)) (at_3_23))
+    (when (and (at_3_24) (valid)) (not (at_3_24)))
+    (when (not (and (at_3_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_24_3_25
+  :effect (and
+    (when (and (at_3_24) (valid)) (at_3_25))
+    (when (and (at_3_24) (valid)) (not (at_3_24)))
+    (when (not (and (at_3_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_25_2_25
+  :effect (and
+    (when (and (at_3_25) (valid)) (at_2_25))
+    (when (and (at_3_25) (valid)) (not (at_3_25)))
+    (when (not (and (at_3_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_25_4_25
+  :effect (and
+    (when (and (at_3_25) (valid)) (at_4_25))
+    (when (and (at_3_25) (valid)) (not (at_3_25)))
+    (when (not (and (at_3_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_25_3_24
+  :effect (and
+    (when (and (at_3_25) (valid)) (at_3_24))
+    (when (and (at_3_25) (valid)) (not (at_3_25)))
+    (when (not (and (at_3_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_25_3_26
+  :effect (and
+    (when (and (at_3_25) (valid)) (at_3_26))
+    (when (and (at_3_25) (valid)) (not (at_3_25)))
+    (when (not (and (at_3_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_26_2_26
+  :effect (and
+    (when (and (at_3_26) (valid)) (at_2_26))
+    (when (and (at_3_26) (valid)) (not (at_3_26)))
+    (when (not (and (at_3_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_26_4_26
+  :effect (and
+    (when (and (at_3_26) (valid)) (at_4_26))
+    (when (and (at_3_26) (valid)) (not (at_3_26)))
+    (when (not (and (at_3_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_26_3_25
+  :effect (and
+    (when (and (at_3_26) (valid)) (at_3_25))
+    (when (and (at_3_26) (valid)) (not (at_3_26)))
+    (when (not (and (at_3_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_26_3_27
+  :effect (and
+    (when (and (at_3_26) (valid)) (at_3_27))
+    (when (and (at_3_26) (valid)) (not (at_3_26)))
+    (when (not (and (at_3_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_27_2_27
+  :effect (and
+    (when (and (at_3_27) (valid)) (at_2_27))
+    (when (and (at_3_27) (valid)) (not (at_3_27)))
+    (when (not (and (at_3_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_27_4_27
+  :effect (and
+    (when (and (at_3_27) (valid)) (at_4_27))
+    (when (and (at_3_27) (valid)) (not (at_3_27)))
+    (when (not (and (at_3_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_27_3_26
+  :effect (and
+    (when (and (at_3_27) (valid)) (at_3_26))
+    (when (and (at_3_27) (valid)) (not (at_3_27)))
+    (when (not (and (at_3_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_27_3_28
+  :effect (and
+    (when (and (at_3_27) (valid)) (at_3_28))
+    (when (and (at_3_27) (valid)) (not (at_3_27)))
+    (when (not (and (at_3_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_28_2_28
+  :effect (and
+    (when (and (at_3_28) (valid)) (at_2_28))
+    (when (and (at_3_28) (valid)) (not (at_3_28)))
+    (when (not (and (at_3_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_28_4_28
+  :effect (and
+    (when (and (at_3_28) (valid)) (at_4_28))
+    (when (and (at_3_28) (valid)) (not (at_3_28)))
+    (when (not (and (at_3_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_28_3_27
+  :effect (and
+    (when (and (at_3_28) (valid)) (at_3_27))
+    (when (and (at_3_28) (valid)) (not (at_3_28)))
+    (when (not (and (at_3_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_28_3_29
+  :effect (and
+    (when (and (at_3_28) (valid)) (at_3_29))
+    (when (and (at_3_28) (valid)) (not (at_3_28)))
+    (when (not (and (at_3_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_29_2_29
+  :effect (and
+    (when (and (at_3_29) (valid)) (at_2_29))
+    (when (and (at_3_29) (valid)) (not (at_3_29)))
+    (when (not (and (at_3_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_29_4_29
+  :effect (and
+    (when (and (at_3_29) (valid)) (at_4_29))
+    (when (and (at_3_29) (valid)) (not (at_3_29)))
+    (when (not (and (at_3_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_29_3_28
+  :effect (and
+    (when (and (at_3_29) (valid)) (at_3_28))
+    (when (and (at_3_29) (valid)) (not (at_3_29)))
+    (when (not (and (at_3_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_29_3_30
+  :effect (and
+    (when (and (at_3_29) (valid)) (at_3_30))
+    (when (and (at_3_29) (valid)) (not (at_3_29)))
+    (when (not (and (at_3_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_30_2_30
+  :effect (and
+    (when (and (at_3_30) (valid)) (at_2_30))
+    (when (and (at_3_30) (valid)) (not (at_3_30)))
+    (when (not (and (at_3_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_30_4_30
+  :effect (and
+    (when (and (at_3_30) (valid)) (at_4_30))
+    (when (and (at_3_30) (valid)) (not (at_3_30)))
+    (when (not (and (at_3_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_30_3_29
+  :effect (and
+    (when (and (at_3_30) (valid)) (at_3_29))
+    (when (and (at_3_30) (valid)) (not (at_3_30)))
+    (when (not (and (at_3_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_30_3_31
+  :effect (and
+    (when (and (at_3_30) (valid)) (at_3_31))
+    (when (and (at_3_30) (valid)) (not (at_3_30)))
+    (when (not (and (at_3_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_31_2_31
+  :effect (and
+    (when (and (at_3_31) (valid)) (at_2_31))
+    (when (and (at_3_31) (valid)) (not (at_3_31)))
+    (when (not (and (at_3_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_31_4_31
+  :effect (and
+    (when (and (at_3_31) (valid)) (at_4_31))
+    (when (and (at_3_31) (valid)) (not (at_3_31)))
+    (when (not (and (at_3_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_3_31_3_30
+  :effect (and
+    (when (and (at_3_31) (valid)) (at_3_30))
+    (when (and (at_3_31) (valid)) (not (at_3_31)))
+    (when (not (and (at_3_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_0_3_0
+  :effect (and
+    (when (and (at_4_0) (valid)) (at_3_0))
+    (when (and (at_4_0) (valid)) (not (at_4_0)))
+    (when (not (and (at_4_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_0_5_0
+  :effect (and
+    (when (and (at_4_0) (valid)) (at_5_0))
+    (when (and (at_4_0) (valid)) (not (at_4_0)))
+    (when (not (and (at_4_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_0_4_1
+  :effect (and
+    (when (and (at_4_0) (valid)) (at_4_1))
+    (when (and (at_4_0) (valid)) (not (at_4_0)))
+    (when (not (and (at_4_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_1_3_1
+  :effect (and
+    (when (and (at_4_1) (valid)) (at_3_1))
+    (when (and (at_4_1) (valid)) (not (at_4_1)))
+    (when (not (and (at_4_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_1_5_1
+  :effect (and
+    (when (and (at_4_1) (valid)) (at_5_1))
+    (when (and (at_4_1) (valid)) (not (at_4_1)))
+    (when (not (and (at_4_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_1_4_0
+  :effect (and
+    (when (and (at_4_1) (valid)) (at_4_0))
+    (when (and (at_4_1) (valid)) (not (at_4_1)))
+    (when (not (and (at_4_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_1_4_2
+  :effect (and
+    (when (and (at_4_1) (valid)) (at_4_2))
+    (when (and (at_4_1) (valid)) (not (at_4_1)))
+    (when (not (and (at_4_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_2_3_2
+  :effect (and
+    (when (and (at_4_2) (valid)) (at_3_2))
+    (when (and (at_4_2) (valid)) (not (at_4_2)))
+    (when (not (and (at_4_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_2_5_2
+  :effect (and
+    (when (and (at_4_2) (valid)) (at_5_2))
+    (when (and (at_4_2) (valid)) (not (at_4_2)))
+    (when (not (and (at_4_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_2_4_1
+  :effect (and
+    (when (and (at_4_2) (valid)) (at_4_1))
+    (when (and (at_4_2) (valid)) (not (at_4_2)))
+    (when (not (and (at_4_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_2_4_3
+  :effect (and
+    (when (and (at_4_2) (valid)) (at_4_3))
+    (when (and (at_4_2) (valid)) (not (at_4_2)))
+    (when (not (and (at_4_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_3_3_3
+  :effect (and
+    (when (and (at_4_3) (valid)) (at_3_3))
+    (when (and (at_4_3) (valid)) (not (at_4_3)))
+    (when (not (and (at_4_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_3_5_3
+  :effect (and
+    (when (and (at_4_3) (valid)) (at_5_3))
+    (when (and (at_4_3) (valid)) (not (at_4_3)))
+    (when (not (and (at_4_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_3_4_2
+  :effect (and
+    (when (and (at_4_3) (valid)) (at_4_2))
+    (when (and (at_4_3) (valid)) (not (at_4_3)))
+    (when (not (and (at_4_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_3_4_4
+  :effect (and
+    (when (and (at_4_3) (valid)) (at_4_4))
+    (when (and (at_4_3) (valid)) (not (at_4_3)))
+    (when (not (and (at_4_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_4_3_4
+  :effect (and
+    (when (and (at_4_4) (valid)) (at_3_4))
+    (when (and (at_4_4) (valid)) (not (at_4_4)))
+    (when (not (and (at_4_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_4_5_4
+  :effect (and
+    (when (and (at_4_4) (valid)) (at_5_4))
+    (when (and (at_4_4) (valid)) (not (at_4_4)))
+    (when (not (and (at_4_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_4_4_3
+  :effect (and
+    (when (and (at_4_4) (valid)) (at_4_3))
+    (when (and (at_4_4) (valid)) (not (at_4_4)))
+    (when (not (and (at_4_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_4_4_5
+  :effect (and
+    (when (and (at_4_4) (valid)) (at_4_5))
+    (when (and (at_4_4) (valid)) (not (at_4_4)))
+    (when (not (and (at_4_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_5_3_5
+  :effect (and
+    (when (and (at_4_5) (valid)) (at_3_5))
+    (when (and (at_4_5) (valid)) (not (at_4_5)))
+    (when (not (and (at_4_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_5_5_5
+  :effect (and
+    (when (and (at_4_5) (valid)) (at_5_5))
+    (when (and (at_4_5) (valid)) (not (at_4_5)))
+    (when (not (and (at_4_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_5_4_4
+  :effect (and
+    (when (and (at_4_5) (valid)) (at_4_4))
+    (when (and (at_4_5) (valid)) (not (at_4_5)))
+    (when (not (and (at_4_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_5_4_6
+  :effect (and
+    (when (and (at_4_5) (valid)) (at_4_6))
+    (when (and (at_4_5) (valid)) (not (at_4_5)))
+    (when (not (and (at_4_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_6_3_6
+  :effect (and
+    (when (and (at_4_6) (valid)) (at_3_6))
+    (when (and (at_4_6) (valid)) (not (at_4_6)))
+    (when (not (and (at_4_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_6_5_6
+  :effect (and
+    (when (and (at_4_6) (valid)) (at_5_6))
+    (when (and (at_4_6) (valid)) (not (at_4_6)))
+    (when (not (and (at_4_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_6_4_5
+  :effect (and
+    (when (and (at_4_6) (valid)) (at_4_5))
+    (when (and (at_4_6) (valid)) (not (at_4_6)))
+    (when (not (and (at_4_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_6_4_7
+  :effect (and
+    (when (and (at_4_6) (valid)) (at_4_7))
+    (when (and (at_4_6) (valid)) (not (at_4_6)))
+    (when (not (and (at_4_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_7_3_7
+  :effect (and
+    (when (and (at_4_7) (valid)) (at_3_7))
+    (when (and (at_4_7) (valid)) (not (at_4_7)))
+    (when (not (and (at_4_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_7_5_7
+  :effect (and
+    (when (and (at_4_7) (valid)) (at_5_7))
+    (when (and (at_4_7) (valid)) (not (at_4_7)))
+    (when (not (and (at_4_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_7_4_6
+  :effect (and
+    (when (and (at_4_7) (valid)) (at_4_6))
+    (when (and (at_4_7) (valid)) (not (at_4_7)))
+    (when (not (and (at_4_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_7_4_8
+  :effect (and
+    (when (and (at_4_7) (valid)) (at_4_8))
+    (when (and (at_4_7) (valid)) (not (at_4_7)))
+    (when (not (and (at_4_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_8_3_8
+  :effect (and
+    (when (and (at_4_8) (valid)) (at_3_8))
+    (when (and (at_4_8) (valid)) (not (at_4_8)))
+    (when (not (and (at_4_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_8_5_8
+  :effect (and
+    (when (and (at_4_8) (valid)) (at_5_8))
+    (when (and (at_4_8) (valid)) (not (at_4_8)))
+    (when (not (and (at_4_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_8_4_7
+  :effect (and
+    (when (and (at_4_8) (valid)) (at_4_7))
+    (when (and (at_4_8) (valid)) (not (at_4_8)))
+    (when (not (and (at_4_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_8_4_9
+  :effect (and
+    (when (and (at_4_8) (valid)) (at_4_9))
+    (when (and (at_4_8) (valid)) (not (at_4_8)))
+    (when (not (and (at_4_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_9_3_9
+  :effect (and
+    (when (and (at_4_9) (valid)) (at_3_9))
+    (when (and (at_4_9) (valid)) (not (at_4_9)))
+    (when (not (and (at_4_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_9_5_9
+  :effect (and
+    (when (and (at_4_9) (valid)) (at_5_9))
+    (when (and (at_4_9) (valid)) (not (at_4_9)))
+    (when (not (and (at_4_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_9_4_8
+  :effect (and
+    (when (and (at_4_9) (valid)) (at_4_8))
+    (when (and (at_4_9) (valid)) (not (at_4_9)))
+    (when (not (and (at_4_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_9_4_10
+  :effect (and
+    (when (and (at_4_9) (valid)) (at_4_10))
+    (when (and (at_4_9) (valid)) (not (at_4_9)))
+    (when (not (and (at_4_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_10_3_10
+  :effect (and
+    (when (and (at_4_10) (valid)) (at_3_10))
+    (when (and (at_4_10) (valid)) (not (at_4_10)))
+    (when (not (and (at_4_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_10_5_10
+  :effect (and
+    (when (and (at_4_10) (valid)) (at_5_10))
+    (when (and (at_4_10) (valid)) (not (at_4_10)))
+    (when (not (and (at_4_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_10_4_9
+  :effect (and
+    (when (and (at_4_10) (valid)) (at_4_9))
+    (when (and (at_4_10) (valid)) (not (at_4_10)))
+    (when (not (and (at_4_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_10_4_11
+  :effect (and
+    (when (and (at_4_10) (valid)) (at_4_11))
+    (when (and (at_4_10) (valid)) (not (at_4_10)))
+    (when (not (and (at_4_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_11_3_11
+  :effect (and
+    (when (and (at_4_11) (valid)) (at_3_11))
+    (when (and (at_4_11) (valid)) (not (at_4_11)))
+    (when (not (and (at_4_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_11_5_11
+  :effect (and
+    (when (and (at_4_11) (valid)) (at_5_11))
+    (when (and (at_4_11) (valid)) (not (at_4_11)))
+    (when (not (and (at_4_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_11_4_10
+  :effect (and
+    (when (and (at_4_11) (valid)) (at_4_10))
+    (when (and (at_4_11) (valid)) (not (at_4_11)))
+    (when (not (and (at_4_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_11_4_12
+  :effect (and
+    (when (and (at_4_11) (valid)) (at_4_12))
+    (when (and (at_4_11) (valid)) (not (at_4_11)))
+    (when (not (and (at_4_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_12_3_12
+  :effect (and
+    (when (and (at_4_12) (valid)) (at_3_12))
+    (when (and (at_4_12) (valid)) (not (at_4_12)))
+    (when (not (and (at_4_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_12_5_12
+  :effect (and
+    (when (and (at_4_12) (valid)) (at_5_12))
+    (when (and (at_4_12) (valid)) (not (at_4_12)))
+    (when (not (and (at_4_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_12_4_11
+  :effect (and
+    (when (and (at_4_12) (valid)) (at_4_11))
+    (when (and (at_4_12) (valid)) (not (at_4_12)))
+    (when (not (and (at_4_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_12_4_13
+  :effect (and
+    (when (and (at_4_12) (valid)) (at_4_13))
+    (when (and (at_4_12) (valid)) (not (at_4_12)))
+    (when (not (and (at_4_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_13_3_13
+  :effect (and
+    (when (and (at_4_13) (valid)) (at_3_13))
+    (when (and (at_4_13) (valid)) (not (at_4_13)))
+    (when (not (and (at_4_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_13_5_13
+  :effect (and
+    (when (and (at_4_13) (valid)) (at_5_13))
+    (when (and (at_4_13) (valid)) (not (at_4_13)))
+    (when (not (and (at_4_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_13_4_12
+  :effect (and
+    (when (and (at_4_13) (valid)) (at_4_12))
+    (when (and (at_4_13) (valid)) (not (at_4_13)))
+    (when (not (and (at_4_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_13_4_14
+  :effect (and
+    (when (and (at_4_13) (valid)) (at_4_14))
+    (when (and (at_4_13) (valid)) (not (at_4_13)))
+    (when (not (and (at_4_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_14_3_14
+  :effect (and
+    (when (and (at_4_14) (valid)) (at_3_14))
+    (when (and (at_4_14) (valid)) (not (at_4_14)))
+    (when (not (and (at_4_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_14_5_14
+  :effect (and
+    (when (and (at_4_14) (valid)) (at_5_14))
+    (when (and (at_4_14) (valid)) (not (at_4_14)))
+    (when (not (and (at_4_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_14_4_13
+  :effect (and
+    (when (and (at_4_14) (valid)) (at_4_13))
+    (when (and (at_4_14) (valid)) (not (at_4_14)))
+    (when (not (and (at_4_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_14_4_15
+  :effect (and
+    (when (and (at_4_14) (valid)) (at_4_15))
+    (when (and (at_4_14) (valid)) (not (at_4_14)))
+    (when (not (and (at_4_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_15_3_15
+  :effect (and
+    (when (and (at_4_15) (valid)) (at_3_15))
+    (when (and (at_4_15) (valid)) (not (at_4_15)))
+    (when (not (and (at_4_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_15_5_15
+  :effect (and
+    (when (and (at_4_15) (valid)) (at_5_15))
+    (when (and (at_4_15) (valid)) (not (at_4_15)))
+    (when (not (and (at_4_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_15_4_14
+  :effect (and
+    (when (and (at_4_15) (valid)) (at_4_14))
+    (when (and (at_4_15) (valid)) (not (at_4_15)))
+    (when (not (and (at_4_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_15_4_16
+  :effect (and
+    (when (and (at_4_15) (valid)) (at_4_16))
+    (when (and (at_4_15) (valid)) (not (at_4_15)))
+    (when (not (and (at_4_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_16_3_16
+  :effect (and
+    (when (and (at_4_16) (valid)) (at_3_16))
+    (when (and (at_4_16) (valid)) (not (at_4_16)))
+    (when (not (and (at_4_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_16_5_16
+  :effect (and
+    (when (and (at_4_16) (valid)) (at_5_16))
+    (when (and (at_4_16) (valid)) (not (at_4_16)))
+    (when (not (and (at_4_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_16_4_15
+  :effect (and
+    (when (and (at_4_16) (valid)) (at_4_15))
+    (when (and (at_4_16) (valid)) (not (at_4_16)))
+    (when (not (and (at_4_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_16_4_17
+  :effect (and
+    (when (and (at_4_16) (valid)) (at_4_17))
+    (when (and (at_4_16) (valid)) (not (at_4_16)))
+    (when (not (and (at_4_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_17_3_17
+  :effect (and
+    (when (and (at_4_17) (valid)) (at_3_17))
+    (when (and (at_4_17) (valid)) (not (at_4_17)))
+    (when (not (and (at_4_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_17_5_17
+  :effect (and
+    (when (and (at_4_17) (valid)) (at_5_17))
+    (when (and (at_4_17) (valid)) (not (at_4_17)))
+    (when (not (and (at_4_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_17_4_16
+  :effect (and
+    (when (and (at_4_17) (valid)) (at_4_16))
+    (when (and (at_4_17) (valid)) (not (at_4_17)))
+    (when (not (and (at_4_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_17_4_18
+  :effect (and
+    (when (and (at_4_17) (valid)) (at_4_18))
+    (when (and (at_4_17) (valid)) (not (at_4_17)))
+    (when (not (and (at_4_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_18_3_18
+  :effect (and
+    (when (and (at_4_18) (valid)) (at_3_18))
+    (when (and (at_4_18) (valid)) (not (at_4_18)))
+    (when (not (and (at_4_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_18_5_18
+  :effect (and
+    (when (and (at_4_18) (valid)) (at_5_18))
+    (when (and (at_4_18) (valid)) (not (at_4_18)))
+    (when (not (and (at_4_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_18_4_17
+  :effect (and
+    (when (and (at_4_18) (valid)) (at_4_17))
+    (when (and (at_4_18) (valid)) (not (at_4_18)))
+    (when (not (and (at_4_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_18_4_19
+  :effect (and
+    (when (and (at_4_18) (valid)) (at_4_19))
+    (when (and (at_4_18) (valid)) (not (at_4_18)))
+    (when (not (and (at_4_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_19_3_19
+  :effect (and
+    (when (and (at_4_19) (valid)) (at_3_19))
+    (when (and (at_4_19) (valid)) (not (at_4_19)))
+    (when (not (and (at_4_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_19_5_19
+  :effect (and
+    (when (and (at_4_19) (valid)) (at_5_19))
+    (when (and (at_4_19) (valid)) (not (at_4_19)))
+    (when (not (and (at_4_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_19_4_18
+  :effect (and
+    (when (and (at_4_19) (valid)) (at_4_18))
+    (when (and (at_4_19) (valid)) (not (at_4_19)))
+    (when (not (and (at_4_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_19_4_20
+  :effect (and
+    (when (and (at_4_19) (valid)) (at_4_20))
+    (when (and (at_4_19) (valid)) (not (at_4_19)))
+    (when (not (and (at_4_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_20_3_20
+  :effect (and
+    (when (and (at_4_20) (valid)) (at_3_20))
+    (when (and (at_4_20) (valid)) (not (at_4_20)))
+    (when (not (and (at_4_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_20_5_20
+  :effect (and
+    (when (and (at_4_20) (valid)) (at_5_20))
+    (when (and (at_4_20) (valid)) (not (at_4_20)))
+    (when (not (and (at_4_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_20_4_19
+  :effect (and
+    (when (and (at_4_20) (valid)) (at_4_19))
+    (when (and (at_4_20) (valid)) (not (at_4_20)))
+    (when (not (and (at_4_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_20_4_21
+  :effect (and
+    (when (and (at_4_20) (valid)) (at_4_21))
+    (when (and (at_4_20) (valid)) (not (at_4_20)))
+    (when (not (and (at_4_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_21_3_21
+  :effect (and
+    (when (and (at_4_21) (valid)) (at_3_21))
+    (when (and (at_4_21) (valid)) (not (at_4_21)))
+    (when (not (and (at_4_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_21_5_21
+  :effect (and
+    (when (and (at_4_21) (valid)) (at_5_21))
+    (when (and (at_4_21) (valid)) (not (at_4_21)))
+    (when (not (and (at_4_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_21_4_20
+  :effect (and
+    (when (and (at_4_21) (valid)) (at_4_20))
+    (when (and (at_4_21) (valid)) (not (at_4_21)))
+    (when (not (and (at_4_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_21_4_22
+  :effect (and
+    (when (and (at_4_21) (valid)) (at_4_22))
+    (when (and (at_4_21) (valid)) (not (at_4_21)))
+    (when (not (and (at_4_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_22_3_22
+  :effect (and
+    (when (and (at_4_22) (valid)) (at_3_22))
+    (when (and (at_4_22) (valid)) (not (at_4_22)))
+    (when (not (and (at_4_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_22_5_22
+  :effect (and
+    (when (and (at_4_22) (valid)) (at_5_22))
+    (when (and (at_4_22) (valid)) (not (at_4_22)))
+    (when (not (and (at_4_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_22_4_21
+  :effect (and
+    (when (and (at_4_22) (valid)) (at_4_21))
+    (when (and (at_4_22) (valid)) (not (at_4_22)))
+    (when (not (and (at_4_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_22_4_23
+  :effect (and
+    (when (and (at_4_22) (valid)) (at_4_23))
+    (when (and (at_4_22) (valid)) (not (at_4_22)))
+    (when (not (and (at_4_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_23_3_23
+  :effect (and
+    (when (and (at_4_23) (valid)) (at_3_23))
+    (when (and (at_4_23) (valid)) (not (at_4_23)))
+    (when (not (and (at_4_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_23_5_23
+  :effect (and
+    (when (and (at_4_23) (valid)) (at_5_23))
+    (when (and (at_4_23) (valid)) (not (at_4_23)))
+    (when (not (and (at_4_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_23_4_22
+  :effect (and
+    (when (and (at_4_23) (valid)) (at_4_22))
+    (when (and (at_4_23) (valid)) (not (at_4_23)))
+    (when (not (and (at_4_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_23_4_24
+  :effect (and
+    (when (and (at_4_23) (valid)) (at_4_24))
+    (when (and (at_4_23) (valid)) (not (at_4_23)))
+    (when (not (and (at_4_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_24_3_24
+  :effect (and
+    (when (and (at_4_24) (valid)) (at_3_24))
+    (when (and (at_4_24) (valid)) (not (at_4_24)))
+    (when (not (and (at_4_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_24_5_24
+  :effect (and
+    (when (and (at_4_24) (valid)) (at_5_24))
+    (when (and (at_4_24) (valid)) (not (at_4_24)))
+    (when (not (and (at_4_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_24_4_23
+  :effect (and
+    (when (and (at_4_24) (valid)) (at_4_23))
+    (when (and (at_4_24) (valid)) (not (at_4_24)))
+    (when (not (and (at_4_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_24_4_25
+  :effect (and
+    (when (and (at_4_24) (valid)) (at_4_25))
+    (when (and (at_4_24) (valid)) (not (at_4_24)))
+    (when (not (and (at_4_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_25_3_25
+  :effect (and
+    (when (and (at_4_25) (valid)) (at_3_25))
+    (when (and (at_4_25) (valid)) (not (at_4_25)))
+    (when (not (and (at_4_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_25_5_25
+  :effect (and
+    (when (and (at_4_25) (valid)) (at_5_25))
+    (when (and (at_4_25) (valid)) (not (at_4_25)))
+    (when (not (and (at_4_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_25_4_24
+  :effect (and
+    (when (and (at_4_25) (valid)) (at_4_24))
+    (when (and (at_4_25) (valid)) (not (at_4_25)))
+    (when (not (and (at_4_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_25_4_26
+  :effect (and
+    (when (and (at_4_25) (valid)) (at_4_26))
+    (when (and (at_4_25) (valid)) (not (at_4_25)))
+    (when (not (and (at_4_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_26_3_26
+  :effect (and
+    (when (and (at_4_26) (valid)) (at_3_26))
+    (when (and (at_4_26) (valid)) (not (at_4_26)))
+    (when (not (and (at_4_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_26_5_26
+  :effect (and
+    (when (and (at_4_26) (valid)) (at_5_26))
+    (when (and (at_4_26) (valid)) (not (at_4_26)))
+    (when (not (and (at_4_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_26_4_25
+  :effect (and
+    (when (and (at_4_26) (valid)) (at_4_25))
+    (when (and (at_4_26) (valid)) (not (at_4_26)))
+    (when (not (and (at_4_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_26_4_27
+  :effect (and
+    (when (and (at_4_26) (valid)) (at_4_27))
+    (when (and (at_4_26) (valid)) (not (at_4_26)))
+    (when (not (and (at_4_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_27_3_27
+  :effect (and
+    (when (and (at_4_27) (valid)) (at_3_27))
+    (when (and (at_4_27) (valid)) (not (at_4_27)))
+    (when (not (and (at_4_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_27_5_27
+  :effect (and
+    (when (and (at_4_27) (valid)) (at_5_27))
+    (when (and (at_4_27) (valid)) (not (at_4_27)))
+    (when (not (and (at_4_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_27_4_26
+  :effect (and
+    (when (and (at_4_27) (valid)) (at_4_26))
+    (when (and (at_4_27) (valid)) (not (at_4_27)))
+    (when (not (and (at_4_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_27_4_28
+  :effect (and
+    (when (and (at_4_27) (valid)) (at_4_28))
+    (when (and (at_4_27) (valid)) (not (at_4_27)))
+    (when (not (and (at_4_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_28_3_28
+  :effect (and
+    (when (and (at_4_28) (valid)) (at_3_28))
+    (when (and (at_4_28) (valid)) (not (at_4_28)))
+    (when (not (and (at_4_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_28_5_28
+  :effect (and
+    (when (and (at_4_28) (valid)) (at_5_28))
+    (when (and (at_4_28) (valid)) (not (at_4_28)))
+    (when (not (and (at_4_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_28_4_27
+  :effect (and
+    (when (and (at_4_28) (valid)) (at_4_27))
+    (when (and (at_4_28) (valid)) (not (at_4_28)))
+    (when (not (and (at_4_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_28_4_29
+  :effect (and
+    (when (and (at_4_28) (valid)) (at_4_29))
+    (when (and (at_4_28) (valid)) (not (at_4_28)))
+    (when (not (and (at_4_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_29_3_29
+  :effect (and
+    (when (and (at_4_29) (valid)) (at_3_29))
+    (when (and (at_4_29) (valid)) (not (at_4_29)))
+    (when (not (and (at_4_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_29_5_29
+  :effect (and
+    (when (and (at_4_29) (valid)) (at_5_29))
+    (when (and (at_4_29) (valid)) (not (at_4_29)))
+    (when (not (and (at_4_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_29_4_28
+  :effect (and
+    (when (and (at_4_29) (valid)) (at_4_28))
+    (when (and (at_4_29) (valid)) (not (at_4_29)))
+    (when (not (and (at_4_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_29_4_30
+  :effect (and
+    (when (and (at_4_29) (valid)) (at_4_30))
+    (when (and (at_4_29) (valid)) (not (at_4_29)))
+    (when (not (and (at_4_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_30_3_30
+  :effect (and
+    (when (and (at_4_30) (valid)) (at_3_30))
+    (when (and (at_4_30) (valid)) (not (at_4_30)))
+    (when (not (and (at_4_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_30_5_30
+  :effect (and
+    (when (and (at_4_30) (valid)) (at_5_30))
+    (when (and (at_4_30) (valid)) (not (at_4_30)))
+    (when (not (and (at_4_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_30_4_29
+  :effect (and
+    (when (and (at_4_30) (valid)) (at_4_29))
+    (when (and (at_4_30) (valid)) (not (at_4_30)))
+    (when (not (and (at_4_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_30_4_31
+  :effect (and
+    (when (and (at_4_30) (valid)) (at_4_31))
+    (when (and (at_4_30) (valid)) (not (at_4_30)))
+    (when (not (and (at_4_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_31_3_31
+  :effect (and
+    (when (and (at_4_31) (valid)) (at_3_31))
+    (when (and (at_4_31) (valid)) (not (at_4_31)))
+    (when (not (and (at_4_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_31_5_31
+  :effect (and
+    (when (and (at_4_31) (valid)) (at_5_31))
+    (when (and (at_4_31) (valid)) (not (at_4_31)))
+    (when (not (and (at_4_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_4_31_4_30
+  :effect (and
+    (when (and (at_4_31) (valid)) (at_4_30))
+    (when (and (at_4_31) (valid)) (not (at_4_31)))
+    (when (not (and (at_4_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_0_4_0
+  :effect (and
+    (when (and (at_5_0) (valid)) (at_4_0))
+    (when (and (at_5_0) (valid)) (not (at_5_0)))
+    (when (not (and (at_5_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_0_6_0
+  :effect (and
+    (when (and (at_5_0) (valid)) (at_6_0))
+    (when (and (at_5_0) (valid)) (not (at_5_0)))
+    (when (not (and (at_5_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_0_5_1
+  :effect (and
+    (when (and (at_5_0) (valid)) (at_5_1))
+    (when (and (at_5_0) (valid)) (not (at_5_0)))
+    (when (not (and (at_5_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_1_4_1
+  :effect (and
+    (when (and (at_5_1) (valid)) (at_4_1))
+    (when (and (at_5_1) (valid)) (not (at_5_1)))
+    (when (not (and (at_5_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_1_6_1
+  :effect (and
+    (when (and (at_5_1) (valid)) (at_6_1))
+    (when (and (at_5_1) (valid)) (not (at_5_1)))
+    (when (not (and (at_5_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_1_5_0
+  :effect (and
+    (when (and (at_5_1) (valid)) (at_5_0))
+    (when (and (at_5_1) (valid)) (not (at_5_1)))
+    (when (not (and (at_5_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_1_5_2
+  :effect (and
+    (when (and (at_5_1) (valid)) (at_5_2))
+    (when (and (at_5_1) (valid)) (not (at_5_1)))
+    (when (not (and (at_5_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_2_4_2
+  :effect (and
+    (when (and (at_5_2) (valid)) (at_4_2))
+    (when (and (at_5_2) (valid)) (not (at_5_2)))
+    (when (not (and (at_5_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_2_6_2
+  :effect (and
+    (when (and (at_5_2) (valid)) (at_6_2))
+    (when (and (at_5_2) (valid)) (not (at_5_2)))
+    (when (not (and (at_5_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_2_5_1
+  :effect (and
+    (when (and (at_5_2) (valid)) (at_5_1))
+    (when (and (at_5_2) (valid)) (not (at_5_2)))
+    (when (not (and (at_5_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_2_5_3
+  :effect (and
+    (when (and (at_5_2) (valid)) (at_5_3))
+    (when (and (at_5_2) (valid)) (not (at_5_2)))
+    (when (not (and (at_5_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_3_4_3
+  :effect (and
+    (when (and (at_5_3) (valid)) (at_4_3))
+    (when (and (at_5_3) (valid)) (not (at_5_3)))
+    (when (not (and (at_5_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_3_6_3
+  :effect (and
+    (when (and (at_5_3) (valid)) (at_6_3))
+    (when (and (at_5_3) (valid)) (not (at_5_3)))
+    (when (not (and (at_5_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_3_5_2
+  :effect (and
+    (when (and (at_5_3) (valid)) (at_5_2))
+    (when (and (at_5_3) (valid)) (not (at_5_3)))
+    (when (not (and (at_5_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_3_5_4
+  :effect (and
+    (when (and (at_5_3) (valid)) (at_5_4))
+    (when (and (at_5_3) (valid)) (not (at_5_3)))
+    (when (not (and (at_5_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_4_4_4
+  :effect (and
+    (when (and (at_5_4) (valid)) (at_4_4))
+    (when (and (at_5_4) (valid)) (not (at_5_4)))
+    (when (not (and (at_5_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_4_6_4
+  :effect (and
+    (when (and (at_5_4) (valid)) (at_6_4))
+    (when (and (at_5_4) (valid)) (not (at_5_4)))
+    (when (not (and (at_5_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_4_5_3
+  :effect (and
+    (when (and (at_5_4) (valid)) (at_5_3))
+    (when (and (at_5_4) (valid)) (not (at_5_4)))
+    (when (not (and (at_5_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_4_5_5
+  :effect (and
+    (when (and (at_5_4) (valid)) (at_5_5))
+    (when (and (at_5_4) (valid)) (not (at_5_4)))
+    (when (not (and (at_5_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_5_4_5
+  :effect (and
+    (when (and (at_5_5) (valid)) (at_4_5))
+    (when (and (at_5_5) (valid)) (not (at_5_5)))
+    (when (not (and (at_5_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_5_6_5
+  :effect (and
+    (when (and (at_5_5) (valid)) (at_6_5))
+    (when (and (at_5_5) (valid)) (not (at_5_5)))
+    (when (not (and (at_5_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_5_5_4
+  :effect (and
+    (when (and (at_5_5) (valid)) (at_5_4))
+    (when (and (at_5_5) (valid)) (not (at_5_5)))
+    (when (not (and (at_5_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_5_5_6
+  :effect (and
+    (when (and (at_5_5) (valid)) (at_5_6))
+    (when (and (at_5_5) (valid)) (not (at_5_5)))
+    (when (not (and (at_5_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_6_4_6
+  :effect (and
+    (when (and (at_5_6) (valid)) (at_4_6))
+    (when (and (at_5_6) (valid)) (not (at_5_6)))
+    (when (not (and (at_5_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_6_6_6
+  :effect (and
+    (when (and (at_5_6) (valid)) (at_6_6))
+    (when (and (at_5_6) (valid)) (not (at_5_6)))
+    (when (not (and (at_5_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_6_5_5
+  :effect (and
+    (when (and (at_5_6) (valid)) (at_5_5))
+    (when (and (at_5_6) (valid)) (not (at_5_6)))
+    (when (not (and (at_5_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_6_5_7
+  :effect (and
+    (when (and (at_5_6) (valid)) (at_5_7))
+    (when (and (at_5_6) (valid)) (not (at_5_6)))
+    (when (not (and (at_5_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_7_4_7
+  :effect (and
+    (when (and (at_5_7) (valid)) (at_4_7))
+    (when (and (at_5_7) (valid)) (not (at_5_7)))
+    (when (not (and (at_5_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_7_6_7
+  :effect (and
+    (when (and (at_5_7) (valid)) (at_6_7))
+    (when (and (at_5_7) (valid)) (not (at_5_7)))
+    (when (not (and (at_5_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_7_5_6
+  :effect (and
+    (when (and (at_5_7) (valid)) (at_5_6))
+    (when (and (at_5_7) (valid)) (not (at_5_7)))
+    (when (not (and (at_5_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_7_5_8
+  :effect (and
+    (when (and (at_5_7) (valid)) (at_5_8))
+    (when (and (at_5_7) (valid)) (not (at_5_7)))
+    (when (not (and (at_5_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_8_4_8
+  :effect (and
+    (when (and (at_5_8) (valid)) (at_4_8))
+    (when (and (at_5_8) (valid)) (not (at_5_8)))
+    (when (not (and (at_5_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_8_6_8
+  :effect (and
+    (when (and (at_5_8) (valid)) (at_6_8))
+    (when (and (at_5_8) (valid)) (not (at_5_8)))
+    (when (not (and (at_5_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_8_5_7
+  :effect (and
+    (when (and (at_5_8) (valid)) (at_5_7))
+    (when (and (at_5_8) (valid)) (not (at_5_8)))
+    (when (not (and (at_5_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_8_5_9
+  :effect (and
+    (when (and (at_5_8) (valid)) (at_5_9))
+    (when (and (at_5_8) (valid)) (not (at_5_8)))
+    (when (not (and (at_5_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_9_4_9
+  :effect (and
+    (when (and (at_5_9) (valid)) (at_4_9))
+    (when (and (at_5_9) (valid)) (not (at_5_9)))
+    (when (not (and (at_5_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_9_6_9
+  :effect (and
+    (when (and (at_5_9) (valid)) (at_6_9))
+    (when (and (at_5_9) (valid)) (not (at_5_9)))
+    (when (not (and (at_5_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_9_5_8
+  :effect (and
+    (when (and (at_5_9) (valid)) (at_5_8))
+    (when (and (at_5_9) (valid)) (not (at_5_9)))
+    (when (not (and (at_5_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_9_5_10
+  :effect (and
+    (when (and (at_5_9) (valid)) (at_5_10))
+    (when (and (at_5_9) (valid)) (not (at_5_9)))
+    (when (not (and (at_5_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_10_4_10
+  :effect (and
+    (when (and (at_5_10) (valid)) (at_4_10))
+    (when (and (at_5_10) (valid)) (not (at_5_10)))
+    (when (not (and (at_5_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_10_6_10
+  :effect (and
+    (when (and (at_5_10) (valid)) (at_6_10))
+    (when (and (at_5_10) (valid)) (not (at_5_10)))
+    (when (not (and (at_5_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_10_5_9
+  :effect (and
+    (when (and (at_5_10) (valid)) (at_5_9))
+    (when (and (at_5_10) (valid)) (not (at_5_10)))
+    (when (not (and (at_5_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_10_5_11
+  :effect (and
+    (when (and (at_5_10) (valid)) (at_5_11))
+    (when (and (at_5_10) (valid)) (not (at_5_10)))
+    (when (not (and (at_5_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_11_4_11
+  :effect (and
+    (when (and (at_5_11) (valid)) (at_4_11))
+    (when (and (at_5_11) (valid)) (not (at_5_11)))
+    (when (not (and (at_5_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_11_6_11
+  :effect (and
+    (when (and (at_5_11) (valid)) (at_6_11))
+    (when (and (at_5_11) (valid)) (not (at_5_11)))
+    (when (not (and (at_5_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_11_5_10
+  :effect (and
+    (when (and (at_5_11) (valid)) (at_5_10))
+    (when (and (at_5_11) (valid)) (not (at_5_11)))
+    (when (not (and (at_5_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_11_5_12
+  :effect (and
+    (when (and (at_5_11) (valid)) (at_5_12))
+    (when (and (at_5_11) (valid)) (not (at_5_11)))
+    (when (not (and (at_5_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_12_4_12
+  :effect (and
+    (when (and (at_5_12) (valid)) (at_4_12))
+    (when (and (at_5_12) (valid)) (not (at_5_12)))
+    (when (not (and (at_5_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_12_6_12
+  :effect (and
+    (when (and (at_5_12) (valid)) (at_6_12))
+    (when (and (at_5_12) (valid)) (not (at_5_12)))
+    (when (not (and (at_5_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_12_5_11
+  :effect (and
+    (when (and (at_5_12) (valid)) (at_5_11))
+    (when (and (at_5_12) (valid)) (not (at_5_12)))
+    (when (not (and (at_5_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_12_5_13
+  :effect (and
+    (when (and (at_5_12) (valid)) (at_5_13))
+    (when (and (at_5_12) (valid)) (not (at_5_12)))
+    (when (not (and (at_5_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_13_4_13
+  :effect (and
+    (when (and (at_5_13) (valid)) (at_4_13))
+    (when (and (at_5_13) (valid)) (not (at_5_13)))
+    (when (not (and (at_5_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_13_6_13
+  :effect (and
+    (when (and (at_5_13) (valid)) (at_6_13))
+    (when (and (at_5_13) (valid)) (not (at_5_13)))
+    (when (not (and (at_5_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_13_5_12
+  :effect (and
+    (when (and (at_5_13) (valid)) (at_5_12))
+    (when (and (at_5_13) (valid)) (not (at_5_13)))
+    (when (not (and (at_5_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_13_5_14
+  :effect (and
+    (when (and (at_5_13) (valid)) (at_5_14))
+    (when (and (at_5_13) (valid)) (not (at_5_13)))
+    (when (not (and (at_5_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_14_4_14
+  :effect (and
+    (when (and (at_5_14) (valid)) (at_4_14))
+    (when (and (at_5_14) (valid)) (not (at_5_14)))
+    (when (not (and (at_5_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_14_6_14
+  :effect (and
+    (when (and (at_5_14) (valid)) (at_6_14))
+    (when (and (at_5_14) (valid)) (not (at_5_14)))
+    (when (not (and (at_5_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_14_5_13
+  :effect (and
+    (when (and (at_5_14) (valid)) (at_5_13))
+    (when (and (at_5_14) (valid)) (not (at_5_14)))
+    (when (not (and (at_5_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_14_5_15
+  :effect (and
+    (when (and (at_5_14) (valid)) (at_5_15))
+    (when (and (at_5_14) (valid)) (not (at_5_14)))
+    (when (not (and (at_5_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_15_4_15
+  :effect (and
+    (when (and (at_5_15) (valid)) (at_4_15))
+    (when (and (at_5_15) (valid)) (not (at_5_15)))
+    (when (not (and (at_5_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_15_6_15
+  :effect (and
+    (when (and (at_5_15) (valid)) (at_6_15))
+    (when (and (at_5_15) (valid)) (not (at_5_15)))
+    (when (not (and (at_5_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_15_5_14
+  :effect (and
+    (when (and (at_5_15) (valid)) (at_5_14))
+    (when (and (at_5_15) (valid)) (not (at_5_15)))
+    (when (not (and (at_5_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_15_5_16
+  :effect (and
+    (when (and (at_5_15) (valid)) (at_5_16))
+    (when (and (at_5_15) (valid)) (not (at_5_15)))
+    (when (not (and (at_5_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_16_4_16
+  :effect (and
+    (when (and (at_5_16) (valid)) (at_4_16))
+    (when (and (at_5_16) (valid)) (not (at_5_16)))
+    (when (not (and (at_5_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_16_6_16
+  :effect (and
+    (when (and (at_5_16) (valid)) (at_6_16))
+    (when (and (at_5_16) (valid)) (not (at_5_16)))
+    (when (not (and (at_5_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_16_5_15
+  :effect (and
+    (when (and (at_5_16) (valid)) (at_5_15))
+    (when (and (at_5_16) (valid)) (not (at_5_16)))
+    (when (not (and (at_5_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_16_5_17
+  :effect (and
+    (when (and (at_5_16) (valid)) (at_5_17))
+    (when (and (at_5_16) (valid)) (not (at_5_16)))
+    (when (not (and (at_5_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_17_4_17
+  :effect (and
+    (when (and (at_5_17) (valid)) (at_4_17))
+    (when (and (at_5_17) (valid)) (not (at_5_17)))
+    (when (not (and (at_5_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_17_6_17
+  :effect (and
+    (when (and (at_5_17) (valid)) (at_6_17))
+    (when (and (at_5_17) (valid)) (not (at_5_17)))
+    (when (not (and (at_5_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_17_5_16
+  :effect (and
+    (when (and (at_5_17) (valid)) (at_5_16))
+    (when (and (at_5_17) (valid)) (not (at_5_17)))
+    (when (not (and (at_5_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_17_5_18
+  :effect (and
+    (when (and (at_5_17) (valid)) (at_5_18))
+    (when (and (at_5_17) (valid)) (not (at_5_17)))
+    (when (not (and (at_5_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_18_4_18
+  :effect (and
+    (when (and (at_5_18) (valid)) (at_4_18))
+    (when (and (at_5_18) (valid)) (not (at_5_18)))
+    (when (not (and (at_5_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_18_6_18
+  :effect (and
+    (when (and (at_5_18) (valid)) (at_6_18))
+    (when (and (at_5_18) (valid)) (not (at_5_18)))
+    (when (not (and (at_5_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_18_5_17
+  :effect (and
+    (when (and (at_5_18) (valid)) (at_5_17))
+    (when (and (at_5_18) (valid)) (not (at_5_18)))
+    (when (not (and (at_5_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_18_5_19
+  :effect (and
+    (when (and (at_5_18) (valid)) (at_5_19))
+    (when (and (at_5_18) (valid)) (not (at_5_18)))
+    (when (not (and (at_5_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_19_4_19
+  :effect (and
+    (when (and (at_5_19) (valid)) (at_4_19))
+    (when (and (at_5_19) (valid)) (not (at_5_19)))
+    (when (not (and (at_5_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_19_6_19
+  :effect (and
+    (when (and (at_5_19) (valid)) (at_6_19))
+    (when (and (at_5_19) (valid)) (not (at_5_19)))
+    (when (not (and (at_5_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_19_5_18
+  :effect (and
+    (when (and (at_5_19) (valid)) (at_5_18))
+    (when (and (at_5_19) (valid)) (not (at_5_19)))
+    (when (not (and (at_5_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_19_5_20
+  :effect (and
+    (when (and (at_5_19) (valid)) (at_5_20))
+    (when (and (at_5_19) (valid)) (not (at_5_19)))
+    (when (not (and (at_5_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_20_4_20
+  :effect (and
+    (when (and (at_5_20) (valid)) (at_4_20))
+    (when (and (at_5_20) (valid)) (not (at_5_20)))
+    (when (not (and (at_5_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_20_6_20
+  :effect (and
+    (when (and (at_5_20) (valid)) (at_6_20))
+    (when (and (at_5_20) (valid)) (not (at_5_20)))
+    (when (not (and (at_5_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_20_5_19
+  :effect (and
+    (when (and (at_5_20) (valid)) (at_5_19))
+    (when (and (at_5_20) (valid)) (not (at_5_20)))
+    (when (not (and (at_5_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_20_5_21
+  :effect (and
+    (when (and (at_5_20) (valid)) (at_5_21))
+    (when (and (at_5_20) (valid)) (not (at_5_20)))
+    (when (not (and (at_5_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_21_4_21
+  :effect (and
+    (when (and (at_5_21) (valid)) (at_4_21))
+    (when (and (at_5_21) (valid)) (not (at_5_21)))
+    (when (not (and (at_5_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_21_6_21
+  :effect (and
+    (when (and (at_5_21) (valid)) (at_6_21))
+    (when (and (at_5_21) (valid)) (not (at_5_21)))
+    (when (not (and (at_5_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_21_5_20
+  :effect (and
+    (when (and (at_5_21) (valid)) (at_5_20))
+    (when (and (at_5_21) (valid)) (not (at_5_21)))
+    (when (not (and (at_5_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_21_5_22
+  :effect (and
+    (when (and (at_5_21) (valid)) (at_5_22))
+    (when (and (at_5_21) (valid)) (not (at_5_21)))
+    (when (not (and (at_5_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_22_4_22
+  :effect (and
+    (when (and (at_5_22) (valid)) (at_4_22))
+    (when (and (at_5_22) (valid)) (not (at_5_22)))
+    (when (not (and (at_5_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_22_6_22
+  :effect (and
+    (when (and (at_5_22) (valid)) (at_6_22))
+    (when (and (at_5_22) (valid)) (not (at_5_22)))
+    (when (not (and (at_5_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_22_5_21
+  :effect (and
+    (when (and (at_5_22) (valid)) (at_5_21))
+    (when (and (at_5_22) (valid)) (not (at_5_22)))
+    (when (not (and (at_5_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_22_5_23
+  :effect (and
+    (when (and (at_5_22) (valid)) (at_5_23))
+    (when (and (at_5_22) (valid)) (not (at_5_22)))
+    (when (not (and (at_5_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_23_4_23
+  :effect (and
+    (when (and (at_5_23) (valid)) (at_4_23))
+    (when (and (at_5_23) (valid)) (not (at_5_23)))
+    (when (not (and (at_5_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_23_6_23
+  :effect (and
+    (when (and (at_5_23) (valid)) (at_6_23))
+    (when (and (at_5_23) (valid)) (not (at_5_23)))
+    (when (not (and (at_5_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_23_5_22
+  :effect (and
+    (when (and (at_5_23) (valid)) (at_5_22))
+    (when (and (at_5_23) (valid)) (not (at_5_23)))
+    (when (not (and (at_5_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_23_5_24
+  :effect (and
+    (when (and (at_5_23) (valid)) (at_5_24))
+    (when (and (at_5_23) (valid)) (not (at_5_23)))
+    (when (not (and (at_5_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_24_4_24
+  :effect (and
+    (when (and (at_5_24) (valid)) (at_4_24))
+    (when (and (at_5_24) (valid)) (not (at_5_24)))
+    (when (not (and (at_5_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_24_6_24
+  :effect (and
+    (when (and (at_5_24) (valid)) (at_6_24))
+    (when (and (at_5_24) (valid)) (not (at_5_24)))
+    (when (not (and (at_5_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_24_5_23
+  :effect (and
+    (when (and (at_5_24) (valid)) (at_5_23))
+    (when (and (at_5_24) (valid)) (not (at_5_24)))
+    (when (not (and (at_5_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_24_5_25
+  :effect (and
+    (when (and (at_5_24) (valid)) (at_5_25))
+    (when (and (at_5_24) (valid)) (not (at_5_24)))
+    (when (not (and (at_5_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_25_4_25
+  :effect (and
+    (when (and (at_5_25) (valid)) (at_4_25))
+    (when (and (at_5_25) (valid)) (not (at_5_25)))
+    (when (not (and (at_5_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_25_6_25
+  :effect (and
+    (when (and (at_5_25) (valid)) (at_6_25))
+    (when (and (at_5_25) (valid)) (not (at_5_25)))
+    (when (not (and (at_5_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_25_5_24
+  :effect (and
+    (when (and (at_5_25) (valid)) (at_5_24))
+    (when (and (at_5_25) (valid)) (not (at_5_25)))
+    (when (not (and (at_5_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_25_5_26
+  :effect (and
+    (when (and (at_5_25) (valid)) (at_5_26))
+    (when (and (at_5_25) (valid)) (not (at_5_25)))
+    (when (not (and (at_5_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_26_4_26
+  :effect (and
+    (when (and (at_5_26) (valid)) (at_4_26))
+    (when (and (at_5_26) (valid)) (not (at_5_26)))
+    (when (not (and (at_5_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_26_6_26
+  :effect (and
+    (when (and (at_5_26) (valid)) (at_6_26))
+    (when (and (at_5_26) (valid)) (not (at_5_26)))
+    (when (not (and (at_5_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_26_5_25
+  :effect (and
+    (when (and (at_5_26) (valid)) (at_5_25))
+    (when (and (at_5_26) (valid)) (not (at_5_26)))
+    (when (not (and (at_5_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_26_5_27
+  :effect (and
+    (when (and (at_5_26) (valid)) (at_5_27))
+    (when (and (at_5_26) (valid)) (not (at_5_26)))
+    (when (not (and (at_5_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_27_4_27
+  :effect (and
+    (when (and (at_5_27) (valid)) (at_4_27))
+    (when (and (at_5_27) (valid)) (not (at_5_27)))
+    (when (not (and (at_5_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_27_6_27
+  :effect (and
+    (when (and (at_5_27) (valid)) (at_6_27))
+    (when (and (at_5_27) (valid)) (not (at_5_27)))
+    (when (not (and (at_5_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_27_5_26
+  :effect (and
+    (when (and (at_5_27) (valid)) (at_5_26))
+    (when (and (at_5_27) (valid)) (not (at_5_27)))
+    (when (not (and (at_5_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_27_5_28
+  :effect (and
+    (when (and (at_5_27) (valid)) (at_5_28))
+    (when (and (at_5_27) (valid)) (not (at_5_27)))
+    (when (not (and (at_5_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_28_4_28
+  :effect (and
+    (when (and (at_5_28) (valid)) (at_4_28))
+    (when (and (at_5_28) (valid)) (not (at_5_28)))
+    (when (not (and (at_5_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_28_6_28
+  :effect (and
+    (when (and (at_5_28) (valid)) (at_6_28))
+    (when (and (at_5_28) (valid)) (not (at_5_28)))
+    (when (not (and (at_5_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_28_5_27
+  :effect (and
+    (when (and (at_5_28) (valid)) (at_5_27))
+    (when (and (at_5_28) (valid)) (not (at_5_28)))
+    (when (not (and (at_5_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_28_5_29
+  :effect (and
+    (when (and (at_5_28) (valid)) (at_5_29))
+    (when (and (at_5_28) (valid)) (not (at_5_28)))
+    (when (not (and (at_5_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_29_4_29
+  :effect (and
+    (when (and (at_5_29) (valid)) (at_4_29))
+    (when (and (at_5_29) (valid)) (not (at_5_29)))
+    (when (not (and (at_5_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_29_6_29
+  :effect (and
+    (when (and (at_5_29) (valid)) (at_6_29))
+    (when (and (at_5_29) (valid)) (not (at_5_29)))
+    (when (not (and (at_5_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_29_5_28
+  :effect (and
+    (when (and (at_5_29) (valid)) (at_5_28))
+    (when (and (at_5_29) (valid)) (not (at_5_29)))
+    (when (not (and (at_5_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_29_5_30
+  :effect (and
+    (when (and (at_5_29) (valid)) (at_5_30))
+    (when (and (at_5_29) (valid)) (not (at_5_29)))
+    (when (not (and (at_5_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_30_4_30
+  :effect (and
+    (when (and (at_5_30) (valid)) (at_4_30))
+    (when (and (at_5_30) (valid)) (not (at_5_30)))
+    (when (not (and (at_5_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_30_6_30
+  :effect (and
+    (when (and (at_5_30) (valid)) (at_6_30))
+    (when (and (at_5_30) (valid)) (not (at_5_30)))
+    (when (not (and (at_5_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_30_5_29
+  :effect (and
+    (when (and (at_5_30) (valid)) (at_5_29))
+    (when (and (at_5_30) (valid)) (not (at_5_30)))
+    (when (not (and (at_5_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_30_5_31
+  :effect (and
+    (when (and (at_5_30) (valid)) (at_5_31))
+    (when (and (at_5_30) (valid)) (not (at_5_30)))
+    (when (not (and (at_5_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_31_4_31
+  :effect (and
+    (when (and (at_5_31) (valid)) (at_4_31))
+    (when (and (at_5_31) (valid)) (not (at_5_31)))
+    (when (not (and (at_5_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_31_6_31
+  :effect (and
+    (when (and (at_5_31) (valid)) (at_6_31))
+    (when (and (at_5_31) (valid)) (not (at_5_31)))
+    (when (not (and (at_5_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_5_31_5_30
+  :effect (and
+    (when (and (at_5_31) (valid)) (at_5_30))
+    (when (and (at_5_31) (valid)) (not (at_5_31)))
+    (when (not (and (at_5_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_0_5_0
+  :effect (and
+    (when (and (at_6_0) (valid)) (at_5_0))
+    (when (and (at_6_0) (valid)) (not (at_6_0)))
+    (when (not (and (at_6_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_0_7_0
+  :effect (and
+    (when (and (at_6_0) (valid)) (at_7_0))
+    (when (and (at_6_0) (valid)) (not (at_6_0)))
+    (when (not (and (at_6_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_0_6_1
+  :effect (and
+    (when (and (at_6_0) (valid)) (at_6_1))
+    (when (and (at_6_0) (valid)) (not (at_6_0)))
+    (when (not (and (at_6_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_1_5_1
+  :effect (and
+    (when (and (at_6_1) (valid)) (at_5_1))
+    (when (and (at_6_1) (valid)) (not (at_6_1)))
+    (when (not (and (at_6_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_1_7_1
+  :effect (and
+    (when (and (at_6_1) (valid)) (at_7_1))
+    (when (and (at_6_1) (valid)) (not (at_6_1)))
+    (when (not (and (at_6_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_1_6_0
+  :effect (and
+    (when (and (at_6_1) (valid)) (at_6_0))
+    (when (and (at_6_1) (valid)) (not (at_6_1)))
+    (when (not (and (at_6_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_1_6_2
+  :effect (and
+    (when (and (at_6_1) (valid)) (at_6_2))
+    (when (and (at_6_1) (valid)) (not (at_6_1)))
+    (when (not (and (at_6_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_2_5_2
+  :effect (and
+    (when (and (at_6_2) (valid)) (at_5_2))
+    (when (and (at_6_2) (valid)) (not (at_6_2)))
+    (when (not (and (at_6_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_2_7_2
+  :effect (and
+    (when (and (at_6_2) (valid)) (at_7_2))
+    (when (and (at_6_2) (valid)) (not (at_6_2)))
+    (when (not (and (at_6_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_2_6_1
+  :effect (and
+    (when (and (at_6_2) (valid)) (at_6_1))
+    (when (and (at_6_2) (valid)) (not (at_6_2)))
+    (when (not (and (at_6_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_2_6_3
+  :effect (and
+    (when (and (at_6_2) (valid)) (at_6_3))
+    (when (and (at_6_2) (valid)) (not (at_6_2)))
+    (when (not (and (at_6_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_3_5_3
+  :effect (and
+    (when (and (at_6_3) (valid)) (at_5_3))
+    (when (and (at_6_3) (valid)) (not (at_6_3)))
+    (when (not (and (at_6_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_3_7_3
+  :effect (and
+    (when (and (at_6_3) (valid)) (at_7_3))
+    (when (and (at_6_3) (valid)) (not (at_6_3)))
+    (when (not (and (at_6_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_3_6_2
+  :effect (and
+    (when (and (at_6_3) (valid)) (at_6_2))
+    (when (and (at_6_3) (valid)) (not (at_6_3)))
+    (when (not (and (at_6_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_3_6_4
+  :effect (and
+    (when (and (at_6_3) (valid)) (at_6_4))
+    (when (and (at_6_3) (valid)) (not (at_6_3)))
+    (when (not (and (at_6_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_4_5_4
+  :effect (and
+    (when (and (at_6_4) (valid)) (at_5_4))
+    (when (and (at_6_4) (valid)) (not (at_6_4)))
+    (when (not (and (at_6_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_4_7_4
+  :effect (and
+    (when (and (at_6_4) (valid)) (at_7_4))
+    (when (and (at_6_4) (valid)) (not (at_6_4)))
+    (when (not (and (at_6_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_4_6_3
+  :effect (and
+    (when (and (at_6_4) (valid)) (at_6_3))
+    (when (and (at_6_4) (valid)) (not (at_6_4)))
+    (when (not (and (at_6_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_4_6_5
+  :effect (and
+    (when (and (at_6_4) (valid)) (at_6_5))
+    (when (and (at_6_4) (valid)) (not (at_6_4)))
+    (when (not (and (at_6_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_5_5_5
+  :effect (and
+    (when (and (at_6_5) (valid)) (at_5_5))
+    (when (and (at_6_5) (valid)) (not (at_6_5)))
+    (when (not (and (at_6_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_5_7_5
+  :effect (and
+    (when (and (at_6_5) (valid)) (at_7_5))
+    (when (and (at_6_5) (valid)) (not (at_6_5)))
+    (when (not (and (at_6_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_5_6_4
+  :effect (and
+    (when (and (at_6_5) (valid)) (at_6_4))
+    (when (and (at_6_5) (valid)) (not (at_6_5)))
+    (when (not (and (at_6_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_5_6_6
+  :effect (and
+    (when (and (at_6_5) (valid)) (at_6_6))
+    (when (and (at_6_5) (valid)) (not (at_6_5)))
+    (when (not (and (at_6_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_6_5_6
+  :effect (and
+    (when (and (at_6_6) (valid)) (at_5_6))
+    (when (and (at_6_6) (valid)) (not (at_6_6)))
+    (when (not (and (at_6_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_6_7_6
+  :effect (and
+    (when (and (at_6_6) (valid)) (at_7_6))
+    (when (and (at_6_6) (valid)) (not (at_6_6)))
+    (when (not (and (at_6_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_6_6_5
+  :effect (and
+    (when (and (at_6_6) (valid)) (at_6_5))
+    (when (and (at_6_6) (valid)) (not (at_6_6)))
+    (when (not (and (at_6_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_6_6_7
+  :effect (and
+    (when (and (at_6_6) (valid)) (at_6_7))
+    (when (and (at_6_6) (valid)) (not (at_6_6)))
+    (when (not (and (at_6_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_7_5_7
+  :effect (and
+    (when (and (at_6_7) (valid)) (at_5_7))
+    (when (and (at_6_7) (valid)) (not (at_6_7)))
+    (when (not (and (at_6_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_7_7_7
+  :effect (and
+    (when (and (at_6_7) (valid)) (at_7_7))
+    (when (and (at_6_7) (valid)) (not (at_6_7)))
+    (when (not (and (at_6_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_7_6_6
+  :effect (and
+    (when (and (at_6_7) (valid)) (at_6_6))
+    (when (and (at_6_7) (valid)) (not (at_6_7)))
+    (when (not (and (at_6_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_7_6_8
+  :effect (and
+    (when (and (at_6_7) (valid)) (at_6_8))
+    (when (and (at_6_7) (valid)) (not (at_6_7)))
+    (when (not (and (at_6_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_8_5_8
+  :effect (and
+    (when (and (at_6_8) (valid)) (at_5_8))
+    (when (and (at_6_8) (valid)) (not (at_6_8)))
+    (when (not (and (at_6_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_8_7_8
+  :effect (and
+    (when (and (at_6_8) (valid)) (at_7_8))
+    (when (and (at_6_8) (valid)) (not (at_6_8)))
+    (when (not (and (at_6_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_8_6_7
+  :effect (and
+    (when (and (at_6_8) (valid)) (at_6_7))
+    (when (and (at_6_8) (valid)) (not (at_6_8)))
+    (when (not (and (at_6_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_8_6_9
+  :effect (and
+    (when (and (at_6_8) (valid)) (at_6_9))
+    (when (and (at_6_8) (valid)) (not (at_6_8)))
+    (when (not (and (at_6_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_9_5_9
+  :effect (and
+    (when (and (at_6_9) (valid)) (at_5_9))
+    (when (and (at_6_9) (valid)) (not (at_6_9)))
+    (when (not (and (at_6_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_9_7_9
+  :effect (and
+    (when (and (at_6_9) (valid)) (at_7_9))
+    (when (and (at_6_9) (valid)) (not (at_6_9)))
+    (when (not (and (at_6_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_9_6_8
+  :effect (and
+    (when (and (at_6_9) (valid)) (at_6_8))
+    (when (and (at_6_9) (valid)) (not (at_6_9)))
+    (when (not (and (at_6_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_9_6_10
+  :effect (and
+    (when (and (at_6_9) (valid)) (at_6_10))
+    (when (and (at_6_9) (valid)) (not (at_6_9)))
+    (when (not (and (at_6_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_10_5_10
+  :effect (and
+    (when (and (at_6_10) (valid)) (at_5_10))
+    (when (and (at_6_10) (valid)) (not (at_6_10)))
+    (when (not (and (at_6_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_10_7_10
+  :effect (and
+    (when (and (at_6_10) (valid)) (at_7_10))
+    (when (and (at_6_10) (valid)) (not (at_6_10)))
+    (when (not (and (at_6_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_10_6_9
+  :effect (and
+    (when (and (at_6_10) (valid)) (at_6_9))
+    (when (and (at_6_10) (valid)) (not (at_6_10)))
+    (when (not (and (at_6_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_10_6_11
+  :effect (and
+    (when (and (at_6_10) (valid)) (at_6_11))
+    (when (and (at_6_10) (valid)) (not (at_6_10)))
+    (when (not (and (at_6_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_11_5_11
+  :effect (and
+    (when (and (at_6_11) (valid)) (at_5_11))
+    (when (and (at_6_11) (valid)) (not (at_6_11)))
+    (when (not (and (at_6_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_11_7_11
+  :effect (and
+    (when (and (at_6_11) (valid)) (at_7_11))
+    (when (and (at_6_11) (valid)) (not (at_6_11)))
+    (when (not (and (at_6_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_11_6_10
+  :effect (and
+    (when (and (at_6_11) (valid)) (at_6_10))
+    (when (and (at_6_11) (valid)) (not (at_6_11)))
+    (when (not (and (at_6_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_11_6_12
+  :effect (and
+    (when (and (at_6_11) (valid)) (at_6_12))
+    (when (and (at_6_11) (valid)) (not (at_6_11)))
+    (when (not (and (at_6_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_12_5_12
+  :effect (and
+    (when (and (at_6_12) (valid)) (at_5_12))
+    (when (and (at_6_12) (valid)) (not (at_6_12)))
+    (when (not (and (at_6_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_12_7_12
+  :effect (and
+    (when (and (at_6_12) (valid)) (at_7_12))
+    (when (and (at_6_12) (valid)) (not (at_6_12)))
+    (when (not (and (at_6_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_12_6_11
+  :effect (and
+    (when (and (at_6_12) (valid)) (at_6_11))
+    (when (and (at_6_12) (valid)) (not (at_6_12)))
+    (when (not (and (at_6_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_12_6_13
+  :effect (and
+    (when (and (at_6_12) (valid)) (at_6_13))
+    (when (and (at_6_12) (valid)) (not (at_6_12)))
+    (when (not (and (at_6_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_13_5_13
+  :effect (and
+    (when (and (at_6_13) (valid)) (at_5_13))
+    (when (and (at_6_13) (valid)) (not (at_6_13)))
+    (when (not (and (at_6_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_13_7_13
+  :effect (and
+    (when (and (at_6_13) (valid)) (at_7_13))
+    (when (and (at_6_13) (valid)) (not (at_6_13)))
+    (when (not (and (at_6_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_13_6_12
+  :effect (and
+    (when (and (at_6_13) (valid)) (at_6_12))
+    (when (and (at_6_13) (valid)) (not (at_6_13)))
+    (when (not (and (at_6_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_13_6_14
+  :effect (and
+    (when (and (at_6_13) (valid)) (at_6_14))
+    (when (and (at_6_13) (valid)) (not (at_6_13)))
+    (when (not (and (at_6_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_14_5_14
+  :effect (and
+    (when (and (at_6_14) (valid)) (at_5_14))
+    (when (and (at_6_14) (valid)) (not (at_6_14)))
+    (when (not (and (at_6_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_14_7_14
+  :effect (and
+    (when (and (at_6_14) (valid)) (at_7_14))
+    (when (and (at_6_14) (valid)) (not (at_6_14)))
+    (when (not (and (at_6_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_14_6_13
+  :effect (and
+    (when (and (at_6_14) (valid)) (at_6_13))
+    (when (and (at_6_14) (valid)) (not (at_6_14)))
+    (when (not (and (at_6_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_14_6_15
+  :effect (and
+    (when (and (at_6_14) (valid)) (at_6_15))
+    (when (and (at_6_14) (valid)) (not (at_6_14)))
+    (when (not (and (at_6_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_15_5_15
+  :effect (and
+    (when (and (at_6_15) (valid)) (at_5_15))
+    (when (and (at_6_15) (valid)) (not (at_6_15)))
+    (when (not (and (at_6_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_15_7_15
+  :effect (and
+    (when (and (at_6_15) (valid)) (at_7_15))
+    (when (and (at_6_15) (valid)) (not (at_6_15)))
+    (when (not (and (at_6_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_15_6_14
+  :effect (and
+    (when (and (at_6_15) (valid)) (at_6_14))
+    (when (and (at_6_15) (valid)) (not (at_6_15)))
+    (when (not (and (at_6_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_15_6_16
+  :effect (and
+    (when (and (at_6_15) (valid)) (at_6_16))
+    (when (and (at_6_15) (valid)) (not (at_6_15)))
+    (when (not (and (at_6_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_16_5_16
+  :effect (and
+    (when (and (at_6_16) (valid)) (at_5_16))
+    (when (and (at_6_16) (valid)) (not (at_6_16)))
+    (when (not (and (at_6_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_16_7_16
+  :effect (and
+    (when (and (at_6_16) (valid)) (at_7_16))
+    (when (and (at_6_16) (valid)) (not (at_6_16)))
+    (when (not (and (at_6_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_16_6_15
+  :effect (and
+    (when (and (at_6_16) (valid)) (at_6_15))
+    (when (and (at_6_16) (valid)) (not (at_6_16)))
+    (when (not (and (at_6_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_16_6_17
+  :effect (and
+    (when (and (at_6_16) (valid)) (at_6_17))
+    (when (and (at_6_16) (valid)) (not (at_6_16)))
+    (when (not (and (at_6_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_17_5_17
+  :effect (and
+    (when (and (at_6_17) (valid)) (at_5_17))
+    (when (and (at_6_17) (valid)) (not (at_6_17)))
+    (when (not (and (at_6_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_17_7_17
+  :effect (and
+    (when (and (at_6_17) (valid)) (at_7_17))
+    (when (and (at_6_17) (valid)) (not (at_6_17)))
+    (when (not (and (at_6_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_17_6_16
+  :effect (and
+    (when (and (at_6_17) (valid)) (at_6_16))
+    (when (and (at_6_17) (valid)) (not (at_6_17)))
+    (when (not (and (at_6_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_17_6_18
+  :effect (and
+    (when (and (at_6_17) (valid)) (at_6_18))
+    (when (and (at_6_17) (valid)) (not (at_6_17)))
+    (when (not (and (at_6_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_18_5_18
+  :effect (and
+    (when (and (at_6_18) (valid)) (at_5_18))
+    (when (and (at_6_18) (valid)) (not (at_6_18)))
+    (when (not (and (at_6_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_18_7_18
+  :effect (and
+    (when (and (at_6_18) (valid)) (at_7_18))
+    (when (and (at_6_18) (valid)) (not (at_6_18)))
+    (when (not (and (at_6_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_18_6_17
+  :effect (and
+    (when (and (at_6_18) (valid)) (at_6_17))
+    (when (and (at_6_18) (valid)) (not (at_6_18)))
+    (when (not (and (at_6_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_18_6_19
+  :effect (and
+    (when (and (at_6_18) (valid)) (at_6_19))
+    (when (and (at_6_18) (valid)) (not (at_6_18)))
+    (when (not (and (at_6_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_19_5_19
+  :effect (and
+    (when (and (at_6_19) (valid)) (at_5_19))
+    (when (and (at_6_19) (valid)) (not (at_6_19)))
+    (when (not (and (at_6_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_19_7_19
+  :effect (and
+    (when (and (at_6_19) (valid)) (at_7_19))
+    (when (and (at_6_19) (valid)) (not (at_6_19)))
+    (when (not (and (at_6_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_19_6_18
+  :effect (and
+    (when (and (at_6_19) (valid)) (at_6_18))
+    (when (and (at_6_19) (valid)) (not (at_6_19)))
+    (when (not (and (at_6_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_19_6_20
+  :effect (and
+    (when (and (at_6_19) (valid)) (at_6_20))
+    (when (and (at_6_19) (valid)) (not (at_6_19)))
+    (when (not (and (at_6_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_20_5_20
+  :effect (and
+    (when (and (at_6_20) (valid)) (at_5_20))
+    (when (and (at_6_20) (valid)) (not (at_6_20)))
+    (when (not (and (at_6_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_20_7_20
+  :effect (and
+    (when (and (at_6_20) (valid)) (at_7_20))
+    (when (and (at_6_20) (valid)) (not (at_6_20)))
+    (when (not (and (at_6_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_20_6_19
+  :effect (and
+    (when (and (at_6_20) (valid)) (at_6_19))
+    (when (and (at_6_20) (valid)) (not (at_6_20)))
+    (when (not (and (at_6_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_20_6_21
+  :effect (and
+    (when (and (at_6_20) (valid)) (at_6_21))
+    (when (and (at_6_20) (valid)) (not (at_6_20)))
+    (when (not (and (at_6_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_21_5_21
+  :effect (and
+    (when (and (at_6_21) (valid)) (at_5_21))
+    (when (and (at_6_21) (valid)) (not (at_6_21)))
+    (when (not (and (at_6_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_21_7_21
+  :effect (and
+    (when (and (at_6_21) (valid)) (at_7_21))
+    (when (and (at_6_21) (valid)) (not (at_6_21)))
+    (when (not (and (at_6_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_21_6_20
+  :effect (and
+    (when (and (at_6_21) (valid)) (at_6_20))
+    (when (and (at_6_21) (valid)) (not (at_6_21)))
+    (when (not (and (at_6_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_21_6_22
+  :effect (and
+    (when (and (at_6_21) (valid)) (at_6_22))
+    (when (and (at_6_21) (valid)) (not (at_6_21)))
+    (when (not (and (at_6_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_22_5_22
+  :effect (and
+    (when (and (at_6_22) (valid)) (at_5_22))
+    (when (and (at_6_22) (valid)) (not (at_6_22)))
+    (when (not (and (at_6_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_22_7_22
+  :effect (and
+    (when (and (at_6_22) (valid)) (at_7_22))
+    (when (and (at_6_22) (valid)) (not (at_6_22)))
+    (when (not (and (at_6_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_22_6_21
+  :effect (and
+    (when (and (at_6_22) (valid)) (at_6_21))
+    (when (and (at_6_22) (valid)) (not (at_6_22)))
+    (when (not (and (at_6_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_22_6_23
+  :effect (and
+    (when (and (at_6_22) (valid)) (at_6_23))
+    (when (and (at_6_22) (valid)) (not (at_6_22)))
+    (when (not (and (at_6_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_23_5_23
+  :effect (and
+    (when (and (at_6_23) (valid)) (at_5_23))
+    (when (and (at_6_23) (valid)) (not (at_6_23)))
+    (when (not (and (at_6_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_23_7_23
+  :effect (and
+    (when (and (at_6_23) (valid)) (at_7_23))
+    (when (and (at_6_23) (valid)) (not (at_6_23)))
+    (when (not (and (at_6_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_23_6_22
+  :effect (and
+    (when (and (at_6_23) (valid)) (at_6_22))
+    (when (and (at_6_23) (valid)) (not (at_6_23)))
+    (when (not (and (at_6_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_23_6_24
+  :effect (and
+    (when (and (at_6_23) (valid)) (at_6_24))
+    (when (and (at_6_23) (valid)) (not (at_6_23)))
+    (when (not (and (at_6_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_24_5_24
+  :effect (and
+    (when (and (at_6_24) (valid)) (at_5_24))
+    (when (and (at_6_24) (valid)) (not (at_6_24)))
+    (when (not (and (at_6_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_24_7_24
+  :effect (and
+    (when (and (at_6_24) (valid)) (at_7_24))
+    (when (and (at_6_24) (valid)) (not (at_6_24)))
+    (when (not (and (at_6_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_24_6_23
+  :effect (and
+    (when (and (at_6_24) (valid)) (at_6_23))
+    (when (and (at_6_24) (valid)) (not (at_6_24)))
+    (when (not (and (at_6_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_24_6_25
+  :effect (and
+    (when (and (at_6_24) (valid)) (at_6_25))
+    (when (and (at_6_24) (valid)) (not (at_6_24)))
+    (when (not (and (at_6_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_25_5_25
+  :effect (and
+    (when (and (at_6_25) (valid)) (at_5_25))
+    (when (and (at_6_25) (valid)) (not (at_6_25)))
+    (when (not (and (at_6_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_25_7_25
+  :effect (and
+    (when (and (at_6_25) (valid)) (at_7_25))
+    (when (and (at_6_25) (valid)) (not (at_6_25)))
+    (when (not (and (at_6_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_25_6_24
+  :effect (and
+    (when (and (at_6_25) (valid)) (at_6_24))
+    (when (and (at_6_25) (valid)) (not (at_6_25)))
+    (when (not (and (at_6_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_25_6_26
+  :effect (and
+    (when (and (at_6_25) (valid)) (at_6_26))
+    (when (and (at_6_25) (valid)) (not (at_6_25)))
+    (when (not (and (at_6_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_26_5_26
+  :effect (and
+    (when (and (at_6_26) (valid)) (at_5_26))
+    (when (and (at_6_26) (valid)) (not (at_6_26)))
+    (when (not (and (at_6_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_26_7_26
+  :effect (and
+    (when (and (at_6_26) (valid)) (at_7_26))
+    (when (and (at_6_26) (valid)) (not (at_6_26)))
+    (when (not (and (at_6_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_26_6_25
+  :effect (and
+    (when (and (at_6_26) (valid)) (at_6_25))
+    (when (and (at_6_26) (valid)) (not (at_6_26)))
+    (when (not (and (at_6_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_26_6_27
+  :effect (and
+    (when (and (at_6_26) (valid)) (at_6_27))
+    (when (and (at_6_26) (valid)) (not (at_6_26)))
+    (when (not (and (at_6_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_27_5_27
+  :effect (and
+    (when (and (at_6_27) (valid)) (at_5_27))
+    (when (and (at_6_27) (valid)) (not (at_6_27)))
+    (when (not (and (at_6_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_27_7_27
+  :effect (and
+    (when (and (at_6_27) (valid)) (at_7_27))
+    (when (and (at_6_27) (valid)) (not (at_6_27)))
+    (when (not (and (at_6_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_27_6_26
+  :effect (and
+    (when (and (at_6_27) (valid)) (at_6_26))
+    (when (and (at_6_27) (valid)) (not (at_6_27)))
+    (when (not (and (at_6_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_27_6_28
+  :effect (and
+    (when (and (at_6_27) (valid)) (at_6_28))
+    (when (and (at_6_27) (valid)) (not (at_6_27)))
+    (when (not (and (at_6_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_28_5_28
+  :effect (and
+    (when (and (at_6_28) (valid)) (at_5_28))
+    (when (and (at_6_28) (valid)) (not (at_6_28)))
+    (when (not (and (at_6_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_28_7_28
+  :effect (and
+    (when (and (at_6_28) (valid)) (at_7_28))
+    (when (and (at_6_28) (valid)) (not (at_6_28)))
+    (when (not (and (at_6_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_28_6_27
+  :effect (and
+    (when (and (at_6_28) (valid)) (at_6_27))
+    (when (and (at_6_28) (valid)) (not (at_6_28)))
+    (when (not (and (at_6_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_28_6_29
+  :effect (and
+    (when (and (at_6_28) (valid)) (at_6_29))
+    (when (and (at_6_28) (valid)) (not (at_6_28)))
+    (when (not (and (at_6_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_29_5_29
+  :effect (and
+    (when (and (at_6_29) (valid)) (at_5_29))
+    (when (and (at_6_29) (valid)) (not (at_6_29)))
+    (when (not (and (at_6_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_29_7_29
+  :effect (and
+    (when (and (at_6_29) (valid)) (at_7_29))
+    (when (and (at_6_29) (valid)) (not (at_6_29)))
+    (when (not (and (at_6_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_29_6_28
+  :effect (and
+    (when (and (at_6_29) (valid)) (at_6_28))
+    (when (and (at_6_29) (valid)) (not (at_6_29)))
+    (when (not (and (at_6_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_29_6_30
+  :effect (and
+    (when (and (at_6_29) (valid)) (at_6_30))
+    (when (and (at_6_29) (valid)) (not (at_6_29)))
+    (when (not (and (at_6_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_30_5_30
+  :effect (and
+    (when (and (at_6_30) (valid)) (at_5_30))
+    (when (and (at_6_30) (valid)) (not (at_6_30)))
+    (when (not (and (at_6_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_30_7_30
+  :effect (and
+    (when (and (at_6_30) (valid)) (at_7_30))
+    (when (and (at_6_30) (valid)) (not (at_6_30)))
+    (when (not (and (at_6_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_30_6_29
+  :effect (and
+    (when (and (at_6_30) (valid)) (at_6_29))
+    (when (and (at_6_30) (valid)) (not (at_6_30)))
+    (when (not (and (at_6_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_30_6_31
+  :effect (and
+    (when (and (at_6_30) (valid)) (at_6_31))
+    (when (and (at_6_30) (valid)) (not (at_6_30)))
+    (when (not (and (at_6_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_31_5_31
+  :effect (and
+    (when (and (at_6_31) (valid)) (at_5_31))
+    (when (and (at_6_31) (valid)) (not (at_6_31)))
+    (when (not (and (at_6_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_31_7_31
+  :effect (and
+    (when (and (at_6_31) (valid)) (at_7_31))
+    (when (and (at_6_31) (valid)) (not (at_6_31)))
+    (when (not (and (at_6_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_6_31_6_30
+  :effect (and
+    (when (and (at_6_31) (valid)) (at_6_30))
+    (when (and (at_6_31) (valid)) (not (at_6_31)))
+    (when (not (and (at_6_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_0_6_0
+  :effect (and
+    (when (and (at_7_0) (valid)) (at_6_0))
+    (when (and (at_7_0) (valid)) (not (at_7_0)))
+    (when (not (and (at_7_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_0_8_0
+  :effect (and
+    (when (and (at_7_0) (valid)) (at_8_0))
+    (when (and (at_7_0) (valid)) (not (at_7_0)))
+    (when (not (and (at_7_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_0_7_1
+  :effect (and
+    (when (and (at_7_0) (valid)) (at_7_1))
+    (when (and (at_7_0) (valid)) (not (at_7_0)))
+    (when (not (and (at_7_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_1_6_1
+  :effect (and
+    (when (and (at_7_1) (valid)) (at_6_1))
+    (when (and (at_7_1) (valid)) (not (at_7_1)))
+    (when (not (and (at_7_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_1_8_1
+  :effect (and
+    (when (and (at_7_1) (valid)) (at_8_1))
+    (when (and (at_7_1) (valid)) (not (at_7_1)))
+    (when (not (and (at_7_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_1_7_0
+  :effect (and
+    (when (and (at_7_1) (valid)) (at_7_0))
+    (when (and (at_7_1) (valid)) (not (at_7_1)))
+    (when (not (and (at_7_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_1_7_2
+  :effect (and
+    (when (and (at_7_1) (valid)) (at_7_2))
+    (when (and (at_7_1) (valid)) (not (at_7_1)))
+    (when (not (and (at_7_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_2_6_2
+  :effect (and
+    (when (and (at_7_2) (valid)) (at_6_2))
+    (when (and (at_7_2) (valid)) (not (at_7_2)))
+    (when (not (and (at_7_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_2_8_2
+  :effect (and
+    (when (and (at_7_2) (valid)) (at_8_2))
+    (when (and (at_7_2) (valid)) (not (at_7_2)))
+    (when (not (and (at_7_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_2_7_1
+  :effect (and
+    (when (and (at_7_2) (valid)) (at_7_1))
+    (when (and (at_7_2) (valid)) (not (at_7_2)))
+    (when (not (and (at_7_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_2_7_3
+  :effect (and
+    (when (and (at_7_2) (valid)) (at_7_3))
+    (when (and (at_7_2) (valid)) (not (at_7_2)))
+    (when (not (and (at_7_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_3_6_3
+  :effect (and
+    (when (and (at_7_3) (valid)) (at_6_3))
+    (when (and (at_7_3) (valid)) (not (at_7_3)))
+    (when (not (and (at_7_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_3_8_3
+  :effect (and
+    (when (and (at_7_3) (valid)) (at_8_3))
+    (when (and (at_7_3) (valid)) (not (at_7_3)))
+    (when (not (and (at_7_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_3_7_2
+  :effect (and
+    (when (and (at_7_3) (valid)) (at_7_2))
+    (when (and (at_7_3) (valid)) (not (at_7_3)))
+    (when (not (and (at_7_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_3_7_4
+  :effect (and
+    (when (and (at_7_3) (valid)) (at_7_4))
+    (when (and (at_7_3) (valid)) (not (at_7_3)))
+    (when (not (and (at_7_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_4_6_4
+  :effect (and
+    (when (and (at_7_4) (valid)) (at_6_4))
+    (when (and (at_7_4) (valid)) (not (at_7_4)))
+    (when (not (and (at_7_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_4_8_4
+  :effect (and
+    (when (and (at_7_4) (valid)) (at_8_4))
+    (when (and (at_7_4) (valid)) (not (at_7_4)))
+    (when (not (and (at_7_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_4_7_3
+  :effect (and
+    (when (and (at_7_4) (valid)) (at_7_3))
+    (when (and (at_7_4) (valid)) (not (at_7_4)))
+    (when (not (and (at_7_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_4_7_5
+  :effect (and
+    (when (and (at_7_4) (valid)) (at_7_5))
+    (when (and (at_7_4) (valid)) (not (at_7_4)))
+    (when (not (and (at_7_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_5_6_5
+  :effect (and
+    (when (and (at_7_5) (valid)) (at_6_5))
+    (when (and (at_7_5) (valid)) (not (at_7_5)))
+    (when (not (and (at_7_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_5_8_5
+  :effect (and
+    (when (and (at_7_5) (valid)) (at_8_5))
+    (when (and (at_7_5) (valid)) (not (at_7_5)))
+    (when (not (and (at_7_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_5_7_4
+  :effect (and
+    (when (and (at_7_5) (valid)) (at_7_4))
+    (when (and (at_7_5) (valid)) (not (at_7_5)))
+    (when (not (and (at_7_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_5_7_6
+  :effect (and
+    (when (and (at_7_5) (valid)) (at_7_6))
+    (when (and (at_7_5) (valid)) (not (at_7_5)))
+    (when (not (and (at_7_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_6_6_6
+  :effect (and
+    (when (and (at_7_6) (valid)) (at_6_6))
+    (when (and (at_7_6) (valid)) (not (at_7_6)))
+    (when (not (and (at_7_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_6_8_6
+  :effect (and
+    (when (and (at_7_6) (valid)) (at_8_6))
+    (when (and (at_7_6) (valid)) (not (at_7_6)))
+    (when (not (and (at_7_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_6_7_5
+  :effect (and
+    (when (and (at_7_6) (valid)) (at_7_5))
+    (when (and (at_7_6) (valid)) (not (at_7_6)))
+    (when (not (and (at_7_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_6_7_7
+  :effect (and
+    (when (and (at_7_6) (valid)) (at_7_7))
+    (when (and (at_7_6) (valid)) (not (at_7_6)))
+    (when (not (and (at_7_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_7_6_7
+  :effect (and
+    (when (and (at_7_7) (valid)) (at_6_7))
+    (when (and (at_7_7) (valid)) (not (at_7_7)))
+    (when (not (and (at_7_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_7_8_7
+  :effect (and
+    (when (and (at_7_7) (valid)) (at_8_7))
+    (when (and (at_7_7) (valid)) (not (at_7_7)))
+    (when (not (and (at_7_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_7_7_6
+  :effect (and
+    (when (and (at_7_7) (valid)) (at_7_6))
+    (when (and (at_7_7) (valid)) (not (at_7_7)))
+    (when (not (and (at_7_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_7_7_8
+  :effect (and
+    (when (and (at_7_7) (valid)) (at_7_8))
+    (when (and (at_7_7) (valid)) (not (at_7_7)))
+    (when (not (and (at_7_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_8_6_8
+  :effect (and
+    (when (and (at_7_8) (valid)) (at_6_8))
+    (when (and (at_7_8) (valid)) (not (at_7_8)))
+    (when (not (and (at_7_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_8_8_8
+  :effect (and
+    (when (and (at_7_8) (valid)) (at_8_8))
+    (when (and (at_7_8) (valid)) (not (at_7_8)))
+    (when (not (and (at_7_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_8_7_7
+  :effect (and
+    (when (and (at_7_8) (valid)) (at_7_7))
+    (when (and (at_7_8) (valid)) (not (at_7_8)))
+    (when (not (and (at_7_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_8_7_9
+  :effect (and
+    (when (and (at_7_8) (valid)) (at_7_9))
+    (when (and (at_7_8) (valid)) (not (at_7_8)))
+    (when (not (and (at_7_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_9_6_9
+  :effect (and
+    (when (and (at_7_9) (valid)) (at_6_9))
+    (when (and (at_7_9) (valid)) (not (at_7_9)))
+    (when (not (and (at_7_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_9_8_9
+  :effect (and
+    (when (and (at_7_9) (valid)) (at_8_9))
+    (when (and (at_7_9) (valid)) (not (at_7_9)))
+    (when (not (and (at_7_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_9_7_8
+  :effect (and
+    (when (and (at_7_9) (valid)) (at_7_8))
+    (when (and (at_7_9) (valid)) (not (at_7_9)))
+    (when (not (and (at_7_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_9_7_10
+  :effect (and
+    (when (and (at_7_9) (valid)) (at_7_10))
+    (when (and (at_7_9) (valid)) (not (at_7_9)))
+    (when (not (and (at_7_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_10_6_10
+  :effect (and
+    (when (and (at_7_10) (valid)) (at_6_10))
+    (when (and (at_7_10) (valid)) (not (at_7_10)))
+    (when (not (and (at_7_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_10_8_10
+  :effect (and
+    (when (and (at_7_10) (valid)) (at_8_10))
+    (when (and (at_7_10) (valid)) (not (at_7_10)))
+    (when (not (and (at_7_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_10_7_9
+  :effect (and
+    (when (and (at_7_10) (valid)) (at_7_9))
+    (when (and (at_7_10) (valid)) (not (at_7_10)))
+    (when (not (and (at_7_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_10_7_11
+  :effect (and
+    (when (and (at_7_10) (valid)) (at_7_11))
+    (when (and (at_7_10) (valid)) (not (at_7_10)))
+    (when (not (and (at_7_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_11_6_11
+  :effect (and
+    (when (and (at_7_11) (valid)) (at_6_11))
+    (when (and (at_7_11) (valid)) (not (at_7_11)))
+    (when (not (and (at_7_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_11_8_11
+  :effect (and
+    (when (and (at_7_11) (valid)) (at_8_11))
+    (when (and (at_7_11) (valid)) (not (at_7_11)))
+    (when (not (and (at_7_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_11_7_10
+  :effect (and
+    (when (and (at_7_11) (valid)) (at_7_10))
+    (when (and (at_7_11) (valid)) (not (at_7_11)))
+    (when (not (and (at_7_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_11_7_12
+  :effect (and
+    (when (and (at_7_11) (valid)) (at_7_12))
+    (when (and (at_7_11) (valid)) (not (at_7_11)))
+    (when (not (and (at_7_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_12_6_12
+  :effect (and
+    (when (and (at_7_12) (valid)) (at_6_12))
+    (when (and (at_7_12) (valid)) (not (at_7_12)))
+    (when (not (and (at_7_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_12_8_12
+  :effect (and
+    (when (and (at_7_12) (valid)) (at_8_12))
+    (when (and (at_7_12) (valid)) (not (at_7_12)))
+    (when (not (and (at_7_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_12_7_11
+  :effect (and
+    (when (and (at_7_12) (valid)) (at_7_11))
+    (when (and (at_7_12) (valid)) (not (at_7_12)))
+    (when (not (and (at_7_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_12_7_13
+  :effect (and
+    (when (and (at_7_12) (valid)) (at_7_13))
+    (when (and (at_7_12) (valid)) (not (at_7_12)))
+    (when (not (and (at_7_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_13_6_13
+  :effect (and
+    (when (and (at_7_13) (valid)) (at_6_13))
+    (when (and (at_7_13) (valid)) (not (at_7_13)))
+    (when (not (and (at_7_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_13_8_13
+  :effect (and
+    (when (and (at_7_13) (valid)) (at_8_13))
+    (when (and (at_7_13) (valid)) (not (at_7_13)))
+    (when (not (and (at_7_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_13_7_12
+  :effect (and
+    (when (and (at_7_13) (valid)) (at_7_12))
+    (when (and (at_7_13) (valid)) (not (at_7_13)))
+    (when (not (and (at_7_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_13_7_14
+  :effect (and
+    (when (and (at_7_13) (valid)) (at_7_14))
+    (when (and (at_7_13) (valid)) (not (at_7_13)))
+    (when (not (and (at_7_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_14_6_14
+  :effect (and
+    (when (and (at_7_14) (valid)) (at_6_14))
+    (when (and (at_7_14) (valid)) (not (at_7_14)))
+    (when (not (and (at_7_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_14_8_14
+  :effect (and
+    (when (and (at_7_14) (valid)) (at_8_14))
+    (when (and (at_7_14) (valid)) (not (at_7_14)))
+    (when (not (and (at_7_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_14_7_13
+  :effect (and
+    (when (and (at_7_14) (valid)) (at_7_13))
+    (when (and (at_7_14) (valid)) (not (at_7_14)))
+    (when (not (and (at_7_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_14_7_15
+  :effect (and
+    (when (and (at_7_14) (valid)) (at_7_15))
+    (when (and (at_7_14) (valid)) (not (at_7_14)))
+    (when (not (and (at_7_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_15_6_15
+  :effect (and
+    (when (and (at_7_15) (valid)) (at_6_15))
+    (when (and (at_7_15) (valid)) (not (at_7_15)))
+    (when (not (and (at_7_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_15_8_15
+  :effect (and
+    (when (and (at_7_15) (valid)) (at_8_15))
+    (when (and (at_7_15) (valid)) (not (at_7_15)))
+    (when (not (and (at_7_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_15_7_14
+  :effect (and
+    (when (and (at_7_15) (valid)) (at_7_14))
+    (when (and (at_7_15) (valid)) (not (at_7_15)))
+    (when (not (and (at_7_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_15_7_16
+  :effect (and
+    (when (and (at_7_15) (valid)) (at_7_16))
+    (when (and (at_7_15) (valid)) (not (at_7_15)))
+    (when (not (and (at_7_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_16_6_16
+  :effect (and
+    (when (and (at_7_16) (valid)) (at_6_16))
+    (when (and (at_7_16) (valid)) (not (at_7_16)))
+    (when (not (and (at_7_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_16_8_16
+  :effect (and
+    (when (and (at_7_16) (valid)) (at_8_16))
+    (when (and (at_7_16) (valid)) (not (at_7_16)))
+    (when (not (and (at_7_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_16_7_15
+  :effect (and
+    (when (and (at_7_16) (valid)) (at_7_15))
+    (when (and (at_7_16) (valid)) (not (at_7_16)))
+    (when (not (and (at_7_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_16_7_17
+  :effect (and
+    (when (and (at_7_16) (valid)) (at_7_17))
+    (when (and (at_7_16) (valid)) (not (at_7_16)))
+    (when (not (and (at_7_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_17_6_17
+  :effect (and
+    (when (and (at_7_17) (valid)) (at_6_17))
+    (when (and (at_7_17) (valid)) (not (at_7_17)))
+    (when (not (and (at_7_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_17_8_17
+  :effect (and
+    (when (and (at_7_17) (valid)) (at_8_17))
+    (when (and (at_7_17) (valid)) (not (at_7_17)))
+    (when (not (and (at_7_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_17_7_16
+  :effect (and
+    (when (and (at_7_17) (valid)) (at_7_16))
+    (when (and (at_7_17) (valid)) (not (at_7_17)))
+    (when (not (and (at_7_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_17_7_18
+  :effect (and
+    (when (and (at_7_17) (valid)) (at_7_18))
+    (when (and (at_7_17) (valid)) (not (at_7_17)))
+    (when (not (and (at_7_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_18_6_18
+  :effect (and
+    (when (and (at_7_18) (valid)) (at_6_18))
+    (when (and (at_7_18) (valid)) (not (at_7_18)))
+    (when (not (and (at_7_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_18_8_18
+  :effect (and
+    (when (and (at_7_18) (valid)) (at_8_18))
+    (when (and (at_7_18) (valid)) (not (at_7_18)))
+    (when (not (and (at_7_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_18_7_17
+  :effect (and
+    (when (and (at_7_18) (valid)) (at_7_17))
+    (when (and (at_7_18) (valid)) (not (at_7_18)))
+    (when (not (and (at_7_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_18_7_19
+  :effect (and
+    (when (and (at_7_18) (valid)) (at_7_19))
+    (when (and (at_7_18) (valid)) (not (at_7_18)))
+    (when (not (and (at_7_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_19_6_19
+  :effect (and
+    (when (and (at_7_19) (valid)) (at_6_19))
+    (when (and (at_7_19) (valid)) (not (at_7_19)))
+    (when (not (and (at_7_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_19_8_19
+  :effect (and
+    (when (and (at_7_19) (valid)) (at_8_19))
+    (when (and (at_7_19) (valid)) (not (at_7_19)))
+    (when (not (and (at_7_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_19_7_18
+  :effect (and
+    (when (and (at_7_19) (valid)) (at_7_18))
+    (when (and (at_7_19) (valid)) (not (at_7_19)))
+    (when (not (and (at_7_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_19_7_20
+  :effect (and
+    (when (and (at_7_19) (valid)) (at_7_20))
+    (when (and (at_7_19) (valid)) (not (at_7_19)))
+    (when (not (and (at_7_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_20_6_20
+  :effect (and
+    (when (and (at_7_20) (valid)) (at_6_20))
+    (when (and (at_7_20) (valid)) (not (at_7_20)))
+    (when (not (and (at_7_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_20_8_20
+  :effect (and
+    (when (and (at_7_20) (valid)) (at_8_20))
+    (when (and (at_7_20) (valid)) (not (at_7_20)))
+    (when (not (and (at_7_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_20_7_19
+  :effect (and
+    (when (and (at_7_20) (valid)) (at_7_19))
+    (when (and (at_7_20) (valid)) (not (at_7_20)))
+    (when (not (and (at_7_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_20_7_21
+  :effect (and
+    (when (and (at_7_20) (valid)) (at_7_21))
+    (when (and (at_7_20) (valid)) (not (at_7_20)))
+    (when (not (and (at_7_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_21_6_21
+  :effect (and
+    (when (and (at_7_21) (valid)) (at_6_21))
+    (when (and (at_7_21) (valid)) (not (at_7_21)))
+    (when (not (and (at_7_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_21_8_21
+  :effect (and
+    (when (and (at_7_21) (valid)) (at_8_21))
+    (when (and (at_7_21) (valid)) (not (at_7_21)))
+    (when (not (and (at_7_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_21_7_20
+  :effect (and
+    (when (and (at_7_21) (valid)) (at_7_20))
+    (when (and (at_7_21) (valid)) (not (at_7_21)))
+    (when (not (and (at_7_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_21_7_22
+  :effect (and
+    (when (and (at_7_21) (valid)) (at_7_22))
+    (when (and (at_7_21) (valid)) (not (at_7_21)))
+    (when (not (and (at_7_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_22_6_22
+  :effect (and
+    (when (and (at_7_22) (valid)) (at_6_22))
+    (when (and (at_7_22) (valid)) (not (at_7_22)))
+    (when (not (and (at_7_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_22_8_22
+  :effect (and
+    (when (and (at_7_22) (valid)) (at_8_22))
+    (when (and (at_7_22) (valid)) (not (at_7_22)))
+    (when (not (and (at_7_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_22_7_21
+  :effect (and
+    (when (and (at_7_22) (valid)) (at_7_21))
+    (when (and (at_7_22) (valid)) (not (at_7_22)))
+    (when (not (and (at_7_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_22_7_23
+  :effect (and
+    (when (and (at_7_22) (valid)) (at_7_23))
+    (when (and (at_7_22) (valid)) (not (at_7_22)))
+    (when (not (and (at_7_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_23_6_23
+  :effect (and
+    (when (and (at_7_23) (valid)) (at_6_23))
+    (when (and (at_7_23) (valid)) (not (at_7_23)))
+    (when (not (and (at_7_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_23_8_23
+  :effect (and
+    (when (and (at_7_23) (valid)) (at_8_23))
+    (when (and (at_7_23) (valid)) (not (at_7_23)))
+    (when (not (and (at_7_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_23_7_22
+  :effect (and
+    (when (and (at_7_23) (valid)) (at_7_22))
+    (when (and (at_7_23) (valid)) (not (at_7_23)))
+    (when (not (and (at_7_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_23_7_24
+  :effect (and
+    (when (and (at_7_23) (valid)) (at_7_24))
+    (when (and (at_7_23) (valid)) (not (at_7_23)))
+    (when (not (and (at_7_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_24_6_24
+  :effect (and
+    (when (and (at_7_24) (valid)) (at_6_24))
+    (when (and (at_7_24) (valid)) (not (at_7_24)))
+    (when (not (and (at_7_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_24_8_24
+  :effect (and
+    (when (and (at_7_24) (valid)) (at_8_24))
+    (when (and (at_7_24) (valid)) (not (at_7_24)))
+    (when (not (and (at_7_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_24_7_23
+  :effect (and
+    (when (and (at_7_24) (valid)) (at_7_23))
+    (when (and (at_7_24) (valid)) (not (at_7_24)))
+    (when (not (and (at_7_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_24_7_25
+  :effect (and
+    (when (and (at_7_24) (valid)) (at_7_25))
+    (when (and (at_7_24) (valid)) (not (at_7_24)))
+    (when (not (and (at_7_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_25_6_25
+  :effect (and
+    (when (and (at_7_25) (valid)) (at_6_25))
+    (when (and (at_7_25) (valid)) (not (at_7_25)))
+    (when (not (and (at_7_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_25_8_25
+  :effect (and
+    (when (and (at_7_25) (valid)) (at_8_25))
+    (when (and (at_7_25) (valid)) (not (at_7_25)))
+    (when (not (and (at_7_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_25_7_24
+  :effect (and
+    (when (and (at_7_25) (valid)) (at_7_24))
+    (when (and (at_7_25) (valid)) (not (at_7_25)))
+    (when (not (and (at_7_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_25_7_26
+  :effect (and
+    (when (and (at_7_25) (valid)) (at_7_26))
+    (when (and (at_7_25) (valid)) (not (at_7_25)))
+    (when (not (and (at_7_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_26_6_26
+  :effect (and
+    (when (and (at_7_26) (valid)) (at_6_26))
+    (when (and (at_7_26) (valid)) (not (at_7_26)))
+    (when (not (and (at_7_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_26_8_26
+  :effect (and
+    (when (and (at_7_26) (valid)) (at_8_26))
+    (when (and (at_7_26) (valid)) (not (at_7_26)))
+    (when (not (and (at_7_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_26_7_25
+  :effect (and
+    (when (and (at_7_26) (valid)) (at_7_25))
+    (when (and (at_7_26) (valid)) (not (at_7_26)))
+    (when (not (and (at_7_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_26_7_27
+  :effect (and
+    (when (and (at_7_26) (valid)) (at_7_27))
+    (when (and (at_7_26) (valid)) (not (at_7_26)))
+    (when (not (and (at_7_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_27_6_27
+  :effect (and
+    (when (and (at_7_27) (valid)) (at_6_27))
+    (when (and (at_7_27) (valid)) (not (at_7_27)))
+    (when (not (and (at_7_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_27_8_27
+  :effect (and
+    (when (and (at_7_27) (valid)) (at_8_27))
+    (when (and (at_7_27) (valid)) (not (at_7_27)))
+    (when (not (and (at_7_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_27_7_26
+  :effect (and
+    (when (and (at_7_27) (valid)) (at_7_26))
+    (when (and (at_7_27) (valid)) (not (at_7_27)))
+    (when (not (and (at_7_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_27_7_28
+  :effect (and
+    (when (and (at_7_27) (valid)) (at_7_28))
+    (when (and (at_7_27) (valid)) (not (at_7_27)))
+    (when (not (and (at_7_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_28_6_28
+  :effect (and
+    (when (and (at_7_28) (valid)) (at_6_28))
+    (when (and (at_7_28) (valid)) (not (at_7_28)))
+    (when (not (and (at_7_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_28_8_28
+  :effect (and
+    (when (and (at_7_28) (valid)) (at_8_28))
+    (when (and (at_7_28) (valid)) (not (at_7_28)))
+    (when (not (and (at_7_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_28_7_27
+  :effect (and
+    (when (and (at_7_28) (valid)) (at_7_27))
+    (when (and (at_7_28) (valid)) (not (at_7_28)))
+    (when (not (and (at_7_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_28_7_29
+  :effect (and
+    (when (and (at_7_28) (valid)) (at_7_29))
+    (when (and (at_7_28) (valid)) (not (at_7_28)))
+    (when (not (and (at_7_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_29_6_29
+  :effect (and
+    (when (and (at_7_29) (valid)) (at_6_29))
+    (when (and (at_7_29) (valid)) (not (at_7_29)))
+    (when (not (and (at_7_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_29_8_29
+  :effect (and
+    (when (and (at_7_29) (valid)) (at_8_29))
+    (when (and (at_7_29) (valid)) (not (at_7_29)))
+    (when (not (and (at_7_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_29_7_28
+  :effect (and
+    (when (and (at_7_29) (valid)) (at_7_28))
+    (when (and (at_7_29) (valid)) (not (at_7_29)))
+    (when (not (and (at_7_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_29_7_30
+  :effect (and
+    (when (and (at_7_29) (valid)) (at_7_30))
+    (when (and (at_7_29) (valid)) (not (at_7_29)))
+    (when (not (and (at_7_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_30_6_30
+  :effect (and
+    (when (and (at_7_30) (valid)) (at_6_30))
+    (when (and (at_7_30) (valid)) (not (at_7_30)))
+    (when (not (and (at_7_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_30_8_30
+  :effect (and
+    (when (and (at_7_30) (valid)) (at_8_30))
+    (when (and (at_7_30) (valid)) (not (at_7_30)))
+    (when (not (and (at_7_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_30_7_29
+  :effect (and
+    (when (and (at_7_30) (valid)) (at_7_29))
+    (when (and (at_7_30) (valid)) (not (at_7_30)))
+    (when (not (and (at_7_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_30_7_31
+  :effect (and
+    (when (and (at_7_30) (valid)) (at_7_31))
+    (when (and (at_7_30) (valid)) (not (at_7_30)))
+    (when (not (and (at_7_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_31_6_31
+  :effect (and
+    (when (and (at_7_31) (valid)) (at_6_31))
+    (when (and (at_7_31) (valid)) (not (at_7_31)))
+    (when (not (and (at_7_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_31_8_31
+  :effect (and
+    (when (and (at_7_31) (valid)) (at_8_31))
+    (when (and (at_7_31) (valid)) (not (at_7_31)))
+    (when (not (and (at_7_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_7_31_7_30
+  :effect (and
+    (when (and (at_7_31) (valid)) (at_7_30))
+    (when (and (at_7_31) (valid)) (not (at_7_31)))
+    (when (not (and (at_7_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_0_7_0
+  :effect (and
+    (when (and (at_8_0) (valid)) (at_7_0))
+    (when (and (at_8_0) (valid)) (not (at_8_0)))
+    (when (not (and (at_8_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_0_9_0
+  :effect (and
+    (when (and (at_8_0) (valid)) (at_9_0))
+    (when (and (at_8_0) (valid)) (not (at_8_0)))
+    (when (not (and (at_8_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_0_8_1
+  :effect (and
+    (when (and (at_8_0) (valid)) (at_8_1))
+    (when (and (at_8_0) (valid)) (not (at_8_0)))
+    (when (not (and (at_8_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_1_7_1
+  :effect (and
+    (when (and (at_8_1) (valid)) (at_7_1))
+    (when (and (at_8_1) (valid)) (not (at_8_1)))
+    (when (not (and (at_8_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_1_9_1
+  :effect (and
+    (when (and (at_8_1) (valid)) (at_9_1))
+    (when (and (at_8_1) (valid)) (not (at_8_1)))
+    (when (not (and (at_8_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_1_8_0
+  :effect (and
+    (when (and (at_8_1) (valid)) (at_8_0))
+    (when (and (at_8_1) (valid)) (not (at_8_1)))
+    (when (not (and (at_8_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_1_8_2
+  :effect (and
+    (when (and (at_8_1) (valid)) (at_8_2))
+    (when (and (at_8_1) (valid)) (not (at_8_1)))
+    (when (not (and (at_8_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_2_7_2
+  :effect (and
+    (when (and (at_8_2) (valid)) (at_7_2))
+    (when (and (at_8_2) (valid)) (not (at_8_2)))
+    (when (not (and (at_8_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_2_9_2
+  :effect (and
+    (when (and (at_8_2) (valid)) (at_9_2))
+    (when (and (at_8_2) (valid)) (not (at_8_2)))
+    (when (not (and (at_8_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_2_8_1
+  :effect (and
+    (when (and (at_8_2) (valid)) (at_8_1))
+    (when (and (at_8_2) (valid)) (not (at_8_2)))
+    (when (not (and (at_8_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_2_8_3
+  :effect (and
+    (when (and (at_8_2) (valid)) (at_8_3))
+    (when (and (at_8_2) (valid)) (not (at_8_2)))
+    (when (not (and (at_8_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_3_7_3
+  :effect (and
+    (when (and (at_8_3) (valid)) (at_7_3))
+    (when (and (at_8_3) (valid)) (not (at_8_3)))
+    (when (not (and (at_8_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_3_9_3
+  :effect (and
+    (when (and (at_8_3) (valid)) (at_9_3))
+    (when (and (at_8_3) (valid)) (not (at_8_3)))
+    (when (not (and (at_8_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_3_8_2
+  :effect (and
+    (when (and (at_8_3) (valid)) (at_8_2))
+    (when (and (at_8_3) (valid)) (not (at_8_3)))
+    (when (not (and (at_8_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_3_8_4
+  :effect (and
+    (when (and (at_8_3) (valid)) (at_8_4))
+    (when (and (at_8_3) (valid)) (not (at_8_3)))
+    (when (not (and (at_8_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_4_7_4
+  :effect (and
+    (when (and (at_8_4) (valid)) (at_7_4))
+    (when (and (at_8_4) (valid)) (not (at_8_4)))
+    (when (not (and (at_8_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_4_9_4
+  :effect (and
+    (when (and (at_8_4) (valid)) (at_9_4))
+    (when (and (at_8_4) (valid)) (not (at_8_4)))
+    (when (not (and (at_8_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_4_8_3
+  :effect (and
+    (when (and (at_8_4) (valid)) (at_8_3))
+    (when (and (at_8_4) (valid)) (not (at_8_4)))
+    (when (not (and (at_8_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_4_8_5
+  :effect (and
+    (when (and (at_8_4) (valid)) (at_8_5))
+    (when (and (at_8_4) (valid)) (not (at_8_4)))
+    (when (not (and (at_8_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_5_7_5
+  :effect (and
+    (when (and (at_8_5) (valid)) (at_7_5))
+    (when (and (at_8_5) (valid)) (not (at_8_5)))
+    (when (not (and (at_8_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_5_9_5
+  :effect (and
+    (when (and (at_8_5) (valid)) (at_9_5))
+    (when (and (at_8_5) (valid)) (not (at_8_5)))
+    (when (not (and (at_8_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_5_8_4
+  :effect (and
+    (when (and (at_8_5) (valid)) (at_8_4))
+    (when (and (at_8_5) (valid)) (not (at_8_5)))
+    (when (not (and (at_8_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_5_8_6
+  :effect (and
+    (when (and (at_8_5) (valid)) (at_8_6))
+    (when (and (at_8_5) (valid)) (not (at_8_5)))
+    (when (not (and (at_8_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_6_7_6
+  :effect (and
+    (when (and (at_8_6) (valid)) (at_7_6))
+    (when (and (at_8_6) (valid)) (not (at_8_6)))
+    (when (not (and (at_8_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_6_9_6
+  :effect (and
+    (when (and (at_8_6) (valid)) (at_9_6))
+    (when (and (at_8_6) (valid)) (not (at_8_6)))
+    (when (not (and (at_8_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_6_8_5
+  :effect (and
+    (when (and (at_8_6) (valid)) (at_8_5))
+    (when (and (at_8_6) (valid)) (not (at_8_6)))
+    (when (not (and (at_8_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_6_8_7
+  :effect (and
+    (when (and (at_8_6) (valid)) (at_8_7))
+    (when (and (at_8_6) (valid)) (not (at_8_6)))
+    (when (not (and (at_8_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_7_7_7
+  :effect (and
+    (when (and (at_8_7) (valid)) (at_7_7))
+    (when (and (at_8_7) (valid)) (not (at_8_7)))
+    (when (not (and (at_8_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_7_9_7
+  :effect (and
+    (when (and (at_8_7) (valid)) (at_9_7))
+    (when (and (at_8_7) (valid)) (not (at_8_7)))
+    (when (not (and (at_8_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_7_8_6
+  :effect (and
+    (when (and (at_8_7) (valid)) (at_8_6))
+    (when (and (at_8_7) (valid)) (not (at_8_7)))
+    (when (not (and (at_8_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_7_8_8
+  :effect (and
+    (when (and (at_8_7) (valid)) (at_8_8))
+    (when (and (at_8_7) (valid)) (not (at_8_7)))
+    (when (not (and (at_8_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_8_7_8
+  :effect (and
+    (when (and (at_8_8) (valid)) (at_7_8))
+    (when (and (at_8_8) (valid)) (not (at_8_8)))
+    (when (not (and (at_8_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_8_9_8
+  :effect (and
+    (when (and (at_8_8) (valid)) (at_9_8))
+    (when (and (at_8_8) (valid)) (not (at_8_8)))
+    (when (not (and (at_8_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_8_8_7
+  :effect (and
+    (when (and (at_8_8) (valid)) (at_8_7))
+    (when (and (at_8_8) (valid)) (not (at_8_8)))
+    (when (not (and (at_8_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_8_8_9
+  :effect (and
+    (when (and (at_8_8) (valid)) (at_8_9))
+    (when (and (at_8_8) (valid)) (not (at_8_8)))
+    (when (not (and (at_8_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_9_7_9
+  :effect (and
+    (when (and (at_8_9) (valid)) (at_7_9))
+    (when (and (at_8_9) (valid)) (not (at_8_9)))
+    (when (not (and (at_8_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_9_9_9
+  :effect (and
+    (when (and (at_8_9) (valid)) (at_9_9))
+    (when (and (at_8_9) (valid)) (not (at_8_9)))
+    (when (not (and (at_8_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_9_8_8
+  :effect (and
+    (when (and (at_8_9) (valid)) (at_8_8))
+    (when (and (at_8_9) (valid)) (not (at_8_9)))
+    (when (not (and (at_8_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_9_8_10
+  :effect (and
+    (when (and (at_8_9) (valid)) (at_8_10))
+    (when (and (at_8_9) (valid)) (not (at_8_9)))
+    (when (not (and (at_8_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_10_7_10
+  :effect (and
+    (when (and (at_8_10) (valid)) (at_7_10))
+    (when (and (at_8_10) (valid)) (not (at_8_10)))
+    (when (not (and (at_8_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_10_9_10
+  :effect (and
+    (when (and (at_8_10) (valid)) (at_9_10))
+    (when (and (at_8_10) (valid)) (not (at_8_10)))
+    (when (not (and (at_8_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_10_8_9
+  :effect (and
+    (when (and (at_8_10) (valid)) (at_8_9))
+    (when (and (at_8_10) (valid)) (not (at_8_10)))
+    (when (not (and (at_8_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_10_8_11
+  :effect (and
+    (when (and (at_8_10) (valid)) (at_8_11))
+    (when (and (at_8_10) (valid)) (not (at_8_10)))
+    (when (not (and (at_8_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_11_7_11
+  :effect (and
+    (when (and (at_8_11) (valid)) (at_7_11))
+    (when (and (at_8_11) (valid)) (not (at_8_11)))
+    (when (not (and (at_8_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_11_9_11
+  :effect (and
+    (when (and (at_8_11) (valid)) (at_9_11))
+    (when (and (at_8_11) (valid)) (not (at_8_11)))
+    (when (not (and (at_8_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_11_8_10
+  :effect (and
+    (when (and (at_8_11) (valid)) (at_8_10))
+    (when (and (at_8_11) (valid)) (not (at_8_11)))
+    (when (not (and (at_8_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_11_8_12
+  :effect (and
+    (when (and (at_8_11) (valid)) (at_8_12))
+    (when (and (at_8_11) (valid)) (not (at_8_11)))
+    (when (not (and (at_8_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_12_7_12
+  :effect (and
+    (when (and (at_8_12) (valid)) (at_7_12))
+    (when (and (at_8_12) (valid)) (not (at_8_12)))
+    (when (not (and (at_8_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_12_9_12
+  :effect (and
+    (when (and (at_8_12) (valid)) (at_9_12))
+    (when (and (at_8_12) (valid)) (not (at_8_12)))
+    (when (not (and (at_8_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_12_8_11
+  :effect (and
+    (when (and (at_8_12) (valid)) (at_8_11))
+    (when (and (at_8_12) (valid)) (not (at_8_12)))
+    (when (not (and (at_8_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_12_8_13
+  :effect (and
+    (when (and (at_8_12) (valid)) (at_8_13))
+    (when (and (at_8_12) (valid)) (not (at_8_12)))
+    (when (not (and (at_8_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_13_7_13
+  :effect (and
+    (when (and (at_8_13) (valid)) (at_7_13))
+    (when (and (at_8_13) (valid)) (not (at_8_13)))
+    (when (not (and (at_8_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_13_9_13
+  :effect (and
+    (when (and (at_8_13) (valid)) (at_9_13))
+    (when (and (at_8_13) (valid)) (not (at_8_13)))
+    (when (not (and (at_8_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_13_8_12
+  :effect (and
+    (when (and (at_8_13) (valid)) (at_8_12))
+    (when (and (at_8_13) (valid)) (not (at_8_13)))
+    (when (not (and (at_8_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_13_8_14
+  :effect (and
+    (when (and (at_8_13) (valid)) (at_8_14))
+    (when (and (at_8_13) (valid)) (not (at_8_13)))
+    (when (not (and (at_8_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_14_7_14
+  :effect (and
+    (when (and (at_8_14) (valid)) (at_7_14))
+    (when (and (at_8_14) (valid)) (not (at_8_14)))
+    (when (not (and (at_8_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_14_9_14
+  :effect (and
+    (when (and (at_8_14) (valid)) (at_9_14))
+    (when (and (at_8_14) (valid)) (not (at_8_14)))
+    (when (not (and (at_8_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_14_8_13
+  :effect (and
+    (when (and (at_8_14) (valid)) (at_8_13))
+    (when (and (at_8_14) (valid)) (not (at_8_14)))
+    (when (not (and (at_8_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_14_8_15
+  :effect (and
+    (when (and (at_8_14) (valid)) (at_8_15))
+    (when (and (at_8_14) (valid)) (not (at_8_14)))
+    (when (not (and (at_8_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_15_7_15
+  :effect (and
+    (when (and (at_8_15) (valid)) (at_7_15))
+    (when (and (at_8_15) (valid)) (not (at_8_15)))
+    (when (not (and (at_8_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_15_9_15
+  :effect (and
+    (when (and (at_8_15) (valid)) (at_9_15))
+    (when (and (at_8_15) (valid)) (not (at_8_15)))
+    (when (not (and (at_8_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_15_8_14
+  :effect (and
+    (when (and (at_8_15) (valid)) (at_8_14))
+    (when (and (at_8_15) (valid)) (not (at_8_15)))
+    (when (not (and (at_8_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_15_8_16
+  :effect (and
+    (when (and (at_8_15) (valid)) (at_8_16))
+    (when (and (at_8_15) (valid)) (not (at_8_15)))
+    (when (not (and (at_8_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_16_7_16
+  :effect (and
+    (when (and (at_8_16) (valid)) (at_7_16))
+    (when (and (at_8_16) (valid)) (not (at_8_16)))
+    (when (not (and (at_8_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_16_9_16
+  :effect (and
+    (when (and (at_8_16) (valid)) (at_9_16))
+    (when (and (at_8_16) (valid)) (not (at_8_16)))
+    (when (not (and (at_8_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_16_8_15
+  :effect (and
+    (when (and (at_8_16) (valid)) (at_8_15))
+    (when (and (at_8_16) (valid)) (not (at_8_16)))
+    (when (not (and (at_8_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_16_8_17
+  :effect (and
+    (when (and (at_8_16) (valid)) (at_8_17))
+    (when (and (at_8_16) (valid)) (not (at_8_16)))
+    (when (not (and (at_8_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_17_7_17
+  :effect (and
+    (when (and (at_8_17) (valid)) (at_7_17))
+    (when (and (at_8_17) (valid)) (not (at_8_17)))
+    (when (not (and (at_8_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_17_9_17
+  :effect (and
+    (when (and (at_8_17) (valid)) (at_9_17))
+    (when (and (at_8_17) (valid)) (not (at_8_17)))
+    (when (not (and (at_8_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_17_8_16
+  :effect (and
+    (when (and (at_8_17) (valid)) (at_8_16))
+    (when (and (at_8_17) (valid)) (not (at_8_17)))
+    (when (not (and (at_8_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_17_8_18
+  :effect (and
+    (when (and (at_8_17) (valid)) (at_8_18))
+    (when (and (at_8_17) (valid)) (not (at_8_17)))
+    (when (not (and (at_8_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_18_7_18
+  :effect (and
+    (when (and (at_8_18) (valid)) (at_7_18))
+    (when (and (at_8_18) (valid)) (not (at_8_18)))
+    (when (not (and (at_8_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_18_9_18
+  :effect (and
+    (when (and (at_8_18) (valid)) (at_9_18))
+    (when (and (at_8_18) (valid)) (not (at_8_18)))
+    (when (not (and (at_8_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_18_8_17
+  :effect (and
+    (when (and (at_8_18) (valid)) (at_8_17))
+    (when (and (at_8_18) (valid)) (not (at_8_18)))
+    (when (not (and (at_8_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_18_8_19
+  :effect (and
+    (when (and (at_8_18) (valid)) (at_8_19))
+    (when (and (at_8_18) (valid)) (not (at_8_18)))
+    (when (not (and (at_8_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_19_7_19
+  :effect (and
+    (when (and (at_8_19) (valid)) (at_7_19))
+    (when (and (at_8_19) (valid)) (not (at_8_19)))
+    (when (not (and (at_8_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_19_9_19
+  :effect (and
+    (when (and (at_8_19) (valid)) (at_9_19))
+    (when (and (at_8_19) (valid)) (not (at_8_19)))
+    (when (not (and (at_8_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_19_8_18
+  :effect (and
+    (when (and (at_8_19) (valid)) (at_8_18))
+    (when (and (at_8_19) (valid)) (not (at_8_19)))
+    (when (not (and (at_8_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_19_8_20
+  :effect (and
+    (when (and (at_8_19) (valid)) (at_8_20))
+    (when (and (at_8_19) (valid)) (not (at_8_19)))
+    (when (not (and (at_8_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_20_7_20
+  :effect (and
+    (when (and (at_8_20) (valid)) (at_7_20))
+    (when (and (at_8_20) (valid)) (not (at_8_20)))
+    (when (not (and (at_8_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_20_9_20
+  :effect (and
+    (when (and (at_8_20) (valid)) (at_9_20))
+    (when (and (at_8_20) (valid)) (not (at_8_20)))
+    (when (not (and (at_8_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_20_8_19
+  :effect (and
+    (when (and (at_8_20) (valid)) (at_8_19))
+    (when (and (at_8_20) (valid)) (not (at_8_20)))
+    (when (not (and (at_8_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_20_8_21
+  :effect (and
+    (when (and (at_8_20) (valid)) (at_8_21))
+    (when (and (at_8_20) (valid)) (not (at_8_20)))
+    (when (not (and (at_8_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_21_7_21
+  :effect (and
+    (when (and (at_8_21) (valid)) (at_7_21))
+    (when (and (at_8_21) (valid)) (not (at_8_21)))
+    (when (not (and (at_8_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_21_9_21
+  :effect (and
+    (when (and (at_8_21) (valid)) (at_9_21))
+    (when (and (at_8_21) (valid)) (not (at_8_21)))
+    (when (not (and (at_8_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_21_8_20
+  :effect (and
+    (when (and (at_8_21) (valid)) (at_8_20))
+    (when (and (at_8_21) (valid)) (not (at_8_21)))
+    (when (not (and (at_8_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_21_8_22
+  :effect (and
+    (when (and (at_8_21) (valid)) (at_8_22))
+    (when (and (at_8_21) (valid)) (not (at_8_21)))
+    (when (not (and (at_8_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_22_7_22
+  :effect (and
+    (when (and (at_8_22) (valid)) (at_7_22))
+    (when (and (at_8_22) (valid)) (not (at_8_22)))
+    (when (not (and (at_8_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_22_9_22
+  :effect (and
+    (when (and (at_8_22) (valid)) (at_9_22))
+    (when (and (at_8_22) (valid)) (not (at_8_22)))
+    (when (not (and (at_8_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_22_8_21
+  :effect (and
+    (when (and (at_8_22) (valid)) (at_8_21))
+    (when (and (at_8_22) (valid)) (not (at_8_22)))
+    (when (not (and (at_8_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_22_8_23
+  :effect (and
+    (when (and (at_8_22) (valid)) (at_8_23))
+    (when (and (at_8_22) (valid)) (not (at_8_22)))
+    (when (not (and (at_8_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_23_7_23
+  :effect (and
+    (when (and (at_8_23) (valid)) (at_7_23))
+    (when (and (at_8_23) (valid)) (not (at_8_23)))
+    (when (not (and (at_8_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_23_9_23
+  :effect (and
+    (when (and (at_8_23) (valid)) (at_9_23))
+    (when (and (at_8_23) (valid)) (not (at_8_23)))
+    (when (not (and (at_8_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_23_8_22
+  :effect (and
+    (when (and (at_8_23) (valid)) (at_8_22))
+    (when (and (at_8_23) (valid)) (not (at_8_23)))
+    (when (not (and (at_8_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_23_8_24
+  :effect (and
+    (when (and (at_8_23) (valid)) (at_8_24))
+    (when (and (at_8_23) (valid)) (not (at_8_23)))
+    (when (not (and (at_8_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_24_7_24
+  :effect (and
+    (when (and (at_8_24) (valid)) (at_7_24))
+    (when (and (at_8_24) (valid)) (not (at_8_24)))
+    (when (not (and (at_8_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_24_9_24
+  :effect (and
+    (when (and (at_8_24) (valid)) (at_9_24))
+    (when (and (at_8_24) (valid)) (not (at_8_24)))
+    (when (not (and (at_8_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_24_8_23
+  :effect (and
+    (when (and (at_8_24) (valid)) (at_8_23))
+    (when (and (at_8_24) (valid)) (not (at_8_24)))
+    (when (not (and (at_8_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_24_8_25
+  :effect (and
+    (when (and (at_8_24) (valid)) (at_8_25))
+    (when (and (at_8_24) (valid)) (not (at_8_24)))
+    (when (not (and (at_8_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_25_7_25
+  :effect (and
+    (when (and (at_8_25) (valid)) (at_7_25))
+    (when (and (at_8_25) (valid)) (not (at_8_25)))
+    (when (not (and (at_8_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_25_9_25
+  :effect (and
+    (when (and (at_8_25) (valid)) (at_9_25))
+    (when (and (at_8_25) (valid)) (not (at_8_25)))
+    (when (not (and (at_8_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_25_8_24
+  :effect (and
+    (when (and (at_8_25) (valid)) (at_8_24))
+    (when (and (at_8_25) (valid)) (not (at_8_25)))
+    (when (not (and (at_8_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_25_8_26
+  :effect (and
+    (when (and (at_8_25) (valid)) (at_8_26))
+    (when (and (at_8_25) (valid)) (not (at_8_25)))
+    (when (not (and (at_8_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_26_7_26
+  :effect (and
+    (when (and (at_8_26) (valid)) (at_7_26))
+    (when (and (at_8_26) (valid)) (not (at_8_26)))
+    (when (not (and (at_8_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_26_9_26
+  :effect (and
+    (when (and (at_8_26) (valid)) (at_9_26))
+    (when (and (at_8_26) (valid)) (not (at_8_26)))
+    (when (not (and (at_8_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_26_8_25
+  :effect (and
+    (when (and (at_8_26) (valid)) (at_8_25))
+    (when (and (at_8_26) (valid)) (not (at_8_26)))
+    (when (not (and (at_8_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_26_8_27
+  :effect (and
+    (when (and (at_8_26) (valid)) (at_8_27))
+    (when (and (at_8_26) (valid)) (not (at_8_26)))
+    (when (not (and (at_8_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_27_7_27
+  :effect (and
+    (when (and (at_8_27) (valid)) (at_7_27))
+    (when (and (at_8_27) (valid)) (not (at_8_27)))
+    (when (not (and (at_8_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_27_9_27
+  :effect (and
+    (when (and (at_8_27) (valid)) (at_9_27))
+    (when (and (at_8_27) (valid)) (not (at_8_27)))
+    (when (not (and (at_8_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_27_8_26
+  :effect (and
+    (when (and (at_8_27) (valid)) (at_8_26))
+    (when (and (at_8_27) (valid)) (not (at_8_27)))
+    (when (not (and (at_8_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_27_8_28
+  :effect (and
+    (when (and (at_8_27) (valid)) (at_8_28))
+    (when (and (at_8_27) (valid)) (not (at_8_27)))
+    (when (not (and (at_8_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_28_7_28
+  :effect (and
+    (when (and (at_8_28) (valid)) (at_7_28))
+    (when (and (at_8_28) (valid)) (not (at_8_28)))
+    (when (not (and (at_8_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_28_9_28
+  :effect (and
+    (when (and (at_8_28) (valid)) (at_9_28))
+    (when (and (at_8_28) (valid)) (not (at_8_28)))
+    (when (not (and (at_8_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_28_8_27
+  :effect (and
+    (when (and (at_8_28) (valid)) (at_8_27))
+    (when (and (at_8_28) (valid)) (not (at_8_28)))
+    (when (not (and (at_8_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_28_8_29
+  :effect (and
+    (when (and (at_8_28) (valid)) (at_8_29))
+    (when (and (at_8_28) (valid)) (not (at_8_28)))
+    (when (not (and (at_8_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_29_7_29
+  :effect (and
+    (when (and (at_8_29) (valid)) (at_7_29))
+    (when (and (at_8_29) (valid)) (not (at_8_29)))
+    (when (not (and (at_8_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_29_9_29
+  :effect (and
+    (when (and (at_8_29) (valid)) (at_9_29))
+    (when (and (at_8_29) (valid)) (not (at_8_29)))
+    (when (not (and (at_8_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_29_8_28
+  :effect (and
+    (when (and (at_8_29) (valid)) (at_8_28))
+    (when (and (at_8_29) (valid)) (not (at_8_29)))
+    (when (not (and (at_8_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_29_8_30
+  :effect (and
+    (when (and (at_8_29) (valid)) (at_8_30))
+    (when (and (at_8_29) (valid)) (not (at_8_29)))
+    (when (not (and (at_8_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_30_7_30
+  :effect (and
+    (when (and (at_8_30) (valid)) (at_7_30))
+    (when (and (at_8_30) (valid)) (not (at_8_30)))
+    (when (not (and (at_8_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_30_9_30
+  :effect (and
+    (when (and (at_8_30) (valid)) (at_9_30))
+    (when (and (at_8_30) (valid)) (not (at_8_30)))
+    (when (not (and (at_8_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_30_8_29
+  :effect (and
+    (when (and (at_8_30) (valid)) (at_8_29))
+    (when (and (at_8_30) (valid)) (not (at_8_30)))
+    (when (not (and (at_8_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_30_8_31
+  :effect (and
+    (when (and (at_8_30) (valid)) (at_8_31))
+    (when (and (at_8_30) (valid)) (not (at_8_30)))
+    (when (not (and (at_8_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_31_7_31
+  :effect (and
+    (when (and (at_8_31) (valid)) (at_7_31))
+    (when (and (at_8_31) (valid)) (not (at_8_31)))
+    (when (not (and (at_8_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_31_9_31
+  :effect (and
+    (when (and (at_8_31) (valid)) (at_9_31))
+    (when (and (at_8_31) (valid)) (not (at_8_31)))
+    (when (not (and (at_8_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_8_31_8_30
+  :effect (and
+    (when (and (at_8_31) (valid)) (at_8_30))
+    (when (and (at_8_31) (valid)) (not (at_8_31)))
+    (when (not (and (at_8_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_0_8_0
+  :effect (and
+    (when (and (at_9_0) (valid)) (at_8_0))
+    (when (and (at_9_0) (valid)) (not (at_9_0)))
+    (when (not (and (at_9_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_0_10_0
+  :effect (and
+    (when (and (at_9_0) (valid)) (at_10_0))
+    (when (and (at_9_0) (valid)) (not (at_9_0)))
+    (when (not (and (at_9_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_0_9_1
+  :effect (and
+    (when (and (at_9_0) (valid)) (at_9_1))
+    (when (and (at_9_0) (valid)) (not (at_9_0)))
+    (when (not (and (at_9_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_1_8_1
+  :effect (and
+    (when (and (at_9_1) (valid)) (at_8_1))
+    (when (and (at_9_1) (valid)) (not (at_9_1)))
+    (when (not (and (at_9_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_1_10_1
+  :effect (and
+    (when (and (at_9_1) (valid)) (at_10_1))
+    (when (and (at_9_1) (valid)) (not (at_9_1)))
+    (when (not (and (at_9_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_1_9_0
+  :effect (and
+    (when (and (at_9_1) (valid)) (at_9_0))
+    (when (and (at_9_1) (valid)) (not (at_9_1)))
+    (when (not (and (at_9_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_1_9_2
+  :effect (and
+    (when (and (at_9_1) (valid)) (at_9_2))
+    (when (and (at_9_1) (valid)) (not (at_9_1)))
+    (when (not (and (at_9_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_2_8_2
+  :effect (and
+    (when (and (at_9_2) (valid)) (at_8_2))
+    (when (and (at_9_2) (valid)) (not (at_9_2)))
+    (when (not (and (at_9_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_2_10_2
+  :effect (and
+    (when (and (at_9_2) (valid)) (at_10_2))
+    (when (and (at_9_2) (valid)) (not (at_9_2)))
+    (when (not (and (at_9_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_2_9_1
+  :effect (and
+    (when (and (at_9_2) (valid)) (at_9_1))
+    (when (and (at_9_2) (valid)) (not (at_9_2)))
+    (when (not (and (at_9_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_2_9_3
+  :effect (and
+    (when (and (at_9_2) (valid)) (at_9_3))
+    (when (and (at_9_2) (valid)) (not (at_9_2)))
+    (when (not (and (at_9_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_3_8_3
+  :effect (and
+    (when (and (at_9_3) (valid)) (at_8_3))
+    (when (and (at_9_3) (valid)) (not (at_9_3)))
+    (when (not (and (at_9_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_3_10_3
+  :effect (and
+    (when (and (at_9_3) (valid)) (at_10_3))
+    (when (and (at_9_3) (valid)) (not (at_9_3)))
+    (when (not (and (at_9_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_3_9_2
+  :effect (and
+    (when (and (at_9_3) (valid)) (at_9_2))
+    (when (and (at_9_3) (valid)) (not (at_9_3)))
+    (when (not (and (at_9_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_3_9_4
+  :effect (and
+    (when (and (at_9_3) (valid)) (at_9_4))
+    (when (and (at_9_3) (valid)) (not (at_9_3)))
+    (when (not (and (at_9_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_4_8_4
+  :effect (and
+    (when (and (at_9_4) (valid)) (at_8_4))
+    (when (and (at_9_4) (valid)) (not (at_9_4)))
+    (when (not (and (at_9_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_4_10_4
+  :effect (and
+    (when (and (at_9_4) (valid)) (at_10_4))
+    (when (and (at_9_4) (valid)) (not (at_9_4)))
+    (when (not (and (at_9_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_4_9_3
+  :effect (and
+    (when (and (at_9_4) (valid)) (at_9_3))
+    (when (and (at_9_4) (valid)) (not (at_9_4)))
+    (when (not (and (at_9_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_4_9_5
+  :effect (and
+    (when (and (at_9_4) (valid)) (at_9_5))
+    (when (and (at_9_4) (valid)) (not (at_9_4)))
+    (when (not (and (at_9_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_5_8_5
+  :effect (and
+    (when (and (at_9_5) (valid)) (at_8_5))
+    (when (and (at_9_5) (valid)) (not (at_9_5)))
+    (when (not (and (at_9_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_5_10_5
+  :effect (and
+    (when (and (at_9_5) (valid)) (at_10_5))
+    (when (and (at_9_5) (valid)) (not (at_9_5)))
+    (when (not (and (at_9_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_5_9_4
+  :effect (and
+    (when (and (at_9_5) (valid)) (at_9_4))
+    (when (and (at_9_5) (valid)) (not (at_9_5)))
+    (when (not (and (at_9_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_5_9_6
+  :effect (and
+    (when (and (at_9_5) (valid)) (at_9_6))
+    (when (and (at_9_5) (valid)) (not (at_9_5)))
+    (when (not (and (at_9_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_6_8_6
+  :effect (and
+    (when (and (at_9_6) (valid)) (at_8_6))
+    (when (and (at_9_6) (valid)) (not (at_9_6)))
+    (when (not (and (at_9_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_6_10_6
+  :effect (and
+    (when (and (at_9_6) (valid)) (at_10_6))
+    (when (and (at_9_6) (valid)) (not (at_9_6)))
+    (when (not (and (at_9_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_6_9_5
+  :effect (and
+    (when (and (at_9_6) (valid)) (at_9_5))
+    (when (and (at_9_6) (valid)) (not (at_9_6)))
+    (when (not (and (at_9_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_6_9_7
+  :effect (and
+    (when (and (at_9_6) (valid)) (at_9_7))
+    (when (and (at_9_6) (valid)) (not (at_9_6)))
+    (when (not (and (at_9_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_7_8_7
+  :effect (and
+    (when (and (at_9_7) (valid)) (at_8_7))
+    (when (and (at_9_7) (valid)) (not (at_9_7)))
+    (when (not (and (at_9_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_7_10_7
+  :effect (and
+    (when (and (at_9_7) (valid)) (at_10_7))
+    (when (and (at_9_7) (valid)) (not (at_9_7)))
+    (when (not (and (at_9_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_7_9_6
+  :effect (and
+    (when (and (at_9_7) (valid)) (at_9_6))
+    (when (and (at_9_7) (valid)) (not (at_9_7)))
+    (when (not (and (at_9_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_7_9_8
+  :effect (and
+    (when (and (at_9_7) (valid)) (at_9_8))
+    (when (and (at_9_7) (valid)) (not (at_9_7)))
+    (when (not (and (at_9_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_8_8_8
+  :effect (and
+    (when (and (at_9_8) (valid)) (at_8_8))
+    (when (and (at_9_8) (valid)) (not (at_9_8)))
+    (when (not (and (at_9_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_8_10_8
+  :effect (and
+    (when (and (at_9_8) (valid)) (at_10_8))
+    (when (and (at_9_8) (valid)) (not (at_9_8)))
+    (when (not (and (at_9_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_8_9_7
+  :effect (and
+    (when (and (at_9_8) (valid)) (at_9_7))
+    (when (and (at_9_8) (valid)) (not (at_9_8)))
+    (when (not (and (at_9_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_8_9_9
+  :effect (and
+    (when (and (at_9_8) (valid)) (at_9_9))
+    (when (and (at_9_8) (valid)) (not (at_9_8)))
+    (when (not (and (at_9_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_9_8_9
+  :effect (and
+    (when (and (at_9_9) (valid)) (at_8_9))
+    (when (and (at_9_9) (valid)) (not (at_9_9)))
+    (when (not (and (at_9_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_9_10_9
+  :effect (and
+    (when (and (at_9_9) (valid)) (at_10_9))
+    (when (and (at_9_9) (valid)) (not (at_9_9)))
+    (when (not (and (at_9_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_9_9_8
+  :effect (and
+    (when (and (at_9_9) (valid)) (at_9_8))
+    (when (and (at_9_9) (valid)) (not (at_9_9)))
+    (when (not (and (at_9_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_9_9_10
+  :effect (and
+    (when (and (at_9_9) (valid)) (at_9_10))
+    (when (and (at_9_9) (valid)) (not (at_9_9)))
+    (when (not (and (at_9_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_10_8_10
+  :effect (and
+    (when (and (at_9_10) (valid)) (at_8_10))
+    (when (and (at_9_10) (valid)) (not (at_9_10)))
+    (when (not (and (at_9_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_10_10_10
+  :effect (and
+    (when (and (at_9_10) (valid)) (at_10_10))
+    (when (and (at_9_10) (valid)) (not (at_9_10)))
+    (when (not (and (at_9_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_10_9_9
+  :effect (and
+    (when (and (at_9_10) (valid)) (at_9_9))
+    (when (and (at_9_10) (valid)) (not (at_9_10)))
+    (when (not (and (at_9_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_10_9_11
+  :effect (and
+    (when (and (at_9_10) (valid)) (at_9_11))
+    (when (and (at_9_10) (valid)) (not (at_9_10)))
+    (when (not (and (at_9_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_11_8_11
+  :effect (and
+    (when (and (at_9_11) (valid)) (at_8_11))
+    (when (and (at_9_11) (valid)) (not (at_9_11)))
+    (when (not (and (at_9_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_11_10_11
+  :effect (and
+    (when (and (at_9_11) (valid)) (at_10_11))
+    (when (and (at_9_11) (valid)) (not (at_9_11)))
+    (when (not (and (at_9_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_11_9_10
+  :effect (and
+    (when (and (at_9_11) (valid)) (at_9_10))
+    (when (and (at_9_11) (valid)) (not (at_9_11)))
+    (when (not (and (at_9_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_11_9_12
+  :effect (and
+    (when (and (at_9_11) (valid)) (at_9_12))
+    (when (and (at_9_11) (valid)) (not (at_9_11)))
+    (when (not (and (at_9_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_12_8_12
+  :effect (and
+    (when (and (at_9_12) (valid)) (at_8_12))
+    (when (and (at_9_12) (valid)) (not (at_9_12)))
+    (when (not (and (at_9_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_12_10_12
+  :effect (and
+    (when (and (at_9_12) (valid)) (at_10_12))
+    (when (and (at_9_12) (valid)) (not (at_9_12)))
+    (when (not (and (at_9_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_12_9_11
+  :effect (and
+    (when (and (at_9_12) (valid)) (at_9_11))
+    (when (and (at_9_12) (valid)) (not (at_9_12)))
+    (when (not (and (at_9_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_12_9_13
+  :effect (and
+    (when (and (at_9_12) (valid)) (at_9_13))
+    (when (and (at_9_12) (valid)) (not (at_9_12)))
+    (when (not (and (at_9_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_13_8_13
+  :effect (and
+    (when (and (at_9_13) (valid)) (at_8_13))
+    (when (and (at_9_13) (valid)) (not (at_9_13)))
+    (when (not (and (at_9_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_13_10_13
+  :effect (and
+    (when (and (at_9_13) (valid)) (at_10_13))
+    (when (and (at_9_13) (valid)) (not (at_9_13)))
+    (when (not (and (at_9_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_13_9_12
+  :effect (and
+    (when (and (at_9_13) (valid)) (at_9_12))
+    (when (and (at_9_13) (valid)) (not (at_9_13)))
+    (when (not (and (at_9_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_13_9_14
+  :effect (and
+    (when (and (at_9_13) (valid)) (at_9_14))
+    (when (and (at_9_13) (valid)) (not (at_9_13)))
+    (when (not (and (at_9_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_14_8_14
+  :effect (and
+    (when (and (at_9_14) (valid)) (at_8_14))
+    (when (and (at_9_14) (valid)) (not (at_9_14)))
+    (when (not (and (at_9_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_14_10_14
+  :effect (and
+    (when (and (at_9_14) (valid)) (at_10_14))
+    (when (and (at_9_14) (valid)) (not (at_9_14)))
+    (when (not (and (at_9_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_14_9_13
+  :effect (and
+    (when (and (at_9_14) (valid)) (at_9_13))
+    (when (and (at_9_14) (valid)) (not (at_9_14)))
+    (when (not (and (at_9_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_14_9_15
+  :effect (and
+    (when (and (at_9_14) (valid)) (at_9_15))
+    (when (and (at_9_14) (valid)) (not (at_9_14)))
+    (when (not (and (at_9_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_15_8_15
+  :effect (and
+    (when (and (at_9_15) (valid)) (at_8_15))
+    (when (and (at_9_15) (valid)) (not (at_9_15)))
+    (when (not (and (at_9_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_15_10_15
+  :effect (and
+    (when (and (at_9_15) (valid)) (at_10_15))
+    (when (and (at_9_15) (valid)) (not (at_9_15)))
+    (when (not (and (at_9_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_15_9_14
+  :effect (and
+    (when (and (at_9_15) (valid)) (at_9_14))
+    (when (and (at_9_15) (valid)) (not (at_9_15)))
+    (when (not (and (at_9_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_15_9_16
+  :effect (and
+    (when (and (at_9_15) (valid)) (at_9_16))
+    (when (and (at_9_15) (valid)) (not (at_9_15)))
+    (when (not (and (at_9_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_16_8_16
+  :effect (and
+    (when (and (at_9_16) (valid)) (at_8_16))
+    (when (and (at_9_16) (valid)) (not (at_9_16)))
+    (when (not (and (at_9_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_16_10_16
+  :effect (and
+    (when (and (at_9_16) (valid)) (at_10_16))
+    (when (and (at_9_16) (valid)) (not (at_9_16)))
+    (when (not (and (at_9_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_16_9_15
+  :effect (and
+    (when (and (at_9_16) (valid)) (at_9_15))
+    (when (and (at_9_16) (valid)) (not (at_9_16)))
+    (when (not (and (at_9_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_16_9_17
+  :effect (and
+    (when (and (at_9_16) (valid)) (at_9_17))
+    (when (and (at_9_16) (valid)) (not (at_9_16)))
+    (when (not (and (at_9_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_17_8_17
+  :effect (and
+    (when (and (at_9_17) (valid)) (at_8_17))
+    (when (and (at_9_17) (valid)) (not (at_9_17)))
+    (when (not (and (at_9_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_17_10_17
+  :effect (and
+    (when (and (at_9_17) (valid)) (at_10_17))
+    (when (and (at_9_17) (valid)) (not (at_9_17)))
+    (when (not (and (at_9_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_17_9_16
+  :effect (and
+    (when (and (at_9_17) (valid)) (at_9_16))
+    (when (and (at_9_17) (valid)) (not (at_9_17)))
+    (when (not (and (at_9_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_17_9_18
+  :effect (and
+    (when (and (at_9_17) (valid)) (at_9_18))
+    (when (and (at_9_17) (valid)) (not (at_9_17)))
+    (when (not (and (at_9_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_18_8_18
+  :effect (and
+    (when (and (at_9_18) (valid)) (at_8_18))
+    (when (and (at_9_18) (valid)) (not (at_9_18)))
+    (when (not (and (at_9_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_18_10_18
+  :effect (and
+    (when (and (at_9_18) (valid)) (at_10_18))
+    (when (and (at_9_18) (valid)) (not (at_9_18)))
+    (when (not (and (at_9_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_18_9_17
+  :effect (and
+    (when (and (at_9_18) (valid)) (at_9_17))
+    (when (and (at_9_18) (valid)) (not (at_9_18)))
+    (when (not (and (at_9_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_18_9_19
+  :effect (and
+    (when (and (at_9_18) (valid)) (at_9_19))
+    (when (and (at_9_18) (valid)) (not (at_9_18)))
+    (when (not (and (at_9_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_19_8_19
+  :effect (and
+    (when (and (at_9_19) (valid)) (at_8_19))
+    (when (and (at_9_19) (valid)) (not (at_9_19)))
+    (when (not (and (at_9_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_19_10_19
+  :effect (and
+    (when (and (at_9_19) (valid)) (at_10_19))
+    (when (and (at_9_19) (valid)) (not (at_9_19)))
+    (when (not (and (at_9_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_19_9_18
+  :effect (and
+    (when (and (at_9_19) (valid)) (at_9_18))
+    (when (and (at_9_19) (valid)) (not (at_9_19)))
+    (when (not (and (at_9_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_19_9_20
+  :effect (and
+    (when (and (at_9_19) (valid)) (at_9_20))
+    (when (and (at_9_19) (valid)) (not (at_9_19)))
+    (when (not (and (at_9_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_20_8_20
+  :effect (and
+    (when (and (at_9_20) (valid)) (at_8_20))
+    (when (and (at_9_20) (valid)) (not (at_9_20)))
+    (when (not (and (at_9_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_20_10_20
+  :effect (and
+    (when (and (at_9_20) (valid)) (at_10_20))
+    (when (and (at_9_20) (valid)) (not (at_9_20)))
+    (when (not (and (at_9_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_20_9_19
+  :effect (and
+    (when (and (at_9_20) (valid)) (at_9_19))
+    (when (and (at_9_20) (valid)) (not (at_9_20)))
+    (when (not (and (at_9_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_20_9_21
+  :effect (and
+    (when (and (at_9_20) (valid)) (at_9_21))
+    (when (and (at_9_20) (valid)) (not (at_9_20)))
+    (when (not (and (at_9_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_21_8_21
+  :effect (and
+    (when (and (at_9_21) (valid)) (at_8_21))
+    (when (and (at_9_21) (valid)) (not (at_9_21)))
+    (when (not (and (at_9_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_21_10_21
+  :effect (and
+    (when (and (at_9_21) (valid)) (at_10_21))
+    (when (and (at_9_21) (valid)) (not (at_9_21)))
+    (when (not (and (at_9_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_21_9_20
+  :effect (and
+    (when (and (at_9_21) (valid)) (at_9_20))
+    (when (and (at_9_21) (valid)) (not (at_9_21)))
+    (when (not (and (at_9_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_21_9_22
+  :effect (and
+    (when (and (at_9_21) (valid)) (at_9_22))
+    (when (and (at_9_21) (valid)) (not (at_9_21)))
+    (when (not (and (at_9_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_22_8_22
+  :effect (and
+    (when (and (at_9_22) (valid)) (at_8_22))
+    (when (and (at_9_22) (valid)) (not (at_9_22)))
+    (when (not (and (at_9_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_22_10_22
+  :effect (and
+    (when (and (at_9_22) (valid)) (at_10_22))
+    (when (and (at_9_22) (valid)) (not (at_9_22)))
+    (when (not (and (at_9_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_22_9_21
+  :effect (and
+    (when (and (at_9_22) (valid)) (at_9_21))
+    (when (and (at_9_22) (valid)) (not (at_9_22)))
+    (when (not (and (at_9_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_22_9_23
+  :effect (and
+    (when (and (at_9_22) (valid)) (at_9_23))
+    (when (and (at_9_22) (valid)) (not (at_9_22)))
+    (when (not (and (at_9_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_23_8_23
+  :effect (and
+    (when (and (at_9_23) (valid)) (at_8_23))
+    (when (and (at_9_23) (valid)) (not (at_9_23)))
+    (when (not (and (at_9_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_23_10_23
+  :effect (and
+    (when (and (at_9_23) (valid)) (at_10_23))
+    (when (and (at_9_23) (valid)) (not (at_9_23)))
+    (when (not (and (at_9_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_23_9_22
+  :effect (and
+    (when (and (at_9_23) (valid)) (at_9_22))
+    (when (and (at_9_23) (valid)) (not (at_9_23)))
+    (when (not (and (at_9_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_23_9_24
+  :effect (and
+    (when (and (at_9_23) (valid)) (at_9_24))
+    (when (and (at_9_23) (valid)) (not (at_9_23)))
+    (when (not (and (at_9_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_24_8_24
+  :effect (and
+    (when (and (at_9_24) (valid)) (at_8_24))
+    (when (and (at_9_24) (valid)) (not (at_9_24)))
+    (when (not (and (at_9_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_24_10_24
+  :effect (and
+    (when (and (at_9_24) (valid)) (at_10_24))
+    (when (and (at_9_24) (valid)) (not (at_9_24)))
+    (when (not (and (at_9_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_24_9_23
+  :effect (and
+    (when (and (at_9_24) (valid)) (at_9_23))
+    (when (and (at_9_24) (valid)) (not (at_9_24)))
+    (when (not (and (at_9_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_24_9_25
+  :effect (and
+    (when (and (at_9_24) (valid)) (at_9_25))
+    (when (and (at_9_24) (valid)) (not (at_9_24)))
+    (when (not (and (at_9_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_25_8_25
+  :effect (and
+    (when (and (at_9_25) (valid)) (at_8_25))
+    (when (and (at_9_25) (valid)) (not (at_9_25)))
+    (when (not (and (at_9_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_25_10_25
+  :effect (and
+    (when (and (at_9_25) (valid)) (at_10_25))
+    (when (and (at_9_25) (valid)) (not (at_9_25)))
+    (when (not (and (at_9_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_25_9_24
+  :effect (and
+    (when (and (at_9_25) (valid)) (at_9_24))
+    (when (and (at_9_25) (valid)) (not (at_9_25)))
+    (when (not (and (at_9_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_25_9_26
+  :effect (and
+    (when (and (at_9_25) (valid)) (at_9_26))
+    (when (and (at_9_25) (valid)) (not (at_9_25)))
+    (when (not (and (at_9_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_26_8_26
+  :effect (and
+    (when (and (at_9_26) (valid)) (at_8_26))
+    (when (and (at_9_26) (valid)) (not (at_9_26)))
+    (when (not (and (at_9_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_26_10_26
+  :effect (and
+    (when (and (at_9_26) (valid)) (at_10_26))
+    (when (and (at_9_26) (valid)) (not (at_9_26)))
+    (when (not (and (at_9_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_26_9_25
+  :effect (and
+    (when (and (at_9_26) (valid)) (at_9_25))
+    (when (and (at_9_26) (valid)) (not (at_9_26)))
+    (when (not (and (at_9_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_26_9_27
+  :effect (and
+    (when (and (at_9_26) (valid)) (at_9_27))
+    (when (and (at_9_26) (valid)) (not (at_9_26)))
+    (when (not (and (at_9_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_27_8_27
+  :effect (and
+    (when (and (at_9_27) (valid)) (at_8_27))
+    (when (and (at_9_27) (valid)) (not (at_9_27)))
+    (when (not (and (at_9_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_27_10_27
+  :effect (and
+    (when (and (at_9_27) (valid)) (at_10_27))
+    (when (and (at_9_27) (valid)) (not (at_9_27)))
+    (when (not (and (at_9_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_27_9_26
+  :effect (and
+    (when (and (at_9_27) (valid)) (at_9_26))
+    (when (and (at_9_27) (valid)) (not (at_9_27)))
+    (when (not (and (at_9_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_27_9_28
+  :effect (and
+    (when (and (at_9_27) (valid)) (at_9_28))
+    (when (and (at_9_27) (valid)) (not (at_9_27)))
+    (when (not (and (at_9_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_28_8_28
+  :effect (and
+    (when (and (at_9_28) (valid)) (at_8_28))
+    (when (and (at_9_28) (valid)) (not (at_9_28)))
+    (when (not (and (at_9_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_28_10_28
+  :effect (and
+    (when (and (at_9_28) (valid)) (at_10_28))
+    (when (and (at_9_28) (valid)) (not (at_9_28)))
+    (when (not (and (at_9_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_28_9_27
+  :effect (and
+    (when (and (at_9_28) (valid)) (at_9_27))
+    (when (and (at_9_28) (valid)) (not (at_9_28)))
+    (when (not (and (at_9_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_28_9_29
+  :effect (and
+    (when (and (at_9_28) (valid)) (at_9_29))
+    (when (and (at_9_28) (valid)) (not (at_9_28)))
+    (when (not (and (at_9_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_29_8_29
+  :effect (and
+    (when (and (at_9_29) (valid)) (at_8_29))
+    (when (and (at_9_29) (valid)) (not (at_9_29)))
+    (when (not (and (at_9_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_29_10_29
+  :effect (and
+    (when (and (at_9_29) (valid)) (at_10_29))
+    (when (and (at_9_29) (valid)) (not (at_9_29)))
+    (when (not (and (at_9_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_29_9_28
+  :effect (and
+    (when (and (at_9_29) (valid)) (at_9_28))
+    (when (and (at_9_29) (valid)) (not (at_9_29)))
+    (when (not (and (at_9_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_29_9_30
+  :effect (and
+    (when (and (at_9_29) (valid)) (at_9_30))
+    (when (and (at_9_29) (valid)) (not (at_9_29)))
+    (when (not (and (at_9_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_30_8_30
+  :effect (and
+    (when (and (at_9_30) (valid)) (at_8_30))
+    (when (and (at_9_30) (valid)) (not (at_9_30)))
+    (when (not (and (at_9_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_30_10_30
+  :effect (and
+    (when (and (at_9_30) (valid)) (at_10_30))
+    (when (and (at_9_30) (valid)) (not (at_9_30)))
+    (when (not (and (at_9_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_30_9_29
+  :effect (and
+    (when (and (at_9_30) (valid)) (at_9_29))
+    (when (and (at_9_30) (valid)) (not (at_9_30)))
+    (when (not (and (at_9_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_30_9_31
+  :effect (and
+    (when (and (at_9_30) (valid)) (at_9_31))
+    (when (and (at_9_30) (valid)) (not (at_9_30)))
+    (when (not (and (at_9_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_31_8_31
+  :effect (and
+    (when (and (at_9_31) (valid)) (at_8_31))
+    (when (and (at_9_31) (valid)) (not (at_9_31)))
+    (when (not (and (at_9_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_31_10_31
+  :effect (and
+    (when (and (at_9_31) (valid)) (at_10_31))
+    (when (and (at_9_31) (valid)) (not (at_9_31)))
+    (when (not (and (at_9_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_9_31_9_30
+  :effect (and
+    (when (and (at_9_31) (valid)) (at_9_30))
+    (when (and (at_9_31) (valid)) (not (at_9_31)))
+    (when (not (and (at_9_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_0_9_0
+  :effect (and
+    (when (and (at_10_0) (valid)) (at_9_0))
+    (when (and (at_10_0) (valid)) (not (at_10_0)))
+    (when (not (and (at_10_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_0_11_0
+  :effect (and
+    (when (and (at_10_0) (valid)) (at_11_0))
+    (when (and (at_10_0) (valid)) (not (at_10_0)))
+    (when (not (and (at_10_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_0_10_1
+  :effect (and
+    (when (and (at_10_0) (valid)) (at_10_1))
+    (when (and (at_10_0) (valid)) (not (at_10_0)))
+    (when (not (and (at_10_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_1_9_1
+  :effect (and
+    (when (and (at_10_1) (valid)) (at_9_1))
+    (when (and (at_10_1) (valid)) (not (at_10_1)))
+    (when (not (and (at_10_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_1_11_1
+  :effect (and
+    (when (and (at_10_1) (valid)) (at_11_1))
+    (when (and (at_10_1) (valid)) (not (at_10_1)))
+    (when (not (and (at_10_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_1_10_0
+  :effect (and
+    (when (and (at_10_1) (valid)) (at_10_0))
+    (when (and (at_10_1) (valid)) (not (at_10_1)))
+    (when (not (and (at_10_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_1_10_2
+  :effect (and
+    (when (and (at_10_1) (valid)) (at_10_2))
+    (when (and (at_10_1) (valid)) (not (at_10_1)))
+    (when (not (and (at_10_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_2_9_2
+  :effect (and
+    (when (and (at_10_2) (valid)) (at_9_2))
+    (when (and (at_10_2) (valid)) (not (at_10_2)))
+    (when (not (and (at_10_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_2_11_2
+  :effect (and
+    (when (and (at_10_2) (valid)) (at_11_2))
+    (when (and (at_10_2) (valid)) (not (at_10_2)))
+    (when (not (and (at_10_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_2_10_1
+  :effect (and
+    (when (and (at_10_2) (valid)) (at_10_1))
+    (when (and (at_10_2) (valid)) (not (at_10_2)))
+    (when (not (and (at_10_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_2_10_3
+  :effect (and
+    (when (and (at_10_2) (valid)) (at_10_3))
+    (when (and (at_10_2) (valid)) (not (at_10_2)))
+    (when (not (and (at_10_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_3_9_3
+  :effect (and
+    (when (and (at_10_3) (valid)) (at_9_3))
+    (when (and (at_10_3) (valid)) (not (at_10_3)))
+    (when (not (and (at_10_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_3_11_3
+  :effect (and
+    (when (and (at_10_3) (valid)) (at_11_3))
+    (when (and (at_10_3) (valid)) (not (at_10_3)))
+    (when (not (and (at_10_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_3_10_2
+  :effect (and
+    (when (and (at_10_3) (valid)) (at_10_2))
+    (when (and (at_10_3) (valid)) (not (at_10_3)))
+    (when (not (and (at_10_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_3_10_4
+  :effect (and
+    (when (and (at_10_3) (valid)) (at_10_4))
+    (when (and (at_10_3) (valid)) (not (at_10_3)))
+    (when (not (and (at_10_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_4_9_4
+  :effect (and
+    (when (and (at_10_4) (valid)) (at_9_4))
+    (when (and (at_10_4) (valid)) (not (at_10_4)))
+    (when (not (and (at_10_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_4_11_4
+  :effect (and
+    (when (and (at_10_4) (valid)) (at_11_4))
+    (when (and (at_10_4) (valid)) (not (at_10_4)))
+    (when (not (and (at_10_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_4_10_3
+  :effect (and
+    (when (and (at_10_4) (valid)) (at_10_3))
+    (when (and (at_10_4) (valid)) (not (at_10_4)))
+    (when (not (and (at_10_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_4_10_5
+  :effect (and
+    (when (and (at_10_4) (valid)) (at_10_5))
+    (when (and (at_10_4) (valid)) (not (at_10_4)))
+    (when (not (and (at_10_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_5_9_5
+  :effect (and
+    (when (and (at_10_5) (valid)) (at_9_5))
+    (when (and (at_10_5) (valid)) (not (at_10_5)))
+    (when (not (and (at_10_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_5_11_5
+  :effect (and
+    (when (and (at_10_5) (valid)) (at_11_5))
+    (when (and (at_10_5) (valid)) (not (at_10_5)))
+    (when (not (and (at_10_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_5_10_4
+  :effect (and
+    (when (and (at_10_5) (valid)) (at_10_4))
+    (when (and (at_10_5) (valid)) (not (at_10_5)))
+    (when (not (and (at_10_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_5_10_6
+  :effect (and
+    (when (and (at_10_5) (valid)) (at_10_6))
+    (when (and (at_10_5) (valid)) (not (at_10_5)))
+    (when (not (and (at_10_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_6_9_6
+  :effect (and
+    (when (and (at_10_6) (valid)) (at_9_6))
+    (when (and (at_10_6) (valid)) (not (at_10_6)))
+    (when (not (and (at_10_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_6_11_6
+  :effect (and
+    (when (and (at_10_6) (valid)) (at_11_6))
+    (when (and (at_10_6) (valid)) (not (at_10_6)))
+    (when (not (and (at_10_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_6_10_5
+  :effect (and
+    (when (and (at_10_6) (valid)) (at_10_5))
+    (when (and (at_10_6) (valid)) (not (at_10_6)))
+    (when (not (and (at_10_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_6_10_7
+  :effect (and
+    (when (and (at_10_6) (valid)) (at_10_7))
+    (when (and (at_10_6) (valid)) (not (at_10_6)))
+    (when (not (and (at_10_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_7_9_7
+  :effect (and
+    (when (and (at_10_7) (valid)) (at_9_7))
+    (when (and (at_10_7) (valid)) (not (at_10_7)))
+    (when (not (and (at_10_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_7_11_7
+  :effect (and
+    (when (and (at_10_7) (valid)) (at_11_7))
+    (when (and (at_10_7) (valid)) (not (at_10_7)))
+    (when (not (and (at_10_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_7_10_6
+  :effect (and
+    (when (and (at_10_7) (valid)) (at_10_6))
+    (when (and (at_10_7) (valid)) (not (at_10_7)))
+    (when (not (and (at_10_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_7_10_8
+  :effect (and
+    (when (and (at_10_7) (valid)) (at_10_8))
+    (when (and (at_10_7) (valid)) (not (at_10_7)))
+    (when (not (and (at_10_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_8_9_8
+  :effect (and
+    (when (and (at_10_8) (valid)) (at_9_8))
+    (when (and (at_10_8) (valid)) (not (at_10_8)))
+    (when (not (and (at_10_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_8_11_8
+  :effect (and
+    (when (and (at_10_8) (valid)) (at_11_8))
+    (when (and (at_10_8) (valid)) (not (at_10_8)))
+    (when (not (and (at_10_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_8_10_7
+  :effect (and
+    (when (and (at_10_8) (valid)) (at_10_7))
+    (when (and (at_10_8) (valid)) (not (at_10_8)))
+    (when (not (and (at_10_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_8_10_9
+  :effect (and
+    (when (and (at_10_8) (valid)) (at_10_9))
+    (when (and (at_10_8) (valid)) (not (at_10_8)))
+    (when (not (and (at_10_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_9_9_9
+  :effect (and
+    (when (and (at_10_9) (valid)) (at_9_9))
+    (when (and (at_10_9) (valid)) (not (at_10_9)))
+    (when (not (and (at_10_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_9_11_9
+  :effect (and
+    (when (and (at_10_9) (valid)) (at_11_9))
+    (when (and (at_10_9) (valid)) (not (at_10_9)))
+    (when (not (and (at_10_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_9_10_8
+  :effect (and
+    (when (and (at_10_9) (valid)) (at_10_8))
+    (when (and (at_10_9) (valid)) (not (at_10_9)))
+    (when (not (and (at_10_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_9_10_10
+  :effect (and
+    (when (and (at_10_9) (valid)) (at_10_10))
+    (when (and (at_10_9) (valid)) (not (at_10_9)))
+    (when (not (and (at_10_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_10_9_10
+  :effect (and
+    (when (and (at_10_10) (valid)) (at_9_10))
+    (when (and (at_10_10) (valid)) (not (at_10_10)))
+    (when (not (and (at_10_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_10_11_10
+  :effect (and
+    (when (and (at_10_10) (valid)) (at_11_10))
+    (when (and (at_10_10) (valid)) (not (at_10_10)))
+    (when (not (and (at_10_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_10_10_9
+  :effect (and
+    (when (and (at_10_10) (valid)) (at_10_9))
+    (when (and (at_10_10) (valid)) (not (at_10_10)))
+    (when (not (and (at_10_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_10_10_11
+  :effect (and
+    (when (and (at_10_10) (valid)) (at_10_11))
+    (when (and (at_10_10) (valid)) (not (at_10_10)))
+    (when (not (and (at_10_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_11_9_11
+  :effect (and
+    (when (and (at_10_11) (valid)) (at_9_11))
+    (when (and (at_10_11) (valid)) (not (at_10_11)))
+    (when (not (and (at_10_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_11_11_11
+  :effect (and
+    (when (and (at_10_11) (valid)) (at_11_11))
+    (when (and (at_10_11) (valid)) (not (at_10_11)))
+    (when (not (and (at_10_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_11_10_10
+  :effect (and
+    (when (and (at_10_11) (valid)) (at_10_10))
+    (when (and (at_10_11) (valid)) (not (at_10_11)))
+    (when (not (and (at_10_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_11_10_12
+  :effect (and
+    (when (and (at_10_11) (valid)) (at_10_12))
+    (when (and (at_10_11) (valid)) (not (at_10_11)))
+    (when (not (and (at_10_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_12_9_12
+  :effect (and
+    (when (and (at_10_12) (valid)) (at_9_12))
+    (when (and (at_10_12) (valid)) (not (at_10_12)))
+    (when (not (and (at_10_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_12_11_12
+  :effect (and
+    (when (and (at_10_12) (valid)) (at_11_12))
+    (when (and (at_10_12) (valid)) (not (at_10_12)))
+    (when (not (and (at_10_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_12_10_11
+  :effect (and
+    (when (and (at_10_12) (valid)) (at_10_11))
+    (when (and (at_10_12) (valid)) (not (at_10_12)))
+    (when (not (and (at_10_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_12_10_13
+  :effect (and
+    (when (and (at_10_12) (valid)) (at_10_13))
+    (when (and (at_10_12) (valid)) (not (at_10_12)))
+    (when (not (and (at_10_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_13_9_13
+  :effect (and
+    (when (and (at_10_13) (valid)) (at_9_13))
+    (when (and (at_10_13) (valid)) (not (at_10_13)))
+    (when (not (and (at_10_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_13_11_13
+  :effect (and
+    (when (and (at_10_13) (valid)) (at_11_13))
+    (when (and (at_10_13) (valid)) (not (at_10_13)))
+    (when (not (and (at_10_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_13_10_12
+  :effect (and
+    (when (and (at_10_13) (valid)) (at_10_12))
+    (when (and (at_10_13) (valid)) (not (at_10_13)))
+    (when (not (and (at_10_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_13_10_14
+  :effect (and
+    (when (and (at_10_13) (valid)) (at_10_14))
+    (when (and (at_10_13) (valid)) (not (at_10_13)))
+    (when (not (and (at_10_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_14_9_14
+  :effect (and
+    (when (and (at_10_14) (valid)) (at_9_14))
+    (when (and (at_10_14) (valid)) (not (at_10_14)))
+    (when (not (and (at_10_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_14_11_14
+  :effect (and
+    (when (and (at_10_14) (valid)) (at_11_14))
+    (when (and (at_10_14) (valid)) (not (at_10_14)))
+    (when (not (and (at_10_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_14_10_13
+  :effect (and
+    (when (and (at_10_14) (valid)) (at_10_13))
+    (when (and (at_10_14) (valid)) (not (at_10_14)))
+    (when (not (and (at_10_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_14_10_15
+  :effect (and
+    (when (and (at_10_14) (valid)) (at_10_15))
+    (when (and (at_10_14) (valid)) (not (at_10_14)))
+    (when (not (and (at_10_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_15_9_15
+  :effect (and
+    (when (and (at_10_15) (valid)) (at_9_15))
+    (when (and (at_10_15) (valid)) (not (at_10_15)))
+    (when (not (and (at_10_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_15_11_15
+  :effect (and
+    (when (and (at_10_15) (valid)) (at_11_15))
+    (when (and (at_10_15) (valid)) (not (at_10_15)))
+    (when (not (and (at_10_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_15_10_14
+  :effect (and
+    (when (and (at_10_15) (valid)) (at_10_14))
+    (when (and (at_10_15) (valid)) (not (at_10_15)))
+    (when (not (and (at_10_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_15_10_16
+  :effect (and
+    (when (and (at_10_15) (valid)) (at_10_16))
+    (when (and (at_10_15) (valid)) (not (at_10_15)))
+    (when (not (and (at_10_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_16_9_16
+  :effect (and
+    (when (and (at_10_16) (valid)) (at_9_16))
+    (when (and (at_10_16) (valid)) (not (at_10_16)))
+    (when (not (and (at_10_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_16_11_16
+  :effect (and
+    (when (and (at_10_16) (valid)) (at_11_16))
+    (when (and (at_10_16) (valid)) (not (at_10_16)))
+    (when (not (and (at_10_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_16_10_15
+  :effect (and
+    (when (and (at_10_16) (valid)) (at_10_15))
+    (when (and (at_10_16) (valid)) (not (at_10_16)))
+    (when (not (and (at_10_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_16_10_17
+  :effect (and
+    (when (and (at_10_16) (valid)) (at_10_17))
+    (when (and (at_10_16) (valid)) (not (at_10_16)))
+    (when (not (and (at_10_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_17_9_17
+  :effect (and
+    (when (and (at_10_17) (valid)) (at_9_17))
+    (when (and (at_10_17) (valid)) (not (at_10_17)))
+    (when (not (and (at_10_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_17_11_17
+  :effect (and
+    (when (and (at_10_17) (valid)) (at_11_17))
+    (when (and (at_10_17) (valid)) (not (at_10_17)))
+    (when (not (and (at_10_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_17_10_16
+  :effect (and
+    (when (and (at_10_17) (valid)) (at_10_16))
+    (when (and (at_10_17) (valid)) (not (at_10_17)))
+    (when (not (and (at_10_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_17_10_18
+  :effect (and
+    (when (and (at_10_17) (valid)) (at_10_18))
+    (when (and (at_10_17) (valid)) (not (at_10_17)))
+    (when (not (and (at_10_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_18_9_18
+  :effect (and
+    (when (and (at_10_18) (valid)) (at_9_18))
+    (when (and (at_10_18) (valid)) (not (at_10_18)))
+    (when (not (and (at_10_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_18_11_18
+  :effect (and
+    (when (and (at_10_18) (valid)) (at_11_18))
+    (when (and (at_10_18) (valid)) (not (at_10_18)))
+    (when (not (and (at_10_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_18_10_17
+  :effect (and
+    (when (and (at_10_18) (valid)) (at_10_17))
+    (when (and (at_10_18) (valid)) (not (at_10_18)))
+    (when (not (and (at_10_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_18_10_19
+  :effect (and
+    (when (and (at_10_18) (valid)) (at_10_19))
+    (when (and (at_10_18) (valid)) (not (at_10_18)))
+    (when (not (and (at_10_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_19_9_19
+  :effect (and
+    (when (and (at_10_19) (valid)) (at_9_19))
+    (when (and (at_10_19) (valid)) (not (at_10_19)))
+    (when (not (and (at_10_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_19_11_19
+  :effect (and
+    (when (and (at_10_19) (valid)) (at_11_19))
+    (when (and (at_10_19) (valid)) (not (at_10_19)))
+    (when (not (and (at_10_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_19_10_18
+  :effect (and
+    (when (and (at_10_19) (valid)) (at_10_18))
+    (when (and (at_10_19) (valid)) (not (at_10_19)))
+    (when (not (and (at_10_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_19_10_20
+  :effect (and
+    (when (and (at_10_19) (valid)) (at_10_20))
+    (when (and (at_10_19) (valid)) (not (at_10_19)))
+    (when (not (and (at_10_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_20_9_20
+  :effect (and
+    (when (and (at_10_20) (valid)) (at_9_20))
+    (when (and (at_10_20) (valid)) (not (at_10_20)))
+    (when (not (and (at_10_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_20_11_20
+  :effect (and
+    (when (and (at_10_20) (valid)) (at_11_20))
+    (when (and (at_10_20) (valid)) (not (at_10_20)))
+    (when (not (and (at_10_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_20_10_19
+  :effect (and
+    (when (and (at_10_20) (valid)) (at_10_19))
+    (when (and (at_10_20) (valid)) (not (at_10_20)))
+    (when (not (and (at_10_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_20_10_21
+  :effect (and
+    (when (and (at_10_20) (valid)) (at_10_21))
+    (when (and (at_10_20) (valid)) (not (at_10_20)))
+    (when (not (and (at_10_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_21_9_21
+  :effect (and
+    (when (and (at_10_21) (valid)) (at_9_21))
+    (when (and (at_10_21) (valid)) (not (at_10_21)))
+    (when (not (and (at_10_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_21_11_21
+  :effect (and
+    (when (and (at_10_21) (valid)) (at_11_21))
+    (when (and (at_10_21) (valid)) (not (at_10_21)))
+    (when (not (and (at_10_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_21_10_20
+  :effect (and
+    (when (and (at_10_21) (valid)) (at_10_20))
+    (when (and (at_10_21) (valid)) (not (at_10_21)))
+    (when (not (and (at_10_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_21_10_22
+  :effect (and
+    (when (and (at_10_21) (valid)) (at_10_22))
+    (when (and (at_10_21) (valid)) (not (at_10_21)))
+    (when (not (and (at_10_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_22_9_22
+  :effect (and
+    (when (and (at_10_22) (valid)) (at_9_22))
+    (when (and (at_10_22) (valid)) (not (at_10_22)))
+    (when (not (and (at_10_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_22_11_22
+  :effect (and
+    (when (and (at_10_22) (valid)) (at_11_22))
+    (when (and (at_10_22) (valid)) (not (at_10_22)))
+    (when (not (and (at_10_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_22_10_21
+  :effect (and
+    (when (and (at_10_22) (valid)) (at_10_21))
+    (when (and (at_10_22) (valid)) (not (at_10_22)))
+    (when (not (and (at_10_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_22_10_23
+  :effect (and
+    (when (and (at_10_22) (valid)) (at_10_23))
+    (when (and (at_10_22) (valid)) (not (at_10_22)))
+    (when (not (and (at_10_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_23_9_23
+  :effect (and
+    (when (and (at_10_23) (valid)) (at_9_23))
+    (when (and (at_10_23) (valid)) (not (at_10_23)))
+    (when (not (and (at_10_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_23_11_23
+  :effect (and
+    (when (and (at_10_23) (valid)) (at_11_23))
+    (when (and (at_10_23) (valid)) (not (at_10_23)))
+    (when (not (and (at_10_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_23_10_22
+  :effect (and
+    (when (and (at_10_23) (valid)) (at_10_22))
+    (when (and (at_10_23) (valid)) (not (at_10_23)))
+    (when (not (and (at_10_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_23_10_24
+  :effect (and
+    (when (and (at_10_23) (valid)) (at_10_24))
+    (when (and (at_10_23) (valid)) (not (at_10_23)))
+    (when (not (and (at_10_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_24_9_24
+  :effect (and
+    (when (and (at_10_24) (valid)) (at_9_24))
+    (when (and (at_10_24) (valid)) (not (at_10_24)))
+    (when (not (and (at_10_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_24_11_24
+  :effect (and
+    (when (and (at_10_24) (valid)) (at_11_24))
+    (when (and (at_10_24) (valid)) (not (at_10_24)))
+    (when (not (and (at_10_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_24_10_23
+  :effect (and
+    (when (and (at_10_24) (valid)) (at_10_23))
+    (when (and (at_10_24) (valid)) (not (at_10_24)))
+    (when (not (and (at_10_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_24_10_25
+  :effect (and
+    (when (and (at_10_24) (valid)) (at_10_25))
+    (when (and (at_10_24) (valid)) (not (at_10_24)))
+    (when (not (and (at_10_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_25_9_25
+  :effect (and
+    (when (and (at_10_25) (valid)) (at_9_25))
+    (when (and (at_10_25) (valid)) (not (at_10_25)))
+    (when (not (and (at_10_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_25_11_25
+  :effect (and
+    (when (and (at_10_25) (valid)) (at_11_25))
+    (when (and (at_10_25) (valid)) (not (at_10_25)))
+    (when (not (and (at_10_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_25_10_24
+  :effect (and
+    (when (and (at_10_25) (valid)) (at_10_24))
+    (when (and (at_10_25) (valid)) (not (at_10_25)))
+    (when (not (and (at_10_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_25_10_26
+  :effect (and
+    (when (and (at_10_25) (valid)) (at_10_26))
+    (when (and (at_10_25) (valid)) (not (at_10_25)))
+    (when (not (and (at_10_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_26_9_26
+  :effect (and
+    (when (and (at_10_26) (valid)) (at_9_26))
+    (when (and (at_10_26) (valid)) (not (at_10_26)))
+    (when (not (and (at_10_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_26_11_26
+  :effect (and
+    (when (and (at_10_26) (valid)) (at_11_26))
+    (when (and (at_10_26) (valid)) (not (at_10_26)))
+    (when (not (and (at_10_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_26_10_25
+  :effect (and
+    (when (and (at_10_26) (valid)) (at_10_25))
+    (when (and (at_10_26) (valid)) (not (at_10_26)))
+    (when (not (and (at_10_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_26_10_27
+  :effect (and
+    (when (and (at_10_26) (valid)) (at_10_27))
+    (when (and (at_10_26) (valid)) (not (at_10_26)))
+    (when (not (and (at_10_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_27_9_27
+  :effect (and
+    (when (and (at_10_27) (valid)) (at_9_27))
+    (when (and (at_10_27) (valid)) (not (at_10_27)))
+    (when (not (and (at_10_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_27_11_27
+  :effect (and
+    (when (and (at_10_27) (valid)) (at_11_27))
+    (when (and (at_10_27) (valid)) (not (at_10_27)))
+    (when (not (and (at_10_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_27_10_26
+  :effect (and
+    (when (and (at_10_27) (valid)) (at_10_26))
+    (when (and (at_10_27) (valid)) (not (at_10_27)))
+    (when (not (and (at_10_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_27_10_28
+  :effect (and
+    (when (and (at_10_27) (valid)) (at_10_28))
+    (when (and (at_10_27) (valid)) (not (at_10_27)))
+    (when (not (and (at_10_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_28_9_28
+  :effect (and
+    (when (and (at_10_28) (valid)) (at_9_28))
+    (when (and (at_10_28) (valid)) (not (at_10_28)))
+    (when (not (and (at_10_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_28_11_28
+  :effect (and
+    (when (and (at_10_28) (valid)) (at_11_28))
+    (when (and (at_10_28) (valid)) (not (at_10_28)))
+    (when (not (and (at_10_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_28_10_27
+  :effect (and
+    (when (and (at_10_28) (valid)) (at_10_27))
+    (when (and (at_10_28) (valid)) (not (at_10_28)))
+    (when (not (and (at_10_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_28_10_29
+  :effect (and
+    (when (and (at_10_28) (valid)) (at_10_29))
+    (when (and (at_10_28) (valid)) (not (at_10_28)))
+    (when (not (and (at_10_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_29_9_29
+  :effect (and
+    (when (and (at_10_29) (valid)) (at_9_29))
+    (when (and (at_10_29) (valid)) (not (at_10_29)))
+    (when (not (and (at_10_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_29_11_29
+  :effect (and
+    (when (and (at_10_29) (valid)) (at_11_29))
+    (when (and (at_10_29) (valid)) (not (at_10_29)))
+    (when (not (and (at_10_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_29_10_28
+  :effect (and
+    (when (and (at_10_29) (valid)) (at_10_28))
+    (when (and (at_10_29) (valid)) (not (at_10_29)))
+    (when (not (and (at_10_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_29_10_30
+  :effect (and
+    (when (and (at_10_29) (valid)) (at_10_30))
+    (when (and (at_10_29) (valid)) (not (at_10_29)))
+    (when (not (and (at_10_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_30_9_30
+  :effect (and
+    (when (and (at_10_30) (valid)) (at_9_30))
+    (when (and (at_10_30) (valid)) (not (at_10_30)))
+    (when (not (and (at_10_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_30_11_30
+  :effect (and
+    (when (and (at_10_30) (valid)) (at_11_30))
+    (when (and (at_10_30) (valid)) (not (at_10_30)))
+    (when (not (and (at_10_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_30_10_29
+  :effect (and
+    (when (and (at_10_30) (valid)) (at_10_29))
+    (when (and (at_10_30) (valid)) (not (at_10_30)))
+    (when (not (and (at_10_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_30_10_31
+  :effect (and
+    (when (and (at_10_30) (valid)) (at_10_31))
+    (when (and (at_10_30) (valid)) (not (at_10_30)))
+    (when (not (and (at_10_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_31_9_31
+  :effect (and
+    (when (and (at_10_31) (valid)) (at_9_31))
+    (when (and (at_10_31) (valid)) (not (at_10_31)))
+    (when (not (and (at_10_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_31_11_31
+  :effect (and
+    (when (and (at_10_31) (valid)) (at_11_31))
+    (when (and (at_10_31) (valid)) (not (at_10_31)))
+    (when (not (and (at_10_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_10_31_10_30
+  :effect (and
+    (when (and (at_10_31) (valid)) (at_10_30))
+    (when (and (at_10_31) (valid)) (not (at_10_31)))
+    (when (not (and (at_10_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_0_10_0
+  :effect (and
+    (when (and (at_11_0) (valid)) (at_10_0))
+    (when (and (at_11_0) (valid)) (not (at_11_0)))
+    (when (not (and (at_11_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_0_12_0
+  :effect (and
+    (when (and (at_11_0) (valid)) (at_12_0))
+    (when (and (at_11_0) (valid)) (not (at_11_0)))
+    (when (not (and (at_11_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_0_11_1
+  :effect (and
+    (when (and (at_11_0) (valid)) (at_11_1))
+    (when (and (at_11_0) (valid)) (not (at_11_0)))
+    (when (not (and (at_11_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_1_10_1
+  :effect (and
+    (when (and (at_11_1) (valid)) (at_10_1))
+    (when (and (at_11_1) (valid)) (not (at_11_1)))
+    (when (not (and (at_11_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_1_12_1
+  :effect (and
+    (when (and (at_11_1) (valid)) (at_12_1))
+    (when (and (at_11_1) (valid)) (not (at_11_1)))
+    (when (not (and (at_11_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_1_11_0
+  :effect (and
+    (when (and (at_11_1) (valid)) (at_11_0))
+    (when (and (at_11_1) (valid)) (not (at_11_1)))
+    (when (not (and (at_11_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_1_11_2
+  :effect (and
+    (when (and (at_11_1) (valid)) (at_11_2))
+    (when (and (at_11_1) (valid)) (not (at_11_1)))
+    (when (not (and (at_11_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_2_10_2
+  :effect (and
+    (when (and (at_11_2) (valid)) (at_10_2))
+    (when (and (at_11_2) (valid)) (not (at_11_2)))
+    (when (not (and (at_11_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_2_12_2
+  :effect (and
+    (when (and (at_11_2) (valid)) (at_12_2))
+    (when (and (at_11_2) (valid)) (not (at_11_2)))
+    (when (not (and (at_11_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_2_11_1
+  :effect (and
+    (when (and (at_11_2) (valid)) (at_11_1))
+    (when (and (at_11_2) (valid)) (not (at_11_2)))
+    (when (not (and (at_11_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_2_11_3
+  :effect (and
+    (when (and (at_11_2) (valid)) (at_11_3))
+    (when (and (at_11_2) (valid)) (not (at_11_2)))
+    (when (not (and (at_11_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_3_10_3
+  :effect (and
+    (when (and (at_11_3) (valid)) (at_10_3))
+    (when (and (at_11_3) (valid)) (not (at_11_3)))
+    (when (not (and (at_11_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_3_12_3
+  :effect (and
+    (when (and (at_11_3) (valid)) (at_12_3))
+    (when (and (at_11_3) (valid)) (not (at_11_3)))
+    (when (not (and (at_11_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_3_11_2
+  :effect (and
+    (when (and (at_11_3) (valid)) (at_11_2))
+    (when (and (at_11_3) (valid)) (not (at_11_3)))
+    (when (not (and (at_11_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_3_11_4
+  :effect (and
+    (when (and (at_11_3) (valid)) (at_11_4))
+    (when (and (at_11_3) (valid)) (not (at_11_3)))
+    (when (not (and (at_11_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_4_10_4
+  :effect (and
+    (when (and (at_11_4) (valid)) (at_10_4))
+    (when (and (at_11_4) (valid)) (not (at_11_4)))
+    (when (not (and (at_11_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_4_12_4
+  :effect (and
+    (when (and (at_11_4) (valid)) (at_12_4))
+    (when (and (at_11_4) (valid)) (not (at_11_4)))
+    (when (not (and (at_11_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_4_11_3
+  :effect (and
+    (when (and (at_11_4) (valid)) (at_11_3))
+    (when (and (at_11_4) (valid)) (not (at_11_4)))
+    (when (not (and (at_11_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_4_11_5
+  :effect (and
+    (when (and (at_11_4) (valid)) (at_11_5))
+    (when (and (at_11_4) (valid)) (not (at_11_4)))
+    (when (not (and (at_11_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_5_10_5
+  :effect (and
+    (when (and (at_11_5) (valid)) (at_10_5))
+    (when (and (at_11_5) (valid)) (not (at_11_5)))
+    (when (not (and (at_11_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_5_12_5
+  :effect (and
+    (when (and (at_11_5) (valid)) (at_12_5))
+    (when (and (at_11_5) (valid)) (not (at_11_5)))
+    (when (not (and (at_11_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_5_11_4
+  :effect (and
+    (when (and (at_11_5) (valid)) (at_11_4))
+    (when (and (at_11_5) (valid)) (not (at_11_5)))
+    (when (not (and (at_11_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_5_11_6
+  :effect (and
+    (when (and (at_11_5) (valid)) (at_11_6))
+    (when (and (at_11_5) (valid)) (not (at_11_5)))
+    (when (not (and (at_11_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_6_10_6
+  :effect (and
+    (when (and (at_11_6) (valid)) (at_10_6))
+    (when (and (at_11_6) (valid)) (not (at_11_6)))
+    (when (not (and (at_11_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_6_12_6
+  :effect (and
+    (when (and (at_11_6) (valid)) (at_12_6))
+    (when (and (at_11_6) (valid)) (not (at_11_6)))
+    (when (not (and (at_11_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_6_11_5
+  :effect (and
+    (when (and (at_11_6) (valid)) (at_11_5))
+    (when (and (at_11_6) (valid)) (not (at_11_6)))
+    (when (not (and (at_11_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_6_11_7
+  :effect (and
+    (when (and (at_11_6) (valid)) (at_11_7))
+    (when (and (at_11_6) (valid)) (not (at_11_6)))
+    (when (not (and (at_11_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_7_10_7
+  :effect (and
+    (when (and (at_11_7) (valid)) (at_10_7))
+    (when (and (at_11_7) (valid)) (not (at_11_7)))
+    (when (not (and (at_11_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_7_12_7
+  :effect (and
+    (when (and (at_11_7) (valid)) (at_12_7))
+    (when (and (at_11_7) (valid)) (not (at_11_7)))
+    (when (not (and (at_11_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_7_11_6
+  :effect (and
+    (when (and (at_11_7) (valid)) (at_11_6))
+    (when (and (at_11_7) (valid)) (not (at_11_7)))
+    (when (not (and (at_11_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_7_11_8
+  :effect (and
+    (when (and (at_11_7) (valid)) (at_11_8))
+    (when (and (at_11_7) (valid)) (not (at_11_7)))
+    (when (not (and (at_11_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_8_10_8
+  :effect (and
+    (when (and (at_11_8) (valid)) (at_10_8))
+    (when (and (at_11_8) (valid)) (not (at_11_8)))
+    (when (not (and (at_11_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_8_12_8
+  :effect (and
+    (when (and (at_11_8) (valid)) (at_12_8))
+    (when (and (at_11_8) (valid)) (not (at_11_8)))
+    (when (not (and (at_11_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_8_11_7
+  :effect (and
+    (when (and (at_11_8) (valid)) (at_11_7))
+    (when (and (at_11_8) (valid)) (not (at_11_8)))
+    (when (not (and (at_11_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_8_11_9
+  :effect (and
+    (when (and (at_11_8) (valid)) (at_11_9))
+    (when (and (at_11_8) (valid)) (not (at_11_8)))
+    (when (not (and (at_11_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_9_10_9
+  :effect (and
+    (when (and (at_11_9) (valid)) (at_10_9))
+    (when (and (at_11_9) (valid)) (not (at_11_9)))
+    (when (not (and (at_11_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_9_12_9
+  :effect (and
+    (when (and (at_11_9) (valid)) (at_12_9))
+    (when (and (at_11_9) (valid)) (not (at_11_9)))
+    (when (not (and (at_11_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_9_11_8
+  :effect (and
+    (when (and (at_11_9) (valid)) (at_11_8))
+    (when (and (at_11_9) (valid)) (not (at_11_9)))
+    (when (not (and (at_11_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_9_11_10
+  :effect (and
+    (when (and (at_11_9) (valid)) (at_11_10))
+    (when (and (at_11_9) (valid)) (not (at_11_9)))
+    (when (not (and (at_11_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_10_10_10
+  :effect (and
+    (when (and (at_11_10) (valid)) (at_10_10))
+    (when (and (at_11_10) (valid)) (not (at_11_10)))
+    (when (not (and (at_11_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_10_12_10
+  :effect (and
+    (when (and (at_11_10) (valid)) (at_12_10))
+    (when (and (at_11_10) (valid)) (not (at_11_10)))
+    (when (not (and (at_11_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_10_11_9
+  :effect (and
+    (when (and (at_11_10) (valid)) (at_11_9))
+    (when (and (at_11_10) (valid)) (not (at_11_10)))
+    (when (not (and (at_11_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_10_11_11
+  :effect (and
+    (when (and (at_11_10) (valid)) (at_11_11))
+    (when (and (at_11_10) (valid)) (not (at_11_10)))
+    (when (not (and (at_11_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_11_10_11
+  :effect (and
+    (when (and (at_11_11) (valid)) (at_10_11))
+    (when (and (at_11_11) (valid)) (not (at_11_11)))
+    (when (not (and (at_11_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_11_12_11
+  :effect (and
+    (when (and (at_11_11) (valid)) (at_12_11))
+    (when (and (at_11_11) (valid)) (not (at_11_11)))
+    (when (not (and (at_11_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_11_11_10
+  :effect (and
+    (when (and (at_11_11) (valid)) (at_11_10))
+    (when (and (at_11_11) (valid)) (not (at_11_11)))
+    (when (not (and (at_11_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_11_11_12
+  :effect (and
+    (when (and (at_11_11) (valid)) (at_11_12))
+    (when (and (at_11_11) (valid)) (not (at_11_11)))
+    (when (not (and (at_11_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_12_10_12
+  :effect (and
+    (when (and (at_11_12) (valid)) (at_10_12))
+    (when (and (at_11_12) (valid)) (not (at_11_12)))
+    (when (not (and (at_11_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_12_12_12
+  :effect (and
+    (when (and (at_11_12) (valid)) (at_12_12))
+    (when (and (at_11_12) (valid)) (not (at_11_12)))
+    (when (not (and (at_11_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_12_11_11
+  :effect (and
+    (when (and (at_11_12) (valid)) (at_11_11))
+    (when (and (at_11_12) (valid)) (not (at_11_12)))
+    (when (not (and (at_11_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_12_11_13
+  :effect (and
+    (when (and (at_11_12) (valid)) (at_11_13))
+    (when (and (at_11_12) (valid)) (not (at_11_12)))
+    (when (not (and (at_11_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_13_10_13
+  :effect (and
+    (when (and (at_11_13) (valid)) (at_10_13))
+    (when (and (at_11_13) (valid)) (not (at_11_13)))
+    (when (not (and (at_11_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_13_12_13
+  :effect (and
+    (when (and (at_11_13) (valid)) (at_12_13))
+    (when (and (at_11_13) (valid)) (not (at_11_13)))
+    (when (not (and (at_11_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_13_11_12
+  :effect (and
+    (when (and (at_11_13) (valid)) (at_11_12))
+    (when (and (at_11_13) (valid)) (not (at_11_13)))
+    (when (not (and (at_11_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_13_11_14
+  :effect (and
+    (when (and (at_11_13) (valid)) (at_11_14))
+    (when (and (at_11_13) (valid)) (not (at_11_13)))
+    (when (not (and (at_11_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_14_10_14
+  :effect (and
+    (when (and (at_11_14) (valid)) (at_10_14))
+    (when (and (at_11_14) (valid)) (not (at_11_14)))
+    (when (not (and (at_11_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_14_12_14
+  :effect (and
+    (when (and (at_11_14) (valid)) (at_12_14))
+    (when (and (at_11_14) (valid)) (not (at_11_14)))
+    (when (not (and (at_11_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_14_11_13
+  :effect (and
+    (when (and (at_11_14) (valid)) (at_11_13))
+    (when (and (at_11_14) (valid)) (not (at_11_14)))
+    (when (not (and (at_11_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_14_11_15
+  :effect (and
+    (when (and (at_11_14) (valid)) (at_11_15))
+    (when (and (at_11_14) (valid)) (not (at_11_14)))
+    (when (not (and (at_11_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_15_10_15
+  :effect (and
+    (when (and (at_11_15) (valid)) (at_10_15))
+    (when (and (at_11_15) (valid)) (not (at_11_15)))
+    (when (not (and (at_11_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_15_12_15
+  :effect (and
+    (when (and (at_11_15) (valid)) (at_12_15))
+    (when (and (at_11_15) (valid)) (not (at_11_15)))
+    (when (not (and (at_11_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_15_11_14
+  :effect (and
+    (when (and (at_11_15) (valid)) (at_11_14))
+    (when (and (at_11_15) (valid)) (not (at_11_15)))
+    (when (not (and (at_11_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_15_11_16
+  :effect (and
+    (when (and (at_11_15) (valid)) (at_11_16))
+    (when (and (at_11_15) (valid)) (not (at_11_15)))
+    (when (not (and (at_11_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_16_10_16
+  :effect (and
+    (when (and (at_11_16) (valid)) (at_10_16))
+    (when (and (at_11_16) (valid)) (not (at_11_16)))
+    (when (not (and (at_11_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_16_12_16
+  :effect (and
+    (when (and (at_11_16) (valid)) (at_12_16))
+    (when (and (at_11_16) (valid)) (not (at_11_16)))
+    (when (not (and (at_11_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_16_11_15
+  :effect (and
+    (when (and (at_11_16) (valid)) (at_11_15))
+    (when (and (at_11_16) (valid)) (not (at_11_16)))
+    (when (not (and (at_11_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_16_11_17
+  :effect (and
+    (when (and (at_11_16) (valid)) (at_11_17))
+    (when (and (at_11_16) (valid)) (not (at_11_16)))
+    (when (not (and (at_11_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_17_10_17
+  :effect (and
+    (when (and (at_11_17) (valid)) (at_10_17))
+    (when (and (at_11_17) (valid)) (not (at_11_17)))
+    (when (not (and (at_11_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_17_12_17
+  :effect (and
+    (when (and (at_11_17) (valid)) (at_12_17))
+    (when (and (at_11_17) (valid)) (not (at_11_17)))
+    (when (not (and (at_11_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_17_11_16
+  :effect (and
+    (when (and (at_11_17) (valid)) (at_11_16))
+    (when (and (at_11_17) (valid)) (not (at_11_17)))
+    (when (not (and (at_11_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_17_11_18
+  :effect (and
+    (when (and (at_11_17) (valid)) (at_11_18))
+    (when (and (at_11_17) (valid)) (not (at_11_17)))
+    (when (not (and (at_11_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_18_10_18
+  :effect (and
+    (when (and (at_11_18) (valid)) (at_10_18))
+    (when (and (at_11_18) (valid)) (not (at_11_18)))
+    (when (not (and (at_11_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_18_12_18
+  :effect (and
+    (when (and (at_11_18) (valid)) (at_12_18))
+    (when (and (at_11_18) (valid)) (not (at_11_18)))
+    (when (not (and (at_11_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_18_11_17
+  :effect (and
+    (when (and (at_11_18) (valid)) (at_11_17))
+    (when (and (at_11_18) (valid)) (not (at_11_18)))
+    (when (not (and (at_11_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_18_11_19
+  :effect (and
+    (when (and (at_11_18) (valid)) (at_11_19))
+    (when (and (at_11_18) (valid)) (not (at_11_18)))
+    (when (not (and (at_11_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_19_10_19
+  :effect (and
+    (when (and (at_11_19) (valid)) (at_10_19))
+    (when (and (at_11_19) (valid)) (not (at_11_19)))
+    (when (not (and (at_11_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_19_12_19
+  :effect (and
+    (when (and (at_11_19) (valid)) (at_12_19))
+    (when (and (at_11_19) (valid)) (not (at_11_19)))
+    (when (not (and (at_11_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_19_11_18
+  :effect (and
+    (when (and (at_11_19) (valid)) (at_11_18))
+    (when (and (at_11_19) (valid)) (not (at_11_19)))
+    (when (not (and (at_11_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_19_11_20
+  :effect (and
+    (when (and (at_11_19) (valid)) (at_11_20))
+    (when (and (at_11_19) (valid)) (not (at_11_19)))
+    (when (not (and (at_11_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_20_10_20
+  :effect (and
+    (when (and (at_11_20) (valid)) (at_10_20))
+    (when (and (at_11_20) (valid)) (not (at_11_20)))
+    (when (not (and (at_11_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_20_12_20
+  :effect (and
+    (when (and (at_11_20) (valid)) (at_12_20))
+    (when (and (at_11_20) (valid)) (not (at_11_20)))
+    (when (not (and (at_11_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_20_11_19
+  :effect (and
+    (when (and (at_11_20) (valid)) (at_11_19))
+    (when (and (at_11_20) (valid)) (not (at_11_20)))
+    (when (not (and (at_11_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_20_11_21
+  :effect (and
+    (when (and (at_11_20) (valid)) (at_11_21))
+    (when (and (at_11_20) (valid)) (not (at_11_20)))
+    (when (not (and (at_11_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_21_10_21
+  :effect (and
+    (when (and (at_11_21) (valid)) (at_10_21))
+    (when (and (at_11_21) (valid)) (not (at_11_21)))
+    (when (not (and (at_11_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_21_12_21
+  :effect (and
+    (when (and (at_11_21) (valid)) (at_12_21))
+    (when (and (at_11_21) (valid)) (not (at_11_21)))
+    (when (not (and (at_11_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_21_11_20
+  :effect (and
+    (when (and (at_11_21) (valid)) (at_11_20))
+    (when (and (at_11_21) (valid)) (not (at_11_21)))
+    (when (not (and (at_11_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_21_11_22
+  :effect (and
+    (when (and (at_11_21) (valid)) (at_11_22))
+    (when (and (at_11_21) (valid)) (not (at_11_21)))
+    (when (not (and (at_11_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_22_10_22
+  :effect (and
+    (when (and (at_11_22) (valid)) (at_10_22))
+    (when (and (at_11_22) (valid)) (not (at_11_22)))
+    (when (not (and (at_11_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_22_12_22
+  :effect (and
+    (when (and (at_11_22) (valid)) (at_12_22))
+    (when (and (at_11_22) (valid)) (not (at_11_22)))
+    (when (not (and (at_11_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_22_11_21
+  :effect (and
+    (when (and (at_11_22) (valid)) (at_11_21))
+    (when (and (at_11_22) (valid)) (not (at_11_22)))
+    (when (not (and (at_11_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_22_11_23
+  :effect (and
+    (when (and (at_11_22) (valid)) (at_11_23))
+    (when (and (at_11_22) (valid)) (not (at_11_22)))
+    (when (not (and (at_11_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_23_10_23
+  :effect (and
+    (when (and (at_11_23) (valid)) (at_10_23))
+    (when (and (at_11_23) (valid)) (not (at_11_23)))
+    (when (not (and (at_11_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_23_12_23
+  :effect (and
+    (when (and (at_11_23) (valid)) (at_12_23))
+    (when (and (at_11_23) (valid)) (not (at_11_23)))
+    (when (not (and (at_11_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_23_11_22
+  :effect (and
+    (when (and (at_11_23) (valid)) (at_11_22))
+    (when (and (at_11_23) (valid)) (not (at_11_23)))
+    (when (not (and (at_11_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_23_11_24
+  :effect (and
+    (when (and (at_11_23) (valid)) (at_11_24))
+    (when (and (at_11_23) (valid)) (not (at_11_23)))
+    (when (not (and (at_11_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_24_10_24
+  :effect (and
+    (when (and (at_11_24) (valid)) (at_10_24))
+    (when (and (at_11_24) (valid)) (not (at_11_24)))
+    (when (not (and (at_11_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_24_12_24
+  :effect (and
+    (when (and (at_11_24) (valid)) (at_12_24))
+    (when (and (at_11_24) (valid)) (not (at_11_24)))
+    (when (not (and (at_11_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_24_11_23
+  :effect (and
+    (when (and (at_11_24) (valid)) (at_11_23))
+    (when (and (at_11_24) (valid)) (not (at_11_24)))
+    (when (not (and (at_11_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_24_11_25
+  :effect (and
+    (when (and (at_11_24) (valid)) (at_11_25))
+    (when (and (at_11_24) (valid)) (not (at_11_24)))
+    (when (not (and (at_11_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_25_10_25
+  :effect (and
+    (when (and (at_11_25) (valid)) (at_10_25))
+    (when (and (at_11_25) (valid)) (not (at_11_25)))
+    (when (not (and (at_11_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_25_12_25
+  :effect (and
+    (when (and (at_11_25) (valid)) (at_12_25))
+    (when (and (at_11_25) (valid)) (not (at_11_25)))
+    (when (not (and (at_11_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_25_11_24
+  :effect (and
+    (when (and (at_11_25) (valid)) (at_11_24))
+    (when (and (at_11_25) (valid)) (not (at_11_25)))
+    (when (not (and (at_11_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_25_11_26
+  :effect (and
+    (when (and (at_11_25) (valid)) (at_11_26))
+    (when (and (at_11_25) (valid)) (not (at_11_25)))
+    (when (not (and (at_11_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_26_10_26
+  :effect (and
+    (when (and (at_11_26) (valid)) (at_10_26))
+    (when (and (at_11_26) (valid)) (not (at_11_26)))
+    (when (not (and (at_11_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_26_12_26
+  :effect (and
+    (when (and (at_11_26) (valid)) (at_12_26))
+    (when (and (at_11_26) (valid)) (not (at_11_26)))
+    (when (not (and (at_11_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_26_11_25
+  :effect (and
+    (when (and (at_11_26) (valid)) (at_11_25))
+    (when (and (at_11_26) (valid)) (not (at_11_26)))
+    (when (not (and (at_11_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_26_11_27
+  :effect (and
+    (when (and (at_11_26) (valid)) (at_11_27))
+    (when (and (at_11_26) (valid)) (not (at_11_26)))
+    (when (not (and (at_11_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_27_10_27
+  :effect (and
+    (when (and (at_11_27) (valid)) (at_10_27))
+    (when (and (at_11_27) (valid)) (not (at_11_27)))
+    (when (not (and (at_11_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_27_12_27
+  :effect (and
+    (when (and (at_11_27) (valid)) (at_12_27))
+    (when (and (at_11_27) (valid)) (not (at_11_27)))
+    (when (not (and (at_11_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_27_11_26
+  :effect (and
+    (when (and (at_11_27) (valid)) (at_11_26))
+    (when (and (at_11_27) (valid)) (not (at_11_27)))
+    (when (not (and (at_11_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_27_11_28
+  :effect (and
+    (when (and (at_11_27) (valid)) (at_11_28))
+    (when (and (at_11_27) (valid)) (not (at_11_27)))
+    (when (not (and (at_11_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_28_10_28
+  :effect (and
+    (when (and (at_11_28) (valid)) (at_10_28))
+    (when (and (at_11_28) (valid)) (not (at_11_28)))
+    (when (not (and (at_11_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_28_12_28
+  :effect (and
+    (when (and (at_11_28) (valid)) (at_12_28))
+    (when (and (at_11_28) (valid)) (not (at_11_28)))
+    (when (not (and (at_11_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_28_11_27
+  :effect (and
+    (when (and (at_11_28) (valid)) (at_11_27))
+    (when (and (at_11_28) (valid)) (not (at_11_28)))
+    (when (not (and (at_11_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_28_11_29
+  :effect (and
+    (when (and (at_11_28) (valid)) (at_11_29))
+    (when (and (at_11_28) (valid)) (not (at_11_28)))
+    (when (not (and (at_11_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_29_10_29
+  :effect (and
+    (when (and (at_11_29) (valid)) (at_10_29))
+    (when (and (at_11_29) (valid)) (not (at_11_29)))
+    (when (not (and (at_11_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_29_12_29
+  :effect (and
+    (when (and (at_11_29) (valid)) (at_12_29))
+    (when (and (at_11_29) (valid)) (not (at_11_29)))
+    (when (not (and (at_11_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_29_11_28
+  :effect (and
+    (when (and (at_11_29) (valid)) (at_11_28))
+    (when (and (at_11_29) (valid)) (not (at_11_29)))
+    (when (not (and (at_11_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_29_11_30
+  :effect (and
+    (when (and (at_11_29) (valid)) (at_11_30))
+    (when (and (at_11_29) (valid)) (not (at_11_29)))
+    (when (not (and (at_11_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_30_10_30
+  :effect (and
+    (when (and (at_11_30) (valid)) (at_10_30))
+    (when (and (at_11_30) (valid)) (not (at_11_30)))
+    (when (not (and (at_11_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_30_12_30
+  :effect (and
+    (when (and (at_11_30) (valid)) (at_12_30))
+    (when (and (at_11_30) (valid)) (not (at_11_30)))
+    (when (not (and (at_11_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_30_11_29
+  :effect (and
+    (when (and (at_11_30) (valid)) (at_11_29))
+    (when (and (at_11_30) (valid)) (not (at_11_30)))
+    (when (not (and (at_11_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_30_11_31
+  :effect (and
+    (when (and (at_11_30) (valid)) (at_11_31))
+    (when (and (at_11_30) (valid)) (not (at_11_30)))
+    (when (not (and (at_11_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_31_10_31
+  :effect (and
+    (when (and (at_11_31) (valid)) (at_10_31))
+    (when (and (at_11_31) (valid)) (not (at_11_31)))
+    (when (not (and (at_11_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_31_12_31
+  :effect (and
+    (when (and (at_11_31) (valid)) (at_12_31))
+    (when (and (at_11_31) (valid)) (not (at_11_31)))
+    (when (not (and (at_11_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_11_31_11_30
+  :effect (and
+    (when (and (at_11_31) (valid)) (at_11_30))
+    (when (and (at_11_31) (valid)) (not (at_11_31)))
+    (when (not (and (at_11_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_0_11_0
+  :effect (and
+    (when (and (at_12_0) (valid)) (at_11_0))
+    (when (and (at_12_0) (valid)) (not (at_12_0)))
+    (when (not (and (at_12_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_0_13_0
+  :effect (and
+    (when (and (at_12_0) (valid)) (at_13_0))
+    (when (and (at_12_0) (valid)) (not (at_12_0)))
+    (when (not (and (at_12_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_0_12_1
+  :effect (and
+    (when (and (at_12_0) (valid)) (at_12_1))
+    (when (and (at_12_0) (valid)) (not (at_12_0)))
+    (when (not (and (at_12_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_1_11_1
+  :effect (and
+    (when (and (at_12_1) (valid)) (at_11_1))
+    (when (and (at_12_1) (valid)) (not (at_12_1)))
+    (when (not (and (at_12_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_1_13_1
+  :effect (and
+    (when (and (at_12_1) (valid)) (at_13_1))
+    (when (and (at_12_1) (valid)) (not (at_12_1)))
+    (when (not (and (at_12_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_1_12_0
+  :effect (and
+    (when (and (at_12_1) (valid)) (at_12_0))
+    (when (and (at_12_1) (valid)) (not (at_12_1)))
+    (when (not (and (at_12_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_1_12_2
+  :effect (and
+    (when (and (at_12_1) (valid)) (at_12_2))
+    (when (and (at_12_1) (valid)) (not (at_12_1)))
+    (when (not (and (at_12_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_2_11_2
+  :effect (and
+    (when (and (at_12_2) (valid)) (at_11_2))
+    (when (and (at_12_2) (valid)) (not (at_12_2)))
+    (when (not (and (at_12_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_2_13_2
+  :effect (and
+    (when (and (at_12_2) (valid)) (at_13_2))
+    (when (and (at_12_2) (valid)) (not (at_12_2)))
+    (when (not (and (at_12_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_2_12_1
+  :effect (and
+    (when (and (at_12_2) (valid)) (at_12_1))
+    (when (and (at_12_2) (valid)) (not (at_12_2)))
+    (when (not (and (at_12_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_2_12_3
+  :effect (and
+    (when (and (at_12_2) (valid)) (at_12_3))
+    (when (and (at_12_2) (valid)) (not (at_12_2)))
+    (when (not (and (at_12_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_3_11_3
+  :effect (and
+    (when (and (at_12_3) (valid)) (at_11_3))
+    (when (and (at_12_3) (valid)) (not (at_12_3)))
+    (when (not (and (at_12_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_3_13_3
+  :effect (and
+    (when (and (at_12_3) (valid)) (at_13_3))
+    (when (and (at_12_3) (valid)) (not (at_12_3)))
+    (when (not (and (at_12_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_3_12_2
+  :effect (and
+    (when (and (at_12_3) (valid)) (at_12_2))
+    (when (and (at_12_3) (valid)) (not (at_12_3)))
+    (when (not (and (at_12_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_3_12_4
+  :effect (and
+    (when (and (at_12_3) (valid)) (at_12_4))
+    (when (and (at_12_3) (valid)) (not (at_12_3)))
+    (when (not (and (at_12_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_4_11_4
+  :effect (and
+    (when (and (at_12_4) (valid)) (at_11_4))
+    (when (and (at_12_4) (valid)) (not (at_12_4)))
+    (when (not (and (at_12_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_4_13_4
+  :effect (and
+    (when (and (at_12_4) (valid)) (at_13_4))
+    (when (and (at_12_4) (valid)) (not (at_12_4)))
+    (when (not (and (at_12_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_4_12_3
+  :effect (and
+    (when (and (at_12_4) (valid)) (at_12_3))
+    (when (and (at_12_4) (valid)) (not (at_12_4)))
+    (when (not (and (at_12_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_4_12_5
+  :effect (and
+    (when (and (at_12_4) (valid)) (at_12_5))
+    (when (and (at_12_4) (valid)) (not (at_12_4)))
+    (when (not (and (at_12_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_5_11_5
+  :effect (and
+    (when (and (at_12_5) (valid)) (at_11_5))
+    (when (and (at_12_5) (valid)) (not (at_12_5)))
+    (when (not (and (at_12_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_5_13_5
+  :effect (and
+    (when (and (at_12_5) (valid)) (at_13_5))
+    (when (and (at_12_5) (valid)) (not (at_12_5)))
+    (when (not (and (at_12_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_5_12_4
+  :effect (and
+    (when (and (at_12_5) (valid)) (at_12_4))
+    (when (and (at_12_5) (valid)) (not (at_12_5)))
+    (when (not (and (at_12_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_5_12_6
+  :effect (and
+    (when (and (at_12_5) (valid)) (at_12_6))
+    (when (and (at_12_5) (valid)) (not (at_12_5)))
+    (when (not (and (at_12_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_6_11_6
+  :effect (and
+    (when (and (at_12_6) (valid)) (at_11_6))
+    (when (and (at_12_6) (valid)) (not (at_12_6)))
+    (when (not (and (at_12_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_6_13_6
+  :effect (and
+    (when (and (at_12_6) (valid)) (at_13_6))
+    (when (and (at_12_6) (valid)) (not (at_12_6)))
+    (when (not (and (at_12_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_6_12_5
+  :effect (and
+    (when (and (at_12_6) (valid)) (at_12_5))
+    (when (and (at_12_6) (valid)) (not (at_12_6)))
+    (when (not (and (at_12_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_6_12_7
+  :effect (and
+    (when (and (at_12_6) (valid)) (at_12_7))
+    (when (and (at_12_6) (valid)) (not (at_12_6)))
+    (when (not (and (at_12_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_7_11_7
+  :effect (and
+    (when (and (at_12_7) (valid)) (at_11_7))
+    (when (and (at_12_7) (valid)) (not (at_12_7)))
+    (when (not (and (at_12_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_7_13_7
+  :effect (and
+    (when (and (at_12_7) (valid)) (at_13_7))
+    (when (and (at_12_7) (valid)) (not (at_12_7)))
+    (when (not (and (at_12_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_7_12_6
+  :effect (and
+    (when (and (at_12_7) (valid)) (at_12_6))
+    (when (and (at_12_7) (valid)) (not (at_12_7)))
+    (when (not (and (at_12_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_7_12_8
+  :effect (and
+    (when (and (at_12_7) (valid)) (at_12_8))
+    (when (and (at_12_7) (valid)) (not (at_12_7)))
+    (when (not (and (at_12_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_8_11_8
+  :effect (and
+    (when (and (at_12_8) (valid)) (at_11_8))
+    (when (and (at_12_8) (valid)) (not (at_12_8)))
+    (when (not (and (at_12_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_8_13_8
+  :effect (and
+    (when (and (at_12_8) (valid)) (at_13_8))
+    (when (and (at_12_8) (valid)) (not (at_12_8)))
+    (when (not (and (at_12_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_8_12_7
+  :effect (and
+    (when (and (at_12_8) (valid)) (at_12_7))
+    (when (and (at_12_8) (valid)) (not (at_12_8)))
+    (when (not (and (at_12_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_8_12_9
+  :effect (and
+    (when (and (at_12_8) (valid)) (at_12_9))
+    (when (and (at_12_8) (valid)) (not (at_12_8)))
+    (when (not (and (at_12_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_9_11_9
+  :effect (and
+    (when (and (at_12_9) (valid)) (at_11_9))
+    (when (and (at_12_9) (valid)) (not (at_12_9)))
+    (when (not (and (at_12_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_9_13_9
+  :effect (and
+    (when (and (at_12_9) (valid)) (at_13_9))
+    (when (and (at_12_9) (valid)) (not (at_12_9)))
+    (when (not (and (at_12_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_9_12_8
+  :effect (and
+    (when (and (at_12_9) (valid)) (at_12_8))
+    (when (and (at_12_9) (valid)) (not (at_12_9)))
+    (when (not (and (at_12_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_9_12_10
+  :effect (and
+    (when (and (at_12_9) (valid)) (at_12_10))
+    (when (and (at_12_9) (valid)) (not (at_12_9)))
+    (when (not (and (at_12_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_10_11_10
+  :effect (and
+    (when (and (at_12_10) (valid)) (at_11_10))
+    (when (and (at_12_10) (valid)) (not (at_12_10)))
+    (when (not (and (at_12_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_10_13_10
+  :effect (and
+    (when (and (at_12_10) (valid)) (at_13_10))
+    (when (and (at_12_10) (valid)) (not (at_12_10)))
+    (when (not (and (at_12_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_10_12_9
+  :effect (and
+    (when (and (at_12_10) (valid)) (at_12_9))
+    (when (and (at_12_10) (valid)) (not (at_12_10)))
+    (when (not (and (at_12_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_10_12_11
+  :effect (and
+    (when (and (at_12_10) (valid)) (at_12_11))
+    (when (and (at_12_10) (valid)) (not (at_12_10)))
+    (when (not (and (at_12_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_11_11_11
+  :effect (and
+    (when (and (at_12_11) (valid)) (at_11_11))
+    (when (and (at_12_11) (valid)) (not (at_12_11)))
+    (when (not (and (at_12_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_11_13_11
+  :effect (and
+    (when (and (at_12_11) (valid)) (at_13_11))
+    (when (and (at_12_11) (valid)) (not (at_12_11)))
+    (when (not (and (at_12_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_11_12_10
+  :effect (and
+    (when (and (at_12_11) (valid)) (at_12_10))
+    (when (and (at_12_11) (valid)) (not (at_12_11)))
+    (when (not (and (at_12_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_11_12_12
+  :effect (and
+    (when (and (at_12_11) (valid)) (at_12_12))
+    (when (and (at_12_11) (valid)) (not (at_12_11)))
+    (when (not (and (at_12_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_12_11_12
+  :effect (and
+    (when (and (at_12_12) (valid)) (at_11_12))
+    (when (and (at_12_12) (valid)) (not (at_12_12)))
+    (when (not (and (at_12_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_12_13_12
+  :effect (and
+    (when (and (at_12_12) (valid)) (at_13_12))
+    (when (and (at_12_12) (valid)) (not (at_12_12)))
+    (when (not (and (at_12_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_12_12_11
+  :effect (and
+    (when (and (at_12_12) (valid)) (at_12_11))
+    (when (and (at_12_12) (valid)) (not (at_12_12)))
+    (when (not (and (at_12_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_12_12_13
+  :effect (and
+    (when (and (at_12_12) (valid)) (at_12_13))
+    (when (and (at_12_12) (valid)) (not (at_12_12)))
+    (when (not (and (at_12_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_13_11_13
+  :effect (and
+    (when (and (at_12_13) (valid)) (at_11_13))
+    (when (and (at_12_13) (valid)) (not (at_12_13)))
+    (when (not (and (at_12_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_13_13_13
+  :effect (and
+    (when (and (at_12_13) (valid)) (at_13_13))
+    (when (and (at_12_13) (valid)) (not (at_12_13)))
+    (when (not (and (at_12_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_13_12_12
+  :effect (and
+    (when (and (at_12_13) (valid)) (at_12_12))
+    (when (and (at_12_13) (valid)) (not (at_12_13)))
+    (when (not (and (at_12_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_13_12_14
+  :effect (and
+    (when (and (at_12_13) (valid)) (at_12_14))
+    (when (and (at_12_13) (valid)) (not (at_12_13)))
+    (when (not (and (at_12_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_14_11_14
+  :effect (and
+    (when (and (at_12_14) (valid)) (at_11_14))
+    (when (and (at_12_14) (valid)) (not (at_12_14)))
+    (when (not (and (at_12_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_14_13_14
+  :effect (and
+    (when (and (at_12_14) (valid)) (at_13_14))
+    (when (and (at_12_14) (valid)) (not (at_12_14)))
+    (when (not (and (at_12_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_14_12_13
+  :effect (and
+    (when (and (at_12_14) (valid)) (at_12_13))
+    (when (and (at_12_14) (valid)) (not (at_12_14)))
+    (when (not (and (at_12_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_14_12_15
+  :effect (and
+    (when (and (at_12_14) (valid)) (at_12_15))
+    (when (and (at_12_14) (valid)) (not (at_12_14)))
+    (when (not (and (at_12_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_15_11_15
+  :effect (and
+    (when (and (at_12_15) (valid)) (at_11_15))
+    (when (and (at_12_15) (valid)) (not (at_12_15)))
+    (when (not (and (at_12_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_15_13_15
+  :effect (and
+    (when (and (at_12_15) (valid)) (at_13_15))
+    (when (and (at_12_15) (valid)) (not (at_12_15)))
+    (when (not (and (at_12_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_15_12_14
+  :effect (and
+    (when (and (at_12_15) (valid)) (at_12_14))
+    (when (and (at_12_15) (valid)) (not (at_12_15)))
+    (when (not (and (at_12_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_15_12_16
+  :effect (and
+    (when (and (at_12_15) (valid)) (at_12_16))
+    (when (and (at_12_15) (valid)) (not (at_12_15)))
+    (when (not (and (at_12_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_16_11_16
+  :effect (and
+    (when (and (at_12_16) (valid)) (at_11_16))
+    (when (and (at_12_16) (valid)) (not (at_12_16)))
+    (when (not (and (at_12_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_16_13_16
+  :effect (and
+    (when (and (at_12_16) (valid)) (at_13_16))
+    (when (and (at_12_16) (valid)) (not (at_12_16)))
+    (when (not (and (at_12_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_16_12_15
+  :effect (and
+    (when (and (at_12_16) (valid)) (at_12_15))
+    (when (and (at_12_16) (valid)) (not (at_12_16)))
+    (when (not (and (at_12_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_16_12_17
+  :effect (and
+    (when (and (at_12_16) (valid)) (at_12_17))
+    (when (and (at_12_16) (valid)) (not (at_12_16)))
+    (when (not (and (at_12_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_17_11_17
+  :effect (and
+    (when (and (at_12_17) (valid)) (at_11_17))
+    (when (and (at_12_17) (valid)) (not (at_12_17)))
+    (when (not (and (at_12_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_17_13_17
+  :effect (and
+    (when (and (at_12_17) (valid)) (at_13_17))
+    (when (and (at_12_17) (valid)) (not (at_12_17)))
+    (when (not (and (at_12_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_17_12_16
+  :effect (and
+    (when (and (at_12_17) (valid)) (at_12_16))
+    (when (and (at_12_17) (valid)) (not (at_12_17)))
+    (when (not (and (at_12_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_17_12_18
+  :effect (and
+    (when (and (at_12_17) (valid)) (at_12_18))
+    (when (and (at_12_17) (valid)) (not (at_12_17)))
+    (when (not (and (at_12_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_18_11_18
+  :effect (and
+    (when (and (at_12_18) (valid)) (at_11_18))
+    (when (and (at_12_18) (valid)) (not (at_12_18)))
+    (when (not (and (at_12_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_18_13_18
+  :effect (and
+    (when (and (at_12_18) (valid)) (at_13_18))
+    (when (and (at_12_18) (valid)) (not (at_12_18)))
+    (when (not (and (at_12_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_18_12_17
+  :effect (and
+    (when (and (at_12_18) (valid)) (at_12_17))
+    (when (and (at_12_18) (valid)) (not (at_12_18)))
+    (when (not (and (at_12_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_18_12_19
+  :effect (and
+    (when (and (at_12_18) (valid)) (at_12_19))
+    (when (and (at_12_18) (valid)) (not (at_12_18)))
+    (when (not (and (at_12_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_19_11_19
+  :effect (and
+    (when (and (at_12_19) (valid)) (at_11_19))
+    (when (and (at_12_19) (valid)) (not (at_12_19)))
+    (when (not (and (at_12_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_19_13_19
+  :effect (and
+    (when (and (at_12_19) (valid)) (at_13_19))
+    (when (and (at_12_19) (valid)) (not (at_12_19)))
+    (when (not (and (at_12_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_19_12_18
+  :effect (and
+    (when (and (at_12_19) (valid)) (at_12_18))
+    (when (and (at_12_19) (valid)) (not (at_12_19)))
+    (when (not (and (at_12_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_19_12_20
+  :effect (and
+    (when (and (at_12_19) (valid)) (at_12_20))
+    (when (and (at_12_19) (valid)) (not (at_12_19)))
+    (when (not (and (at_12_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_20_11_20
+  :effect (and
+    (when (and (at_12_20) (valid)) (at_11_20))
+    (when (and (at_12_20) (valid)) (not (at_12_20)))
+    (when (not (and (at_12_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_20_13_20
+  :effect (and
+    (when (and (at_12_20) (valid)) (at_13_20))
+    (when (and (at_12_20) (valid)) (not (at_12_20)))
+    (when (not (and (at_12_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_20_12_19
+  :effect (and
+    (when (and (at_12_20) (valid)) (at_12_19))
+    (when (and (at_12_20) (valid)) (not (at_12_20)))
+    (when (not (and (at_12_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_20_12_21
+  :effect (and
+    (when (and (at_12_20) (valid)) (at_12_21))
+    (when (and (at_12_20) (valid)) (not (at_12_20)))
+    (when (not (and (at_12_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_21_11_21
+  :effect (and
+    (when (and (at_12_21) (valid)) (at_11_21))
+    (when (and (at_12_21) (valid)) (not (at_12_21)))
+    (when (not (and (at_12_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_21_13_21
+  :effect (and
+    (when (and (at_12_21) (valid)) (at_13_21))
+    (when (and (at_12_21) (valid)) (not (at_12_21)))
+    (when (not (and (at_12_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_21_12_20
+  :effect (and
+    (when (and (at_12_21) (valid)) (at_12_20))
+    (when (and (at_12_21) (valid)) (not (at_12_21)))
+    (when (not (and (at_12_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_21_12_22
+  :effect (and
+    (when (and (at_12_21) (valid)) (at_12_22))
+    (when (and (at_12_21) (valid)) (not (at_12_21)))
+    (when (not (and (at_12_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_22_11_22
+  :effect (and
+    (when (and (at_12_22) (valid)) (at_11_22))
+    (when (and (at_12_22) (valid)) (not (at_12_22)))
+    (when (not (and (at_12_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_22_13_22
+  :effect (and
+    (when (and (at_12_22) (valid)) (at_13_22))
+    (when (and (at_12_22) (valid)) (not (at_12_22)))
+    (when (not (and (at_12_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_22_12_21
+  :effect (and
+    (when (and (at_12_22) (valid)) (at_12_21))
+    (when (and (at_12_22) (valid)) (not (at_12_22)))
+    (when (not (and (at_12_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_22_12_23
+  :effect (and
+    (when (and (at_12_22) (valid)) (at_12_23))
+    (when (and (at_12_22) (valid)) (not (at_12_22)))
+    (when (not (and (at_12_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_23_11_23
+  :effect (and
+    (when (and (at_12_23) (valid)) (at_11_23))
+    (when (and (at_12_23) (valid)) (not (at_12_23)))
+    (when (not (and (at_12_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_23_13_23
+  :effect (and
+    (when (and (at_12_23) (valid)) (at_13_23))
+    (when (and (at_12_23) (valid)) (not (at_12_23)))
+    (when (not (and (at_12_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_23_12_22
+  :effect (and
+    (when (and (at_12_23) (valid)) (at_12_22))
+    (when (and (at_12_23) (valid)) (not (at_12_23)))
+    (when (not (and (at_12_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_23_12_24
+  :effect (and
+    (when (and (at_12_23) (valid)) (at_12_24))
+    (when (and (at_12_23) (valid)) (not (at_12_23)))
+    (when (not (and (at_12_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_24_11_24
+  :effect (and
+    (when (and (at_12_24) (valid)) (at_11_24))
+    (when (and (at_12_24) (valid)) (not (at_12_24)))
+    (when (not (and (at_12_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_24_13_24
+  :effect (and
+    (when (and (at_12_24) (valid)) (at_13_24))
+    (when (and (at_12_24) (valid)) (not (at_12_24)))
+    (when (not (and (at_12_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_24_12_23
+  :effect (and
+    (when (and (at_12_24) (valid)) (at_12_23))
+    (when (and (at_12_24) (valid)) (not (at_12_24)))
+    (when (not (and (at_12_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_24_12_25
+  :effect (and
+    (when (and (at_12_24) (valid)) (at_12_25))
+    (when (and (at_12_24) (valid)) (not (at_12_24)))
+    (when (not (and (at_12_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_25_11_25
+  :effect (and
+    (when (and (at_12_25) (valid)) (at_11_25))
+    (when (and (at_12_25) (valid)) (not (at_12_25)))
+    (when (not (and (at_12_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_25_13_25
+  :effect (and
+    (when (and (at_12_25) (valid)) (at_13_25))
+    (when (and (at_12_25) (valid)) (not (at_12_25)))
+    (when (not (and (at_12_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_25_12_24
+  :effect (and
+    (when (and (at_12_25) (valid)) (at_12_24))
+    (when (and (at_12_25) (valid)) (not (at_12_25)))
+    (when (not (and (at_12_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_25_12_26
+  :effect (and
+    (when (and (at_12_25) (valid)) (at_12_26))
+    (when (and (at_12_25) (valid)) (not (at_12_25)))
+    (when (not (and (at_12_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_26_11_26
+  :effect (and
+    (when (and (at_12_26) (valid)) (at_11_26))
+    (when (and (at_12_26) (valid)) (not (at_12_26)))
+    (when (not (and (at_12_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_26_13_26
+  :effect (and
+    (when (and (at_12_26) (valid)) (at_13_26))
+    (when (and (at_12_26) (valid)) (not (at_12_26)))
+    (when (not (and (at_12_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_26_12_25
+  :effect (and
+    (when (and (at_12_26) (valid)) (at_12_25))
+    (when (and (at_12_26) (valid)) (not (at_12_26)))
+    (when (not (and (at_12_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_26_12_27
+  :effect (and
+    (when (and (at_12_26) (valid)) (at_12_27))
+    (when (and (at_12_26) (valid)) (not (at_12_26)))
+    (when (not (and (at_12_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_27_11_27
+  :effect (and
+    (when (and (at_12_27) (valid)) (at_11_27))
+    (when (and (at_12_27) (valid)) (not (at_12_27)))
+    (when (not (and (at_12_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_27_13_27
+  :effect (and
+    (when (and (at_12_27) (valid)) (at_13_27))
+    (when (and (at_12_27) (valid)) (not (at_12_27)))
+    (when (not (and (at_12_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_27_12_26
+  :effect (and
+    (when (and (at_12_27) (valid)) (at_12_26))
+    (when (and (at_12_27) (valid)) (not (at_12_27)))
+    (when (not (and (at_12_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_27_12_28
+  :effect (and
+    (when (and (at_12_27) (valid)) (at_12_28))
+    (when (and (at_12_27) (valid)) (not (at_12_27)))
+    (when (not (and (at_12_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_28_11_28
+  :effect (and
+    (when (and (at_12_28) (valid)) (at_11_28))
+    (when (and (at_12_28) (valid)) (not (at_12_28)))
+    (when (not (and (at_12_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_28_13_28
+  :effect (and
+    (when (and (at_12_28) (valid)) (at_13_28))
+    (when (and (at_12_28) (valid)) (not (at_12_28)))
+    (when (not (and (at_12_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_28_12_27
+  :effect (and
+    (when (and (at_12_28) (valid)) (at_12_27))
+    (when (and (at_12_28) (valid)) (not (at_12_28)))
+    (when (not (and (at_12_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_28_12_29
+  :effect (and
+    (when (and (at_12_28) (valid)) (at_12_29))
+    (when (and (at_12_28) (valid)) (not (at_12_28)))
+    (when (not (and (at_12_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_29_11_29
+  :effect (and
+    (when (and (at_12_29) (valid)) (at_11_29))
+    (when (and (at_12_29) (valid)) (not (at_12_29)))
+    (when (not (and (at_12_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_29_13_29
+  :effect (and
+    (when (and (at_12_29) (valid)) (at_13_29))
+    (when (and (at_12_29) (valid)) (not (at_12_29)))
+    (when (not (and (at_12_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_29_12_28
+  :effect (and
+    (when (and (at_12_29) (valid)) (at_12_28))
+    (when (and (at_12_29) (valid)) (not (at_12_29)))
+    (when (not (and (at_12_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_29_12_30
+  :effect (and
+    (when (and (at_12_29) (valid)) (at_12_30))
+    (when (and (at_12_29) (valid)) (not (at_12_29)))
+    (when (not (and (at_12_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_30_11_30
+  :effect (and
+    (when (and (at_12_30) (valid)) (at_11_30))
+    (when (and (at_12_30) (valid)) (not (at_12_30)))
+    (when (not (and (at_12_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_30_13_30
+  :effect (and
+    (when (and (at_12_30) (valid)) (at_13_30))
+    (when (and (at_12_30) (valid)) (not (at_12_30)))
+    (when (not (and (at_12_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_30_12_29
+  :effect (and
+    (when (and (at_12_30) (valid)) (at_12_29))
+    (when (and (at_12_30) (valid)) (not (at_12_30)))
+    (when (not (and (at_12_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_30_12_31
+  :effect (and
+    (when (and (at_12_30) (valid)) (at_12_31))
+    (when (and (at_12_30) (valid)) (not (at_12_30)))
+    (when (not (and (at_12_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_31_11_31
+  :effect (and
+    (when (and (at_12_31) (valid)) (at_11_31))
+    (when (and (at_12_31) (valid)) (not (at_12_31)))
+    (when (not (and (at_12_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_31_13_31
+  :effect (and
+    (when (and (at_12_31) (valid)) (at_13_31))
+    (when (and (at_12_31) (valid)) (not (at_12_31)))
+    (when (not (and (at_12_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_12_31_12_30
+  :effect (and
+    (when (and (at_12_31) (valid)) (at_12_30))
+    (when (and (at_12_31) (valid)) (not (at_12_31)))
+    (when (not (and (at_12_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_0_12_0
+  :effect (and
+    (when (and (at_13_0) (valid)) (at_12_0))
+    (when (and (at_13_0) (valid)) (not (at_13_0)))
+    (when (not (and (at_13_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_0_14_0
+  :effect (and
+    (when (and (at_13_0) (valid)) (at_14_0))
+    (when (and (at_13_0) (valid)) (not (at_13_0)))
+    (when (not (and (at_13_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_0_13_1
+  :effect (and
+    (when (and (at_13_0) (valid)) (at_13_1))
+    (when (and (at_13_0) (valid)) (not (at_13_0)))
+    (when (not (and (at_13_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_1_12_1
+  :effect (and
+    (when (and (at_13_1) (valid)) (at_12_1))
+    (when (and (at_13_1) (valid)) (not (at_13_1)))
+    (when (not (and (at_13_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_1_14_1
+  :effect (and
+    (when (and (at_13_1) (valid)) (at_14_1))
+    (when (and (at_13_1) (valid)) (not (at_13_1)))
+    (when (not (and (at_13_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_1_13_0
+  :effect (and
+    (when (and (at_13_1) (valid)) (at_13_0))
+    (when (and (at_13_1) (valid)) (not (at_13_1)))
+    (when (not (and (at_13_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_1_13_2
+  :effect (and
+    (when (and (at_13_1) (valid)) (at_13_2))
+    (when (and (at_13_1) (valid)) (not (at_13_1)))
+    (when (not (and (at_13_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_2_12_2
+  :effect (and
+    (when (and (at_13_2) (valid)) (at_12_2))
+    (when (and (at_13_2) (valid)) (not (at_13_2)))
+    (when (not (and (at_13_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_2_14_2
+  :effect (and
+    (when (and (at_13_2) (valid)) (at_14_2))
+    (when (and (at_13_2) (valid)) (not (at_13_2)))
+    (when (not (and (at_13_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_2_13_1
+  :effect (and
+    (when (and (at_13_2) (valid)) (at_13_1))
+    (when (and (at_13_2) (valid)) (not (at_13_2)))
+    (when (not (and (at_13_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_2_13_3
+  :effect (and
+    (when (and (at_13_2) (valid)) (at_13_3))
+    (when (and (at_13_2) (valid)) (not (at_13_2)))
+    (when (not (and (at_13_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_3_12_3
+  :effect (and
+    (when (and (at_13_3) (valid)) (at_12_3))
+    (when (and (at_13_3) (valid)) (not (at_13_3)))
+    (when (not (and (at_13_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_3_14_3
+  :effect (and
+    (when (and (at_13_3) (valid)) (at_14_3))
+    (when (and (at_13_3) (valid)) (not (at_13_3)))
+    (when (not (and (at_13_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_3_13_2
+  :effect (and
+    (when (and (at_13_3) (valid)) (at_13_2))
+    (when (and (at_13_3) (valid)) (not (at_13_3)))
+    (when (not (and (at_13_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_3_13_4
+  :effect (and
+    (when (and (at_13_3) (valid)) (at_13_4))
+    (when (and (at_13_3) (valid)) (not (at_13_3)))
+    (when (not (and (at_13_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_4_12_4
+  :effect (and
+    (when (and (at_13_4) (valid)) (at_12_4))
+    (when (and (at_13_4) (valid)) (not (at_13_4)))
+    (when (not (and (at_13_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_4_14_4
+  :effect (and
+    (when (and (at_13_4) (valid)) (at_14_4))
+    (when (and (at_13_4) (valid)) (not (at_13_4)))
+    (when (not (and (at_13_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_4_13_3
+  :effect (and
+    (when (and (at_13_4) (valid)) (at_13_3))
+    (when (and (at_13_4) (valid)) (not (at_13_4)))
+    (when (not (and (at_13_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_4_13_5
+  :effect (and
+    (when (and (at_13_4) (valid)) (at_13_5))
+    (when (and (at_13_4) (valid)) (not (at_13_4)))
+    (when (not (and (at_13_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_5_12_5
+  :effect (and
+    (when (and (at_13_5) (valid)) (at_12_5))
+    (when (and (at_13_5) (valid)) (not (at_13_5)))
+    (when (not (and (at_13_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_5_14_5
+  :effect (and
+    (when (and (at_13_5) (valid)) (at_14_5))
+    (when (and (at_13_5) (valid)) (not (at_13_5)))
+    (when (not (and (at_13_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_5_13_4
+  :effect (and
+    (when (and (at_13_5) (valid)) (at_13_4))
+    (when (and (at_13_5) (valid)) (not (at_13_5)))
+    (when (not (and (at_13_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_5_13_6
+  :effect (and
+    (when (and (at_13_5) (valid)) (at_13_6))
+    (when (and (at_13_5) (valid)) (not (at_13_5)))
+    (when (not (and (at_13_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_6_12_6
+  :effect (and
+    (when (and (at_13_6) (valid)) (at_12_6))
+    (when (and (at_13_6) (valid)) (not (at_13_6)))
+    (when (not (and (at_13_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_6_14_6
+  :effect (and
+    (when (and (at_13_6) (valid)) (at_14_6))
+    (when (and (at_13_6) (valid)) (not (at_13_6)))
+    (when (not (and (at_13_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_6_13_5
+  :effect (and
+    (when (and (at_13_6) (valid)) (at_13_5))
+    (when (and (at_13_6) (valid)) (not (at_13_6)))
+    (when (not (and (at_13_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_6_13_7
+  :effect (and
+    (when (and (at_13_6) (valid)) (at_13_7))
+    (when (and (at_13_6) (valid)) (not (at_13_6)))
+    (when (not (and (at_13_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_7_12_7
+  :effect (and
+    (when (and (at_13_7) (valid)) (at_12_7))
+    (when (and (at_13_7) (valid)) (not (at_13_7)))
+    (when (not (and (at_13_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_7_14_7
+  :effect (and
+    (when (and (at_13_7) (valid)) (at_14_7))
+    (when (and (at_13_7) (valid)) (not (at_13_7)))
+    (when (not (and (at_13_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_7_13_6
+  :effect (and
+    (when (and (at_13_7) (valid)) (at_13_6))
+    (when (and (at_13_7) (valid)) (not (at_13_7)))
+    (when (not (and (at_13_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_7_13_8
+  :effect (and
+    (when (and (at_13_7) (valid)) (at_13_8))
+    (when (and (at_13_7) (valid)) (not (at_13_7)))
+    (when (not (and (at_13_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_8_12_8
+  :effect (and
+    (when (and (at_13_8) (valid)) (at_12_8))
+    (when (and (at_13_8) (valid)) (not (at_13_8)))
+    (when (not (and (at_13_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_8_14_8
+  :effect (and
+    (when (and (at_13_8) (valid)) (at_14_8))
+    (when (and (at_13_8) (valid)) (not (at_13_8)))
+    (when (not (and (at_13_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_8_13_7
+  :effect (and
+    (when (and (at_13_8) (valid)) (at_13_7))
+    (when (and (at_13_8) (valid)) (not (at_13_8)))
+    (when (not (and (at_13_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_8_13_9
+  :effect (and
+    (when (and (at_13_8) (valid)) (at_13_9))
+    (when (and (at_13_8) (valid)) (not (at_13_8)))
+    (when (not (and (at_13_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_9_12_9
+  :effect (and
+    (when (and (at_13_9) (valid)) (at_12_9))
+    (when (and (at_13_9) (valid)) (not (at_13_9)))
+    (when (not (and (at_13_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_9_14_9
+  :effect (and
+    (when (and (at_13_9) (valid)) (at_14_9))
+    (when (and (at_13_9) (valid)) (not (at_13_9)))
+    (when (not (and (at_13_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_9_13_8
+  :effect (and
+    (when (and (at_13_9) (valid)) (at_13_8))
+    (when (and (at_13_9) (valid)) (not (at_13_9)))
+    (when (not (and (at_13_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_9_13_10
+  :effect (and
+    (when (and (at_13_9) (valid)) (at_13_10))
+    (when (and (at_13_9) (valid)) (not (at_13_9)))
+    (when (not (and (at_13_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_10_12_10
+  :effect (and
+    (when (and (at_13_10) (valid)) (at_12_10))
+    (when (and (at_13_10) (valid)) (not (at_13_10)))
+    (when (not (and (at_13_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_10_14_10
+  :effect (and
+    (when (and (at_13_10) (valid)) (at_14_10))
+    (when (and (at_13_10) (valid)) (not (at_13_10)))
+    (when (not (and (at_13_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_10_13_9
+  :effect (and
+    (when (and (at_13_10) (valid)) (at_13_9))
+    (when (and (at_13_10) (valid)) (not (at_13_10)))
+    (when (not (and (at_13_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_10_13_11
+  :effect (and
+    (when (and (at_13_10) (valid)) (at_13_11))
+    (when (and (at_13_10) (valid)) (not (at_13_10)))
+    (when (not (and (at_13_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_11_12_11
+  :effect (and
+    (when (and (at_13_11) (valid)) (at_12_11))
+    (when (and (at_13_11) (valid)) (not (at_13_11)))
+    (when (not (and (at_13_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_11_14_11
+  :effect (and
+    (when (and (at_13_11) (valid)) (at_14_11))
+    (when (and (at_13_11) (valid)) (not (at_13_11)))
+    (when (not (and (at_13_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_11_13_10
+  :effect (and
+    (when (and (at_13_11) (valid)) (at_13_10))
+    (when (and (at_13_11) (valid)) (not (at_13_11)))
+    (when (not (and (at_13_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_11_13_12
+  :effect (and
+    (when (and (at_13_11) (valid)) (at_13_12))
+    (when (and (at_13_11) (valid)) (not (at_13_11)))
+    (when (not (and (at_13_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_12_12_12
+  :effect (and
+    (when (and (at_13_12) (valid)) (at_12_12))
+    (when (and (at_13_12) (valid)) (not (at_13_12)))
+    (when (not (and (at_13_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_12_14_12
+  :effect (and
+    (when (and (at_13_12) (valid)) (at_14_12))
+    (when (and (at_13_12) (valid)) (not (at_13_12)))
+    (when (not (and (at_13_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_12_13_11
+  :effect (and
+    (when (and (at_13_12) (valid)) (at_13_11))
+    (when (and (at_13_12) (valid)) (not (at_13_12)))
+    (when (not (and (at_13_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_12_13_13
+  :effect (and
+    (when (and (at_13_12) (valid)) (at_13_13))
+    (when (and (at_13_12) (valid)) (not (at_13_12)))
+    (when (not (and (at_13_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_13_12_13
+  :effect (and
+    (when (and (at_13_13) (valid)) (at_12_13))
+    (when (and (at_13_13) (valid)) (not (at_13_13)))
+    (when (not (and (at_13_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_13_14_13
+  :effect (and
+    (when (and (at_13_13) (valid)) (at_14_13))
+    (when (and (at_13_13) (valid)) (not (at_13_13)))
+    (when (not (and (at_13_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_13_13_12
+  :effect (and
+    (when (and (at_13_13) (valid)) (at_13_12))
+    (when (and (at_13_13) (valid)) (not (at_13_13)))
+    (when (not (and (at_13_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_13_13_14
+  :effect (and
+    (when (and (at_13_13) (valid)) (at_13_14))
+    (when (and (at_13_13) (valid)) (not (at_13_13)))
+    (when (not (and (at_13_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_14_12_14
+  :effect (and
+    (when (and (at_13_14) (valid)) (at_12_14))
+    (when (and (at_13_14) (valid)) (not (at_13_14)))
+    (when (not (and (at_13_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_14_14_14
+  :effect (and
+    (when (and (at_13_14) (valid)) (at_14_14))
+    (when (and (at_13_14) (valid)) (not (at_13_14)))
+    (when (not (and (at_13_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_14_13_13
+  :effect (and
+    (when (and (at_13_14) (valid)) (at_13_13))
+    (when (and (at_13_14) (valid)) (not (at_13_14)))
+    (when (not (and (at_13_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_14_13_15
+  :effect (and
+    (when (and (at_13_14) (valid)) (at_13_15))
+    (when (and (at_13_14) (valid)) (not (at_13_14)))
+    (when (not (and (at_13_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_15_12_15
+  :effect (and
+    (when (and (at_13_15) (valid)) (at_12_15))
+    (when (and (at_13_15) (valid)) (not (at_13_15)))
+    (when (not (and (at_13_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_15_14_15
+  :effect (and
+    (when (and (at_13_15) (valid)) (at_14_15))
+    (when (and (at_13_15) (valid)) (not (at_13_15)))
+    (when (not (and (at_13_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_15_13_14
+  :effect (and
+    (when (and (at_13_15) (valid)) (at_13_14))
+    (when (and (at_13_15) (valid)) (not (at_13_15)))
+    (when (not (and (at_13_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_15_13_16
+  :effect (and
+    (when (and (at_13_15) (valid)) (at_13_16))
+    (when (and (at_13_15) (valid)) (not (at_13_15)))
+    (when (not (and (at_13_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_16_12_16
+  :effect (and
+    (when (and (at_13_16) (valid)) (at_12_16))
+    (when (and (at_13_16) (valid)) (not (at_13_16)))
+    (when (not (and (at_13_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_16_14_16
+  :effect (and
+    (when (and (at_13_16) (valid)) (at_14_16))
+    (when (and (at_13_16) (valid)) (not (at_13_16)))
+    (when (not (and (at_13_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_16_13_15
+  :effect (and
+    (when (and (at_13_16) (valid)) (at_13_15))
+    (when (and (at_13_16) (valid)) (not (at_13_16)))
+    (when (not (and (at_13_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_16_13_17
+  :effect (and
+    (when (and (at_13_16) (valid)) (at_13_17))
+    (when (and (at_13_16) (valid)) (not (at_13_16)))
+    (when (not (and (at_13_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_17_12_17
+  :effect (and
+    (when (and (at_13_17) (valid)) (at_12_17))
+    (when (and (at_13_17) (valid)) (not (at_13_17)))
+    (when (not (and (at_13_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_17_14_17
+  :effect (and
+    (when (and (at_13_17) (valid)) (at_14_17))
+    (when (and (at_13_17) (valid)) (not (at_13_17)))
+    (when (not (and (at_13_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_17_13_16
+  :effect (and
+    (when (and (at_13_17) (valid)) (at_13_16))
+    (when (and (at_13_17) (valid)) (not (at_13_17)))
+    (when (not (and (at_13_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_17_13_18
+  :effect (and
+    (when (and (at_13_17) (valid)) (at_13_18))
+    (when (and (at_13_17) (valid)) (not (at_13_17)))
+    (when (not (and (at_13_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_18_12_18
+  :effect (and
+    (when (and (at_13_18) (valid)) (at_12_18))
+    (when (and (at_13_18) (valid)) (not (at_13_18)))
+    (when (not (and (at_13_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_18_14_18
+  :effect (and
+    (when (and (at_13_18) (valid)) (at_14_18))
+    (when (and (at_13_18) (valid)) (not (at_13_18)))
+    (when (not (and (at_13_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_18_13_17
+  :effect (and
+    (when (and (at_13_18) (valid)) (at_13_17))
+    (when (and (at_13_18) (valid)) (not (at_13_18)))
+    (when (not (and (at_13_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_18_13_19
+  :effect (and
+    (when (and (at_13_18) (valid)) (at_13_19))
+    (when (and (at_13_18) (valid)) (not (at_13_18)))
+    (when (not (and (at_13_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_19_12_19
+  :effect (and
+    (when (and (at_13_19) (valid)) (at_12_19))
+    (when (and (at_13_19) (valid)) (not (at_13_19)))
+    (when (not (and (at_13_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_19_14_19
+  :effect (and
+    (when (and (at_13_19) (valid)) (at_14_19))
+    (when (and (at_13_19) (valid)) (not (at_13_19)))
+    (when (not (and (at_13_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_19_13_18
+  :effect (and
+    (when (and (at_13_19) (valid)) (at_13_18))
+    (when (and (at_13_19) (valid)) (not (at_13_19)))
+    (when (not (and (at_13_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_19_13_20
+  :effect (and
+    (when (and (at_13_19) (valid)) (at_13_20))
+    (when (and (at_13_19) (valid)) (not (at_13_19)))
+    (when (not (and (at_13_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_20_12_20
+  :effect (and
+    (when (and (at_13_20) (valid)) (at_12_20))
+    (when (and (at_13_20) (valid)) (not (at_13_20)))
+    (when (not (and (at_13_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_20_14_20
+  :effect (and
+    (when (and (at_13_20) (valid)) (at_14_20))
+    (when (and (at_13_20) (valid)) (not (at_13_20)))
+    (when (not (and (at_13_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_20_13_19
+  :effect (and
+    (when (and (at_13_20) (valid)) (at_13_19))
+    (when (and (at_13_20) (valid)) (not (at_13_20)))
+    (when (not (and (at_13_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_20_13_21
+  :effect (and
+    (when (and (at_13_20) (valid)) (at_13_21))
+    (when (and (at_13_20) (valid)) (not (at_13_20)))
+    (when (not (and (at_13_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_21_12_21
+  :effect (and
+    (when (and (at_13_21) (valid)) (at_12_21))
+    (when (and (at_13_21) (valid)) (not (at_13_21)))
+    (when (not (and (at_13_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_21_14_21
+  :effect (and
+    (when (and (at_13_21) (valid)) (at_14_21))
+    (when (and (at_13_21) (valid)) (not (at_13_21)))
+    (when (not (and (at_13_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_21_13_20
+  :effect (and
+    (when (and (at_13_21) (valid)) (at_13_20))
+    (when (and (at_13_21) (valid)) (not (at_13_21)))
+    (when (not (and (at_13_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_21_13_22
+  :effect (and
+    (when (and (at_13_21) (valid)) (at_13_22))
+    (when (and (at_13_21) (valid)) (not (at_13_21)))
+    (when (not (and (at_13_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_22_12_22
+  :effect (and
+    (when (and (at_13_22) (valid)) (at_12_22))
+    (when (and (at_13_22) (valid)) (not (at_13_22)))
+    (when (not (and (at_13_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_22_14_22
+  :effect (and
+    (when (and (at_13_22) (valid)) (at_14_22))
+    (when (and (at_13_22) (valid)) (not (at_13_22)))
+    (when (not (and (at_13_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_22_13_21
+  :effect (and
+    (when (and (at_13_22) (valid)) (at_13_21))
+    (when (and (at_13_22) (valid)) (not (at_13_22)))
+    (when (not (and (at_13_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_22_13_23
+  :effect (and
+    (when (and (at_13_22) (valid)) (at_13_23))
+    (when (and (at_13_22) (valid)) (not (at_13_22)))
+    (when (not (and (at_13_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_23_12_23
+  :effect (and
+    (when (and (at_13_23) (valid)) (at_12_23))
+    (when (and (at_13_23) (valid)) (not (at_13_23)))
+    (when (not (and (at_13_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_23_14_23
+  :effect (and
+    (when (and (at_13_23) (valid)) (at_14_23))
+    (when (and (at_13_23) (valid)) (not (at_13_23)))
+    (when (not (and (at_13_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_23_13_22
+  :effect (and
+    (when (and (at_13_23) (valid)) (at_13_22))
+    (when (and (at_13_23) (valid)) (not (at_13_23)))
+    (when (not (and (at_13_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_23_13_24
+  :effect (and
+    (when (and (at_13_23) (valid)) (at_13_24))
+    (when (and (at_13_23) (valid)) (not (at_13_23)))
+    (when (not (and (at_13_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_24_12_24
+  :effect (and
+    (when (and (at_13_24) (valid)) (at_12_24))
+    (when (and (at_13_24) (valid)) (not (at_13_24)))
+    (when (not (and (at_13_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_24_14_24
+  :effect (and
+    (when (and (at_13_24) (valid)) (at_14_24))
+    (when (and (at_13_24) (valid)) (not (at_13_24)))
+    (when (not (and (at_13_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_24_13_23
+  :effect (and
+    (when (and (at_13_24) (valid)) (at_13_23))
+    (when (and (at_13_24) (valid)) (not (at_13_24)))
+    (when (not (and (at_13_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_24_13_25
+  :effect (and
+    (when (and (at_13_24) (valid)) (at_13_25))
+    (when (and (at_13_24) (valid)) (not (at_13_24)))
+    (when (not (and (at_13_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_25_12_25
+  :effect (and
+    (when (and (at_13_25) (valid)) (at_12_25))
+    (when (and (at_13_25) (valid)) (not (at_13_25)))
+    (when (not (and (at_13_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_25_14_25
+  :effect (and
+    (when (and (at_13_25) (valid)) (at_14_25))
+    (when (and (at_13_25) (valid)) (not (at_13_25)))
+    (when (not (and (at_13_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_25_13_24
+  :effect (and
+    (when (and (at_13_25) (valid)) (at_13_24))
+    (when (and (at_13_25) (valid)) (not (at_13_25)))
+    (when (not (and (at_13_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_25_13_26
+  :effect (and
+    (when (and (at_13_25) (valid)) (at_13_26))
+    (when (and (at_13_25) (valid)) (not (at_13_25)))
+    (when (not (and (at_13_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_26_12_26
+  :effect (and
+    (when (and (at_13_26) (valid)) (at_12_26))
+    (when (and (at_13_26) (valid)) (not (at_13_26)))
+    (when (not (and (at_13_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_26_14_26
+  :effect (and
+    (when (and (at_13_26) (valid)) (at_14_26))
+    (when (and (at_13_26) (valid)) (not (at_13_26)))
+    (when (not (and (at_13_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_26_13_25
+  :effect (and
+    (when (and (at_13_26) (valid)) (at_13_25))
+    (when (and (at_13_26) (valid)) (not (at_13_26)))
+    (when (not (and (at_13_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_26_13_27
+  :effect (and
+    (when (and (at_13_26) (valid)) (at_13_27))
+    (when (and (at_13_26) (valid)) (not (at_13_26)))
+    (when (not (and (at_13_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_27_12_27
+  :effect (and
+    (when (and (at_13_27) (valid)) (at_12_27))
+    (when (and (at_13_27) (valid)) (not (at_13_27)))
+    (when (not (and (at_13_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_27_14_27
+  :effect (and
+    (when (and (at_13_27) (valid)) (at_14_27))
+    (when (and (at_13_27) (valid)) (not (at_13_27)))
+    (when (not (and (at_13_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_27_13_26
+  :effect (and
+    (when (and (at_13_27) (valid)) (at_13_26))
+    (when (and (at_13_27) (valid)) (not (at_13_27)))
+    (when (not (and (at_13_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_27_13_28
+  :effect (and
+    (when (and (at_13_27) (valid)) (at_13_28))
+    (when (and (at_13_27) (valid)) (not (at_13_27)))
+    (when (not (and (at_13_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_28_12_28
+  :effect (and
+    (when (and (at_13_28) (valid)) (at_12_28))
+    (when (and (at_13_28) (valid)) (not (at_13_28)))
+    (when (not (and (at_13_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_28_14_28
+  :effect (and
+    (when (and (at_13_28) (valid)) (at_14_28))
+    (when (and (at_13_28) (valid)) (not (at_13_28)))
+    (when (not (and (at_13_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_28_13_27
+  :effect (and
+    (when (and (at_13_28) (valid)) (at_13_27))
+    (when (and (at_13_28) (valid)) (not (at_13_28)))
+    (when (not (and (at_13_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_28_13_29
+  :effect (and
+    (when (and (at_13_28) (valid)) (at_13_29))
+    (when (and (at_13_28) (valid)) (not (at_13_28)))
+    (when (not (and (at_13_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_29_12_29
+  :effect (and
+    (when (and (at_13_29) (valid)) (at_12_29))
+    (when (and (at_13_29) (valid)) (not (at_13_29)))
+    (when (not (and (at_13_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_29_14_29
+  :effect (and
+    (when (and (at_13_29) (valid)) (at_14_29))
+    (when (and (at_13_29) (valid)) (not (at_13_29)))
+    (when (not (and (at_13_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_29_13_28
+  :effect (and
+    (when (and (at_13_29) (valid)) (at_13_28))
+    (when (and (at_13_29) (valid)) (not (at_13_29)))
+    (when (not (and (at_13_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_29_13_30
+  :effect (and
+    (when (and (at_13_29) (valid)) (at_13_30))
+    (when (and (at_13_29) (valid)) (not (at_13_29)))
+    (when (not (and (at_13_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_30_12_30
+  :effect (and
+    (when (and (at_13_30) (valid)) (at_12_30))
+    (when (and (at_13_30) (valid)) (not (at_13_30)))
+    (when (not (and (at_13_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_30_14_30
+  :effect (and
+    (when (and (at_13_30) (valid)) (at_14_30))
+    (when (and (at_13_30) (valid)) (not (at_13_30)))
+    (when (not (and (at_13_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_30_13_29
+  :effect (and
+    (when (and (at_13_30) (valid)) (at_13_29))
+    (when (and (at_13_30) (valid)) (not (at_13_30)))
+    (when (not (and (at_13_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_30_13_31
+  :effect (and
+    (when (and (at_13_30) (valid)) (at_13_31))
+    (when (and (at_13_30) (valid)) (not (at_13_30)))
+    (when (not (and (at_13_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_31_12_31
+  :effect (and
+    (when (and (at_13_31) (valid)) (at_12_31))
+    (when (and (at_13_31) (valid)) (not (at_13_31)))
+    (when (not (and (at_13_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_31_14_31
+  :effect (and
+    (when (and (at_13_31) (valid)) (at_14_31))
+    (when (and (at_13_31) (valid)) (not (at_13_31)))
+    (when (not (and (at_13_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_13_31_13_30
+  :effect (and
+    (when (and (at_13_31) (valid)) (at_13_30))
+    (when (and (at_13_31) (valid)) (not (at_13_31)))
+    (when (not (and (at_13_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_0_13_0
+  :effect (and
+    (when (and (at_14_0) (valid)) (at_13_0))
+    (when (and (at_14_0) (valid)) (not (at_14_0)))
+    (when (not (and (at_14_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_0_15_0
+  :effect (and
+    (when (and (at_14_0) (valid)) (at_15_0))
+    (when (and (at_14_0) (valid)) (not (at_14_0)))
+    (when (not (and (at_14_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_0_14_1
+  :effect (and
+    (when (and (at_14_0) (valid)) (at_14_1))
+    (when (and (at_14_0) (valid)) (not (at_14_0)))
+    (when (not (and (at_14_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_1_13_1
+  :effect (and
+    (when (and (at_14_1) (valid)) (at_13_1))
+    (when (and (at_14_1) (valid)) (not (at_14_1)))
+    (when (not (and (at_14_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_1_15_1
+  :effect (and
+    (when (and (at_14_1) (valid)) (at_15_1))
+    (when (and (at_14_1) (valid)) (not (at_14_1)))
+    (when (not (and (at_14_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_1_14_0
+  :effect (and
+    (when (and (at_14_1) (valid)) (at_14_0))
+    (when (and (at_14_1) (valid)) (not (at_14_1)))
+    (when (not (and (at_14_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_1_14_2
+  :effect (and
+    (when (and (at_14_1) (valid)) (at_14_2))
+    (when (and (at_14_1) (valid)) (not (at_14_1)))
+    (when (not (and (at_14_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_2_13_2
+  :effect (and
+    (when (and (at_14_2) (valid)) (at_13_2))
+    (when (and (at_14_2) (valid)) (not (at_14_2)))
+    (when (not (and (at_14_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_2_15_2
+  :effect (and
+    (when (and (at_14_2) (valid)) (at_15_2))
+    (when (and (at_14_2) (valid)) (not (at_14_2)))
+    (when (not (and (at_14_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_2_14_1
+  :effect (and
+    (when (and (at_14_2) (valid)) (at_14_1))
+    (when (and (at_14_2) (valid)) (not (at_14_2)))
+    (when (not (and (at_14_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_2_14_3
+  :effect (and
+    (when (and (at_14_2) (valid)) (at_14_3))
+    (when (and (at_14_2) (valid)) (not (at_14_2)))
+    (when (not (and (at_14_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_3_13_3
+  :effect (and
+    (when (and (at_14_3) (valid)) (at_13_3))
+    (when (and (at_14_3) (valid)) (not (at_14_3)))
+    (when (not (and (at_14_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_3_15_3
+  :effect (and
+    (when (and (at_14_3) (valid)) (at_15_3))
+    (when (and (at_14_3) (valid)) (not (at_14_3)))
+    (when (not (and (at_14_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_3_14_2
+  :effect (and
+    (when (and (at_14_3) (valid)) (at_14_2))
+    (when (and (at_14_3) (valid)) (not (at_14_3)))
+    (when (not (and (at_14_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_3_14_4
+  :effect (and
+    (when (and (at_14_3) (valid)) (at_14_4))
+    (when (and (at_14_3) (valid)) (not (at_14_3)))
+    (when (not (and (at_14_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_4_13_4
+  :effect (and
+    (when (and (at_14_4) (valid)) (at_13_4))
+    (when (and (at_14_4) (valid)) (not (at_14_4)))
+    (when (not (and (at_14_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_4_15_4
+  :effect (and
+    (when (and (at_14_4) (valid)) (at_15_4))
+    (when (and (at_14_4) (valid)) (not (at_14_4)))
+    (when (not (and (at_14_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_4_14_3
+  :effect (and
+    (when (and (at_14_4) (valid)) (at_14_3))
+    (when (and (at_14_4) (valid)) (not (at_14_4)))
+    (when (not (and (at_14_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_4_14_5
+  :effect (and
+    (when (and (at_14_4) (valid)) (at_14_5))
+    (when (and (at_14_4) (valid)) (not (at_14_4)))
+    (when (not (and (at_14_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_5_13_5
+  :effect (and
+    (when (and (at_14_5) (valid)) (at_13_5))
+    (when (and (at_14_5) (valid)) (not (at_14_5)))
+    (when (not (and (at_14_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_5_15_5
+  :effect (and
+    (when (and (at_14_5) (valid)) (at_15_5))
+    (when (and (at_14_5) (valid)) (not (at_14_5)))
+    (when (not (and (at_14_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_5_14_4
+  :effect (and
+    (when (and (at_14_5) (valid)) (at_14_4))
+    (when (and (at_14_5) (valid)) (not (at_14_5)))
+    (when (not (and (at_14_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_5_14_6
+  :effect (and
+    (when (and (at_14_5) (valid)) (at_14_6))
+    (when (and (at_14_5) (valid)) (not (at_14_5)))
+    (when (not (and (at_14_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_6_13_6
+  :effect (and
+    (when (and (at_14_6) (valid)) (at_13_6))
+    (when (and (at_14_6) (valid)) (not (at_14_6)))
+    (when (not (and (at_14_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_6_15_6
+  :effect (and
+    (when (and (at_14_6) (valid)) (at_15_6))
+    (when (and (at_14_6) (valid)) (not (at_14_6)))
+    (when (not (and (at_14_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_6_14_5
+  :effect (and
+    (when (and (at_14_6) (valid)) (at_14_5))
+    (when (and (at_14_6) (valid)) (not (at_14_6)))
+    (when (not (and (at_14_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_6_14_7
+  :effect (and
+    (when (and (at_14_6) (valid)) (at_14_7))
+    (when (and (at_14_6) (valid)) (not (at_14_6)))
+    (when (not (and (at_14_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_7_13_7
+  :effect (and
+    (when (and (at_14_7) (valid)) (at_13_7))
+    (when (and (at_14_7) (valid)) (not (at_14_7)))
+    (when (not (and (at_14_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_7_15_7
+  :effect (and
+    (when (and (at_14_7) (valid)) (at_15_7))
+    (when (and (at_14_7) (valid)) (not (at_14_7)))
+    (when (not (and (at_14_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_7_14_6
+  :effect (and
+    (when (and (at_14_7) (valid)) (at_14_6))
+    (when (and (at_14_7) (valid)) (not (at_14_7)))
+    (when (not (and (at_14_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_7_14_8
+  :effect (and
+    (when (and (at_14_7) (valid)) (at_14_8))
+    (when (and (at_14_7) (valid)) (not (at_14_7)))
+    (when (not (and (at_14_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_8_13_8
+  :effect (and
+    (when (and (at_14_8) (valid)) (at_13_8))
+    (when (and (at_14_8) (valid)) (not (at_14_8)))
+    (when (not (and (at_14_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_8_15_8
+  :effect (and
+    (when (and (at_14_8) (valid)) (at_15_8))
+    (when (and (at_14_8) (valid)) (not (at_14_8)))
+    (when (not (and (at_14_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_8_14_7
+  :effect (and
+    (when (and (at_14_8) (valid)) (at_14_7))
+    (when (and (at_14_8) (valid)) (not (at_14_8)))
+    (when (not (and (at_14_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_8_14_9
+  :effect (and
+    (when (and (at_14_8) (valid)) (at_14_9))
+    (when (and (at_14_8) (valid)) (not (at_14_8)))
+    (when (not (and (at_14_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_9_13_9
+  :effect (and
+    (when (and (at_14_9) (valid)) (at_13_9))
+    (when (and (at_14_9) (valid)) (not (at_14_9)))
+    (when (not (and (at_14_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_9_15_9
+  :effect (and
+    (when (and (at_14_9) (valid)) (at_15_9))
+    (when (and (at_14_9) (valid)) (not (at_14_9)))
+    (when (not (and (at_14_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_9_14_8
+  :effect (and
+    (when (and (at_14_9) (valid)) (at_14_8))
+    (when (and (at_14_9) (valid)) (not (at_14_9)))
+    (when (not (and (at_14_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_9_14_10
+  :effect (and
+    (when (and (at_14_9) (valid)) (at_14_10))
+    (when (and (at_14_9) (valid)) (not (at_14_9)))
+    (when (not (and (at_14_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_10_13_10
+  :effect (and
+    (when (and (at_14_10) (valid)) (at_13_10))
+    (when (and (at_14_10) (valid)) (not (at_14_10)))
+    (when (not (and (at_14_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_10_15_10
+  :effect (and
+    (when (and (at_14_10) (valid)) (at_15_10))
+    (when (and (at_14_10) (valid)) (not (at_14_10)))
+    (when (not (and (at_14_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_10_14_9
+  :effect (and
+    (when (and (at_14_10) (valid)) (at_14_9))
+    (when (and (at_14_10) (valid)) (not (at_14_10)))
+    (when (not (and (at_14_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_10_14_11
+  :effect (and
+    (when (and (at_14_10) (valid)) (at_14_11))
+    (when (and (at_14_10) (valid)) (not (at_14_10)))
+    (when (not (and (at_14_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_11_13_11
+  :effect (and
+    (when (and (at_14_11) (valid)) (at_13_11))
+    (when (and (at_14_11) (valid)) (not (at_14_11)))
+    (when (not (and (at_14_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_11_15_11
+  :effect (and
+    (when (and (at_14_11) (valid)) (at_15_11))
+    (when (and (at_14_11) (valid)) (not (at_14_11)))
+    (when (not (and (at_14_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_11_14_10
+  :effect (and
+    (when (and (at_14_11) (valid)) (at_14_10))
+    (when (and (at_14_11) (valid)) (not (at_14_11)))
+    (when (not (and (at_14_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_11_14_12
+  :effect (and
+    (when (and (at_14_11) (valid)) (at_14_12))
+    (when (and (at_14_11) (valid)) (not (at_14_11)))
+    (when (not (and (at_14_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_12_13_12
+  :effect (and
+    (when (and (at_14_12) (valid)) (at_13_12))
+    (when (and (at_14_12) (valid)) (not (at_14_12)))
+    (when (not (and (at_14_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_12_15_12
+  :effect (and
+    (when (and (at_14_12) (valid)) (at_15_12))
+    (when (and (at_14_12) (valid)) (not (at_14_12)))
+    (when (not (and (at_14_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_12_14_11
+  :effect (and
+    (when (and (at_14_12) (valid)) (at_14_11))
+    (when (and (at_14_12) (valid)) (not (at_14_12)))
+    (when (not (and (at_14_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_12_14_13
+  :effect (and
+    (when (and (at_14_12) (valid)) (at_14_13))
+    (when (and (at_14_12) (valid)) (not (at_14_12)))
+    (when (not (and (at_14_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_13_13_13
+  :effect (and
+    (when (and (at_14_13) (valid)) (at_13_13))
+    (when (and (at_14_13) (valid)) (not (at_14_13)))
+    (when (not (and (at_14_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_13_15_13
+  :effect (and
+    (when (and (at_14_13) (valid)) (at_15_13))
+    (when (and (at_14_13) (valid)) (not (at_14_13)))
+    (when (not (and (at_14_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_13_14_12
+  :effect (and
+    (when (and (at_14_13) (valid)) (at_14_12))
+    (when (and (at_14_13) (valid)) (not (at_14_13)))
+    (when (not (and (at_14_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_13_14_14
+  :effect (and
+    (when (and (at_14_13) (valid)) (at_14_14))
+    (when (and (at_14_13) (valid)) (not (at_14_13)))
+    (when (not (and (at_14_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_14_13_14
+  :effect (and
+    (when (and (at_14_14) (valid)) (at_13_14))
+    (when (and (at_14_14) (valid)) (not (at_14_14)))
+    (when (not (and (at_14_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_14_15_14
+  :effect (and
+    (when (and (at_14_14) (valid)) (at_15_14))
+    (when (and (at_14_14) (valid)) (not (at_14_14)))
+    (when (not (and (at_14_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_14_14_13
+  :effect (and
+    (when (and (at_14_14) (valid)) (at_14_13))
+    (when (and (at_14_14) (valid)) (not (at_14_14)))
+    (when (not (and (at_14_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_14_14_15
+  :effect (and
+    (when (and (at_14_14) (valid)) (at_14_15))
+    (when (and (at_14_14) (valid)) (not (at_14_14)))
+    (when (not (and (at_14_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_15_13_15
+  :effect (and
+    (when (and (at_14_15) (valid)) (at_13_15))
+    (when (and (at_14_15) (valid)) (not (at_14_15)))
+    (when (not (and (at_14_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_15_15_15
+  :effect (and
+    (when (and (at_14_15) (valid)) (at_15_15))
+    (when (and (at_14_15) (valid)) (not (at_14_15)))
+    (when (not (and (at_14_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_15_14_14
+  :effect (and
+    (when (and (at_14_15) (valid)) (at_14_14))
+    (when (and (at_14_15) (valid)) (not (at_14_15)))
+    (when (not (and (at_14_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_15_14_16
+  :effect (and
+    (when (and (at_14_15) (valid)) (at_14_16))
+    (when (and (at_14_15) (valid)) (not (at_14_15)))
+    (when (not (and (at_14_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_16_13_16
+  :effect (and
+    (when (and (at_14_16) (valid)) (at_13_16))
+    (when (and (at_14_16) (valid)) (not (at_14_16)))
+    (when (not (and (at_14_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_16_15_16
+  :effect (and
+    (when (and (at_14_16) (valid)) (at_15_16))
+    (when (and (at_14_16) (valid)) (not (at_14_16)))
+    (when (not (and (at_14_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_16_14_15
+  :effect (and
+    (when (and (at_14_16) (valid)) (at_14_15))
+    (when (and (at_14_16) (valid)) (not (at_14_16)))
+    (when (not (and (at_14_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_16_14_17
+  :effect (and
+    (when (and (at_14_16) (valid)) (at_14_17))
+    (when (and (at_14_16) (valid)) (not (at_14_16)))
+    (when (not (and (at_14_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_17_13_17
+  :effect (and
+    (when (and (at_14_17) (valid)) (at_13_17))
+    (when (and (at_14_17) (valid)) (not (at_14_17)))
+    (when (not (and (at_14_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_17_15_17
+  :effect (and
+    (when (and (at_14_17) (valid)) (at_15_17))
+    (when (and (at_14_17) (valid)) (not (at_14_17)))
+    (when (not (and (at_14_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_17_14_16
+  :effect (and
+    (when (and (at_14_17) (valid)) (at_14_16))
+    (when (and (at_14_17) (valid)) (not (at_14_17)))
+    (when (not (and (at_14_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_17_14_18
+  :effect (and
+    (when (and (at_14_17) (valid)) (at_14_18))
+    (when (and (at_14_17) (valid)) (not (at_14_17)))
+    (when (not (and (at_14_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_18_13_18
+  :effect (and
+    (when (and (at_14_18) (valid)) (at_13_18))
+    (when (and (at_14_18) (valid)) (not (at_14_18)))
+    (when (not (and (at_14_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_18_15_18
+  :effect (and
+    (when (and (at_14_18) (valid)) (at_15_18))
+    (when (and (at_14_18) (valid)) (not (at_14_18)))
+    (when (not (and (at_14_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_18_14_17
+  :effect (and
+    (when (and (at_14_18) (valid)) (at_14_17))
+    (when (and (at_14_18) (valid)) (not (at_14_18)))
+    (when (not (and (at_14_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_18_14_19
+  :effect (and
+    (when (and (at_14_18) (valid)) (at_14_19))
+    (when (and (at_14_18) (valid)) (not (at_14_18)))
+    (when (not (and (at_14_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_19_13_19
+  :effect (and
+    (when (and (at_14_19) (valid)) (at_13_19))
+    (when (and (at_14_19) (valid)) (not (at_14_19)))
+    (when (not (and (at_14_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_19_15_19
+  :effect (and
+    (when (and (at_14_19) (valid)) (at_15_19))
+    (when (and (at_14_19) (valid)) (not (at_14_19)))
+    (when (not (and (at_14_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_19_14_18
+  :effect (and
+    (when (and (at_14_19) (valid)) (at_14_18))
+    (when (and (at_14_19) (valid)) (not (at_14_19)))
+    (when (not (and (at_14_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_19_14_20
+  :effect (and
+    (when (and (at_14_19) (valid)) (at_14_20))
+    (when (and (at_14_19) (valid)) (not (at_14_19)))
+    (when (not (and (at_14_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_20_13_20
+  :effect (and
+    (when (and (at_14_20) (valid)) (at_13_20))
+    (when (and (at_14_20) (valid)) (not (at_14_20)))
+    (when (not (and (at_14_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_20_15_20
+  :effect (and
+    (when (and (at_14_20) (valid)) (at_15_20))
+    (when (and (at_14_20) (valid)) (not (at_14_20)))
+    (when (not (and (at_14_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_20_14_19
+  :effect (and
+    (when (and (at_14_20) (valid)) (at_14_19))
+    (when (and (at_14_20) (valid)) (not (at_14_20)))
+    (when (not (and (at_14_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_20_14_21
+  :effect (and
+    (when (and (at_14_20) (valid)) (at_14_21))
+    (when (and (at_14_20) (valid)) (not (at_14_20)))
+    (when (not (and (at_14_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_21_13_21
+  :effect (and
+    (when (and (at_14_21) (valid)) (at_13_21))
+    (when (and (at_14_21) (valid)) (not (at_14_21)))
+    (when (not (and (at_14_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_21_15_21
+  :effect (and
+    (when (and (at_14_21) (valid)) (at_15_21))
+    (when (and (at_14_21) (valid)) (not (at_14_21)))
+    (when (not (and (at_14_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_21_14_20
+  :effect (and
+    (when (and (at_14_21) (valid)) (at_14_20))
+    (when (and (at_14_21) (valid)) (not (at_14_21)))
+    (when (not (and (at_14_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_21_14_22
+  :effect (and
+    (when (and (at_14_21) (valid)) (at_14_22))
+    (when (and (at_14_21) (valid)) (not (at_14_21)))
+    (when (not (and (at_14_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_22_13_22
+  :effect (and
+    (when (and (at_14_22) (valid)) (at_13_22))
+    (when (and (at_14_22) (valid)) (not (at_14_22)))
+    (when (not (and (at_14_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_22_15_22
+  :effect (and
+    (when (and (at_14_22) (valid)) (at_15_22))
+    (when (and (at_14_22) (valid)) (not (at_14_22)))
+    (when (not (and (at_14_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_22_14_21
+  :effect (and
+    (when (and (at_14_22) (valid)) (at_14_21))
+    (when (and (at_14_22) (valid)) (not (at_14_22)))
+    (when (not (and (at_14_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_22_14_23
+  :effect (and
+    (when (and (at_14_22) (valid)) (at_14_23))
+    (when (and (at_14_22) (valid)) (not (at_14_22)))
+    (when (not (and (at_14_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_23_13_23
+  :effect (and
+    (when (and (at_14_23) (valid)) (at_13_23))
+    (when (and (at_14_23) (valid)) (not (at_14_23)))
+    (when (not (and (at_14_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_23_15_23
+  :effect (and
+    (when (and (at_14_23) (valid)) (at_15_23))
+    (when (and (at_14_23) (valid)) (not (at_14_23)))
+    (when (not (and (at_14_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_23_14_22
+  :effect (and
+    (when (and (at_14_23) (valid)) (at_14_22))
+    (when (and (at_14_23) (valid)) (not (at_14_23)))
+    (when (not (and (at_14_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_23_14_24
+  :effect (and
+    (when (and (at_14_23) (valid)) (at_14_24))
+    (when (and (at_14_23) (valid)) (not (at_14_23)))
+    (when (not (and (at_14_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_24_13_24
+  :effect (and
+    (when (and (at_14_24) (valid)) (at_13_24))
+    (when (and (at_14_24) (valid)) (not (at_14_24)))
+    (when (not (and (at_14_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_24_15_24
+  :effect (and
+    (when (and (at_14_24) (valid)) (at_15_24))
+    (when (and (at_14_24) (valid)) (not (at_14_24)))
+    (when (not (and (at_14_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_24_14_23
+  :effect (and
+    (when (and (at_14_24) (valid)) (at_14_23))
+    (when (and (at_14_24) (valid)) (not (at_14_24)))
+    (when (not (and (at_14_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_24_14_25
+  :effect (and
+    (when (and (at_14_24) (valid)) (at_14_25))
+    (when (and (at_14_24) (valid)) (not (at_14_24)))
+    (when (not (and (at_14_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_25_13_25
+  :effect (and
+    (when (and (at_14_25) (valid)) (at_13_25))
+    (when (and (at_14_25) (valid)) (not (at_14_25)))
+    (when (not (and (at_14_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_25_15_25
+  :effect (and
+    (when (and (at_14_25) (valid)) (at_15_25))
+    (when (and (at_14_25) (valid)) (not (at_14_25)))
+    (when (not (and (at_14_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_25_14_24
+  :effect (and
+    (when (and (at_14_25) (valid)) (at_14_24))
+    (when (and (at_14_25) (valid)) (not (at_14_25)))
+    (when (not (and (at_14_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_25_14_26
+  :effect (and
+    (when (and (at_14_25) (valid)) (at_14_26))
+    (when (and (at_14_25) (valid)) (not (at_14_25)))
+    (when (not (and (at_14_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_26_13_26
+  :effect (and
+    (when (and (at_14_26) (valid)) (at_13_26))
+    (when (and (at_14_26) (valid)) (not (at_14_26)))
+    (when (not (and (at_14_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_26_15_26
+  :effect (and
+    (when (and (at_14_26) (valid)) (at_15_26))
+    (when (and (at_14_26) (valid)) (not (at_14_26)))
+    (when (not (and (at_14_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_26_14_25
+  :effect (and
+    (when (and (at_14_26) (valid)) (at_14_25))
+    (when (and (at_14_26) (valid)) (not (at_14_26)))
+    (when (not (and (at_14_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_26_14_27
+  :effect (and
+    (when (and (at_14_26) (valid)) (at_14_27))
+    (when (and (at_14_26) (valid)) (not (at_14_26)))
+    (when (not (and (at_14_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_27_13_27
+  :effect (and
+    (when (and (at_14_27) (valid)) (at_13_27))
+    (when (and (at_14_27) (valid)) (not (at_14_27)))
+    (when (not (and (at_14_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_27_15_27
+  :effect (and
+    (when (and (at_14_27) (valid)) (at_15_27))
+    (when (and (at_14_27) (valid)) (not (at_14_27)))
+    (when (not (and (at_14_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_27_14_26
+  :effect (and
+    (when (and (at_14_27) (valid)) (at_14_26))
+    (when (and (at_14_27) (valid)) (not (at_14_27)))
+    (when (not (and (at_14_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_27_14_28
+  :effect (and
+    (when (and (at_14_27) (valid)) (at_14_28))
+    (when (and (at_14_27) (valid)) (not (at_14_27)))
+    (when (not (and (at_14_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_28_13_28
+  :effect (and
+    (when (and (at_14_28) (valid)) (at_13_28))
+    (when (and (at_14_28) (valid)) (not (at_14_28)))
+    (when (not (and (at_14_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_28_15_28
+  :effect (and
+    (when (and (at_14_28) (valid)) (at_15_28))
+    (when (and (at_14_28) (valid)) (not (at_14_28)))
+    (when (not (and (at_14_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_28_14_27
+  :effect (and
+    (when (and (at_14_28) (valid)) (at_14_27))
+    (when (and (at_14_28) (valid)) (not (at_14_28)))
+    (when (not (and (at_14_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_28_14_29
+  :effect (and
+    (when (and (at_14_28) (valid)) (at_14_29))
+    (when (and (at_14_28) (valid)) (not (at_14_28)))
+    (when (not (and (at_14_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_29_13_29
+  :effect (and
+    (when (and (at_14_29) (valid)) (at_13_29))
+    (when (and (at_14_29) (valid)) (not (at_14_29)))
+    (when (not (and (at_14_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_29_15_29
+  :effect (and
+    (when (and (at_14_29) (valid)) (at_15_29))
+    (when (and (at_14_29) (valid)) (not (at_14_29)))
+    (when (not (and (at_14_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_29_14_28
+  :effect (and
+    (when (and (at_14_29) (valid)) (at_14_28))
+    (when (and (at_14_29) (valid)) (not (at_14_29)))
+    (when (not (and (at_14_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_29_14_30
+  :effect (and
+    (when (and (at_14_29) (valid)) (at_14_30))
+    (when (and (at_14_29) (valid)) (not (at_14_29)))
+    (when (not (and (at_14_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_30_13_30
+  :effect (and
+    (when (and (at_14_30) (valid)) (at_13_30))
+    (when (and (at_14_30) (valid)) (not (at_14_30)))
+    (when (not (and (at_14_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_30_15_30
+  :effect (and
+    (when (and (at_14_30) (valid)) (at_15_30))
+    (when (and (at_14_30) (valid)) (not (at_14_30)))
+    (when (not (and (at_14_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_30_14_29
+  :effect (and
+    (when (and (at_14_30) (valid)) (at_14_29))
+    (when (and (at_14_30) (valid)) (not (at_14_30)))
+    (when (not (and (at_14_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_30_14_31
+  :effect (and
+    (when (and (at_14_30) (valid)) (at_14_31))
+    (when (and (at_14_30) (valid)) (not (at_14_30)))
+    (when (not (and (at_14_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_31_13_31
+  :effect (and
+    (when (and (at_14_31) (valid)) (at_13_31))
+    (when (and (at_14_31) (valid)) (not (at_14_31)))
+    (when (not (and (at_14_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_31_15_31
+  :effect (and
+    (when (and (at_14_31) (valid)) (at_15_31))
+    (when (and (at_14_31) (valid)) (not (at_14_31)))
+    (when (not (and (at_14_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_14_31_14_30
+  :effect (and
+    (when (and (at_14_31) (valid)) (at_14_30))
+    (when (and (at_14_31) (valid)) (not (at_14_31)))
+    (when (not (and (at_14_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_0_14_0
+  :effect (and
+    (when (and (at_15_0) (valid)) (at_14_0))
+    (when (and (at_15_0) (valid)) (not (at_15_0)))
+    (when (not (and (at_15_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_0_16_0
+  :effect (and
+    (when (and (at_15_0) (valid)) (at_16_0))
+    (when (and (at_15_0) (valid)) (not (at_15_0)))
+    (when (not (and (at_15_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_0_15_1
+  :effect (and
+    (when (and (at_15_0) (valid)) (at_15_1))
+    (when (and (at_15_0) (valid)) (not (at_15_0)))
+    (when (not (and (at_15_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_1_14_1
+  :effect (and
+    (when (and (at_15_1) (valid)) (at_14_1))
+    (when (and (at_15_1) (valid)) (not (at_15_1)))
+    (when (not (and (at_15_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_1_16_1
+  :effect (and
+    (when (and (at_15_1) (valid)) (at_16_1))
+    (when (and (at_15_1) (valid)) (not (at_15_1)))
+    (when (not (and (at_15_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_1_15_0
+  :effect (and
+    (when (and (at_15_1) (valid)) (at_15_0))
+    (when (and (at_15_1) (valid)) (not (at_15_1)))
+    (when (not (and (at_15_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_1_15_2
+  :effect (and
+    (when (and (at_15_1) (valid)) (at_15_2))
+    (when (and (at_15_1) (valid)) (not (at_15_1)))
+    (when (not (and (at_15_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_2_14_2
+  :effect (and
+    (when (and (at_15_2) (valid)) (at_14_2))
+    (when (and (at_15_2) (valid)) (not (at_15_2)))
+    (when (not (and (at_15_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_2_16_2
+  :effect (and
+    (when (and (at_15_2) (valid)) (at_16_2))
+    (when (and (at_15_2) (valid)) (not (at_15_2)))
+    (when (not (and (at_15_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_2_15_1
+  :effect (and
+    (when (and (at_15_2) (valid)) (at_15_1))
+    (when (and (at_15_2) (valid)) (not (at_15_2)))
+    (when (not (and (at_15_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_2_15_3
+  :effect (and
+    (when (and (at_15_2) (valid)) (at_15_3))
+    (when (and (at_15_2) (valid)) (not (at_15_2)))
+    (when (not (and (at_15_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_3_14_3
+  :effect (and
+    (when (and (at_15_3) (valid)) (at_14_3))
+    (when (and (at_15_3) (valid)) (not (at_15_3)))
+    (when (not (and (at_15_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_3_16_3
+  :effect (and
+    (when (and (at_15_3) (valid)) (at_16_3))
+    (when (and (at_15_3) (valid)) (not (at_15_3)))
+    (when (not (and (at_15_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_3_15_2
+  :effect (and
+    (when (and (at_15_3) (valid)) (at_15_2))
+    (when (and (at_15_3) (valid)) (not (at_15_3)))
+    (when (not (and (at_15_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_3_15_4
+  :effect (and
+    (when (and (at_15_3) (valid)) (at_15_4))
+    (when (and (at_15_3) (valid)) (not (at_15_3)))
+    (when (not (and (at_15_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_4_14_4
+  :effect (and
+    (when (and (at_15_4) (valid)) (at_14_4))
+    (when (and (at_15_4) (valid)) (not (at_15_4)))
+    (when (not (and (at_15_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_4_16_4
+  :effect (and
+    (when (and (at_15_4) (valid)) (at_16_4))
+    (when (and (at_15_4) (valid)) (not (at_15_4)))
+    (when (not (and (at_15_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_4_15_3
+  :effect (and
+    (when (and (at_15_4) (valid)) (at_15_3))
+    (when (and (at_15_4) (valid)) (not (at_15_4)))
+    (when (not (and (at_15_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_4_15_5
+  :effect (and
+    (when (and (at_15_4) (valid)) (at_15_5))
+    (when (and (at_15_4) (valid)) (not (at_15_4)))
+    (when (not (and (at_15_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_5_14_5
+  :effect (and
+    (when (and (at_15_5) (valid)) (at_14_5))
+    (when (and (at_15_5) (valid)) (not (at_15_5)))
+    (when (not (and (at_15_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_5_16_5
+  :effect (and
+    (when (and (at_15_5) (valid)) (at_16_5))
+    (when (and (at_15_5) (valid)) (not (at_15_5)))
+    (when (not (and (at_15_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_5_15_4
+  :effect (and
+    (when (and (at_15_5) (valid)) (at_15_4))
+    (when (and (at_15_5) (valid)) (not (at_15_5)))
+    (when (not (and (at_15_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_5_15_6
+  :effect (and
+    (when (and (at_15_5) (valid)) (at_15_6))
+    (when (and (at_15_5) (valid)) (not (at_15_5)))
+    (when (not (and (at_15_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_6_14_6
+  :effect (and
+    (when (and (at_15_6) (valid)) (at_14_6))
+    (when (and (at_15_6) (valid)) (not (at_15_6)))
+    (when (not (and (at_15_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_6_16_6
+  :effect (and
+    (when (and (at_15_6) (valid)) (at_16_6))
+    (when (and (at_15_6) (valid)) (not (at_15_6)))
+    (when (not (and (at_15_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_6_15_5
+  :effect (and
+    (when (and (at_15_6) (valid)) (at_15_5))
+    (when (and (at_15_6) (valid)) (not (at_15_6)))
+    (when (not (and (at_15_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_6_15_7
+  :effect (and
+    (when (and (at_15_6) (valid)) (at_15_7))
+    (when (and (at_15_6) (valid)) (not (at_15_6)))
+    (when (not (and (at_15_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_7_14_7
+  :effect (and
+    (when (and (at_15_7) (valid)) (at_14_7))
+    (when (and (at_15_7) (valid)) (not (at_15_7)))
+    (when (not (and (at_15_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_7_16_7
+  :effect (and
+    (when (and (at_15_7) (valid)) (at_16_7))
+    (when (and (at_15_7) (valid)) (not (at_15_7)))
+    (when (not (and (at_15_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_7_15_6
+  :effect (and
+    (when (and (at_15_7) (valid)) (at_15_6))
+    (when (and (at_15_7) (valid)) (not (at_15_7)))
+    (when (not (and (at_15_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_7_15_8
+  :effect (and
+    (when (and (at_15_7) (valid)) (at_15_8))
+    (when (and (at_15_7) (valid)) (not (at_15_7)))
+    (when (not (and (at_15_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_8_14_8
+  :effect (and
+    (when (and (at_15_8) (valid)) (at_14_8))
+    (when (and (at_15_8) (valid)) (not (at_15_8)))
+    (when (not (and (at_15_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_8_16_8
+  :effect (and
+    (when (and (at_15_8) (valid)) (at_16_8))
+    (when (and (at_15_8) (valid)) (not (at_15_8)))
+    (when (not (and (at_15_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_8_15_7
+  :effect (and
+    (when (and (at_15_8) (valid)) (at_15_7))
+    (when (and (at_15_8) (valid)) (not (at_15_8)))
+    (when (not (and (at_15_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_8_15_9
+  :effect (and
+    (when (and (at_15_8) (valid)) (at_15_9))
+    (when (and (at_15_8) (valid)) (not (at_15_8)))
+    (when (not (and (at_15_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_9_14_9
+  :effect (and
+    (when (and (at_15_9) (valid)) (at_14_9))
+    (when (and (at_15_9) (valid)) (not (at_15_9)))
+    (when (not (and (at_15_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_9_16_9
+  :effect (and
+    (when (and (at_15_9) (valid)) (at_16_9))
+    (when (and (at_15_9) (valid)) (not (at_15_9)))
+    (when (not (and (at_15_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_9_15_8
+  :effect (and
+    (when (and (at_15_9) (valid)) (at_15_8))
+    (when (and (at_15_9) (valid)) (not (at_15_9)))
+    (when (not (and (at_15_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_9_15_10
+  :effect (and
+    (when (and (at_15_9) (valid)) (at_15_10))
+    (when (and (at_15_9) (valid)) (not (at_15_9)))
+    (when (not (and (at_15_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_10_14_10
+  :effect (and
+    (when (and (at_15_10) (valid)) (at_14_10))
+    (when (and (at_15_10) (valid)) (not (at_15_10)))
+    (when (not (and (at_15_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_10_16_10
+  :effect (and
+    (when (and (at_15_10) (valid)) (at_16_10))
+    (when (and (at_15_10) (valid)) (not (at_15_10)))
+    (when (not (and (at_15_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_10_15_9
+  :effect (and
+    (when (and (at_15_10) (valid)) (at_15_9))
+    (when (and (at_15_10) (valid)) (not (at_15_10)))
+    (when (not (and (at_15_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_10_15_11
+  :effect (and
+    (when (and (at_15_10) (valid)) (at_15_11))
+    (when (and (at_15_10) (valid)) (not (at_15_10)))
+    (when (not (and (at_15_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_11_14_11
+  :effect (and
+    (when (and (at_15_11) (valid)) (at_14_11))
+    (when (and (at_15_11) (valid)) (not (at_15_11)))
+    (when (not (and (at_15_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_11_16_11
+  :effect (and
+    (when (and (at_15_11) (valid)) (at_16_11))
+    (when (and (at_15_11) (valid)) (not (at_15_11)))
+    (when (not (and (at_15_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_11_15_10
+  :effect (and
+    (when (and (at_15_11) (valid)) (at_15_10))
+    (when (and (at_15_11) (valid)) (not (at_15_11)))
+    (when (not (and (at_15_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_11_15_12
+  :effect (and
+    (when (and (at_15_11) (valid)) (at_15_12))
+    (when (and (at_15_11) (valid)) (not (at_15_11)))
+    (when (not (and (at_15_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_12_14_12
+  :effect (and
+    (when (and (at_15_12) (valid)) (at_14_12))
+    (when (and (at_15_12) (valid)) (not (at_15_12)))
+    (when (not (and (at_15_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_12_16_12
+  :effect (and
+    (when (and (at_15_12) (valid)) (at_16_12))
+    (when (and (at_15_12) (valid)) (not (at_15_12)))
+    (when (not (and (at_15_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_12_15_11
+  :effect (and
+    (when (and (at_15_12) (valid)) (at_15_11))
+    (when (and (at_15_12) (valid)) (not (at_15_12)))
+    (when (not (and (at_15_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_12_15_13
+  :effect (and
+    (when (and (at_15_12) (valid)) (at_15_13))
+    (when (and (at_15_12) (valid)) (not (at_15_12)))
+    (when (not (and (at_15_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_13_14_13
+  :effect (and
+    (when (and (at_15_13) (valid)) (at_14_13))
+    (when (and (at_15_13) (valid)) (not (at_15_13)))
+    (when (not (and (at_15_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_13_16_13
+  :effect (and
+    (when (and (at_15_13) (valid)) (at_16_13))
+    (when (and (at_15_13) (valid)) (not (at_15_13)))
+    (when (not (and (at_15_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_13_15_12
+  :effect (and
+    (when (and (at_15_13) (valid)) (at_15_12))
+    (when (and (at_15_13) (valid)) (not (at_15_13)))
+    (when (not (and (at_15_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_13_15_14
+  :effect (and
+    (when (and (at_15_13) (valid)) (at_15_14))
+    (when (and (at_15_13) (valid)) (not (at_15_13)))
+    (when (not (and (at_15_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_14_14_14
+  :effect (and
+    (when (and (at_15_14) (valid)) (at_14_14))
+    (when (and (at_15_14) (valid)) (not (at_15_14)))
+    (when (not (and (at_15_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_14_16_14
+  :effect (and
+    (when (and (at_15_14) (valid)) (at_16_14))
+    (when (and (at_15_14) (valid)) (not (at_15_14)))
+    (when (not (and (at_15_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_14_15_13
+  :effect (and
+    (when (and (at_15_14) (valid)) (at_15_13))
+    (when (and (at_15_14) (valid)) (not (at_15_14)))
+    (when (not (and (at_15_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_14_15_15
+  :effect (and
+    (when (and (at_15_14) (valid)) (at_15_15))
+    (when (and (at_15_14) (valid)) (not (at_15_14)))
+    (when (not (and (at_15_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_15_14_15
+  :effect (and
+    (when (and (at_15_15) (valid)) (at_14_15))
+    (when (and (at_15_15) (valid)) (not (at_15_15)))
+    (when (not (and (at_15_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_15_16_15
+  :effect (and
+    (when (and (at_15_15) (valid)) (at_16_15))
+    (when (and (at_15_15) (valid)) (not (at_15_15)))
+    (when (not (and (at_15_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_15_15_14
+  :effect (and
+    (when (and (at_15_15) (valid)) (at_15_14))
+    (when (and (at_15_15) (valid)) (not (at_15_15)))
+    (when (not (and (at_15_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_15_15_16
+  :effect (and
+    (when (and (at_15_15) (valid)) (at_15_16))
+    (when (and (at_15_15) (valid)) (not (at_15_15)))
+    (when (not (and (at_15_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_16_14_16
+  :effect (and
+    (when (and (at_15_16) (valid)) (at_14_16))
+    (when (and (at_15_16) (valid)) (not (at_15_16)))
+    (when (not (and (at_15_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_16_16_16
+  :effect (and
+    (when (and (at_15_16) (valid)) (at_16_16))
+    (when (and (at_15_16) (valid)) (not (at_15_16)))
+    (when (not (and (at_15_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_16_15_15
+  :effect (and
+    (when (and (at_15_16) (valid)) (at_15_15))
+    (when (and (at_15_16) (valid)) (not (at_15_16)))
+    (when (not (and (at_15_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_16_15_17
+  :effect (and
+    (when (and (at_15_16) (valid)) (at_15_17))
+    (when (and (at_15_16) (valid)) (not (at_15_16)))
+    (when (not (and (at_15_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_17_14_17
+  :effect (and
+    (when (and (at_15_17) (valid)) (at_14_17))
+    (when (and (at_15_17) (valid)) (not (at_15_17)))
+    (when (not (and (at_15_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_17_16_17
+  :effect (and
+    (when (and (at_15_17) (valid)) (at_16_17))
+    (when (and (at_15_17) (valid)) (not (at_15_17)))
+    (when (not (and (at_15_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_17_15_16
+  :effect (and
+    (when (and (at_15_17) (valid)) (at_15_16))
+    (when (and (at_15_17) (valid)) (not (at_15_17)))
+    (when (not (and (at_15_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_17_15_18
+  :effect (and
+    (when (and (at_15_17) (valid)) (at_15_18))
+    (when (and (at_15_17) (valid)) (not (at_15_17)))
+    (when (not (and (at_15_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_18_14_18
+  :effect (and
+    (when (and (at_15_18) (valid)) (at_14_18))
+    (when (and (at_15_18) (valid)) (not (at_15_18)))
+    (when (not (and (at_15_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_18_16_18
+  :effect (and
+    (when (and (at_15_18) (valid)) (at_16_18))
+    (when (and (at_15_18) (valid)) (not (at_15_18)))
+    (when (not (and (at_15_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_18_15_17
+  :effect (and
+    (when (and (at_15_18) (valid)) (at_15_17))
+    (when (and (at_15_18) (valid)) (not (at_15_18)))
+    (when (not (and (at_15_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_18_15_19
+  :effect (and
+    (when (and (at_15_18) (valid)) (at_15_19))
+    (when (and (at_15_18) (valid)) (not (at_15_18)))
+    (when (not (and (at_15_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_19_14_19
+  :effect (and
+    (when (and (at_15_19) (valid)) (at_14_19))
+    (when (and (at_15_19) (valid)) (not (at_15_19)))
+    (when (not (and (at_15_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_19_16_19
+  :effect (and
+    (when (and (at_15_19) (valid)) (at_16_19))
+    (when (and (at_15_19) (valid)) (not (at_15_19)))
+    (when (not (and (at_15_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_19_15_18
+  :effect (and
+    (when (and (at_15_19) (valid)) (at_15_18))
+    (when (and (at_15_19) (valid)) (not (at_15_19)))
+    (when (not (and (at_15_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_19_15_20
+  :effect (and
+    (when (and (at_15_19) (valid)) (at_15_20))
+    (when (and (at_15_19) (valid)) (not (at_15_19)))
+    (when (not (and (at_15_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_20_14_20
+  :effect (and
+    (when (and (at_15_20) (valid)) (at_14_20))
+    (when (and (at_15_20) (valid)) (not (at_15_20)))
+    (when (not (and (at_15_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_20_16_20
+  :effect (and
+    (when (and (at_15_20) (valid)) (at_16_20))
+    (when (and (at_15_20) (valid)) (not (at_15_20)))
+    (when (not (and (at_15_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_20_15_19
+  :effect (and
+    (when (and (at_15_20) (valid)) (at_15_19))
+    (when (and (at_15_20) (valid)) (not (at_15_20)))
+    (when (not (and (at_15_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_20_15_21
+  :effect (and
+    (when (and (at_15_20) (valid)) (at_15_21))
+    (when (and (at_15_20) (valid)) (not (at_15_20)))
+    (when (not (and (at_15_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_21_14_21
+  :effect (and
+    (when (and (at_15_21) (valid)) (at_14_21))
+    (when (and (at_15_21) (valid)) (not (at_15_21)))
+    (when (not (and (at_15_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_21_16_21
+  :effect (and
+    (when (and (at_15_21) (valid)) (at_16_21))
+    (when (and (at_15_21) (valid)) (not (at_15_21)))
+    (when (not (and (at_15_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_21_15_20
+  :effect (and
+    (when (and (at_15_21) (valid)) (at_15_20))
+    (when (and (at_15_21) (valid)) (not (at_15_21)))
+    (when (not (and (at_15_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_21_15_22
+  :effect (and
+    (when (and (at_15_21) (valid)) (at_15_22))
+    (when (and (at_15_21) (valid)) (not (at_15_21)))
+    (when (not (and (at_15_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_22_14_22
+  :effect (and
+    (when (and (at_15_22) (valid)) (at_14_22))
+    (when (and (at_15_22) (valid)) (not (at_15_22)))
+    (when (not (and (at_15_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_22_16_22
+  :effect (and
+    (when (and (at_15_22) (valid)) (at_16_22))
+    (when (and (at_15_22) (valid)) (not (at_15_22)))
+    (when (not (and (at_15_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_22_15_21
+  :effect (and
+    (when (and (at_15_22) (valid)) (at_15_21))
+    (when (and (at_15_22) (valid)) (not (at_15_22)))
+    (when (not (and (at_15_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_22_15_23
+  :effect (and
+    (when (and (at_15_22) (valid)) (at_15_23))
+    (when (and (at_15_22) (valid)) (not (at_15_22)))
+    (when (not (and (at_15_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_23_14_23
+  :effect (and
+    (when (and (at_15_23) (valid)) (at_14_23))
+    (when (and (at_15_23) (valid)) (not (at_15_23)))
+    (when (not (and (at_15_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_23_16_23
+  :effect (and
+    (when (and (at_15_23) (valid)) (at_16_23))
+    (when (and (at_15_23) (valid)) (not (at_15_23)))
+    (when (not (and (at_15_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_23_15_22
+  :effect (and
+    (when (and (at_15_23) (valid)) (at_15_22))
+    (when (and (at_15_23) (valid)) (not (at_15_23)))
+    (when (not (and (at_15_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_23_15_24
+  :effect (and
+    (when (and (at_15_23) (valid)) (at_15_24))
+    (when (and (at_15_23) (valid)) (not (at_15_23)))
+    (when (not (and (at_15_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_24_14_24
+  :effect (and
+    (when (and (at_15_24) (valid)) (at_14_24))
+    (when (and (at_15_24) (valid)) (not (at_15_24)))
+    (when (not (and (at_15_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_24_16_24
+  :effect (and
+    (when (and (at_15_24) (valid)) (at_16_24))
+    (when (and (at_15_24) (valid)) (not (at_15_24)))
+    (when (not (and (at_15_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_24_15_23
+  :effect (and
+    (when (and (at_15_24) (valid)) (at_15_23))
+    (when (and (at_15_24) (valid)) (not (at_15_24)))
+    (when (not (and (at_15_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_24_15_25
+  :effect (and
+    (when (and (at_15_24) (valid)) (at_15_25))
+    (when (and (at_15_24) (valid)) (not (at_15_24)))
+    (when (not (and (at_15_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_25_14_25
+  :effect (and
+    (when (and (at_15_25) (valid)) (at_14_25))
+    (when (and (at_15_25) (valid)) (not (at_15_25)))
+    (when (not (and (at_15_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_25_16_25
+  :effect (and
+    (when (and (at_15_25) (valid)) (at_16_25))
+    (when (and (at_15_25) (valid)) (not (at_15_25)))
+    (when (not (and (at_15_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_25_15_24
+  :effect (and
+    (when (and (at_15_25) (valid)) (at_15_24))
+    (when (and (at_15_25) (valid)) (not (at_15_25)))
+    (when (not (and (at_15_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_25_15_26
+  :effect (and
+    (when (and (at_15_25) (valid)) (at_15_26))
+    (when (and (at_15_25) (valid)) (not (at_15_25)))
+    (when (not (and (at_15_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_26_14_26
+  :effect (and
+    (when (and (at_15_26) (valid)) (at_14_26))
+    (when (and (at_15_26) (valid)) (not (at_15_26)))
+    (when (not (and (at_15_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_26_16_26
+  :effect (and
+    (when (and (at_15_26) (valid)) (at_16_26))
+    (when (and (at_15_26) (valid)) (not (at_15_26)))
+    (when (not (and (at_15_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_26_15_25
+  :effect (and
+    (when (and (at_15_26) (valid)) (at_15_25))
+    (when (and (at_15_26) (valid)) (not (at_15_26)))
+    (when (not (and (at_15_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_26_15_27
+  :effect (and
+    (when (and (at_15_26) (valid)) (at_15_27))
+    (when (and (at_15_26) (valid)) (not (at_15_26)))
+    (when (not (and (at_15_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_27_14_27
+  :effect (and
+    (when (and (at_15_27) (valid)) (at_14_27))
+    (when (and (at_15_27) (valid)) (not (at_15_27)))
+    (when (not (and (at_15_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_27_16_27
+  :effect (and
+    (when (and (at_15_27) (valid)) (at_16_27))
+    (when (and (at_15_27) (valid)) (not (at_15_27)))
+    (when (not (and (at_15_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_27_15_26
+  :effect (and
+    (when (and (at_15_27) (valid)) (at_15_26))
+    (when (and (at_15_27) (valid)) (not (at_15_27)))
+    (when (not (and (at_15_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_27_15_28
+  :effect (and
+    (when (and (at_15_27) (valid)) (at_15_28))
+    (when (and (at_15_27) (valid)) (not (at_15_27)))
+    (when (not (and (at_15_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_28_14_28
+  :effect (and
+    (when (and (at_15_28) (valid)) (at_14_28))
+    (when (and (at_15_28) (valid)) (not (at_15_28)))
+    (when (not (and (at_15_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_28_16_28
+  :effect (and
+    (when (and (at_15_28) (valid)) (at_16_28))
+    (when (and (at_15_28) (valid)) (not (at_15_28)))
+    (when (not (and (at_15_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_28_15_27
+  :effect (and
+    (when (and (at_15_28) (valid)) (at_15_27))
+    (when (and (at_15_28) (valid)) (not (at_15_28)))
+    (when (not (and (at_15_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_28_15_29
+  :effect (and
+    (when (and (at_15_28) (valid)) (at_15_29))
+    (when (and (at_15_28) (valid)) (not (at_15_28)))
+    (when (not (and (at_15_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_29_14_29
+  :effect (and
+    (when (and (at_15_29) (valid)) (at_14_29))
+    (when (and (at_15_29) (valid)) (not (at_15_29)))
+    (when (not (and (at_15_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_29_16_29
+  :effect (and
+    (when (and (at_15_29) (valid)) (at_16_29))
+    (when (and (at_15_29) (valid)) (not (at_15_29)))
+    (when (not (and (at_15_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_29_15_28
+  :effect (and
+    (when (and (at_15_29) (valid)) (at_15_28))
+    (when (and (at_15_29) (valid)) (not (at_15_29)))
+    (when (not (and (at_15_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_29_15_30
+  :effect (and
+    (when (and (at_15_29) (valid)) (at_15_30))
+    (when (and (at_15_29) (valid)) (not (at_15_29)))
+    (when (not (and (at_15_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_30_14_30
+  :effect (and
+    (when (and (at_15_30) (valid)) (at_14_30))
+    (when (and (at_15_30) (valid)) (not (at_15_30)))
+    (when (not (and (at_15_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_30_16_30
+  :effect (and
+    (when (and (at_15_30) (valid)) (at_16_30))
+    (when (and (at_15_30) (valid)) (not (at_15_30)))
+    (when (not (and (at_15_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_30_15_29
+  :effect (and
+    (when (and (at_15_30) (valid)) (at_15_29))
+    (when (and (at_15_30) (valid)) (not (at_15_30)))
+    (when (not (and (at_15_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_30_15_31
+  :effect (and
+    (when (and (at_15_30) (valid)) (at_15_31))
+    (when (and (at_15_30) (valid)) (not (at_15_30)))
+    (when (not (and (at_15_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_31_14_31
+  :effect (and
+    (when (and (at_15_31) (valid)) (at_14_31))
+    (when (and (at_15_31) (valid)) (not (at_15_31)))
+    (when (not (and (at_15_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_31_16_31
+  :effect (and
+    (when (and (at_15_31) (valid)) (at_16_31))
+    (when (and (at_15_31) (valid)) (not (at_15_31)))
+    (when (not (and (at_15_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_15_31_15_30
+  :effect (and
+    (when (and (at_15_31) (valid)) (at_15_30))
+    (when (and (at_15_31) (valid)) (not (at_15_31)))
+    (when (not (and (at_15_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_0_15_0
+  :effect (and
+    (when (and (at_16_0) (valid)) (at_15_0))
+    (when (and (at_16_0) (valid)) (not (at_16_0)))
+    (when (not (and (at_16_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_0_17_0
+  :effect (and
+    (when (and (at_16_0) (valid)) (at_17_0))
+    (when (and (at_16_0) (valid)) (not (at_16_0)))
+    (when (not (and (at_16_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_0_16_1
+  :effect (and
+    (when (and (at_16_0) (valid)) (at_16_1))
+    (when (and (at_16_0) (valid)) (not (at_16_0)))
+    (when (not (and (at_16_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_1_15_1
+  :effect (and
+    (when (and (at_16_1) (valid)) (at_15_1))
+    (when (and (at_16_1) (valid)) (not (at_16_1)))
+    (when (not (and (at_16_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_1_17_1
+  :effect (and
+    (when (and (at_16_1) (valid)) (at_17_1))
+    (when (and (at_16_1) (valid)) (not (at_16_1)))
+    (when (not (and (at_16_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_1_16_0
+  :effect (and
+    (when (and (at_16_1) (valid)) (at_16_0))
+    (when (and (at_16_1) (valid)) (not (at_16_1)))
+    (when (not (and (at_16_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_1_16_2
+  :effect (and
+    (when (and (at_16_1) (valid)) (at_16_2))
+    (when (and (at_16_1) (valid)) (not (at_16_1)))
+    (when (not (and (at_16_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_2_15_2
+  :effect (and
+    (when (and (at_16_2) (valid)) (at_15_2))
+    (when (and (at_16_2) (valid)) (not (at_16_2)))
+    (when (not (and (at_16_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_2_17_2
+  :effect (and
+    (when (and (at_16_2) (valid)) (at_17_2))
+    (when (and (at_16_2) (valid)) (not (at_16_2)))
+    (when (not (and (at_16_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_2_16_1
+  :effect (and
+    (when (and (at_16_2) (valid)) (at_16_1))
+    (when (and (at_16_2) (valid)) (not (at_16_2)))
+    (when (not (and (at_16_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_2_16_3
+  :effect (and
+    (when (and (at_16_2) (valid)) (at_16_3))
+    (when (and (at_16_2) (valid)) (not (at_16_2)))
+    (when (not (and (at_16_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_3_15_3
+  :effect (and
+    (when (and (at_16_3) (valid)) (at_15_3))
+    (when (and (at_16_3) (valid)) (not (at_16_3)))
+    (when (not (and (at_16_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_3_17_3
+  :effect (and
+    (when (and (at_16_3) (valid)) (at_17_3))
+    (when (and (at_16_3) (valid)) (not (at_16_3)))
+    (when (not (and (at_16_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_3_16_2
+  :effect (and
+    (when (and (at_16_3) (valid)) (at_16_2))
+    (when (and (at_16_3) (valid)) (not (at_16_3)))
+    (when (not (and (at_16_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_3_16_4
+  :effect (and
+    (when (and (at_16_3) (valid)) (at_16_4))
+    (when (and (at_16_3) (valid)) (not (at_16_3)))
+    (when (not (and (at_16_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_4_15_4
+  :effect (and
+    (when (and (at_16_4) (valid)) (at_15_4))
+    (when (and (at_16_4) (valid)) (not (at_16_4)))
+    (when (not (and (at_16_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_4_17_4
+  :effect (and
+    (when (and (at_16_4) (valid)) (at_17_4))
+    (when (and (at_16_4) (valid)) (not (at_16_4)))
+    (when (not (and (at_16_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_4_16_3
+  :effect (and
+    (when (and (at_16_4) (valid)) (at_16_3))
+    (when (and (at_16_4) (valid)) (not (at_16_4)))
+    (when (not (and (at_16_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_4_16_5
+  :effect (and
+    (when (and (at_16_4) (valid)) (at_16_5))
+    (when (and (at_16_4) (valid)) (not (at_16_4)))
+    (when (not (and (at_16_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_5_15_5
+  :effect (and
+    (when (and (at_16_5) (valid)) (at_15_5))
+    (when (and (at_16_5) (valid)) (not (at_16_5)))
+    (when (not (and (at_16_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_5_17_5
+  :effect (and
+    (when (and (at_16_5) (valid)) (at_17_5))
+    (when (and (at_16_5) (valid)) (not (at_16_5)))
+    (when (not (and (at_16_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_5_16_4
+  :effect (and
+    (when (and (at_16_5) (valid)) (at_16_4))
+    (when (and (at_16_5) (valid)) (not (at_16_5)))
+    (when (not (and (at_16_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_5_16_6
+  :effect (and
+    (when (and (at_16_5) (valid)) (at_16_6))
+    (when (and (at_16_5) (valid)) (not (at_16_5)))
+    (when (not (and (at_16_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_6_15_6
+  :effect (and
+    (when (and (at_16_6) (valid)) (at_15_6))
+    (when (and (at_16_6) (valid)) (not (at_16_6)))
+    (when (not (and (at_16_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_6_17_6
+  :effect (and
+    (when (and (at_16_6) (valid)) (at_17_6))
+    (when (and (at_16_6) (valid)) (not (at_16_6)))
+    (when (not (and (at_16_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_6_16_5
+  :effect (and
+    (when (and (at_16_6) (valid)) (at_16_5))
+    (when (and (at_16_6) (valid)) (not (at_16_6)))
+    (when (not (and (at_16_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_6_16_7
+  :effect (and
+    (when (and (at_16_6) (valid)) (at_16_7))
+    (when (and (at_16_6) (valid)) (not (at_16_6)))
+    (when (not (and (at_16_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_7_15_7
+  :effect (and
+    (when (and (at_16_7) (valid)) (at_15_7))
+    (when (and (at_16_7) (valid)) (not (at_16_7)))
+    (when (not (and (at_16_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_7_17_7
+  :effect (and
+    (when (and (at_16_7) (valid)) (at_17_7))
+    (when (and (at_16_7) (valid)) (not (at_16_7)))
+    (when (not (and (at_16_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_7_16_6
+  :effect (and
+    (when (and (at_16_7) (valid)) (at_16_6))
+    (when (and (at_16_7) (valid)) (not (at_16_7)))
+    (when (not (and (at_16_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_7_16_8
+  :effect (and
+    (when (and (at_16_7) (valid)) (at_16_8))
+    (when (and (at_16_7) (valid)) (not (at_16_7)))
+    (when (not (and (at_16_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_8_15_8
+  :effect (and
+    (when (and (at_16_8) (valid)) (at_15_8))
+    (when (and (at_16_8) (valid)) (not (at_16_8)))
+    (when (not (and (at_16_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_8_17_8
+  :effect (and
+    (when (and (at_16_8) (valid)) (at_17_8))
+    (when (and (at_16_8) (valid)) (not (at_16_8)))
+    (when (not (and (at_16_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_8_16_7
+  :effect (and
+    (when (and (at_16_8) (valid)) (at_16_7))
+    (when (and (at_16_8) (valid)) (not (at_16_8)))
+    (when (not (and (at_16_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_8_16_9
+  :effect (and
+    (when (and (at_16_8) (valid)) (at_16_9))
+    (when (and (at_16_8) (valid)) (not (at_16_8)))
+    (when (not (and (at_16_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_9_15_9
+  :effect (and
+    (when (and (at_16_9) (valid)) (at_15_9))
+    (when (and (at_16_9) (valid)) (not (at_16_9)))
+    (when (not (and (at_16_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_9_17_9
+  :effect (and
+    (when (and (at_16_9) (valid)) (at_17_9))
+    (when (and (at_16_9) (valid)) (not (at_16_9)))
+    (when (not (and (at_16_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_9_16_8
+  :effect (and
+    (when (and (at_16_9) (valid)) (at_16_8))
+    (when (and (at_16_9) (valid)) (not (at_16_9)))
+    (when (not (and (at_16_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_9_16_10
+  :effect (and
+    (when (and (at_16_9) (valid)) (at_16_10))
+    (when (and (at_16_9) (valid)) (not (at_16_9)))
+    (when (not (and (at_16_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_10_15_10
+  :effect (and
+    (when (and (at_16_10) (valid)) (at_15_10))
+    (when (and (at_16_10) (valid)) (not (at_16_10)))
+    (when (not (and (at_16_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_10_17_10
+  :effect (and
+    (when (and (at_16_10) (valid)) (at_17_10))
+    (when (and (at_16_10) (valid)) (not (at_16_10)))
+    (when (not (and (at_16_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_10_16_9
+  :effect (and
+    (when (and (at_16_10) (valid)) (at_16_9))
+    (when (and (at_16_10) (valid)) (not (at_16_10)))
+    (when (not (and (at_16_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_10_16_11
+  :effect (and
+    (when (and (at_16_10) (valid)) (at_16_11))
+    (when (and (at_16_10) (valid)) (not (at_16_10)))
+    (when (not (and (at_16_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_11_15_11
+  :effect (and
+    (when (and (at_16_11) (valid)) (at_15_11))
+    (when (and (at_16_11) (valid)) (not (at_16_11)))
+    (when (not (and (at_16_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_11_17_11
+  :effect (and
+    (when (and (at_16_11) (valid)) (at_17_11))
+    (when (and (at_16_11) (valid)) (not (at_16_11)))
+    (when (not (and (at_16_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_11_16_10
+  :effect (and
+    (when (and (at_16_11) (valid)) (at_16_10))
+    (when (and (at_16_11) (valid)) (not (at_16_11)))
+    (when (not (and (at_16_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_11_16_12
+  :effect (and
+    (when (and (at_16_11) (valid)) (at_16_12))
+    (when (and (at_16_11) (valid)) (not (at_16_11)))
+    (when (not (and (at_16_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_12_15_12
+  :effect (and
+    (when (and (at_16_12) (valid)) (at_15_12))
+    (when (and (at_16_12) (valid)) (not (at_16_12)))
+    (when (not (and (at_16_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_12_17_12
+  :effect (and
+    (when (and (at_16_12) (valid)) (at_17_12))
+    (when (and (at_16_12) (valid)) (not (at_16_12)))
+    (when (not (and (at_16_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_12_16_11
+  :effect (and
+    (when (and (at_16_12) (valid)) (at_16_11))
+    (when (and (at_16_12) (valid)) (not (at_16_12)))
+    (when (not (and (at_16_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_12_16_13
+  :effect (and
+    (when (and (at_16_12) (valid)) (at_16_13))
+    (when (and (at_16_12) (valid)) (not (at_16_12)))
+    (when (not (and (at_16_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_13_15_13
+  :effect (and
+    (when (and (at_16_13) (valid)) (at_15_13))
+    (when (and (at_16_13) (valid)) (not (at_16_13)))
+    (when (not (and (at_16_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_13_17_13
+  :effect (and
+    (when (and (at_16_13) (valid)) (at_17_13))
+    (when (and (at_16_13) (valid)) (not (at_16_13)))
+    (when (not (and (at_16_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_13_16_12
+  :effect (and
+    (when (and (at_16_13) (valid)) (at_16_12))
+    (when (and (at_16_13) (valid)) (not (at_16_13)))
+    (when (not (and (at_16_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_13_16_14
+  :effect (and
+    (when (and (at_16_13) (valid)) (at_16_14))
+    (when (and (at_16_13) (valid)) (not (at_16_13)))
+    (when (not (and (at_16_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_14_15_14
+  :effect (and
+    (when (and (at_16_14) (valid)) (at_15_14))
+    (when (and (at_16_14) (valid)) (not (at_16_14)))
+    (when (not (and (at_16_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_14_17_14
+  :effect (and
+    (when (and (at_16_14) (valid)) (at_17_14))
+    (when (and (at_16_14) (valid)) (not (at_16_14)))
+    (when (not (and (at_16_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_14_16_13
+  :effect (and
+    (when (and (at_16_14) (valid)) (at_16_13))
+    (when (and (at_16_14) (valid)) (not (at_16_14)))
+    (when (not (and (at_16_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_14_16_15
+  :effect (and
+    (when (and (at_16_14) (valid)) (at_16_15))
+    (when (and (at_16_14) (valid)) (not (at_16_14)))
+    (when (not (and (at_16_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_15_15_15
+  :effect (and
+    (when (and (at_16_15) (valid)) (at_15_15))
+    (when (and (at_16_15) (valid)) (not (at_16_15)))
+    (when (not (and (at_16_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_15_17_15
+  :effect (and
+    (when (and (at_16_15) (valid)) (at_17_15))
+    (when (and (at_16_15) (valid)) (not (at_16_15)))
+    (when (not (and (at_16_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_15_16_14
+  :effect (and
+    (when (and (at_16_15) (valid)) (at_16_14))
+    (when (and (at_16_15) (valid)) (not (at_16_15)))
+    (when (not (and (at_16_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_15_16_16
+  :effect (and
+    (when (and (at_16_15) (valid)) (at_16_16))
+    (when (and (at_16_15) (valid)) (not (at_16_15)))
+    (when (not (and (at_16_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_16_15_16
+  :effect (and
+    (when (and (at_16_16) (valid)) (at_15_16))
+    (when (and (at_16_16) (valid)) (not (at_16_16)))
+    (when (not (and (at_16_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_16_17_16
+  :effect (and
+    (when (and (at_16_16) (valid)) (at_17_16))
+    (when (and (at_16_16) (valid)) (not (at_16_16)))
+    (when (not (and (at_16_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_16_16_15
+  :effect (and
+    (when (and (at_16_16) (valid)) (at_16_15))
+    (when (and (at_16_16) (valid)) (not (at_16_16)))
+    (when (not (and (at_16_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_16_16_17
+  :effect (and
+    (when (and (at_16_16) (valid)) (at_16_17))
+    (when (and (at_16_16) (valid)) (not (at_16_16)))
+    (when (not (and (at_16_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_17_15_17
+  :effect (and
+    (when (and (at_16_17) (valid)) (at_15_17))
+    (when (and (at_16_17) (valid)) (not (at_16_17)))
+    (when (not (and (at_16_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_17_17_17
+  :effect (and
+    (when (and (at_16_17) (valid)) (at_17_17))
+    (when (and (at_16_17) (valid)) (not (at_16_17)))
+    (when (not (and (at_16_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_17_16_16
+  :effect (and
+    (when (and (at_16_17) (valid)) (at_16_16))
+    (when (and (at_16_17) (valid)) (not (at_16_17)))
+    (when (not (and (at_16_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_17_16_18
+  :effect (and
+    (when (and (at_16_17) (valid)) (at_16_18))
+    (when (and (at_16_17) (valid)) (not (at_16_17)))
+    (when (not (and (at_16_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_18_15_18
+  :effect (and
+    (when (and (at_16_18) (valid)) (at_15_18))
+    (when (and (at_16_18) (valid)) (not (at_16_18)))
+    (when (not (and (at_16_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_18_17_18
+  :effect (and
+    (when (and (at_16_18) (valid)) (at_17_18))
+    (when (and (at_16_18) (valid)) (not (at_16_18)))
+    (when (not (and (at_16_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_18_16_17
+  :effect (and
+    (when (and (at_16_18) (valid)) (at_16_17))
+    (when (and (at_16_18) (valid)) (not (at_16_18)))
+    (when (not (and (at_16_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_18_16_19
+  :effect (and
+    (when (and (at_16_18) (valid)) (at_16_19))
+    (when (and (at_16_18) (valid)) (not (at_16_18)))
+    (when (not (and (at_16_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_19_15_19
+  :effect (and
+    (when (and (at_16_19) (valid)) (at_15_19))
+    (when (and (at_16_19) (valid)) (not (at_16_19)))
+    (when (not (and (at_16_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_19_17_19
+  :effect (and
+    (when (and (at_16_19) (valid)) (at_17_19))
+    (when (and (at_16_19) (valid)) (not (at_16_19)))
+    (when (not (and (at_16_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_19_16_18
+  :effect (and
+    (when (and (at_16_19) (valid)) (at_16_18))
+    (when (and (at_16_19) (valid)) (not (at_16_19)))
+    (when (not (and (at_16_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_19_16_20
+  :effect (and
+    (when (and (at_16_19) (valid)) (at_16_20))
+    (when (and (at_16_19) (valid)) (not (at_16_19)))
+    (when (not (and (at_16_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_20_15_20
+  :effect (and
+    (when (and (at_16_20) (valid)) (at_15_20))
+    (when (and (at_16_20) (valid)) (not (at_16_20)))
+    (when (not (and (at_16_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_20_17_20
+  :effect (and
+    (when (and (at_16_20) (valid)) (at_17_20))
+    (when (and (at_16_20) (valid)) (not (at_16_20)))
+    (when (not (and (at_16_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_20_16_19
+  :effect (and
+    (when (and (at_16_20) (valid)) (at_16_19))
+    (when (and (at_16_20) (valid)) (not (at_16_20)))
+    (when (not (and (at_16_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_20_16_21
+  :effect (and
+    (when (and (at_16_20) (valid)) (at_16_21))
+    (when (and (at_16_20) (valid)) (not (at_16_20)))
+    (when (not (and (at_16_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_21_15_21
+  :effect (and
+    (when (and (at_16_21) (valid)) (at_15_21))
+    (when (and (at_16_21) (valid)) (not (at_16_21)))
+    (when (not (and (at_16_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_21_17_21
+  :effect (and
+    (when (and (at_16_21) (valid)) (at_17_21))
+    (when (and (at_16_21) (valid)) (not (at_16_21)))
+    (when (not (and (at_16_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_21_16_20
+  :effect (and
+    (when (and (at_16_21) (valid)) (at_16_20))
+    (when (and (at_16_21) (valid)) (not (at_16_21)))
+    (when (not (and (at_16_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_21_16_22
+  :effect (and
+    (when (and (at_16_21) (valid)) (at_16_22))
+    (when (and (at_16_21) (valid)) (not (at_16_21)))
+    (when (not (and (at_16_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_22_15_22
+  :effect (and
+    (when (and (at_16_22) (valid)) (at_15_22))
+    (when (and (at_16_22) (valid)) (not (at_16_22)))
+    (when (not (and (at_16_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_22_17_22
+  :effect (and
+    (when (and (at_16_22) (valid)) (at_17_22))
+    (when (and (at_16_22) (valid)) (not (at_16_22)))
+    (when (not (and (at_16_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_22_16_21
+  :effect (and
+    (when (and (at_16_22) (valid)) (at_16_21))
+    (when (and (at_16_22) (valid)) (not (at_16_22)))
+    (when (not (and (at_16_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_22_16_23
+  :effect (and
+    (when (and (at_16_22) (valid)) (at_16_23))
+    (when (and (at_16_22) (valid)) (not (at_16_22)))
+    (when (not (and (at_16_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_23_15_23
+  :effect (and
+    (when (and (at_16_23) (valid)) (at_15_23))
+    (when (and (at_16_23) (valid)) (not (at_16_23)))
+    (when (not (and (at_16_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_23_17_23
+  :effect (and
+    (when (and (at_16_23) (valid)) (at_17_23))
+    (when (and (at_16_23) (valid)) (not (at_16_23)))
+    (when (not (and (at_16_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_23_16_22
+  :effect (and
+    (when (and (at_16_23) (valid)) (at_16_22))
+    (when (and (at_16_23) (valid)) (not (at_16_23)))
+    (when (not (and (at_16_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_23_16_24
+  :effect (and
+    (when (and (at_16_23) (valid)) (at_16_24))
+    (when (and (at_16_23) (valid)) (not (at_16_23)))
+    (when (not (and (at_16_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_24_15_24
+  :effect (and
+    (when (and (at_16_24) (valid)) (at_15_24))
+    (when (and (at_16_24) (valid)) (not (at_16_24)))
+    (when (not (and (at_16_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_24_17_24
+  :effect (and
+    (when (and (at_16_24) (valid)) (at_17_24))
+    (when (and (at_16_24) (valid)) (not (at_16_24)))
+    (when (not (and (at_16_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_24_16_23
+  :effect (and
+    (when (and (at_16_24) (valid)) (at_16_23))
+    (when (and (at_16_24) (valid)) (not (at_16_24)))
+    (when (not (and (at_16_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_24_16_25
+  :effect (and
+    (when (and (at_16_24) (valid)) (at_16_25))
+    (when (and (at_16_24) (valid)) (not (at_16_24)))
+    (when (not (and (at_16_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_25_15_25
+  :effect (and
+    (when (and (at_16_25) (valid)) (at_15_25))
+    (when (and (at_16_25) (valid)) (not (at_16_25)))
+    (when (not (and (at_16_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_25_17_25
+  :effect (and
+    (when (and (at_16_25) (valid)) (at_17_25))
+    (when (and (at_16_25) (valid)) (not (at_16_25)))
+    (when (not (and (at_16_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_25_16_24
+  :effect (and
+    (when (and (at_16_25) (valid)) (at_16_24))
+    (when (and (at_16_25) (valid)) (not (at_16_25)))
+    (when (not (and (at_16_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_25_16_26
+  :effect (and
+    (when (and (at_16_25) (valid)) (at_16_26))
+    (when (and (at_16_25) (valid)) (not (at_16_25)))
+    (when (not (and (at_16_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_26_15_26
+  :effect (and
+    (when (and (at_16_26) (valid)) (at_15_26))
+    (when (and (at_16_26) (valid)) (not (at_16_26)))
+    (when (not (and (at_16_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_26_17_26
+  :effect (and
+    (when (and (at_16_26) (valid)) (at_17_26))
+    (when (and (at_16_26) (valid)) (not (at_16_26)))
+    (when (not (and (at_16_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_26_16_25
+  :effect (and
+    (when (and (at_16_26) (valid)) (at_16_25))
+    (when (and (at_16_26) (valid)) (not (at_16_26)))
+    (when (not (and (at_16_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_26_16_27
+  :effect (and
+    (when (and (at_16_26) (valid)) (at_16_27))
+    (when (and (at_16_26) (valid)) (not (at_16_26)))
+    (when (not (and (at_16_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_27_15_27
+  :effect (and
+    (when (and (at_16_27) (valid)) (at_15_27))
+    (when (and (at_16_27) (valid)) (not (at_16_27)))
+    (when (not (and (at_16_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_27_17_27
+  :effect (and
+    (when (and (at_16_27) (valid)) (at_17_27))
+    (when (and (at_16_27) (valid)) (not (at_16_27)))
+    (when (not (and (at_16_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_27_16_26
+  :effect (and
+    (when (and (at_16_27) (valid)) (at_16_26))
+    (when (and (at_16_27) (valid)) (not (at_16_27)))
+    (when (not (and (at_16_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_27_16_28
+  :effect (and
+    (when (and (at_16_27) (valid)) (at_16_28))
+    (when (and (at_16_27) (valid)) (not (at_16_27)))
+    (when (not (and (at_16_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_28_15_28
+  :effect (and
+    (when (and (at_16_28) (valid)) (at_15_28))
+    (when (and (at_16_28) (valid)) (not (at_16_28)))
+    (when (not (and (at_16_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_28_17_28
+  :effect (and
+    (when (and (at_16_28) (valid)) (at_17_28))
+    (when (and (at_16_28) (valid)) (not (at_16_28)))
+    (when (not (and (at_16_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_28_16_27
+  :effect (and
+    (when (and (at_16_28) (valid)) (at_16_27))
+    (when (and (at_16_28) (valid)) (not (at_16_28)))
+    (when (not (and (at_16_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_28_16_29
+  :effect (and
+    (when (and (at_16_28) (valid)) (at_16_29))
+    (when (and (at_16_28) (valid)) (not (at_16_28)))
+    (when (not (and (at_16_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_29_15_29
+  :effect (and
+    (when (and (at_16_29) (valid)) (at_15_29))
+    (when (and (at_16_29) (valid)) (not (at_16_29)))
+    (when (not (and (at_16_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_29_17_29
+  :effect (and
+    (when (and (at_16_29) (valid)) (at_17_29))
+    (when (and (at_16_29) (valid)) (not (at_16_29)))
+    (when (not (and (at_16_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_29_16_28
+  :effect (and
+    (when (and (at_16_29) (valid)) (at_16_28))
+    (when (and (at_16_29) (valid)) (not (at_16_29)))
+    (when (not (and (at_16_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_29_16_30
+  :effect (and
+    (when (and (at_16_29) (valid)) (at_16_30))
+    (when (and (at_16_29) (valid)) (not (at_16_29)))
+    (when (not (and (at_16_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_30_15_30
+  :effect (and
+    (when (and (at_16_30) (valid)) (at_15_30))
+    (when (and (at_16_30) (valid)) (not (at_16_30)))
+    (when (not (and (at_16_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_30_17_30
+  :effect (and
+    (when (and (at_16_30) (valid)) (at_17_30))
+    (when (and (at_16_30) (valid)) (not (at_16_30)))
+    (when (not (and (at_16_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_30_16_29
+  :effect (and
+    (when (and (at_16_30) (valid)) (at_16_29))
+    (when (and (at_16_30) (valid)) (not (at_16_30)))
+    (when (not (and (at_16_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_30_16_31
+  :effect (and
+    (when (and (at_16_30) (valid)) (at_16_31))
+    (when (and (at_16_30) (valid)) (not (at_16_30)))
+    (when (not (and (at_16_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_31_15_31
+  :effect (and
+    (when (and (at_16_31) (valid)) (at_15_31))
+    (when (and (at_16_31) (valid)) (not (at_16_31)))
+    (when (not (and (at_16_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_31_17_31
+  :effect (and
+    (when (and (at_16_31) (valid)) (at_17_31))
+    (when (and (at_16_31) (valid)) (not (at_16_31)))
+    (when (not (and (at_16_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_16_31_16_30
+  :effect (and
+    (when (and (at_16_31) (valid)) (at_16_30))
+    (when (and (at_16_31) (valid)) (not (at_16_31)))
+    (when (not (and (at_16_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_0_16_0
+  :effect (and
+    (when (and (at_17_0) (valid)) (at_16_0))
+    (when (and (at_17_0) (valid)) (not (at_17_0)))
+    (when (not (and (at_17_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_0_18_0
+  :effect (and
+    (when (and (at_17_0) (valid)) (at_18_0))
+    (when (and (at_17_0) (valid)) (not (at_17_0)))
+    (when (not (and (at_17_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_0_17_1
+  :effect (and
+    (when (and (at_17_0) (valid)) (at_17_1))
+    (when (and (at_17_0) (valid)) (not (at_17_0)))
+    (when (not (and (at_17_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_1_16_1
+  :effect (and
+    (when (and (at_17_1) (valid)) (at_16_1))
+    (when (and (at_17_1) (valid)) (not (at_17_1)))
+    (when (not (and (at_17_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_1_18_1
+  :effect (and
+    (when (and (at_17_1) (valid)) (at_18_1))
+    (when (and (at_17_1) (valid)) (not (at_17_1)))
+    (when (not (and (at_17_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_1_17_0
+  :effect (and
+    (when (and (at_17_1) (valid)) (at_17_0))
+    (when (and (at_17_1) (valid)) (not (at_17_1)))
+    (when (not (and (at_17_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_1_17_2
+  :effect (and
+    (when (and (at_17_1) (valid)) (at_17_2))
+    (when (and (at_17_1) (valid)) (not (at_17_1)))
+    (when (not (and (at_17_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_2_16_2
+  :effect (and
+    (when (and (at_17_2) (valid)) (at_16_2))
+    (when (and (at_17_2) (valid)) (not (at_17_2)))
+    (when (not (and (at_17_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_2_18_2
+  :effect (and
+    (when (and (at_17_2) (valid)) (at_18_2))
+    (when (and (at_17_2) (valid)) (not (at_17_2)))
+    (when (not (and (at_17_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_2_17_1
+  :effect (and
+    (when (and (at_17_2) (valid)) (at_17_1))
+    (when (and (at_17_2) (valid)) (not (at_17_2)))
+    (when (not (and (at_17_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_2_17_3
+  :effect (and
+    (when (and (at_17_2) (valid)) (at_17_3))
+    (when (and (at_17_2) (valid)) (not (at_17_2)))
+    (when (not (and (at_17_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_3_16_3
+  :effect (and
+    (when (and (at_17_3) (valid)) (at_16_3))
+    (when (and (at_17_3) (valid)) (not (at_17_3)))
+    (when (not (and (at_17_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_3_18_3
+  :effect (and
+    (when (and (at_17_3) (valid)) (at_18_3))
+    (when (and (at_17_3) (valid)) (not (at_17_3)))
+    (when (not (and (at_17_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_3_17_2
+  :effect (and
+    (when (and (at_17_3) (valid)) (at_17_2))
+    (when (and (at_17_3) (valid)) (not (at_17_3)))
+    (when (not (and (at_17_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_3_17_4
+  :effect (and
+    (when (and (at_17_3) (valid)) (at_17_4))
+    (when (and (at_17_3) (valid)) (not (at_17_3)))
+    (when (not (and (at_17_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_4_16_4
+  :effect (and
+    (when (and (at_17_4) (valid)) (at_16_4))
+    (when (and (at_17_4) (valid)) (not (at_17_4)))
+    (when (not (and (at_17_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_4_18_4
+  :effect (and
+    (when (and (at_17_4) (valid)) (at_18_4))
+    (when (and (at_17_4) (valid)) (not (at_17_4)))
+    (when (not (and (at_17_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_4_17_3
+  :effect (and
+    (when (and (at_17_4) (valid)) (at_17_3))
+    (when (and (at_17_4) (valid)) (not (at_17_4)))
+    (when (not (and (at_17_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_4_17_5
+  :effect (and
+    (when (and (at_17_4) (valid)) (at_17_5))
+    (when (and (at_17_4) (valid)) (not (at_17_4)))
+    (when (not (and (at_17_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_5_16_5
+  :effect (and
+    (when (and (at_17_5) (valid)) (at_16_5))
+    (when (and (at_17_5) (valid)) (not (at_17_5)))
+    (when (not (and (at_17_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_5_18_5
+  :effect (and
+    (when (and (at_17_5) (valid)) (at_18_5))
+    (when (and (at_17_5) (valid)) (not (at_17_5)))
+    (when (not (and (at_17_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_5_17_4
+  :effect (and
+    (when (and (at_17_5) (valid)) (at_17_4))
+    (when (and (at_17_5) (valid)) (not (at_17_5)))
+    (when (not (and (at_17_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_5_17_6
+  :effect (and
+    (when (and (at_17_5) (valid)) (at_17_6))
+    (when (and (at_17_5) (valid)) (not (at_17_5)))
+    (when (not (and (at_17_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_6_16_6
+  :effect (and
+    (when (and (at_17_6) (valid)) (at_16_6))
+    (when (and (at_17_6) (valid)) (not (at_17_6)))
+    (when (not (and (at_17_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_6_18_6
+  :effect (and
+    (when (and (at_17_6) (valid)) (at_18_6))
+    (when (and (at_17_6) (valid)) (not (at_17_6)))
+    (when (not (and (at_17_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_6_17_5
+  :effect (and
+    (when (and (at_17_6) (valid)) (at_17_5))
+    (when (and (at_17_6) (valid)) (not (at_17_6)))
+    (when (not (and (at_17_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_6_17_7
+  :effect (and
+    (when (and (at_17_6) (valid)) (at_17_7))
+    (when (and (at_17_6) (valid)) (not (at_17_6)))
+    (when (not (and (at_17_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_7_16_7
+  :effect (and
+    (when (and (at_17_7) (valid)) (at_16_7))
+    (when (and (at_17_7) (valid)) (not (at_17_7)))
+    (when (not (and (at_17_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_7_18_7
+  :effect (and
+    (when (and (at_17_7) (valid)) (at_18_7))
+    (when (and (at_17_7) (valid)) (not (at_17_7)))
+    (when (not (and (at_17_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_7_17_6
+  :effect (and
+    (when (and (at_17_7) (valid)) (at_17_6))
+    (when (and (at_17_7) (valid)) (not (at_17_7)))
+    (when (not (and (at_17_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_7_17_8
+  :effect (and
+    (when (and (at_17_7) (valid)) (at_17_8))
+    (when (and (at_17_7) (valid)) (not (at_17_7)))
+    (when (not (and (at_17_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_8_16_8
+  :effect (and
+    (when (and (at_17_8) (valid)) (at_16_8))
+    (when (and (at_17_8) (valid)) (not (at_17_8)))
+    (when (not (and (at_17_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_8_18_8
+  :effect (and
+    (when (and (at_17_8) (valid)) (at_18_8))
+    (when (and (at_17_8) (valid)) (not (at_17_8)))
+    (when (not (and (at_17_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_8_17_7
+  :effect (and
+    (when (and (at_17_8) (valid)) (at_17_7))
+    (when (and (at_17_8) (valid)) (not (at_17_8)))
+    (when (not (and (at_17_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_8_17_9
+  :effect (and
+    (when (and (at_17_8) (valid)) (at_17_9))
+    (when (and (at_17_8) (valid)) (not (at_17_8)))
+    (when (not (and (at_17_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_9_16_9
+  :effect (and
+    (when (and (at_17_9) (valid)) (at_16_9))
+    (when (and (at_17_9) (valid)) (not (at_17_9)))
+    (when (not (and (at_17_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_9_18_9
+  :effect (and
+    (when (and (at_17_9) (valid)) (at_18_9))
+    (when (and (at_17_9) (valid)) (not (at_17_9)))
+    (when (not (and (at_17_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_9_17_8
+  :effect (and
+    (when (and (at_17_9) (valid)) (at_17_8))
+    (when (and (at_17_9) (valid)) (not (at_17_9)))
+    (when (not (and (at_17_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_9_17_10
+  :effect (and
+    (when (and (at_17_9) (valid)) (at_17_10))
+    (when (and (at_17_9) (valid)) (not (at_17_9)))
+    (when (not (and (at_17_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_10_16_10
+  :effect (and
+    (when (and (at_17_10) (valid)) (at_16_10))
+    (when (and (at_17_10) (valid)) (not (at_17_10)))
+    (when (not (and (at_17_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_10_18_10
+  :effect (and
+    (when (and (at_17_10) (valid)) (at_18_10))
+    (when (and (at_17_10) (valid)) (not (at_17_10)))
+    (when (not (and (at_17_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_10_17_9
+  :effect (and
+    (when (and (at_17_10) (valid)) (at_17_9))
+    (when (and (at_17_10) (valid)) (not (at_17_10)))
+    (when (not (and (at_17_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_10_17_11
+  :effect (and
+    (when (and (at_17_10) (valid)) (at_17_11))
+    (when (and (at_17_10) (valid)) (not (at_17_10)))
+    (when (not (and (at_17_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_11_16_11
+  :effect (and
+    (when (and (at_17_11) (valid)) (at_16_11))
+    (when (and (at_17_11) (valid)) (not (at_17_11)))
+    (when (not (and (at_17_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_11_18_11
+  :effect (and
+    (when (and (at_17_11) (valid)) (at_18_11))
+    (when (and (at_17_11) (valid)) (not (at_17_11)))
+    (when (not (and (at_17_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_11_17_10
+  :effect (and
+    (when (and (at_17_11) (valid)) (at_17_10))
+    (when (and (at_17_11) (valid)) (not (at_17_11)))
+    (when (not (and (at_17_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_11_17_12
+  :effect (and
+    (when (and (at_17_11) (valid)) (at_17_12))
+    (when (and (at_17_11) (valid)) (not (at_17_11)))
+    (when (not (and (at_17_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_12_16_12
+  :effect (and
+    (when (and (at_17_12) (valid)) (at_16_12))
+    (when (and (at_17_12) (valid)) (not (at_17_12)))
+    (when (not (and (at_17_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_12_18_12
+  :effect (and
+    (when (and (at_17_12) (valid)) (at_18_12))
+    (when (and (at_17_12) (valid)) (not (at_17_12)))
+    (when (not (and (at_17_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_12_17_11
+  :effect (and
+    (when (and (at_17_12) (valid)) (at_17_11))
+    (when (and (at_17_12) (valid)) (not (at_17_12)))
+    (when (not (and (at_17_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_12_17_13
+  :effect (and
+    (when (and (at_17_12) (valid)) (at_17_13))
+    (when (and (at_17_12) (valid)) (not (at_17_12)))
+    (when (not (and (at_17_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_13_16_13
+  :effect (and
+    (when (and (at_17_13) (valid)) (at_16_13))
+    (when (and (at_17_13) (valid)) (not (at_17_13)))
+    (when (not (and (at_17_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_13_18_13
+  :effect (and
+    (when (and (at_17_13) (valid)) (at_18_13))
+    (when (and (at_17_13) (valid)) (not (at_17_13)))
+    (when (not (and (at_17_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_13_17_12
+  :effect (and
+    (when (and (at_17_13) (valid)) (at_17_12))
+    (when (and (at_17_13) (valid)) (not (at_17_13)))
+    (when (not (and (at_17_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_13_17_14
+  :effect (and
+    (when (and (at_17_13) (valid)) (at_17_14))
+    (when (and (at_17_13) (valid)) (not (at_17_13)))
+    (when (not (and (at_17_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_14_16_14
+  :effect (and
+    (when (and (at_17_14) (valid)) (at_16_14))
+    (when (and (at_17_14) (valid)) (not (at_17_14)))
+    (when (not (and (at_17_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_14_18_14
+  :effect (and
+    (when (and (at_17_14) (valid)) (at_18_14))
+    (when (and (at_17_14) (valid)) (not (at_17_14)))
+    (when (not (and (at_17_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_14_17_13
+  :effect (and
+    (when (and (at_17_14) (valid)) (at_17_13))
+    (when (and (at_17_14) (valid)) (not (at_17_14)))
+    (when (not (and (at_17_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_14_17_15
+  :effect (and
+    (when (and (at_17_14) (valid)) (at_17_15))
+    (when (and (at_17_14) (valid)) (not (at_17_14)))
+    (when (not (and (at_17_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_15_16_15
+  :effect (and
+    (when (and (at_17_15) (valid)) (at_16_15))
+    (when (and (at_17_15) (valid)) (not (at_17_15)))
+    (when (not (and (at_17_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_15_18_15
+  :effect (and
+    (when (and (at_17_15) (valid)) (at_18_15))
+    (when (and (at_17_15) (valid)) (not (at_17_15)))
+    (when (not (and (at_17_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_15_17_14
+  :effect (and
+    (when (and (at_17_15) (valid)) (at_17_14))
+    (when (and (at_17_15) (valid)) (not (at_17_15)))
+    (when (not (and (at_17_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_15_17_16
+  :effect (and
+    (when (and (at_17_15) (valid)) (at_17_16))
+    (when (and (at_17_15) (valid)) (not (at_17_15)))
+    (when (not (and (at_17_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_16_16_16
+  :effect (and
+    (when (and (at_17_16) (valid)) (at_16_16))
+    (when (and (at_17_16) (valid)) (not (at_17_16)))
+    (when (not (and (at_17_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_16_18_16
+  :effect (and
+    (when (and (at_17_16) (valid)) (at_18_16))
+    (when (and (at_17_16) (valid)) (not (at_17_16)))
+    (when (not (and (at_17_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_16_17_15
+  :effect (and
+    (when (and (at_17_16) (valid)) (at_17_15))
+    (when (and (at_17_16) (valid)) (not (at_17_16)))
+    (when (not (and (at_17_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_16_17_17
+  :effect (and
+    (when (and (at_17_16) (valid)) (at_17_17))
+    (when (and (at_17_16) (valid)) (not (at_17_16)))
+    (when (not (and (at_17_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_17_16_17
+  :effect (and
+    (when (and (at_17_17) (valid)) (at_16_17))
+    (when (and (at_17_17) (valid)) (not (at_17_17)))
+    (when (not (and (at_17_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_17_18_17
+  :effect (and
+    (when (and (at_17_17) (valid)) (at_18_17))
+    (when (and (at_17_17) (valid)) (not (at_17_17)))
+    (when (not (and (at_17_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_17_17_16
+  :effect (and
+    (when (and (at_17_17) (valid)) (at_17_16))
+    (when (and (at_17_17) (valid)) (not (at_17_17)))
+    (when (not (and (at_17_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_17_17_18
+  :effect (and
+    (when (and (at_17_17) (valid)) (at_17_18))
+    (when (and (at_17_17) (valid)) (not (at_17_17)))
+    (when (not (and (at_17_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_18_16_18
+  :effect (and
+    (when (and (at_17_18) (valid)) (at_16_18))
+    (when (and (at_17_18) (valid)) (not (at_17_18)))
+    (when (not (and (at_17_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_18_18_18
+  :effect (and
+    (when (and (at_17_18) (valid)) (at_18_18))
+    (when (and (at_17_18) (valid)) (not (at_17_18)))
+    (when (not (and (at_17_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_18_17_17
+  :effect (and
+    (when (and (at_17_18) (valid)) (at_17_17))
+    (when (and (at_17_18) (valid)) (not (at_17_18)))
+    (when (not (and (at_17_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_18_17_19
+  :effect (and
+    (when (and (at_17_18) (valid)) (at_17_19))
+    (when (and (at_17_18) (valid)) (not (at_17_18)))
+    (when (not (and (at_17_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_19_16_19
+  :effect (and
+    (when (and (at_17_19) (valid)) (at_16_19))
+    (when (and (at_17_19) (valid)) (not (at_17_19)))
+    (when (not (and (at_17_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_19_18_19
+  :effect (and
+    (when (and (at_17_19) (valid)) (at_18_19))
+    (when (and (at_17_19) (valid)) (not (at_17_19)))
+    (when (not (and (at_17_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_19_17_18
+  :effect (and
+    (when (and (at_17_19) (valid)) (at_17_18))
+    (when (and (at_17_19) (valid)) (not (at_17_19)))
+    (when (not (and (at_17_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_19_17_20
+  :effect (and
+    (when (and (at_17_19) (valid)) (at_17_20))
+    (when (and (at_17_19) (valid)) (not (at_17_19)))
+    (when (not (and (at_17_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_20_16_20
+  :effect (and
+    (when (and (at_17_20) (valid)) (at_16_20))
+    (when (and (at_17_20) (valid)) (not (at_17_20)))
+    (when (not (and (at_17_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_20_18_20
+  :effect (and
+    (when (and (at_17_20) (valid)) (at_18_20))
+    (when (and (at_17_20) (valid)) (not (at_17_20)))
+    (when (not (and (at_17_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_20_17_19
+  :effect (and
+    (when (and (at_17_20) (valid)) (at_17_19))
+    (when (and (at_17_20) (valid)) (not (at_17_20)))
+    (when (not (and (at_17_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_20_17_21
+  :effect (and
+    (when (and (at_17_20) (valid)) (at_17_21))
+    (when (and (at_17_20) (valid)) (not (at_17_20)))
+    (when (not (and (at_17_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_21_16_21
+  :effect (and
+    (when (and (at_17_21) (valid)) (at_16_21))
+    (when (and (at_17_21) (valid)) (not (at_17_21)))
+    (when (not (and (at_17_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_21_18_21
+  :effect (and
+    (when (and (at_17_21) (valid)) (at_18_21))
+    (when (and (at_17_21) (valid)) (not (at_17_21)))
+    (when (not (and (at_17_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_21_17_20
+  :effect (and
+    (when (and (at_17_21) (valid)) (at_17_20))
+    (when (and (at_17_21) (valid)) (not (at_17_21)))
+    (when (not (and (at_17_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_21_17_22
+  :effect (and
+    (when (and (at_17_21) (valid)) (at_17_22))
+    (when (and (at_17_21) (valid)) (not (at_17_21)))
+    (when (not (and (at_17_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_22_16_22
+  :effect (and
+    (when (and (at_17_22) (valid)) (at_16_22))
+    (when (and (at_17_22) (valid)) (not (at_17_22)))
+    (when (not (and (at_17_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_22_18_22
+  :effect (and
+    (when (and (at_17_22) (valid)) (at_18_22))
+    (when (and (at_17_22) (valid)) (not (at_17_22)))
+    (when (not (and (at_17_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_22_17_21
+  :effect (and
+    (when (and (at_17_22) (valid)) (at_17_21))
+    (when (and (at_17_22) (valid)) (not (at_17_22)))
+    (when (not (and (at_17_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_22_17_23
+  :effect (and
+    (when (and (at_17_22) (valid)) (at_17_23))
+    (when (and (at_17_22) (valid)) (not (at_17_22)))
+    (when (not (and (at_17_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_23_16_23
+  :effect (and
+    (when (and (at_17_23) (valid)) (at_16_23))
+    (when (and (at_17_23) (valid)) (not (at_17_23)))
+    (when (not (and (at_17_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_23_18_23
+  :effect (and
+    (when (and (at_17_23) (valid)) (at_18_23))
+    (when (and (at_17_23) (valid)) (not (at_17_23)))
+    (when (not (and (at_17_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_23_17_22
+  :effect (and
+    (when (and (at_17_23) (valid)) (at_17_22))
+    (when (and (at_17_23) (valid)) (not (at_17_23)))
+    (when (not (and (at_17_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_23_17_24
+  :effect (and
+    (when (and (at_17_23) (valid)) (at_17_24))
+    (when (and (at_17_23) (valid)) (not (at_17_23)))
+    (when (not (and (at_17_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_24_16_24
+  :effect (and
+    (when (and (at_17_24) (valid)) (at_16_24))
+    (when (and (at_17_24) (valid)) (not (at_17_24)))
+    (when (not (and (at_17_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_24_18_24
+  :effect (and
+    (when (and (at_17_24) (valid)) (at_18_24))
+    (when (and (at_17_24) (valid)) (not (at_17_24)))
+    (when (not (and (at_17_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_24_17_23
+  :effect (and
+    (when (and (at_17_24) (valid)) (at_17_23))
+    (when (and (at_17_24) (valid)) (not (at_17_24)))
+    (when (not (and (at_17_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_24_17_25
+  :effect (and
+    (when (and (at_17_24) (valid)) (at_17_25))
+    (when (and (at_17_24) (valid)) (not (at_17_24)))
+    (when (not (and (at_17_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_25_16_25
+  :effect (and
+    (when (and (at_17_25) (valid)) (at_16_25))
+    (when (and (at_17_25) (valid)) (not (at_17_25)))
+    (when (not (and (at_17_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_25_18_25
+  :effect (and
+    (when (and (at_17_25) (valid)) (at_18_25))
+    (when (and (at_17_25) (valid)) (not (at_17_25)))
+    (when (not (and (at_17_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_25_17_24
+  :effect (and
+    (when (and (at_17_25) (valid)) (at_17_24))
+    (when (and (at_17_25) (valid)) (not (at_17_25)))
+    (when (not (and (at_17_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_25_17_26
+  :effect (and
+    (when (and (at_17_25) (valid)) (at_17_26))
+    (when (and (at_17_25) (valid)) (not (at_17_25)))
+    (when (not (and (at_17_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_26_16_26
+  :effect (and
+    (when (and (at_17_26) (valid)) (at_16_26))
+    (when (and (at_17_26) (valid)) (not (at_17_26)))
+    (when (not (and (at_17_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_26_18_26
+  :effect (and
+    (when (and (at_17_26) (valid)) (at_18_26))
+    (when (and (at_17_26) (valid)) (not (at_17_26)))
+    (when (not (and (at_17_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_26_17_25
+  :effect (and
+    (when (and (at_17_26) (valid)) (at_17_25))
+    (when (and (at_17_26) (valid)) (not (at_17_26)))
+    (when (not (and (at_17_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_26_17_27
+  :effect (and
+    (when (and (at_17_26) (valid)) (at_17_27))
+    (when (and (at_17_26) (valid)) (not (at_17_26)))
+    (when (not (and (at_17_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_27_16_27
+  :effect (and
+    (when (and (at_17_27) (valid)) (at_16_27))
+    (when (and (at_17_27) (valid)) (not (at_17_27)))
+    (when (not (and (at_17_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_27_18_27
+  :effect (and
+    (when (and (at_17_27) (valid)) (at_18_27))
+    (when (and (at_17_27) (valid)) (not (at_17_27)))
+    (when (not (and (at_17_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_27_17_26
+  :effect (and
+    (when (and (at_17_27) (valid)) (at_17_26))
+    (when (and (at_17_27) (valid)) (not (at_17_27)))
+    (when (not (and (at_17_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_27_17_28
+  :effect (and
+    (when (and (at_17_27) (valid)) (at_17_28))
+    (when (and (at_17_27) (valid)) (not (at_17_27)))
+    (when (not (and (at_17_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_28_16_28
+  :effect (and
+    (when (and (at_17_28) (valid)) (at_16_28))
+    (when (and (at_17_28) (valid)) (not (at_17_28)))
+    (when (not (and (at_17_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_28_18_28
+  :effect (and
+    (when (and (at_17_28) (valid)) (at_18_28))
+    (when (and (at_17_28) (valid)) (not (at_17_28)))
+    (when (not (and (at_17_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_28_17_27
+  :effect (and
+    (when (and (at_17_28) (valid)) (at_17_27))
+    (when (and (at_17_28) (valid)) (not (at_17_28)))
+    (when (not (and (at_17_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_28_17_29
+  :effect (and
+    (when (and (at_17_28) (valid)) (at_17_29))
+    (when (and (at_17_28) (valid)) (not (at_17_28)))
+    (when (not (and (at_17_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_29_16_29
+  :effect (and
+    (when (and (at_17_29) (valid)) (at_16_29))
+    (when (and (at_17_29) (valid)) (not (at_17_29)))
+    (when (not (and (at_17_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_29_18_29
+  :effect (and
+    (when (and (at_17_29) (valid)) (at_18_29))
+    (when (and (at_17_29) (valid)) (not (at_17_29)))
+    (when (not (and (at_17_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_29_17_28
+  :effect (and
+    (when (and (at_17_29) (valid)) (at_17_28))
+    (when (and (at_17_29) (valid)) (not (at_17_29)))
+    (when (not (and (at_17_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_29_17_30
+  :effect (and
+    (when (and (at_17_29) (valid)) (at_17_30))
+    (when (and (at_17_29) (valid)) (not (at_17_29)))
+    (when (not (and (at_17_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_30_16_30
+  :effect (and
+    (when (and (at_17_30) (valid)) (at_16_30))
+    (when (and (at_17_30) (valid)) (not (at_17_30)))
+    (when (not (and (at_17_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_30_18_30
+  :effect (and
+    (when (and (at_17_30) (valid)) (at_18_30))
+    (when (and (at_17_30) (valid)) (not (at_17_30)))
+    (when (not (and (at_17_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_30_17_29
+  :effect (and
+    (when (and (at_17_30) (valid)) (at_17_29))
+    (when (and (at_17_30) (valid)) (not (at_17_30)))
+    (when (not (and (at_17_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_30_17_31
+  :effect (and
+    (when (and (at_17_30) (valid)) (at_17_31))
+    (when (and (at_17_30) (valid)) (not (at_17_30)))
+    (when (not (and (at_17_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_31_16_31
+  :effect (and
+    (when (and (at_17_31) (valid)) (at_16_31))
+    (when (and (at_17_31) (valid)) (not (at_17_31)))
+    (when (not (and (at_17_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_31_18_31
+  :effect (and
+    (when (and (at_17_31) (valid)) (at_18_31))
+    (when (and (at_17_31) (valid)) (not (at_17_31)))
+    (when (not (and (at_17_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_17_31_17_30
+  :effect (and
+    (when (and (at_17_31) (valid)) (at_17_30))
+    (when (and (at_17_31) (valid)) (not (at_17_31)))
+    (when (not (and (at_17_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_0_17_0
+  :effect (and
+    (when (and (at_18_0) (valid)) (at_17_0))
+    (when (and (at_18_0) (valid)) (not (at_18_0)))
+    (when (not (and (at_18_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_0_19_0
+  :effect (and
+    (when (and (at_18_0) (valid)) (at_19_0))
+    (when (and (at_18_0) (valid)) (not (at_18_0)))
+    (when (not (and (at_18_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_0_18_1
+  :effect (and
+    (when (and (at_18_0) (valid)) (at_18_1))
+    (when (and (at_18_0) (valid)) (not (at_18_0)))
+    (when (not (and (at_18_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_1_17_1
+  :effect (and
+    (when (and (at_18_1) (valid)) (at_17_1))
+    (when (and (at_18_1) (valid)) (not (at_18_1)))
+    (when (not (and (at_18_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_1_19_1
+  :effect (and
+    (when (and (at_18_1) (valid)) (at_19_1))
+    (when (and (at_18_1) (valid)) (not (at_18_1)))
+    (when (not (and (at_18_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_1_18_0
+  :effect (and
+    (when (and (at_18_1) (valid)) (at_18_0))
+    (when (and (at_18_1) (valid)) (not (at_18_1)))
+    (when (not (and (at_18_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_1_18_2
+  :effect (and
+    (when (and (at_18_1) (valid)) (at_18_2))
+    (when (and (at_18_1) (valid)) (not (at_18_1)))
+    (when (not (and (at_18_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_2_17_2
+  :effect (and
+    (when (and (at_18_2) (valid)) (at_17_2))
+    (when (and (at_18_2) (valid)) (not (at_18_2)))
+    (when (not (and (at_18_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_2_19_2
+  :effect (and
+    (when (and (at_18_2) (valid)) (at_19_2))
+    (when (and (at_18_2) (valid)) (not (at_18_2)))
+    (when (not (and (at_18_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_2_18_1
+  :effect (and
+    (when (and (at_18_2) (valid)) (at_18_1))
+    (when (and (at_18_2) (valid)) (not (at_18_2)))
+    (when (not (and (at_18_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_2_18_3
+  :effect (and
+    (when (and (at_18_2) (valid)) (at_18_3))
+    (when (and (at_18_2) (valid)) (not (at_18_2)))
+    (when (not (and (at_18_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_3_17_3
+  :effect (and
+    (when (and (at_18_3) (valid)) (at_17_3))
+    (when (and (at_18_3) (valid)) (not (at_18_3)))
+    (when (not (and (at_18_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_3_19_3
+  :effect (and
+    (when (and (at_18_3) (valid)) (at_19_3))
+    (when (and (at_18_3) (valid)) (not (at_18_3)))
+    (when (not (and (at_18_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_3_18_2
+  :effect (and
+    (when (and (at_18_3) (valid)) (at_18_2))
+    (when (and (at_18_3) (valid)) (not (at_18_3)))
+    (when (not (and (at_18_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_3_18_4
+  :effect (and
+    (when (and (at_18_3) (valid)) (at_18_4))
+    (when (and (at_18_3) (valid)) (not (at_18_3)))
+    (when (not (and (at_18_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_4_17_4
+  :effect (and
+    (when (and (at_18_4) (valid)) (at_17_4))
+    (when (and (at_18_4) (valid)) (not (at_18_4)))
+    (when (not (and (at_18_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_4_19_4
+  :effect (and
+    (when (and (at_18_4) (valid)) (at_19_4))
+    (when (and (at_18_4) (valid)) (not (at_18_4)))
+    (when (not (and (at_18_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_4_18_3
+  :effect (and
+    (when (and (at_18_4) (valid)) (at_18_3))
+    (when (and (at_18_4) (valid)) (not (at_18_4)))
+    (when (not (and (at_18_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_4_18_5
+  :effect (and
+    (when (and (at_18_4) (valid)) (at_18_5))
+    (when (and (at_18_4) (valid)) (not (at_18_4)))
+    (when (not (and (at_18_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_5_17_5
+  :effect (and
+    (when (and (at_18_5) (valid)) (at_17_5))
+    (when (and (at_18_5) (valid)) (not (at_18_5)))
+    (when (not (and (at_18_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_5_19_5
+  :effect (and
+    (when (and (at_18_5) (valid)) (at_19_5))
+    (when (and (at_18_5) (valid)) (not (at_18_5)))
+    (when (not (and (at_18_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_5_18_4
+  :effect (and
+    (when (and (at_18_5) (valid)) (at_18_4))
+    (when (and (at_18_5) (valid)) (not (at_18_5)))
+    (when (not (and (at_18_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_5_18_6
+  :effect (and
+    (when (and (at_18_5) (valid)) (at_18_6))
+    (when (and (at_18_5) (valid)) (not (at_18_5)))
+    (when (not (and (at_18_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_6_17_6
+  :effect (and
+    (when (and (at_18_6) (valid)) (at_17_6))
+    (when (and (at_18_6) (valid)) (not (at_18_6)))
+    (when (not (and (at_18_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_6_19_6
+  :effect (and
+    (when (and (at_18_6) (valid)) (at_19_6))
+    (when (and (at_18_6) (valid)) (not (at_18_6)))
+    (when (not (and (at_18_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_6_18_5
+  :effect (and
+    (when (and (at_18_6) (valid)) (at_18_5))
+    (when (and (at_18_6) (valid)) (not (at_18_6)))
+    (when (not (and (at_18_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_6_18_7
+  :effect (and
+    (when (and (at_18_6) (valid)) (at_18_7))
+    (when (and (at_18_6) (valid)) (not (at_18_6)))
+    (when (not (and (at_18_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_7_17_7
+  :effect (and
+    (when (and (at_18_7) (valid)) (at_17_7))
+    (when (and (at_18_7) (valid)) (not (at_18_7)))
+    (when (not (and (at_18_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_7_19_7
+  :effect (and
+    (when (and (at_18_7) (valid)) (at_19_7))
+    (when (and (at_18_7) (valid)) (not (at_18_7)))
+    (when (not (and (at_18_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_7_18_6
+  :effect (and
+    (when (and (at_18_7) (valid)) (at_18_6))
+    (when (and (at_18_7) (valid)) (not (at_18_7)))
+    (when (not (and (at_18_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_7_18_8
+  :effect (and
+    (when (and (at_18_7) (valid)) (at_18_8))
+    (when (and (at_18_7) (valid)) (not (at_18_7)))
+    (when (not (and (at_18_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_8_17_8
+  :effect (and
+    (when (and (at_18_8) (valid)) (at_17_8))
+    (when (and (at_18_8) (valid)) (not (at_18_8)))
+    (when (not (and (at_18_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_8_19_8
+  :effect (and
+    (when (and (at_18_8) (valid)) (at_19_8))
+    (when (and (at_18_8) (valid)) (not (at_18_8)))
+    (when (not (and (at_18_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_8_18_7
+  :effect (and
+    (when (and (at_18_8) (valid)) (at_18_7))
+    (when (and (at_18_8) (valid)) (not (at_18_8)))
+    (when (not (and (at_18_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_8_18_9
+  :effect (and
+    (when (and (at_18_8) (valid)) (at_18_9))
+    (when (and (at_18_8) (valid)) (not (at_18_8)))
+    (when (not (and (at_18_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_9_17_9
+  :effect (and
+    (when (and (at_18_9) (valid)) (at_17_9))
+    (when (and (at_18_9) (valid)) (not (at_18_9)))
+    (when (not (and (at_18_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_9_19_9
+  :effect (and
+    (when (and (at_18_9) (valid)) (at_19_9))
+    (when (and (at_18_9) (valid)) (not (at_18_9)))
+    (when (not (and (at_18_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_9_18_8
+  :effect (and
+    (when (and (at_18_9) (valid)) (at_18_8))
+    (when (and (at_18_9) (valid)) (not (at_18_9)))
+    (when (not (and (at_18_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_9_18_10
+  :effect (and
+    (when (and (at_18_9) (valid)) (at_18_10))
+    (when (and (at_18_9) (valid)) (not (at_18_9)))
+    (when (not (and (at_18_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_10_17_10
+  :effect (and
+    (when (and (at_18_10) (valid)) (at_17_10))
+    (when (and (at_18_10) (valid)) (not (at_18_10)))
+    (when (not (and (at_18_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_10_19_10
+  :effect (and
+    (when (and (at_18_10) (valid)) (at_19_10))
+    (when (and (at_18_10) (valid)) (not (at_18_10)))
+    (when (not (and (at_18_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_10_18_9
+  :effect (and
+    (when (and (at_18_10) (valid)) (at_18_9))
+    (when (and (at_18_10) (valid)) (not (at_18_10)))
+    (when (not (and (at_18_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_10_18_11
+  :effect (and
+    (when (and (at_18_10) (valid)) (at_18_11))
+    (when (and (at_18_10) (valid)) (not (at_18_10)))
+    (when (not (and (at_18_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_11_17_11
+  :effect (and
+    (when (and (at_18_11) (valid)) (at_17_11))
+    (when (and (at_18_11) (valid)) (not (at_18_11)))
+    (when (not (and (at_18_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_11_19_11
+  :effect (and
+    (when (and (at_18_11) (valid)) (at_19_11))
+    (when (and (at_18_11) (valid)) (not (at_18_11)))
+    (when (not (and (at_18_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_11_18_10
+  :effect (and
+    (when (and (at_18_11) (valid)) (at_18_10))
+    (when (and (at_18_11) (valid)) (not (at_18_11)))
+    (when (not (and (at_18_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_11_18_12
+  :effect (and
+    (when (and (at_18_11) (valid)) (at_18_12))
+    (when (and (at_18_11) (valid)) (not (at_18_11)))
+    (when (not (and (at_18_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_12_17_12
+  :effect (and
+    (when (and (at_18_12) (valid)) (at_17_12))
+    (when (and (at_18_12) (valid)) (not (at_18_12)))
+    (when (not (and (at_18_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_12_19_12
+  :effect (and
+    (when (and (at_18_12) (valid)) (at_19_12))
+    (when (and (at_18_12) (valid)) (not (at_18_12)))
+    (when (not (and (at_18_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_12_18_11
+  :effect (and
+    (when (and (at_18_12) (valid)) (at_18_11))
+    (when (and (at_18_12) (valid)) (not (at_18_12)))
+    (when (not (and (at_18_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_12_18_13
+  :effect (and
+    (when (and (at_18_12) (valid)) (at_18_13))
+    (when (and (at_18_12) (valid)) (not (at_18_12)))
+    (when (not (and (at_18_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_13_17_13
+  :effect (and
+    (when (and (at_18_13) (valid)) (at_17_13))
+    (when (and (at_18_13) (valid)) (not (at_18_13)))
+    (when (not (and (at_18_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_13_19_13
+  :effect (and
+    (when (and (at_18_13) (valid)) (at_19_13))
+    (when (and (at_18_13) (valid)) (not (at_18_13)))
+    (when (not (and (at_18_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_13_18_12
+  :effect (and
+    (when (and (at_18_13) (valid)) (at_18_12))
+    (when (and (at_18_13) (valid)) (not (at_18_13)))
+    (when (not (and (at_18_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_13_18_14
+  :effect (and
+    (when (and (at_18_13) (valid)) (at_18_14))
+    (when (and (at_18_13) (valid)) (not (at_18_13)))
+    (when (not (and (at_18_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_14_17_14
+  :effect (and
+    (when (and (at_18_14) (valid)) (at_17_14))
+    (when (and (at_18_14) (valid)) (not (at_18_14)))
+    (when (not (and (at_18_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_14_19_14
+  :effect (and
+    (when (and (at_18_14) (valid)) (at_19_14))
+    (when (and (at_18_14) (valid)) (not (at_18_14)))
+    (when (not (and (at_18_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_14_18_13
+  :effect (and
+    (when (and (at_18_14) (valid)) (at_18_13))
+    (when (and (at_18_14) (valid)) (not (at_18_14)))
+    (when (not (and (at_18_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_14_18_15
+  :effect (and
+    (when (and (at_18_14) (valid)) (at_18_15))
+    (when (and (at_18_14) (valid)) (not (at_18_14)))
+    (when (not (and (at_18_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_15_17_15
+  :effect (and
+    (when (and (at_18_15) (valid)) (at_17_15))
+    (when (and (at_18_15) (valid)) (not (at_18_15)))
+    (when (not (and (at_18_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_15_19_15
+  :effect (and
+    (when (and (at_18_15) (valid)) (at_19_15))
+    (when (and (at_18_15) (valid)) (not (at_18_15)))
+    (when (not (and (at_18_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_15_18_14
+  :effect (and
+    (when (and (at_18_15) (valid)) (at_18_14))
+    (when (and (at_18_15) (valid)) (not (at_18_15)))
+    (when (not (and (at_18_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_15_18_16
+  :effect (and
+    (when (and (at_18_15) (valid)) (at_18_16))
+    (when (and (at_18_15) (valid)) (not (at_18_15)))
+    (when (not (and (at_18_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_16_17_16
+  :effect (and
+    (when (and (at_18_16) (valid)) (at_17_16))
+    (when (and (at_18_16) (valid)) (not (at_18_16)))
+    (when (not (and (at_18_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_16_19_16
+  :effect (and
+    (when (and (at_18_16) (valid)) (at_19_16))
+    (when (and (at_18_16) (valid)) (not (at_18_16)))
+    (when (not (and (at_18_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_16_18_15
+  :effect (and
+    (when (and (at_18_16) (valid)) (at_18_15))
+    (when (and (at_18_16) (valid)) (not (at_18_16)))
+    (when (not (and (at_18_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_16_18_17
+  :effect (and
+    (when (and (at_18_16) (valid)) (at_18_17))
+    (when (and (at_18_16) (valid)) (not (at_18_16)))
+    (when (not (and (at_18_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_17_17_17
+  :effect (and
+    (when (and (at_18_17) (valid)) (at_17_17))
+    (when (and (at_18_17) (valid)) (not (at_18_17)))
+    (when (not (and (at_18_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_17_19_17
+  :effect (and
+    (when (and (at_18_17) (valid)) (at_19_17))
+    (when (and (at_18_17) (valid)) (not (at_18_17)))
+    (when (not (and (at_18_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_17_18_16
+  :effect (and
+    (when (and (at_18_17) (valid)) (at_18_16))
+    (when (and (at_18_17) (valid)) (not (at_18_17)))
+    (when (not (and (at_18_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_17_18_18
+  :effect (and
+    (when (and (at_18_17) (valid)) (at_18_18))
+    (when (and (at_18_17) (valid)) (not (at_18_17)))
+    (when (not (and (at_18_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_18_17_18
+  :effect (and
+    (when (and (at_18_18) (valid)) (at_17_18))
+    (when (and (at_18_18) (valid)) (not (at_18_18)))
+    (when (not (and (at_18_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_18_19_18
+  :effect (and
+    (when (and (at_18_18) (valid)) (at_19_18))
+    (when (and (at_18_18) (valid)) (not (at_18_18)))
+    (when (not (and (at_18_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_18_18_17
+  :effect (and
+    (when (and (at_18_18) (valid)) (at_18_17))
+    (when (and (at_18_18) (valid)) (not (at_18_18)))
+    (when (not (and (at_18_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_18_18_19
+  :effect (and
+    (when (and (at_18_18) (valid)) (at_18_19))
+    (when (and (at_18_18) (valid)) (not (at_18_18)))
+    (when (not (and (at_18_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_19_17_19
+  :effect (and
+    (when (and (at_18_19) (valid)) (at_17_19))
+    (when (and (at_18_19) (valid)) (not (at_18_19)))
+    (when (not (and (at_18_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_19_19_19
+  :effect (and
+    (when (and (at_18_19) (valid)) (at_19_19))
+    (when (and (at_18_19) (valid)) (not (at_18_19)))
+    (when (not (and (at_18_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_19_18_18
+  :effect (and
+    (when (and (at_18_19) (valid)) (at_18_18))
+    (when (and (at_18_19) (valid)) (not (at_18_19)))
+    (when (not (and (at_18_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_19_18_20
+  :effect (and
+    (when (and (at_18_19) (valid)) (at_18_20))
+    (when (and (at_18_19) (valid)) (not (at_18_19)))
+    (when (not (and (at_18_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_20_17_20
+  :effect (and
+    (when (and (at_18_20) (valid)) (at_17_20))
+    (when (and (at_18_20) (valid)) (not (at_18_20)))
+    (when (not (and (at_18_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_20_19_20
+  :effect (and
+    (when (and (at_18_20) (valid)) (at_19_20))
+    (when (and (at_18_20) (valid)) (not (at_18_20)))
+    (when (not (and (at_18_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_20_18_19
+  :effect (and
+    (when (and (at_18_20) (valid)) (at_18_19))
+    (when (and (at_18_20) (valid)) (not (at_18_20)))
+    (when (not (and (at_18_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_20_18_21
+  :effect (and
+    (when (and (at_18_20) (valid)) (at_18_21))
+    (when (and (at_18_20) (valid)) (not (at_18_20)))
+    (when (not (and (at_18_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_21_17_21
+  :effect (and
+    (when (and (at_18_21) (valid)) (at_17_21))
+    (when (and (at_18_21) (valid)) (not (at_18_21)))
+    (when (not (and (at_18_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_21_19_21
+  :effect (and
+    (when (and (at_18_21) (valid)) (at_19_21))
+    (when (and (at_18_21) (valid)) (not (at_18_21)))
+    (when (not (and (at_18_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_21_18_20
+  :effect (and
+    (when (and (at_18_21) (valid)) (at_18_20))
+    (when (and (at_18_21) (valid)) (not (at_18_21)))
+    (when (not (and (at_18_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_21_18_22
+  :effect (and
+    (when (and (at_18_21) (valid)) (at_18_22))
+    (when (and (at_18_21) (valid)) (not (at_18_21)))
+    (when (not (and (at_18_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_22_17_22
+  :effect (and
+    (when (and (at_18_22) (valid)) (at_17_22))
+    (when (and (at_18_22) (valid)) (not (at_18_22)))
+    (when (not (and (at_18_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_22_19_22
+  :effect (and
+    (when (and (at_18_22) (valid)) (at_19_22))
+    (when (and (at_18_22) (valid)) (not (at_18_22)))
+    (when (not (and (at_18_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_22_18_21
+  :effect (and
+    (when (and (at_18_22) (valid)) (at_18_21))
+    (when (and (at_18_22) (valid)) (not (at_18_22)))
+    (when (not (and (at_18_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_22_18_23
+  :effect (and
+    (when (and (at_18_22) (valid)) (at_18_23))
+    (when (and (at_18_22) (valid)) (not (at_18_22)))
+    (when (not (and (at_18_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_23_17_23
+  :effect (and
+    (when (and (at_18_23) (valid)) (at_17_23))
+    (when (and (at_18_23) (valid)) (not (at_18_23)))
+    (when (not (and (at_18_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_23_19_23
+  :effect (and
+    (when (and (at_18_23) (valid)) (at_19_23))
+    (when (and (at_18_23) (valid)) (not (at_18_23)))
+    (when (not (and (at_18_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_23_18_22
+  :effect (and
+    (when (and (at_18_23) (valid)) (at_18_22))
+    (when (and (at_18_23) (valid)) (not (at_18_23)))
+    (when (not (and (at_18_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_23_18_24
+  :effect (and
+    (when (and (at_18_23) (valid)) (at_18_24))
+    (when (and (at_18_23) (valid)) (not (at_18_23)))
+    (when (not (and (at_18_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_24_17_24
+  :effect (and
+    (when (and (at_18_24) (valid)) (at_17_24))
+    (when (and (at_18_24) (valid)) (not (at_18_24)))
+    (when (not (and (at_18_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_24_19_24
+  :effect (and
+    (when (and (at_18_24) (valid)) (at_19_24))
+    (when (and (at_18_24) (valid)) (not (at_18_24)))
+    (when (not (and (at_18_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_24_18_23
+  :effect (and
+    (when (and (at_18_24) (valid)) (at_18_23))
+    (when (and (at_18_24) (valid)) (not (at_18_24)))
+    (when (not (and (at_18_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_24_18_25
+  :effect (and
+    (when (and (at_18_24) (valid)) (at_18_25))
+    (when (and (at_18_24) (valid)) (not (at_18_24)))
+    (when (not (and (at_18_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_25_17_25
+  :effect (and
+    (when (and (at_18_25) (valid)) (at_17_25))
+    (when (and (at_18_25) (valid)) (not (at_18_25)))
+    (when (not (and (at_18_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_25_19_25
+  :effect (and
+    (when (and (at_18_25) (valid)) (at_19_25))
+    (when (and (at_18_25) (valid)) (not (at_18_25)))
+    (when (not (and (at_18_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_25_18_24
+  :effect (and
+    (when (and (at_18_25) (valid)) (at_18_24))
+    (when (and (at_18_25) (valid)) (not (at_18_25)))
+    (when (not (and (at_18_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_25_18_26
+  :effect (and
+    (when (and (at_18_25) (valid)) (at_18_26))
+    (when (and (at_18_25) (valid)) (not (at_18_25)))
+    (when (not (and (at_18_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_26_17_26
+  :effect (and
+    (when (and (at_18_26) (valid)) (at_17_26))
+    (when (and (at_18_26) (valid)) (not (at_18_26)))
+    (when (not (and (at_18_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_26_19_26
+  :effect (and
+    (when (and (at_18_26) (valid)) (at_19_26))
+    (when (and (at_18_26) (valid)) (not (at_18_26)))
+    (when (not (and (at_18_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_26_18_25
+  :effect (and
+    (when (and (at_18_26) (valid)) (at_18_25))
+    (when (and (at_18_26) (valid)) (not (at_18_26)))
+    (when (not (and (at_18_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_26_18_27
+  :effect (and
+    (when (and (at_18_26) (valid)) (at_18_27))
+    (when (and (at_18_26) (valid)) (not (at_18_26)))
+    (when (not (and (at_18_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_27_17_27
+  :effect (and
+    (when (and (at_18_27) (valid)) (at_17_27))
+    (when (and (at_18_27) (valid)) (not (at_18_27)))
+    (when (not (and (at_18_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_27_19_27
+  :effect (and
+    (when (and (at_18_27) (valid)) (at_19_27))
+    (when (and (at_18_27) (valid)) (not (at_18_27)))
+    (when (not (and (at_18_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_27_18_26
+  :effect (and
+    (when (and (at_18_27) (valid)) (at_18_26))
+    (when (and (at_18_27) (valid)) (not (at_18_27)))
+    (when (not (and (at_18_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_27_18_28
+  :effect (and
+    (when (and (at_18_27) (valid)) (at_18_28))
+    (when (and (at_18_27) (valid)) (not (at_18_27)))
+    (when (not (and (at_18_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_28_17_28
+  :effect (and
+    (when (and (at_18_28) (valid)) (at_17_28))
+    (when (and (at_18_28) (valid)) (not (at_18_28)))
+    (when (not (and (at_18_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_28_19_28
+  :effect (and
+    (when (and (at_18_28) (valid)) (at_19_28))
+    (when (and (at_18_28) (valid)) (not (at_18_28)))
+    (when (not (and (at_18_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_28_18_27
+  :effect (and
+    (when (and (at_18_28) (valid)) (at_18_27))
+    (when (and (at_18_28) (valid)) (not (at_18_28)))
+    (when (not (and (at_18_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_28_18_29
+  :effect (and
+    (when (and (at_18_28) (valid)) (at_18_29))
+    (when (and (at_18_28) (valid)) (not (at_18_28)))
+    (when (not (and (at_18_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_29_17_29
+  :effect (and
+    (when (and (at_18_29) (valid)) (at_17_29))
+    (when (and (at_18_29) (valid)) (not (at_18_29)))
+    (when (not (and (at_18_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_29_19_29
+  :effect (and
+    (when (and (at_18_29) (valid)) (at_19_29))
+    (when (and (at_18_29) (valid)) (not (at_18_29)))
+    (when (not (and (at_18_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_29_18_28
+  :effect (and
+    (when (and (at_18_29) (valid)) (at_18_28))
+    (when (and (at_18_29) (valid)) (not (at_18_29)))
+    (when (not (and (at_18_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_29_18_30
+  :effect (and
+    (when (and (at_18_29) (valid)) (at_18_30))
+    (when (and (at_18_29) (valid)) (not (at_18_29)))
+    (when (not (and (at_18_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_30_17_30
+  :effect (and
+    (when (and (at_18_30) (valid)) (at_17_30))
+    (when (and (at_18_30) (valid)) (not (at_18_30)))
+    (when (not (and (at_18_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_30_19_30
+  :effect (and
+    (when (and (at_18_30) (valid)) (at_19_30))
+    (when (and (at_18_30) (valid)) (not (at_18_30)))
+    (when (not (and (at_18_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_30_18_29
+  :effect (and
+    (when (and (at_18_30) (valid)) (at_18_29))
+    (when (and (at_18_30) (valid)) (not (at_18_30)))
+    (when (not (and (at_18_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_30_18_31
+  :effect (and
+    (when (and (at_18_30) (valid)) (at_18_31))
+    (when (and (at_18_30) (valid)) (not (at_18_30)))
+    (when (not (and (at_18_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_31_17_31
+  :effect (and
+    (when (and (at_18_31) (valid)) (at_17_31))
+    (when (and (at_18_31) (valid)) (not (at_18_31)))
+    (when (not (and (at_18_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_31_19_31
+  :effect (and
+    (when (and (at_18_31) (valid)) (at_19_31))
+    (when (and (at_18_31) (valid)) (not (at_18_31)))
+    (when (not (and (at_18_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_18_31_18_30
+  :effect (and
+    (when (and (at_18_31) (valid)) (at_18_30))
+    (when (and (at_18_31) (valid)) (not (at_18_31)))
+    (when (not (and (at_18_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_0_18_0
+  :effect (and
+    (when (and (at_19_0) (valid)) (at_18_0))
+    (when (and (at_19_0) (valid)) (not (at_19_0)))
+    (when (not (and (at_19_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_0_20_0
+  :effect (and
+    (when (and (at_19_0) (valid)) (at_20_0))
+    (when (and (at_19_0) (valid)) (not (at_19_0)))
+    (when (not (and (at_19_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_0_19_1
+  :effect (and
+    (when (and (at_19_0) (valid)) (at_19_1))
+    (when (and (at_19_0) (valid)) (not (at_19_0)))
+    (when (not (and (at_19_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_1_18_1
+  :effect (and
+    (when (and (at_19_1) (valid)) (at_18_1))
+    (when (and (at_19_1) (valid)) (not (at_19_1)))
+    (when (not (and (at_19_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_1_20_1
+  :effect (and
+    (when (and (at_19_1) (valid)) (at_20_1))
+    (when (and (at_19_1) (valid)) (not (at_19_1)))
+    (when (not (and (at_19_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_1_19_0
+  :effect (and
+    (when (and (at_19_1) (valid)) (at_19_0))
+    (when (and (at_19_1) (valid)) (not (at_19_1)))
+    (when (not (and (at_19_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_1_19_2
+  :effect (and
+    (when (and (at_19_1) (valid)) (at_19_2))
+    (when (and (at_19_1) (valid)) (not (at_19_1)))
+    (when (not (and (at_19_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_2_18_2
+  :effect (and
+    (when (and (at_19_2) (valid)) (at_18_2))
+    (when (and (at_19_2) (valid)) (not (at_19_2)))
+    (when (not (and (at_19_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_2_20_2
+  :effect (and
+    (when (and (at_19_2) (valid)) (at_20_2))
+    (when (and (at_19_2) (valid)) (not (at_19_2)))
+    (when (not (and (at_19_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_2_19_1
+  :effect (and
+    (when (and (at_19_2) (valid)) (at_19_1))
+    (when (and (at_19_2) (valid)) (not (at_19_2)))
+    (when (not (and (at_19_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_2_19_3
+  :effect (and
+    (when (and (at_19_2) (valid)) (at_19_3))
+    (when (and (at_19_2) (valid)) (not (at_19_2)))
+    (when (not (and (at_19_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_3_18_3
+  :effect (and
+    (when (and (at_19_3) (valid)) (at_18_3))
+    (when (and (at_19_3) (valid)) (not (at_19_3)))
+    (when (not (and (at_19_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_3_20_3
+  :effect (and
+    (when (and (at_19_3) (valid)) (at_20_3))
+    (when (and (at_19_3) (valid)) (not (at_19_3)))
+    (when (not (and (at_19_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_3_19_2
+  :effect (and
+    (when (and (at_19_3) (valid)) (at_19_2))
+    (when (and (at_19_3) (valid)) (not (at_19_3)))
+    (when (not (and (at_19_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_3_19_4
+  :effect (and
+    (when (and (at_19_3) (valid)) (at_19_4))
+    (when (and (at_19_3) (valid)) (not (at_19_3)))
+    (when (not (and (at_19_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_4_18_4
+  :effect (and
+    (when (and (at_19_4) (valid)) (at_18_4))
+    (when (and (at_19_4) (valid)) (not (at_19_4)))
+    (when (not (and (at_19_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_4_20_4
+  :effect (and
+    (when (and (at_19_4) (valid)) (at_20_4))
+    (when (and (at_19_4) (valid)) (not (at_19_4)))
+    (when (not (and (at_19_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_4_19_3
+  :effect (and
+    (when (and (at_19_4) (valid)) (at_19_3))
+    (when (and (at_19_4) (valid)) (not (at_19_4)))
+    (when (not (and (at_19_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_4_19_5
+  :effect (and
+    (when (and (at_19_4) (valid)) (at_19_5))
+    (when (and (at_19_4) (valid)) (not (at_19_4)))
+    (when (not (and (at_19_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_5_18_5
+  :effect (and
+    (when (and (at_19_5) (valid)) (at_18_5))
+    (when (and (at_19_5) (valid)) (not (at_19_5)))
+    (when (not (and (at_19_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_5_20_5
+  :effect (and
+    (when (and (at_19_5) (valid)) (at_20_5))
+    (when (and (at_19_5) (valid)) (not (at_19_5)))
+    (when (not (and (at_19_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_5_19_4
+  :effect (and
+    (when (and (at_19_5) (valid)) (at_19_4))
+    (when (and (at_19_5) (valid)) (not (at_19_5)))
+    (when (not (and (at_19_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_5_19_6
+  :effect (and
+    (when (and (at_19_5) (valid)) (at_19_6))
+    (when (and (at_19_5) (valid)) (not (at_19_5)))
+    (when (not (and (at_19_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_6_18_6
+  :effect (and
+    (when (and (at_19_6) (valid)) (at_18_6))
+    (when (and (at_19_6) (valid)) (not (at_19_6)))
+    (when (not (and (at_19_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_6_20_6
+  :effect (and
+    (when (and (at_19_6) (valid)) (at_20_6))
+    (when (and (at_19_6) (valid)) (not (at_19_6)))
+    (when (not (and (at_19_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_6_19_5
+  :effect (and
+    (when (and (at_19_6) (valid)) (at_19_5))
+    (when (and (at_19_6) (valid)) (not (at_19_6)))
+    (when (not (and (at_19_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_6_19_7
+  :effect (and
+    (when (and (at_19_6) (valid)) (at_19_7))
+    (when (and (at_19_6) (valid)) (not (at_19_6)))
+    (when (not (and (at_19_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_7_18_7
+  :effect (and
+    (when (and (at_19_7) (valid)) (at_18_7))
+    (when (and (at_19_7) (valid)) (not (at_19_7)))
+    (when (not (and (at_19_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_7_20_7
+  :effect (and
+    (when (and (at_19_7) (valid)) (at_20_7))
+    (when (and (at_19_7) (valid)) (not (at_19_7)))
+    (when (not (and (at_19_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_7_19_6
+  :effect (and
+    (when (and (at_19_7) (valid)) (at_19_6))
+    (when (and (at_19_7) (valid)) (not (at_19_7)))
+    (when (not (and (at_19_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_7_19_8
+  :effect (and
+    (when (and (at_19_7) (valid)) (at_19_8))
+    (when (and (at_19_7) (valid)) (not (at_19_7)))
+    (when (not (and (at_19_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_8_18_8
+  :effect (and
+    (when (and (at_19_8) (valid)) (at_18_8))
+    (when (and (at_19_8) (valid)) (not (at_19_8)))
+    (when (not (and (at_19_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_8_20_8
+  :effect (and
+    (when (and (at_19_8) (valid)) (at_20_8))
+    (when (and (at_19_8) (valid)) (not (at_19_8)))
+    (when (not (and (at_19_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_8_19_7
+  :effect (and
+    (when (and (at_19_8) (valid)) (at_19_7))
+    (when (and (at_19_8) (valid)) (not (at_19_8)))
+    (when (not (and (at_19_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_8_19_9
+  :effect (and
+    (when (and (at_19_8) (valid)) (at_19_9))
+    (when (and (at_19_8) (valid)) (not (at_19_8)))
+    (when (not (and (at_19_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_9_18_9
+  :effect (and
+    (when (and (at_19_9) (valid)) (at_18_9))
+    (when (and (at_19_9) (valid)) (not (at_19_9)))
+    (when (not (and (at_19_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_9_20_9
+  :effect (and
+    (when (and (at_19_9) (valid)) (at_20_9))
+    (when (and (at_19_9) (valid)) (not (at_19_9)))
+    (when (not (and (at_19_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_9_19_8
+  :effect (and
+    (when (and (at_19_9) (valid)) (at_19_8))
+    (when (and (at_19_9) (valid)) (not (at_19_9)))
+    (when (not (and (at_19_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_9_19_10
+  :effect (and
+    (when (and (at_19_9) (valid)) (at_19_10))
+    (when (and (at_19_9) (valid)) (not (at_19_9)))
+    (when (not (and (at_19_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_10_18_10
+  :effect (and
+    (when (and (at_19_10) (valid)) (at_18_10))
+    (when (and (at_19_10) (valid)) (not (at_19_10)))
+    (when (not (and (at_19_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_10_20_10
+  :effect (and
+    (when (and (at_19_10) (valid)) (at_20_10))
+    (when (and (at_19_10) (valid)) (not (at_19_10)))
+    (when (not (and (at_19_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_10_19_9
+  :effect (and
+    (when (and (at_19_10) (valid)) (at_19_9))
+    (when (and (at_19_10) (valid)) (not (at_19_10)))
+    (when (not (and (at_19_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_10_19_11
+  :effect (and
+    (when (and (at_19_10) (valid)) (at_19_11))
+    (when (and (at_19_10) (valid)) (not (at_19_10)))
+    (when (not (and (at_19_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_11_18_11
+  :effect (and
+    (when (and (at_19_11) (valid)) (at_18_11))
+    (when (and (at_19_11) (valid)) (not (at_19_11)))
+    (when (not (and (at_19_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_11_20_11
+  :effect (and
+    (when (and (at_19_11) (valid)) (at_20_11))
+    (when (and (at_19_11) (valid)) (not (at_19_11)))
+    (when (not (and (at_19_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_11_19_10
+  :effect (and
+    (when (and (at_19_11) (valid)) (at_19_10))
+    (when (and (at_19_11) (valid)) (not (at_19_11)))
+    (when (not (and (at_19_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_11_19_12
+  :effect (and
+    (when (and (at_19_11) (valid)) (at_19_12))
+    (when (and (at_19_11) (valid)) (not (at_19_11)))
+    (when (not (and (at_19_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_12_18_12
+  :effect (and
+    (when (and (at_19_12) (valid)) (at_18_12))
+    (when (and (at_19_12) (valid)) (not (at_19_12)))
+    (when (not (and (at_19_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_12_20_12
+  :effect (and
+    (when (and (at_19_12) (valid)) (at_20_12))
+    (when (and (at_19_12) (valid)) (not (at_19_12)))
+    (when (not (and (at_19_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_12_19_11
+  :effect (and
+    (when (and (at_19_12) (valid)) (at_19_11))
+    (when (and (at_19_12) (valid)) (not (at_19_12)))
+    (when (not (and (at_19_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_12_19_13
+  :effect (and
+    (when (and (at_19_12) (valid)) (at_19_13))
+    (when (and (at_19_12) (valid)) (not (at_19_12)))
+    (when (not (and (at_19_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_13_18_13
+  :effect (and
+    (when (and (at_19_13) (valid)) (at_18_13))
+    (when (and (at_19_13) (valid)) (not (at_19_13)))
+    (when (not (and (at_19_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_13_20_13
+  :effect (and
+    (when (and (at_19_13) (valid)) (at_20_13))
+    (when (and (at_19_13) (valid)) (not (at_19_13)))
+    (when (not (and (at_19_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_13_19_12
+  :effect (and
+    (when (and (at_19_13) (valid)) (at_19_12))
+    (when (and (at_19_13) (valid)) (not (at_19_13)))
+    (when (not (and (at_19_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_13_19_14
+  :effect (and
+    (when (and (at_19_13) (valid)) (at_19_14))
+    (when (and (at_19_13) (valid)) (not (at_19_13)))
+    (when (not (and (at_19_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_14_18_14
+  :effect (and
+    (when (and (at_19_14) (valid)) (at_18_14))
+    (when (and (at_19_14) (valid)) (not (at_19_14)))
+    (when (not (and (at_19_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_14_20_14
+  :effect (and
+    (when (and (at_19_14) (valid)) (at_20_14))
+    (when (and (at_19_14) (valid)) (not (at_19_14)))
+    (when (not (and (at_19_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_14_19_13
+  :effect (and
+    (when (and (at_19_14) (valid)) (at_19_13))
+    (when (and (at_19_14) (valid)) (not (at_19_14)))
+    (when (not (and (at_19_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_14_19_15
+  :effect (and
+    (when (and (at_19_14) (valid)) (at_19_15))
+    (when (and (at_19_14) (valid)) (not (at_19_14)))
+    (when (not (and (at_19_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_15_18_15
+  :effect (and
+    (when (and (at_19_15) (valid)) (at_18_15))
+    (when (and (at_19_15) (valid)) (not (at_19_15)))
+    (when (not (and (at_19_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_15_20_15
+  :effect (and
+    (when (and (at_19_15) (valid)) (at_20_15))
+    (when (and (at_19_15) (valid)) (not (at_19_15)))
+    (when (not (and (at_19_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_15_19_14
+  :effect (and
+    (when (and (at_19_15) (valid)) (at_19_14))
+    (when (and (at_19_15) (valid)) (not (at_19_15)))
+    (when (not (and (at_19_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_15_19_16
+  :effect (and
+    (when (and (at_19_15) (valid)) (at_19_16))
+    (when (and (at_19_15) (valid)) (not (at_19_15)))
+    (when (not (and (at_19_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_16_18_16
+  :effect (and
+    (when (and (at_19_16) (valid)) (at_18_16))
+    (when (and (at_19_16) (valid)) (not (at_19_16)))
+    (when (not (and (at_19_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_16_20_16
+  :effect (and
+    (when (and (at_19_16) (valid)) (at_20_16))
+    (when (and (at_19_16) (valid)) (not (at_19_16)))
+    (when (not (and (at_19_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_16_19_15
+  :effect (and
+    (when (and (at_19_16) (valid)) (at_19_15))
+    (when (and (at_19_16) (valid)) (not (at_19_16)))
+    (when (not (and (at_19_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_16_19_17
+  :effect (and
+    (when (and (at_19_16) (valid)) (at_19_17))
+    (when (and (at_19_16) (valid)) (not (at_19_16)))
+    (when (not (and (at_19_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_17_18_17
+  :effect (and
+    (when (and (at_19_17) (valid)) (at_18_17))
+    (when (and (at_19_17) (valid)) (not (at_19_17)))
+    (when (not (and (at_19_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_17_20_17
+  :effect (and
+    (when (and (at_19_17) (valid)) (at_20_17))
+    (when (and (at_19_17) (valid)) (not (at_19_17)))
+    (when (not (and (at_19_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_17_19_16
+  :effect (and
+    (when (and (at_19_17) (valid)) (at_19_16))
+    (when (and (at_19_17) (valid)) (not (at_19_17)))
+    (when (not (and (at_19_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_17_19_18
+  :effect (and
+    (when (and (at_19_17) (valid)) (at_19_18))
+    (when (and (at_19_17) (valid)) (not (at_19_17)))
+    (when (not (and (at_19_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_18_18_18
+  :effect (and
+    (when (and (at_19_18) (valid)) (at_18_18))
+    (when (and (at_19_18) (valid)) (not (at_19_18)))
+    (when (not (and (at_19_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_18_20_18
+  :effect (and
+    (when (and (at_19_18) (valid)) (at_20_18))
+    (when (and (at_19_18) (valid)) (not (at_19_18)))
+    (when (not (and (at_19_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_18_19_17
+  :effect (and
+    (when (and (at_19_18) (valid)) (at_19_17))
+    (when (and (at_19_18) (valid)) (not (at_19_18)))
+    (when (not (and (at_19_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_18_19_19
+  :effect (and
+    (when (and (at_19_18) (valid)) (at_19_19))
+    (when (and (at_19_18) (valid)) (not (at_19_18)))
+    (when (not (and (at_19_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_19_18_19
+  :effect (and
+    (when (and (at_19_19) (valid)) (at_18_19))
+    (when (and (at_19_19) (valid)) (not (at_19_19)))
+    (when (not (and (at_19_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_19_20_19
+  :effect (and
+    (when (and (at_19_19) (valid)) (at_20_19))
+    (when (and (at_19_19) (valid)) (not (at_19_19)))
+    (when (not (and (at_19_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_19_19_18
+  :effect (and
+    (when (and (at_19_19) (valid)) (at_19_18))
+    (when (and (at_19_19) (valid)) (not (at_19_19)))
+    (when (not (and (at_19_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_19_19_20
+  :effect (and
+    (when (and (at_19_19) (valid)) (at_19_20))
+    (when (and (at_19_19) (valid)) (not (at_19_19)))
+    (when (not (and (at_19_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_20_18_20
+  :effect (and
+    (when (and (at_19_20) (valid)) (at_18_20))
+    (when (and (at_19_20) (valid)) (not (at_19_20)))
+    (when (not (and (at_19_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_20_20_20
+  :effect (and
+    (when (and (at_19_20) (valid)) (at_20_20))
+    (when (and (at_19_20) (valid)) (not (at_19_20)))
+    (when (not (and (at_19_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_20_19_19
+  :effect (and
+    (when (and (at_19_20) (valid)) (at_19_19))
+    (when (and (at_19_20) (valid)) (not (at_19_20)))
+    (when (not (and (at_19_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_20_19_21
+  :effect (and
+    (when (and (at_19_20) (valid)) (at_19_21))
+    (when (and (at_19_20) (valid)) (not (at_19_20)))
+    (when (not (and (at_19_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_21_18_21
+  :effect (and
+    (when (and (at_19_21) (valid)) (at_18_21))
+    (when (and (at_19_21) (valid)) (not (at_19_21)))
+    (when (not (and (at_19_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_21_20_21
+  :effect (and
+    (when (and (at_19_21) (valid)) (at_20_21))
+    (when (and (at_19_21) (valid)) (not (at_19_21)))
+    (when (not (and (at_19_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_21_19_20
+  :effect (and
+    (when (and (at_19_21) (valid)) (at_19_20))
+    (when (and (at_19_21) (valid)) (not (at_19_21)))
+    (when (not (and (at_19_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_21_19_22
+  :effect (and
+    (when (and (at_19_21) (valid)) (at_19_22))
+    (when (and (at_19_21) (valid)) (not (at_19_21)))
+    (when (not (and (at_19_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_22_18_22
+  :effect (and
+    (when (and (at_19_22) (valid)) (at_18_22))
+    (when (and (at_19_22) (valid)) (not (at_19_22)))
+    (when (not (and (at_19_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_22_20_22
+  :effect (and
+    (when (and (at_19_22) (valid)) (at_20_22))
+    (when (and (at_19_22) (valid)) (not (at_19_22)))
+    (when (not (and (at_19_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_22_19_21
+  :effect (and
+    (when (and (at_19_22) (valid)) (at_19_21))
+    (when (and (at_19_22) (valid)) (not (at_19_22)))
+    (when (not (and (at_19_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_22_19_23
+  :effect (and
+    (when (and (at_19_22) (valid)) (at_19_23))
+    (when (and (at_19_22) (valid)) (not (at_19_22)))
+    (when (not (and (at_19_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_23_18_23
+  :effect (and
+    (when (and (at_19_23) (valid)) (at_18_23))
+    (when (and (at_19_23) (valid)) (not (at_19_23)))
+    (when (not (and (at_19_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_23_20_23
+  :effect (and
+    (when (and (at_19_23) (valid)) (at_20_23))
+    (when (and (at_19_23) (valid)) (not (at_19_23)))
+    (when (not (and (at_19_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_23_19_22
+  :effect (and
+    (when (and (at_19_23) (valid)) (at_19_22))
+    (when (and (at_19_23) (valid)) (not (at_19_23)))
+    (when (not (and (at_19_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_23_19_24
+  :effect (and
+    (when (and (at_19_23) (valid)) (at_19_24))
+    (when (and (at_19_23) (valid)) (not (at_19_23)))
+    (when (not (and (at_19_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_24_18_24
+  :effect (and
+    (when (and (at_19_24) (valid)) (at_18_24))
+    (when (and (at_19_24) (valid)) (not (at_19_24)))
+    (when (not (and (at_19_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_24_20_24
+  :effect (and
+    (when (and (at_19_24) (valid)) (at_20_24))
+    (when (and (at_19_24) (valid)) (not (at_19_24)))
+    (when (not (and (at_19_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_24_19_23
+  :effect (and
+    (when (and (at_19_24) (valid)) (at_19_23))
+    (when (and (at_19_24) (valid)) (not (at_19_24)))
+    (when (not (and (at_19_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_24_19_25
+  :effect (and
+    (when (and (at_19_24) (valid)) (at_19_25))
+    (when (and (at_19_24) (valid)) (not (at_19_24)))
+    (when (not (and (at_19_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_25_18_25
+  :effect (and
+    (when (and (at_19_25) (valid)) (at_18_25))
+    (when (and (at_19_25) (valid)) (not (at_19_25)))
+    (when (not (and (at_19_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_25_20_25
+  :effect (and
+    (when (and (at_19_25) (valid)) (at_20_25))
+    (when (and (at_19_25) (valid)) (not (at_19_25)))
+    (when (not (and (at_19_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_25_19_24
+  :effect (and
+    (when (and (at_19_25) (valid)) (at_19_24))
+    (when (and (at_19_25) (valid)) (not (at_19_25)))
+    (when (not (and (at_19_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_25_19_26
+  :effect (and
+    (when (and (at_19_25) (valid)) (at_19_26))
+    (when (and (at_19_25) (valid)) (not (at_19_25)))
+    (when (not (and (at_19_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_26_18_26
+  :effect (and
+    (when (and (at_19_26) (valid)) (at_18_26))
+    (when (and (at_19_26) (valid)) (not (at_19_26)))
+    (when (not (and (at_19_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_26_20_26
+  :effect (and
+    (when (and (at_19_26) (valid)) (at_20_26))
+    (when (and (at_19_26) (valid)) (not (at_19_26)))
+    (when (not (and (at_19_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_26_19_25
+  :effect (and
+    (when (and (at_19_26) (valid)) (at_19_25))
+    (when (and (at_19_26) (valid)) (not (at_19_26)))
+    (when (not (and (at_19_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_26_19_27
+  :effect (and
+    (when (and (at_19_26) (valid)) (at_19_27))
+    (when (and (at_19_26) (valid)) (not (at_19_26)))
+    (when (not (and (at_19_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_27_18_27
+  :effect (and
+    (when (and (at_19_27) (valid)) (at_18_27))
+    (when (and (at_19_27) (valid)) (not (at_19_27)))
+    (when (not (and (at_19_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_27_20_27
+  :effect (and
+    (when (and (at_19_27) (valid)) (at_20_27))
+    (when (and (at_19_27) (valid)) (not (at_19_27)))
+    (when (not (and (at_19_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_27_19_26
+  :effect (and
+    (when (and (at_19_27) (valid)) (at_19_26))
+    (when (and (at_19_27) (valid)) (not (at_19_27)))
+    (when (not (and (at_19_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_27_19_28
+  :effect (and
+    (when (and (at_19_27) (valid)) (at_19_28))
+    (when (and (at_19_27) (valid)) (not (at_19_27)))
+    (when (not (and (at_19_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_28_18_28
+  :effect (and
+    (when (and (at_19_28) (valid)) (at_18_28))
+    (when (and (at_19_28) (valid)) (not (at_19_28)))
+    (when (not (and (at_19_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_28_20_28
+  :effect (and
+    (when (and (at_19_28) (valid)) (at_20_28))
+    (when (and (at_19_28) (valid)) (not (at_19_28)))
+    (when (not (and (at_19_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_28_19_27
+  :effect (and
+    (when (and (at_19_28) (valid)) (at_19_27))
+    (when (and (at_19_28) (valid)) (not (at_19_28)))
+    (when (not (and (at_19_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_28_19_29
+  :effect (and
+    (when (and (at_19_28) (valid)) (at_19_29))
+    (when (and (at_19_28) (valid)) (not (at_19_28)))
+    (when (not (and (at_19_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_29_18_29
+  :effect (and
+    (when (and (at_19_29) (valid)) (at_18_29))
+    (when (and (at_19_29) (valid)) (not (at_19_29)))
+    (when (not (and (at_19_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_29_20_29
+  :effect (and
+    (when (and (at_19_29) (valid)) (at_20_29))
+    (when (and (at_19_29) (valid)) (not (at_19_29)))
+    (when (not (and (at_19_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_29_19_28
+  :effect (and
+    (when (and (at_19_29) (valid)) (at_19_28))
+    (when (and (at_19_29) (valid)) (not (at_19_29)))
+    (when (not (and (at_19_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_29_19_30
+  :effect (and
+    (when (and (at_19_29) (valid)) (at_19_30))
+    (when (and (at_19_29) (valid)) (not (at_19_29)))
+    (when (not (and (at_19_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_30_18_30
+  :effect (and
+    (when (and (at_19_30) (valid)) (at_18_30))
+    (when (and (at_19_30) (valid)) (not (at_19_30)))
+    (when (not (and (at_19_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_30_20_30
+  :effect (and
+    (when (and (at_19_30) (valid)) (at_20_30))
+    (when (and (at_19_30) (valid)) (not (at_19_30)))
+    (when (not (and (at_19_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_30_19_29
+  :effect (and
+    (when (and (at_19_30) (valid)) (at_19_29))
+    (when (and (at_19_30) (valid)) (not (at_19_30)))
+    (when (not (and (at_19_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_30_19_31
+  :effect (and
+    (when (and (at_19_30) (valid)) (at_19_31))
+    (when (and (at_19_30) (valid)) (not (at_19_30)))
+    (when (not (and (at_19_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_31_18_31
+  :effect (and
+    (when (and (at_19_31) (valid)) (at_18_31))
+    (when (and (at_19_31) (valid)) (not (at_19_31)))
+    (when (not (and (at_19_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_31_20_31
+  :effect (and
+    (when (and (at_19_31) (valid)) (at_20_31))
+    (when (and (at_19_31) (valid)) (not (at_19_31)))
+    (when (not (and (at_19_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_19_31_19_30
+  :effect (and
+    (when (and (at_19_31) (valid)) (at_19_30))
+    (when (and (at_19_31) (valid)) (not (at_19_31)))
+    (when (not (and (at_19_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_0_19_0
+  :effect (and
+    (when (and (at_20_0) (valid)) (at_19_0))
+    (when (and (at_20_0) (valid)) (not (at_20_0)))
+    (when (not (and (at_20_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_0_21_0
+  :effect (and
+    (when (and (at_20_0) (valid)) (at_21_0))
+    (when (and (at_20_0) (valid)) (not (at_20_0)))
+    (when (not (and (at_20_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_0_20_1
+  :effect (and
+    (when (and (at_20_0) (valid)) (at_20_1))
+    (when (and (at_20_0) (valid)) (not (at_20_0)))
+    (when (not (and (at_20_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_1_19_1
+  :effect (and
+    (when (and (at_20_1) (valid)) (at_19_1))
+    (when (and (at_20_1) (valid)) (not (at_20_1)))
+    (when (not (and (at_20_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_1_21_1
+  :effect (and
+    (when (and (at_20_1) (valid)) (at_21_1))
+    (when (and (at_20_1) (valid)) (not (at_20_1)))
+    (when (not (and (at_20_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_1_20_0
+  :effect (and
+    (when (and (at_20_1) (valid)) (at_20_0))
+    (when (and (at_20_1) (valid)) (not (at_20_1)))
+    (when (not (and (at_20_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_1_20_2
+  :effect (and
+    (when (and (at_20_1) (valid)) (at_20_2))
+    (when (and (at_20_1) (valid)) (not (at_20_1)))
+    (when (not (and (at_20_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_2_19_2
+  :effect (and
+    (when (and (at_20_2) (valid)) (at_19_2))
+    (when (and (at_20_2) (valid)) (not (at_20_2)))
+    (when (not (and (at_20_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_2_21_2
+  :effect (and
+    (when (and (at_20_2) (valid)) (at_21_2))
+    (when (and (at_20_2) (valid)) (not (at_20_2)))
+    (when (not (and (at_20_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_2_20_1
+  :effect (and
+    (when (and (at_20_2) (valid)) (at_20_1))
+    (when (and (at_20_2) (valid)) (not (at_20_2)))
+    (when (not (and (at_20_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_2_20_3
+  :effect (and
+    (when (and (at_20_2) (valid)) (at_20_3))
+    (when (and (at_20_2) (valid)) (not (at_20_2)))
+    (when (not (and (at_20_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_3_19_3
+  :effect (and
+    (when (and (at_20_3) (valid)) (at_19_3))
+    (when (and (at_20_3) (valid)) (not (at_20_3)))
+    (when (not (and (at_20_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_3_21_3
+  :effect (and
+    (when (and (at_20_3) (valid)) (at_21_3))
+    (when (and (at_20_3) (valid)) (not (at_20_3)))
+    (when (not (and (at_20_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_3_20_2
+  :effect (and
+    (when (and (at_20_3) (valid)) (at_20_2))
+    (when (and (at_20_3) (valid)) (not (at_20_3)))
+    (when (not (and (at_20_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_3_20_4
+  :effect (and
+    (when (and (at_20_3) (valid)) (at_20_4))
+    (when (and (at_20_3) (valid)) (not (at_20_3)))
+    (when (not (and (at_20_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_4_19_4
+  :effect (and
+    (when (and (at_20_4) (valid)) (at_19_4))
+    (when (and (at_20_4) (valid)) (not (at_20_4)))
+    (when (not (and (at_20_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_4_21_4
+  :effect (and
+    (when (and (at_20_4) (valid)) (at_21_4))
+    (when (and (at_20_4) (valid)) (not (at_20_4)))
+    (when (not (and (at_20_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_4_20_3
+  :effect (and
+    (when (and (at_20_4) (valid)) (at_20_3))
+    (when (and (at_20_4) (valid)) (not (at_20_4)))
+    (when (not (and (at_20_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_4_20_5
+  :effect (and
+    (when (and (at_20_4) (valid)) (at_20_5))
+    (when (and (at_20_4) (valid)) (not (at_20_4)))
+    (when (not (and (at_20_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_5_19_5
+  :effect (and
+    (when (and (at_20_5) (valid)) (at_19_5))
+    (when (and (at_20_5) (valid)) (not (at_20_5)))
+    (when (not (and (at_20_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_5_21_5
+  :effect (and
+    (when (and (at_20_5) (valid)) (at_21_5))
+    (when (and (at_20_5) (valid)) (not (at_20_5)))
+    (when (not (and (at_20_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_5_20_4
+  :effect (and
+    (when (and (at_20_5) (valid)) (at_20_4))
+    (when (and (at_20_5) (valid)) (not (at_20_5)))
+    (when (not (and (at_20_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_5_20_6
+  :effect (and
+    (when (and (at_20_5) (valid)) (at_20_6))
+    (when (and (at_20_5) (valid)) (not (at_20_5)))
+    (when (not (and (at_20_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_6_19_6
+  :effect (and
+    (when (and (at_20_6) (valid)) (at_19_6))
+    (when (and (at_20_6) (valid)) (not (at_20_6)))
+    (when (not (and (at_20_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_6_21_6
+  :effect (and
+    (when (and (at_20_6) (valid)) (at_21_6))
+    (when (and (at_20_6) (valid)) (not (at_20_6)))
+    (when (not (and (at_20_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_6_20_5
+  :effect (and
+    (when (and (at_20_6) (valid)) (at_20_5))
+    (when (and (at_20_6) (valid)) (not (at_20_6)))
+    (when (not (and (at_20_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_6_20_7
+  :effect (and
+    (when (and (at_20_6) (valid)) (at_20_7))
+    (when (and (at_20_6) (valid)) (not (at_20_6)))
+    (when (not (and (at_20_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_7_19_7
+  :effect (and
+    (when (and (at_20_7) (valid)) (at_19_7))
+    (when (and (at_20_7) (valid)) (not (at_20_7)))
+    (when (not (and (at_20_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_7_21_7
+  :effect (and
+    (when (and (at_20_7) (valid)) (at_21_7))
+    (when (and (at_20_7) (valid)) (not (at_20_7)))
+    (when (not (and (at_20_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_7_20_6
+  :effect (and
+    (when (and (at_20_7) (valid)) (at_20_6))
+    (when (and (at_20_7) (valid)) (not (at_20_7)))
+    (when (not (and (at_20_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_7_20_8
+  :effect (and
+    (when (and (at_20_7) (valid)) (at_20_8))
+    (when (and (at_20_7) (valid)) (not (at_20_7)))
+    (when (not (and (at_20_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_8_19_8
+  :effect (and
+    (when (and (at_20_8) (valid)) (at_19_8))
+    (when (and (at_20_8) (valid)) (not (at_20_8)))
+    (when (not (and (at_20_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_8_21_8
+  :effect (and
+    (when (and (at_20_8) (valid)) (at_21_8))
+    (when (and (at_20_8) (valid)) (not (at_20_8)))
+    (when (not (and (at_20_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_8_20_7
+  :effect (and
+    (when (and (at_20_8) (valid)) (at_20_7))
+    (when (and (at_20_8) (valid)) (not (at_20_8)))
+    (when (not (and (at_20_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_8_20_9
+  :effect (and
+    (when (and (at_20_8) (valid)) (at_20_9))
+    (when (and (at_20_8) (valid)) (not (at_20_8)))
+    (when (not (and (at_20_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_9_19_9
+  :effect (and
+    (when (and (at_20_9) (valid)) (at_19_9))
+    (when (and (at_20_9) (valid)) (not (at_20_9)))
+    (when (not (and (at_20_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_9_21_9
+  :effect (and
+    (when (and (at_20_9) (valid)) (at_21_9))
+    (when (and (at_20_9) (valid)) (not (at_20_9)))
+    (when (not (and (at_20_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_9_20_8
+  :effect (and
+    (when (and (at_20_9) (valid)) (at_20_8))
+    (when (and (at_20_9) (valid)) (not (at_20_9)))
+    (when (not (and (at_20_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_9_20_10
+  :effect (and
+    (when (and (at_20_9) (valid)) (at_20_10))
+    (when (and (at_20_9) (valid)) (not (at_20_9)))
+    (when (not (and (at_20_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_10_19_10
+  :effect (and
+    (when (and (at_20_10) (valid)) (at_19_10))
+    (when (and (at_20_10) (valid)) (not (at_20_10)))
+    (when (not (and (at_20_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_10_21_10
+  :effect (and
+    (when (and (at_20_10) (valid)) (at_21_10))
+    (when (and (at_20_10) (valid)) (not (at_20_10)))
+    (when (not (and (at_20_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_10_20_9
+  :effect (and
+    (when (and (at_20_10) (valid)) (at_20_9))
+    (when (and (at_20_10) (valid)) (not (at_20_10)))
+    (when (not (and (at_20_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_10_20_11
+  :effect (and
+    (when (and (at_20_10) (valid)) (at_20_11))
+    (when (and (at_20_10) (valid)) (not (at_20_10)))
+    (when (not (and (at_20_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_11_19_11
+  :effect (and
+    (when (and (at_20_11) (valid)) (at_19_11))
+    (when (and (at_20_11) (valid)) (not (at_20_11)))
+    (when (not (and (at_20_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_11_21_11
+  :effect (and
+    (when (and (at_20_11) (valid)) (at_21_11))
+    (when (and (at_20_11) (valid)) (not (at_20_11)))
+    (when (not (and (at_20_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_11_20_10
+  :effect (and
+    (when (and (at_20_11) (valid)) (at_20_10))
+    (when (and (at_20_11) (valid)) (not (at_20_11)))
+    (when (not (and (at_20_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_11_20_12
+  :effect (and
+    (when (and (at_20_11) (valid)) (at_20_12))
+    (when (and (at_20_11) (valid)) (not (at_20_11)))
+    (when (not (and (at_20_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_12_19_12
+  :effect (and
+    (when (and (at_20_12) (valid)) (at_19_12))
+    (when (and (at_20_12) (valid)) (not (at_20_12)))
+    (when (not (and (at_20_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_12_21_12
+  :effect (and
+    (when (and (at_20_12) (valid)) (at_21_12))
+    (when (and (at_20_12) (valid)) (not (at_20_12)))
+    (when (not (and (at_20_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_12_20_11
+  :effect (and
+    (when (and (at_20_12) (valid)) (at_20_11))
+    (when (and (at_20_12) (valid)) (not (at_20_12)))
+    (when (not (and (at_20_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_12_20_13
+  :effect (and
+    (when (and (at_20_12) (valid)) (at_20_13))
+    (when (and (at_20_12) (valid)) (not (at_20_12)))
+    (when (not (and (at_20_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_13_19_13
+  :effect (and
+    (when (and (at_20_13) (valid)) (at_19_13))
+    (when (and (at_20_13) (valid)) (not (at_20_13)))
+    (when (not (and (at_20_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_13_21_13
+  :effect (and
+    (when (and (at_20_13) (valid)) (at_21_13))
+    (when (and (at_20_13) (valid)) (not (at_20_13)))
+    (when (not (and (at_20_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_13_20_12
+  :effect (and
+    (when (and (at_20_13) (valid)) (at_20_12))
+    (when (and (at_20_13) (valid)) (not (at_20_13)))
+    (when (not (and (at_20_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_13_20_14
+  :effect (and
+    (when (and (at_20_13) (valid)) (at_20_14))
+    (when (and (at_20_13) (valid)) (not (at_20_13)))
+    (when (not (and (at_20_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_14_19_14
+  :effect (and
+    (when (and (at_20_14) (valid)) (at_19_14))
+    (when (and (at_20_14) (valid)) (not (at_20_14)))
+    (when (not (and (at_20_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_14_21_14
+  :effect (and
+    (when (and (at_20_14) (valid)) (at_21_14))
+    (when (and (at_20_14) (valid)) (not (at_20_14)))
+    (when (not (and (at_20_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_14_20_13
+  :effect (and
+    (when (and (at_20_14) (valid)) (at_20_13))
+    (when (and (at_20_14) (valid)) (not (at_20_14)))
+    (when (not (and (at_20_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_14_20_15
+  :effect (and
+    (when (and (at_20_14) (valid)) (at_20_15))
+    (when (and (at_20_14) (valid)) (not (at_20_14)))
+    (when (not (and (at_20_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_15_19_15
+  :effect (and
+    (when (and (at_20_15) (valid)) (at_19_15))
+    (when (and (at_20_15) (valid)) (not (at_20_15)))
+    (when (not (and (at_20_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_15_21_15
+  :effect (and
+    (when (and (at_20_15) (valid)) (at_21_15))
+    (when (and (at_20_15) (valid)) (not (at_20_15)))
+    (when (not (and (at_20_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_15_20_14
+  :effect (and
+    (when (and (at_20_15) (valid)) (at_20_14))
+    (when (and (at_20_15) (valid)) (not (at_20_15)))
+    (when (not (and (at_20_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_15_20_16
+  :effect (and
+    (when (and (at_20_15) (valid)) (at_20_16))
+    (when (and (at_20_15) (valid)) (not (at_20_15)))
+    (when (not (and (at_20_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_16_19_16
+  :effect (and
+    (when (and (at_20_16) (valid)) (at_19_16))
+    (when (and (at_20_16) (valid)) (not (at_20_16)))
+    (when (not (and (at_20_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_16_21_16
+  :effect (and
+    (when (and (at_20_16) (valid)) (at_21_16))
+    (when (and (at_20_16) (valid)) (not (at_20_16)))
+    (when (not (and (at_20_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_16_20_15
+  :effect (and
+    (when (and (at_20_16) (valid)) (at_20_15))
+    (when (and (at_20_16) (valid)) (not (at_20_16)))
+    (when (not (and (at_20_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_16_20_17
+  :effect (and
+    (when (and (at_20_16) (valid)) (at_20_17))
+    (when (and (at_20_16) (valid)) (not (at_20_16)))
+    (when (not (and (at_20_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_17_19_17
+  :effect (and
+    (when (and (at_20_17) (valid)) (at_19_17))
+    (when (and (at_20_17) (valid)) (not (at_20_17)))
+    (when (not (and (at_20_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_17_21_17
+  :effect (and
+    (when (and (at_20_17) (valid)) (at_21_17))
+    (when (and (at_20_17) (valid)) (not (at_20_17)))
+    (when (not (and (at_20_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_17_20_16
+  :effect (and
+    (when (and (at_20_17) (valid)) (at_20_16))
+    (when (and (at_20_17) (valid)) (not (at_20_17)))
+    (when (not (and (at_20_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_17_20_18
+  :effect (and
+    (when (and (at_20_17) (valid)) (at_20_18))
+    (when (and (at_20_17) (valid)) (not (at_20_17)))
+    (when (not (and (at_20_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_18_19_18
+  :effect (and
+    (when (and (at_20_18) (valid)) (at_19_18))
+    (when (and (at_20_18) (valid)) (not (at_20_18)))
+    (when (not (and (at_20_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_18_21_18
+  :effect (and
+    (when (and (at_20_18) (valid)) (at_21_18))
+    (when (and (at_20_18) (valid)) (not (at_20_18)))
+    (when (not (and (at_20_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_18_20_17
+  :effect (and
+    (when (and (at_20_18) (valid)) (at_20_17))
+    (when (and (at_20_18) (valid)) (not (at_20_18)))
+    (when (not (and (at_20_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_18_20_19
+  :effect (and
+    (when (and (at_20_18) (valid)) (at_20_19))
+    (when (and (at_20_18) (valid)) (not (at_20_18)))
+    (when (not (and (at_20_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_19_19_19
+  :effect (and
+    (when (and (at_20_19) (valid)) (at_19_19))
+    (when (and (at_20_19) (valid)) (not (at_20_19)))
+    (when (not (and (at_20_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_19_21_19
+  :effect (and
+    (when (and (at_20_19) (valid)) (at_21_19))
+    (when (and (at_20_19) (valid)) (not (at_20_19)))
+    (when (not (and (at_20_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_19_20_18
+  :effect (and
+    (when (and (at_20_19) (valid)) (at_20_18))
+    (when (and (at_20_19) (valid)) (not (at_20_19)))
+    (when (not (and (at_20_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_19_20_20
+  :effect (and
+    (when (and (at_20_19) (valid)) (at_20_20))
+    (when (and (at_20_19) (valid)) (not (at_20_19)))
+    (when (not (and (at_20_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_20_19_20
+  :effect (and
+    (when (and (at_20_20) (valid)) (at_19_20))
+    (when (and (at_20_20) (valid)) (not (at_20_20)))
+    (when (not (and (at_20_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_20_21_20
+  :effect (and
+    (when (and (at_20_20) (valid)) (at_21_20))
+    (when (and (at_20_20) (valid)) (not (at_20_20)))
+    (when (not (and (at_20_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_20_20_19
+  :effect (and
+    (when (and (at_20_20) (valid)) (at_20_19))
+    (when (and (at_20_20) (valid)) (not (at_20_20)))
+    (when (not (and (at_20_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_20_20_21
+  :effect (and
+    (when (and (at_20_20) (valid)) (at_20_21))
+    (when (and (at_20_20) (valid)) (not (at_20_20)))
+    (when (not (and (at_20_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_21_19_21
+  :effect (and
+    (when (and (at_20_21) (valid)) (at_19_21))
+    (when (and (at_20_21) (valid)) (not (at_20_21)))
+    (when (not (and (at_20_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_21_21_21
+  :effect (and
+    (when (and (at_20_21) (valid)) (at_21_21))
+    (when (and (at_20_21) (valid)) (not (at_20_21)))
+    (when (not (and (at_20_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_21_20_20
+  :effect (and
+    (when (and (at_20_21) (valid)) (at_20_20))
+    (when (and (at_20_21) (valid)) (not (at_20_21)))
+    (when (not (and (at_20_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_21_20_22
+  :effect (and
+    (when (and (at_20_21) (valid)) (at_20_22))
+    (when (and (at_20_21) (valid)) (not (at_20_21)))
+    (when (not (and (at_20_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_22_19_22
+  :effect (and
+    (when (and (at_20_22) (valid)) (at_19_22))
+    (when (and (at_20_22) (valid)) (not (at_20_22)))
+    (when (not (and (at_20_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_22_21_22
+  :effect (and
+    (when (and (at_20_22) (valid)) (at_21_22))
+    (when (and (at_20_22) (valid)) (not (at_20_22)))
+    (when (not (and (at_20_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_22_20_21
+  :effect (and
+    (when (and (at_20_22) (valid)) (at_20_21))
+    (when (and (at_20_22) (valid)) (not (at_20_22)))
+    (when (not (and (at_20_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_22_20_23
+  :effect (and
+    (when (and (at_20_22) (valid)) (at_20_23))
+    (when (and (at_20_22) (valid)) (not (at_20_22)))
+    (when (not (and (at_20_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_23_19_23
+  :effect (and
+    (when (and (at_20_23) (valid)) (at_19_23))
+    (when (and (at_20_23) (valid)) (not (at_20_23)))
+    (when (not (and (at_20_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_23_21_23
+  :effect (and
+    (when (and (at_20_23) (valid)) (at_21_23))
+    (when (and (at_20_23) (valid)) (not (at_20_23)))
+    (when (not (and (at_20_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_23_20_22
+  :effect (and
+    (when (and (at_20_23) (valid)) (at_20_22))
+    (when (and (at_20_23) (valid)) (not (at_20_23)))
+    (when (not (and (at_20_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_23_20_24
+  :effect (and
+    (when (and (at_20_23) (valid)) (at_20_24))
+    (when (and (at_20_23) (valid)) (not (at_20_23)))
+    (when (not (and (at_20_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_24_19_24
+  :effect (and
+    (when (and (at_20_24) (valid)) (at_19_24))
+    (when (and (at_20_24) (valid)) (not (at_20_24)))
+    (when (not (and (at_20_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_24_21_24
+  :effect (and
+    (when (and (at_20_24) (valid)) (at_21_24))
+    (when (and (at_20_24) (valid)) (not (at_20_24)))
+    (when (not (and (at_20_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_24_20_23
+  :effect (and
+    (when (and (at_20_24) (valid)) (at_20_23))
+    (when (and (at_20_24) (valid)) (not (at_20_24)))
+    (when (not (and (at_20_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_24_20_25
+  :effect (and
+    (when (and (at_20_24) (valid)) (at_20_25))
+    (when (and (at_20_24) (valid)) (not (at_20_24)))
+    (when (not (and (at_20_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_25_19_25
+  :effect (and
+    (when (and (at_20_25) (valid)) (at_19_25))
+    (when (and (at_20_25) (valid)) (not (at_20_25)))
+    (when (not (and (at_20_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_25_21_25
+  :effect (and
+    (when (and (at_20_25) (valid)) (at_21_25))
+    (when (and (at_20_25) (valid)) (not (at_20_25)))
+    (when (not (and (at_20_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_25_20_24
+  :effect (and
+    (when (and (at_20_25) (valid)) (at_20_24))
+    (when (and (at_20_25) (valid)) (not (at_20_25)))
+    (when (not (and (at_20_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_25_20_26
+  :effect (and
+    (when (and (at_20_25) (valid)) (at_20_26))
+    (when (and (at_20_25) (valid)) (not (at_20_25)))
+    (when (not (and (at_20_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_26_19_26
+  :effect (and
+    (when (and (at_20_26) (valid)) (at_19_26))
+    (when (and (at_20_26) (valid)) (not (at_20_26)))
+    (when (not (and (at_20_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_26_21_26
+  :effect (and
+    (when (and (at_20_26) (valid)) (at_21_26))
+    (when (and (at_20_26) (valid)) (not (at_20_26)))
+    (when (not (and (at_20_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_26_20_25
+  :effect (and
+    (when (and (at_20_26) (valid)) (at_20_25))
+    (when (and (at_20_26) (valid)) (not (at_20_26)))
+    (when (not (and (at_20_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_26_20_27
+  :effect (and
+    (when (and (at_20_26) (valid)) (at_20_27))
+    (when (and (at_20_26) (valid)) (not (at_20_26)))
+    (when (not (and (at_20_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_27_19_27
+  :effect (and
+    (when (and (at_20_27) (valid)) (at_19_27))
+    (when (and (at_20_27) (valid)) (not (at_20_27)))
+    (when (not (and (at_20_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_27_21_27
+  :effect (and
+    (when (and (at_20_27) (valid)) (at_21_27))
+    (when (and (at_20_27) (valid)) (not (at_20_27)))
+    (when (not (and (at_20_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_27_20_26
+  :effect (and
+    (when (and (at_20_27) (valid)) (at_20_26))
+    (when (and (at_20_27) (valid)) (not (at_20_27)))
+    (when (not (and (at_20_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_27_20_28
+  :effect (and
+    (when (and (at_20_27) (valid)) (at_20_28))
+    (when (and (at_20_27) (valid)) (not (at_20_27)))
+    (when (not (and (at_20_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_28_19_28
+  :effect (and
+    (when (and (at_20_28) (valid)) (at_19_28))
+    (when (and (at_20_28) (valid)) (not (at_20_28)))
+    (when (not (and (at_20_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_28_21_28
+  :effect (and
+    (when (and (at_20_28) (valid)) (at_21_28))
+    (when (and (at_20_28) (valid)) (not (at_20_28)))
+    (when (not (and (at_20_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_28_20_27
+  :effect (and
+    (when (and (at_20_28) (valid)) (at_20_27))
+    (when (and (at_20_28) (valid)) (not (at_20_28)))
+    (when (not (and (at_20_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_28_20_29
+  :effect (and
+    (when (and (at_20_28) (valid)) (at_20_29))
+    (when (and (at_20_28) (valid)) (not (at_20_28)))
+    (when (not (and (at_20_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_29_19_29
+  :effect (and
+    (when (and (at_20_29) (valid)) (at_19_29))
+    (when (and (at_20_29) (valid)) (not (at_20_29)))
+    (when (not (and (at_20_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_29_21_29
+  :effect (and
+    (when (and (at_20_29) (valid)) (at_21_29))
+    (when (and (at_20_29) (valid)) (not (at_20_29)))
+    (when (not (and (at_20_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_29_20_28
+  :effect (and
+    (when (and (at_20_29) (valid)) (at_20_28))
+    (when (and (at_20_29) (valid)) (not (at_20_29)))
+    (when (not (and (at_20_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_29_20_30
+  :effect (and
+    (when (and (at_20_29) (valid)) (at_20_30))
+    (when (and (at_20_29) (valid)) (not (at_20_29)))
+    (when (not (and (at_20_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_30_19_30
+  :effect (and
+    (when (and (at_20_30) (valid)) (at_19_30))
+    (when (and (at_20_30) (valid)) (not (at_20_30)))
+    (when (not (and (at_20_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_30_21_30
+  :effect (and
+    (when (and (at_20_30) (valid)) (at_21_30))
+    (when (and (at_20_30) (valid)) (not (at_20_30)))
+    (when (not (and (at_20_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_30_20_29
+  :effect (and
+    (when (and (at_20_30) (valid)) (at_20_29))
+    (when (and (at_20_30) (valid)) (not (at_20_30)))
+    (when (not (and (at_20_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_30_20_31
+  :effect (and
+    (when (and (at_20_30) (valid)) (at_20_31))
+    (when (and (at_20_30) (valid)) (not (at_20_30)))
+    (when (not (and (at_20_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_31_19_31
+  :effect (and
+    (when (and (at_20_31) (valid)) (at_19_31))
+    (when (and (at_20_31) (valid)) (not (at_20_31)))
+    (when (not (and (at_20_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_31_21_31
+  :effect (and
+    (when (and (at_20_31) (valid)) (at_21_31))
+    (when (and (at_20_31) (valid)) (not (at_20_31)))
+    (when (not (and (at_20_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_20_31_20_30
+  :effect (and
+    (when (and (at_20_31) (valid)) (at_20_30))
+    (when (and (at_20_31) (valid)) (not (at_20_31)))
+    (when (not (and (at_20_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_0_20_0
+  :effect (and
+    (when (and (at_21_0) (valid)) (at_20_0))
+    (when (and (at_21_0) (valid)) (not (at_21_0)))
+    (when (not (and (at_21_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_0_22_0
+  :effect (and
+    (when (and (at_21_0) (valid)) (at_22_0))
+    (when (and (at_21_0) (valid)) (not (at_21_0)))
+    (when (not (and (at_21_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_0_21_1
+  :effect (and
+    (when (and (at_21_0) (valid)) (at_21_1))
+    (when (and (at_21_0) (valid)) (not (at_21_0)))
+    (when (not (and (at_21_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_1_20_1
+  :effect (and
+    (when (and (at_21_1) (valid)) (at_20_1))
+    (when (and (at_21_1) (valid)) (not (at_21_1)))
+    (when (not (and (at_21_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_1_22_1
+  :effect (and
+    (when (and (at_21_1) (valid)) (at_22_1))
+    (when (and (at_21_1) (valid)) (not (at_21_1)))
+    (when (not (and (at_21_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_1_21_0
+  :effect (and
+    (when (and (at_21_1) (valid)) (at_21_0))
+    (when (and (at_21_1) (valid)) (not (at_21_1)))
+    (when (not (and (at_21_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_1_21_2
+  :effect (and
+    (when (and (at_21_1) (valid)) (at_21_2))
+    (when (and (at_21_1) (valid)) (not (at_21_1)))
+    (when (not (and (at_21_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_2_20_2
+  :effect (and
+    (when (and (at_21_2) (valid)) (at_20_2))
+    (when (and (at_21_2) (valid)) (not (at_21_2)))
+    (when (not (and (at_21_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_2_22_2
+  :effect (and
+    (when (and (at_21_2) (valid)) (at_22_2))
+    (when (and (at_21_2) (valid)) (not (at_21_2)))
+    (when (not (and (at_21_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_2_21_1
+  :effect (and
+    (when (and (at_21_2) (valid)) (at_21_1))
+    (when (and (at_21_2) (valid)) (not (at_21_2)))
+    (when (not (and (at_21_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_2_21_3
+  :effect (and
+    (when (and (at_21_2) (valid)) (at_21_3))
+    (when (and (at_21_2) (valid)) (not (at_21_2)))
+    (when (not (and (at_21_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_3_20_3
+  :effect (and
+    (when (and (at_21_3) (valid)) (at_20_3))
+    (when (and (at_21_3) (valid)) (not (at_21_3)))
+    (when (not (and (at_21_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_3_22_3
+  :effect (and
+    (when (and (at_21_3) (valid)) (at_22_3))
+    (when (and (at_21_3) (valid)) (not (at_21_3)))
+    (when (not (and (at_21_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_3_21_2
+  :effect (and
+    (when (and (at_21_3) (valid)) (at_21_2))
+    (when (and (at_21_3) (valid)) (not (at_21_3)))
+    (when (not (and (at_21_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_3_21_4
+  :effect (and
+    (when (and (at_21_3) (valid)) (at_21_4))
+    (when (and (at_21_3) (valid)) (not (at_21_3)))
+    (when (not (and (at_21_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_4_20_4
+  :effect (and
+    (when (and (at_21_4) (valid)) (at_20_4))
+    (when (and (at_21_4) (valid)) (not (at_21_4)))
+    (when (not (and (at_21_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_4_22_4
+  :effect (and
+    (when (and (at_21_4) (valid)) (at_22_4))
+    (when (and (at_21_4) (valid)) (not (at_21_4)))
+    (when (not (and (at_21_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_4_21_3
+  :effect (and
+    (when (and (at_21_4) (valid)) (at_21_3))
+    (when (and (at_21_4) (valid)) (not (at_21_4)))
+    (when (not (and (at_21_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_4_21_5
+  :effect (and
+    (when (and (at_21_4) (valid)) (at_21_5))
+    (when (and (at_21_4) (valid)) (not (at_21_4)))
+    (when (not (and (at_21_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_5_20_5
+  :effect (and
+    (when (and (at_21_5) (valid)) (at_20_5))
+    (when (and (at_21_5) (valid)) (not (at_21_5)))
+    (when (not (and (at_21_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_5_22_5
+  :effect (and
+    (when (and (at_21_5) (valid)) (at_22_5))
+    (when (and (at_21_5) (valid)) (not (at_21_5)))
+    (when (not (and (at_21_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_5_21_4
+  :effect (and
+    (when (and (at_21_5) (valid)) (at_21_4))
+    (when (and (at_21_5) (valid)) (not (at_21_5)))
+    (when (not (and (at_21_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_5_21_6
+  :effect (and
+    (when (and (at_21_5) (valid)) (at_21_6))
+    (when (and (at_21_5) (valid)) (not (at_21_5)))
+    (when (not (and (at_21_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_6_20_6
+  :effect (and
+    (when (and (at_21_6) (valid)) (at_20_6))
+    (when (and (at_21_6) (valid)) (not (at_21_6)))
+    (when (not (and (at_21_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_6_22_6
+  :effect (and
+    (when (and (at_21_6) (valid)) (at_22_6))
+    (when (and (at_21_6) (valid)) (not (at_21_6)))
+    (when (not (and (at_21_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_6_21_5
+  :effect (and
+    (when (and (at_21_6) (valid)) (at_21_5))
+    (when (and (at_21_6) (valid)) (not (at_21_6)))
+    (when (not (and (at_21_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_6_21_7
+  :effect (and
+    (when (and (at_21_6) (valid)) (at_21_7))
+    (when (and (at_21_6) (valid)) (not (at_21_6)))
+    (when (not (and (at_21_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_7_20_7
+  :effect (and
+    (when (and (at_21_7) (valid)) (at_20_7))
+    (when (and (at_21_7) (valid)) (not (at_21_7)))
+    (when (not (and (at_21_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_7_22_7
+  :effect (and
+    (when (and (at_21_7) (valid)) (at_22_7))
+    (when (and (at_21_7) (valid)) (not (at_21_7)))
+    (when (not (and (at_21_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_7_21_6
+  :effect (and
+    (when (and (at_21_7) (valid)) (at_21_6))
+    (when (and (at_21_7) (valid)) (not (at_21_7)))
+    (when (not (and (at_21_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_7_21_8
+  :effect (and
+    (when (and (at_21_7) (valid)) (at_21_8))
+    (when (and (at_21_7) (valid)) (not (at_21_7)))
+    (when (not (and (at_21_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_8_20_8
+  :effect (and
+    (when (and (at_21_8) (valid)) (at_20_8))
+    (when (and (at_21_8) (valid)) (not (at_21_8)))
+    (when (not (and (at_21_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_8_22_8
+  :effect (and
+    (when (and (at_21_8) (valid)) (at_22_8))
+    (when (and (at_21_8) (valid)) (not (at_21_8)))
+    (when (not (and (at_21_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_8_21_7
+  :effect (and
+    (when (and (at_21_8) (valid)) (at_21_7))
+    (when (and (at_21_8) (valid)) (not (at_21_8)))
+    (when (not (and (at_21_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_8_21_9
+  :effect (and
+    (when (and (at_21_8) (valid)) (at_21_9))
+    (when (and (at_21_8) (valid)) (not (at_21_8)))
+    (when (not (and (at_21_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_9_20_9
+  :effect (and
+    (when (and (at_21_9) (valid)) (at_20_9))
+    (when (and (at_21_9) (valid)) (not (at_21_9)))
+    (when (not (and (at_21_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_9_22_9
+  :effect (and
+    (when (and (at_21_9) (valid)) (at_22_9))
+    (when (and (at_21_9) (valid)) (not (at_21_9)))
+    (when (not (and (at_21_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_9_21_8
+  :effect (and
+    (when (and (at_21_9) (valid)) (at_21_8))
+    (when (and (at_21_9) (valid)) (not (at_21_9)))
+    (when (not (and (at_21_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_9_21_10
+  :effect (and
+    (when (and (at_21_9) (valid)) (at_21_10))
+    (when (and (at_21_9) (valid)) (not (at_21_9)))
+    (when (not (and (at_21_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_10_20_10
+  :effect (and
+    (when (and (at_21_10) (valid)) (at_20_10))
+    (when (and (at_21_10) (valid)) (not (at_21_10)))
+    (when (not (and (at_21_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_10_22_10
+  :effect (and
+    (when (and (at_21_10) (valid)) (at_22_10))
+    (when (and (at_21_10) (valid)) (not (at_21_10)))
+    (when (not (and (at_21_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_10_21_9
+  :effect (and
+    (when (and (at_21_10) (valid)) (at_21_9))
+    (when (and (at_21_10) (valid)) (not (at_21_10)))
+    (when (not (and (at_21_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_10_21_11
+  :effect (and
+    (when (and (at_21_10) (valid)) (at_21_11))
+    (when (and (at_21_10) (valid)) (not (at_21_10)))
+    (when (not (and (at_21_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_11_20_11
+  :effect (and
+    (when (and (at_21_11) (valid)) (at_20_11))
+    (when (and (at_21_11) (valid)) (not (at_21_11)))
+    (when (not (and (at_21_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_11_22_11
+  :effect (and
+    (when (and (at_21_11) (valid)) (at_22_11))
+    (when (and (at_21_11) (valid)) (not (at_21_11)))
+    (when (not (and (at_21_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_11_21_10
+  :effect (and
+    (when (and (at_21_11) (valid)) (at_21_10))
+    (when (and (at_21_11) (valid)) (not (at_21_11)))
+    (when (not (and (at_21_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_11_21_12
+  :effect (and
+    (when (and (at_21_11) (valid)) (at_21_12))
+    (when (and (at_21_11) (valid)) (not (at_21_11)))
+    (when (not (and (at_21_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_12_20_12
+  :effect (and
+    (when (and (at_21_12) (valid)) (at_20_12))
+    (when (and (at_21_12) (valid)) (not (at_21_12)))
+    (when (not (and (at_21_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_12_22_12
+  :effect (and
+    (when (and (at_21_12) (valid)) (at_22_12))
+    (when (and (at_21_12) (valid)) (not (at_21_12)))
+    (when (not (and (at_21_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_12_21_11
+  :effect (and
+    (when (and (at_21_12) (valid)) (at_21_11))
+    (when (and (at_21_12) (valid)) (not (at_21_12)))
+    (when (not (and (at_21_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_12_21_13
+  :effect (and
+    (when (and (at_21_12) (valid)) (at_21_13))
+    (when (and (at_21_12) (valid)) (not (at_21_12)))
+    (when (not (and (at_21_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_13_20_13
+  :effect (and
+    (when (and (at_21_13) (valid)) (at_20_13))
+    (when (and (at_21_13) (valid)) (not (at_21_13)))
+    (when (not (and (at_21_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_13_22_13
+  :effect (and
+    (when (and (at_21_13) (valid)) (at_22_13))
+    (when (and (at_21_13) (valid)) (not (at_21_13)))
+    (when (not (and (at_21_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_13_21_12
+  :effect (and
+    (when (and (at_21_13) (valid)) (at_21_12))
+    (when (and (at_21_13) (valid)) (not (at_21_13)))
+    (when (not (and (at_21_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_13_21_14
+  :effect (and
+    (when (and (at_21_13) (valid)) (at_21_14))
+    (when (and (at_21_13) (valid)) (not (at_21_13)))
+    (when (not (and (at_21_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_14_20_14
+  :effect (and
+    (when (and (at_21_14) (valid)) (at_20_14))
+    (when (and (at_21_14) (valid)) (not (at_21_14)))
+    (when (not (and (at_21_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_14_22_14
+  :effect (and
+    (when (and (at_21_14) (valid)) (at_22_14))
+    (when (and (at_21_14) (valid)) (not (at_21_14)))
+    (when (not (and (at_21_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_14_21_13
+  :effect (and
+    (when (and (at_21_14) (valid)) (at_21_13))
+    (when (and (at_21_14) (valid)) (not (at_21_14)))
+    (when (not (and (at_21_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_14_21_15
+  :effect (and
+    (when (and (at_21_14) (valid)) (at_21_15))
+    (when (and (at_21_14) (valid)) (not (at_21_14)))
+    (when (not (and (at_21_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_15_20_15
+  :effect (and
+    (when (and (at_21_15) (valid)) (at_20_15))
+    (when (and (at_21_15) (valid)) (not (at_21_15)))
+    (when (not (and (at_21_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_15_22_15
+  :effect (and
+    (when (and (at_21_15) (valid)) (at_22_15))
+    (when (and (at_21_15) (valid)) (not (at_21_15)))
+    (when (not (and (at_21_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_15_21_14
+  :effect (and
+    (when (and (at_21_15) (valid)) (at_21_14))
+    (when (and (at_21_15) (valid)) (not (at_21_15)))
+    (when (not (and (at_21_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_15_21_16
+  :effect (and
+    (when (and (at_21_15) (valid)) (at_21_16))
+    (when (and (at_21_15) (valid)) (not (at_21_15)))
+    (when (not (and (at_21_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_16_20_16
+  :effect (and
+    (when (and (at_21_16) (valid)) (at_20_16))
+    (when (and (at_21_16) (valid)) (not (at_21_16)))
+    (when (not (and (at_21_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_16_22_16
+  :effect (and
+    (when (and (at_21_16) (valid)) (at_22_16))
+    (when (and (at_21_16) (valid)) (not (at_21_16)))
+    (when (not (and (at_21_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_16_21_15
+  :effect (and
+    (when (and (at_21_16) (valid)) (at_21_15))
+    (when (and (at_21_16) (valid)) (not (at_21_16)))
+    (when (not (and (at_21_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_16_21_17
+  :effect (and
+    (when (and (at_21_16) (valid)) (at_21_17))
+    (when (and (at_21_16) (valid)) (not (at_21_16)))
+    (when (not (and (at_21_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_17_20_17
+  :effect (and
+    (when (and (at_21_17) (valid)) (at_20_17))
+    (when (and (at_21_17) (valid)) (not (at_21_17)))
+    (when (not (and (at_21_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_17_22_17
+  :effect (and
+    (when (and (at_21_17) (valid)) (at_22_17))
+    (when (and (at_21_17) (valid)) (not (at_21_17)))
+    (when (not (and (at_21_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_17_21_16
+  :effect (and
+    (when (and (at_21_17) (valid)) (at_21_16))
+    (when (and (at_21_17) (valid)) (not (at_21_17)))
+    (when (not (and (at_21_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_17_21_18
+  :effect (and
+    (when (and (at_21_17) (valid)) (at_21_18))
+    (when (and (at_21_17) (valid)) (not (at_21_17)))
+    (when (not (and (at_21_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_18_20_18
+  :effect (and
+    (when (and (at_21_18) (valid)) (at_20_18))
+    (when (and (at_21_18) (valid)) (not (at_21_18)))
+    (when (not (and (at_21_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_18_22_18
+  :effect (and
+    (when (and (at_21_18) (valid)) (at_22_18))
+    (when (and (at_21_18) (valid)) (not (at_21_18)))
+    (when (not (and (at_21_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_18_21_17
+  :effect (and
+    (when (and (at_21_18) (valid)) (at_21_17))
+    (when (and (at_21_18) (valid)) (not (at_21_18)))
+    (when (not (and (at_21_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_18_21_19
+  :effect (and
+    (when (and (at_21_18) (valid)) (at_21_19))
+    (when (and (at_21_18) (valid)) (not (at_21_18)))
+    (when (not (and (at_21_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_19_20_19
+  :effect (and
+    (when (and (at_21_19) (valid)) (at_20_19))
+    (when (and (at_21_19) (valid)) (not (at_21_19)))
+    (when (not (and (at_21_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_19_22_19
+  :effect (and
+    (when (and (at_21_19) (valid)) (at_22_19))
+    (when (and (at_21_19) (valid)) (not (at_21_19)))
+    (when (not (and (at_21_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_19_21_18
+  :effect (and
+    (when (and (at_21_19) (valid)) (at_21_18))
+    (when (and (at_21_19) (valid)) (not (at_21_19)))
+    (when (not (and (at_21_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_19_21_20
+  :effect (and
+    (when (and (at_21_19) (valid)) (at_21_20))
+    (when (and (at_21_19) (valid)) (not (at_21_19)))
+    (when (not (and (at_21_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_20_20_20
+  :effect (and
+    (when (and (at_21_20) (valid)) (at_20_20))
+    (when (and (at_21_20) (valid)) (not (at_21_20)))
+    (when (not (and (at_21_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_20_22_20
+  :effect (and
+    (when (and (at_21_20) (valid)) (at_22_20))
+    (when (and (at_21_20) (valid)) (not (at_21_20)))
+    (when (not (and (at_21_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_20_21_19
+  :effect (and
+    (when (and (at_21_20) (valid)) (at_21_19))
+    (when (and (at_21_20) (valid)) (not (at_21_20)))
+    (when (not (and (at_21_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_20_21_21
+  :effect (and
+    (when (and (at_21_20) (valid)) (at_21_21))
+    (when (and (at_21_20) (valid)) (not (at_21_20)))
+    (when (not (and (at_21_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_21_20_21
+  :effect (and
+    (when (and (at_21_21) (valid)) (at_20_21))
+    (when (and (at_21_21) (valid)) (not (at_21_21)))
+    (when (not (and (at_21_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_21_22_21
+  :effect (and
+    (when (and (at_21_21) (valid)) (at_22_21))
+    (when (and (at_21_21) (valid)) (not (at_21_21)))
+    (when (not (and (at_21_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_21_21_20
+  :effect (and
+    (when (and (at_21_21) (valid)) (at_21_20))
+    (when (and (at_21_21) (valid)) (not (at_21_21)))
+    (when (not (and (at_21_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_21_21_22
+  :effect (and
+    (when (and (at_21_21) (valid)) (at_21_22))
+    (when (and (at_21_21) (valid)) (not (at_21_21)))
+    (when (not (and (at_21_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_22_20_22
+  :effect (and
+    (when (and (at_21_22) (valid)) (at_20_22))
+    (when (and (at_21_22) (valid)) (not (at_21_22)))
+    (when (not (and (at_21_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_22_22_22
+  :effect (and
+    (when (and (at_21_22) (valid)) (at_22_22))
+    (when (and (at_21_22) (valid)) (not (at_21_22)))
+    (when (not (and (at_21_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_22_21_21
+  :effect (and
+    (when (and (at_21_22) (valid)) (at_21_21))
+    (when (and (at_21_22) (valid)) (not (at_21_22)))
+    (when (not (and (at_21_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_22_21_23
+  :effect (and
+    (when (and (at_21_22) (valid)) (at_21_23))
+    (when (and (at_21_22) (valid)) (not (at_21_22)))
+    (when (not (and (at_21_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_23_20_23
+  :effect (and
+    (when (and (at_21_23) (valid)) (at_20_23))
+    (when (and (at_21_23) (valid)) (not (at_21_23)))
+    (when (not (and (at_21_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_23_22_23
+  :effect (and
+    (when (and (at_21_23) (valid)) (at_22_23))
+    (when (and (at_21_23) (valid)) (not (at_21_23)))
+    (when (not (and (at_21_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_23_21_22
+  :effect (and
+    (when (and (at_21_23) (valid)) (at_21_22))
+    (when (and (at_21_23) (valid)) (not (at_21_23)))
+    (when (not (and (at_21_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_23_21_24
+  :effect (and
+    (when (and (at_21_23) (valid)) (at_21_24))
+    (when (and (at_21_23) (valid)) (not (at_21_23)))
+    (when (not (and (at_21_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_24_20_24
+  :effect (and
+    (when (and (at_21_24) (valid)) (at_20_24))
+    (when (and (at_21_24) (valid)) (not (at_21_24)))
+    (when (not (and (at_21_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_24_22_24
+  :effect (and
+    (when (and (at_21_24) (valid)) (at_22_24))
+    (when (and (at_21_24) (valid)) (not (at_21_24)))
+    (when (not (and (at_21_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_24_21_23
+  :effect (and
+    (when (and (at_21_24) (valid)) (at_21_23))
+    (when (and (at_21_24) (valid)) (not (at_21_24)))
+    (when (not (and (at_21_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_24_21_25
+  :effect (and
+    (when (and (at_21_24) (valid)) (at_21_25))
+    (when (and (at_21_24) (valid)) (not (at_21_24)))
+    (when (not (and (at_21_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_25_20_25
+  :effect (and
+    (when (and (at_21_25) (valid)) (at_20_25))
+    (when (and (at_21_25) (valid)) (not (at_21_25)))
+    (when (not (and (at_21_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_25_22_25
+  :effect (and
+    (when (and (at_21_25) (valid)) (at_22_25))
+    (when (and (at_21_25) (valid)) (not (at_21_25)))
+    (when (not (and (at_21_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_25_21_24
+  :effect (and
+    (when (and (at_21_25) (valid)) (at_21_24))
+    (when (and (at_21_25) (valid)) (not (at_21_25)))
+    (when (not (and (at_21_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_25_21_26
+  :effect (and
+    (when (and (at_21_25) (valid)) (at_21_26))
+    (when (and (at_21_25) (valid)) (not (at_21_25)))
+    (when (not (and (at_21_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_26_20_26
+  :effect (and
+    (when (and (at_21_26) (valid)) (at_20_26))
+    (when (and (at_21_26) (valid)) (not (at_21_26)))
+    (when (not (and (at_21_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_26_22_26
+  :effect (and
+    (when (and (at_21_26) (valid)) (at_22_26))
+    (when (and (at_21_26) (valid)) (not (at_21_26)))
+    (when (not (and (at_21_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_26_21_25
+  :effect (and
+    (when (and (at_21_26) (valid)) (at_21_25))
+    (when (and (at_21_26) (valid)) (not (at_21_26)))
+    (when (not (and (at_21_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_26_21_27
+  :effect (and
+    (when (and (at_21_26) (valid)) (at_21_27))
+    (when (and (at_21_26) (valid)) (not (at_21_26)))
+    (when (not (and (at_21_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_27_20_27
+  :effect (and
+    (when (and (at_21_27) (valid)) (at_20_27))
+    (when (and (at_21_27) (valid)) (not (at_21_27)))
+    (when (not (and (at_21_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_27_22_27
+  :effect (and
+    (when (and (at_21_27) (valid)) (at_22_27))
+    (when (and (at_21_27) (valid)) (not (at_21_27)))
+    (when (not (and (at_21_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_27_21_26
+  :effect (and
+    (when (and (at_21_27) (valid)) (at_21_26))
+    (when (and (at_21_27) (valid)) (not (at_21_27)))
+    (when (not (and (at_21_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_27_21_28
+  :effect (and
+    (when (and (at_21_27) (valid)) (at_21_28))
+    (when (and (at_21_27) (valid)) (not (at_21_27)))
+    (when (not (and (at_21_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_28_20_28
+  :effect (and
+    (when (and (at_21_28) (valid)) (at_20_28))
+    (when (and (at_21_28) (valid)) (not (at_21_28)))
+    (when (not (and (at_21_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_28_22_28
+  :effect (and
+    (when (and (at_21_28) (valid)) (at_22_28))
+    (when (and (at_21_28) (valid)) (not (at_21_28)))
+    (when (not (and (at_21_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_28_21_27
+  :effect (and
+    (when (and (at_21_28) (valid)) (at_21_27))
+    (when (and (at_21_28) (valid)) (not (at_21_28)))
+    (when (not (and (at_21_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_28_21_29
+  :effect (and
+    (when (and (at_21_28) (valid)) (at_21_29))
+    (when (and (at_21_28) (valid)) (not (at_21_28)))
+    (when (not (and (at_21_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_29_20_29
+  :effect (and
+    (when (and (at_21_29) (valid)) (at_20_29))
+    (when (and (at_21_29) (valid)) (not (at_21_29)))
+    (when (not (and (at_21_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_29_22_29
+  :effect (and
+    (when (and (at_21_29) (valid)) (at_22_29))
+    (when (and (at_21_29) (valid)) (not (at_21_29)))
+    (when (not (and (at_21_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_29_21_28
+  :effect (and
+    (when (and (at_21_29) (valid)) (at_21_28))
+    (when (and (at_21_29) (valid)) (not (at_21_29)))
+    (when (not (and (at_21_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_29_21_30
+  :effect (and
+    (when (and (at_21_29) (valid)) (at_21_30))
+    (when (and (at_21_29) (valid)) (not (at_21_29)))
+    (when (not (and (at_21_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_30_20_30
+  :effect (and
+    (when (and (at_21_30) (valid)) (at_20_30))
+    (when (and (at_21_30) (valid)) (not (at_21_30)))
+    (when (not (and (at_21_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_30_22_30
+  :effect (and
+    (when (and (at_21_30) (valid)) (at_22_30))
+    (when (and (at_21_30) (valid)) (not (at_21_30)))
+    (when (not (and (at_21_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_30_21_29
+  :effect (and
+    (when (and (at_21_30) (valid)) (at_21_29))
+    (when (and (at_21_30) (valid)) (not (at_21_30)))
+    (when (not (and (at_21_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_30_21_31
+  :effect (and
+    (when (and (at_21_30) (valid)) (at_21_31))
+    (when (and (at_21_30) (valid)) (not (at_21_30)))
+    (when (not (and (at_21_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_31_20_31
+  :effect (and
+    (when (and (at_21_31) (valid)) (at_20_31))
+    (when (and (at_21_31) (valid)) (not (at_21_31)))
+    (when (not (and (at_21_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_31_22_31
+  :effect (and
+    (when (and (at_21_31) (valid)) (at_22_31))
+    (when (and (at_21_31) (valid)) (not (at_21_31)))
+    (when (not (and (at_21_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_21_31_21_30
+  :effect (and
+    (when (and (at_21_31) (valid)) (at_21_30))
+    (when (and (at_21_31) (valid)) (not (at_21_31)))
+    (when (not (and (at_21_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_0_21_0
+  :effect (and
+    (when (and (at_22_0) (valid)) (at_21_0))
+    (when (and (at_22_0) (valid)) (not (at_22_0)))
+    (when (not (and (at_22_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_0_23_0
+  :effect (and
+    (when (and (at_22_0) (valid)) (at_23_0))
+    (when (and (at_22_0) (valid)) (not (at_22_0)))
+    (when (not (and (at_22_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_0_22_1
+  :effect (and
+    (when (and (at_22_0) (valid)) (at_22_1))
+    (when (and (at_22_0) (valid)) (not (at_22_0)))
+    (when (not (and (at_22_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_1_21_1
+  :effect (and
+    (when (and (at_22_1) (valid)) (at_21_1))
+    (when (and (at_22_1) (valid)) (not (at_22_1)))
+    (when (not (and (at_22_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_1_23_1
+  :effect (and
+    (when (and (at_22_1) (valid)) (at_23_1))
+    (when (and (at_22_1) (valid)) (not (at_22_1)))
+    (when (not (and (at_22_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_1_22_0
+  :effect (and
+    (when (and (at_22_1) (valid)) (at_22_0))
+    (when (and (at_22_1) (valid)) (not (at_22_1)))
+    (when (not (and (at_22_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_1_22_2
+  :effect (and
+    (when (and (at_22_1) (valid)) (at_22_2))
+    (when (and (at_22_1) (valid)) (not (at_22_1)))
+    (when (not (and (at_22_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_2_21_2
+  :effect (and
+    (when (and (at_22_2) (valid)) (at_21_2))
+    (when (and (at_22_2) (valid)) (not (at_22_2)))
+    (when (not (and (at_22_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_2_23_2
+  :effect (and
+    (when (and (at_22_2) (valid)) (at_23_2))
+    (when (and (at_22_2) (valid)) (not (at_22_2)))
+    (when (not (and (at_22_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_2_22_1
+  :effect (and
+    (when (and (at_22_2) (valid)) (at_22_1))
+    (when (and (at_22_2) (valid)) (not (at_22_2)))
+    (when (not (and (at_22_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_2_22_3
+  :effect (and
+    (when (and (at_22_2) (valid)) (at_22_3))
+    (when (and (at_22_2) (valid)) (not (at_22_2)))
+    (when (not (and (at_22_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_3_21_3
+  :effect (and
+    (when (and (at_22_3) (valid)) (at_21_3))
+    (when (and (at_22_3) (valid)) (not (at_22_3)))
+    (when (not (and (at_22_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_3_23_3
+  :effect (and
+    (when (and (at_22_3) (valid)) (at_23_3))
+    (when (and (at_22_3) (valid)) (not (at_22_3)))
+    (when (not (and (at_22_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_3_22_2
+  :effect (and
+    (when (and (at_22_3) (valid)) (at_22_2))
+    (when (and (at_22_3) (valid)) (not (at_22_3)))
+    (when (not (and (at_22_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_3_22_4
+  :effect (and
+    (when (and (at_22_3) (valid)) (at_22_4))
+    (when (and (at_22_3) (valid)) (not (at_22_3)))
+    (when (not (and (at_22_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_4_21_4
+  :effect (and
+    (when (and (at_22_4) (valid)) (at_21_4))
+    (when (and (at_22_4) (valid)) (not (at_22_4)))
+    (when (not (and (at_22_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_4_23_4
+  :effect (and
+    (when (and (at_22_4) (valid)) (at_23_4))
+    (when (and (at_22_4) (valid)) (not (at_22_4)))
+    (when (not (and (at_22_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_4_22_3
+  :effect (and
+    (when (and (at_22_4) (valid)) (at_22_3))
+    (when (and (at_22_4) (valid)) (not (at_22_4)))
+    (when (not (and (at_22_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_4_22_5
+  :effect (and
+    (when (and (at_22_4) (valid)) (at_22_5))
+    (when (and (at_22_4) (valid)) (not (at_22_4)))
+    (when (not (and (at_22_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_5_21_5
+  :effect (and
+    (when (and (at_22_5) (valid)) (at_21_5))
+    (when (and (at_22_5) (valid)) (not (at_22_5)))
+    (when (not (and (at_22_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_5_23_5
+  :effect (and
+    (when (and (at_22_5) (valid)) (at_23_5))
+    (when (and (at_22_5) (valid)) (not (at_22_5)))
+    (when (not (and (at_22_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_5_22_4
+  :effect (and
+    (when (and (at_22_5) (valid)) (at_22_4))
+    (when (and (at_22_5) (valid)) (not (at_22_5)))
+    (when (not (and (at_22_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_5_22_6
+  :effect (and
+    (when (and (at_22_5) (valid)) (at_22_6))
+    (when (and (at_22_5) (valid)) (not (at_22_5)))
+    (when (not (and (at_22_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_6_21_6
+  :effect (and
+    (when (and (at_22_6) (valid)) (at_21_6))
+    (when (and (at_22_6) (valid)) (not (at_22_6)))
+    (when (not (and (at_22_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_6_23_6
+  :effect (and
+    (when (and (at_22_6) (valid)) (at_23_6))
+    (when (and (at_22_6) (valid)) (not (at_22_6)))
+    (when (not (and (at_22_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_6_22_5
+  :effect (and
+    (when (and (at_22_6) (valid)) (at_22_5))
+    (when (and (at_22_6) (valid)) (not (at_22_6)))
+    (when (not (and (at_22_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_6_22_7
+  :effect (and
+    (when (and (at_22_6) (valid)) (at_22_7))
+    (when (and (at_22_6) (valid)) (not (at_22_6)))
+    (when (not (and (at_22_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_7_21_7
+  :effect (and
+    (when (and (at_22_7) (valid)) (at_21_7))
+    (when (and (at_22_7) (valid)) (not (at_22_7)))
+    (when (not (and (at_22_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_7_23_7
+  :effect (and
+    (when (and (at_22_7) (valid)) (at_23_7))
+    (when (and (at_22_7) (valid)) (not (at_22_7)))
+    (when (not (and (at_22_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_7_22_6
+  :effect (and
+    (when (and (at_22_7) (valid)) (at_22_6))
+    (when (and (at_22_7) (valid)) (not (at_22_7)))
+    (when (not (and (at_22_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_7_22_8
+  :effect (and
+    (when (and (at_22_7) (valid)) (at_22_8))
+    (when (and (at_22_7) (valid)) (not (at_22_7)))
+    (when (not (and (at_22_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_8_21_8
+  :effect (and
+    (when (and (at_22_8) (valid)) (at_21_8))
+    (when (and (at_22_8) (valid)) (not (at_22_8)))
+    (when (not (and (at_22_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_8_23_8
+  :effect (and
+    (when (and (at_22_8) (valid)) (at_23_8))
+    (when (and (at_22_8) (valid)) (not (at_22_8)))
+    (when (not (and (at_22_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_8_22_7
+  :effect (and
+    (when (and (at_22_8) (valid)) (at_22_7))
+    (when (and (at_22_8) (valid)) (not (at_22_8)))
+    (when (not (and (at_22_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_8_22_9
+  :effect (and
+    (when (and (at_22_8) (valid)) (at_22_9))
+    (when (and (at_22_8) (valid)) (not (at_22_8)))
+    (when (not (and (at_22_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_9_21_9
+  :effect (and
+    (when (and (at_22_9) (valid)) (at_21_9))
+    (when (and (at_22_9) (valid)) (not (at_22_9)))
+    (when (not (and (at_22_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_9_23_9
+  :effect (and
+    (when (and (at_22_9) (valid)) (at_23_9))
+    (when (and (at_22_9) (valid)) (not (at_22_9)))
+    (when (not (and (at_22_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_9_22_8
+  :effect (and
+    (when (and (at_22_9) (valid)) (at_22_8))
+    (when (and (at_22_9) (valid)) (not (at_22_9)))
+    (when (not (and (at_22_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_9_22_10
+  :effect (and
+    (when (and (at_22_9) (valid)) (at_22_10))
+    (when (and (at_22_9) (valid)) (not (at_22_9)))
+    (when (not (and (at_22_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_10_21_10
+  :effect (and
+    (when (and (at_22_10) (valid)) (at_21_10))
+    (when (and (at_22_10) (valid)) (not (at_22_10)))
+    (when (not (and (at_22_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_10_23_10
+  :effect (and
+    (when (and (at_22_10) (valid)) (at_23_10))
+    (when (and (at_22_10) (valid)) (not (at_22_10)))
+    (when (not (and (at_22_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_10_22_9
+  :effect (and
+    (when (and (at_22_10) (valid)) (at_22_9))
+    (when (and (at_22_10) (valid)) (not (at_22_10)))
+    (when (not (and (at_22_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_10_22_11
+  :effect (and
+    (when (and (at_22_10) (valid)) (at_22_11))
+    (when (and (at_22_10) (valid)) (not (at_22_10)))
+    (when (not (and (at_22_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_11_21_11
+  :effect (and
+    (when (and (at_22_11) (valid)) (at_21_11))
+    (when (and (at_22_11) (valid)) (not (at_22_11)))
+    (when (not (and (at_22_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_11_23_11
+  :effect (and
+    (when (and (at_22_11) (valid)) (at_23_11))
+    (when (and (at_22_11) (valid)) (not (at_22_11)))
+    (when (not (and (at_22_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_11_22_10
+  :effect (and
+    (when (and (at_22_11) (valid)) (at_22_10))
+    (when (and (at_22_11) (valid)) (not (at_22_11)))
+    (when (not (and (at_22_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_11_22_12
+  :effect (and
+    (when (and (at_22_11) (valid)) (at_22_12))
+    (when (and (at_22_11) (valid)) (not (at_22_11)))
+    (when (not (and (at_22_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_12_21_12
+  :effect (and
+    (when (and (at_22_12) (valid)) (at_21_12))
+    (when (and (at_22_12) (valid)) (not (at_22_12)))
+    (when (not (and (at_22_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_12_23_12
+  :effect (and
+    (when (and (at_22_12) (valid)) (at_23_12))
+    (when (and (at_22_12) (valid)) (not (at_22_12)))
+    (when (not (and (at_22_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_12_22_11
+  :effect (and
+    (when (and (at_22_12) (valid)) (at_22_11))
+    (when (and (at_22_12) (valid)) (not (at_22_12)))
+    (when (not (and (at_22_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_12_22_13
+  :effect (and
+    (when (and (at_22_12) (valid)) (at_22_13))
+    (when (and (at_22_12) (valid)) (not (at_22_12)))
+    (when (not (and (at_22_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_13_21_13
+  :effect (and
+    (when (and (at_22_13) (valid)) (at_21_13))
+    (when (and (at_22_13) (valid)) (not (at_22_13)))
+    (when (not (and (at_22_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_13_23_13
+  :effect (and
+    (when (and (at_22_13) (valid)) (at_23_13))
+    (when (and (at_22_13) (valid)) (not (at_22_13)))
+    (when (not (and (at_22_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_13_22_12
+  :effect (and
+    (when (and (at_22_13) (valid)) (at_22_12))
+    (when (and (at_22_13) (valid)) (not (at_22_13)))
+    (when (not (and (at_22_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_13_22_14
+  :effect (and
+    (when (and (at_22_13) (valid)) (at_22_14))
+    (when (and (at_22_13) (valid)) (not (at_22_13)))
+    (when (not (and (at_22_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_14_21_14
+  :effect (and
+    (when (and (at_22_14) (valid)) (at_21_14))
+    (when (and (at_22_14) (valid)) (not (at_22_14)))
+    (when (not (and (at_22_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_14_23_14
+  :effect (and
+    (when (and (at_22_14) (valid)) (at_23_14))
+    (when (and (at_22_14) (valid)) (not (at_22_14)))
+    (when (not (and (at_22_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_14_22_13
+  :effect (and
+    (when (and (at_22_14) (valid)) (at_22_13))
+    (when (and (at_22_14) (valid)) (not (at_22_14)))
+    (when (not (and (at_22_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_14_22_15
+  :effect (and
+    (when (and (at_22_14) (valid)) (at_22_15))
+    (when (and (at_22_14) (valid)) (not (at_22_14)))
+    (when (not (and (at_22_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_15_21_15
+  :effect (and
+    (when (and (at_22_15) (valid)) (at_21_15))
+    (when (and (at_22_15) (valid)) (not (at_22_15)))
+    (when (not (and (at_22_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_15_23_15
+  :effect (and
+    (when (and (at_22_15) (valid)) (at_23_15))
+    (when (and (at_22_15) (valid)) (not (at_22_15)))
+    (when (not (and (at_22_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_15_22_14
+  :effect (and
+    (when (and (at_22_15) (valid)) (at_22_14))
+    (when (and (at_22_15) (valid)) (not (at_22_15)))
+    (when (not (and (at_22_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_15_22_16
+  :effect (and
+    (when (and (at_22_15) (valid)) (at_22_16))
+    (when (and (at_22_15) (valid)) (not (at_22_15)))
+    (when (not (and (at_22_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_16_21_16
+  :effect (and
+    (when (and (at_22_16) (valid)) (at_21_16))
+    (when (and (at_22_16) (valid)) (not (at_22_16)))
+    (when (not (and (at_22_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_16_23_16
+  :effect (and
+    (when (and (at_22_16) (valid)) (at_23_16))
+    (when (and (at_22_16) (valid)) (not (at_22_16)))
+    (when (not (and (at_22_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_16_22_15
+  :effect (and
+    (when (and (at_22_16) (valid)) (at_22_15))
+    (when (and (at_22_16) (valid)) (not (at_22_16)))
+    (when (not (and (at_22_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_16_22_17
+  :effect (and
+    (when (and (at_22_16) (valid)) (at_22_17))
+    (when (and (at_22_16) (valid)) (not (at_22_16)))
+    (when (not (and (at_22_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_17_21_17
+  :effect (and
+    (when (and (at_22_17) (valid)) (at_21_17))
+    (when (and (at_22_17) (valid)) (not (at_22_17)))
+    (when (not (and (at_22_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_17_23_17
+  :effect (and
+    (when (and (at_22_17) (valid)) (at_23_17))
+    (when (and (at_22_17) (valid)) (not (at_22_17)))
+    (when (not (and (at_22_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_17_22_16
+  :effect (and
+    (when (and (at_22_17) (valid)) (at_22_16))
+    (when (and (at_22_17) (valid)) (not (at_22_17)))
+    (when (not (and (at_22_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_17_22_18
+  :effect (and
+    (when (and (at_22_17) (valid)) (at_22_18))
+    (when (and (at_22_17) (valid)) (not (at_22_17)))
+    (when (not (and (at_22_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_18_21_18
+  :effect (and
+    (when (and (at_22_18) (valid)) (at_21_18))
+    (when (and (at_22_18) (valid)) (not (at_22_18)))
+    (when (not (and (at_22_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_18_23_18
+  :effect (and
+    (when (and (at_22_18) (valid)) (at_23_18))
+    (when (and (at_22_18) (valid)) (not (at_22_18)))
+    (when (not (and (at_22_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_18_22_17
+  :effect (and
+    (when (and (at_22_18) (valid)) (at_22_17))
+    (when (and (at_22_18) (valid)) (not (at_22_18)))
+    (when (not (and (at_22_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_18_22_19
+  :effect (and
+    (when (and (at_22_18) (valid)) (at_22_19))
+    (when (and (at_22_18) (valid)) (not (at_22_18)))
+    (when (not (and (at_22_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_19_21_19
+  :effect (and
+    (when (and (at_22_19) (valid)) (at_21_19))
+    (when (and (at_22_19) (valid)) (not (at_22_19)))
+    (when (not (and (at_22_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_19_23_19
+  :effect (and
+    (when (and (at_22_19) (valid)) (at_23_19))
+    (when (and (at_22_19) (valid)) (not (at_22_19)))
+    (when (not (and (at_22_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_19_22_18
+  :effect (and
+    (when (and (at_22_19) (valid)) (at_22_18))
+    (when (and (at_22_19) (valid)) (not (at_22_19)))
+    (when (not (and (at_22_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_19_22_20
+  :effect (and
+    (when (and (at_22_19) (valid)) (at_22_20))
+    (when (and (at_22_19) (valid)) (not (at_22_19)))
+    (when (not (and (at_22_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_20_21_20
+  :effect (and
+    (when (and (at_22_20) (valid)) (at_21_20))
+    (when (and (at_22_20) (valid)) (not (at_22_20)))
+    (when (not (and (at_22_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_20_23_20
+  :effect (and
+    (when (and (at_22_20) (valid)) (at_23_20))
+    (when (and (at_22_20) (valid)) (not (at_22_20)))
+    (when (not (and (at_22_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_20_22_19
+  :effect (and
+    (when (and (at_22_20) (valid)) (at_22_19))
+    (when (and (at_22_20) (valid)) (not (at_22_20)))
+    (when (not (and (at_22_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_20_22_21
+  :effect (and
+    (when (and (at_22_20) (valid)) (at_22_21))
+    (when (and (at_22_20) (valid)) (not (at_22_20)))
+    (when (not (and (at_22_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_21_21_21
+  :effect (and
+    (when (and (at_22_21) (valid)) (at_21_21))
+    (when (and (at_22_21) (valid)) (not (at_22_21)))
+    (when (not (and (at_22_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_21_23_21
+  :effect (and
+    (when (and (at_22_21) (valid)) (at_23_21))
+    (when (and (at_22_21) (valid)) (not (at_22_21)))
+    (when (not (and (at_22_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_21_22_20
+  :effect (and
+    (when (and (at_22_21) (valid)) (at_22_20))
+    (when (and (at_22_21) (valid)) (not (at_22_21)))
+    (when (not (and (at_22_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_21_22_22
+  :effect (and
+    (when (and (at_22_21) (valid)) (at_22_22))
+    (when (and (at_22_21) (valid)) (not (at_22_21)))
+    (when (not (and (at_22_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_22_21_22
+  :effect (and
+    (when (and (at_22_22) (valid)) (at_21_22))
+    (when (and (at_22_22) (valid)) (not (at_22_22)))
+    (when (not (and (at_22_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_22_23_22
+  :effect (and
+    (when (and (at_22_22) (valid)) (at_23_22))
+    (when (and (at_22_22) (valid)) (not (at_22_22)))
+    (when (not (and (at_22_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_22_22_21
+  :effect (and
+    (when (and (at_22_22) (valid)) (at_22_21))
+    (when (and (at_22_22) (valid)) (not (at_22_22)))
+    (when (not (and (at_22_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_22_22_23
+  :effect (and
+    (when (and (at_22_22) (valid)) (at_22_23))
+    (when (and (at_22_22) (valid)) (not (at_22_22)))
+    (when (not (and (at_22_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_23_21_23
+  :effect (and
+    (when (and (at_22_23) (valid)) (at_21_23))
+    (when (and (at_22_23) (valid)) (not (at_22_23)))
+    (when (not (and (at_22_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_23_23_23
+  :effect (and
+    (when (and (at_22_23) (valid)) (at_23_23))
+    (when (and (at_22_23) (valid)) (not (at_22_23)))
+    (when (not (and (at_22_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_23_22_22
+  :effect (and
+    (when (and (at_22_23) (valid)) (at_22_22))
+    (when (and (at_22_23) (valid)) (not (at_22_23)))
+    (when (not (and (at_22_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_23_22_24
+  :effect (and
+    (when (and (at_22_23) (valid)) (at_22_24))
+    (when (and (at_22_23) (valid)) (not (at_22_23)))
+    (when (not (and (at_22_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_24_21_24
+  :effect (and
+    (when (and (at_22_24) (valid)) (at_21_24))
+    (when (and (at_22_24) (valid)) (not (at_22_24)))
+    (when (not (and (at_22_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_24_23_24
+  :effect (and
+    (when (and (at_22_24) (valid)) (at_23_24))
+    (when (and (at_22_24) (valid)) (not (at_22_24)))
+    (when (not (and (at_22_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_24_22_23
+  :effect (and
+    (when (and (at_22_24) (valid)) (at_22_23))
+    (when (and (at_22_24) (valid)) (not (at_22_24)))
+    (when (not (and (at_22_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_24_22_25
+  :effect (and
+    (when (and (at_22_24) (valid)) (at_22_25))
+    (when (and (at_22_24) (valid)) (not (at_22_24)))
+    (when (not (and (at_22_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_25_21_25
+  :effect (and
+    (when (and (at_22_25) (valid)) (at_21_25))
+    (when (and (at_22_25) (valid)) (not (at_22_25)))
+    (when (not (and (at_22_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_25_23_25
+  :effect (and
+    (when (and (at_22_25) (valid)) (at_23_25))
+    (when (and (at_22_25) (valid)) (not (at_22_25)))
+    (when (not (and (at_22_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_25_22_24
+  :effect (and
+    (when (and (at_22_25) (valid)) (at_22_24))
+    (when (and (at_22_25) (valid)) (not (at_22_25)))
+    (when (not (and (at_22_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_25_22_26
+  :effect (and
+    (when (and (at_22_25) (valid)) (at_22_26))
+    (when (and (at_22_25) (valid)) (not (at_22_25)))
+    (when (not (and (at_22_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_26_21_26
+  :effect (and
+    (when (and (at_22_26) (valid)) (at_21_26))
+    (when (and (at_22_26) (valid)) (not (at_22_26)))
+    (when (not (and (at_22_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_26_23_26
+  :effect (and
+    (when (and (at_22_26) (valid)) (at_23_26))
+    (when (and (at_22_26) (valid)) (not (at_22_26)))
+    (when (not (and (at_22_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_26_22_25
+  :effect (and
+    (when (and (at_22_26) (valid)) (at_22_25))
+    (when (and (at_22_26) (valid)) (not (at_22_26)))
+    (when (not (and (at_22_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_26_22_27
+  :effect (and
+    (when (and (at_22_26) (valid)) (at_22_27))
+    (when (and (at_22_26) (valid)) (not (at_22_26)))
+    (when (not (and (at_22_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_27_21_27
+  :effect (and
+    (when (and (at_22_27) (valid)) (at_21_27))
+    (when (and (at_22_27) (valid)) (not (at_22_27)))
+    (when (not (and (at_22_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_27_23_27
+  :effect (and
+    (when (and (at_22_27) (valid)) (at_23_27))
+    (when (and (at_22_27) (valid)) (not (at_22_27)))
+    (when (not (and (at_22_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_27_22_26
+  :effect (and
+    (when (and (at_22_27) (valid)) (at_22_26))
+    (when (and (at_22_27) (valid)) (not (at_22_27)))
+    (when (not (and (at_22_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_27_22_28
+  :effect (and
+    (when (and (at_22_27) (valid)) (at_22_28))
+    (when (and (at_22_27) (valid)) (not (at_22_27)))
+    (when (not (and (at_22_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_28_21_28
+  :effect (and
+    (when (and (at_22_28) (valid)) (at_21_28))
+    (when (and (at_22_28) (valid)) (not (at_22_28)))
+    (when (not (and (at_22_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_28_23_28
+  :effect (and
+    (when (and (at_22_28) (valid)) (at_23_28))
+    (when (and (at_22_28) (valid)) (not (at_22_28)))
+    (when (not (and (at_22_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_28_22_27
+  :effect (and
+    (when (and (at_22_28) (valid)) (at_22_27))
+    (when (and (at_22_28) (valid)) (not (at_22_28)))
+    (when (not (and (at_22_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_28_22_29
+  :effect (and
+    (when (and (at_22_28) (valid)) (at_22_29))
+    (when (and (at_22_28) (valid)) (not (at_22_28)))
+    (when (not (and (at_22_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_29_21_29
+  :effect (and
+    (when (and (at_22_29) (valid)) (at_21_29))
+    (when (and (at_22_29) (valid)) (not (at_22_29)))
+    (when (not (and (at_22_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_29_23_29
+  :effect (and
+    (when (and (at_22_29) (valid)) (at_23_29))
+    (when (and (at_22_29) (valid)) (not (at_22_29)))
+    (when (not (and (at_22_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_29_22_28
+  :effect (and
+    (when (and (at_22_29) (valid)) (at_22_28))
+    (when (and (at_22_29) (valid)) (not (at_22_29)))
+    (when (not (and (at_22_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_29_22_30
+  :effect (and
+    (when (and (at_22_29) (valid)) (at_22_30))
+    (when (and (at_22_29) (valid)) (not (at_22_29)))
+    (when (not (and (at_22_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_30_21_30
+  :effect (and
+    (when (and (at_22_30) (valid)) (at_21_30))
+    (when (and (at_22_30) (valid)) (not (at_22_30)))
+    (when (not (and (at_22_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_30_23_30
+  :effect (and
+    (when (and (at_22_30) (valid)) (at_23_30))
+    (when (and (at_22_30) (valid)) (not (at_22_30)))
+    (when (not (and (at_22_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_30_22_29
+  :effect (and
+    (when (and (at_22_30) (valid)) (at_22_29))
+    (when (and (at_22_30) (valid)) (not (at_22_30)))
+    (when (not (and (at_22_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_30_22_31
+  :effect (and
+    (when (and (at_22_30) (valid)) (at_22_31))
+    (when (and (at_22_30) (valid)) (not (at_22_30)))
+    (when (not (and (at_22_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_31_21_31
+  :effect (and
+    (when (and (at_22_31) (valid)) (at_21_31))
+    (when (and (at_22_31) (valid)) (not (at_22_31)))
+    (when (not (and (at_22_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_31_23_31
+  :effect (and
+    (when (and (at_22_31) (valid)) (at_23_31))
+    (when (and (at_22_31) (valid)) (not (at_22_31)))
+    (when (not (and (at_22_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_22_31_22_30
+  :effect (and
+    (when (and (at_22_31) (valid)) (at_22_30))
+    (when (and (at_22_31) (valid)) (not (at_22_31)))
+    (when (not (and (at_22_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_0_22_0
+  :effect (and
+    (when (and (at_23_0) (valid)) (at_22_0))
+    (when (and (at_23_0) (valid)) (not (at_23_0)))
+    (when (not (and (at_23_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_0_24_0
+  :effect (and
+    (when (and (at_23_0) (valid)) (at_24_0))
+    (when (and (at_23_0) (valid)) (not (at_23_0)))
+    (when (not (and (at_23_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_0_23_1
+  :effect (and
+    (when (and (at_23_0) (valid)) (at_23_1))
+    (when (and (at_23_0) (valid)) (not (at_23_0)))
+    (when (not (and (at_23_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_1_22_1
+  :effect (and
+    (when (and (at_23_1) (valid)) (at_22_1))
+    (when (and (at_23_1) (valid)) (not (at_23_1)))
+    (when (not (and (at_23_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_1_24_1
+  :effect (and
+    (when (and (at_23_1) (valid)) (at_24_1))
+    (when (and (at_23_1) (valid)) (not (at_23_1)))
+    (when (not (and (at_23_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_1_23_0
+  :effect (and
+    (when (and (at_23_1) (valid)) (at_23_0))
+    (when (and (at_23_1) (valid)) (not (at_23_1)))
+    (when (not (and (at_23_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_1_23_2
+  :effect (and
+    (when (and (at_23_1) (valid)) (at_23_2))
+    (when (and (at_23_1) (valid)) (not (at_23_1)))
+    (when (not (and (at_23_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_2_22_2
+  :effect (and
+    (when (and (at_23_2) (valid)) (at_22_2))
+    (when (and (at_23_2) (valid)) (not (at_23_2)))
+    (when (not (and (at_23_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_2_24_2
+  :effect (and
+    (when (and (at_23_2) (valid)) (at_24_2))
+    (when (and (at_23_2) (valid)) (not (at_23_2)))
+    (when (not (and (at_23_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_2_23_1
+  :effect (and
+    (when (and (at_23_2) (valid)) (at_23_1))
+    (when (and (at_23_2) (valid)) (not (at_23_2)))
+    (when (not (and (at_23_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_2_23_3
+  :effect (and
+    (when (and (at_23_2) (valid)) (at_23_3))
+    (when (and (at_23_2) (valid)) (not (at_23_2)))
+    (when (not (and (at_23_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_3_22_3
+  :effect (and
+    (when (and (at_23_3) (valid)) (at_22_3))
+    (when (and (at_23_3) (valid)) (not (at_23_3)))
+    (when (not (and (at_23_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_3_24_3
+  :effect (and
+    (when (and (at_23_3) (valid)) (at_24_3))
+    (when (and (at_23_3) (valid)) (not (at_23_3)))
+    (when (not (and (at_23_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_3_23_2
+  :effect (and
+    (when (and (at_23_3) (valid)) (at_23_2))
+    (when (and (at_23_3) (valid)) (not (at_23_3)))
+    (when (not (and (at_23_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_3_23_4
+  :effect (and
+    (when (and (at_23_3) (valid)) (at_23_4))
+    (when (and (at_23_3) (valid)) (not (at_23_3)))
+    (when (not (and (at_23_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_4_22_4
+  :effect (and
+    (when (and (at_23_4) (valid)) (at_22_4))
+    (when (and (at_23_4) (valid)) (not (at_23_4)))
+    (when (not (and (at_23_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_4_24_4
+  :effect (and
+    (when (and (at_23_4) (valid)) (at_24_4))
+    (when (and (at_23_4) (valid)) (not (at_23_4)))
+    (when (not (and (at_23_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_4_23_3
+  :effect (and
+    (when (and (at_23_4) (valid)) (at_23_3))
+    (when (and (at_23_4) (valid)) (not (at_23_4)))
+    (when (not (and (at_23_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_4_23_5
+  :effect (and
+    (when (and (at_23_4) (valid)) (at_23_5))
+    (when (and (at_23_4) (valid)) (not (at_23_4)))
+    (when (not (and (at_23_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_5_22_5
+  :effect (and
+    (when (and (at_23_5) (valid)) (at_22_5))
+    (when (and (at_23_5) (valid)) (not (at_23_5)))
+    (when (not (and (at_23_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_5_24_5
+  :effect (and
+    (when (and (at_23_5) (valid)) (at_24_5))
+    (when (and (at_23_5) (valid)) (not (at_23_5)))
+    (when (not (and (at_23_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_5_23_4
+  :effect (and
+    (when (and (at_23_5) (valid)) (at_23_4))
+    (when (and (at_23_5) (valid)) (not (at_23_5)))
+    (when (not (and (at_23_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_5_23_6
+  :effect (and
+    (when (and (at_23_5) (valid)) (at_23_6))
+    (when (and (at_23_5) (valid)) (not (at_23_5)))
+    (when (not (and (at_23_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_6_22_6
+  :effect (and
+    (when (and (at_23_6) (valid)) (at_22_6))
+    (when (and (at_23_6) (valid)) (not (at_23_6)))
+    (when (not (and (at_23_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_6_24_6
+  :effect (and
+    (when (and (at_23_6) (valid)) (at_24_6))
+    (when (and (at_23_6) (valid)) (not (at_23_6)))
+    (when (not (and (at_23_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_6_23_5
+  :effect (and
+    (when (and (at_23_6) (valid)) (at_23_5))
+    (when (and (at_23_6) (valid)) (not (at_23_6)))
+    (when (not (and (at_23_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_6_23_7
+  :effect (and
+    (when (and (at_23_6) (valid)) (at_23_7))
+    (when (and (at_23_6) (valid)) (not (at_23_6)))
+    (when (not (and (at_23_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_7_22_7
+  :effect (and
+    (when (and (at_23_7) (valid)) (at_22_7))
+    (when (and (at_23_7) (valid)) (not (at_23_7)))
+    (when (not (and (at_23_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_7_24_7
+  :effect (and
+    (when (and (at_23_7) (valid)) (at_24_7))
+    (when (and (at_23_7) (valid)) (not (at_23_7)))
+    (when (not (and (at_23_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_7_23_6
+  :effect (and
+    (when (and (at_23_7) (valid)) (at_23_6))
+    (when (and (at_23_7) (valid)) (not (at_23_7)))
+    (when (not (and (at_23_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_7_23_8
+  :effect (and
+    (when (and (at_23_7) (valid)) (at_23_8))
+    (when (and (at_23_7) (valid)) (not (at_23_7)))
+    (when (not (and (at_23_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_8_22_8
+  :effect (and
+    (when (and (at_23_8) (valid)) (at_22_8))
+    (when (and (at_23_8) (valid)) (not (at_23_8)))
+    (when (not (and (at_23_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_8_24_8
+  :effect (and
+    (when (and (at_23_8) (valid)) (at_24_8))
+    (when (and (at_23_8) (valid)) (not (at_23_8)))
+    (when (not (and (at_23_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_8_23_7
+  :effect (and
+    (when (and (at_23_8) (valid)) (at_23_7))
+    (when (and (at_23_8) (valid)) (not (at_23_8)))
+    (when (not (and (at_23_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_8_23_9
+  :effect (and
+    (when (and (at_23_8) (valid)) (at_23_9))
+    (when (and (at_23_8) (valid)) (not (at_23_8)))
+    (when (not (and (at_23_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_9_22_9
+  :effect (and
+    (when (and (at_23_9) (valid)) (at_22_9))
+    (when (and (at_23_9) (valid)) (not (at_23_9)))
+    (when (not (and (at_23_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_9_24_9
+  :effect (and
+    (when (and (at_23_9) (valid)) (at_24_9))
+    (when (and (at_23_9) (valid)) (not (at_23_9)))
+    (when (not (and (at_23_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_9_23_8
+  :effect (and
+    (when (and (at_23_9) (valid)) (at_23_8))
+    (when (and (at_23_9) (valid)) (not (at_23_9)))
+    (when (not (and (at_23_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_9_23_10
+  :effect (and
+    (when (and (at_23_9) (valid)) (at_23_10))
+    (when (and (at_23_9) (valid)) (not (at_23_9)))
+    (when (not (and (at_23_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_10_22_10
+  :effect (and
+    (when (and (at_23_10) (valid)) (at_22_10))
+    (when (and (at_23_10) (valid)) (not (at_23_10)))
+    (when (not (and (at_23_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_10_24_10
+  :effect (and
+    (when (and (at_23_10) (valid)) (at_24_10))
+    (when (and (at_23_10) (valid)) (not (at_23_10)))
+    (when (not (and (at_23_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_10_23_9
+  :effect (and
+    (when (and (at_23_10) (valid)) (at_23_9))
+    (when (and (at_23_10) (valid)) (not (at_23_10)))
+    (when (not (and (at_23_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_10_23_11
+  :effect (and
+    (when (and (at_23_10) (valid)) (at_23_11))
+    (when (and (at_23_10) (valid)) (not (at_23_10)))
+    (when (not (and (at_23_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_11_22_11
+  :effect (and
+    (when (and (at_23_11) (valid)) (at_22_11))
+    (when (and (at_23_11) (valid)) (not (at_23_11)))
+    (when (not (and (at_23_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_11_24_11
+  :effect (and
+    (when (and (at_23_11) (valid)) (at_24_11))
+    (when (and (at_23_11) (valid)) (not (at_23_11)))
+    (when (not (and (at_23_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_11_23_10
+  :effect (and
+    (when (and (at_23_11) (valid)) (at_23_10))
+    (when (and (at_23_11) (valid)) (not (at_23_11)))
+    (when (not (and (at_23_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_11_23_12
+  :effect (and
+    (when (and (at_23_11) (valid)) (at_23_12))
+    (when (and (at_23_11) (valid)) (not (at_23_11)))
+    (when (not (and (at_23_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_12_22_12
+  :effect (and
+    (when (and (at_23_12) (valid)) (at_22_12))
+    (when (and (at_23_12) (valid)) (not (at_23_12)))
+    (when (not (and (at_23_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_12_24_12
+  :effect (and
+    (when (and (at_23_12) (valid)) (at_24_12))
+    (when (and (at_23_12) (valid)) (not (at_23_12)))
+    (when (not (and (at_23_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_12_23_11
+  :effect (and
+    (when (and (at_23_12) (valid)) (at_23_11))
+    (when (and (at_23_12) (valid)) (not (at_23_12)))
+    (when (not (and (at_23_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_12_23_13
+  :effect (and
+    (when (and (at_23_12) (valid)) (at_23_13))
+    (when (and (at_23_12) (valid)) (not (at_23_12)))
+    (when (not (and (at_23_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_13_22_13
+  :effect (and
+    (when (and (at_23_13) (valid)) (at_22_13))
+    (when (and (at_23_13) (valid)) (not (at_23_13)))
+    (when (not (and (at_23_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_13_24_13
+  :effect (and
+    (when (and (at_23_13) (valid)) (at_24_13))
+    (when (and (at_23_13) (valid)) (not (at_23_13)))
+    (when (not (and (at_23_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_13_23_12
+  :effect (and
+    (when (and (at_23_13) (valid)) (at_23_12))
+    (when (and (at_23_13) (valid)) (not (at_23_13)))
+    (when (not (and (at_23_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_13_23_14
+  :effect (and
+    (when (and (at_23_13) (valid)) (at_23_14))
+    (when (and (at_23_13) (valid)) (not (at_23_13)))
+    (when (not (and (at_23_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_14_22_14
+  :effect (and
+    (when (and (at_23_14) (valid)) (at_22_14))
+    (when (and (at_23_14) (valid)) (not (at_23_14)))
+    (when (not (and (at_23_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_14_24_14
+  :effect (and
+    (when (and (at_23_14) (valid)) (at_24_14))
+    (when (and (at_23_14) (valid)) (not (at_23_14)))
+    (when (not (and (at_23_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_14_23_13
+  :effect (and
+    (when (and (at_23_14) (valid)) (at_23_13))
+    (when (and (at_23_14) (valid)) (not (at_23_14)))
+    (when (not (and (at_23_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_14_23_15
+  :effect (and
+    (when (and (at_23_14) (valid)) (at_23_15))
+    (when (and (at_23_14) (valid)) (not (at_23_14)))
+    (when (not (and (at_23_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_15_22_15
+  :effect (and
+    (when (and (at_23_15) (valid)) (at_22_15))
+    (when (and (at_23_15) (valid)) (not (at_23_15)))
+    (when (not (and (at_23_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_15_24_15
+  :effect (and
+    (when (and (at_23_15) (valid)) (at_24_15))
+    (when (and (at_23_15) (valid)) (not (at_23_15)))
+    (when (not (and (at_23_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_15_23_14
+  :effect (and
+    (when (and (at_23_15) (valid)) (at_23_14))
+    (when (and (at_23_15) (valid)) (not (at_23_15)))
+    (when (not (and (at_23_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_15_23_16
+  :effect (and
+    (when (and (at_23_15) (valid)) (at_23_16))
+    (when (and (at_23_15) (valid)) (not (at_23_15)))
+    (when (not (and (at_23_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_16_22_16
+  :effect (and
+    (when (and (at_23_16) (valid)) (at_22_16))
+    (when (and (at_23_16) (valid)) (not (at_23_16)))
+    (when (not (and (at_23_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_16_24_16
+  :effect (and
+    (when (and (at_23_16) (valid)) (at_24_16))
+    (when (and (at_23_16) (valid)) (not (at_23_16)))
+    (when (not (and (at_23_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_16_23_15
+  :effect (and
+    (when (and (at_23_16) (valid)) (at_23_15))
+    (when (and (at_23_16) (valid)) (not (at_23_16)))
+    (when (not (and (at_23_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_16_23_17
+  :effect (and
+    (when (and (at_23_16) (valid)) (at_23_17))
+    (when (and (at_23_16) (valid)) (not (at_23_16)))
+    (when (not (and (at_23_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_17_22_17
+  :effect (and
+    (when (and (at_23_17) (valid)) (at_22_17))
+    (when (and (at_23_17) (valid)) (not (at_23_17)))
+    (when (not (and (at_23_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_17_24_17
+  :effect (and
+    (when (and (at_23_17) (valid)) (at_24_17))
+    (when (and (at_23_17) (valid)) (not (at_23_17)))
+    (when (not (and (at_23_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_17_23_16
+  :effect (and
+    (when (and (at_23_17) (valid)) (at_23_16))
+    (when (and (at_23_17) (valid)) (not (at_23_17)))
+    (when (not (and (at_23_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_17_23_18
+  :effect (and
+    (when (and (at_23_17) (valid)) (at_23_18))
+    (when (and (at_23_17) (valid)) (not (at_23_17)))
+    (when (not (and (at_23_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_18_22_18
+  :effect (and
+    (when (and (at_23_18) (valid)) (at_22_18))
+    (when (and (at_23_18) (valid)) (not (at_23_18)))
+    (when (not (and (at_23_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_18_24_18
+  :effect (and
+    (when (and (at_23_18) (valid)) (at_24_18))
+    (when (and (at_23_18) (valid)) (not (at_23_18)))
+    (when (not (and (at_23_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_18_23_17
+  :effect (and
+    (when (and (at_23_18) (valid)) (at_23_17))
+    (when (and (at_23_18) (valid)) (not (at_23_18)))
+    (when (not (and (at_23_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_18_23_19
+  :effect (and
+    (when (and (at_23_18) (valid)) (at_23_19))
+    (when (and (at_23_18) (valid)) (not (at_23_18)))
+    (when (not (and (at_23_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_19_22_19
+  :effect (and
+    (when (and (at_23_19) (valid)) (at_22_19))
+    (when (and (at_23_19) (valid)) (not (at_23_19)))
+    (when (not (and (at_23_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_19_24_19
+  :effect (and
+    (when (and (at_23_19) (valid)) (at_24_19))
+    (when (and (at_23_19) (valid)) (not (at_23_19)))
+    (when (not (and (at_23_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_19_23_18
+  :effect (and
+    (when (and (at_23_19) (valid)) (at_23_18))
+    (when (and (at_23_19) (valid)) (not (at_23_19)))
+    (when (not (and (at_23_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_19_23_20
+  :effect (and
+    (when (and (at_23_19) (valid)) (at_23_20))
+    (when (and (at_23_19) (valid)) (not (at_23_19)))
+    (when (not (and (at_23_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_20_22_20
+  :effect (and
+    (when (and (at_23_20) (valid)) (at_22_20))
+    (when (and (at_23_20) (valid)) (not (at_23_20)))
+    (when (not (and (at_23_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_20_24_20
+  :effect (and
+    (when (and (at_23_20) (valid)) (at_24_20))
+    (when (and (at_23_20) (valid)) (not (at_23_20)))
+    (when (not (and (at_23_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_20_23_19
+  :effect (and
+    (when (and (at_23_20) (valid)) (at_23_19))
+    (when (and (at_23_20) (valid)) (not (at_23_20)))
+    (when (not (and (at_23_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_20_23_21
+  :effect (and
+    (when (and (at_23_20) (valid)) (at_23_21))
+    (when (and (at_23_20) (valid)) (not (at_23_20)))
+    (when (not (and (at_23_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_21_22_21
+  :effect (and
+    (when (and (at_23_21) (valid)) (at_22_21))
+    (when (and (at_23_21) (valid)) (not (at_23_21)))
+    (when (not (and (at_23_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_21_24_21
+  :effect (and
+    (when (and (at_23_21) (valid)) (at_24_21))
+    (when (and (at_23_21) (valid)) (not (at_23_21)))
+    (when (not (and (at_23_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_21_23_20
+  :effect (and
+    (when (and (at_23_21) (valid)) (at_23_20))
+    (when (and (at_23_21) (valid)) (not (at_23_21)))
+    (when (not (and (at_23_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_21_23_22
+  :effect (and
+    (when (and (at_23_21) (valid)) (at_23_22))
+    (when (and (at_23_21) (valid)) (not (at_23_21)))
+    (when (not (and (at_23_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_22_22_22
+  :effect (and
+    (when (and (at_23_22) (valid)) (at_22_22))
+    (when (and (at_23_22) (valid)) (not (at_23_22)))
+    (when (not (and (at_23_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_22_24_22
+  :effect (and
+    (when (and (at_23_22) (valid)) (at_24_22))
+    (when (and (at_23_22) (valid)) (not (at_23_22)))
+    (when (not (and (at_23_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_22_23_21
+  :effect (and
+    (when (and (at_23_22) (valid)) (at_23_21))
+    (when (and (at_23_22) (valid)) (not (at_23_22)))
+    (when (not (and (at_23_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_22_23_23
+  :effect (and
+    (when (and (at_23_22) (valid)) (at_23_23))
+    (when (and (at_23_22) (valid)) (not (at_23_22)))
+    (when (not (and (at_23_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_23_22_23
+  :effect (and
+    (when (and (at_23_23) (valid)) (at_22_23))
+    (when (and (at_23_23) (valid)) (not (at_23_23)))
+    (when (not (and (at_23_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_23_24_23
+  :effect (and
+    (when (and (at_23_23) (valid)) (at_24_23))
+    (when (and (at_23_23) (valid)) (not (at_23_23)))
+    (when (not (and (at_23_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_23_23_22
+  :effect (and
+    (when (and (at_23_23) (valid)) (at_23_22))
+    (when (and (at_23_23) (valid)) (not (at_23_23)))
+    (when (not (and (at_23_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_23_23_24
+  :effect (and
+    (when (and (at_23_23) (valid)) (at_23_24))
+    (when (and (at_23_23) (valid)) (not (at_23_23)))
+    (when (not (and (at_23_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_24_22_24
+  :effect (and
+    (when (and (at_23_24) (valid)) (at_22_24))
+    (when (and (at_23_24) (valid)) (not (at_23_24)))
+    (when (not (and (at_23_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_24_24_24
+  :effect (and
+    (when (and (at_23_24) (valid)) (at_24_24))
+    (when (and (at_23_24) (valid)) (not (at_23_24)))
+    (when (not (and (at_23_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_24_23_23
+  :effect (and
+    (when (and (at_23_24) (valid)) (at_23_23))
+    (when (and (at_23_24) (valid)) (not (at_23_24)))
+    (when (not (and (at_23_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_24_23_25
+  :effect (and
+    (when (and (at_23_24) (valid)) (at_23_25))
+    (when (and (at_23_24) (valid)) (not (at_23_24)))
+    (when (not (and (at_23_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_25_22_25
+  :effect (and
+    (when (and (at_23_25) (valid)) (at_22_25))
+    (when (and (at_23_25) (valid)) (not (at_23_25)))
+    (when (not (and (at_23_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_25_24_25
+  :effect (and
+    (when (and (at_23_25) (valid)) (at_24_25))
+    (when (and (at_23_25) (valid)) (not (at_23_25)))
+    (when (not (and (at_23_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_25_23_24
+  :effect (and
+    (when (and (at_23_25) (valid)) (at_23_24))
+    (when (and (at_23_25) (valid)) (not (at_23_25)))
+    (when (not (and (at_23_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_25_23_26
+  :effect (and
+    (when (and (at_23_25) (valid)) (at_23_26))
+    (when (and (at_23_25) (valid)) (not (at_23_25)))
+    (when (not (and (at_23_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_26_22_26
+  :effect (and
+    (when (and (at_23_26) (valid)) (at_22_26))
+    (when (and (at_23_26) (valid)) (not (at_23_26)))
+    (when (not (and (at_23_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_26_24_26
+  :effect (and
+    (when (and (at_23_26) (valid)) (at_24_26))
+    (when (and (at_23_26) (valid)) (not (at_23_26)))
+    (when (not (and (at_23_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_26_23_25
+  :effect (and
+    (when (and (at_23_26) (valid)) (at_23_25))
+    (when (and (at_23_26) (valid)) (not (at_23_26)))
+    (when (not (and (at_23_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_26_23_27
+  :effect (and
+    (when (and (at_23_26) (valid)) (at_23_27))
+    (when (and (at_23_26) (valid)) (not (at_23_26)))
+    (when (not (and (at_23_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_27_22_27
+  :effect (and
+    (when (and (at_23_27) (valid)) (at_22_27))
+    (when (and (at_23_27) (valid)) (not (at_23_27)))
+    (when (not (and (at_23_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_27_24_27
+  :effect (and
+    (when (and (at_23_27) (valid)) (at_24_27))
+    (when (and (at_23_27) (valid)) (not (at_23_27)))
+    (when (not (and (at_23_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_27_23_26
+  :effect (and
+    (when (and (at_23_27) (valid)) (at_23_26))
+    (when (and (at_23_27) (valid)) (not (at_23_27)))
+    (when (not (and (at_23_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_27_23_28
+  :effect (and
+    (when (and (at_23_27) (valid)) (at_23_28))
+    (when (and (at_23_27) (valid)) (not (at_23_27)))
+    (when (not (and (at_23_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_28_22_28
+  :effect (and
+    (when (and (at_23_28) (valid)) (at_22_28))
+    (when (and (at_23_28) (valid)) (not (at_23_28)))
+    (when (not (and (at_23_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_28_24_28
+  :effect (and
+    (when (and (at_23_28) (valid)) (at_24_28))
+    (when (and (at_23_28) (valid)) (not (at_23_28)))
+    (when (not (and (at_23_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_28_23_27
+  :effect (and
+    (when (and (at_23_28) (valid)) (at_23_27))
+    (when (and (at_23_28) (valid)) (not (at_23_28)))
+    (when (not (and (at_23_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_28_23_29
+  :effect (and
+    (when (and (at_23_28) (valid)) (at_23_29))
+    (when (and (at_23_28) (valid)) (not (at_23_28)))
+    (when (not (and (at_23_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_29_22_29
+  :effect (and
+    (when (and (at_23_29) (valid)) (at_22_29))
+    (when (and (at_23_29) (valid)) (not (at_23_29)))
+    (when (not (and (at_23_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_29_24_29
+  :effect (and
+    (when (and (at_23_29) (valid)) (at_24_29))
+    (when (and (at_23_29) (valid)) (not (at_23_29)))
+    (when (not (and (at_23_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_29_23_28
+  :effect (and
+    (when (and (at_23_29) (valid)) (at_23_28))
+    (when (and (at_23_29) (valid)) (not (at_23_29)))
+    (when (not (and (at_23_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_29_23_30
+  :effect (and
+    (when (and (at_23_29) (valid)) (at_23_30))
+    (when (and (at_23_29) (valid)) (not (at_23_29)))
+    (when (not (and (at_23_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_30_22_30
+  :effect (and
+    (when (and (at_23_30) (valid)) (at_22_30))
+    (when (and (at_23_30) (valid)) (not (at_23_30)))
+    (when (not (and (at_23_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_30_24_30
+  :effect (and
+    (when (and (at_23_30) (valid)) (at_24_30))
+    (when (and (at_23_30) (valid)) (not (at_23_30)))
+    (when (not (and (at_23_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_30_23_29
+  :effect (and
+    (when (and (at_23_30) (valid)) (at_23_29))
+    (when (and (at_23_30) (valid)) (not (at_23_30)))
+    (when (not (and (at_23_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_30_23_31
+  :effect (and
+    (when (and (at_23_30) (valid)) (at_23_31))
+    (when (and (at_23_30) (valid)) (not (at_23_30)))
+    (when (not (and (at_23_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_31_22_31
+  :effect (and
+    (when (and (at_23_31) (valid)) (at_22_31))
+    (when (and (at_23_31) (valid)) (not (at_23_31)))
+    (when (not (and (at_23_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_31_24_31
+  :effect (and
+    (when (and (at_23_31) (valid)) (at_24_31))
+    (when (and (at_23_31) (valid)) (not (at_23_31)))
+    (when (not (and (at_23_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_23_31_23_30
+  :effect (and
+    (when (and (at_23_31) (valid)) (at_23_30))
+    (when (and (at_23_31) (valid)) (not (at_23_31)))
+    (when (not (and (at_23_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_0_23_0
+  :effect (and
+    (when (and (at_24_0) (valid)) (at_23_0))
+    (when (and (at_24_0) (valid)) (not (at_24_0)))
+    (when (not (and (at_24_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_0_25_0
+  :effect (and
+    (when (and (at_24_0) (valid)) (at_25_0))
+    (when (and (at_24_0) (valid)) (not (at_24_0)))
+    (when (not (and (at_24_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_0_24_1
+  :effect (and
+    (when (and (at_24_0) (valid)) (at_24_1))
+    (when (and (at_24_0) (valid)) (not (at_24_0)))
+    (when (not (and (at_24_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_1_23_1
+  :effect (and
+    (when (and (at_24_1) (valid)) (at_23_1))
+    (when (and (at_24_1) (valid)) (not (at_24_1)))
+    (when (not (and (at_24_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_1_25_1
+  :effect (and
+    (when (and (at_24_1) (valid)) (at_25_1))
+    (when (and (at_24_1) (valid)) (not (at_24_1)))
+    (when (not (and (at_24_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_1_24_0
+  :effect (and
+    (when (and (at_24_1) (valid)) (at_24_0))
+    (when (and (at_24_1) (valid)) (not (at_24_1)))
+    (when (not (and (at_24_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_1_24_2
+  :effect (and
+    (when (and (at_24_1) (valid)) (at_24_2))
+    (when (and (at_24_1) (valid)) (not (at_24_1)))
+    (when (not (and (at_24_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_2_23_2
+  :effect (and
+    (when (and (at_24_2) (valid)) (at_23_2))
+    (when (and (at_24_2) (valid)) (not (at_24_2)))
+    (when (not (and (at_24_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_2_25_2
+  :effect (and
+    (when (and (at_24_2) (valid)) (at_25_2))
+    (when (and (at_24_2) (valid)) (not (at_24_2)))
+    (when (not (and (at_24_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_2_24_1
+  :effect (and
+    (when (and (at_24_2) (valid)) (at_24_1))
+    (when (and (at_24_2) (valid)) (not (at_24_2)))
+    (when (not (and (at_24_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_2_24_3
+  :effect (and
+    (when (and (at_24_2) (valid)) (at_24_3))
+    (when (and (at_24_2) (valid)) (not (at_24_2)))
+    (when (not (and (at_24_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_3_23_3
+  :effect (and
+    (when (and (at_24_3) (valid)) (at_23_3))
+    (when (and (at_24_3) (valid)) (not (at_24_3)))
+    (when (not (and (at_24_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_3_25_3
+  :effect (and
+    (when (and (at_24_3) (valid)) (at_25_3))
+    (when (and (at_24_3) (valid)) (not (at_24_3)))
+    (when (not (and (at_24_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_3_24_2
+  :effect (and
+    (when (and (at_24_3) (valid)) (at_24_2))
+    (when (and (at_24_3) (valid)) (not (at_24_3)))
+    (when (not (and (at_24_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_3_24_4
+  :effect (and
+    (when (and (at_24_3) (valid)) (at_24_4))
+    (when (and (at_24_3) (valid)) (not (at_24_3)))
+    (when (not (and (at_24_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_4_23_4
+  :effect (and
+    (when (and (at_24_4) (valid)) (at_23_4))
+    (when (and (at_24_4) (valid)) (not (at_24_4)))
+    (when (not (and (at_24_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_4_25_4
+  :effect (and
+    (when (and (at_24_4) (valid)) (at_25_4))
+    (when (and (at_24_4) (valid)) (not (at_24_4)))
+    (when (not (and (at_24_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_4_24_3
+  :effect (and
+    (when (and (at_24_4) (valid)) (at_24_3))
+    (when (and (at_24_4) (valid)) (not (at_24_4)))
+    (when (not (and (at_24_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_4_24_5
+  :effect (and
+    (when (and (at_24_4) (valid)) (at_24_5))
+    (when (and (at_24_4) (valid)) (not (at_24_4)))
+    (when (not (and (at_24_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_5_23_5
+  :effect (and
+    (when (and (at_24_5) (valid)) (at_23_5))
+    (when (and (at_24_5) (valid)) (not (at_24_5)))
+    (when (not (and (at_24_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_5_25_5
+  :effect (and
+    (when (and (at_24_5) (valid)) (at_25_5))
+    (when (and (at_24_5) (valid)) (not (at_24_5)))
+    (when (not (and (at_24_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_5_24_4
+  :effect (and
+    (when (and (at_24_5) (valid)) (at_24_4))
+    (when (and (at_24_5) (valid)) (not (at_24_5)))
+    (when (not (and (at_24_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_5_24_6
+  :effect (and
+    (when (and (at_24_5) (valid)) (at_24_6))
+    (when (and (at_24_5) (valid)) (not (at_24_5)))
+    (when (not (and (at_24_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_6_23_6
+  :effect (and
+    (when (and (at_24_6) (valid)) (at_23_6))
+    (when (and (at_24_6) (valid)) (not (at_24_6)))
+    (when (not (and (at_24_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_6_25_6
+  :effect (and
+    (when (and (at_24_6) (valid)) (at_25_6))
+    (when (and (at_24_6) (valid)) (not (at_24_6)))
+    (when (not (and (at_24_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_6_24_5
+  :effect (and
+    (when (and (at_24_6) (valid)) (at_24_5))
+    (when (and (at_24_6) (valid)) (not (at_24_6)))
+    (when (not (and (at_24_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_6_24_7
+  :effect (and
+    (when (and (at_24_6) (valid)) (at_24_7))
+    (when (and (at_24_6) (valid)) (not (at_24_6)))
+    (when (not (and (at_24_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_7_23_7
+  :effect (and
+    (when (and (at_24_7) (valid)) (at_23_7))
+    (when (and (at_24_7) (valid)) (not (at_24_7)))
+    (when (not (and (at_24_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_7_25_7
+  :effect (and
+    (when (and (at_24_7) (valid)) (at_25_7))
+    (when (and (at_24_7) (valid)) (not (at_24_7)))
+    (when (not (and (at_24_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_7_24_6
+  :effect (and
+    (when (and (at_24_7) (valid)) (at_24_6))
+    (when (and (at_24_7) (valid)) (not (at_24_7)))
+    (when (not (and (at_24_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_7_24_8
+  :effect (and
+    (when (and (at_24_7) (valid)) (at_24_8))
+    (when (and (at_24_7) (valid)) (not (at_24_7)))
+    (when (not (and (at_24_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_8_23_8
+  :effect (and
+    (when (and (at_24_8) (valid)) (at_23_8))
+    (when (and (at_24_8) (valid)) (not (at_24_8)))
+    (when (not (and (at_24_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_8_25_8
+  :effect (and
+    (when (and (at_24_8) (valid)) (at_25_8))
+    (when (and (at_24_8) (valid)) (not (at_24_8)))
+    (when (not (and (at_24_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_8_24_7
+  :effect (and
+    (when (and (at_24_8) (valid)) (at_24_7))
+    (when (and (at_24_8) (valid)) (not (at_24_8)))
+    (when (not (and (at_24_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_8_24_9
+  :effect (and
+    (when (and (at_24_8) (valid)) (at_24_9))
+    (when (and (at_24_8) (valid)) (not (at_24_8)))
+    (when (not (and (at_24_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_9_23_9
+  :effect (and
+    (when (and (at_24_9) (valid)) (at_23_9))
+    (when (and (at_24_9) (valid)) (not (at_24_9)))
+    (when (not (and (at_24_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_9_25_9
+  :effect (and
+    (when (and (at_24_9) (valid)) (at_25_9))
+    (when (and (at_24_9) (valid)) (not (at_24_9)))
+    (when (not (and (at_24_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_9_24_8
+  :effect (and
+    (when (and (at_24_9) (valid)) (at_24_8))
+    (when (and (at_24_9) (valid)) (not (at_24_9)))
+    (when (not (and (at_24_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_9_24_10
+  :effect (and
+    (when (and (at_24_9) (valid)) (at_24_10))
+    (when (and (at_24_9) (valid)) (not (at_24_9)))
+    (when (not (and (at_24_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_10_23_10
+  :effect (and
+    (when (and (at_24_10) (valid)) (at_23_10))
+    (when (and (at_24_10) (valid)) (not (at_24_10)))
+    (when (not (and (at_24_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_10_25_10
+  :effect (and
+    (when (and (at_24_10) (valid)) (at_25_10))
+    (when (and (at_24_10) (valid)) (not (at_24_10)))
+    (when (not (and (at_24_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_10_24_9
+  :effect (and
+    (when (and (at_24_10) (valid)) (at_24_9))
+    (when (and (at_24_10) (valid)) (not (at_24_10)))
+    (when (not (and (at_24_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_10_24_11
+  :effect (and
+    (when (and (at_24_10) (valid)) (at_24_11))
+    (when (and (at_24_10) (valid)) (not (at_24_10)))
+    (when (not (and (at_24_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_11_23_11
+  :effect (and
+    (when (and (at_24_11) (valid)) (at_23_11))
+    (when (and (at_24_11) (valid)) (not (at_24_11)))
+    (when (not (and (at_24_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_11_25_11
+  :effect (and
+    (when (and (at_24_11) (valid)) (at_25_11))
+    (when (and (at_24_11) (valid)) (not (at_24_11)))
+    (when (not (and (at_24_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_11_24_10
+  :effect (and
+    (when (and (at_24_11) (valid)) (at_24_10))
+    (when (and (at_24_11) (valid)) (not (at_24_11)))
+    (when (not (and (at_24_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_11_24_12
+  :effect (and
+    (when (and (at_24_11) (valid)) (at_24_12))
+    (when (and (at_24_11) (valid)) (not (at_24_11)))
+    (when (not (and (at_24_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_12_23_12
+  :effect (and
+    (when (and (at_24_12) (valid)) (at_23_12))
+    (when (and (at_24_12) (valid)) (not (at_24_12)))
+    (when (not (and (at_24_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_12_25_12
+  :effect (and
+    (when (and (at_24_12) (valid)) (at_25_12))
+    (when (and (at_24_12) (valid)) (not (at_24_12)))
+    (when (not (and (at_24_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_12_24_11
+  :effect (and
+    (when (and (at_24_12) (valid)) (at_24_11))
+    (when (and (at_24_12) (valid)) (not (at_24_12)))
+    (when (not (and (at_24_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_12_24_13
+  :effect (and
+    (when (and (at_24_12) (valid)) (at_24_13))
+    (when (and (at_24_12) (valid)) (not (at_24_12)))
+    (when (not (and (at_24_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_13_23_13
+  :effect (and
+    (when (and (at_24_13) (valid)) (at_23_13))
+    (when (and (at_24_13) (valid)) (not (at_24_13)))
+    (when (not (and (at_24_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_13_25_13
+  :effect (and
+    (when (and (at_24_13) (valid)) (at_25_13))
+    (when (and (at_24_13) (valid)) (not (at_24_13)))
+    (when (not (and (at_24_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_13_24_12
+  :effect (and
+    (when (and (at_24_13) (valid)) (at_24_12))
+    (when (and (at_24_13) (valid)) (not (at_24_13)))
+    (when (not (and (at_24_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_13_24_14
+  :effect (and
+    (when (and (at_24_13) (valid)) (at_24_14))
+    (when (and (at_24_13) (valid)) (not (at_24_13)))
+    (when (not (and (at_24_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_14_23_14
+  :effect (and
+    (when (and (at_24_14) (valid)) (at_23_14))
+    (when (and (at_24_14) (valid)) (not (at_24_14)))
+    (when (not (and (at_24_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_14_25_14
+  :effect (and
+    (when (and (at_24_14) (valid)) (at_25_14))
+    (when (and (at_24_14) (valid)) (not (at_24_14)))
+    (when (not (and (at_24_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_14_24_13
+  :effect (and
+    (when (and (at_24_14) (valid)) (at_24_13))
+    (when (and (at_24_14) (valid)) (not (at_24_14)))
+    (when (not (and (at_24_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_14_24_15
+  :effect (and
+    (when (and (at_24_14) (valid)) (at_24_15))
+    (when (and (at_24_14) (valid)) (not (at_24_14)))
+    (when (not (and (at_24_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_15_23_15
+  :effect (and
+    (when (and (at_24_15) (valid)) (at_23_15))
+    (when (and (at_24_15) (valid)) (not (at_24_15)))
+    (when (not (and (at_24_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_15_25_15
+  :effect (and
+    (when (and (at_24_15) (valid)) (at_25_15))
+    (when (and (at_24_15) (valid)) (not (at_24_15)))
+    (when (not (and (at_24_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_15_24_14
+  :effect (and
+    (when (and (at_24_15) (valid)) (at_24_14))
+    (when (and (at_24_15) (valid)) (not (at_24_15)))
+    (when (not (and (at_24_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_15_24_16
+  :effect (and
+    (when (and (at_24_15) (valid)) (at_24_16))
+    (when (and (at_24_15) (valid)) (not (at_24_15)))
+    (when (not (and (at_24_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_16_23_16
+  :effect (and
+    (when (and (at_24_16) (valid)) (at_23_16))
+    (when (and (at_24_16) (valid)) (not (at_24_16)))
+    (when (not (and (at_24_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_16_25_16
+  :effect (and
+    (when (and (at_24_16) (valid)) (at_25_16))
+    (when (and (at_24_16) (valid)) (not (at_24_16)))
+    (when (not (and (at_24_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_16_24_15
+  :effect (and
+    (when (and (at_24_16) (valid)) (at_24_15))
+    (when (and (at_24_16) (valid)) (not (at_24_16)))
+    (when (not (and (at_24_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_16_24_17
+  :effect (and
+    (when (and (at_24_16) (valid)) (at_24_17))
+    (when (and (at_24_16) (valid)) (not (at_24_16)))
+    (when (not (and (at_24_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_17_23_17
+  :effect (and
+    (when (and (at_24_17) (valid)) (at_23_17))
+    (when (and (at_24_17) (valid)) (not (at_24_17)))
+    (when (not (and (at_24_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_17_25_17
+  :effect (and
+    (when (and (at_24_17) (valid)) (at_25_17))
+    (when (and (at_24_17) (valid)) (not (at_24_17)))
+    (when (not (and (at_24_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_17_24_16
+  :effect (and
+    (when (and (at_24_17) (valid)) (at_24_16))
+    (when (and (at_24_17) (valid)) (not (at_24_17)))
+    (when (not (and (at_24_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_17_24_18
+  :effect (and
+    (when (and (at_24_17) (valid)) (at_24_18))
+    (when (and (at_24_17) (valid)) (not (at_24_17)))
+    (when (not (and (at_24_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_18_23_18
+  :effect (and
+    (when (and (at_24_18) (valid)) (at_23_18))
+    (when (and (at_24_18) (valid)) (not (at_24_18)))
+    (when (not (and (at_24_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_18_25_18
+  :effect (and
+    (when (and (at_24_18) (valid)) (at_25_18))
+    (when (and (at_24_18) (valid)) (not (at_24_18)))
+    (when (not (and (at_24_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_18_24_17
+  :effect (and
+    (when (and (at_24_18) (valid)) (at_24_17))
+    (when (and (at_24_18) (valid)) (not (at_24_18)))
+    (when (not (and (at_24_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_18_24_19
+  :effect (and
+    (when (and (at_24_18) (valid)) (at_24_19))
+    (when (and (at_24_18) (valid)) (not (at_24_18)))
+    (when (not (and (at_24_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_19_23_19
+  :effect (and
+    (when (and (at_24_19) (valid)) (at_23_19))
+    (when (and (at_24_19) (valid)) (not (at_24_19)))
+    (when (not (and (at_24_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_19_25_19
+  :effect (and
+    (when (and (at_24_19) (valid)) (at_25_19))
+    (when (and (at_24_19) (valid)) (not (at_24_19)))
+    (when (not (and (at_24_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_19_24_18
+  :effect (and
+    (when (and (at_24_19) (valid)) (at_24_18))
+    (when (and (at_24_19) (valid)) (not (at_24_19)))
+    (when (not (and (at_24_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_19_24_20
+  :effect (and
+    (when (and (at_24_19) (valid)) (at_24_20))
+    (when (and (at_24_19) (valid)) (not (at_24_19)))
+    (when (not (and (at_24_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_20_23_20
+  :effect (and
+    (when (and (at_24_20) (valid)) (at_23_20))
+    (when (and (at_24_20) (valid)) (not (at_24_20)))
+    (when (not (and (at_24_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_20_25_20
+  :effect (and
+    (when (and (at_24_20) (valid)) (at_25_20))
+    (when (and (at_24_20) (valid)) (not (at_24_20)))
+    (when (not (and (at_24_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_20_24_19
+  :effect (and
+    (when (and (at_24_20) (valid)) (at_24_19))
+    (when (and (at_24_20) (valid)) (not (at_24_20)))
+    (when (not (and (at_24_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_20_24_21
+  :effect (and
+    (when (and (at_24_20) (valid)) (at_24_21))
+    (when (and (at_24_20) (valid)) (not (at_24_20)))
+    (when (not (and (at_24_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_21_23_21
+  :effect (and
+    (when (and (at_24_21) (valid)) (at_23_21))
+    (when (and (at_24_21) (valid)) (not (at_24_21)))
+    (when (not (and (at_24_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_21_25_21
+  :effect (and
+    (when (and (at_24_21) (valid)) (at_25_21))
+    (when (and (at_24_21) (valid)) (not (at_24_21)))
+    (when (not (and (at_24_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_21_24_20
+  :effect (and
+    (when (and (at_24_21) (valid)) (at_24_20))
+    (when (and (at_24_21) (valid)) (not (at_24_21)))
+    (when (not (and (at_24_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_21_24_22
+  :effect (and
+    (when (and (at_24_21) (valid)) (at_24_22))
+    (when (and (at_24_21) (valid)) (not (at_24_21)))
+    (when (not (and (at_24_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_22_23_22
+  :effect (and
+    (when (and (at_24_22) (valid)) (at_23_22))
+    (when (and (at_24_22) (valid)) (not (at_24_22)))
+    (when (not (and (at_24_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_22_25_22
+  :effect (and
+    (when (and (at_24_22) (valid)) (at_25_22))
+    (when (and (at_24_22) (valid)) (not (at_24_22)))
+    (when (not (and (at_24_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_22_24_21
+  :effect (and
+    (when (and (at_24_22) (valid)) (at_24_21))
+    (when (and (at_24_22) (valid)) (not (at_24_22)))
+    (when (not (and (at_24_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_22_24_23
+  :effect (and
+    (when (and (at_24_22) (valid)) (at_24_23))
+    (when (and (at_24_22) (valid)) (not (at_24_22)))
+    (when (not (and (at_24_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_23_23_23
+  :effect (and
+    (when (and (at_24_23) (valid)) (at_23_23))
+    (when (and (at_24_23) (valid)) (not (at_24_23)))
+    (when (not (and (at_24_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_23_25_23
+  :effect (and
+    (when (and (at_24_23) (valid)) (at_25_23))
+    (when (and (at_24_23) (valid)) (not (at_24_23)))
+    (when (not (and (at_24_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_23_24_22
+  :effect (and
+    (when (and (at_24_23) (valid)) (at_24_22))
+    (when (and (at_24_23) (valid)) (not (at_24_23)))
+    (when (not (and (at_24_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_23_24_24
+  :effect (and
+    (when (and (at_24_23) (valid)) (at_24_24))
+    (when (and (at_24_23) (valid)) (not (at_24_23)))
+    (when (not (and (at_24_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_24_23_24
+  :effect (and
+    (when (and (at_24_24) (valid)) (at_23_24))
+    (when (and (at_24_24) (valid)) (not (at_24_24)))
+    (when (not (and (at_24_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_24_25_24
+  :effect (and
+    (when (and (at_24_24) (valid)) (at_25_24))
+    (when (and (at_24_24) (valid)) (not (at_24_24)))
+    (when (not (and (at_24_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_24_24_23
+  :effect (and
+    (when (and (at_24_24) (valid)) (at_24_23))
+    (when (and (at_24_24) (valid)) (not (at_24_24)))
+    (when (not (and (at_24_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_24_24_25
+  :effect (and
+    (when (and (at_24_24) (valid)) (at_24_25))
+    (when (and (at_24_24) (valid)) (not (at_24_24)))
+    (when (not (and (at_24_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_25_23_25
+  :effect (and
+    (when (and (at_24_25) (valid)) (at_23_25))
+    (when (and (at_24_25) (valid)) (not (at_24_25)))
+    (when (not (and (at_24_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_25_25_25
+  :effect (and
+    (when (and (at_24_25) (valid)) (at_25_25))
+    (when (and (at_24_25) (valid)) (not (at_24_25)))
+    (when (not (and (at_24_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_25_24_24
+  :effect (and
+    (when (and (at_24_25) (valid)) (at_24_24))
+    (when (and (at_24_25) (valid)) (not (at_24_25)))
+    (when (not (and (at_24_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_25_24_26
+  :effect (and
+    (when (and (at_24_25) (valid)) (at_24_26))
+    (when (and (at_24_25) (valid)) (not (at_24_25)))
+    (when (not (and (at_24_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_26_23_26
+  :effect (and
+    (when (and (at_24_26) (valid)) (at_23_26))
+    (when (and (at_24_26) (valid)) (not (at_24_26)))
+    (when (not (and (at_24_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_26_25_26
+  :effect (and
+    (when (and (at_24_26) (valid)) (at_25_26))
+    (when (and (at_24_26) (valid)) (not (at_24_26)))
+    (when (not (and (at_24_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_26_24_25
+  :effect (and
+    (when (and (at_24_26) (valid)) (at_24_25))
+    (when (and (at_24_26) (valid)) (not (at_24_26)))
+    (when (not (and (at_24_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_26_24_27
+  :effect (and
+    (when (and (at_24_26) (valid)) (at_24_27))
+    (when (and (at_24_26) (valid)) (not (at_24_26)))
+    (when (not (and (at_24_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_27_23_27
+  :effect (and
+    (when (and (at_24_27) (valid)) (at_23_27))
+    (when (and (at_24_27) (valid)) (not (at_24_27)))
+    (when (not (and (at_24_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_27_25_27
+  :effect (and
+    (when (and (at_24_27) (valid)) (at_25_27))
+    (when (and (at_24_27) (valid)) (not (at_24_27)))
+    (when (not (and (at_24_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_27_24_26
+  :effect (and
+    (when (and (at_24_27) (valid)) (at_24_26))
+    (when (and (at_24_27) (valid)) (not (at_24_27)))
+    (when (not (and (at_24_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_27_24_28
+  :effect (and
+    (when (and (at_24_27) (valid)) (at_24_28))
+    (when (and (at_24_27) (valid)) (not (at_24_27)))
+    (when (not (and (at_24_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_28_23_28
+  :effect (and
+    (when (and (at_24_28) (valid)) (at_23_28))
+    (when (and (at_24_28) (valid)) (not (at_24_28)))
+    (when (not (and (at_24_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_28_25_28
+  :effect (and
+    (when (and (at_24_28) (valid)) (at_25_28))
+    (when (and (at_24_28) (valid)) (not (at_24_28)))
+    (when (not (and (at_24_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_28_24_27
+  :effect (and
+    (when (and (at_24_28) (valid)) (at_24_27))
+    (when (and (at_24_28) (valid)) (not (at_24_28)))
+    (when (not (and (at_24_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_28_24_29
+  :effect (and
+    (when (and (at_24_28) (valid)) (at_24_29))
+    (when (and (at_24_28) (valid)) (not (at_24_28)))
+    (when (not (and (at_24_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_29_23_29
+  :effect (and
+    (when (and (at_24_29) (valid)) (at_23_29))
+    (when (and (at_24_29) (valid)) (not (at_24_29)))
+    (when (not (and (at_24_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_29_25_29
+  :effect (and
+    (when (and (at_24_29) (valid)) (at_25_29))
+    (when (and (at_24_29) (valid)) (not (at_24_29)))
+    (when (not (and (at_24_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_29_24_28
+  :effect (and
+    (when (and (at_24_29) (valid)) (at_24_28))
+    (when (and (at_24_29) (valid)) (not (at_24_29)))
+    (when (not (and (at_24_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_29_24_30
+  :effect (and
+    (when (and (at_24_29) (valid)) (at_24_30))
+    (when (and (at_24_29) (valid)) (not (at_24_29)))
+    (when (not (and (at_24_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_30_23_30
+  :effect (and
+    (when (and (at_24_30) (valid)) (at_23_30))
+    (when (and (at_24_30) (valid)) (not (at_24_30)))
+    (when (not (and (at_24_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_30_25_30
+  :effect (and
+    (when (and (at_24_30) (valid)) (at_25_30))
+    (when (and (at_24_30) (valid)) (not (at_24_30)))
+    (when (not (and (at_24_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_30_24_29
+  :effect (and
+    (when (and (at_24_30) (valid)) (at_24_29))
+    (when (and (at_24_30) (valid)) (not (at_24_30)))
+    (when (not (and (at_24_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_30_24_31
+  :effect (and
+    (when (and (at_24_30) (valid)) (at_24_31))
+    (when (and (at_24_30) (valid)) (not (at_24_30)))
+    (when (not (and (at_24_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_31_23_31
+  :effect (and
+    (when (and (at_24_31) (valid)) (at_23_31))
+    (when (and (at_24_31) (valid)) (not (at_24_31)))
+    (when (not (and (at_24_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_31_25_31
+  :effect (and
+    (when (and (at_24_31) (valid)) (at_25_31))
+    (when (and (at_24_31) (valid)) (not (at_24_31)))
+    (when (not (and (at_24_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_24_31_24_30
+  :effect (and
+    (when (and (at_24_31) (valid)) (at_24_30))
+    (when (and (at_24_31) (valid)) (not (at_24_31)))
+    (when (not (and (at_24_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_0_24_0
+  :effect (and
+    (when (and (at_25_0) (valid)) (at_24_0))
+    (when (and (at_25_0) (valid)) (not (at_25_0)))
+    (when (not (and (at_25_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_0_26_0
+  :effect (and
+    (when (and (at_25_0) (valid)) (at_26_0))
+    (when (and (at_25_0) (valid)) (not (at_25_0)))
+    (when (not (and (at_25_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_0_25_1
+  :effect (and
+    (when (and (at_25_0) (valid)) (at_25_1))
+    (when (and (at_25_0) (valid)) (not (at_25_0)))
+    (when (not (and (at_25_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_1_24_1
+  :effect (and
+    (when (and (at_25_1) (valid)) (at_24_1))
+    (when (and (at_25_1) (valid)) (not (at_25_1)))
+    (when (not (and (at_25_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_1_26_1
+  :effect (and
+    (when (and (at_25_1) (valid)) (at_26_1))
+    (when (and (at_25_1) (valid)) (not (at_25_1)))
+    (when (not (and (at_25_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_1_25_0
+  :effect (and
+    (when (and (at_25_1) (valid)) (at_25_0))
+    (when (and (at_25_1) (valid)) (not (at_25_1)))
+    (when (not (and (at_25_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_1_25_2
+  :effect (and
+    (when (and (at_25_1) (valid)) (at_25_2))
+    (when (and (at_25_1) (valid)) (not (at_25_1)))
+    (when (not (and (at_25_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_2_24_2
+  :effect (and
+    (when (and (at_25_2) (valid)) (at_24_2))
+    (when (and (at_25_2) (valid)) (not (at_25_2)))
+    (when (not (and (at_25_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_2_26_2
+  :effect (and
+    (when (and (at_25_2) (valid)) (at_26_2))
+    (when (and (at_25_2) (valid)) (not (at_25_2)))
+    (when (not (and (at_25_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_2_25_1
+  :effect (and
+    (when (and (at_25_2) (valid)) (at_25_1))
+    (when (and (at_25_2) (valid)) (not (at_25_2)))
+    (when (not (and (at_25_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_2_25_3
+  :effect (and
+    (when (and (at_25_2) (valid)) (at_25_3))
+    (when (and (at_25_2) (valid)) (not (at_25_2)))
+    (when (not (and (at_25_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_3_24_3
+  :effect (and
+    (when (and (at_25_3) (valid)) (at_24_3))
+    (when (and (at_25_3) (valid)) (not (at_25_3)))
+    (when (not (and (at_25_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_3_26_3
+  :effect (and
+    (when (and (at_25_3) (valid)) (at_26_3))
+    (when (and (at_25_3) (valid)) (not (at_25_3)))
+    (when (not (and (at_25_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_3_25_2
+  :effect (and
+    (when (and (at_25_3) (valid)) (at_25_2))
+    (when (and (at_25_3) (valid)) (not (at_25_3)))
+    (when (not (and (at_25_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_3_25_4
+  :effect (and
+    (when (and (at_25_3) (valid)) (at_25_4))
+    (when (and (at_25_3) (valid)) (not (at_25_3)))
+    (when (not (and (at_25_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_4_24_4
+  :effect (and
+    (when (and (at_25_4) (valid)) (at_24_4))
+    (when (and (at_25_4) (valid)) (not (at_25_4)))
+    (when (not (and (at_25_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_4_26_4
+  :effect (and
+    (when (and (at_25_4) (valid)) (at_26_4))
+    (when (and (at_25_4) (valid)) (not (at_25_4)))
+    (when (not (and (at_25_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_4_25_3
+  :effect (and
+    (when (and (at_25_4) (valid)) (at_25_3))
+    (when (and (at_25_4) (valid)) (not (at_25_4)))
+    (when (not (and (at_25_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_4_25_5
+  :effect (and
+    (when (and (at_25_4) (valid)) (at_25_5))
+    (when (and (at_25_4) (valid)) (not (at_25_4)))
+    (when (not (and (at_25_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_5_24_5
+  :effect (and
+    (when (and (at_25_5) (valid)) (at_24_5))
+    (when (and (at_25_5) (valid)) (not (at_25_5)))
+    (when (not (and (at_25_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_5_26_5
+  :effect (and
+    (when (and (at_25_5) (valid)) (at_26_5))
+    (when (and (at_25_5) (valid)) (not (at_25_5)))
+    (when (not (and (at_25_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_5_25_4
+  :effect (and
+    (when (and (at_25_5) (valid)) (at_25_4))
+    (when (and (at_25_5) (valid)) (not (at_25_5)))
+    (when (not (and (at_25_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_5_25_6
+  :effect (and
+    (when (and (at_25_5) (valid)) (at_25_6))
+    (when (and (at_25_5) (valid)) (not (at_25_5)))
+    (when (not (and (at_25_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_6_24_6
+  :effect (and
+    (when (and (at_25_6) (valid)) (at_24_6))
+    (when (and (at_25_6) (valid)) (not (at_25_6)))
+    (when (not (and (at_25_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_6_26_6
+  :effect (and
+    (when (and (at_25_6) (valid)) (at_26_6))
+    (when (and (at_25_6) (valid)) (not (at_25_6)))
+    (when (not (and (at_25_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_6_25_5
+  :effect (and
+    (when (and (at_25_6) (valid)) (at_25_5))
+    (when (and (at_25_6) (valid)) (not (at_25_6)))
+    (when (not (and (at_25_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_6_25_7
+  :effect (and
+    (when (and (at_25_6) (valid)) (at_25_7))
+    (when (and (at_25_6) (valid)) (not (at_25_6)))
+    (when (not (and (at_25_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_7_24_7
+  :effect (and
+    (when (and (at_25_7) (valid)) (at_24_7))
+    (when (and (at_25_7) (valid)) (not (at_25_7)))
+    (when (not (and (at_25_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_7_26_7
+  :effect (and
+    (when (and (at_25_7) (valid)) (at_26_7))
+    (when (and (at_25_7) (valid)) (not (at_25_7)))
+    (when (not (and (at_25_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_7_25_6
+  :effect (and
+    (when (and (at_25_7) (valid)) (at_25_6))
+    (when (and (at_25_7) (valid)) (not (at_25_7)))
+    (when (not (and (at_25_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_7_25_8
+  :effect (and
+    (when (and (at_25_7) (valid)) (at_25_8))
+    (when (and (at_25_7) (valid)) (not (at_25_7)))
+    (when (not (and (at_25_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_8_24_8
+  :effect (and
+    (when (and (at_25_8) (valid)) (at_24_8))
+    (when (and (at_25_8) (valid)) (not (at_25_8)))
+    (when (not (and (at_25_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_8_26_8
+  :effect (and
+    (when (and (at_25_8) (valid)) (at_26_8))
+    (when (and (at_25_8) (valid)) (not (at_25_8)))
+    (when (not (and (at_25_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_8_25_7
+  :effect (and
+    (when (and (at_25_8) (valid)) (at_25_7))
+    (when (and (at_25_8) (valid)) (not (at_25_8)))
+    (when (not (and (at_25_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_8_25_9
+  :effect (and
+    (when (and (at_25_8) (valid)) (at_25_9))
+    (when (and (at_25_8) (valid)) (not (at_25_8)))
+    (when (not (and (at_25_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_9_24_9
+  :effect (and
+    (when (and (at_25_9) (valid)) (at_24_9))
+    (when (and (at_25_9) (valid)) (not (at_25_9)))
+    (when (not (and (at_25_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_9_26_9
+  :effect (and
+    (when (and (at_25_9) (valid)) (at_26_9))
+    (when (and (at_25_9) (valid)) (not (at_25_9)))
+    (when (not (and (at_25_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_9_25_8
+  :effect (and
+    (when (and (at_25_9) (valid)) (at_25_8))
+    (when (and (at_25_9) (valid)) (not (at_25_9)))
+    (when (not (and (at_25_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_9_25_10
+  :effect (and
+    (when (and (at_25_9) (valid)) (at_25_10))
+    (when (and (at_25_9) (valid)) (not (at_25_9)))
+    (when (not (and (at_25_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_10_24_10
+  :effect (and
+    (when (and (at_25_10) (valid)) (at_24_10))
+    (when (and (at_25_10) (valid)) (not (at_25_10)))
+    (when (not (and (at_25_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_10_26_10
+  :effect (and
+    (when (and (at_25_10) (valid)) (at_26_10))
+    (when (and (at_25_10) (valid)) (not (at_25_10)))
+    (when (not (and (at_25_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_10_25_9
+  :effect (and
+    (when (and (at_25_10) (valid)) (at_25_9))
+    (when (and (at_25_10) (valid)) (not (at_25_10)))
+    (when (not (and (at_25_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_10_25_11
+  :effect (and
+    (when (and (at_25_10) (valid)) (at_25_11))
+    (when (and (at_25_10) (valid)) (not (at_25_10)))
+    (when (not (and (at_25_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_11_24_11
+  :effect (and
+    (when (and (at_25_11) (valid)) (at_24_11))
+    (when (and (at_25_11) (valid)) (not (at_25_11)))
+    (when (not (and (at_25_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_11_26_11
+  :effect (and
+    (when (and (at_25_11) (valid)) (at_26_11))
+    (when (and (at_25_11) (valid)) (not (at_25_11)))
+    (when (not (and (at_25_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_11_25_10
+  :effect (and
+    (when (and (at_25_11) (valid)) (at_25_10))
+    (when (and (at_25_11) (valid)) (not (at_25_11)))
+    (when (not (and (at_25_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_11_25_12
+  :effect (and
+    (when (and (at_25_11) (valid)) (at_25_12))
+    (when (and (at_25_11) (valid)) (not (at_25_11)))
+    (when (not (and (at_25_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_12_24_12
+  :effect (and
+    (when (and (at_25_12) (valid)) (at_24_12))
+    (when (and (at_25_12) (valid)) (not (at_25_12)))
+    (when (not (and (at_25_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_12_26_12
+  :effect (and
+    (when (and (at_25_12) (valid)) (at_26_12))
+    (when (and (at_25_12) (valid)) (not (at_25_12)))
+    (when (not (and (at_25_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_12_25_11
+  :effect (and
+    (when (and (at_25_12) (valid)) (at_25_11))
+    (when (and (at_25_12) (valid)) (not (at_25_12)))
+    (when (not (and (at_25_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_12_25_13
+  :effect (and
+    (when (and (at_25_12) (valid)) (at_25_13))
+    (when (and (at_25_12) (valid)) (not (at_25_12)))
+    (when (not (and (at_25_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_13_24_13
+  :effect (and
+    (when (and (at_25_13) (valid)) (at_24_13))
+    (when (and (at_25_13) (valid)) (not (at_25_13)))
+    (when (not (and (at_25_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_13_26_13
+  :effect (and
+    (when (and (at_25_13) (valid)) (at_26_13))
+    (when (and (at_25_13) (valid)) (not (at_25_13)))
+    (when (not (and (at_25_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_13_25_12
+  :effect (and
+    (when (and (at_25_13) (valid)) (at_25_12))
+    (when (and (at_25_13) (valid)) (not (at_25_13)))
+    (when (not (and (at_25_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_13_25_14
+  :effect (and
+    (when (and (at_25_13) (valid)) (at_25_14))
+    (when (and (at_25_13) (valid)) (not (at_25_13)))
+    (when (not (and (at_25_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_14_24_14
+  :effect (and
+    (when (and (at_25_14) (valid)) (at_24_14))
+    (when (and (at_25_14) (valid)) (not (at_25_14)))
+    (when (not (and (at_25_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_14_26_14
+  :effect (and
+    (when (and (at_25_14) (valid)) (at_26_14))
+    (when (and (at_25_14) (valid)) (not (at_25_14)))
+    (when (not (and (at_25_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_14_25_13
+  :effect (and
+    (when (and (at_25_14) (valid)) (at_25_13))
+    (when (and (at_25_14) (valid)) (not (at_25_14)))
+    (when (not (and (at_25_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_14_25_15
+  :effect (and
+    (when (and (at_25_14) (valid)) (at_25_15))
+    (when (and (at_25_14) (valid)) (not (at_25_14)))
+    (when (not (and (at_25_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_15_24_15
+  :effect (and
+    (when (and (at_25_15) (valid)) (at_24_15))
+    (when (and (at_25_15) (valid)) (not (at_25_15)))
+    (when (not (and (at_25_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_15_26_15
+  :effect (and
+    (when (and (at_25_15) (valid)) (at_26_15))
+    (when (and (at_25_15) (valid)) (not (at_25_15)))
+    (when (not (and (at_25_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_15_25_14
+  :effect (and
+    (when (and (at_25_15) (valid)) (at_25_14))
+    (when (and (at_25_15) (valid)) (not (at_25_15)))
+    (when (not (and (at_25_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_15_25_16
+  :effect (and
+    (when (and (at_25_15) (valid)) (at_25_16))
+    (when (and (at_25_15) (valid)) (not (at_25_15)))
+    (when (not (and (at_25_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_16_24_16
+  :effect (and
+    (when (and (at_25_16) (valid)) (at_24_16))
+    (when (and (at_25_16) (valid)) (not (at_25_16)))
+    (when (not (and (at_25_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_16_26_16
+  :effect (and
+    (when (and (at_25_16) (valid)) (at_26_16))
+    (when (and (at_25_16) (valid)) (not (at_25_16)))
+    (when (not (and (at_25_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_16_25_15
+  :effect (and
+    (when (and (at_25_16) (valid)) (at_25_15))
+    (when (and (at_25_16) (valid)) (not (at_25_16)))
+    (when (not (and (at_25_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_16_25_17
+  :effect (and
+    (when (and (at_25_16) (valid)) (at_25_17))
+    (when (and (at_25_16) (valid)) (not (at_25_16)))
+    (when (not (and (at_25_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_17_24_17
+  :effect (and
+    (when (and (at_25_17) (valid)) (at_24_17))
+    (when (and (at_25_17) (valid)) (not (at_25_17)))
+    (when (not (and (at_25_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_17_26_17
+  :effect (and
+    (when (and (at_25_17) (valid)) (at_26_17))
+    (when (and (at_25_17) (valid)) (not (at_25_17)))
+    (when (not (and (at_25_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_17_25_16
+  :effect (and
+    (when (and (at_25_17) (valid)) (at_25_16))
+    (when (and (at_25_17) (valid)) (not (at_25_17)))
+    (when (not (and (at_25_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_17_25_18
+  :effect (and
+    (when (and (at_25_17) (valid)) (at_25_18))
+    (when (and (at_25_17) (valid)) (not (at_25_17)))
+    (when (not (and (at_25_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_18_24_18
+  :effect (and
+    (when (and (at_25_18) (valid)) (at_24_18))
+    (when (and (at_25_18) (valid)) (not (at_25_18)))
+    (when (not (and (at_25_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_18_26_18
+  :effect (and
+    (when (and (at_25_18) (valid)) (at_26_18))
+    (when (and (at_25_18) (valid)) (not (at_25_18)))
+    (when (not (and (at_25_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_18_25_17
+  :effect (and
+    (when (and (at_25_18) (valid)) (at_25_17))
+    (when (and (at_25_18) (valid)) (not (at_25_18)))
+    (when (not (and (at_25_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_18_25_19
+  :effect (and
+    (when (and (at_25_18) (valid)) (at_25_19))
+    (when (and (at_25_18) (valid)) (not (at_25_18)))
+    (when (not (and (at_25_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_19_24_19
+  :effect (and
+    (when (and (at_25_19) (valid)) (at_24_19))
+    (when (and (at_25_19) (valid)) (not (at_25_19)))
+    (when (not (and (at_25_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_19_26_19
+  :effect (and
+    (when (and (at_25_19) (valid)) (at_26_19))
+    (when (and (at_25_19) (valid)) (not (at_25_19)))
+    (when (not (and (at_25_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_19_25_18
+  :effect (and
+    (when (and (at_25_19) (valid)) (at_25_18))
+    (when (and (at_25_19) (valid)) (not (at_25_19)))
+    (when (not (and (at_25_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_19_25_20
+  :effect (and
+    (when (and (at_25_19) (valid)) (at_25_20))
+    (when (and (at_25_19) (valid)) (not (at_25_19)))
+    (when (not (and (at_25_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_20_24_20
+  :effect (and
+    (when (and (at_25_20) (valid)) (at_24_20))
+    (when (and (at_25_20) (valid)) (not (at_25_20)))
+    (when (not (and (at_25_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_20_26_20
+  :effect (and
+    (when (and (at_25_20) (valid)) (at_26_20))
+    (when (and (at_25_20) (valid)) (not (at_25_20)))
+    (when (not (and (at_25_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_20_25_19
+  :effect (and
+    (when (and (at_25_20) (valid)) (at_25_19))
+    (when (and (at_25_20) (valid)) (not (at_25_20)))
+    (when (not (and (at_25_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_20_25_21
+  :effect (and
+    (when (and (at_25_20) (valid)) (at_25_21))
+    (when (and (at_25_20) (valid)) (not (at_25_20)))
+    (when (not (and (at_25_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_21_24_21
+  :effect (and
+    (when (and (at_25_21) (valid)) (at_24_21))
+    (when (and (at_25_21) (valid)) (not (at_25_21)))
+    (when (not (and (at_25_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_21_26_21
+  :effect (and
+    (when (and (at_25_21) (valid)) (at_26_21))
+    (when (and (at_25_21) (valid)) (not (at_25_21)))
+    (when (not (and (at_25_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_21_25_20
+  :effect (and
+    (when (and (at_25_21) (valid)) (at_25_20))
+    (when (and (at_25_21) (valid)) (not (at_25_21)))
+    (when (not (and (at_25_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_21_25_22
+  :effect (and
+    (when (and (at_25_21) (valid)) (at_25_22))
+    (when (and (at_25_21) (valid)) (not (at_25_21)))
+    (when (not (and (at_25_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_22_24_22
+  :effect (and
+    (when (and (at_25_22) (valid)) (at_24_22))
+    (when (and (at_25_22) (valid)) (not (at_25_22)))
+    (when (not (and (at_25_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_22_26_22
+  :effect (and
+    (when (and (at_25_22) (valid)) (at_26_22))
+    (when (and (at_25_22) (valid)) (not (at_25_22)))
+    (when (not (and (at_25_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_22_25_21
+  :effect (and
+    (when (and (at_25_22) (valid)) (at_25_21))
+    (when (and (at_25_22) (valid)) (not (at_25_22)))
+    (when (not (and (at_25_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_22_25_23
+  :effect (and
+    (when (and (at_25_22) (valid)) (at_25_23))
+    (when (and (at_25_22) (valid)) (not (at_25_22)))
+    (when (not (and (at_25_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_23_24_23
+  :effect (and
+    (when (and (at_25_23) (valid)) (at_24_23))
+    (when (and (at_25_23) (valid)) (not (at_25_23)))
+    (when (not (and (at_25_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_23_26_23
+  :effect (and
+    (when (and (at_25_23) (valid)) (at_26_23))
+    (when (and (at_25_23) (valid)) (not (at_25_23)))
+    (when (not (and (at_25_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_23_25_22
+  :effect (and
+    (when (and (at_25_23) (valid)) (at_25_22))
+    (when (and (at_25_23) (valid)) (not (at_25_23)))
+    (when (not (and (at_25_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_23_25_24
+  :effect (and
+    (when (and (at_25_23) (valid)) (at_25_24))
+    (when (and (at_25_23) (valid)) (not (at_25_23)))
+    (when (not (and (at_25_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_24_24_24
+  :effect (and
+    (when (and (at_25_24) (valid)) (at_24_24))
+    (when (and (at_25_24) (valid)) (not (at_25_24)))
+    (when (not (and (at_25_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_24_26_24
+  :effect (and
+    (when (and (at_25_24) (valid)) (at_26_24))
+    (when (and (at_25_24) (valid)) (not (at_25_24)))
+    (when (not (and (at_25_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_24_25_23
+  :effect (and
+    (when (and (at_25_24) (valid)) (at_25_23))
+    (when (and (at_25_24) (valid)) (not (at_25_24)))
+    (when (not (and (at_25_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_24_25_25
+  :effect (and
+    (when (and (at_25_24) (valid)) (at_25_25))
+    (when (and (at_25_24) (valid)) (not (at_25_24)))
+    (when (not (and (at_25_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_25_24_25
+  :effect (and
+    (when (and (at_25_25) (valid)) (at_24_25))
+    (when (and (at_25_25) (valid)) (not (at_25_25)))
+    (when (not (and (at_25_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_25_26_25
+  :effect (and
+    (when (and (at_25_25) (valid)) (at_26_25))
+    (when (and (at_25_25) (valid)) (not (at_25_25)))
+    (when (not (and (at_25_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_25_25_24
+  :effect (and
+    (when (and (at_25_25) (valid)) (at_25_24))
+    (when (and (at_25_25) (valid)) (not (at_25_25)))
+    (when (not (and (at_25_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_25_25_26
+  :effect (and
+    (when (and (at_25_25) (valid)) (at_25_26))
+    (when (and (at_25_25) (valid)) (not (at_25_25)))
+    (when (not (and (at_25_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_26_24_26
+  :effect (and
+    (when (and (at_25_26) (valid)) (at_24_26))
+    (when (and (at_25_26) (valid)) (not (at_25_26)))
+    (when (not (and (at_25_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_26_26_26
+  :effect (and
+    (when (and (at_25_26) (valid)) (at_26_26))
+    (when (and (at_25_26) (valid)) (not (at_25_26)))
+    (when (not (and (at_25_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_26_25_25
+  :effect (and
+    (when (and (at_25_26) (valid)) (at_25_25))
+    (when (and (at_25_26) (valid)) (not (at_25_26)))
+    (when (not (and (at_25_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_26_25_27
+  :effect (and
+    (when (and (at_25_26) (valid)) (at_25_27))
+    (when (and (at_25_26) (valid)) (not (at_25_26)))
+    (when (not (and (at_25_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_27_24_27
+  :effect (and
+    (when (and (at_25_27) (valid)) (at_24_27))
+    (when (and (at_25_27) (valid)) (not (at_25_27)))
+    (when (not (and (at_25_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_27_26_27
+  :effect (and
+    (when (and (at_25_27) (valid)) (at_26_27))
+    (when (and (at_25_27) (valid)) (not (at_25_27)))
+    (when (not (and (at_25_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_27_25_26
+  :effect (and
+    (when (and (at_25_27) (valid)) (at_25_26))
+    (when (and (at_25_27) (valid)) (not (at_25_27)))
+    (when (not (and (at_25_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_27_25_28
+  :effect (and
+    (when (and (at_25_27) (valid)) (at_25_28))
+    (when (and (at_25_27) (valid)) (not (at_25_27)))
+    (when (not (and (at_25_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_28_24_28
+  :effect (and
+    (when (and (at_25_28) (valid)) (at_24_28))
+    (when (and (at_25_28) (valid)) (not (at_25_28)))
+    (when (not (and (at_25_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_28_26_28
+  :effect (and
+    (when (and (at_25_28) (valid)) (at_26_28))
+    (when (and (at_25_28) (valid)) (not (at_25_28)))
+    (when (not (and (at_25_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_28_25_27
+  :effect (and
+    (when (and (at_25_28) (valid)) (at_25_27))
+    (when (and (at_25_28) (valid)) (not (at_25_28)))
+    (when (not (and (at_25_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_28_25_29
+  :effect (and
+    (when (and (at_25_28) (valid)) (at_25_29))
+    (when (and (at_25_28) (valid)) (not (at_25_28)))
+    (when (not (and (at_25_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_29_24_29
+  :effect (and
+    (when (and (at_25_29) (valid)) (at_24_29))
+    (when (and (at_25_29) (valid)) (not (at_25_29)))
+    (when (not (and (at_25_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_29_26_29
+  :effect (and
+    (when (and (at_25_29) (valid)) (at_26_29))
+    (when (and (at_25_29) (valid)) (not (at_25_29)))
+    (when (not (and (at_25_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_29_25_28
+  :effect (and
+    (when (and (at_25_29) (valid)) (at_25_28))
+    (when (and (at_25_29) (valid)) (not (at_25_29)))
+    (when (not (and (at_25_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_29_25_30
+  :effect (and
+    (when (and (at_25_29) (valid)) (at_25_30))
+    (when (and (at_25_29) (valid)) (not (at_25_29)))
+    (when (not (and (at_25_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_30_24_30
+  :effect (and
+    (when (and (at_25_30) (valid)) (at_24_30))
+    (when (and (at_25_30) (valid)) (not (at_25_30)))
+    (when (not (and (at_25_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_30_26_30
+  :effect (and
+    (when (and (at_25_30) (valid)) (at_26_30))
+    (when (and (at_25_30) (valid)) (not (at_25_30)))
+    (when (not (and (at_25_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_30_25_29
+  :effect (and
+    (when (and (at_25_30) (valid)) (at_25_29))
+    (when (and (at_25_30) (valid)) (not (at_25_30)))
+    (when (not (and (at_25_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_30_25_31
+  :effect (and
+    (when (and (at_25_30) (valid)) (at_25_31))
+    (when (and (at_25_30) (valid)) (not (at_25_30)))
+    (when (not (and (at_25_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_31_24_31
+  :effect (and
+    (when (and (at_25_31) (valid)) (at_24_31))
+    (when (and (at_25_31) (valid)) (not (at_25_31)))
+    (when (not (and (at_25_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_31_26_31
+  :effect (and
+    (when (and (at_25_31) (valid)) (at_26_31))
+    (when (and (at_25_31) (valid)) (not (at_25_31)))
+    (when (not (and (at_25_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_25_31_25_30
+  :effect (and
+    (when (and (at_25_31) (valid)) (at_25_30))
+    (when (and (at_25_31) (valid)) (not (at_25_31)))
+    (when (not (and (at_25_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_0_25_0
+  :effect (and
+    (when (and (at_26_0) (valid)) (at_25_0))
+    (when (and (at_26_0) (valid)) (not (at_26_0)))
+    (when (not (and (at_26_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_0_27_0
+  :effect (and
+    (when (and (at_26_0) (valid)) (at_27_0))
+    (when (and (at_26_0) (valid)) (not (at_26_0)))
+    (when (not (and (at_26_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_0_26_1
+  :effect (and
+    (when (and (at_26_0) (valid)) (at_26_1))
+    (when (and (at_26_0) (valid)) (not (at_26_0)))
+    (when (not (and (at_26_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_1_25_1
+  :effect (and
+    (when (and (at_26_1) (valid)) (at_25_1))
+    (when (and (at_26_1) (valid)) (not (at_26_1)))
+    (when (not (and (at_26_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_1_27_1
+  :effect (and
+    (when (and (at_26_1) (valid)) (at_27_1))
+    (when (and (at_26_1) (valid)) (not (at_26_1)))
+    (when (not (and (at_26_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_1_26_0
+  :effect (and
+    (when (and (at_26_1) (valid)) (at_26_0))
+    (when (and (at_26_1) (valid)) (not (at_26_1)))
+    (when (not (and (at_26_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_1_26_2
+  :effect (and
+    (when (and (at_26_1) (valid)) (at_26_2))
+    (when (and (at_26_1) (valid)) (not (at_26_1)))
+    (when (not (and (at_26_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_2_25_2
+  :effect (and
+    (when (and (at_26_2) (valid)) (at_25_2))
+    (when (and (at_26_2) (valid)) (not (at_26_2)))
+    (when (not (and (at_26_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_2_27_2
+  :effect (and
+    (when (and (at_26_2) (valid)) (at_27_2))
+    (when (and (at_26_2) (valid)) (not (at_26_2)))
+    (when (not (and (at_26_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_2_26_1
+  :effect (and
+    (when (and (at_26_2) (valid)) (at_26_1))
+    (when (and (at_26_2) (valid)) (not (at_26_2)))
+    (when (not (and (at_26_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_2_26_3
+  :effect (and
+    (when (and (at_26_2) (valid)) (at_26_3))
+    (when (and (at_26_2) (valid)) (not (at_26_2)))
+    (when (not (and (at_26_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_3_25_3
+  :effect (and
+    (when (and (at_26_3) (valid)) (at_25_3))
+    (when (and (at_26_3) (valid)) (not (at_26_3)))
+    (when (not (and (at_26_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_3_27_3
+  :effect (and
+    (when (and (at_26_3) (valid)) (at_27_3))
+    (when (and (at_26_3) (valid)) (not (at_26_3)))
+    (when (not (and (at_26_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_3_26_2
+  :effect (and
+    (when (and (at_26_3) (valid)) (at_26_2))
+    (when (and (at_26_3) (valid)) (not (at_26_3)))
+    (when (not (and (at_26_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_3_26_4
+  :effect (and
+    (when (and (at_26_3) (valid)) (at_26_4))
+    (when (and (at_26_3) (valid)) (not (at_26_3)))
+    (when (not (and (at_26_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_4_25_4
+  :effect (and
+    (when (and (at_26_4) (valid)) (at_25_4))
+    (when (and (at_26_4) (valid)) (not (at_26_4)))
+    (when (not (and (at_26_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_4_27_4
+  :effect (and
+    (when (and (at_26_4) (valid)) (at_27_4))
+    (when (and (at_26_4) (valid)) (not (at_26_4)))
+    (when (not (and (at_26_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_4_26_3
+  :effect (and
+    (when (and (at_26_4) (valid)) (at_26_3))
+    (when (and (at_26_4) (valid)) (not (at_26_4)))
+    (when (not (and (at_26_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_4_26_5
+  :effect (and
+    (when (and (at_26_4) (valid)) (at_26_5))
+    (when (and (at_26_4) (valid)) (not (at_26_4)))
+    (when (not (and (at_26_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_5_25_5
+  :effect (and
+    (when (and (at_26_5) (valid)) (at_25_5))
+    (when (and (at_26_5) (valid)) (not (at_26_5)))
+    (when (not (and (at_26_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_5_27_5
+  :effect (and
+    (when (and (at_26_5) (valid)) (at_27_5))
+    (when (and (at_26_5) (valid)) (not (at_26_5)))
+    (when (not (and (at_26_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_5_26_4
+  :effect (and
+    (when (and (at_26_5) (valid)) (at_26_4))
+    (when (and (at_26_5) (valid)) (not (at_26_5)))
+    (when (not (and (at_26_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_5_26_6
+  :effect (and
+    (when (and (at_26_5) (valid)) (at_26_6))
+    (when (and (at_26_5) (valid)) (not (at_26_5)))
+    (when (not (and (at_26_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_6_25_6
+  :effect (and
+    (when (and (at_26_6) (valid)) (at_25_6))
+    (when (and (at_26_6) (valid)) (not (at_26_6)))
+    (when (not (and (at_26_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_6_27_6
+  :effect (and
+    (when (and (at_26_6) (valid)) (at_27_6))
+    (when (and (at_26_6) (valid)) (not (at_26_6)))
+    (when (not (and (at_26_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_6_26_5
+  :effect (and
+    (when (and (at_26_6) (valid)) (at_26_5))
+    (when (and (at_26_6) (valid)) (not (at_26_6)))
+    (when (not (and (at_26_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_6_26_7
+  :effect (and
+    (when (and (at_26_6) (valid)) (at_26_7))
+    (when (and (at_26_6) (valid)) (not (at_26_6)))
+    (when (not (and (at_26_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_7_25_7
+  :effect (and
+    (when (and (at_26_7) (valid)) (at_25_7))
+    (when (and (at_26_7) (valid)) (not (at_26_7)))
+    (when (not (and (at_26_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_7_27_7
+  :effect (and
+    (when (and (at_26_7) (valid)) (at_27_7))
+    (when (and (at_26_7) (valid)) (not (at_26_7)))
+    (when (not (and (at_26_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_7_26_6
+  :effect (and
+    (when (and (at_26_7) (valid)) (at_26_6))
+    (when (and (at_26_7) (valid)) (not (at_26_7)))
+    (when (not (and (at_26_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_7_26_8
+  :effect (and
+    (when (and (at_26_7) (valid)) (at_26_8))
+    (when (and (at_26_7) (valid)) (not (at_26_7)))
+    (when (not (and (at_26_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_8_25_8
+  :effect (and
+    (when (and (at_26_8) (valid)) (at_25_8))
+    (when (and (at_26_8) (valid)) (not (at_26_8)))
+    (when (not (and (at_26_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_8_27_8
+  :effect (and
+    (when (and (at_26_8) (valid)) (at_27_8))
+    (when (and (at_26_8) (valid)) (not (at_26_8)))
+    (when (not (and (at_26_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_8_26_7
+  :effect (and
+    (when (and (at_26_8) (valid)) (at_26_7))
+    (when (and (at_26_8) (valid)) (not (at_26_8)))
+    (when (not (and (at_26_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_8_26_9
+  :effect (and
+    (when (and (at_26_8) (valid)) (at_26_9))
+    (when (and (at_26_8) (valid)) (not (at_26_8)))
+    (when (not (and (at_26_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_9_25_9
+  :effect (and
+    (when (and (at_26_9) (valid)) (at_25_9))
+    (when (and (at_26_9) (valid)) (not (at_26_9)))
+    (when (not (and (at_26_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_9_27_9
+  :effect (and
+    (when (and (at_26_9) (valid)) (at_27_9))
+    (when (and (at_26_9) (valid)) (not (at_26_9)))
+    (when (not (and (at_26_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_9_26_8
+  :effect (and
+    (when (and (at_26_9) (valid)) (at_26_8))
+    (when (and (at_26_9) (valid)) (not (at_26_9)))
+    (when (not (and (at_26_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_9_26_10
+  :effect (and
+    (when (and (at_26_9) (valid)) (at_26_10))
+    (when (and (at_26_9) (valid)) (not (at_26_9)))
+    (when (not (and (at_26_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_10_25_10
+  :effect (and
+    (when (and (at_26_10) (valid)) (at_25_10))
+    (when (and (at_26_10) (valid)) (not (at_26_10)))
+    (when (not (and (at_26_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_10_27_10
+  :effect (and
+    (when (and (at_26_10) (valid)) (at_27_10))
+    (when (and (at_26_10) (valid)) (not (at_26_10)))
+    (when (not (and (at_26_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_10_26_9
+  :effect (and
+    (when (and (at_26_10) (valid)) (at_26_9))
+    (when (and (at_26_10) (valid)) (not (at_26_10)))
+    (when (not (and (at_26_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_10_26_11
+  :effect (and
+    (when (and (at_26_10) (valid)) (at_26_11))
+    (when (and (at_26_10) (valid)) (not (at_26_10)))
+    (when (not (and (at_26_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_11_25_11
+  :effect (and
+    (when (and (at_26_11) (valid)) (at_25_11))
+    (when (and (at_26_11) (valid)) (not (at_26_11)))
+    (when (not (and (at_26_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_11_27_11
+  :effect (and
+    (when (and (at_26_11) (valid)) (at_27_11))
+    (when (and (at_26_11) (valid)) (not (at_26_11)))
+    (when (not (and (at_26_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_11_26_10
+  :effect (and
+    (when (and (at_26_11) (valid)) (at_26_10))
+    (when (and (at_26_11) (valid)) (not (at_26_11)))
+    (when (not (and (at_26_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_11_26_12
+  :effect (and
+    (when (and (at_26_11) (valid)) (at_26_12))
+    (when (and (at_26_11) (valid)) (not (at_26_11)))
+    (when (not (and (at_26_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_12_25_12
+  :effect (and
+    (when (and (at_26_12) (valid)) (at_25_12))
+    (when (and (at_26_12) (valid)) (not (at_26_12)))
+    (when (not (and (at_26_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_12_27_12
+  :effect (and
+    (when (and (at_26_12) (valid)) (at_27_12))
+    (when (and (at_26_12) (valid)) (not (at_26_12)))
+    (when (not (and (at_26_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_12_26_11
+  :effect (and
+    (when (and (at_26_12) (valid)) (at_26_11))
+    (when (and (at_26_12) (valid)) (not (at_26_12)))
+    (when (not (and (at_26_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_12_26_13
+  :effect (and
+    (when (and (at_26_12) (valid)) (at_26_13))
+    (when (and (at_26_12) (valid)) (not (at_26_12)))
+    (when (not (and (at_26_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_13_25_13
+  :effect (and
+    (when (and (at_26_13) (valid)) (at_25_13))
+    (when (and (at_26_13) (valid)) (not (at_26_13)))
+    (when (not (and (at_26_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_13_27_13
+  :effect (and
+    (when (and (at_26_13) (valid)) (at_27_13))
+    (when (and (at_26_13) (valid)) (not (at_26_13)))
+    (when (not (and (at_26_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_13_26_12
+  :effect (and
+    (when (and (at_26_13) (valid)) (at_26_12))
+    (when (and (at_26_13) (valid)) (not (at_26_13)))
+    (when (not (and (at_26_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_13_26_14
+  :effect (and
+    (when (and (at_26_13) (valid)) (at_26_14))
+    (when (and (at_26_13) (valid)) (not (at_26_13)))
+    (when (not (and (at_26_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_14_25_14
+  :effect (and
+    (when (and (at_26_14) (valid)) (at_25_14))
+    (when (and (at_26_14) (valid)) (not (at_26_14)))
+    (when (not (and (at_26_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_14_27_14
+  :effect (and
+    (when (and (at_26_14) (valid)) (at_27_14))
+    (when (and (at_26_14) (valid)) (not (at_26_14)))
+    (when (not (and (at_26_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_14_26_13
+  :effect (and
+    (when (and (at_26_14) (valid)) (at_26_13))
+    (when (and (at_26_14) (valid)) (not (at_26_14)))
+    (when (not (and (at_26_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_14_26_15
+  :effect (and
+    (when (and (at_26_14) (valid)) (at_26_15))
+    (when (and (at_26_14) (valid)) (not (at_26_14)))
+    (when (not (and (at_26_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_15_25_15
+  :effect (and
+    (when (and (at_26_15) (valid)) (at_25_15))
+    (when (and (at_26_15) (valid)) (not (at_26_15)))
+    (when (not (and (at_26_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_15_27_15
+  :effect (and
+    (when (and (at_26_15) (valid)) (at_27_15))
+    (when (and (at_26_15) (valid)) (not (at_26_15)))
+    (when (not (and (at_26_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_15_26_14
+  :effect (and
+    (when (and (at_26_15) (valid)) (at_26_14))
+    (when (and (at_26_15) (valid)) (not (at_26_15)))
+    (when (not (and (at_26_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_15_26_16
+  :effect (and
+    (when (and (at_26_15) (valid)) (at_26_16))
+    (when (and (at_26_15) (valid)) (not (at_26_15)))
+    (when (not (and (at_26_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_16_25_16
+  :effect (and
+    (when (and (at_26_16) (valid)) (at_25_16))
+    (when (and (at_26_16) (valid)) (not (at_26_16)))
+    (when (not (and (at_26_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_16_27_16
+  :effect (and
+    (when (and (at_26_16) (valid)) (at_27_16))
+    (when (and (at_26_16) (valid)) (not (at_26_16)))
+    (when (not (and (at_26_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_16_26_15
+  :effect (and
+    (when (and (at_26_16) (valid)) (at_26_15))
+    (when (and (at_26_16) (valid)) (not (at_26_16)))
+    (when (not (and (at_26_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_16_26_17
+  :effect (and
+    (when (and (at_26_16) (valid)) (at_26_17))
+    (when (and (at_26_16) (valid)) (not (at_26_16)))
+    (when (not (and (at_26_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_17_25_17
+  :effect (and
+    (when (and (at_26_17) (valid)) (at_25_17))
+    (when (and (at_26_17) (valid)) (not (at_26_17)))
+    (when (not (and (at_26_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_17_27_17
+  :effect (and
+    (when (and (at_26_17) (valid)) (at_27_17))
+    (when (and (at_26_17) (valid)) (not (at_26_17)))
+    (when (not (and (at_26_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_17_26_16
+  :effect (and
+    (when (and (at_26_17) (valid)) (at_26_16))
+    (when (and (at_26_17) (valid)) (not (at_26_17)))
+    (when (not (and (at_26_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_17_26_18
+  :effect (and
+    (when (and (at_26_17) (valid)) (at_26_18))
+    (when (and (at_26_17) (valid)) (not (at_26_17)))
+    (when (not (and (at_26_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_18_25_18
+  :effect (and
+    (when (and (at_26_18) (valid)) (at_25_18))
+    (when (and (at_26_18) (valid)) (not (at_26_18)))
+    (when (not (and (at_26_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_18_27_18
+  :effect (and
+    (when (and (at_26_18) (valid)) (at_27_18))
+    (when (and (at_26_18) (valid)) (not (at_26_18)))
+    (when (not (and (at_26_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_18_26_17
+  :effect (and
+    (when (and (at_26_18) (valid)) (at_26_17))
+    (when (and (at_26_18) (valid)) (not (at_26_18)))
+    (when (not (and (at_26_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_18_26_19
+  :effect (and
+    (when (and (at_26_18) (valid)) (at_26_19))
+    (when (and (at_26_18) (valid)) (not (at_26_18)))
+    (when (not (and (at_26_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_19_25_19
+  :effect (and
+    (when (and (at_26_19) (valid)) (at_25_19))
+    (when (and (at_26_19) (valid)) (not (at_26_19)))
+    (when (not (and (at_26_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_19_27_19
+  :effect (and
+    (when (and (at_26_19) (valid)) (at_27_19))
+    (when (and (at_26_19) (valid)) (not (at_26_19)))
+    (when (not (and (at_26_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_19_26_18
+  :effect (and
+    (when (and (at_26_19) (valid)) (at_26_18))
+    (when (and (at_26_19) (valid)) (not (at_26_19)))
+    (when (not (and (at_26_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_19_26_20
+  :effect (and
+    (when (and (at_26_19) (valid)) (at_26_20))
+    (when (and (at_26_19) (valid)) (not (at_26_19)))
+    (when (not (and (at_26_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_20_25_20
+  :effect (and
+    (when (and (at_26_20) (valid)) (at_25_20))
+    (when (and (at_26_20) (valid)) (not (at_26_20)))
+    (when (not (and (at_26_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_20_27_20
+  :effect (and
+    (when (and (at_26_20) (valid)) (at_27_20))
+    (when (and (at_26_20) (valid)) (not (at_26_20)))
+    (when (not (and (at_26_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_20_26_19
+  :effect (and
+    (when (and (at_26_20) (valid)) (at_26_19))
+    (when (and (at_26_20) (valid)) (not (at_26_20)))
+    (when (not (and (at_26_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_20_26_21
+  :effect (and
+    (when (and (at_26_20) (valid)) (at_26_21))
+    (when (and (at_26_20) (valid)) (not (at_26_20)))
+    (when (not (and (at_26_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_21_25_21
+  :effect (and
+    (when (and (at_26_21) (valid)) (at_25_21))
+    (when (and (at_26_21) (valid)) (not (at_26_21)))
+    (when (not (and (at_26_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_21_27_21
+  :effect (and
+    (when (and (at_26_21) (valid)) (at_27_21))
+    (when (and (at_26_21) (valid)) (not (at_26_21)))
+    (when (not (and (at_26_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_21_26_20
+  :effect (and
+    (when (and (at_26_21) (valid)) (at_26_20))
+    (when (and (at_26_21) (valid)) (not (at_26_21)))
+    (when (not (and (at_26_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_21_26_22
+  :effect (and
+    (when (and (at_26_21) (valid)) (at_26_22))
+    (when (and (at_26_21) (valid)) (not (at_26_21)))
+    (when (not (and (at_26_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_22_25_22
+  :effect (and
+    (when (and (at_26_22) (valid)) (at_25_22))
+    (when (and (at_26_22) (valid)) (not (at_26_22)))
+    (when (not (and (at_26_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_22_27_22
+  :effect (and
+    (when (and (at_26_22) (valid)) (at_27_22))
+    (when (and (at_26_22) (valid)) (not (at_26_22)))
+    (when (not (and (at_26_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_22_26_21
+  :effect (and
+    (when (and (at_26_22) (valid)) (at_26_21))
+    (when (and (at_26_22) (valid)) (not (at_26_22)))
+    (when (not (and (at_26_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_22_26_23
+  :effect (and
+    (when (and (at_26_22) (valid)) (at_26_23))
+    (when (and (at_26_22) (valid)) (not (at_26_22)))
+    (when (not (and (at_26_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_23_25_23
+  :effect (and
+    (when (and (at_26_23) (valid)) (at_25_23))
+    (when (and (at_26_23) (valid)) (not (at_26_23)))
+    (when (not (and (at_26_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_23_27_23
+  :effect (and
+    (when (and (at_26_23) (valid)) (at_27_23))
+    (when (and (at_26_23) (valid)) (not (at_26_23)))
+    (when (not (and (at_26_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_23_26_22
+  :effect (and
+    (when (and (at_26_23) (valid)) (at_26_22))
+    (when (and (at_26_23) (valid)) (not (at_26_23)))
+    (when (not (and (at_26_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_23_26_24
+  :effect (and
+    (when (and (at_26_23) (valid)) (at_26_24))
+    (when (and (at_26_23) (valid)) (not (at_26_23)))
+    (when (not (and (at_26_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_24_25_24
+  :effect (and
+    (when (and (at_26_24) (valid)) (at_25_24))
+    (when (and (at_26_24) (valid)) (not (at_26_24)))
+    (when (not (and (at_26_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_24_27_24
+  :effect (and
+    (when (and (at_26_24) (valid)) (at_27_24))
+    (when (and (at_26_24) (valid)) (not (at_26_24)))
+    (when (not (and (at_26_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_24_26_23
+  :effect (and
+    (when (and (at_26_24) (valid)) (at_26_23))
+    (when (and (at_26_24) (valid)) (not (at_26_24)))
+    (when (not (and (at_26_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_24_26_25
+  :effect (and
+    (when (and (at_26_24) (valid)) (at_26_25))
+    (when (and (at_26_24) (valid)) (not (at_26_24)))
+    (when (not (and (at_26_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_25_25_25
+  :effect (and
+    (when (and (at_26_25) (valid)) (at_25_25))
+    (when (and (at_26_25) (valid)) (not (at_26_25)))
+    (when (not (and (at_26_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_25_27_25
+  :effect (and
+    (when (and (at_26_25) (valid)) (at_27_25))
+    (when (and (at_26_25) (valid)) (not (at_26_25)))
+    (when (not (and (at_26_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_25_26_24
+  :effect (and
+    (when (and (at_26_25) (valid)) (at_26_24))
+    (when (and (at_26_25) (valid)) (not (at_26_25)))
+    (when (not (and (at_26_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_25_26_26
+  :effect (and
+    (when (and (at_26_25) (valid)) (at_26_26))
+    (when (and (at_26_25) (valid)) (not (at_26_25)))
+    (when (not (and (at_26_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_26_25_26
+  :effect (and
+    (when (and (at_26_26) (valid)) (at_25_26))
+    (when (and (at_26_26) (valid)) (not (at_26_26)))
+    (when (not (and (at_26_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_26_27_26
+  :effect (and
+    (when (and (at_26_26) (valid)) (at_27_26))
+    (when (and (at_26_26) (valid)) (not (at_26_26)))
+    (when (not (and (at_26_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_26_26_25
+  :effect (and
+    (when (and (at_26_26) (valid)) (at_26_25))
+    (when (and (at_26_26) (valid)) (not (at_26_26)))
+    (when (not (and (at_26_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_26_26_27
+  :effect (and
+    (when (and (at_26_26) (valid)) (at_26_27))
+    (when (and (at_26_26) (valid)) (not (at_26_26)))
+    (when (not (and (at_26_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_27_25_27
+  :effect (and
+    (when (and (at_26_27) (valid)) (at_25_27))
+    (when (and (at_26_27) (valid)) (not (at_26_27)))
+    (when (not (and (at_26_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_27_27_27
+  :effect (and
+    (when (and (at_26_27) (valid)) (at_27_27))
+    (when (and (at_26_27) (valid)) (not (at_26_27)))
+    (when (not (and (at_26_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_27_26_26
+  :effect (and
+    (when (and (at_26_27) (valid)) (at_26_26))
+    (when (and (at_26_27) (valid)) (not (at_26_27)))
+    (when (not (and (at_26_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_27_26_28
+  :effect (and
+    (when (and (at_26_27) (valid)) (at_26_28))
+    (when (and (at_26_27) (valid)) (not (at_26_27)))
+    (when (not (and (at_26_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_28_25_28
+  :effect (and
+    (when (and (at_26_28) (valid)) (at_25_28))
+    (when (and (at_26_28) (valid)) (not (at_26_28)))
+    (when (not (and (at_26_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_28_27_28
+  :effect (and
+    (when (and (at_26_28) (valid)) (at_27_28))
+    (when (and (at_26_28) (valid)) (not (at_26_28)))
+    (when (not (and (at_26_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_28_26_27
+  :effect (and
+    (when (and (at_26_28) (valid)) (at_26_27))
+    (when (and (at_26_28) (valid)) (not (at_26_28)))
+    (when (not (and (at_26_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_28_26_29
+  :effect (and
+    (when (and (at_26_28) (valid)) (at_26_29))
+    (when (and (at_26_28) (valid)) (not (at_26_28)))
+    (when (not (and (at_26_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_29_25_29
+  :effect (and
+    (when (and (at_26_29) (valid)) (at_25_29))
+    (when (and (at_26_29) (valid)) (not (at_26_29)))
+    (when (not (and (at_26_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_29_27_29
+  :effect (and
+    (when (and (at_26_29) (valid)) (at_27_29))
+    (when (and (at_26_29) (valid)) (not (at_26_29)))
+    (when (not (and (at_26_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_29_26_28
+  :effect (and
+    (when (and (at_26_29) (valid)) (at_26_28))
+    (when (and (at_26_29) (valid)) (not (at_26_29)))
+    (when (not (and (at_26_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_29_26_30
+  :effect (and
+    (when (and (at_26_29) (valid)) (at_26_30))
+    (when (and (at_26_29) (valid)) (not (at_26_29)))
+    (when (not (and (at_26_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_30_25_30
+  :effect (and
+    (when (and (at_26_30) (valid)) (at_25_30))
+    (when (and (at_26_30) (valid)) (not (at_26_30)))
+    (when (not (and (at_26_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_30_27_30
+  :effect (and
+    (when (and (at_26_30) (valid)) (at_27_30))
+    (when (and (at_26_30) (valid)) (not (at_26_30)))
+    (when (not (and (at_26_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_30_26_29
+  :effect (and
+    (when (and (at_26_30) (valid)) (at_26_29))
+    (when (and (at_26_30) (valid)) (not (at_26_30)))
+    (when (not (and (at_26_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_30_26_31
+  :effect (and
+    (when (and (at_26_30) (valid)) (at_26_31))
+    (when (and (at_26_30) (valid)) (not (at_26_30)))
+    (when (not (and (at_26_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_31_25_31
+  :effect (and
+    (when (and (at_26_31) (valid)) (at_25_31))
+    (when (and (at_26_31) (valid)) (not (at_26_31)))
+    (when (not (and (at_26_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_31_27_31
+  :effect (and
+    (when (and (at_26_31) (valid)) (at_27_31))
+    (when (and (at_26_31) (valid)) (not (at_26_31)))
+    (when (not (and (at_26_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_26_31_26_30
+  :effect (and
+    (when (and (at_26_31) (valid)) (at_26_30))
+    (when (and (at_26_31) (valid)) (not (at_26_31)))
+    (when (not (and (at_26_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_0_26_0
+  :effect (and
+    (when (and (at_27_0) (valid)) (at_26_0))
+    (when (and (at_27_0) (valid)) (not (at_27_0)))
+    (when (not (and (at_27_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_0_28_0
+  :effect (and
+    (when (and (at_27_0) (valid)) (at_28_0))
+    (when (and (at_27_0) (valid)) (not (at_27_0)))
+    (when (not (and (at_27_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_0_27_1
+  :effect (and
+    (when (and (at_27_0) (valid)) (at_27_1))
+    (when (and (at_27_0) (valid)) (not (at_27_0)))
+    (when (not (and (at_27_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_1_26_1
+  :effect (and
+    (when (and (at_27_1) (valid)) (at_26_1))
+    (when (and (at_27_1) (valid)) (not (at_27_1)))
+    (when (not (and (at_27_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_1_28_1
+  :effect (and
+    (when (and (at_27_1) (valid)) (at_28_1))
+    (when (and (at_27_1) (valid)) (not (at_27_1)))
+    (when (not (and (at_27_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_1_27_0
+  :effect (and
+    (when (and (at_27_1) (valid)) (at_27_0))
+    (when (and (at_27_1) (valid)) (not (at_27_1)))
+    (when (not (and (at_27_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_1_27_2
+  :effect (and
+    (when (and (at_27_1) (valid)) (at_27_2))
+    (when (and (at_27_1) (valid)) (not (at_27_1)))
+    (when (not (and (at_27_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_2_26_2
+  :effect (and
+    (when (and (at_27_2) (valid)) (at_26_2))
+    (when (and (at_27_2) (valid)) (not (at_27_2)))
+    (when (not (and (at_27_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_2_28_2
+  :effect (and
+    (when (and (at_27_2) (valid)) (at_28_2))
+    (when (and (at_27_2) (valid)) (not (at_27_2)))
+    (when (not (and (at_27_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_2_27_1
+  :effect (and
+    (when (and (at_27_2) (valid)) (at_27_1))
+    (when (and (at_27_2) (valid)) (not (at_27_2)))
+    (when (not (and (at_27_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_2_27_3
+  :effect (and
+    (when (and (at_27_2) (valid)) (at_27_3))
+    (when (and (at_27_2) (valid)) (not (at_27_2)))
+    (when (not (and (at_27_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_3_26_3
+  :effect (and
+    (when (and (at_27_3) (valid)) (at_26_3))
+    (when (and (at_27_3) (valid)) (not (at_27_3)))
+    (when (not (and (at_27_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_3_28_3
+  :effect (and
+    (when (and (at_27_3) (valid)) (at_28_3))
+    (when (and (at_27_3) (valid)) (not (at_27_3)))
+    (when (not (and (at_27_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_3_27_2
+  :effect (and
+    (when (and (at_27_3) (valid)) (at_27_2))
+    (when (and (at_27_3) (valid)) (not (at_27_3)))
+    (when (not (and (at_27_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_3_27_4
+  :effect (and
+    (when (and (at_27_3) (valid)) (at_27_4))
+    (when (and (at_27_3) (valid)) (not (at_27_3)))
+    (when (not (and (at_27_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_4_26_4
+  :effect (and
+    (when (and (at_27_4) (valid)) (at_26_4))
+    (when (and (at_27_4) (valid)) (not (at_27_4)))
+    (when (not (and (at_27_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_4_28_4
+  :effect (and
+    (when (and (at_27_4) (valid)) (at_28_4))
+    (when (and (at_27_4) (valid)) (not (at_27_4)))
+    (when (not (and (at_27_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_4_27_3
+  :effect (and
+    (when (and (at_27_4) (valid)) (at_27_3))
+    (when (and (at_27_4) (valid)) (not (at_27_4)))
+    (when (not (and (at_27_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_4_27_5
+  :effect (and
+    (when (and (at_27_4) (valid)) (at_27_5))
+    (when (and (at_27_4) (valid)) (not (at_27_4)))
+    (when (not (and (at_27_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_5_26_5
+  :effect (and
+    (when (and (at_27_5) (valid)) (at_26_5))
+    (when (and (at_27_5) (valid)) (not (at_27_5)))
+    (when (not (and (at_27_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_5_28_5
+  :effect (and
+    (when (and (at_27_5) (valid)) (at_28_5))
+    (when (and (at_27_5) (valid)) (not (at_27_5)))
+    (when (not (and (at_27_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_5_27_4
+  :effect (and
+    (when (and (at_27_5) (valid)) (at_27_4))
+    (when (and (at_27_5) (valid)) (not (at_27_5)))
+    (when (not (and (at_27_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_5_27_6
+  :effect (and
+    (when (and (at_27_5) (valid)) (at_27_6))
+    (when (and (at_27_5) (valid)) (not (at_27_5)))
+    (when (not (and (at_27_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_6_26_6
+  :effect (and
+    (when (and (at_27_6) (valid)) (at_26_6))
+    (when (and (at_27_6) (valid)) (not (at_27_6)))
+    (when (not (and (at_27_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_6_28_6
+  :effect (and
+    (when (and (at_27_6) (valid)) (at_28_6))
+    (when (and (at_27_6) (valid)) (not (at_27_6)))
+    (when (not (and (at_27_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_6_27_5
+  :effect (and
+    (when (and (at_27_6) (valid)) (at_27_5))
+    (when (and (at_27_6) (valid)) (not (at_27_6)))
+    (when (not (and (at_27_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_6_27_7
+  :effect (and
+    (when (and (at_27_6) (valid)) (at_27_7))
+    (when (and (at_27_6) (valid)) (not (at_27_6)))
+    (when (not (and (at_27_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_7_26_7
+  :effect (and
+    (when (and (at_27_7) (valid)) (at_26_7))
+    (when (and (at_27_7) (valid)) (not (at_27_7)))
+    (when (not (and (at_27_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_7_28_7
+  :effect (and
+    (when (and (at_27_7) (valid)) (at_28_7))
+    (when (and (at_27_7) (valid)) (not (at_27_7)))
+    (when (not (and (at_27_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_7_27_6
+  :effect (and
+    (when (and (at_27_7) (valid)) (at_27_6))
+    (when (and (at_27_7) (valid)) (not (at_27_7)))
+    (when (not (and (at_27_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_7_27_8
+  :effect (and
+    (when (and (at_27_7) (valid)) (at_27_8))
+    (when (and (at_27_7) (valid)) (not (at_27_7)))
+    (when (not (and (at_27_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_8_26_8
+  :effect (and
+    (when (and (at_27_8) (valid)) (at_26_8))
+    (when (and (at_27_8) (valid)) (not (at_27_8)))
+    (when (not (and (at_27_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_8_28_8
+  :effect (and
+    (when (and (at_27_8) (valid)) (at_28_8))
+    (when (and (at_27_8) (valid)) (not (at_27_8)))
+    (when (not (and (at_27_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_8_27_7
+  :effect (and
+    (when (and (at_27_8) (valid)) (at_27_7))
+    (when (and (at_27_8) (valid)) (not (at_27_8)))
+    (when (not (and (at_27_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_8_27_9
+  :effect (and
+    (when (and (at_27_8) (valid)) (at_27_9))
+    (when (and (at_27_8) (valid)) (not (at_27_8)))
+    (when (not (and (at_27_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_9_26_9
+  :effect (and
+    (when (and (at_27_9) (valid)) (at_26_9))
+    (when (and (at_27_9) (valid)) (not (at_27_9)))
+    (when (not (and (at_27_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_9_28_9
+  :effect (and
+    (when (and (at_27_9) (valid)) (at_28_9))
+    (when (and (at_27_9) (valid)) (not (at_27_9)))
+    (when (not (and (at_27_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_9_27_8
+  :effect (and
+    (when (and (at_27_9) (valid)) (at_27_8))
+    (when (and (at_27_9) (valid)) (not (at_27_9)))
+    (when (not (and (at_27_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_9_27_10
+  :effect (and
+    (when (and (at_27_9) (valid)) (at_27_10))
+    (when (and (at_27_9) (valid)) (not (at_27_9)))
+    (when (not (and (at_27_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_10_26_10
+  :effect (and
+    (when (and (at_27_10) (valid)) (at_26_10))
+    (when (and (at_27_10) (valid)) (not (at_27_10)))
+    (when (not (and (at_27_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_10_28_10
+  :effect (and
+    (when (and (at_27_10) (valid)) (at_28_10))
+    (when (and (at_27_10) (valid)) (not (at_27_10)))
+    (when (not (and (at_27_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_10_27_9
+  :effect (and
+    (when (and (at_27_10) (valid)) (at_27_9))
+    (when (and (at_27_10) (valid)) (not (at_27_10)))
+    (when (not (and (at_27_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_10_27_11
+  :effect (and
+    (when (and (at_27_10) (valid)) (at_27_11))
+    (when (and (at_27_10) (valid)) (not (at_27_10)))
+    (when (not (and (at_27_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_11_26_11
+  :effect (and
+    (when (and (at_27_11) (valid)) (at_26_11))
+    (when (and (at_27_11) (valid)) (not (at_27_11)))
+    (when (not (and (at_27_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_11_28_11
+  :effect (and
+    (when (and (at_27_11) (valid)) (at_28_11))
+    (when (and (at_27_11) (valid)) (not (at_27_11)))
+    (when (not (and (at_27_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_11_27_10
+  :effect (and
+    (when (and (at_27_11) (valid)) (at_27_10))
+    (when (and (at_27_11) (valid)) (not (at_27_11)))
+    (when (not (and (at_27_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_11_27_12
+  :effect (and
+    (when (and (at_27_11) (valid)) (at_27_12))
+    (when (and (at_27_11) (valid)) (not (at_27_11)))
+    (when (not (and (at_27_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_12_26_12
+  :effect (and
+    (when (and (at_27_12) (valid)) (at_26_12))
+    (when (and (at_27_12) (valid)) (not (at_27_12)))
+    (when (not (and (at_27_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_12_28_12
+  :effect (and
+    (when (and (at_27_12) (valid)) (at_28_12))
+    (when (and (at_27_12) (valid)) (not (at_27_12)))
+    (when (not (and (at_27_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_12_27_11
+  :effect (and
+    (when (and (at_27_12) (valid)) (at_27_11))
+    (when (and (at_27_12) (valid)) (not (at_27_12)))
+    (when (not (and (at_27_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_12_27_13
+  :effect (and
+    (when (and (at_27_12) (valid)) (at_27_13))
+    (when (and (at_27_12) (valid)) (not (at_27_12)))
+    (when (not (and (at_27_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_13_26_13
+  :effect (and
+    (when (and (at_27_13) (valid)) (at_26_13))
+    (when (and (at_27_13) (valid)) (not (at_27_13)))
+    (when (not (and (at_27_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_13_28_13
+  :effect (and
+    (when (and (at_27_13) (valid)) (at_28_13))
+    (when (and (at_27_13) (valid)) (not (at_27_13)))
+    (when (not (and (at_27_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_13_27_12
+  :effect (and
+    (when (and (at_27_13) (valid)) (at_27_12))
+    (when (and (at_27_13) (valid)) (not (at_27_13)))
+    (when (not (and (at_27_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_13_27_14
+  :effect (and
+    (when (and (at_27_13) (valid)) (at_27_14))
+    (when (and (at_27_13) (valid)) (not (at_27_13)))
+    (when (not (and (at_27_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_14_26_14
+  :effect (and
+    (when (and (at_27_14) (valid)) (at_26_14))
+    (when (and (at_27_14) (valid)) (not (at_27_14)))
+    (when (not (and (at_27_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_14_28_14
+  :effect (and
+    (when (and (at_27_14) (valid)) (at_28_14))
+    (when (and (at_27_14) (valid)) (not (at_27_14)))
+    (when (not (and (at_27_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_14_27_13
+  :effect (and
+    (when (and (at_27_14) (valid)) (at_27_13))
+    (when (and (at_27_14) (valid)) (not (at_27_14)))
+    (when (not (and (at_27_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_14_27_15
+  :effect (and
+    (when (and (at_27_14) (valid)) (at_27_15))
+    (when (and (at_27_14) (valid)) (not (at_27_14)))
+    (when (not (and (at_27_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_15_26_15
+  :effect (and
+    (when (and (at_27_15) (valid)) (at_26_15))
+    (when (and (at_27_15) (valid)) (not (at_27_15)))
+    (when (not (and (at_27_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_15_28_15
+  :effect (and
+    (when (and (at_27_15) (valid)) (at_28_15))
+    (when (and (at_27_15) (valid)) (not (at_27_15)))
+    (when (not (and (at_27_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_15_27_14
+  :effect (and
+    (when (and (at_27_15) (valid)) (at_27_14))
+    (when (and (at_27_15) (valid)) (not (at_27_15)))
+    (when (not (and (at_27_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_15_27_16
+  :effect (and
+    (when (and (at_27_15) (valid)) (at_27_16))
+    (when (and (at_27_15) (valid)) (not (at_27_15)))
+    (when (not (and (at_27_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_16_26_16
+  :effect (and
+    (when (and (at_27_16) (valid)) (at_26_16))
+    (when (and (at_27_16) (valid)) (not (at_27_16)))
+    (when (not (and (at_27_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_16_28_16
+  :effect (and
+    (when (and (at_27_16) (valid)) (at_28_16))
+    (when (and (at_27_16) (valid)) (not (at_27_16)))
+    (when (not (and (at_27_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_16_27_15
+  :effect (and
+    (when (and (at_27_16) (valid)) (at_27_15))
+    (when (and (at_27_16) (valid)) (not (at_27_16)))
+    (when (not (and (at_27_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_16_27_17
+  :effect (and
+    (when (and (at_27_16) (valid)) (at_27_17))
+    (when (and (at_27_16) (valid)) (not (at_27_16)))
+    (when (not (and (at_27_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_17_26_17
+  :effect (and
+    (when (and (at_27_17) (valid)) (at_26_17))
+    (when (and (at_27_17) (valid)) (not (at_27_17)))
+    (when (not (and (at_27_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_17_28_17
+  :effect (and
+    (when (and (at_27_17) (valid)) (at_28_17))
+    (when (and (at_27_17) (valid)) (not (at_27_17)))
+    (when (not (and (at_27_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_17_27_16
+  :effect (and
+    (when (and (at_27_17) (valid)) (at_27_16))
+    (when (and (at_27_17) (valid)) (not (at_27_17)))
+    (when (not (and (at_27_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_17_27_18
+  :effect (and
+    (when (and (at_27_17) (valid)) (at_27_18))
+    (when (and (at_27_17) (valid)) (not (at_27_17)))
+    (when (not (and (at_27_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_18_26_18
+  :effect (and
+    (when (and (at_27_18) (valid)) (at_26_18))
+    (when (and (at_27_18) (valid)) (not (at_27_18)))
+    (when (not (and (at_27_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_18_28_18
+  :effect (and
+    (when (and (at_27_18) (valid)) (at_28_18))
+    (when (and (at_27_18) (valid)) (not (at_27_18)))
+    (when (not (and (at_27_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_18_27_17
+  :effect (and
+    (when (and (at_27_18) (valid)) (at_27_17))
+    (when (and (at_27_18) (valid)) (not (at_27_18)))
+    (when (not (and (at_27_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_18_27_19
+  :effect (and
+    (when (and (at_27_18) (valid)) (at_27_19))
+    (when (and (at_27_18) (valid)) (not (at_27_18)))
+    (when (not (and (at_27_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_19_26_19
+  :effect (and
+    (when (and (at_27_19) (valid)) (at_26_19))
+    (when (and (at_27_19) (valid)) (not (at_27_19)))
+    (when (not (and (at_27_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_19_28_19
+  :effect (and
+    (when (and (at_27_19) (valid)) (at_28_19))
+    (when (and (at_27_19) (valid)) (not (at_27_19)))
+    (when (not (and (at_27_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_19_27_18
+  :effect (and
+    (when (and (at_27_19) (valid)) (at_27_18))
+    (when (and (at_27_19) (valid)) (not (at_27_19)))
+    (when (not (and (at_27_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_19_27_20
+  :effect (and
+    (when (and (at_27_19) (valid)) (at_27_20))
+    (when (and (at_27_19) (valid)) (not (at_27_19)))
+    (when (not (and (at_27_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_20_26_20
+  :effect (and
+    (when (and (at_27_20) (valid)) (at_26_20))
+    (when (and (at_27_20) (valid)) (not (at_27_20)))
+    (when (not (and (at_27_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_20_28_20
+  :effect (and
+    (when (and (at_27_20) (valid)) (at_28_20))
+    (when (and (at_27_20) (valid)) (not (at_27_20)))
+    (when (not (and (at_27_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_20_27_19
+  :effect (and
+    (when (and (at_27_20) (valid)) (at_27_19))
+    (when (and (at_27_20) (valid)) (not (at_27_20)))
+    (when (not (and (at_27_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_20_27_21
+  :effect (and
+    (when (and (at_27_20) (valid)) (at_27_21))
+    (when (and (at_27_20) (valid)) (not (at_27_20)))
+    (when (not (and (at_27_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_21_26_21
+  :effect (and
+    (when (and (at_27_21) (valid)) (at_26_21))
+    (when (and (at_27_21) (valid)) (not (at_27_21)))
+    (when (not (and (at_27_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_21_28_21
+  :effect (and
+    (when (and (at_27_21) (valid)) (at_28_21))
+    (when (and (at_27_21) (valid)) (not (at_27_21)))
+    (when (not (and (at_27_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_21_27_20
+  :effect (and
+    (when (and (at_27_21) (valid)) (at_27_20))
+    (when (and (at_27_21) (valid)) (not (at_27_21)))
+    (when (not (and (at_27_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_21_27_22
+  :effect (and
+    (when (and (at_27_21) (valid)) (at_27_22))
+    (when (and (at_27_21) (valid)) (not (at_27_21)))
+    (when (not (and (at_27_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_22_26_22
+  :effect (and
+    (when (and (at_27_22) (valid)) (at_26_22))
+    (when (and (at_27_22) (valid)) (not (at_27_22)))
+    (when (not (and (at_27_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_22_28_22
+  :effect (and
+    (when (and (at_27_22) (valid)) (at_28_22))
+    (when (and (at_27_22) (valid)) (not (at_27_22)))
+    (when (not (and (at_27_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_22_27_21
+  :effect (and
+    (when (and (at_27_22) (valid)) (at_27_21))
+    (when (and (at_27_22) (valid)) (not (at_27_22)))
+    (when (not (and (at_27_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_22_27_23
+  :effect (and
+    (when (and (at_27_22) (valid)) (at_27_23))
+    (when (and (at_27_22) (valid)) (not (at_27_22)))
+    (when (not (and (at_27_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_23_26_23
+  :effect (and
+    (when (and (at_27_23) (valid)) (at_26_23))
+    (when (and (at_27_23) (valid)) (not (at_27_23)))
+    (when (not (and (at_27_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_23_28_23
+  :effect (and
+    (when (and (at_27_23) (valid)) (at_28_23))
+    (when (and (at_27_23) (valid)) (not (at_27_23)))
+    (when (not (and (at_27_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_23_27_22
+  :effect (and
+    (when (and (at_27_23) (valid)) (at_27_22))
+    (when (and (at_27_23) (valid)) (not (at_27_23)))
+    (when (not (and (at_27_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_23_27_24
+  :effect (and
+    (when (and (at_27_23) (valid)) (at_27_24))
+    (when (and (at_27_23) (valid)) (not (at_27_23)))
+    (when (not (and (at_27_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_24_26_24
+  :effect (and
+    (when (and (at_27_24) (valid)) (at_26_24))
+    (when (and (at_27_24) (valid)) (not (at_27_24)))
+    (when (not (and (at_27_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_24_28_24
+  :effect (and
+    (when (and (at_27_24) (valid)) (at_28_24))
+    (when (and (at_27_24) (valid)) (not (at_27_24)))
+    (when (not (and (at_27_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_24_27_23
+  :effect (and
+    (when (and (at_27_24) (valid)) (at_27_23))
+    (when (and (at_27_24) (valid)) (not (at_27_24)))
+    (when (not (and (at_27_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_24_27_25
+  :effect (and
+    (when (and (at_27_24) (valid)) (at_27_25))
+    (when (and (at_27_24) (valid)) (not (at_27_24)))
+    (when (not (and (at_27_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_25_26_25
+  :effect (and
+    (when (and (at_27_25) (valid)) (at_26_25))
+    (when (and (at_27_25) (valid)) (not (at_27_25)))
+    (when (not (and (at_27_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_25_28_25
+  :effect (and
+    (when (and (at_27_25) (valid)) (at_28_25))
+    (when (and (at_27_25) (valid)) (not (at_27_25)))
+    (when (not (and (at_27_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_25_27_24
+  :effect (and
+    (when (and (at_27_25) (valid)) (at_27_24))
+    (when (and (at_27_25) (valid)) (not (at_27_25)))
+    (when (not (and (at_27_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_25_27_26
+  :effect (and
+    (when (and (at_27_25) (valid)) (at_27_26))
+    (when (and (at_27_25) (valid)) (not (at_27_25)))
+    (when (not (and (at_27_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_26_26_26
+  :effect (and
+    (when (and (at_27_26) (valid)) (at_26_26))
+    (when (and (at_27_26) (valid)) (not (at_27_26)))
+    (when (not (and (at_27_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_26_28_26
+  :effect (and
+    (when (and (at_27_26) (valid)) (at_28_26))
+    (when (and (at_27_26) (valid)) (not (at_27_26)))
+    (when (not (and (at_27_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_26_27_25
+  :effect (and
+    (when (and (at_27_26) (valid)) (at_27_25))
+    (when (and (at_27_26) (valid)) (not (at_27_26)))
+    (when (not (and (at_27_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_26_27_27
+  :effect (and
+    (when (and (at_27_26) (valid)) (at_27_27))
+    (when (and (at_27_26) (valid)) (not (at_27_26)))
+    (when (not (and (at_27_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_27_26_27
+  :effect (and
+    (when (and (at_27_27) (valid)) (at_26_27))
+    (when (and (at_27_27) (valid)) (not (at_27_27)))
+    (when (not (and (at_27_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_27_28_27
+  :effect (and
+    (when (and (at_27_27) (valid)) (at_28_27))
+    (when (and (at_27_27) (valid)) (not (at_27_27)))
+    (when (not (and (at_27_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_27_27_26
+  :effect (and
+    (when (and (at_27_27) (valid)) (at_27_26))
+    (when (and (at_27_27) (valid)) (not (at_27_27)))
+    (when (not (and (at_27_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_27_27_28
+  :effect (and
+    (when (and (at_27_27) (valid)) (at_27_28))
+    (when (and (at_27_27) (valid)) (not (at_27_27)))
+    (when (not (and (at_27_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_28_26_28
+  :effect (and
+    (when (and (at_27_28) (valid)) (at_26_28))
+    (when (and (at_27_28) (valid)) (not (at_27_28)))
+    (when (not (and (at_27_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_28_28_28
+  :effect (and
+    (when (and (at_27_28) (valid)) (at_28_28))
+    (when (and (at_27_28) (valid)) (not (at_27_28)))
+    (when (not (and (at_27_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_28_27_27
+  :effect (and
+    (when (and (at_27_28) (valid)) (at_27_27))
+    (when (and (at_27_28) (valid)) (not (at_27_28)))
+    (when (not (and (at_27_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_28_27_29
+  :effect (and
+    (when (and (at_27_28) (valid)) (at_27_29))
+    (when (and (at_27_28) (valid)) (not (at_27_28)))
+    (when (not (and (at_27_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_29_26_29
+  :effect (and
+    (when (and (at_27_29) (valid)) (at_26_29))
+    (when (and (at_27_29) (valid)) (not (at_27_29)))
+    (when (not (and (at_27_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_29_28_29
+  :effect (and
+    (when (and (at_27_29) (valid)) (at_28_29))
+    (when (and (at_27_29) (valid)) (not (at_27_29)))
+    (when (not (and (at_27_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_29_27_28
+  :effect (and
+    (when (and (at_27_29) (valid)) (at_27_28))
+    (when (and (at_27_29) (valid)) (not (at_27_29)))
+    (when (not (and (at_27_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_29_27_30
+  :effect (and
+    (when (and (at_27_29) (valid)) (at_27_30))
+    (when (and (at_27_29) (valid)) (not (at_27_29)))
+    (when (not (and (at_27_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_30_26_30
+  :effect (and
+    (when (and (at_27_30) (valid)) (at_26_30))
+    (when (and (at_27_30) (valid)) (not (at_27_30)))
+    (when (not (and (at_27_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_30_28_30
+  :effect (and
+    (when (and (at_27_30) (valid)) (at_28_30))
+    (when (and (at_27_30) (valid)) (not (at_27_30)))
+    (when (not (and (at_27_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_30_27_29
+  :effect (and
+    (when (and (at_27_30) (valid)) (at_27_29))
+    (when (and (at_27_30) (valid)) (not (at_27_30)))
+    (when (not (and (at_27_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_30_27_31
+  :effect (and
+    (when (and (at_27_30) (valid)) (at_27_31))
+    (when (and (at_27_30) (valid)) (not (at_27_30)))
+    (when (not (and (at_27_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_31_26_31
+  :effect (and
+    (when (and (at_27_31) (valid)) (at_26_31))
+    (when (and (at_27_31) (valid)) (not (at_27_31)))
+    (when (not (and (at_27_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_31_28_31
+  :effect (and
+    (when (and (at_27_31) (valid)) (at_28_31))
+    (when (and (at_27_31) (valid)) (not (at_27_31)))
+    (when (not (and (at_27_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_27_31_27_30
+  :effect (and
+    (when (and (at_27_31) (valid)) (at_27_30))
+    (when (and (at_27_31) (valid)) (not (at_27_31)))
+    (when (not (and (at_27_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_0_27_0
+  :effect (and
+    (when (and (at_28_0) (valid)) (at_27_0))
+    (when (and (at_28_0) (valid)) (not (at_28_0)))
+    (when (not (and (at_28_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_0_29_0
+  :effect (and
+    (when (and (at_28_0) (valid)) (at_29_0))
+    (when (and (at_28_0) (valid)) (not (at_28_0)))
+    (when (not (and (at_28_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_0_28_1
+  :effect (and
+    (when (and (at_28_0) (valid)) (at_28_1))
+    (when (and (at_28_0) (valid)) (not (at_28_0)))
+    (when (not (and (at_28_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_1_27_1
+  :effect (and
+    (when (and (at_28_1) (valid)) (at_27_1))
+    (when (and (at_28_1) (valid)) (not (at_28_1)))
+    (when (not (and (at_28_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_1_29_1
+  :effect (and
+    (when (and (at_28_1) (valid)) (at_29_1))
+    (when (and (at_28_1) (valid)) (not (at_28_1)))
+    (when (not (and (at_28_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_1_28_0
+  :effect (and
+    (when (and (at_28_1) (valid)) (at_28_0))
+    (when (and (at_28_1) (valid)) (not (at_28_1)))
+    (when (not (and (at_28_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_1_28_2
+  :effect (and
+    (when (and (at_28_1) (valid)) (at_28_2))
+    (when (and (at_28_1) (valid)) (not (at_28_1)))
+    (when (not (and (at_28_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_2_27_2
+  :effect (and
+    (when (and (at_28_2) (valid)) (at_27_2))
+    (when (and (at_28_2) (valid)) (not (at_28_2)))
+    (when (not (and (at_28_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_2_29_2
+  :effect (and
+    (when (and (at_28_2) (valid)) (at_29_2))
+    (when (and (at_28_2) (valid)) (not (at_28_2)))
+    (when (not (and (at_28_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_2_28_1
+  :effect (and
+    (when (and (at_28_2) (valid)) (at_28_1))
+    (when (and (at_28_2) (valid)) (not (at_28_2)))
+    (when (not (and (at_28_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_2_28_3
+  :effect (and
+    (when (and (at_28_2) (valid)) (at_28_3))
+    (when (and (at_28_2) (valid)) (not (at_28_2)))
+    (when (not (and (at_28_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_3_27_3
+  :effect (and
+    (when (and (at_28_3) (valid)) (at_27_3))
+    (when (and (at_28_3) (valid)) (not (at_28_3)))
+    (when (not (and (at_28_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_3_29_3
+  :effect (and
+    (when (and (at_28_3) (valid)) (at_29_3))
+    (when (and (at_28_3) (valid)) (not (at_28_3)))
+    (when (not (and (at_28_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_3_28_2
+  :effect (and
+    (when (and (at_28_3) (valid)) (at_28_2))
+    (when (and (at_28_3) (valid)) (not (at_28_3)))
+    (when (not (and (at_28_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_3_28_4
+  :effect (and
+    (when (and (at_28_3) (valid)) (at_28_4))
+    (when (and (at_28_3) (valid)) (not (at_28_3)))
+    (when (not (and (at_28_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_4_27_4
+  :effect (and
+    (when (and (at_28_4) (valid)) (at_27_4))
+    (when (and (at_28_4) (valid)) (not (at_28_4)))
+    (when (not (and (at_28_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_4_29_4
+  :effect (and
+    (when (and (at_28_4) (valid)) (at_29_4))
+    (when (and (at_28_4) (valid)) (not (at_28_4)))
+    (when (not (and (at_28_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_4_28_3
+  :effect (and
+    (when (and (at_28_4) (valid)) (at_28_3))
+    (when (and (at_28_4) (valid)) (not (at_28_4)))
+    (when (not (and (at_28_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_4_28_5
+  :effect (and
+    (when (and (at_28_4) (valid)) (at_28_5))
+    (when (and (at_28_4) (valid)) (not (at_28_4)))
+    (when (not (and (at_28_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_5_27_5
+  :effect (and
+    (when (and (at_28_5) (valid)) (at_27_5))
+    (when (and (at_28_5) (valid)) (not (at_28_5)))
+    (when (not (and (at_28_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_5_29_5
+  :effect (and
+    (when (and (at_28_5) (valid)) (at_29_5))
+    (when (and (at_28_5) (valid)) (not (at_28_5)))
+    (when (not (and (at_28_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_5_28_4
+  :effect (and
+    (when (and (at_28_5) (valid)) (at_28_4))
+    (when (and (at_28_5) (valid)) (not (at_28_5)))
+    (when (not (and (at_28_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_5_28_6
+  :effect (and
+    (when (and (at_28_5) (valid)) (at_28_6))
+    (when (and (at_28_5) (valid)) (not (at_28_5)))
+    (when (not (and (at_28_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_6_27_6
+  :effect (and
+    (when (and (at_28_6) (valid)) (at_27_6))
+    (when (and (at_28_6) (valid)) (not (at_28_6)))
+    (when (not (and (at_28_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_6_29_6
+  :effect (and
+    (when (and (at_28_6) (valid)) (at_29_6))
+    (when (and (at_28_6) (valid)) (not (at_28_6)))
+    (when (not (and (at_28_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_6_28_5
+  :effect (and
+    (when (and (at_28_6) (valid)) (at_28_5))
+    (when (and (at_28_6) (valid)) (not (at_28_6)))
+    (when (not (and (at_28_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_6_28_7
+  :effect (and
+    (when (and (at_28_6) (valid)) (at_28_7))
+    (when (and (at_28_6) (valid)) (not (at_28_6)))
+    (when (not (and (at_28_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_7_27_7
+  :effect (and
+    (when (and (at_28_7) (valid)) (at_27_7))
+    (when (and (at_28_7) (valid)) (not (at_28_7)))
+    (when (not (and (at_28_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_7_29_7
+  :effect (and
+    (when (and (at_28_7) (valid)) (at_29_7))
+    (when (and (at_28_7) (valid)) (not (at_28_7)))
+    (when (not (and (at_28_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_7_28_6
+  :effect (and
+    (when (and (at_28_7) (valid)) (at_28_6))
+    (when (and (at_28_7) (valid)) (not (at_28_7)))
+    (when (not (and (at_28_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_7_28_8
+  :effect (and
+    (when (and (at_28_7) (valid)) (at_28_8))
+    (when (and (at_28_7) (valid)) (not (at_28_7)))
+    (when (not (and (at_28_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_8_27_8
+  :effect (and
+    (when (and (at_28_8) (valid)) (at_27_8))
+    (when (and (at_28_8) (valid)) (not (at_28_8)))
+    (when (not (and (at_28_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_8_29_8
+  :effect (and
+    (when (and (at_28_8) (valid)) (at_29_8))
+    (when (and (at_28_8) (valid)) (not (at_28_8)))
+    (when (not (and (at_28_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_8_28_7
+  :effect (and
+    (when (and (at_28_8) (valid)) (at_28_7))
+    (when (and (at_28_8) (valid)) (not (at_28_8)))
+    (when (not (and (at_28_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_8_28_9
+  :effect (and
+    (when (and (at_28_8) (valid)) (at_28_9))
+    (when (and (at_28_8) (valid)) (not (at_28_8)))
+    (when (not (and (at_28_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_9_27_9
+  :effect (and
+    (when (and (at_28_9) (valid)) (at_27_9))
+    (when (and (at_28_9) (valid)) (not (at_28_9)))
+    (when (not (and (at_28_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_9_29_9
+  :effect (and
+    (when (and (at_28_9) (valid)) (at_29_9))
+    (when (and (at_28_9) (valid)) (not (at_28_9)))
+    (when (not (and (at_28_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_9_28_8
+  :effect (and
+    (when (and (at_28_9) (valid)) (at_28_8))
+    (when (and (at_28_9) (valid)) (not (at_28_9)))
+    (when (not (and (at_28_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_9_28_10
+  :effect (and
+    (when (and (at_28_9) (valid)) (at_28_10))
+    (when (and (at_28_9) (valid)) (not (at_28_9)))
+    (when (not (and (at_28_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_10_27_10
+  :effect (and
+    (when (and (at_28_10) (valid)) (at_27_10))
+    (when (and (at_28_10) (valid)) (not (at_28_10)))
+    (when (not (and (at_28_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_10_29_10
+  :effect (and
+    (when (and (at_28_10) (valid)) (at_29_10))
+    (when (and (at_28_10) (valid)) (not (at_28_10)))
+    (when (not (and (at_28_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_10_28_9
+  :effect (and
+    (when (and (at_28_10) (valid)) (at_28_9))
+    (when (and (at_28_10) (valid)) (not (at_28_10)))
+    (when (not (and (at_28_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_10_28_11
+  :effect (and
+    (when (and (at_28_10) (valid)) (at_28_11))
+    (when (and (at_28_10) (valid)) (not (at_28_10)))
+    (when (not (and (at_28_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_11_27_11
+  :effect (and
+    (when (and (at_28_11) (valid)) (at_27_11))
+    (when (and (at_28_11) (valid)) (not (at_28_11)))
+    (when (not (and (at_28_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_11_29_11
+  :effect (and
+    (when (and (at_28_11) (valid)) (at_29_11))
+    (when (and (at_28_11) (valid)) (not (at_28_11)))
+    (when (not (and (at_28_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_11_28_10
+  :effect (and
+    (when (and (at_28_11) (valid)) (at_28_10))
+    (when (and (at_28_11) (valid)) (not (at_28_11)))
+    (when (not (and (at_28_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_11_28_12
+  :effect (and
+    (when (and (at_28_11) (valid)) (at_28_12))
+    (when (and (at_28_11) (valid)) (not (at_28_11)))
+    (when (not (and (at_28_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_12_27_12
+  :effect (and
+    (when (and (at_28_12) (valid)) (at_27_12))
+    (when (and (at_28_12) (valid)) (not (at_28_12)))
+    (when (not (and (at_28_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_12_29_12
+  :effect (and
+    (when (and (at_28_12) (valid)) (at_29_12))
+    (when (and (at_28_12) (valid)) (not (at_28_12)))
+    (when (not (and (at_28_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_12_28_11
+  :effect (and
+    (when (and (at_28_12) (valid)) (at_28_11))
+    (when (and (at_28_12) (valid)) (not (at_28_12)))
+    (when (not (and (at_28_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_12_28_13
+  :effect (and
+    (when (and (at_28_12) (valid)) (at_28_13))
+    (when (and (at_28_12) (valid)) (not (at_28_12)))
+    (when (not (and (at_28_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_13_27_13
+  :effect (and
+    (when (and (at_28_13) (valid)) (at_27_13))
+    (when (and (at_28_13) (valid)) (not (at_28_13)))
+    (when (not (and (at_28_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_13_29_13
+  :effect (and
+    (when (and (at_28_13) (valid)) (at_29_13))
+    (when (and (at_28_13) (valid)) (not (at_28_13)))
+    (when (not (and (at_28_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_13_28_12
+  :effect (and
+    (when (and (at_28_13) (valid)) (at_28_12))
+    (when (and (at_28_13) (valid)) (not (at_28_13)))
+    (when (not (and (at_28_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_13_28_14
+  :effect (and
+    (when (and (at_28_13) (valid)) (at_28_14))
+    (when (and (at_28_13) (valid)) (not (at_28_13)))
+    (when (not (and (at_28_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_14_27_14
+  :effect (and
+    (when (and (at_28_14) (valid)) (at_27_14))
+    (when (and (at_28_14) (valid)) (not (at_28_14)))
+    (when (not (and (at_28_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_14_29_14
+  :effect (and
+    (when (and (at_28_14) (valid)) (at_29_14))
+    (when (and (at_28_14) (valid)) (not (at_28_14)))
+    (when (not (and (at_28_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_14_28_13
+  :effect (and
+    (when (and (at_28_14) (valid)) (at_28_13))
+    (when (and (at_28_14) (valid)) (not (at_28_14)))
+    (when (not (and (at_28_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_14_28_15
+  :effect (and
+    (when (and (at_28_14) (valid)) (at_28_15))
+    (when (and (at_28_14) (valid)) (not (at_28_14)))
+    (when (not (and (at_28_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_15_27_15
+  :effect (and
+    (when (and (at_28_15) (valid)) (at_27_15))
+    (when (and (at_28_15) (valid)) (not (at_28_15)))
+    (when (not (and (at_28_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_15_29_15
+  :effect (and
+    (when (and (at_28_15) (valid)) (at_29_15))
+    (when (and (at_28_15) (valid)) (not (at_28_15)))
+    (when (not (and (at_28_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_15_28_14
+  :effect (and
+    (when (and (at_28_15) (valid)) (at_28_14))
+    (when (and (at_28_15) (valid)) (not (at_28_15)))
+    (when (not (and (at_28_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_15_28_16
+  :effect (and
+    (when (and (at_28_15) (valid)) (at_28_16))
+    (when (and (at_28_15) (valid)) (not (at_28_15)))
+    (when (not (and (at_28_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_16_27_16
+  :effect (and
+    (when (and (at_28_16) (valid)) (at_27_16))
+    (when (and (at_28_16) (valid)) (not (at_28_16)))
+    (when (not (and (at_28_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_16_29_16
+  :effect (and
+    (when (and (at_28_16) (valid)) (at_29_16))
+    (when (and (at_28_16) (valid)) (not (at_28_16)))
+    (when (not (and (at_28_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_16_28_15
+  :effect (and
+    (when (and (at_28_16) (valid)) (at_28_15))
+    (when (and (at_28_16) (valid)) (not (at_28_16)))
+    (when (not (and (at_28_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_16_28_17
+  :effect (and
+    (when (and (at_28_16) (valid)) (at_28_17))
+    (when (and (at_28_16) (valid)) (not (at_28_16)))
+    (when (not (and (at_28_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_17_27_17
+  :effect (and
+    (when (and (at_28_17) (valid)) (at_27_17))
+    (when (and (at_28_17) (valid)) (not (at_28_17)))
+    (when (not (and (at_28_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_17_29_17
+  :effect (and
+    (when (and (at_28_17) (valid)) (at_29_17))
+    (when (and (at_28_17) (valid)) (not (at_28_17)))
+    (when (not (and (at_28_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_17_28_16
+  :effect (and
+    (when (and (at_28_17) (valid)) (at_28_16))
+    (when (and (at_28_17) (valid)) (not (at_28_17)))
+    (when (not (and (at_28_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_17_28_18
+  :effect (and
+    (when (and (at_28_17) (valid)) (at_28_18))
+    (when (and (at_28_17) (valid)) (not (at_28_17)))
+    (when (not (and (at_28_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_18_27_18
+  :effect (and
+    (when (and (at_28_18) (valid)) (at_27_18))
+    (when (and (at_28_18) (valid)) (not (at_28_18)))
+    (when (not (and (at_28_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_18_29_18
+  :effect (and
+    (when (and (at_28_18) (valid)) (at_29_18))
+    (when (and (at_28_18) (valid)) (not (at_28_18)))
+    (when (not (and (at_28_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_18_28_17
+  :effect (and
+    (when (and (at_28_18) (valid)) (at_28_17))
+    (when (and (at_28_18) (valid)) (not (at_28_18)))
+    (when (not (and (at_28_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_18_28_19
+  :effect (and
+    (when (and (at_28_18) (valid)) (at_28_19))
+    (when (and (at_28_18) (valid)) (not (at_28_18)))
+    (when (not (and (at_28_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_19_27_19
+  :effect (and
+    (when (and (at_28_19) (valid)) (at_27_19))
+    (when (and (at_28_19) (valid)) (not (at_28_19)))
+    (when (not (and (at_28_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_19_29_19
+  :effect (and
+    (when (and (at_28_19) (valid)) (at_29_19))
+    (when (and (at_28_19) (valid)) (not (at_28_19)))
+    (when (not (and (at_28_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_19_28_18
+  :effect (and
+    (when (and (at_28_19) (valid)) (at_28_18))
+    (when (and (at_28_19) (valid)) (not (at_28_19)))
+    (when (not (and (at_28_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_19_28_20
+  :effect (and
+    (when (and (at_28_19) (valid)) (at_28_20))
+    (when (and (at_28_19) (valid)) (not (at_28_19)))
+    (when (not (and (at_28_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_20_27_20
+  :effect (and
+    (when (and (at_28_20) (valid)) (at_27_20))
+    (when (and (at_28_20) (valid)) (not (at_28_20)))
+    (when (not (and (at_28_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_20_29_20
+  :effect (and
+    (when (and (at_28_20) (valid)) (at_29_20))
+    (when (and (at_28_20) (valid)) (not (at_28_20)))
+    (when (not (and (at_28_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_20_28_19
+  :effect (and
+    (when (and (at_28_20) (valid)) (at_28_19))
+    (when (and (at_28_20) (valid)) (not (at_28_20)))
+    (when (not (and (at_28_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_20_28_21
+  :effect (and
+    (when (and (at_28_20) (valid)) (at_28_21))
+    (when (and (at_28_20) (valid)) (not (at_28_20)))
+    (when (not (and (at_28_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_21_27_21
+  :effect (and
+    (when (and (at_28_21) (valid)) (at_27_21))
+    (when (and (at_28_21) (valid)) (not (at_28_21)))
+    (when (not (and (at_28_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_21_29_21
+  :effect (and
+    (when (and (at_28_21) (valid)) (at_29_21))
+    (when (and (at_28_21) (valid)) (not (at_28_21)))
+    (when (not (and (at_28_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_21_28_20
+  :effect (and
+    (when (and (at_28_21) (valid)) (at_28_20))
+    (when (and (at_28_21) (valid)) (not (at_28_21)))
+    (when (not (and (at_28_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_21_28_22
+  :effect (and
+    (when (and (at_28_21) (valid)) (at_28_22))
+    (when (and (at_28_21) (valid)) (not (at_28_21)))
+    (when (not (and (at_28_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_22_27_22
+  :effect (and
+    (when (and (at_28_22) (valid)) (at_27_22))
+    (when (and (at_28_22) (valid)) (not (at_28_22)))
+    (when (not (and (at_28_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_22_29_22
+  :effect (and
+    (when (and (at_28_22) (valid)) (at_29_22))
+    (when (and (at_28_22) (valid)) (not (at_28_22)))
+    (when (not (and (at_28_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_22_28_21
+  :effect (and
+    (when (and (at_28_22) (valid)) (at_28_21))
+    (when (and (at_28_22) (valid)) (not (at_28_22)))
+    (when (not (and (at_28_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_22_28_23
+  :effect (and
+    (when (and (at_28_22) (valid)) (at_28_23))
+    (when (and (at_28_22) (valid)) (not (at_28_22)))
+    (when (not (and (at_28_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_23_27_23
+  :effect (and
+    (when (and (at_28_23) (valid)) (at_27_23))
+    (when (and (at_28_23) (valid)) (not (at_28_23)))
+    (when (not (and (at_28_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_23_29_23
+  :effect (and
+    (when (and (at_28_23) (valid)) (at_29_23))
+    (when (and (at_28_23) (valid)) (not (at_28_23)))
+    (when (not (and (at_28_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_23_28_22
+  :effect (and
+    (when (and (at_28_23) (valid)) (at_28_22))
+    (when (and (at_28_23) (valid)) (not (at_28_23)))
+    (when (not (and (at_28_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_23_28_24
+  :effect (and
+    (when (and (at_28_23) (valid)) (at_28_24))
+    (when (and (at_28_23) (valid)) (not (at_28_23)))
+    (when (not (and (at_28_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_24_27_24
+  :effect (and
+    (when (and (at_28_24) (valid)) (at_27_24))
+    (when (and (at_28_24) (valid)) (not (at_28_24)))
+    (when (not (and (at_28_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_24_29_24
+  :effect (and
+    (when (and (at_28_24) (valid)) (at_29_24))
+    (when (and (at_28_24) (valid)) (not (at_28_24)))
+    (when (not (and (at_28_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_24_28_23
+  :effect (and
+    (when (and (at_28_24) (valid)) (at_28_23))
+    (when (and (at_28_24) (valid)) (not (at_28_24)))
+    (when (not (and (at_28_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_24_28_25
+  :effect (and
+    (when (and (at_28_24) (valid)) (at_28_25))
+    (when (and (at_28_24) (valid)) (not (at_28_24)))
+    (when (not (and (at_28_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_25_27_25
+  :effect (and
+    (when (and (at_28_25) (valid)) (at_27_25))
+    (when (and (at_28_25) (valid)) (not (at_28_25)))
+    (when (not (and (at_28_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_25_29_25
+  :effect (and
+    (when (and (at_28_25) (valid)) (at_29_25))
+    (when (and (at_28_25) (valid)) (not (at_28_25)))
+    (when (not (and (at_28_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_25_28_24
+  :effect (and
+    (when (and (at_28_25) (valid)) (at_28_24))
+    (when (and (at_28_25) (valid)) (not (at_28_25)))
+    (when (not (and (at_28_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_25_28_26
+  :effect (and
+    (when (and (at_28_25) (valid)) (at_28_26))
+    (when (and (at_28_25) (valid)) (not (at_28_25)))
+    (when (not (and (at_28_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_26_27_26
+  :effect (and
+    (when (and (at_28_26) (valid)) (at_27_26))
+    (when (and (at_28_26) (valid)) (not (at_28_26)))
+    (when (not (and (at_28_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_26_29_26
+  :effect (and
+    (when (and (at_28_26) (valid)) (at_29_26))
+    (when (and (at_28_26) (valid)) (not (at_28_26)))
+    (when (not (and (at_28_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_26_28_25
+  :effect (and
+    (when (and (at_28_26) (valid)) (at_28_25))
+    (when (and (at_28_26) (valid)) (not (at_28_26)))
+    (when (not (and (at_28_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_26_28_27
+  :effect (and
+    (when (and (at_28_26) (valid)) (at_28_27))
+    (when (and (at_28_26) (valid)) (not (at_28_26)))
+    (when (not (and (at_28_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_27_27_27
+  :effect (and
+    (when (and (at_28_27) (valid)) (at_27_27))
+    (when (and (at_28_27) (valid)) (not (at_28_27)))
+    (when (not (and (at_28_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_27_29_27
+  :effect (and
+    (when (and (at_28_27) (valid)) (at_29_27))
+    (when (and (at_28_27) (valid)) (not (at_28_27)))
+    (when (not (and (at_28_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_27_28_26
+  :effect (and
+    (when (and (at_28_27) (valid)) (at_28_26))
+    (when (and (at_28_27) (valid)) (not (at_28_27)))
+    (when (not (and (at_28_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_27_28_28
+  :effect (and
+    (when (and (at_28_27) (valid)) (at_28_28))
+    (when (and (at_28_27) (valid)) (not (at_28_27)))
+    (when (not (and (at_28_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_28_27_28
+  :effect (and
+    (when (and (at_28_28) (valid)) (at_27_28))
+    (when (and (at_28_28) (valid)) (not (at_28_28)))
+    (when (not (and (at_28_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_28_29_28
+  :effect (and
+    (when (and (at_28_28) (valid)) (at_29_28))
+    (when (and (at_28_28) (valid)) (not (at_28_28)))
+    (when (not (and (at_28_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_28_28_27
+  :effect (and
+    (when (and (at_28_28) (valid)) (at_28_27))
+    (when (and (at_28_28) (valid)) (not (at_28_28)))
+    (when (not (and (at_28_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_28_28_29
+  :effect (and
+    (when (and (at_28_28) (valid)) (at_28_29))
+    (when (and (at_28_28) (valid)) (not (at_28_28)))
+    (when (not (and (at_28_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_29_27_29
+  :effect (and
+    (when (and (at_28_29) (valid)) (at_27_29))
+    (when (and (at_28_29) (valid)) (not (at_28_29)))
+    (when (not (and (at_28_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_29_29_29
+  :effect (and
+    (when (and (at_28_29) (valid)) (at_29_29))
+    (when (and (at_28_29) (valid)) (not (at_28_29)))
+    (when (not (and (at_28_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_29_28_28
+  :effect (and
+    (when (and (at_28_29) (valid)) (at_28_28))
+    (when (and (at_28_29) (valid)) (not (at_28_29)))
+    (when (not (and (at_28_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_29_28_30
+  :effect (and
+    (when (and (at_28_29) (valid)) (at_28_30))
+    (when (and (at_28_29) (valid)) (not (at_28_29)))
+    (when (not (and (at_28_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_30_27_30
+  :effect (and
+    (when (and (at_28_30) (valid)) (at_27_30))
+    (when (and (at_28_30) (valid)) (not (at_28_30)))
+    (when (not (and (at_28_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_30_29_30
+  :effect (and
+    (when (and (at_28_30) (valid)) (at_29_30))
+    (when (and (at_28_30) (valid)) (not (at_28_30)))
+    (when (not (and (at_28_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_30_28_29
+  :effect (and
+    (when (and (at_28_30) (valid)) (at_28_29))
+    (when (and (at_28_30) (valid)) (not (at_28_30)))
+    (when (not (and (at_28_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_30_28_31
+  :effect (and
+    (when (and (at_28_30) (valid)) (at_28_31))
+    (when (and (at_28_30) (valid)) (not (at_28_30)))
+    (when (not (and (at_28_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_31_27_31
+  :effect (and
+    (when (and (at_28_31) (valid)) (at_27_31))
+    (when (and (at_28_31) (valid)) (not (at_28_31)))
+    (when (not (and (at_28_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_31_29_31
+  :effect (and
+    (when (and (at_28_31) (valid)) (at_29_31))
+    (when (and (at_28_31) (valid)) (not (at_28_31)))
+    (when (not (and (at_28_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_28_31_28_30
+  :effect (and
+    (when (and (at_28_31) (valid)) (at_28_30))
+    (when (and (at_28_31) (valid)) (not (at_28_31)))
+    (when (not (and (at_28_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_0_28_0
+  :effect (and
+    (when (and (at_29_0) (valid)) (at_28_0))
+    (when (and (at_29_0) (valid)) (not (at_29_0)))
+    (when (not (and (at_29_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_0_30_0
+  :effect (and
+    (when (and (at_29_0) (valid)) (at_30_0))
+    (when (and (at_29_0) (valid)) (not (at_29_0)))
+    (when (not (and (at_29_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_0_29_1
+  :effect (and
+    (when (and (at_29_0) (valid)) (at_29_1))
+    (when (and (at_29_0) (valid)) (not (at_29_0)))
+    (when (not (and (at_29_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_1_28_1
+  :effect (and
+    (when (and (at_29_1) (valid)) (at_28_1))
+    (when (and (at_29_1) (valid)) (not (at_29_1)))
+    (when (not (and (at_29_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_1_30_1
+  :effect (and
+    (when (and (at_29_1) (valid)) (at_30_1))
+    (when (and (at_29_1) (valid)) (not (at_29_1)))
+    (when (not (and (at_29_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_1_29_0
+  :effect (and
+    (when (and (at_29_1) (valid)) (at_29_0))
+    (when (and (at_29_1) (valid)) (not (at_29_1)))
+    (when (not (and (at_29_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_1_29_2
+  :effect (and
+    (when (and (at_29_1) (valid)) (at_29_2))
+    (when (and (at_29_1) (valid)) (not (at_29_1)))
+    (when (not (and (at_29_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_2_28_2
+  :effect (and
+    (when (and (at_29_2) (valid)) (at_28_2))
+    (when (and (at_29_2) (valid)) (not (at_29_2)))
+    (when (not (and (at_29_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_2_30_2
+  :effect (and
+    (when (and (at_29_2) (valid)) (at_30_2))
+    (when (and (at_29_2) (valid)) (not (at_29_2)))
+    (when (not (and (at_29_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_2_29_1
+  :effect (and
+    (when (and (at_29_2) (valid)) (at_29_1))
+    (when (and (at_29_2) (valid)) (not (at_29_2)))
+    (when (not (and (at_29_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_2_29_3
+  :effect (and
+    (when (and (at_29_2) (valid)) (at_29_3))
+    (when (and (at_29_2) (valid)) (not (at_29_2)))
+    (when (not (and (at_29_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_3_28_3
+  :effect (and
+    (when (and (at_29_3) (valid)) (at_28_3))
+    (when (and (at_29_3) (valid)) (not (at_29_3)))
+    (when (not (and (at_29_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_3_30_3
+  :effect (and
+    (when (and (at_29_3) (valid)) (at_30_3))
+    (when (and (at_29_3) (valid)) (not (at_29_3)))
+    (when (not (and (at_29_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_3_29_2
+  :effect (and
+    (when (and (at_29_3) (valid)) (at_29_2))
+    (when (and (at_29_3) (valid)) (not (at_29_3)))
+    (when (not (and (at_29_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_3_29_4
+  :effect (and
+    (when (and (at_29_3) (valid)) (at_29_4))
+    (when (and (at_29_3) (valid)) (not (at_29_3)))
+    (when (not (and (at_29_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_4_28_4
+  :effect (and
+    (when (and (at_29_4) (valid)) (at_28_4))
+    (when (and (at_29_4) (valid)) (not (at_29_4)))
+    (when (not (and (at_29_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_4_30_4
+  :effect (and
+    (when (and (at_29_4) (valid)) (at_30_4))
+    (when (and (at_29_4) (valid)) (not (at_29_4)))
+    (when (not (and (at_29_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_4_29_3
+  :effect (and
+    (when (and (at_29_4) (valid)) (at_29_3))
+    (when (and (at_29_4) (valid)) (not (at_29_4)))
+    (when (not (and (at_29_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_4_29_5
+  :effect (and
+    (when (and (at_29_4) (valid)) (at_29_5))
+    (when (and (at_29_4) (valid)) (not (at_29_4)))
+    (when (not (and (at_29_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_5_28_5
+  :effect (and
+    (when (and (at_29_5) (valid)) (at_28_5))
+    (when (and (at_29_5) (valid)) (not (at_29_5)))
+    (when (not (and (at_29_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_5_30_5
+  :effect (and
+    (when (and (at_29_5) (valid)) (at_30_5))
+    (when (and (at_29_5) (valid)) (not (at_29_5)))
+    (when (not (and (at_29_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_5_29_4
+  :effect (and
+    (when (and (at_29_5) (valid)) (at_29_4))
+    (when (and (at_29_5) (valid)) (not (at_29_5)))
+    (when (not (and (at_29_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_5_29_6
+  :effect (and
+    (when (and (at_29_5) (valid)) (at_29_6))
+    (when (and (at_29_5) (valid)) (not (at_29_5)))
+    (when (not (and (at_29_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_6_28_6
+  :effect (and
+    (when (and (at_29_6) (valid)) (at_28_6))
+    (when (and (at_29_6) (valid)) (not (at_29_6)))
+    (when (not (and (at_29_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_6_30_6
+  :effect (and
+    (when (and (at_29_6) (valid)) (at_30_6))
+    (when (and (at_29_6) (valid)) (not (at_29_6)))
+    (when (not (and (at_29_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_6_29_5
+  :effect (and
+    (when (and (at_29_6) (valid)) (at_29_5))
+    (when (and (at_29_6) (valid)) (not (at_29_6)))
+    (when (not (and (at_29_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_6_29_7
+  :effect (and
+    (when (and (at_29_6) (valid)) (at_29_7))
+    (when (and (at_29_6) (valid)) (not (at_29_6)))
+    (when (not (and (at_29_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_7_28_7
+  :effect (and
+    (when (and (at_29_7) (valid)) (at_28_7))
+    (when (and (at_29_7) (valid)) (not (at_29_7)))
+    (when (not (and (at_29_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_7_30_7
+  :effect (and
+    (when (and (at_29_7) (valid)) (at_30_7))
+    (when (and (at_29_7) (valid)) (not (at_29_7)))
+    (when (not (and (at_29_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_7_29_6
+  :effect (and
+    (when (and (at_29_7) (valid)) (at_29_6))
+    (when (and (at_29_7) (valid)) (not (at_29_7)))
+    (when (not (and (at_29_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_7_29_8
+  :effect (and
+    (when (and (at_29_7) (valid)) (at_29_8))
+    (when (and (at_29_7) (valid)) (not (at_29_7)))
+    (when (not (and (at_29_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_8_28_8
+  :effect (and
+    (when (and (at_29_8) (valid)) (at_28_8))
+    (when (and (at_29_8) (valid)) (not (at_29_8)))
+    (when (not (and (at_29_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_8_30_8
+  :effect (and
+    (when (and (at_29_8) (valid)) (at_30_8))
+    (when (and (at_29_8) (valid)) (not (at_29_8)))
+    (when (not (and (at_29_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_8_29_7
+  :effect (and
+    (when (and (at_29_8) (valid)) (at_29_7))
+    (when (and (at_29_8) (valid)) (not (at_29_8)))
+    (when (not (and (at_29_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_8_29_9
+  :effect (and
+    (when (and (at_29_8) (valid)) (at_29_9))
+    (when (and (at_29_8) (valid)) (not (at_29_8)))
+    (when (not (and (at_29_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_9_28_9
+  :effect (and
+    (when (and (at_29_9) (valid)) (at_28_9))
+    (when (and (at_29_9) (valid)) (not (at_29_9)))
+    (when (not (and (at_29_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_9_30_9
+  :effect (and
+    (when (and (at_29_9) (valid)) (at_30_9))
+    (when (and (at_29_9) (valid)) (not (at_29_9)))
+    (when (not (and (at_29_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_9_29_8
+  :effect (and
+    (when (and (at_29_9) (valid)) (at_29_8))
+    (when (and (at_29_9) (valid)) (not (at_29_9)))
+    (when (not (and (at_29_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_9_29_10
+  :effect (and
+    (when (and (at_29_9) (valid)) (at_29_10))
+    (when (and (at_29_9) (valid)) (not (at_29_9)))
+    (when (not (and (at_29_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_10_28_10
+  :effect (and
+    (when (and (at_29_10) (valid)) (at_28_10))
+    (when (and (at_29_10) (valid)) (not (at_29_10)))
+    (when (not (and (at_29_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_10_30_10
+  :effect (and
+    (when (and (at_29_10) (valid)) (at_30_10))
+    (when (and (at_29_10) (valid)) (not (at_29_10)))
+    (when (not (and (at_29_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_10_29_9
+  :effect (and
+    (when (and (at_29_10) (valid)) (at_29_9))
+    (when (and (at_29_10) (valid)) (not (at_29_10)))
+    (when (not (and (at_29_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_10_29_11
+  :effect (and
+    (when (and (at_29_10) (valid)) (at_29_11))
+    (when (and (at_29_10) (valid)) (not (at_29_10)))
+    (when (not (and (at_29_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_11_28_11
+  :effect (and
+    (when (and (at_29_11) (valid)) (at_28_11))
+    (when (and (at_29_11) (valid)) (not (at_29_11)))
+    (when (not (and (at_29_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_11_30_11
+  :effect (and
+    (when (and (at_29_11) (valid)) (at_30_11))
+    (when (and (at_29_11) (valid)) (not (at_29_11)))
+    (when (not (and (at_29_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_11_29_10
+  :effect (and
+    (when (and (at_29_11) (valid)) (at_29_10))
+    (when (and (at_29_11) (valid)) (not (at_29_11)))
+    (when (not (and (at_29_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_11_29_12
+  :effect (and
+    (when (and (at_29_11) (valid)) (at_29_12))
+    (when (and (at_29_11) (valid)) (not (at_29_11)))
+    (when (not (and (at_29_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_12_28_12
+  :effect (and
+    (when (and (at_29_12) (valid)) (at_28_12))
+    (when (and (at_29_12) (valid)) (not (at_29_12)))
+    (when (not (and (at_29_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_12_30_12
+  :effect (and
+    (when (and (at_29_12) (valid)) (at_30_12))
+    (when (and (at_29_12) (valid)) (not (at_29_12)))
+    (when (not (and (at_29_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_12_29_11
+  :effect (and
+    (when (and (at_29_12) (valid)) (at_29_11))
+    (when (and (at_29_12) (valid)) (not (at_29_12)))
+    (when (not (and (at_29_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_12_29_13
+  :effect (and
+    (when (and (at_29_12) (valid)) (at_29_13))
+    (when (and (at_29_12) (valid)) (not (at_29_12)))
+    (when (not (and (at_29_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_13_28_13
+  :effect (and
+    (when (and (at_29_13) (valid)) (at_28_13))
+    (when (and (at_29_13) (valid)) (not (at_29_13)))
+    (when (not (and (at_29_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_13_30_13
+  :effect (and
+    (when (and (at_29_13) (valid)) (at_30_13))
+    (when (and (at_29_13) (valid)) (not (at_29_13)))
+    (when (not (and (at_29_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_13_29_12
+  :effect (and
+    (when (and (at_29_13) (valid)) (at_29_12))
+    (when (and (at_29_13) (valid)) (not (at_29_13)))
+    (when (not (and (at_29_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_13_29_14
+  :effect (and
+    (when (and (at_29_13) (valid)) (at_29_14))
+    (when (and (at_29_13) (valid)) (not (at_29_13)))
+    (when (not (and (at_29_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_14_28_14
+  :effect (and
+    (when (and (at_29_14) (valid)) (at_28_14))
+    (when (and (at_29_14) (valid)) (not (at_29_14)))
+    (when (not (and (at_29_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_14_30_14
+  :effect (and
+    (when (and (at_29_14) (valid)) (at_30_14))
+    (when (and (at_29_14) (valid)) (not (at_29_14)))
+    (when (not (and (at_29_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_14_29_13
+  :effect (and
+    (when (and (at_29_14) (valid)) (at_29_13))
+    (when (and (at_29_14) (valid)) (not (at_29_14)))
+    (when (not (and (at_29_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_14_29_15
+  :effect (and
+    (when (and (at_29_14) (valid)) (at_29_15))
+    (when (and (at_29_14) (valid)) (not (at_29_14)))
+    (when (not (and (at_29_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_15_28_15
+  :effect (and
+    (when (and (at_29_15) (valid)) (at_28_15))
+    (when (and (at_29_15) (valid)) (not (at_29_15)))
+    (when (not (and (at_29_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_15_30_15
+  :effect (and
+    (when (and (at_29_15) (valid)) (at_30_15))
+    (when (and (at_29_15) (valid)) (not (at_29_15)))
+    (when (not (and (at_29_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_15_29_14
+  :effect (and
+    (when (and (at_29_15) (valid)) (at_29_14))
+    (when (and (at_29_15) (valid)) (not (at_29_15)))
+    (when (not (and (at_29_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_15_29_16
+  :effect (and
+    (when (and (at_29_15) (valid)) (at_29_16))
+    (when (and (at_29_15) (valid)) (not (at_29_15)))
+    (when (not (and (at_29_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_16_28_16
+  :effect (and
+    (when (and (at_29_16) (valid)) (at_28_16))
+    (when (and (at_29_16) (valid)) (not (at_29_16)))
+    (when (not (and (at_29_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_16_30_16
+  :effect (and
+    (when (and (at_29_16) (valid)) (at_30_16))
+    (when (and (at_29_16) (valid)) (not (at_29_16)))
+    (when (not (and (at_29_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_16_29_15
+  :effect (and
+    (when (and (at_29_16) (valid)) (at_29_15))
+    (when (and (at_29_16) (valid)) (not (at_29_16)))
+    (when (not (and (at_29_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_16_29_17
+  :effect (and
+    (when (and (at_29_16) (valid)) (at_29_17))
+    (when (and (at_29_16) (valid)) (not (at_29_16)))
+    (when (not (and (at_29_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_17_28_17
+  :effect (and
+    (when (and (at_29_17) (valid)) (at_28_17))
+    (when (and (at_29_17) (valid)) (not (at_29_17)))
+    (when (not (and (at_29_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_17_30_17
+  :effect (and
+    (when (and (at_29_17) (valid)) (at_30_17))
+    (when (and (at_29_17) (valid)) (not (at_29_17)))
+    (when (not (and (at_29_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_17_29_16
+  :effect (and
+    (when (and (at_29_17) (valid)) (at_29_16))
+    (when (and (at_29_17) (valid)) (not (at_29_17)))
+    (when (not (and (at_29_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_17_29_18
+  :effect (and
+    (when (and (at_29_17) (valid)) (at_29_18))
+    (when (and (at_29_17) (valid)) (not (at_29_17)))
+    (when (not (and (at_29_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_18_28_18
+  :effect (and
+    (when (and (at_29_18) (valid)) (at_28_18))
+    (when (and (at_29_18) (valid)) (not (at_29_18)))
+    (when (not (and (at_29_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_18_30_18
+  :effect (and
+    (when (and (at_29_18) (valid)) (at_30_18))
+    (when (and (at_29_18) (valid)) (not (at_29_18)))
+    (when (not (and (at_29_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_18_29_17
+  :effect (and
+    (when (and (at_29_18) (valid)) (at_29_17))
+    (when (and (at_29_18) (valid)) (not (at_29_18)))
+    (when (not (and (at_29_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_18_29_19
+  :effect (and
+    (when (and (at_29_18) (valid)) (at_29_19))
+    (when (and (at_29_18) (valid)) (not (at_29_18)))
+    (when (not (and (at_29_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_19_28_19
+  :effect (and
+    (when (and (at_29_19) (valid)) (at_28_19))
+    (when (and (at_29_19) (valid)) (not (at_29_19)))
+    (when (not (and (at_29_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_19_30_19
+  :effect (and
+    (when (and (at_29_19) (valid)) (at_30_19))
+    (when (and (at_29_19) (valid)) (not (at_29_19)))
+    (when (not (and (at_29_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_19_29_18
+  :effect (and
+    (when (and (at_29_19) (valid)) (at_29_18))
+    (when (and (at_29_19) (valid)) (not (at_29_19)))
+    (when (not (and (at_29_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_19_29_20
+  :effect (and
+    (when (and (at_29_19) (valid)) (at_29_20))
+    (when (and (at_29_19) (valid)) (not (at_29_19)))
+    (when (not (and (at_29_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_20_28_20
+  :effect (and
+    (when (and (at_29_20) (valid)) (at_28_20))
+    (when (and (at_29_20) (valid)) (not (at_29_20)))
+    (when (not (and (at_29_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_20_30_20
+  :effect (and
+    (when (and (at_29_20) (valid)) (at_30_20))
+    (when (and (at_29_20) (valid)) (not (at_29_20)))
+    (when (not (and (at_29_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_20_29_19
+  :effect (and
+    (when (and (at_29_20) (valid)) (at_29_19))
+    (when (and (at_29_20) (valid)) (not (at_29_20)))
+    (when (not (and (at_29_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_20_29_21
+  :effect (and
+    (when (and (at_29_20) (valid)) (at_29_21))
+    (when (and (at_29_20) (valid)) (not (at_29_20)))
+    (when (not (and (at_29_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_21_28_21
+  :effect (and
+    (when (and (at_29_21) (valid)) (at_28_21))
+    (when (and (at_29_21) (valid)) (not (at_29_21)))
+    (when (not (and (at_29_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_21_30_21
+  :effect (and
+    (when (and (at_29_21) (valid)) (at_30_21))
+    (when (and (at_29_21) (valid)) (not (at_29_21)))
+    (when (not (and (at_29_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_21_29_20
+  :effect (and
+    (when (and (at_29_21) (valid)) (at_29_20))
+    (when (and (at_29_21) (valid)) (not (at_29_21)))
+    (when (not (and (at_29_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_21_29_22
+  :effect (and
+    (when (and (at_29_21) (valid)) (at_29_22))
+    (when (and (at_29_21) (valid)) (not (at_29_21)))
+    (when (not (and (at_29_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_22_28_22
+  :effect (and
+    (when (and (at_29_22) (valid)) (at_28_22))
+    (when (and (at_29_22) (valid)) (not (at_29_22)))
+    (when (not (and (at_29_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_22_30_22
+  :effect (and
+    (when (and (at_29_22) (valid)) (at_30_22))
+    (when (and (at_29_22) (valid)) (not (at_29_22)))
+    (when (not (and (at_29_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_22_29_21
+  :effect (and
+    (when (and (at_29_22) (valid)) (at_29_21))
+    (when (and (at_29_22) (valid)) (not (at_29_22)))
+    (when (not (and (at_29_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_22_29_23
+  :effect (and
+    (when (and (at_29_22) (valid)) (at_29_23))
+    (when (and (at_29_22) (valid)) (not (at_29_22)))
+    (when (not (and (at_29_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_23_28_23
+  :effect (and
+    (when (and (at_29_23) (valid)) (at_28_23))
+    (when (and (at_29_23) (valid)) (not (at_29_23)))
+    (when (not (and (at_29_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_23_30_23
+  :effect (and
+    (when (and (at_29_23) (valid)) (at_30_23))
+    (when (and (at_29_23) (valid)) (not (at_29_23)))
+    (when (not (and (at_29_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_23_29_22
+  :effect (and
+    (when (and (at_29_23) (valid)) (at_29_22))
+    (when (and (at_29_23) (valid)) (not (at_29_23)))
+    (when (not (and (at_29_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_23_29_24
+  :effect (and
+    (when (and (at_29_23) (valid)) (at_29_24))
+    (when (and (at_29_23) (valid)) (not (at_29_23)))
+    (when (not (and (at_29_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_24_28_24
+  :effect (and
+    (when (and (at_29_24) (valid)) (at_28_24))
+    (when (and (at_29_24) (valid)) (not (at_29_24)))
+    (when (not (and (at_29_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_24_30_24
+  :effect (and
+    (when (and (at_29_24) (valid)) (at_30_24))
+    (when (and (at_29_24) (valid)) (not (at_29_24)))
+    (when (not (and (at_29_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_24_29_23
+  :effect (and
+    (when (and (at_29_24) (valid)) (at_29_23))
+    (when (and (at_29_24) (valid)) (not (at_29_24)))
+    (when (not (and (at_29_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_24_29_25
+  :effect (and
+    (when (and (at_29_24) (valid)) (at_29_25))
+    (when (and (at_29_24) (valid)) (not (at_29_24)))
+    (when (not (and (at_29_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_25_28_25
+  :effect (and
+    (when (and (at_29_25) (valid)) (at_28_25))
+    (when (and (at_29_25) (valid)) (not (at_29_25)))
+    (when (not (and (at_29_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_25_30_25
+  :effect (and
+    (when (and (at_29_25) (valid)) (at_30_25))
+    (when (and (at_29_25) (valid)) (not (at_29_25)))
+    (when (not (and (at_29_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_25_29_24
+  :effect (and
+    (when (and (at_29_25) (valid)) (at_29_24))
+    (when (and (at_29_25) (valid)) (not (at_29_25)))
+    (when (not (and (at_29_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_25_29_26
+  :effect (and
+    (when (and (at_29_25) (valid)) (at_29_26))
+    (when (and (at_29_25) (valid)) (not (at_29_25)))
+    (when (not (and (at_29_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_26_28_26
+  :effect (and
+    (when (and (at_29_26) (valid)) (at_28_26))
+    (when (and (at_29_26) (valid)) (not (at_29_26)))
+    (when (not (and (at_29_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_26_30_26
+  :effect (and
+    (when (and (at_29_26) (valid)) (at_30_26))
+    (when (and (at_29_26) (valid)) (not (at_29_26)))
+    (when (not (and (at_29_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_26_29_25
+  :effect (and
+    (when (and (at_29_26) (valid)) (at_29_25))
+    (when (and (at_29_26) (valid)) (not (at_29_26)))
+    (when (not (and (at_29_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_26_29_27
+  :effect (and
+    (when (and (at_29_26) (valid)) (at_29_27))
+    (when (and (at_29_26) (valid)) (not (at_29_26)))
+    (when (not (and (at_29_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_27_28_27
+  :effect (and
+    (when (and (at_29_27) (valid)) (at_28_27))
+    (when (and (at_29_27) (valid)) (not (at_29_27)))
+    (when (not (and (at_29_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_27_30_27
+  :effect (and
+    (when (and (at_29_27) (valid)) (at_30_27))
+    (when (and (at_29_27) (valid)) (not (at_29_27)))
+    (when (not (and (at_29_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_27_29_26
+  :effect (and
+    (when (and (at_29_27) (valid)) (at_29_26))
+    (when (and (at_29_27) (valid)) (not (at_29_27)))
+    (when (not (and (at_29_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_27_29_28
+  :effect (and
+    (when (and (at_29_27) (valid)) (at_29_28))
+    (when (and (at_29_27) (valid)) (not (at_29_27)))
+    (when (not (and (at_29_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_28_28_28
+  :effect (and
+    (when (and (at_29_28) (valid)) (at_28_28))
+    (when (and (at_29_28) (valid)) (not (at_29_28)))
+    (when (not (and (at_29_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_28_30_28
+  :effect (and
+    (when (and (at_29_28) (valid)) (at_30_28))
+    (when (and (at_29_28) (valid)) (not (at_29_28)))
+    (when (not (and (at_29_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_28_29_27
+  :effect (and
+    (when (and (at_29_28) (valid)) (at_29_27))
+    (when (and (at_29_28) (valid)) (not (at_29_28)))
+    (when (not (and (at_29_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_28_29_29
+  :effect (and
+    (when (and (at_29_28) (valid)) (at_29_29))
+    (when (and (at_29_28) (valid)) (not (at_29_28)))
+    (when (not (and (at_29_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_29_28_29
+  :effect (and
+    (when (and (at_29_29) (valid)) (at_28_29))
+    (when (and (at_29_29) (valid)) (not (at_29_29)))
+    (when (not (and (at_29_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_29_30_29
+  :effect (and
+    (when (and (at_29_29) (valid)) (at_30_29))
+    (when (and (at_29_29) (valid)) (not (at_29_29)))
+    (when (not (and (at_29_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_29_29_28
+  :effect (and
+    (when (and (at_29_29) (valid)) (at_29_28))
+    (when (and (at_29_29) (valid)) (not (at_29_29)))
+    (when (not (and (at_29_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_29_29_30
+  :effect (and
+    (when (and (at_29_29) (valid)) (at_29_30))
+    (when (and (at_29_29) (valid)) (not (at_29_29)))
+    (when (not (and (at_29_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_30_28_30
+  :effect (and
+    (when (and (at_29_30) (valid)) (at_28_30))
+    (when (and (at_29_30) (valid)) (not (at_29_30)))
+    (when (not (and (at_29_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_30_30_30
+  :effect (and
+    (when (and (at_29_30) (valid)) (at_30_30))
+    (when (and (at_29_30) (valid)) (not (at_29_30)))
+    (when (not (and (at_29_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_30_29_29
+  :effect (and
+    (when (and (at_29_30) (valid)) (at_29_29))
+    (when (and (at_29_30) (valid)) (not (at_29_30)))
+    (when (not (and (at_29_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_30_29_31
+  :effect (and
+    (when (and (at_29_30) (valid)) (at_29_31))
+    (when (and (at_29_30) (valid)) (not (at_29_30)))
+    (when (not (and (at_29_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_31_28_31
+  :effect (and
+    (when (and (at_29_31) (valid)) (at_28_31))
+    (when (and (at_29_31) (valid)) (not (at_29_31)))
+    (when (not (and (at_29_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_31_30_31
+  :effect (and
+    (when (and (at_29_31) (valid)) (at_30_31))
+    (when (and (at_29_31) (valid)) (not (at_29_31)))
+    (when (not (and (at_29_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_29_31_29_30
+  :effect (and
+    (when (and (at_29_31) (valid)) (at_29_30))
+    (when (and (at_29_31) (valid)) (not (at_29_31)))
+    (when (not (and (at_29_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_0_29_0
+  :effect (and
+    (when (and (at_30_0) (valid)) (at_29_0))
+    (when (and (at_30_0) (valid)) (not (at_30_0)))
+    (when (not (and (at_30_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_0_31_0
+  :effect (and
+    (when (and (at_30_0) (valid)) (at_31_0))
+    (when (and (at_30_0) (valid)) (not (at_30_0)))
+    (when (not (and (at_30_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_0_30_1
+  :effect (and
+    (when (and (at_30_0) (valid)) (at_30_1))
+    (when (and (at_30_0) (valid)) (not (at_30_0)))
+    (when (not (and (at_30_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_1_29_1
+  :effect (and
+    (when (and (at_30_1) (valid)) (at_29_1))
+    (when (and (at_30_1) (valid)) (not (at_30_1)))
+    (when (not (and (at_30_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_1_31_1
+  :effect (and
+    (when (and (at_30_1) (valid)) (at_31_1))
+    (when (and (at_30_1) (valid)) (not (at_30_1)))
+    (when (not (and (at_30_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_1_30_0
+  :effect (and
+    (when (and (at_30_1) (valid)) (at_30_0))
+    (when (and (at_30_1) (valid)) (not (at_30_1)))
+    (when (not (and (at_30_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_1_30_2
+  :effect (and
+    (when (and (at_30_1) (valid)) (at_30_2))
+    (when (and (at_30_1) (valid)) (not (at_30_1)))
+    (when (not (and (at_30_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_2_29_2
+  :effect (and
+    (when (and (at_30_2) (valid)) (at_29_2))
+    (when (and (at_30_2) (valid)) (not (at_30_2)))
+    (when (not (and (at_30_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_2_31_2
+  :effect (and
+    (when (and (at_30_2) (valid)) (at_31_2))
+    (when (and (at_30_2) (valid)) (not (at_30_2)))
+    (when (not (and (at_30_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_2_30_1
+  :effect (and
+    (when (and (at_30_2) (valid)) (at_30_1))
+    (when (and (at_30_2) (valid)) (not (at_30_2)))
+    (when (not (and (at_30_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_2_30_3
+  :effect (and
+    (when (and (at_30_2) (valid)) (at_30_3))
+    (when (and (at_30_2) (valid)) (not (at_30_2)))
+    (when (not (and (at_30_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_3_29_3
+  :effect (and
+    (when (and (at_30_3) (valid)) (at_29_3))
+    (when (and (at_30_3) (valid)) (not (at_30_3)))
+    (when (not (and (at_30_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_3_31_3
+  :effect (and
+    (when (and (at_30_3) (valid)) (at_31_3))
+    (when (and (at_30_3) (valid)) (not (at_30_3)))
+    (when (not (and (at_30_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_3_30_2
+  :effect (and
+    (when (and (at_30_3) (valid)) (at_30_2))
+    (when (and (at_30_3) (valid)) (not (at_30_3)))
+    (when (not (and (at_30_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_3_30_4
+  :effect (and
+    (when (and (at_30_3) (valid)) (at_30_4))
+    (when (and (at_30_3) (valid)) (not (at_30_3)))
+    (when (not (and (at_30_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_4_29_4
+  :effect (and
+    (when (and (at_30_4) (valid)) (at_29_4))
+    (when (and (at_30_4) (valid)) (not (at_30_4)))
+    (when (not (and (at_30_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_4_31_4
+  :effect (and
+    (when (and (at_30_4) (valid)) (at_31_4))
+    (when (and (at_30_4) (valid)) (not (at_30_4)))
+    (when (not (and (at_30_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_4_30_3
+  :effect (and
+    (when (and (at_30_4) (valid)) (at_30_3))
+    (when (and (at_30_4) (valid)) (not (at_30_4)))
+    (when (not (and (at_30_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_4_30_5
+  :effect (and
+    (when (and (at_30_4) (valid)) (at_30_5))
+    (when (and (at_30_4) (valid)) (not (at_30_4)))
+    (when (not (and (at_30_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_5_29_5
+  :effect (and
+    (when (and (at_30_5) (valid)) (at_29_5))
+    (when (and (at_30_5) (valid)) (not (at_30_5)))
+    (when (not (and (at_30_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_5_31_5
+  :effect (and
+    (when (and (at_30_5) (valid)) (at_31_5))
+    (when (and (at_30_5) (valid)) (not (at_30_5)))
+    (when (not (and (at_30_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_5_30_4
+  :effect (and
+    (when (and (at_30_5) (valid)) (at_30_4))
+    (when (and (at_30_5) (valid)) (not (at_30_5)))
+    (when (not (and (at_30_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_5_30_6
+  :effect (and
+    (when (and (at_30_5) (valid)) (at_30_6))
+    (when (and (at_30_5) (valid)) (not (at_30_5)))
+    (when (not (and (at_30_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_6_29_6
+  :effect (and
+    (when (and (at_30_6) (valid)) (at_29_6))
+    (when (and (at_30_6) (valid)) (not (at_30_6)))
+    (when (not (and (at_30_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_6_31_6
+  :effect (and
+    (when (and (at_30_6) (valid)) (at_31_6))
+    (when (and (at_30_6) (valid)) (not (at_30_6)))
+    (when (not (and (at_30_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_6_30_5
+  :effect (and
+    (when (and (at_30_6) (valid)) (at_30_5))
+    (when (and (at_30_6) (valid)) (not (at_30_6)))
+    (when (not (and (at_30_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_6_30_7
+  :effect (and
+    (when (and (at_30_6) (valid)) (at_30_7))
+    (when (and (at_30_6) (valid)) (not (at_30_6)))
+    (when (not (and (at_30_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_7_29_7
+  :effect (and
+    (when (and (at_30_7) (valid)) (at_29_7))
+    (when (and (at_30_7) (valid)) (not (at_30_7)))
+    (when (not (and (at_30_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_7_31_7
+  :effect (and
+    (when (and (at_30_7) (valid)) (at_31_7))
+    (when (and (at_30_7) (valid)) (not (at_30_7)))
+    (when (not (and (at_30_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_7_30_6
+  :effect (and
+    (when (and (at_30_7) (valid)) (at_30_6))
+    (when (and (at_30_7) (valid)) (not (at_30_7)))
+    (when (not (and (at_30_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_7_30_8
+  :effect (and
+    (when (and (at_30_7) (valid)) (at_30_8))
+    (when (and (at_30_7) (valid)) (not (at_30_7)))
+    (when (not (and (at_30_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_8_29_8
+  :effect (and
+    (when (and (at_30_8) (valid)) (at_29_8))
+    (when (and (at_30_8) (valid)) (not (at_30_8)))
+    (when (not (and (at_30_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_8_31_8
+  :effect (and
+    (when (and (at_30_8) (valid)) (at_31_8))
+    (when (and (at_30_8) (valid)) (not (at_30_8)))
+    (when (not (and (at_30_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_8_30_7
+  :effect (and
+    (when (and (at_30_8) (valid)) (at_30_7))
+    (when (and (at_30_8) (valid)) (not (at_30_8)))
+    (when (not (and (at_30_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_8_30_9
+  :effect (and
+    (when (and (at_30_8) (valid)) (at_30_9))
+    (when (and (at_30_8) (valid)) (not (at_30_8)))
+    (when (not (and (at_30_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_9_29_9
+  :effect (and
+    (when (and (at_30_9) (valid)) (at_29_9))
+    (when (and (at_30_9) (valid)) (not (at_30_9)))
+    (when (not (and (at_30_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_9_31_9
+  :effect (and
+    (when (and (at_30_9) (valid)) (at_31_9))
+    (when (and (at_30_9) (valid)) (not (at_30_9)))
+    (when (not (and (at_30_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_9_30_8
+  :effect (and
+    (when (and (at_30_9) (valid)) (at_30_8))
+    (when (and (at_30_9) (valid)) (not (at_30_9)))
+    (when (not (and (at_30_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_9_30_10
+  :effect (and
+    (when (and (at_30_9) (valid)) (at_30_10))
+    (when (and (at_30_9) (valid)) (not (at_30_9)))
+    (when (not (and (at_30_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_10_29_10
+  :effect (and
+    (when (and (at_30_10) (valid)) (at_29_10))
+    (when (and (at_30_10) (valid)) (not (at_30_10)))
+    (when (not (and (at_30_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_10_31_10
+  :effect (and
+    (when (and (at_30_10) (valid)) (at_31_10))
+    (when (and (at_30_10) (valid)) (not (at_30_10)))
+    (when (not (and (at_30_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_10_30_9
+  :effect (and
+    (when (and (at_30_10) (valid)) (at_30_9))
+    (when (and (at_30_10) (valid)) (not (at_30_10)))
+    (when (not (and (at_30_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_10_30_11
+  :effect (and
+    (when (and (at_30_10) (valid)) (at_30_11))
+    (when (and (at_30_10) (valid)) (not (at_30_10)))
+    (when (not (and (at_30_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_11_29_11
+  :effect (and
+    (when (and (at_30_11) (valid)) (at_29_11))
+    (when (and (at_30_11) (valid)) (not (at_30_11)))
+    (when (not (and (at_30_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_11_31_11
+  :effect (and
+    (when (and (at_30_11) (valid)) (at_31_11))
+    (when (and (at_30_11) (valid)) (not (at_30_11)))
+    (when (not (and (at_30_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_11_30_10
+  :effect (and
+    (when (and (at_30_11) (valid)) (at_30_10))
+    (when (and (at_30_11) (valid)) (not (at_30_11)))
+    (when (not (and (at_30_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_11_30_12
+  :effect (and
+    (when (and (at_30_11) (valid)) (at_30_12))
+    (when (and (at_30_11) (valid)) (not (at_30_11)))
+    (when (not (and (at_30_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_12_29_12
+  :effect (and
+    (when (and (at_30_12) (valid)) (at_29_12))
+    (when (and (at_30_12) (valid)) (not (at_30_12)))
+    (when (not (and (at_30_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_12_31_12
+  :effect (and
+    (when (and (at_30_12) (valid)) (at_31_12))
+    (when (and (at_30_12) (valid)) (not (at_30_12)))
+    (when (not (and (at_30_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_12_30_11
+  :effect (and
+    (when (and (at_30_12) (valid)) (at_30_11))
+    (when (and (at_30_12) (valid)) (not (at_30_12)))
+    (when (not (and (at_30_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_12_30_13
+  :effect (and
+    (when (and (at_30_12) (valid)) (at_30_13))
+    (when (and (at_30_12) (valid)) (not (at_30_12)))
+    (when (not (and (at_30_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_13_29_13
+  :effect (and
+    (when (and (at_30_13) (valid)) (at_29_13))
+    (when (and (at_30_13) (valid)) (not (at_30_13)))
+    (when (not (and (at_30_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_13_31_13
+  :effect (and
+    (when (and (at_30_13) (valid)) (at_31_13))
+    (when (and (at_30_13) (valid)) (not (at_30_13)))
+    (when (not (and (at_30_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_13_30_12
+  :effect (and
+    (when (and (at_30_13) (valid)) (at_30_12))
+    (when (and (at_30_13) (valid)) (not (at_30_13)))
+    (when (not (and (at_30_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_13_30_14
+  :effect (and
+    (when (and (at_30_13) (valid)) (at_30_14))
+    (when (and (at_30_13) (valid)) (not (at_30_13)))
+    (when (not (and (at_30_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_14_29_14
+  :effect (and
+    (when (and (at_30_14) (valid)) (at_29_14))
+    (when (and (at_30_14) (valid)) (not (at_30_14)))
+    (when (not (and (at_30_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_14_31_14
+  :effect (and
+    (when (and (at_30_14) (valid)) (at_31_14))
+    (when (and (at_30_14) (valid)) (not (at_30_14)))
+    (when (not (and (at_30_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_14_30_13
+  :effect (and
+    (when (and (at_30_14) (valid)) (at_30_13))
+    (when (and (at_30_14) (valid)) (not (at_30_14)))
+    (when (not (and (at_30_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_14_30_15
+  :effect (and
+    (when (and (at_30_14) (valid)) (at_30_15))
+    (when (and (at_30_14) (valid)) (not (at_30_14)))
+    (when (not (and (at_30_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_15_29_15
+  :effect (and
+    (when (and (at_30_15) (valid)) (at_29_15))
+    (when (and (at_30_15) (valid)) (not (at_30_15)))
+    (when (not (and (at_30_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_15_31_15
+  :effect (and
+    (when (and (at_30_15) (valid)) (at_31_15))
+    (when (and (at_30_15) (valid)) (not (at_30_15)))
+    (when (not (and (at_30_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_15_30_14
+  :effect (and
+    (when (and (at_30_15) (valid)) (at_30_14))
+    (when (and (at_30_15) (valid)) (not (at_30_15)))
+    (when (not (and (at_30_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_15_30_16
+  :effect (and
+    (when (and (at_30_15) (valid)) (at_30_16))
+    (when (and (at_30_15) (valid)) (not (at_30_15)))
+    (when (not (and (at_30_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_16_29_16
+  :effect (and
+    (when (and (at_30_16) (valid)) (at_29_16))
+    (when (and (at_30_16) (valid)) (not (at_30_16)))
+    (when (not (and (at_30_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_16_31_16
+  :effect (and
+    (when (and (at_30_16) (valid)) (at_31_16))
+    (when (and (at_30_16) (valid)) (not (at_30_16)))
+    (when (not (and (at_30_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_16_30_15
+  :effect (and
+    (when (and (at_30_16) (valid)) (at_30_15))
+    (when (and (at_30_16) (valid)) (not (at_30_16)))
+    (when (not (and (at_30_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_16_30_17
+  :effect (and
+    (when (and (at_30_16) (valid)) (at_30_17))
+    (when (and (at_30_16) (valid)) (not (at_30_16)))
+    (when (not (and (at_30_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_17_29_17
+  :effect (and
+    (when (and (at_30_17) (valid)) (at_29_17))
+    (when (and (at_30_17) (valid)) (not (at_30_17)))
+    (when (not (and (at_30_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_17_31_17
+  :effect (and
+    (when (and (at_30_17) (valid)) (at_31_17))
+    (when (and (at_30_17) (valid)) (not (at_30_17)))
+    (when (not (and (at_30_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_17_30_16
+  :effect (and
+    (when (and (at_30_17) (valid)) (at_30_16))
+    (when (and (at_30_17) (valid)) (not (at_30_17)))
+    (when (not (and (at_30_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_17_30_18
+  :effect (and
+    (when (and (at_30_17) (valid)) (at_30_18))
+    (when (and (at_30_17) (valid)) (not (at_30_17)))
+    (when (not (and (at_30_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_18_29_18
+  :effect (and
+    (when (and (at_30_18) (valid)) (at_29_18))
+    (when (and (at_30_18) (valid)) (not (at_30_18)))
+    (when (not (and (at_30_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_18_31_18
+  :effect (and
+    (when (and (at_30_18) (valid)) (at_31_18))
+    (when (and (at_30_18) (valid)) (not (at_30_18)))
+    (when (not (and (at_30_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_18_30_17
+  :effect (and
+    (when (and (at_30_18) (valid)) (at_30_17))
+    (when (and (at_30_18) (valid)) (not (at_30_18)))
+    (when (not (and (at_30_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_18_30_19
+  :effect (and
+    (when (and (at_30_18) (valid)) (at_30_19))
+    (when (and (at_30_18) (valid)) (not (at_30_18)))
+    (when (not (and (at_30_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_19_29_19
+  :effect (and
+    (when (and (at_30_19) (valid)) (at_29_19))
+    (when (and (at_30_19) (valid)) (not (at_30_19)))
+    (when (not (and (at_30_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_19_31_19
+  :effect (and
+    (when (and (at_30_19) (valid)) (at_31_19))
+    (when (and (at_30_19) (valid)) (not (at_30_19)))
+    (when (not (and (at_30_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_19_30_18
+  :effect (and
+    (when (and (at_30_19) (valid)) (at_30_18))
+    (when (and (at_30_19) (valid)) (not (at_30_19)))
+    (when (not (and (at_30_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_19_30_20
+  :effect (and
+    (when (and (at_30_19) (valid)) (at_30_20))
+    (when (and (at_30_19) (valid)) (not (at_30_19)))
+    (when (not (and (at_30_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_20_29_20
+  :effect (and
+    (when (and (at_30_20) (valid)) (at_29_20))
+    (when (and (at_30_20) (valid)) (not (at_30_20)))
+    (when (not (and (at_30_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_20_31_20
+  :effect (and
+    (when (and (at_30_20) (valid)) (at_31_20))
+    (when (and (at_30_20) (valid)) (not (at_30_20)))
+    (when (not (and (at_30_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_20_30_19
+  :effect (and
+    (when (and (at_30_20) (valid)) (at_30_19))
+    (when (and (at_30_20) (valid)) (not (at_30_20)))
+    (when (not (and (at_30_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_20_30_21
+  :effect (and
+    (when (and (at_30_20) (valid)) (at_30_21))
+    (when (and (at_30_20) (valid)) (not (at_30_20)))
+    (when (not (and (at_30_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_21_29_21
+  :effect (and
+    (when (and (at_30_21) (valid)) (at_29_21))
+    (when (and (at_30_21) (valid)) (not (at_30_21)))
+    (when (not (and (at_30_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_21_31_21
+  :effect (and
+    (when (and (at_30_21) (valid)) (at_31_21))
+    (when (and (at_30_21) (valid)) (not (at_30_21)))
+    (when (not (and (at_30_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_21_30_20
+  :effect (and
+    (when (and (at_30_21) (valid)) (at_30_20))
+    (when (and (at_30_21) (valid)) (not (at_30_21)))
+    (when (not (and (at_30_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_21_30_22
+  :effect (and
+    (when (and (at_30_21) (valid)) (at_30_22))
+    (when (and (at_30_21) (valid)) (not (at_30_21)))
+    (when (not (and (at_30_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_22_29_22
+  :effect (and
+    (when (and (at_30_22) (valid)) (at_29_22))
+    (when (and (at_30_22) (valid)) (not (at_30_22)))
+    (when (not (and (at_30_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_22_31_22
+  :effect (and
+    (when (and (at_30_22) (valid)) (at_31_22))
+    (when (and (at_30_22) (valid)) (not (at_30_22)))
+    (when (not (and (at_30_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_22_30_21
+  :effect (and
+    (when (and (at_30_22) (valid)) (at_30_21))
+    (when (and (at_30_22) (valid)) (not (at_30_22)))
+    (when (not (and (at_30_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_22_30_23
+  :effect (and
+    (when (and (at_30_22) (valid)) (at_30_23))
+    (when (and (at_30_22) (valid)) (not (at_30_22)))
+    (when (not (and (at_30_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_23_29_23
+  :effect (and
+    (when (and (at_30_23) (valid)) (at_29_23))
+    (when (and (at_30_23) (valid)) (not (at_30_23)))
+    (when (not (and (at_30_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_23_31_23
+  :effect (and
+    (when (and (at_30_23) (valid)) (at_31_23))
+    (when (and (at_30_23) (valid)) (not (at_30_23)))
+    (when (not (and (at_30_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_23_30_22
+  :effect (and
+    (when (and (at_30_23) (valid)) (at_30_22))
+    (when (and (at_30_23) (valid)) (not (at_30_23)))
+    (when (not (and (at_30_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_23_30_24
+  :effect (and
+    (when (and (at_30_23) (valid)) (at_30_24))
+    (when (and (at_30_23) (valid)) (not (at_30_23)))
+    (when (not (and (at_30_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_24_29_24
+  :effect (and
+    (when (and (at_30_24) (valid)) (at_29_24))
+    (when (and (at_30_24) (valid)) (not (at_30_24)))
+    (when (not (and (at_30_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_24_31_24
+  :effect (and
+    (when (and (at_30_24) (valid)) (at_31_24))
+    (when (and (at_30_24) (valid)) (not (at_30_24)))
+    (when (not (and (at_30_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_24_30_23
+  :effect (and
+    (when (and (at_30_24) (valid)) (at_30_23))
+    (when (and (at_30_24) (valid)) (not (at_30_24)))
+    (when (not (and (at_30_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_24_30_25
+  :effect (and
+    (when (and (at_30_24) (valid)) (at_30_25))
+    (when (and (at_30_24) (valid)) (not (at_30_24)))
+    (when (not (and (at_30_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_25_29_25
+  :effect (and
+    (when (and (at_30_25) (valid)) (at_29_25))
+    (when (and (at_30_25) (valid)) (not (at_30_25)))
+    (when (not (and (at_30_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_25_31_25
+  :effect (and
+    (when (and (at_30_25) (valid)) (at_31_25))
+    (when (and (at_30_25) (valid)) (not (at_30_25)))
+    (when (not (and (at_30_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_25_30_24
+  :effect (and
+    (when (and (at_30_25) (valid)) (at_30_24))
+    (when (and (at_30_25) (valid)) (not (at_30_25)))
+    (when (not (and (at_30_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_25_30_26
+  :effect (and
+    (when (and (at_30_25) (valid)) (at_30_26))
+    (when (and (at_30_25) (valid)) (not (at_30_25)))
+    (when (not (and (at_30_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_26_29_26
+  :effect (and
+    (when (and (at_30_26) (valid)) (at_29_26))
+    (when (and (at_30_26) (valid)) (not (at_30_26)))
+    (when (not (and (at_30_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_26_31_26
+  :effect (and
+    (when (and (at_30_26) (valid)) (at_31_26))
+    (when (and (at_30_26) (valid)) (not (at_30_26)))
+    (when (not (and (at_30_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_26_30_25
+  :effect (and
+    (when (and (at_30_26) (valid)) (at_30_25))
+    (when (and (at_30_26) (valid)) (not (at_30_26)))
+    (when (not (and (at_30_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_26_30_27
+  :effect (and
+    (when (and (at_30_26) (valid)) (at_30_27))
+    (when (and (at_30_26) (valid)) (not (at_30_26)))
+    (when (not (and (at_30_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_27_29_27
+  :effect (and
+    (when (and (at_30_27) (valid)) (at_29_27))
+    (when (and (at_30_27) (valid)) (not (at_30_27)))
+    (when (not (and (at_30_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_27_31_27
+  :effect (and
+    (when (and (at_30_27) (valid)) (at_31_27))
+    (when (and (at_30_27) (valid)) (not (at_30_27)))
+    (when (not (and (at_30_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_27_30_26
+  :effect (and
+    (when (and (at_30_27) (valid)) (at_30_26))
+    (when (and (at_30_27) (valid)) (not (at_30_27)))
+    (when (not (and (at_30_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_27_30_28
+  :effect (and
+    (when (and (at_30_27) (valid)) (at_30_28))
+    (when (and (at_30_27) (valid)) (not (at_30_27)))
+    (when (not (and (at_30_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_28_29_28
+  :effect (and
+    (when (and (at_30_28) (valid)) (at_29_28))
+    (when (and (at_30_28) (valid)) (not (at_30_28)))
+    (when (not (and (at_30_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_28_31_28
+  :effect (and
+    (when (and (at_30_28) (valid)) (at_31_28))
+    (when (and (at_30_28) (valid)) (not (at_30_28)))
+    (when (not (and (at_30_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_28_30_27
+  :effect (and
+    (when (and (at_30_28) (valid)) (at_30_27))
+    (when (and (at_30_28) (valid)) (not (at_30_28)))
+    (when (not (and (at_30_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_28_30_29
+  :effect (and
+    (when (and (at_30_28) (valid)) (at_30_29))
+    (when (and (at_30_28) (valid)) (not (at_30_28)))
+    (when (not (and (at_30_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_29_29_29
+  :effect (and
+    (when (and (at_30_29) (valid)) (at_29_29))
+    (when (and (at_30_29) (valid)) (not (at_30_29)))
+    (when (not (and (at_30_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_29_31_29
+  :effect (and
+    (when (and (at_30_29) (valid)) (at_31_29))
+    (when (and (at_30_29) (valid)) (not (at_30_29)))
+    (when (not (and (at_30_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_29_30_28
+  :effect (and
+    (when (and (at_30_29) (valid)) (at_30_28))
+    (when (and (at_30_29) (valid)) (not (at_30_29)))
+    (when (not (and (at_30_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_29_30_30
+  :effect (and
+    (when (and (at_30_29) (valid)) (at_30_30))
+    (when (and (at_30_29) (valid)) (not (at_30_29)))
+    (when (not (and (at_30_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_30_29_30
+  :effect (and
+    (when (and (at_30_30) (valid)) (at_29_30))
+    (when (and (at_30_30) (valid)) (not (at_30_30)))
+    (when (not (and (at_30_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_30_31_30
+  :effect (and
+    (when (and (at_30_30) (valid)) (at_31_30))
+    (when (and (at_30_30) (valid)) (not (at_30_30)))
+    (when (not (and (at_30_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_30_30_29
+  :effect (and
+    (when (and (at_30_30) (valid)) (at_30_29))
+    (when (and (at_30_30) (valid)) (not (at_30_30)))
+    (when (not (and (at_30_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_30_30_31
+  :effect (and
+    (when (and (at_30_30) (valid)) (at_30_31))
+    (when (and (at_30_30) (valid)) (not (at_30_30)))
+    (when (not (and (at_30_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_31_29_31
+  :effect (and
+    (when (and (at_30_31) (valid)) (at_29_31))
+    (when (and (at_30_31) (valid)) (not (at_30_31)))
+    (when (not (and (at_30_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_31_31_31
+  :effect (and
+    (when (and (at_30_31) (valid)) (at_31_31))
+    (when (and (at_30_31) (valid)) (not (at_30_31)))
+    (when (not (and (at_30_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_30_31_30_30
+  :effect (and
+    (when (and (at_30_31) (valid)) (at_30_30))
+    (when (and (at_30_31) (valid)) (not (at_30_31)))
+    (when (not (and (at_30_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_0_30_0
+  :effect (and
+    (when (and (at_31_0) (valid)) (at_30_0))
+    (when (and (at_31_0) (valid)) (not (at_31_0)))
+    (when (not (and (at_31_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_0_31_1
+  :effect (and
+    (when (and (at_31_0) (valid)) (at_31_1))
+    (when (and (at_31_0) (valid)) (not (at_31_0)))
+    (when (not (and (at_31_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_1_30_1
+  :effect (and
+    (when (and (at_31_1) (valid)) (at_30_1))
+    (when (and (at_31_1) (valid)) (not (at_31_1)))
+    (when (not (and (at_31_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_1_31_0
+  :effect (and
+    (when (and (at_31_1) (valid)) (at_31_0))
+    (when (and (at_31_1) (valid)) (not (at_31_1)))
+    (when (not (and (at_31_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_1_31_2
+  :effect (and
+    (when (and (at_31_1) (valid)) (at_31_2))
+    (when (and (at_31_1) (valid)) (not (at_31_1)))
+    (when (not (and (at_31_1) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_2_30_2
+  :effect (and
+    (when (and (at_31_2) (valid)) (at_30_2))
+    (when (and (at_31_2) (valid)) (not (at_31_2)))
+    (when (not (and (at_31_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_2_31_1
+  :effect (and
+    (when (and (at_31_2) (valid)) (at_31_1))
+    (when (and (at_31_2) (valid)) (not (at_31_2)))
+    (when (not (and (at_31_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_2_31_3
+  :effect (and
+    (when (and (at_31_2) (valid)) (at_31_3))
+    (when (and (at_31_2) (valid)) (not (at_31_2)))
+    (when (not (and (at_31_2) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_3_30_3
+  :effect (and
+    (when (and (at_31_3) (valid)) (at_30_3))
+    (when (and (at_31_3) (valid)) (not (at_31_3)))
+    (when (not (and (at_31_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_3_31_2
+  :effect (and
+    (when (and (at_31_3) (valid)) (at_31_2))
+    (when (and (at_31_3) (valid)) (not (at_31_3)))
+    (when (not (and (at_31_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_3_31_4
+  :effect (and
+    (when (and (at_31_3) (valid)) (at_31_4))
+    (when (and (at_31_3) (valid)) (not (at_31_3)))
+    (when (not (and (at_31_3) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_4_30_4
+  :effect (and
+    (when (and (at_31_4) (valid)) (at_30_4))
+    (when (and (at_31_4) (valid)) (not (at_31_4)))
+    (when (not (and (at_31_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_4_31_3
+  :effect (and
+    (when (and (at_31_4) (valid)) (at_31_3))
+    (when (and (at_31_4) (valid)) (not (at_31_4)))
+    (when (not (and (at_31_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_4_31_5
+  :effect (and
+    (when (and (at_31_4) (valid)) (at_31_5))
+    (when (and (at_31_4) (valid)) (not (at_31_4)))
+    (when (not (and (at_31_4) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_5_30_5
+  :effect (and
+    (when (and (at_31_5) (valid)) (at_30_5))
+    (when (and (at_31_5) (valid)) (not (at_31_5)))
+    (when (not (and (at_31_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_5_31_4
+  :effect (and
+    (when (and (at_31_5) (valid)) (at_31_4))
+    (when (and (at_31_5) (valid)) (not (at_31_5)))
+    (when (not (and (at_31_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_5_31_6
+  :effect (and
+    (when (and (at_31_5) (valid)) (at_31_6))
+    (when (and (at_31_5) (valid)) (not (at_31_5)))
+    (when (not (and (at_31_5) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_6_30_6
+  :effect (and
+    (when (and (at_31_6) (valid)) (at_30_6))
+    (when (and (at_31_6) (valid)) (not (at_31_6)))
+    (when (not (and (at_31_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_6_31_5
+  :effect (and
+    (when (and (at_31_6) (valid)) (at_31_5))
+    (when (and (at_31_6) (valid)) (not (at_31_6)))
+    (when (not (and (at_31_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_6_31_7
+  :effect (and
+    (when (and (at_31_6) (valid)) (at_31_7))
+    (when (and (at_31_6) (valid)) (not (at_31_6)))
+    (when (not (and (at_31_6) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_7_30_7
+  :effect (and
+    (when (and (at_31_7) (valid)) (at_30_7))
+    (when (and (at_31_7) (valid)) (not (at_31_7)))
+    (when (not (and (at_31_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_7_31_6
+  :effect (and
+    (when (and (at_31_7) (valid)) (at_31_6))
+    (when (and (at_31_7) (valid)) (not (at_31_7)))
+    (when (not (and (at_31_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_7_31_8
+  :effect (and
+    (when (and (at_31_7) (valid)) (at_31_8))
+    (when (and (at_31_7) (valid)) (not (at_31_7)))
+    (when (not (and (at_31_7) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_8_30_8
+  :effect (and
+    (when (and (at_31_8) (valid)) (at_30_8))
+    (when (and (at_31_8) (valid)) (not (at_31_8)))
+    (when (not (and (at_31_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_8_31_7
+  :effect (and
+    (when (and (at_31_8) (valid)) (at_31_7))
+    (when (and (at_31_8) (valid)) (not (at_31_8)))
+    (when (not (and (at_31_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_8_31_9
+  :effect (and
+    (when (and (at_31_8) (valid)) (at_31_9))
+    (when (and (at_31_8) (valid)) (not (at_31_8)))
+    (when (not (and (at_31_8) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_9_30_9
+  :effect (and
+    (when (and (at_31_9) (valid)) (at_30_9))
+    (when (and (at_31_9) (valid)) (not (at_31_9)))
+    (when (not (and (at_31_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_9_31_8
+  :effect (and
+    (when (and (at_31_9) (valid)) (at_31_8))
+    (when (and (at_31_9) (valid)) (not (at_31_9)))
+    (when (not (and (at_31_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_9_31_10
+  :effect (and
+    (when (and (at_31_9) (valid)) (at_31_10))
+    (when (and (at_31_9) (valid)) (not (at_31_9)))
+    (when (not (and (at_31_9) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_10_30_10
+  :effect (and
+    (when (and (at_31_10) (valid)) (at_30_10))
+    (when (and (at_31_10) (valid)) (not (at_31_10)))
+    (when (not (and (at_31_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_10_31_9
+  :effect (and
+    (when (and (at_31_10) (valid)) (at_31_9))
+    (when (and (at_31_10) (valid)) (not (at_31_10)))
+    (when (not (and (at_31_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_10_31_11
+  :effect (and
+    (when (and (at_31_10) (valid)) (at_31_11))
+    (when (and (at_31_10) (valid)) (not (at_31_10)))
+    (when (not (and (at_31_10) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_11_30_11
+  :effect (and
+    (when (and (at_31_11) (valid)) (at_30_11))
+    (when (and (at_31_11) (valid)) (not (at_31_11)))
+    (when (not (and (at_31_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_11_31_10
+  :effect (and
+    (when (and (at_31_11) (valid)) (at_31_10))
+    (when (and (at_31_11) (valid)) (not (at_31_11)))
+    (when (not (and (at_31_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_11_31_12
+  :effect (and
+    (when (and (at_31_11) (valid)) (at_31_12))
+    (when (and (at_31_11) (valid)) (not (at_31_11)))
+    (when (not (and (at_31_11) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_12_30_12
+  :effect (and
+    (when (and (at_31_12) (valid)) (at_30_12))
+    (when (and (at_31_12) (valid)) (not (at_31_12)))
+    (when (not (and (at_31_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_12_31_11
+  :effect (and
+    (when (and (at_31_12) (valid)) (at_31_11))
+    (when (and (at_31_12) (valid)) (not (at_31_12)))
+    (when (not (and (at_31_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_12_31_13
+  :effect (and
+    (when (and (at_31_12) (valid)) (at_31_13))
+    (when (and (at_31_12) (valid)) (not (at_31_12)))
+    (when (not (and (at_31_12) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_13_30_13
+  :effect (and
+    (when (and (at_31_13) (valid)) (at_30_13))
+    (when (and (at_31_13) (valid)) (not (at_31_13)))
+    (when (not (and (at_31_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_13_31_12
+  :effect (and
+    (when (and (at_31_13) (valid)) (at_31_12))
+    (when (and (at_31_13) (valid)) (not (at_31_13)))
+    (when (not (and (at_31_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_13_31_14
+  :effect (and
+    (when (and (at_31_13) (valid)) (at_31_14))
+    (when (and (at_31_13) (valid)) (not (at_31_13)))
+    (when (not (and (at_31_13) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_14_30_14
+  :effect (and
+    (when (and (at_31_14) (valid)) (at_30_14))
+    (when (and (at_31_14) (valid)) (not (at_31_14)))
+    (when (not (and (at_31_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_14_31_13
+  :effect (and
+    (when (and (at_31_14) (valid)) (at_31_13))
+    (when (and (at_31_14) (valid)) (not (at_31_14)))
+    (when (not (and (at_31_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_14_31_15
+  :effect (and
+    (when (and (at_31_14) (valid)) (at_31_15))
+    (when (and (at_31_14) (valid)) (not (at_31_14)))
+    (when (not (and (at_31_14) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_15_30_15
+  :effect (and
+    (when (and (at_31_15) (valid)) (at_30_15))
+    (when (and (at_31_15) (valid)) (not (at_31_15)))
+    (when (not (and (at_31_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_15_31_14
+  :effect (and
+    (when (and (at_31_15) (valid)) (at_31_14))
+    (when (and (at_31_15) (valid)) (not (at_31_15)))
+    (when (not (and (at_31_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_15_31_16
+  :effect (and
+    (when (and (at_31_15) (valid)) (at_31_16))
+    (when (and (at_31_15) (valid)) (not (at_31_15)))
+    (when (not (and (at_31_15) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_16_30_16
+  :effect (and
+    (when (and (at_31_16) (valid)) (at_30_16))
+    (when (and (at_31_16) (valid)) (not (at_31_16)))
+    (when (not (and (at_31_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_16_31_15
+  :effect (and
+    (when (and (at_31_16) (valid)) (at_31_15))
+    (when (and (at_31_16) (valid)) (not (at_31_16)))
+    (when (not (and (at_31_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_16_31_17
+  :effect (and
+    (when (and (at_31_16) (valid)) (at_31_17))
+    (when (and (at_31_16) (valid)) (not (at_31_16)))
+    (when (not (and (at_31_16) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_17_30_17
+  :effect (and
+    (when (and (at_31_17) (valid)) (at_30_17))
+    (when (and (at_31_17) (valid)) (not (at_31_17)))
+    (when (not (and (at_31_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_17_31_16
+  :effect (and
+    (when (and (at_31_17) (valid)) (at_31_16))
+    (when (and (at_31_17) (valid)) (not (at_31_17)))
+    (when (not (and (at_31_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_17_31_18
+  :effect (and
+    (when (and (at_31_17) (valid)) (at_31_18))
+    (when (and (at_31_17) (valid)) (not (at_31_17)))
+    (when (not (and (at_31_17) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_18_30_18
+  :effect (and
+    (when (and (at_31_18) (valid)) (at_30_18))
+    (when (and (at_31_18) (valid)) (not (at_31_18)))
+    (when (not (and (at_31_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_18_31_17
+  :effect (and
+    (when (and (at_31_18) (valid)) (at_31_17))
+    (when (and (at_31_18) (valid)) (not (at_31_18)))
+    (when (not (and (at_31_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_18_31_19
+  :effect (and
+    (when (and (at_31_18) (valid)) (at_31_19))
+    (when (and (at_31_18) (valid)) (not (at_31_18)))
+    (when (not (and (at_31_18) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_19_30_19
+  :effect (and
+    (when (and (at_31_19) (valid)) (at_30_19))
+    (when (and (at_31_19) (valid)) (not (at_31_19)))
+    (when (not (and (at_31_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_19_31_18
+  :effect (and
+    (when (and (at_31_19) (valid)) (at_31_18))
+    (when (and (at_31_19) (valid)) (not (at_31_19)))
+    (when (not (and (at_31_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_19_31_20
+  :effect (and
+    (when (and (at_31_19) (valid)) (at_31_20))
+    (when (and (at_31_19) (valid)) (not (at_31_19)))
+    (when (not (and (at_31_19) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_20_30_20
+  :effect (and
+    (when (and (at_31_20) (valid)) (at_30_20))
+    (when (and (at_31_20) (valid)) (not (at_31_20)))
+    (when (not (and (at_31_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_20_31_19
+  :effect (and
+    (when (and (at_31_20) (valid)) (at_31_19))
+    (when (and (at_31_20) (valid)) (not (at_31_20)))
+    (when (not (and (at_31_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_20_31_21
+  :effect (and
+    (when (and (at_31_20) (valid)) (at_31_21))
+    (when (and (at_31_20) (valid)) (not (at_31_20)))
+    (when (not (and (at_31_20) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_21_30_21
+  :effect (and
+    (when (and (at_31_21) (valid)) (at_30_21))
+    (when (and (at_31_21) (valid)) (not (at_31_21)))
+    (when (not (and (at_31_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_21_31_20
+  :effect (and
+    (when (and (at_31_21) (valid)) (at_31_20))
+    (when (and (at_31_21) (valid)) (not (at_31_21)))
+    (when (not (and (at_31_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_21_31_22
+  :effect (and
+    (when (and (at_31_21) (valid)) (at_31_22))
+    (when (and (at_31_21) (valid)) (not (at_31_21)))
+    (when (not (and (at_31_21) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_22_30_22
+  :effect (and
+    (when (and (at_31_22) (valid)) (at_30_22))
+    (when (and (at_31_22) (valid)) (not (at_31_22)))
+    (when (not (and (at_31_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_22_31_21
+  :effect (and
+    (when (and (at_31_22) (valid)) (at_31_21))
+    (when (and (at_31_22) (valid)) (not (at_31_22)))
+    (when (not (and (at_31_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_22_31_23
+  :effect (and
+    (when (and (at_31_22) (valid)) (at_31_23))
+    (when (and (at_31_22) (valid)) (not (at_31_22)))
+    (when (not (and (at_31_22) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_23_30_23
+  :effect (and
+    (when (and (at_31_23) (valid)) (at_30_23))
+    (when (and (at_31_23) (valid)) (not (at_31_23)))
+    (when (not (and (at_31_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_23_31_22
+  :effect (and
+    (when (and (at_31_23) (valid)) (at_31_22))
+    (when (and (at_31_23) (valid)) (not (at_31_23)))
+    (when (not (and (at_31_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_23_31_24
+  :effect (and
+    (when (and (at_31_23) (valid)) (at_31_24))
+    (when (and (at_31_23) (valid)) (not (at_31_23)))
+    (when (not (and (at_31_23) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_24_30_24
+  :effect (and
+    (when (and (at_31_24) (valid)) (at_30_24))
+    (when (and (at_31_24) (valid)) (not (at_31_24)))
+    (when (not (and (at_31_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_24_31_23
+  :effect (and
+    (when (and (at_31_24) (valid)) (at_31_23))
+    (when (and (at_31_24) (valid)) (not (at_31_24)))
+    (when (not (and (at_31_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_24_31_25
+  :effect (and
+    (when (and (at_31_24) (valid)) (at_31_25))
+    (when (and (at_31_24) (valid)) (not (at_31_24)))
+    (when (not (and (at_31_24) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_25_30_25
+  :effect (and
+    (when (and (at_31_25) (valid)) (at_30_25))
+    (when (and (at_31_25) (valid)) (not (at_31_25)))
+    (when (not (and (at_31_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_25_31_24
+  :effect (and
+    (when (and (at_31_25) (valid)) (at_31_24))
+    (when (and (at_31_25) (valid)) (not (at_31_25)))
+    (when (not (and (at_31_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_25_31_26
+  :effect (and
+    (when (and (at_31_25) (valid)) (at_31_26))
+    (when (and (at_31_25) (valid)) (not (at_31_25)))
+    (when (not (and (at_31_25) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_26_30_26
+  :effect (and
+    (when (and (at_31_26) (valid)) (at_30_26))
+    (when (and (at_31_26) (valid)) (not (at_31_26)))
+    (when (not (and (at_31_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_26_31_25
+  :effect (and
+    (when (and (at_31_26) (valid)) (at_31_25))
+    (when (and (at_31_26) (valid)) (not (at_31_26)))
+    (when (not (and (at_31_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_26_31_27
+  :effect (and
+    (when (and (at_31_26) (valid)) (at_31_27))
+    (when (and (at_31_26) (valid)) (not (at_31_26)))
+    (when (not (and (at_31_26) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_27_30_27
+  :effect (and
+    (when (and (at_31_27) (valid)) (at_30_27))
+    (when (and (at_31_27) (valid)) (not (at_31_27)))
+    (when (not (and (at_31_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_27_31_26
+  :effect (and
+    (when (and (at_31_27) (valid)) (at_31_26))
+    (when (and (at_31_27) (valid)) (not (at_31_27)))
+    (when (not (and (at_31_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_27_31_28
+  :effect (and
+    (when (and (at_31_27) (valid)) (at_31_28))
+    (when (and (at_31_27) (valid)) (not (at_31_27)))
+    (when (not (and (at_31_27) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_28_30_28
+  :effect (and
+    (when (and (at_31_28) (valid)) (at_30_28))
+    (when (and (at_31_28) (valid)) (not (at_31_28)))
+    (when (not (and (at_31_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_28_31_27
+  :effect (and
+    (when (and (at_31_28) (valid)) (at_31_27))
+    (when (and (at_31_28) (valid)) (not (at_31_28)))
+    (when (not (and (at_31_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_28_31_29
+  :effect (and
+    (when (and (at_31_28) (valid)) (at_31_29))
+    (when (and (at_31_28) (valid)) (not (at_31_28)))
+    (when (not (and (at_31_28) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_29_30_29
+  :effect (and
+    (when (and (at_31_29) (valid)) (at_30_29))
+    (when (and (at_31_29) (valid)) (not (at_31_29)))
+    (when (not (and (at_31_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_29_31_28
+  :effect (and
+    (when (and (at_31_29) (valid)) (at_31_28))
+    (when (and (at_31_29) (valid)) (not (at_31_29)))
+    (when (not (and (at_31_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_29_31_30
+  :effect (and
+    (when (and (at_31_29) (valid)) (at_31_30))
+    (when (and (at_31_29) (valid)) (not (at_31_29)))
+    (when (not (and (at_31_29) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_30_30_30
+  :effect (and
+    (when (and (at_31_30) (valid)) (at_30_30))
+    (when (and (at_31_30) (valid)) (not (at_31_30)))
+    (when (not (and (at_31_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_30_31_29
+  :effect (and
+    (when (and (at_31_30) (valid)) (at_31_29))
+    (when (and (at_31_30) (valid)) (not (at_31_30)))
+    (when (not (and (at_31_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_30_31_31
+  :effect (and
+    (when (and (at_31_30) (valid)) (at_31_31))
+    (when (and (at_31_30) (valid)) (not (at_31_30)))
+    (when (not (and (at_31_30) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_31_30_31
+  :effect (and
+    (when (and (at_31_31) (valid)) (at_30_31))
+    (when (and (at_31_31) (valid)) (not (at_31_31)))
+    (when (not (and (at_31_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action move_31_31_31_30
+  :effect (and
+    (when (and (at_31_31) (valid)) (at_31_30))
+    (when (and (at_31_31) (valid)) (not (at_31_31)))
+    (when (not (and (at_31_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action pickup_treasure1
+  :effect (and
+    (when (and (at_31_0) (valid)) (holding_treasure_1))
+    (when (and (at_31_0) (valid) (unlistedeffect_pickup_treasure1_holding_treasure_3)) (holding_treasure_3))
+    (when (not (and (at_31_0) (valid))) (not (valid)))
+  )
+ )
+
+ (:action pickup_treasure2
+  :effect (and
+    (when (and (at_31_31) (valid)) (holding_treasure_2))
+    (when (not (and (at_31_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action pickup_treasure3
+  :effect (and
+    (when (and (at_0_31) (valid)) (holding_treasure_3))
+    (when (and (at_0_31) (valid) (unlistedeffect_pickup_treasure3_holding_treasure_2)) (holding_treasure_2))
+    (when (not (and (at_0_31) (valid))) (not (valid)))
+  )
+ )
+
+ (:action cpp_goal
+  :precondition (and )
+  :effect (when (and (at_0_0 ) (holding_treasure_1 ) (holding_treasure_2 ) (holding_treasure_3 ) (valid)) (done))
+ )
+)

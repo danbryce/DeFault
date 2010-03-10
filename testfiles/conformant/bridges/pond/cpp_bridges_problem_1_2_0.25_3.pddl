@@ -1,0 +1,10 @@
+(define (problem bridges)
+ (:domain Bridges)
+ (:init
+  (at_0_0)
+  (valid)
+  (probabilistic 0.5 (openprec_move_1_0_1_1_bridge_1_0_1_1))
+  (probabilistic 0.5 (openprec_move_1_1_1_0_bridge_1_0_1_1))
+ )
+ (:goal (and (done)))
+)
