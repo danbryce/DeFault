@@ -6,13 +6,13 @@ import edu.usu.cs.search.SearchTest;
 
 public class BlindNav {
 	
-	private int maxSize = 16;
-	private int createThisManyOfMaxSize = 50;
+	private int maxSize = 6;
+	private int createThisManyOfMaxSize = 10;
 	private String extension = ".pddl";
 	
 	@Test
 	public void createBlindNavDomains() {
-		for(int i = 2; i <= maxSize; i *= 2) {
+		for(int i = 6; i <= maxSize; i *= 2) {
 			String[] args = new String[3];
 			args[0] = Integer.toString(i);
 			args[1] = "testfiles/incomplete/blindnav";
@@ -27,7 +27,7 @@ public class BlindNav {
 		String blindnavInputDir = "testfiles/incomplete/blindnav/";
 		String blindnavCppDir = "testfiles/conformant/blindnav/" + translationType + "/";
 		
-		for(int gridSize = 2; gridSize <= maxSize; gridSize *= 2) {
+		for(int gridSize = 6; gridSize <= maxSize; gridSize *= 2) {
 			for(int instance = 1; instance <= createThisManyOfMaxSize; instance++) {
 				String[] args = new String[5];
 				args[0] = blindnavInputDir + "blindnav_" + gridSize + "_" + instance + extension;
