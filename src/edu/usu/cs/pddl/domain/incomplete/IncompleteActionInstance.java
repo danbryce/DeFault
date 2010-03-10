@@ -273,6 +273,9 @@ public class IncompleteActionInstance  implements ActionInstance{
 					}
 				}
 			}
+			
+			// Remove any delete effect that is in the add effects
+			this.deleteEffects.removeAll(this.addEffects);
 		}
 
 		// Add the possible preconditions

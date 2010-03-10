@@ -1,0 +1,15 @@
+p01-domain.pddl	p01.pddl	friskylength	8	1328	8	0
+p02-domain.pddl	p02.pddl	friskylength	15	1172	15	0
+p03-domain.pddl	p03.pddl	friskylength	22	2109	22	0
+p04-domain.pddl	p04.pddl	friskylength	29	5875	29	0
+p05-domain.pddl	p05.pddl	friskylength	36	10954	36	0
+p06-domain.pddl	p06.pddl	friskylength	43	23735	43	0
+p07-domain.pddl	p07.pddl	friskylength	50	52938	50	0
+p08-domain.pddl	p08.pddl	friskylength	57	113437	57	0
+p09-domain.pddl	p09.pddl	friskylength	64	155297	64	0
+p10-domain.pddl	p10.pddl	friskylength	71	419750	71	0
+p11-domain.pddl	p11.pddl	friskylength	9	78	9	0
+p12-domain.pddl	p12.pddl	friskylength	17	828	17	0
+p13-domain.pddl	p13.pddl	friskylength	25	2703	25	0
+p14-domain.pddl	p14.pddl	friskylength	33	18234	33	0
+p15-domain.pddl	p15.pddl	friskylength	49	75625	140	0
