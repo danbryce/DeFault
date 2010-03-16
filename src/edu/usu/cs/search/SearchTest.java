@@ -14,8 +14,6 @@ import edu.usu.cs.conformant.TranslationToCPP.TranslationType;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
@@ -30,17 +28,10 @@ import edu.usu.cs.planner.ffrisky.UniformCostFFriskySolver;
 import edu.usu.cs.planner.ffvanilla.AStarSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
-import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class SearchTest {
 
-	private static FFRiskyNode finalNode;
-	private static IncompleteProblem problem;
-	private static double goalMin = Double.MAX_VALUE; // Once solution is found,
-														// this is used to keep
-														// track of the best
-														// solution found so far
 	private static Logger logger = LoggerFactory.getLogger(SearchTest.class);
 
 	public static void main(String[] args) {
