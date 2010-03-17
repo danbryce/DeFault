@@ -33,8 +33,6 @@ import java.util.logging.Logger;
 import org.antlr.runtime.tree.Tree;
 
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
-import edu.usu.cs.pddl.domain.DefaultGoalDesc;
-import edu.usu.cs.pddl.domain.DefaultProblem;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.FunctionDef;

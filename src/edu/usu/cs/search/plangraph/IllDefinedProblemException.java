@@ -14,7 +14,9 @@ package edu.usu.cs.search.plangraph;
  */
 public class IllDefinedProblemException extends Exception
 {
-    public IllDefinedProblemException(String message, Throwable cause) {
+	private static final long serialVersionUID = -7443500605181301082L;
+
+	public IllDefinedProblemException(String message, Throwable cause) {
         super(message, cause);
     }
 

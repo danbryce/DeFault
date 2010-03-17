@@ -51,7 +51,7 @@ public class Pair<T>
         if (getClass() != obj.getClass())
             return false;
 
-        final Pair other = (Pair) obj;
+        final Pair<?> other = (Pair<?>) obj;
         if (first.equals(other.first) 
                 && second.equals(other.second)) {
             return true;

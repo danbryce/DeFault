@@ -1,7 +1,6 @@
 package edu.usu.cs.conformant;
 
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -11,12 +10,9 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FunctionDef;
 import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.PredicateDef;
-import edu.usu.cs.pddl.domain.PredicateHeader;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 
 public class TranslationToCPP {
 	

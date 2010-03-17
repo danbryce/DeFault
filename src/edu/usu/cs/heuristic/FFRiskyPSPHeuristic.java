@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.search.StateNode;
 
 /**

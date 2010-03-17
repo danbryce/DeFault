@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.domain.incomplete.Risk;
-import edu.usu.cs.search.astar.AStarSearch;
 
 public class ActionSpike {
 	private FactSpike factSpike = null;

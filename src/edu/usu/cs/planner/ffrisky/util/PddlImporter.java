@@ -8,24 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.FFRiskyHeuristic;
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.DefaultActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
-import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.GoalDesc;
-import edu.usu.cs.pddl.domain.GoalUtils;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.parser.DisjunctionGoalDesc;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class PddlImporter {

@@ -9,7 +9,6 @@ import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
@@ -19,7 +18,6 @@ public class FFRiskyHeuristic implements Heuristic {
 	Problem problem;
 	Domain domain;
 	FFriskyRelaxedPlanningGraph solver;
-	private int planLength = -1;
 
 	public FFRiskyHeuristic(Problem problem, Domain domain, SolverOptions solverOptions) {
 		this.problem = problem;

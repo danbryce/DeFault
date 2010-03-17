@@ -11,7 +11,6 @@ package edu.usu.cs.pddl.domain;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -147,7 +146,7 @@ public class ConsistentLiteralSet
 		for(PredicateInstance pi : predicateValues.keySet()){
 			sortedPredicates.add(pi);	
 		}
-		Collections.sort(sortedPredicates);
+//		Collections.sort(sortedPredicates);
 		
 		for(PredicateInstance pi : sortedPredicates){
 			PredicateLiteral pl = predicateValues.get(pi);
@@ -183,20 +182,20 @@ public class ConsistentLiteralSet
 //		return hashcode;
 	}
 	
-	private int createHashCode() {
-		final int PRIME = 31;
-		int result = 1;
-		for(PredicateLiteral predicate : predicateValues.values()) {
-			// Only add true predicate values to the hash
-			if(predicate.getValue() == true) {
-				result = PRIME * result + predicate.hashCode();
-			}
-		}
-		for(FunctionLiteral function : functionValues.values()) {
-			result = PRIME * result + function.hashCode();
-		}
-		return result;
-	}
+//	private int createHashCode() {
+//		final int PRIME = 31;
+//		int result = 1;
+//		for(PredicateLiteral predicate : predicateValues.values()) {
+//			// Only add true predicate values to the hash
+//			if(predicate.getValue() == true) {
+//				result = PRIME * result + predicate.hashCode();
+//			}
+//		}
+//		for(FunctionLiteral function : functionValues.values()) {
+//			result = PRIME * result + function.hashCode();
+//		}
+//		return result;
+//	}
 
 	@Override
 	public boolean equals(Object obj){

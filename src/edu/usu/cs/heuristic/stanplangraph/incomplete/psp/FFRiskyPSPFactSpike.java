@@ -1,18 +1,12 @@
 package edu.usu.cs.heuristic.stanplangraph.incomplete.psp;
 
-import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import edu.usu.cs.heuristic.stanplangraph.FactHeader;
 import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.FactSpike;
 import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class FFRiskyPSPFactSpike extends FactSpike {
 

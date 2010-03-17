@@ -1,12 +1,10 @@
 package edu.usu.cs.planner.ffvanilla;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.Search;
@@ -17,8 +15,6 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class AStarSolver extends DefaultSolver
 {
-	private static final Logger logger = Logger.getLogger(AStarSolver.class.getName());
-	
 //	private final Domain domain;
 //	private final DefaultProblem problem;
 	private final Search search;

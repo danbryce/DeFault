@@ -1,12 +1,10 @@
 package edu.usu.cs.planner.pspvanilla;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
@@ -14,9 +12,6 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 import edu.usu.cs.search.psp.PSPSearch;
 
 public class PSPSolver extends DefaultSolver {
-	private static final Logger logger = Logger.getLogger(PSPSolver.class.getName());
-
-	
 	
 	public PSPSolver(Domain domain, Problem problem, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException
 	{

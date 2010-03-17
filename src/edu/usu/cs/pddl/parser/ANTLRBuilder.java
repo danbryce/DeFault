@@ -40,7 +40,6 @@ import org.antlr.runtime.tree.Tree;
 
 import edu.usu.cs.pddl.antlr.PddlLexer;
 import edu.usu.cs.pddl.antlr.PddlParser;
-import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.FunctionDef;

@@ -1,19 +1,15 @@
 package edu.usu.cs.heuristic.stanplangraph.incomplete.psp;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.heuristic.Heuristic;
-import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.psp.UtilityFunction;
 
@@ -21,7 +17,6 @@ public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
 	Problem problem;
 	Domain domain;
 	FFriskyPSPRelaxedPlanningGraph solver;
-	private int planLength = -1;
 
 	public FFRiskyPSPRelaxedPlanHeuristic(Problem problem, Domain domain, UtilityFunction utilityFunction, SolverOptions solverOptions) {
 		this.problem = problem;

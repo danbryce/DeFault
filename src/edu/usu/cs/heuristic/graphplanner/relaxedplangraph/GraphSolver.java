@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
@@ -47,9 +46,6 @@ public class GraphSolver
     
 	private static final int MAX_NUM_LEVELS = 100;
 	
-    
-    private final Random random = new Random();
-    
     public GraphSolver(Domain dom, Problem problem2) throws IllDefinedProblemException
     {
         if (dom == null || problem2 == null) {
@@ -216,8 +212,6 @@ public class GraphSolver
         return true;
     }
     
-    private int counter = 0;
-
     /*
      * This builds the plan BACKWARDS, so actions that should be executed first are added
      * at the end of the list.

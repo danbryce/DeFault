@@ -1,12 +1,10 @@
 package edu.usu.cs.pddl.domain;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
 import edu.usu.cs.pddl.goalseffects.NotGoalDesc;
 import edu.usu.cs.pddl.parser.DisjunctionGoalDesc;
 
@@ -69,7 +67,6 @@ public class ImplyGoalDesc implements GoalDesc {
 
 	public String toString() 
 	{
-		String sep = "";
 		StringBuffer result = new StringBuffer();
 		result.append("(imply ").append(antecedent).append(" ").append(consequent).append(")");
 		return result.toString();

@@ -7,7 +7,6 @@ import java.util.List;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;

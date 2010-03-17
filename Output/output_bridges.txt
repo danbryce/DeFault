@@ -1,0 +1,3 @@
+blindnav_2_1.pddl	blindnav_problem.pddl	friskylengthfirst	5	188	5	2
+blindnav_2_1.pddl	blindnav_problem.pddl	friskyriskfirst	7	187	7	0
+bridges_v1_4_1.0_1.pddl	bridges_problem.pddl	friskylength	21	2703	324	15

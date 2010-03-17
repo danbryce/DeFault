@@ -14,7 +14,9 @@ package edu.usu.cs.pddl.domain;
  */
 public class InconsistentLiteralException extends Exception
 {
-    public InconsistentLiteralException(String message, Throwable cause) {
+	private static final long serialVersionUID = -6213559589732354989L;
+
+	public InconsistentLiteralException(String message, Throwable cause) {
         super(message, cause);
     }
 

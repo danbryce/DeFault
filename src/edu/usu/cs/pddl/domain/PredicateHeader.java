@@ -13,9 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
-import edu.usu.cs.pddl.parser.DisjunctionGoalDesc;
-
 /**
  * Placeholder for a predicate used in an {@link ActionDef} before actual objects
  * have been matched to the action arguments. Replaced by an {@link PredicateInstance}

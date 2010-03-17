@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;

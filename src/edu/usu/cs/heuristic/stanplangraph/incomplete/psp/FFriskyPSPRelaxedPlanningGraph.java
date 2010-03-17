@@ -8,11 +8,8 @@ import java.util.Set;
 
 import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
 import edu.usu.cs.heuristic.stanplangraph.ActionLevelInfo;
-import edu.usu.cs.heuristic.stanplangraph.ActionSpike;
 import edu.usu.cs.heuristic.stanplangraph.FactHeader;
 import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
-import edu.usu.cs.heuristic.stanplangraph.FactSpike;
-import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.FFriskyRelaxedPlanningGraph;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -344,8 +341,6 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 		Set<Proposition> goalAsPropositions = this.getProblem().getGoalAction().getPreconditions();
 		Set<FactHeader> goal = new HashSet<FactHeader>();
 
-		double utility = 0;
-
 		//System.out.println("Extracting relaxed plan from level: " + level);
 
 
@@ -412,7 +407,6 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 		Set<FactHeader> subGoalsToBeAdded = new HashSet<FactHeader>();
 
 		for (FactHeader subGoal : goal) {
-			boolean hasNoop = false;
 
 			FactLevelInfo fli = factSpike.getFactLevelInfo(level, subGoal.getPropositionIndex());
 

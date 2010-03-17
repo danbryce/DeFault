@@ -8,14 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import antlr.debug.NewLineEvent;
-
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
-import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarNode;
@@ -259,7 +256,7 @@ public class FFRiskyNode  extends AStarNode {
 		List<ActionInstance> actsToExpand = null;
 
 		if(preferredOperators != null && useHelpfulActions){
-			actsToExpand =  new ArrayList(preferredOperators);
+			actsToExpand =  new ArrayList<ActionInstance>(preferredOperators);
 		}
 		else{
 			actsToExpand = subsequentActions;

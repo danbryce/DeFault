@@ -100,7 +100,6 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 				//risks to action are same as risks to fact
 				int index = actionHeader.getPreconditions().nextSetBit(0);
 				FactHeader prec = globalFactHeaders.get(index);
-				FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, index);
 				ali.getSupportingFacts().add(prec);
 			}
 			else{
@@ -108,7 +107,6 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 
 				//take union of precondition possible and critical risks
 				for(FactHeader factHeader : actionHeader.getPreconditionHeaders()){
-					FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
 					ali.getSupportingFacts().add(factHeader);
 				}
 //				for(Proposition possPre : actionHeader.getAction().getPossiblePreconditions()){

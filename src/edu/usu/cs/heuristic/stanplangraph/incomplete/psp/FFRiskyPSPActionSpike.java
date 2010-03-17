@@ -1,8 +1,6 @@
 package edu.usu.cs.heuristic.stanplangraph.incomplete.psp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
@@ -11,10 +9,6 @@ import edu.usu.cs.heuristic.stanplangraph.ActionSpike;
 import edu.usu.cs.heuristic.stanplangraph.FactHeader;
 import edu.usu.cs.heuristic.stanplangraph.FactSpike;
 import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.domain.incomplete.Risk;
 
 public class FFRiskyPSPActionSpike extends ActionSpike{
 

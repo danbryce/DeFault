@@ -96,7 +96,6 @@ public class GraphAction
 
     public String toString() 
     {
-        String sep = "";
         StringBuffer result = new StringBuffer();
         result.append(isMaintenanceAction ? "<maint>" : action.toString());
 //        result.append("\n\t[");

@@ -5,13 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
@@ -28,9 +24,6 @@ import edu.usu.cs.search.psp.UtilityFunction;
  * 
  */
 public class FFRiskyPSPNode  extends FFRiskyNode {
-
-	private static Logger logger = LoggerFactory
-	.getLogger(FFRiskyPSPNode.class);
 
 	protected double utilityUpToNow = 0.0;
 	protected double costUpToNow = 0.0;

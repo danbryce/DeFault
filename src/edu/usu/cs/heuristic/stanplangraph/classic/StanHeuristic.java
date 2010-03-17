@@ -9,7 +9,6 @@ import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;

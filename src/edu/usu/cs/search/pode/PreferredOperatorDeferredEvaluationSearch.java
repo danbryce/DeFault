@@ -13,8 +13,6 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.search.DefaultSearch;
-import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;

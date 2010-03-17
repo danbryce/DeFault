@@ -21,7 +21,6 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.GoalDesc;
-import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.PDDLType;
 import edu.usu.cs.pddl.domain.PredicateDef;
@@ -140,36 +139,36 @@ public class IncompleteProblem implements Problem
 		return true;
 	}
 
-	private boolean checkDynamicPredicate(PredicateInstance p) {
-		//static (not dynamic) if 
-		// 1) it is either not given as an effect, or
-		// 2) it is the effect of an action whose precondition
-		//    will never be satisfied, or
-		// 3) it is given as an effect but doesn't change its value
-
-		if(!isAnEffect(p) || 
-				isAnEffectOfUnexecutableAction(p) ||
-				isAnEffectButNeverChangesValue(p)){
-			return false;
-		}
-		return true;	
-	}
-
-	private boolean isAnEffectButNeverChangesValue(PredicateInstance p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private boolean isAnEffectOfUnexecutableAction(PredicateInstance p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private boolean isAnEffect(PredicateInstance p) {
-
-
-		return false;
-	}
+//	private boolean checkDynamicPredicate(PredicateInstance p) {
+//		//static (not dynamic) if 
+//		// 1) it is either not given as an effect, or
+//		// 2) it is the effect of an action whose precondition
+//		//    will never be satisfied, or
+//		// 3) it is given as an effect but doesn't change its value
+//
+//		if(!isAnEffect(p) || 
+//				isAnEffectOfUnexecutableAction(p) ||
+//				isAnEffectButNeverChangesValue(p)){
+//			return false;
+//		}
+//		return true;	
+//	}
+//
+//	private boolean isAnEffectButNeverChangesValue(PredicateInstance p) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+//
+//	private boolean isAnEffectOfUnexecutableAction(PredicateInstance p) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+//
+//	private boolean isAnEffect(PredicateInstance p) {
+//
+//
+//		return false;
+//	}
 
 
 

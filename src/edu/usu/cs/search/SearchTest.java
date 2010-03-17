@@ -121,10 +121,10 @@ public class SearchTest {
 				solverOptions.setUseDeferredEvaluation(true);
 				solver = new GreedyBestFirstFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
-			} else if (args[3].equalsIgnoreCase("quadqueue")) {
-				solverOptions.setUseQuadQueue(true);
-				solver = new FFriskySolver(domain, problem, searchStatistics,
-						solverOptions);
+//			} else if (args[3].equalsIgnoreCase("quadqueue")) {
+//				solverOptions.setUseQuadQueue(true);
+//				solver = new FFriskySolver(domain, problem, searchStatistics,
+//						solverOptions);
 			} else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
 				// Convert domain and problem files to ppddl.
 				if ("pond".equals(args[4])) {

@@ -14,7 +14,9 @@ package edu.usu.cs.pddl.parser;
  */
 public class PDDLSyntaxException extends Exception
 {
-    public PDDLSyntaxException()
+	private static final long serialVersionUID = 2131714624036837144L;
+
+	public PDDLSyntaxException()
     {
         super();
     }

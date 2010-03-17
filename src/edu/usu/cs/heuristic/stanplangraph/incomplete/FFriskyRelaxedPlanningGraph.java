@@ -12,7 +12,6 @@ import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
@@ -21,7 +20,6 @@ import edu.usu.cs.search.incomplete.FFRiskyNode;
 
 public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 
-	private List<IncompleteActionInstance> relaxedPlan = null;
 	protected int levelsPastClassicalLevelOff= 0;
 
 

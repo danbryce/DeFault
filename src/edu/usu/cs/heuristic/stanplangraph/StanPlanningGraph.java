@@ -17,11 +17,8 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.astar.AStarSearch;
-import edu.usu.cs.search.incomplete.psp.FriskyPSPSearch;
 
 public class StanPlanningGraph {
 	protected static Logger logger = LoggerFactory.getLogger(StanPlanningGraph.class.getName());
@@ -498,7 +495,6 @@ public class StanPlanningGraph {
 		Set<FactHeader> subGoalsToBeAdded = new HashSet<FactHeader>();
 
 		for (FactHeader subGoal : goal) {
-			boolean hasNoop = false;
 
 			FactLevelInfo fli = factSpike.getFactLevelInfo(level, subGoal.getPropositionIndex());
 
@@ -620,7 +616,6 @@ public class StanPlanningGraph {
 		Set<FactHeader> subGoalsToBeAdded = new HashSet<FactHeader>();
 
 		for (FactHeader subGoal : goal) {
-			boolean hasNoop = false;
 
 			FactLevelInfo fli = factSpike.getFactLevelInfo(level, subGoal.getPropositionIndex());
 

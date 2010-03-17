@@ -9,7 +9,6 @@
 package edu.usu.cs.heuristic.graphplanner.relaxedplangraph;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -238,15 +237,15 @@ public class PreProcessingLevel extends Level
 		return possibleLiteralCombinations;
 	}
 
-	private boolean noneMutex(Collection<Literal> literalList, Literal lit)
-	{
-		for (Literal testLit : literalList) {
-			if (literalsAreMutex(testLit, lit)) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	private boolean noneMutex(Collection<Literal> literalList, Literal lit)
+//	{
+//		for (Literal testLit : literalList) {
+//			if (literalsAreMutex(testLit, lit)) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	/**
 	 * All predicates that are not defined as true in the PDDL :init section are assumed
@@ -353,26 +352,25 @@ public class PreProcessingLevel extends Level
 		}
 	}
 
-	private void removeMutexPreconds(PreProcessingLevel previousLevel, List<GraphAction> actions)
-	{
-		Iterator<GraphAction>  aIter = actions.iterator();
-		mainLoop:
-			while (aIter.hasNext()) {
-				GraphAction gAction = aIter.next();
-				List<Literal> preconds = new ArrayList<Literal>(gAction.getPreconditions().getLiterals());
-
-				// Loop over all pairs of precondition literals
-				while (preconds.size() > 1) {
-					Literal firstLit = preconds.remove(0);
-					for (Literal secondLit : preconds) {
-						if (previousLevel.literalsAreMutex(firstLit, secondLit)) {
-							aIter.remove();
-							continue mainLoop;
-						}
-					}
-				}
-			}
-	}
+//	private void removeMutexPreconds(PreProcessingLevel previousLevel, List<GraphAction> actions) {
+//		Iterator<GraphAction> aIter = actions.iterator();
+//		mainLoop: while (aIter.hasNext()) {
+//			GraphAction gAction = aIter.next();
+//			List<Literal> preconds = new ArrayList<Literal>(gAction
+//					.getPreconditions().getLiterals());
+//
+//			// Loop over all pairs of precondition literals
+//			while (preconds.size() > 1) {
+//				Literal firstLit = preconds.remove(0);
+//				for (Literal secondLit : preconds) {
+//					if (previousLevel.literalsAreMutex(firstLit, secondLit)) {
+//						aIter.remove();
+//						continue mainLoop;
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	public boolean literalsAreMutex(Literal one, Literal two) 
 	{
@@ -506,31 +504,31 @@ public class PreProcessingLevel extends Level
 		return result;
 	}
 
-	private boolean creatingActionsAreMutex(final Literal firstLiteral,
-			final Literal secondLiteral,
-			Map<Literal, List<GraphAction>> literalCreatorMap,
-			Map<GraphAction, Set<GraphAction>> actionMutexMap)
-	{
-		List<GraphAction> firstLitActions = literalCreatorMap.get(firstLiteral);
-		List<GraphAction> secondLitActions = literalCreatorMap.get(secondLiteral);
-
-		for (GraphAction firstAction : firstLitActions) {
-			Set<GraphAction> firstMutexes = actionMutexMap.get(firstAction);
-
-			if (firstMutexes == null) {
-				// no actions are mutex with firstAction => literals certainly not mutex
-				return false;
-			} else {
-				for (GraphAction secondAction : secondLitActions) {
-					if (!firstMutexes.contains(secondAction)) {
-						// Found two actions that are not mutex => literals are not mutex
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
+//	private boolean creatingActionsAreMutex(final Literal firstLiteral,
+//			final Literal secondLiteral,
+//			Map<Literal, List<GraphAction>> literalCreatorMap,
+//			Map<GraphAction, Set<GraphAction>> actionMutexMap)
+//	{
+//		List<GraphAction> firstLitActions = literalCreatorMap.get(firstLiteral);
+//		List<GraphAction> secondLitActions = literalCreatorMap.get(secondLiteral);
+//
+//		for (GraphAction firstAction : firstLitActions) {
+//			Set<GraphAction> firstMutexes = actionMutexMap.get(firstAction);
+//
+//			if (firstMutexes == null) {
+//				// no actions are mutex with firstAction => literals certainly not mutex
+//				return false;
+//			} else {
+//				for (GraphAction secondAction : secondLitActions) {
+//					if (!firstMutexes.contains(secondAction)) {
+//						// Found two actions that are not mutex => literals are not mutex
+//						return false;
+//					}
+//				}
+//			}
+//		}
+//		return true;
+//	}
 
 	private Map<LiteralInstance, List<Literal>> buildLiteralLookup(Set<Literal> allLiterals)
 	{

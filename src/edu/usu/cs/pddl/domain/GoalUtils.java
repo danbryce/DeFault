@@ -16,10 +16,10 @@ public class GoalUtils {
 	//It returns a sentence with the standardized quantifiers with an empty sentence
 	public static GoalDesc stripAndStandardizeQuantifiers(List<GoalDesc> dnfConjuncts, List<GoalDesc> dnfConjunctsWithoutQuantifiers) {
 
-		int varIndex = 0;
+//		int varIndex = 0;
 		List<GoalDesc> quantifiers = new ArrayList<GoalDesc>();
 		for(GoalDesc c : dnfConjuncts){
-			GoalDesc cStandardized = renameQuantifiers(c, varIndex);
+//			GoalDesc cStandardized = renameQuantifiers(c, varIndex);
 			GoalDesc cUnquantified = stripQuantifiers(c); //afterward c is only quantifiers, and cUnquantified is the nested formula
 			if(cUnquantified != c){ //only keep track of quantifiers if there are any
 				quantifiers.add(c);

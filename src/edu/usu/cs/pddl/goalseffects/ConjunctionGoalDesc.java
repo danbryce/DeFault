@@ -9,27 +9,20 @@
 package edu.usu.cs.pddl.goalseffects;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
-import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.FalseGoal;
 import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.GoalDesc;
-import edu.usu.cs.pddl.domain.GoalUtils;
 import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.MethodDef;
 import edu.usu.cs.pddl.domain.PDDLObject;
-import edu.usu.cs.pddl.domain.PredicateHeader;
 import edu.usu.cs.pddl.domain.TrueGoal;
 import edu.usu.cs.pddl.parser.DisjunctionGoalDesc;
-import edu.usu.cs.pddl.parser.ForAllGoalDesc;
-import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
-import edu.usu.cs.pddl.parser.QuantifiedGoal;
 
 /**
  * An 'and' goal.

@@ -16,16 +16,13 @@ import org.slf4j.LoggerFactory;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.pspffrisky.FFRiskyPSPEHCSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.SearchStatistics;
-import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FFRiskyPSPTest {

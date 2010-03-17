@@ -40,7 +40,6 @@ import org.antlr.runtime.tree.Tree;
 
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ConstantDef;
-import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Effect;
 import edu.usu.cs.pddl.domain.FormalArgument;

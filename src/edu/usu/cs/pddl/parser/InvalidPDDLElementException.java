@@ -15,7 +15,9 @@ package edu.usu.cs.pddl.parser;
  */
 public class InvalidPDDLElementException extends Exception
 {
-    public InvalidPDDLElementException()
+	private static final long serialVersionUID = -3426091388469660547L;
+
+	public InvalidPDDLElementException()
     {
         super();
     }

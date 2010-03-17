@@ -1,7 +1,5 @@
 package edu.usu.cs.pddl.domain;
 
-import java.util.List;
-
 public class ConstantDef extends FormalArgument {
 
 	public ConstantDef(String name) {

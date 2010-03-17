@@ -1,7 +1,6 @@
 package edu.usu.cs.search;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -14,7 +13,6 @@ import edu.usu.cs.heuristic.stanplangraph.classic.StanHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 

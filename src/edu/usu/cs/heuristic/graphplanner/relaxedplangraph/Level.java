@@ -44,8 +44,6 @@ public class Level
     private Set<Literal> endLiterals;
     private List<GraphAction> actions;
     private Set<Pair<GraphAction>> actionMutexes;
-    private Set<Pair<Literal>> literalMutexes;
-    
     // Generated fields
     private Map<LiteralInstance, List<Literal>> endLiteralLookup;
 
@@ -67,7 +65,6 @@ public class Level
     	endLiterals = null;
     	actions = null;
     	actionMutexes= null;
-    	literalMutexes = null;
     }
     
     /**
@@ -81,7 +78,7 @@ public class Level
         levelNum = 0;
         actions = Collections.emptyList();
         actionMutexes = Collections.emptySet();
-        literalMutexes = Collections.emptySet();
+        Collections.emptySet();
 
         endLiterals = new HashSet<Literal>(problem.getStartState().getLiterals());
         //createPredicateNegations(instances);
