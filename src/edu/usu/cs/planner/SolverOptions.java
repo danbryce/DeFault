@@ -7,7 +7,21 @@ public class SolverOptions {
 	private boolean useDeferredEvaluation = false;
 	private boolean usePreferredOperators = false;
 	private boolean riskHeuristicFirst = false;
-//	private boolean useQuadQueue = false;
+	private boolean useJDDGValue = false;
+	
+	public boolean isUseJDDGValue() {
+		return useJDDGValue;
+	}
+	public void setUseJDDGValue(boolean useJDDGValue) {
+		this.useJDDGValue = useJDDGValue;
+	}
+	public boolean isUseJDDHeuristic() {
+		return useJDDHeuristic;
+	}
+	public void setUseJDDHeuristic(boolean useJDDHeuristic) {
+		this.useJDDHeuristic = useJDDHeuristic;
+	}
+	private boolean useJDDHeuristic = false;
 	private boolean ucs = false;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
@@ -40,12 +54,6 @@ public class SolverOptions {
 	public void setRiskHeuristicFirst(boolean riskHeuristicFirst) {
 		this.riskHeuristicFirst = riskHeuristicFirst;
 	}
-//	public boolean isUseQuadQueue() {
-//		return useQuadQueue;
-//	}
-//	public void setUseQuadQueue(boolean useQuadQueue) {
-//		this.useQuadQueue = useQuadQueue;
-//	}
 	public boolean isUCS() {
 		return ucs;
 	}

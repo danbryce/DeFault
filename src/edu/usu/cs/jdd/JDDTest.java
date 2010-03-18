@@ -39,31 +39,31 @@ public class JDDTest {
 		System.out.println(jdd.getSetCount(xtree));
 	}
 	
-	private static void tutorial() {
-		// Create a BDD object
-		BDD bdd = new BDD(1000, 1000);
-		
-		// Allocating variables
-		int v1 = bdd.createVar();
-		int v2 = bdd.createVar();
-		int v3 = bdd.createVar();
-		
-		// BDD operations (x, y, and z are all trees)
-		int x = bdd.or(v1, v2);
-		int y = bdd.xor(v1, v3);
-		int z = bdd.not(v2);
-		
-		// Reference trees as soon as you get them, then de-reference them when you don't need them anymore.
-		bdd.ref(x);
-		bdd.ref(y);
-		bdd.ref(z);
-		
-		bdd.printSet(x);
-		bdd.printCubes(x);
-		
-		// At the end, do this
-		bdd.deref(x);
-		bdd.deref(y);
-		bdd.deref(z);
-	}
+//	private static void tutorial() {
+//		// Create a BDD object
+//		BDD bdd = new BDD(1000, 1000);
+//		
+//		// Allocating variables
+//		int v1 = bdd.createVar();
+//		int v2 = bdd.createVar();
+//		int v3 = bdd.createVar();
+//		
+//		// BDD operations (x, y, and z are all trees)
+//		int x = bdd.or(v1, v2);
+//		int y = bdd.xor(v1, v3);
+//		int z = bdd.not(v2);
+//		
+//		// Reference trees as soon as you get them, then de-reference them when you don't need them anymore.
+//		bdd.ref(x);
+//		bdd.ref(y);
+//		bdd.ref(z);
+//		
+//		bdd.printSet(x);
+//		bdd.printCubes(x);
+//		
+//		// At the end, do this
+//		bdd.deref(x);
+//		bdd.deref(y);
+//		bdd.deref(z);
+//	}
 }
