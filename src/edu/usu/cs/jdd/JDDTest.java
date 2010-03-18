@@ -13,24 +13,30 @@ public class JDDTest {
 		int b = bdd.createVar();
 		int c = bdd.createVar();
 		
-		int x1 = bdd.createVar();
-		int x2 = bdd.createVar();
-		int x3 = bdd.createVar();
-		
 		int tree1 = bdd.ref(bdd.and(
 				bdd.or(a, b),
 				bdd.or(bdd.not(b),c)
 				));
+		bdd.printSet(tree1);
+		System.out.println(bdd.getSetCount(tree1) + "\n");
+		
+		int x1 = bdd.createVar();
+		int x2 = bdd.createVar();
+		int x3 = bdd.createVar();
+		
 		int tree2 = bdd.ref(bdd.or(
 				bdd.and(bdd.not(x1), bdd.not(x2), bdd.not(x3)),
 				bdd.and(x1, x2),
 				bdd.and(x2, x3)
 		));
-		int tree3 = bdd.ref(bdd.or(tree1, tree2));
-		
-		bdd.printSet(tree1);
 		bdd.printSet(tree2);
-		bdd.printSet(tree3);
+		System.out.println(bdd.getSetCount(tree2) + "\n");
+
+		BDD jdd = new BDD(10);
+		int x = jdd.createVar();
+		int xtree = jdd.ref(jdd.or(x, jdd.not(x)));
+		jdd.printSet(xtree);
+		System.out.println(jdd.getSetCount(xtree));
 	}
 	
 	private static void tutorial() {
@@ -47,7 +53,7 @@ public class JDDTest {
 		int y = bdd.xor(v1, v3);
 		int z = bdd.not(v2);
 		
-		// Reference trees as soon as you get them, then de-reference them when you don't need them jamas.
+		// Reference trees as soon as you get them, then de-reference them when you don't need them anymore.
 		bdd.ref(x);
 		bdd.ref(y);
 		bdd.ref(z);

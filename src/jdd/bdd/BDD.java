@@ -1514,6 +1514,10 @@ public class BDD extends NodeTable {
 
 	/** print the cubes (true assignment) for the minterms in this BDD */
 	public void printCubes(int bdd) {	BDDPrinter.printSet(bdd, num_vars, this, nodeNames);	}
+	
+	public int getSetCount(int bdd) {
+		return BDDCounter.getSetCount(bdd, num_vars, this);
+	}
 
 	/**
 	 * Change the default node-naming procedure, for advanced users only!
