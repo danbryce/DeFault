@@ -237,7 +237,6 @@ public class FFRiskyNode  extends AStarNode {
 		return this.gvalue;
 	}
 
-
 	public List<StateNode> createSubsequentNodes(
 			List<ActionInstance> subsequentActions){
 

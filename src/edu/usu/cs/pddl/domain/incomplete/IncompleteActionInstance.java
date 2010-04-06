@@ -31,15 +31,15 @@ import edu.usu.cs.pddl.goalseffects.PredicateEffect;
  * from one state to another.
  */
 public class IncompleteActionInstance  implements ActionInstance{
-	private final String name;
-	private final Set<Proposition> preconditions;
-	private final Set<Proposition> addEffects;
-	private final Set<Proposition> deleteEffects;
-	private final Set<Proposition> possiblePreconditions;
-	private final Set<Proposition> possibleAddEffects;
-	private final Set<Proposition> possibleDeleteEffects;
-	private int hash;
-	private int index;
+	protected final String name;
+	protected final Set<Proposition> preconditions;
+	protected final Set<Proposition> addEffects;
+	protected final Set<Proposition> deleteEffects;
+	protected final Set<Proposition> possiblePreconditions;
+	protected final Set<Proposition> possibleAddEffects;
+	protected final Set<Proposition> possibleDeleteEffects;
+	protected int hash;
+	protected int index;
 
 	protected  ActionDef definition;
 	protected Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();

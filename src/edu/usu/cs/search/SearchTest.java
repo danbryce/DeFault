@@ -32,7 +32,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class SearchTest {
 
-	private static Logger logger = LoggerFactory.getLogger(SearchTest.class);
+//	private static Logger logger = LoggerFactory.getLogger(SearchTest.class);
 
 	public static void main(String[] args) {
 		if (!(args.length == 3 || args.length == 4 || args.length == 5 || args.length == 6)) {
@@ -74,16 +74,16 @@ public class SearchTest {
 		try {
 			// Initialize search algorithm
 
-			if (args.length == 3 || args[3].equalsIgnoreCase("frisky")||
-					args[3].equalsIgnoreCase("friskyLengthFirst")) {
+			if (args.length == 3 || args[3].equalsIgnoreCase("frisky")
+					|| args[3].equalsIgnoreCase("friskyLengthFirst")) {
 				solver = new FFriskySolver(domain, problem, searchStatistics,
 						solverOptions);
 			} else if (args[3].equalsIgnoreCase("friskyRiskFirst")) {
 				solverOptions.setRiskHeuristicFirst(true);
 				solver = new FFriskySolver(domain, problem, searchStatistics,
 						solverOptions);
-			} else if (args.length == 3 || args[3].equalsIgnoreCase("friskyMS") ||
-					args[3].equalsIgnoreCase("friskyMSLengthFirst")) {
+			} else if (args.length == 3 || args[3].equalsIgnoreCase("friskyMS")
+					|| args[3].equalsIgnoreCase("friskyMSLengthFirst")) {
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solver = new FFriskySolver(domain, problem, searchStatistics,
 						solverOptions);
@@ -91,7 +91,7 @@ public class SearchTest {
 				solverOptions.setRiskHeuristicFirst(true);
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solver = new FFriskySolver(domain, problem, searchStatistics,
-						solverOptions);				
+						solverOptions);
 			} else if (args.length == 3
 					|| args[3].equalsIgnoreCase("friskylength")) {
 				solver = new FFriskyLengthSolver(domain, problem,
@@ -126,7 +126,7 @@ public class SearchTest {
 				solverOptions.setUseJDDHeuristic(true);
 				solver = new FFriskySolver(domain, problem, searchStatistics,
 						solverOptions);
- 			} else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
+			} else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
 				// Convert domain and problem files to ppddl.
 				if ("pond".equals(args[4])) {
 					TranslationToCPP.ConvertToCPP(domain, problem, args[2],
@@ -147,12 +147,15 @@ public class SearchTest {
 		// getPlan(search);
 
 		if (plan == null) {
-			logger.debug("\nNo plan found");
+//			logger.debug("\nNo plan found");
+			System.out.println("\nNo plan found");
 			return;
 		}
-		logger.debug("\nPlan found");
+//		logger.debug("\nPlan found");
+		System.out.println("\nPlan found");
 		for (ActionInstance action : plan) {
-			logger.debug(action.getName());
+//			logger.debug(action.getName());
+			System.out.println(action.getName());
 		}
 
 		// // Output the state sequence and actions in the plan
@@ -176,14 +179,25 @@ public class SearchTest {
 		// System.out.println(risk);
 		// }
 
-		logger.debug("\nFinal Stats:\n");
-		logger.debug("Plan length: " + plan.size());
-		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
+//		logger.debug("\nFinal Stats:\n");
+//		logger.debug("Plan length: " + plan.size());
+//		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
+//				+ " milliseconds");
+//		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
+//		if (searchStatistics.getSolutionNode() != null
+//				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
+//			logger.debug("Risk count: "
+//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+//							.getCriticalRisks().size());
+//		}
+		System.out.println("\nFinal Stats:\n");
+		System.out.println("Plan length: " + plan.size());
+		System.out.println("Elapsed time: " + searchStatistics.getElapsedTime()
 				+ " milliseconds");
-		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
+		System.out.println("Nodes expanded: " + searchStatistics.getNodesExpanded());
 		if (searchStatistics.getSolutionNode() != null
 				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
-			logger.debug("Risk count: "
+			System.out.println("Risk count: "
 					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
 							.getCriticalRisks().size());
 		}

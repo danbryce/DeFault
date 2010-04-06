@@ -21,7 +21,7 @@ public class ParserTest {
 				return;
 			}
 		}
-		
+
 		// Open and parse the domain file
 		File inputDomainFile = new File(args[0]);
 		if (!inputDomainFile.exists()) {
@@ -30,28 +30,27 @@ public class ParserTest {
 		}
 		String domainOutput = null;
 		try {
-		FileReader fileReader = new FileReader(inputDomainFile);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		
-		List<String> inputDomainlines = new ArrayList<String>();
-		while (true) {
-			String inputDomainLine = bufferedReader.readLine();
-			if (inputDomainLine == null) {
-				break;
+			FileReader fileReader = new FileReader(inputDomainFile);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+			List<String> inputDomainlines = new ArrayList<String>();
+			while (true) {
+				String inputDomainLine = bufferedReader.readLine();
+				if (inputDomainLine == null) {
+					break;
+				}
+				inputDomainlines.add(inputDomainLine);
 			}
-			inputDomainlines.add(inputDomainLine);
-		}
-		
-		domainOutput = Parser.parseParcPrinterDomainFile(inputDomainlines);
-		
-		bufferedReader.close();
-		fileReader.close();
-		}
-		catch(Exception e) {
+
+			domainOutput = Parser.parseParcPrinterDomainFile(inputDomainlines);
+
+			bufferedReader.close();
+			fileReader.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
-		
+
 		System.out.println(domainOutput);
 		try {
 			FileWriter fstream = new FileWriter(args[2]);
@@ -62,38 +61,38 @@ public class ParserTest {
 			e.printStackTrace();
 			return;
 		}
-		
 
 		// Open and parse the problem file
 		File inputProblemFile = new File(args[1]);
 		if (!inputProblemFile.exists()) {
-			System.err.println("Unable to find input PDDL problem file " + args[0]);
+			System.err.println("Unable to find input PDDL problem file "
+					+ args[0]);
 			usage();
 		}
 		String problemOutput = null;
 		try {
-		FileReader fileReader = new FileReader(inputProblemFile);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		
-		List<String> inputProblemlines = new ArrayList<String>();
-		while (true) {
-			String inputProblemLine = bufferedReader.readLine();
-			if (inputProblemLine == null) {
-				break;
+			FileReader fileReader = new FileReader(inputProblemFile);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+			List<String> inputProblemlines = new ArrayList<String>();
+			while (true) {
+				String inputProblemLine = bufferedReader.readLine();
+				if (inputProblemLine == null) {
+					break;
+				}
+				inputProblemlines.add(inputProblemLine);
 			}
-			inputProblemlines.add(inputProblemLine);
-		}
-		
-		problemOutput = Parser.parseParcPrinterProblemFile(inputProblemlines);
-		
-		bufferedReader.close();
-		fileReader.close();
-		}
-		catch(Exception e) {
+
+			problemOutput = Parser
+					.parseParcPrinterProblemFile(inputProblemlines);
+
+			bufferedReader.close();
+			fileReader.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
-		
+
 		System.out.println(problemOutput);
 		try {
 			FileWriter fstream = new FileWriter(args[3]);
@@ -105,7 +104,7 @@ public class ParserTest {
 			return;
 		}
 	}
-	
+
 	private static void usage() {
 		System.out.println("ParserTest [input domain file] [input problem file] [output domain file] [output problem file]");
 	}
