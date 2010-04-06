@@ -1,0 +1,37 @@
+Apr 2, 2010 3:35:24 PM edu.usu.cs.pddl.parser.ANTLRBuilder parseDocument
+INFO: Parsing PDDL file 'testfiles\incomplete\rao-domain.pddl'
+Apr 2, 2010 3:35:24 PM edu.usu.cs.pddl.parser.ANTLRBuilder parseDocument
+INFO: Parsing PDDL file 'testfiles\incomplete\rao-problem.pddl'
+Apr 2, 2010 3:35:24 PM edu.usu.cs.planner.DefaultSolver <init>
+INFO: All action instances in problem:
+Apr 2, 2010 3:35:24 PM edu.usu.cs.planner.DefaultSolver <init>
+INFO: Action: 1 a1
+Apr 2, 2010 3:35:24 PM edu.usu.cs.planner.DefaultSolver <init>
+INFO: Action: 2 a2
+0.156	1	1	0.0	10.0	0.0	0.0	0.0	10.0	
+0.156	2	2	2.0	6.0	1.0	1.0	1.0	5.0	
+Found Solution: Node:
+	F: 0.0 0.0
+	State:
+		p3: vulnerable
+			PrecOpen a1 p3
+		p2: vulnerable
+			PrecOpen a1 p3
+		p1: not vulnerable
+	Risk set:
+		PrecOpen a1 p3
+
+Found solution using queue 0
+
+Plan found
+a1
+a2
+
+Final Stats:
+
+Plan length: 2
+Elapsed time: 156 milliseconds
+Nodes expanded: 2
+Risk count: 1
+
+information written to Output/output_rao.txt

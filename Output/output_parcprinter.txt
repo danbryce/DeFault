@@ -14,3 +14,4 @@ p01_1-domain-incomplete.pddl	p03_1-problem-incomplete.pddl	friskylength	22	9360	
 p01_1-domain-incomplete.pddl	p01_1-problem-incomplete.pddl	friskylength	8	391	8	2
 p01_1-domain-incomplete.pddl	p01_1-problem-incomplete.pddl	friskylengthfirst	8	625	8	0
 p01_1-domain-incomplete.pddl	p01_1-problem-incomplete.pddl	friskyriskfirst	8	610	8	0
+p01_1-domain-incomplete.pddl	p01_1-problem-incomplete.pddl	friskyriskfirst	8	1063	8	0
