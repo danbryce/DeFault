@@ -213,7 +213,7 @@ public class IncompleteProblem implements Problem
 				sw.append("\t").append(p.toString()).append("\n");
 		}
 		else{
-			sw.append(startState.toString());	
+			sw.append(startState.toString());
 		}
 
 		sw.append(" )\n");

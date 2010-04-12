@@ -3,6 +3,9 @@ package edu.usu.cs.conformant;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -10,6 +13,7 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.FunctionDef;
 import edu.usu.cs.pddl.domain.GoalDesc;
 import edu.usu.cs.pddl.domain.PredicateDef;
+import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
@@ -197,10 +201,19 @@ public class TranslationToCPP {
 		output.append(" (:domain " + problem.getDomain().getName() + ")\n");
 		
 		// Initial state
+		Collection<PredicateLiteral> literals = problem.getStartState().getPredicateLiterals();
+		Set<Proposition> initialState = new HashSet<Proposition>();
+		for (PredicateLiteral literal : literals) {
+			if (literal.getValue()) {
+				Proposition p = Proposition.getPropositionFromIndex(literal.getInstance());			
+				initialState.add(p);
+			}
+		}
 		output.append(" (:init\n");
-		for(Proposition prop : problem.getInitialState()) {
+		for(Proposition prop : initialState) {
 			output.append("  (" + prop.getName() + ")\n");
 		}
+		
 		output.append(" " + getValid() + "\n");
 		for(ActionInstance actionInstance : problem.getActions()) {
 			if(actionInstance instanceof IncompleteActionInstance) {

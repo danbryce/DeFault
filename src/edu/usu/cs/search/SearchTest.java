@@ -6,9 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.usu.cs.conformant.TranslationToCPP;
 import edu.usu.cs.conformant.TranslationToCPP.TranslationType;
 import edu.usu.cs.pddl.domain.ActionInstance;
