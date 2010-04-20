@@ -7,6 +7,8 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class RiskCounterAction extends IncompleteActionInstance {
 
+	protected int actionRisks;
+	
 	public RiskCounterAction(String name, Set<Proposition> preconditions,
 			Set<Proposition> addEffects, Set<Proposition> deleteEffects,
 			Set<Proposition> possiblePreconditions,
@@ -25,5 +27,13 @@ public class RiskCounterAction extends IncompleteActionInstance {
 				action.getPossibleAddEffects(),
 				action.getPossibleDeleteEffects(),
 				action.getIndex());
+	}
+	
+	public void setActionRisks(int actionRisks) {
+		this.actionRisks = actionRisks;
+	}
+	
+	public int getActionRisks() {
+		return this.actionRisks;
 	}
 }

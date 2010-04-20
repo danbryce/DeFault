@@ -1,8 +1,10 @@
 package edu.usu.cs.planner.ffrisky.util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
@@ -27,10 +29,13 @@ public class RiskCounter {
 	private static BDD bdd;
 	private static Map<Risk, Integer> riskToBDD;
 	private static Map<Integer, Risk> bddToRisk;
+	private static List<Risk> allRisks;
+	private static boolean isInitialized = false;
 	
-	public static double getRisks(Domain domain, Problem problem, List<RiskCounterAction> plan) {
+	public static void initialize(Domain domain, Problem problem) {
+		if (isInitialized) return;
 		
-		List<Risk> allRisks = getAllRisks(problem);
+		allRisks = getAllRisks(problem);
 		
 		bdd = new BDD(1000, 1000);
 		
@@ -41,6 +46,24 @@ public class RiskCounter {
 			int temp = bdd.createVar();
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
+		}
+		
+		isInitialized = true;
+	}
+	
+	public static void deref() {
+		// Hopefully this will deref everything
+		bdd = null;
+		riskToBDD = null;
+		bddToRisk = null;
+		allRisks = null;
+		isInitialized = false;
+	}
+	
+	public static int getRisks(Domain domain, Problem problem, List<RiskCounterAction> plan) {
+		
+		if (!isInitialized) {
+			initialize(domain, problem);
 		}
 		
 		// Figure out which risks are true right now
@@ -54,21 +77,24 @@ public class RiskCounter {
 			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode(action));
 		}
 		
-		int solvableDomains = bdd.getSetCount(nodes.get(nodes.size() - 1).getCriticalRisks());
-		for (Risk risk : allRisks) {
-			System.out.print("(" + risk.toString() + ") ");
-		}
-		System.out.println();
-		bdd.printSet(nodes.get(nodes.size() - 1).getCriticalRisks());
+//		for (Risk risk : allRisks) {
+//			System.out.print("(" + risk.toString() + ") ");
+//		}
+//		System.out.println();
+//		bdd.printSet(nodes.get(nodes.size() - 1).getCriticalRisks());
 		
-		double solvableRatio = solvableDomains / Math.pow(2, allRisks.size());
+		int solvableDomains = getSolvableDomains(nodes.get(nodes.size() - 1).getCriticalRisks());
 		
-		// Hopefully this will deref everything
-		bdd = null;
-		riskToBDD = null;
-		bddToRisk = null;
-		
-		return solvableRatio;
+		return solvableDomains;
+	}
+	
+	public static int getSolvableDomains(int bdd) {
+		return RiskCounter.bdd.getSetCount(bdd);
+	}
+	
+	public static double getUnsolvableDomainCount(int bdd) {
+		int solvableDomains = RiskCounter.bdd.getSetCount(bdd);
+		return Math.pow(2, allRisks.size()) - solvableDomains;
 	}
 	
 	public static BDD getBDD() {
@@ -121,7 +147,7 @@ public class RiskCounter {
 	}
 	
 	public static void main(String[] args) {
-		if (args.length != 3) {
+		if (args.length != 6) {
 			usage();
 			return;
 		}
@@ -130,11 +156,13 @@ public class RiskCounter {
 		if (!domainFile.exists()) {
 			System.err.println("Unable to find PDDL domain file " + args[0]);
 			usage();
+			return;
 		}
 		File problemFile = new File(args[1]);
 		if (!problemFile.exists()) {
 			System.err.println("Unable to find PDDL problem file " + args[1]);
 			usage();
+			return;
 		}
 
 		Domain domain = null;
@@ -156,72 +184,173 @@ public class RiskCounter {
 			e.printStackTrace();
 		}
 		
+		initialize(domain, problem);
+		
 		// Get the plan
-		List<RiskCounterAction> plan = new ArrayList<RiskCounterAction>();
-		for (IncompleteActionInstance action : parseOutputFile(problem, args[2])) {
-			plan.add(new RiskCounterAction(action));
+		RiskCounterResults results = new RiskCounterResults();
+		
+		// Set the domain and problem file names and the search type (friskymsriskfirst, uniformcost, etc.)
+		getProblemType(args, results);
+		results.allRisksCount = allRisks.size();
+
+		// Get the plan, plan length, elapsed time, nodes expanded, and risk count
+		parseOutputFile(problem, args[2], results);
+		
+		// If there was a plan, get the number of solvable domains
+		if (results.plan != null)
+		{
+			results.solvableDomains = getRisks(domain, problem, results.plan);
 		}
 		
-		double solvableRatio = getRisks(domain, problem, plan);
+		try {
+			FileWriter fstream = new FileWriter(args[3], true);
+			BufferedWriter out = new BufferedWriter(fstream);
+			
+			out.append(results.toString());
+			
+			out.close();
+			fstream.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
 		
-		System.out.println("Solvable Ratio: " + solvableRatio);
+		System.out.println(results.toString());
+		
+		deref();
 	}
 	
-	private static List<IncompleteActionInstance> parseOutputFile(Problem problem, String outputFileName) {
-		List<IncompleteActionInstance> plan = new ArrayList<IncompleteActionInstance>();
+	private static void getProblemType(String[] args, RiskCounterResults results) {
+		results.instance = Integer.parseInt(args[4]);
+		results.probability = Double.parseDouble(args[5]);
+		results.domainFileName = args[0];
+		results.problemFileName = args[1];
+		
+		String solverName = args[2].toLowerCase();
+		if (solverName.contains("friskymsriskfirst")) {
+			results.solverName = "friskymsriskfirst";
+		} else if (solverName.contains("friskymslengthfirst")) {
+			results.solverName = "friskymslengthfirst";
+		} else if (solverName.contains("uniformcost")) {
+			results.solverName = "uniformcost";
+		} else if (solverName.contains("friskyriskfirst")) {
+			results.solverName = "friskyriskfirst";
+		} else if (solverName.contains("friskylengthfirst")) {
+			results.solverName = "friskylengthfirst";
+		} else if (solverName.contains("friskylength")) {
+			results.solverName = "friskylength";
+		}
+	}
+	
+	private static void parseOutputFile(Problem problem, String outputFileName, RiskCounterResults results) {
+		
+		results.plan = new ArrayList<RiskCounterAction>();
 		
 		// Open the file
 		File file = new File(outputFileName);
 		if (!file.exists()) {
 			System.err.println("Unable to find input FFRisky output file " + outputFileName);
 			usage();
-			return null;
+			return;
 		}
 		
-		List<String> inputLines = null;
+//		List<String> inputLines = null;
 		List<String> planAsStrings = null;
 		
 		try {
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-			inputLines = new ArrayList<String>();
+//			inputLines = new ArrayList<String>();
 			while (true) {
-				String inputLine = bufferedReader.readLine();
-				if (inputLine == null) {
+				String line = bufferedReader.readLine();
+				if (line == null) {
 					break;
 				}
-				inputLines.add(inputLine);
+				
+				// get the plan
+				if (line.equals("Plan found")) {
+					planAsStrings = new ArrayList<String>();
+					
+					while (!line.equals("")) {
+						line = bufferedReader.readLine();
+						planAsStrings.add(line);
+					}
+				}
+				
+				// Get plan length, elapsed time, nodes expanded, risk count
+				else if (line.startsWith("Plan length: ")) {
+					String planLengthAsString = line.substring(13);
+					results.planLength = Integer.parseInt(planLengthAsString);
+				}
+				else if (line.startsWith("Elapsed time: ")) {
+					String elapsedTimeAsString = line.substring(14);
+					elapsedTimeAsString = elapsedTimeAsString.substring(0, elapsedTimeAsString.indexOf(' '));
+					results.elapsedTime = Integer.parseInt(elapsedTimeAsString);
+				}
+				else if (line.startsWith("Nodes expanded: ")) {
+					String nodesExpandedAsString = line.substring(16);
+					results.nodesExpanded = Integer.parseInt(nodesExpandedAsString);
+				}
+				else if (line.startsWith("Risk count: ")) {
+					String riskCountAsString = line.substring(12);
+					results.riskCount = Integer.parseInt(riskCountAsString);
+				}
+				
+//				inputLines.add(line);
 			}
 			
 			bufferedReader.close();
 			fileReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return;
 		}
 		
-		// If it's a ffrisky output file, get the plan
-		for (int i = 0; i < inputLines.size(); i++) {
-			String line = inputLines.get(i);
-			
-			// Search for "Plan found" - 
-			// What's below it is the plan
-			if (line.equals("Plan found")) {
-				planAsStrings = new ArrayList<String>();
-				
-				while (!line.equals("")) {
-					i++;
-					line = inputLines.get(i);
-					planAsStrings.add(line);
-				}
-				break;
-			}
-		}
+//		// If it's a ffrisky output file, get the plan
+//		for (int i = 0; i < inputLines.size(); i++) {
+//			String line = inputLines.get(i);
+//			
+//			// Search for "Plan found" - 
+//			// What's below it is the plan
+//			if (line.equals("Plan found")) {
+//				planAsStrings = new ArrayList<String>();
+//				
+//				while (!line.equals("")) {
+//					i++;
+//					line = inputLines.get(i);
+//					planAsStrings.add(line);
+//				}
+//			}
+//			
+//			// Get plan length, elapsed time, nodes expanded, risk count
+//			else if (line.startsWith("Plan length: ")) {
+//				String planLengthAsString = line.substring(13);
+//				results.planLength = Integer.parseInt(planLengthAsString);
+//			}
+//			else if (line.startsWith("Elapsed time: ")) {
+//				String elapsedTimeAsString = line.substring(14);
+//				elapsedTimeAsString = elapsedTimeAsString.substring(0, elapsedTimeAsString.indexOf(' '));
+//				results.elapsedTime = Integer.parseInt(elapsedTimeAsString);
+//			}
+//			else if (line.startsWith("Nodes expanded: ")) {
+//				String nodesExpandedAsString = line.substring(16);
+//				results.nodesExpanded = Integer.parseInt(nodesExpandedAsString);
+//			}
+//			else if (line.startsWith("Risk count: ")) {
+//				String riskCountAsString = line.substring(12);
+//				results.riskCount = Integer.parseInt(riskCountAsString);
+//			}
+//		}
 		
-		// If it's not a ffrisky output file, assume every line has an action instance in the plan
+//		// If it's not a ffrisky output file, assume every line has an action instance in the plan
+//		if (planAsStrings == null) {
+//			planAsStrings = inputLines;
+//		}
+		
+		// If it's not a ffrisky output file, just quit
 		if (planAsStrings == null) {
-			planAsStrings = inputLines;
+			return;
 		}
 		
 		// Convert the plan from strings to action instances
@@ -230,17 +359,15 @@ public class RiskCounter {
 		for (String str : planAsStrings) {
 			for (ActionInstance actionInstance : allActions) {
 				if (actionInstance.getName().equals(str)) {
-					plan.add((IncompleteActionInstance)actionInstance);
+					results.plan.add(new RiskCounterAction((IncompleteActionInstance)actionInstance));
 					break;
 				}
 			}
 		}
-		plan.add(problem.getGoalAction());
-		
-		return plan;
+		results.plan.add(new RiskCounterAction(problem.getGoalAction()));
 	}
 	
 	private static void usage() {
-		System.out.println("usage: RiskCounter [domain file] [problem file] [ffrisky output file]");
+		System.out.println("usage: RiskCounter [domain file] [problem file] [ffrisky output file] [stats output file] [instance] [probability]");
 	}
 }

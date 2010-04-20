@@ -14,6 +14,9 @@ import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.RiskCounterAction;
+import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarNode;
 
@@ -34,6 +37,7 @@ public class FFRiskyNode  extends AStarNode {
 	private boolean hashCodeInitialized = false;
 	protected SolverOptions solverOptions = null;
 
+	protected RiskCounterNode riskCounterNode = null;
 
 
 	/**
@@ -53,6 +57,9 @@ public class FFRiskyNode  extends AStarNode {
 		this.criticalRisks = new HashSet<Risk>();
 		this.state = propositions;
 		this.solverOptions = solverOptions;
+		if (solverOptions.isUseJDDGValue()) {
+			this.riskCounterNode = new RiskCounterNode(propositions);
+		}
 	}
 
 	//	public FFRiskyNode(HashMap<Proposition, Set<Risk>> propositions,
@@ -92,6 +99,9 @@ public class FFRiskyNode  extends AStarNode {
 		this.dimension = node.dimension;
 		this.heuristic = node.heuristic;
 		this.solverOptions = node.solverOptions;
+		if (solverOptions.isUseJDDGValue()) {
+			this.riskCounterNode = new RiskCounterNode(node.riskCounterNode);
+		}
 	}
 	public HashMap<Proposition, Set<Risk>> getPropositions() {
 		return propositions;
@@ -223,13 +233,16 @@ public class FFRiskyNode  extends AStarNode {
 					this.gvalue[i] = 0.0;
 				}
 				else{
-					if(i == 1){
+					if(i == 1) {
 						this.gvalue[i] = parent.getGValue()[i] + this.action.getCost();
 					}
-					else if (i==0){
+					else if (i == 0 && !solverOptions.isUseJDDGValue()) {
 						Set<Risk> risks = new HashSet<Risk>(this.getCriticalRisks());
 						risks.removeAll(((FFRiskyNode)parent).getCriticalRisks());
 						this.gvalue[i] = risks.size();
+					} else if (i == 0 && solverOptions.isUseJDDGValue()) {
+						// Risk Counter g value
+						this.gvalue[i] = RiskCounter.getUnsolvableDomainCount(riskCounterNode.getCriticalRisks());
 					}
 				}
 			}
@@ -356,6 +369,10 @@ public class FFRiskyNode  extends AStarNode {
 		node.setState(node.getPropositions().keySet());
 		
 		node.setSolverOptions(solverOptions);
+		
+		if (solverOptions.isUseJDDGValue()) {
+			node.riskCounterNode = this.riskCounterNode.getSuccessorNode(new RiskCounterAction(action));
+		}
 
 		return node;
 	}

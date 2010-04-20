@@ -3,3 +3,7 @@ rao-domain.pddl	rao-problem.pddl	friskylengthfirst	2	156	2	1
 rao-domain.pddl	rao-problem.pddl	frisky	2	500	2	1
 rao-domain.pddl	rao-problem.pddl	friskyriskfirst	2	172	2	1
 rao-domain.pddl	rao-problem.pddl	friskyriskfirst	2	609	2	1
+rao-domain.pddl	rao-problem.pddl	jdd	2	250	2	1
+rao-domain.pddl	rao-problem.pddl	jdd	2	203	2	1
+rao-domain.pddl	rao-problem.pddl	jdd	2	219	2	1
+rao-domain.pddl	rao-problem.pddl	jdd	2	5938	2	1

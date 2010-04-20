@@ -18,7 +18,6 @@ public class RiskCounterNode extends AbstractStateNode {
 	protected HashMap<Proposition, Integer> propositions = null;
 	protected int criticalRisks;
 	protected int possibleRisks;
-	protected int actionRisks;
 	protected BDD bdd;
 	protected Map<Risk, Integer> riskToBDD;
 	
@@ -34,7 +33,6 @@ public class RiskCounterNode extends AbstractStateNode {
 		
 		this.criticalRisks = bdd.getOne();
 		this.possibleRisks = bdd.getOne();
-		this.actionRisks = bdd.getOne();
 		
 		this.parent = null;
 		this.state = state;
@@ -61,7 +59,6 @@ public class RiskCounterNode extends AbstractStateNode {
 		
 		this.criticalRisks = bdd.getOne();
 		this.possibleRisks = bdd.getOne();
-		this.actionRisks = bdd.getOne();
 	}
 	
 	public  RiskCounterNode getSuccessorNode(RiskCounterAction action) {
@@ -74,7 +71,7 @@ public class RiskCounterNode extends AbstractStateNode {
 		// Create the new node and copy all the values from the old one to the
 		// new one
 		RiskCounterNode node = new RiskCounterNode(this);
-
+ 
 		node.setActionRisks(this, action);
 		
 		// Add all risks associated with the new node
@@ -102,15 +99,13 @@ public class RiskCounterNode extends AbstractStateNode {
 	}
 	
 	private void setActionRisks(RiskCounterNode parent, RiskCounterAction action) {
-		this.actionRisks = bdd.ref(bdd.and(getPrecRisks(parent, action), getPossPrecRisks(parent, action)));
-	}
-	
-	private int getActionRisks() {
-		return this.actionRisks;
+		int actionRisks = bdd.ref(bdd.and(getPrecRisks(parent, action), getPossPrecRisks(parent, action)));
+		action.setActionRisks(actionRisks);
+		this.action = action;
 	}
 
 	private void setCriticalRisks() {
-		this.criticalRisks = this.actionRisks;
+		this.criticalRisks = bdd.ref(bdd.and(this.criticalRisks, ((RiskCounterAction)this.action).getActionRisks()));
 	}
 	
 	private int getPrecRisks(RiskCounterNode parent, RiskCounterAction action) {
@@ -177,7 +172,7 @@ public class RiskCounterNode extends AbstractStateNode {
 			int newRisks = bdd.ref(
 					bdd.or(
 							this.getPropositions().get(proposition), 
-							this.getActionRisks()
+							((RiskCounterAction)this.action).getActionRisks()
 							));
 			this.getPropositions().put(proposition, newRisks);
 		}
@@ -194,8 +189,12 @@ public class RiskCounterNode extends AbstractStateNode {
 			}
 			
 			// Figure out the risks
-			int newRisks = bdd.or(parent.getPropositions().get(proposition), 
-					bdd.and(parent.getActionRisks(), bdd.not(riskToBDD.get(Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, action.getName(), proposition.getName())))));
+			int newRisks = 
+				bdd.or(
+						this.getPropositions().get(proposition), 
+						bdd.and(
+								action/*((RiskCounterAction)parent.getAction())*/.getActionRisks(), 
+								riskToBDD.get(Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, action.getName(), proposition.getName()))));
 			this.getPropositions().put(proposition, newRisks);
 		}
 	}

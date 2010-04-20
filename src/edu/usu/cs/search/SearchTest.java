@@ -22,6 +22,7 @@ import edu.usu.cs.planner.ffrisky.FFriskyLengthSolver;
 import edu.usu.cs.planner.ffrisky.FFriskySolver;
 import edu.usu.cs.planner.ffrisky.GreedyBestFirstFFriskySolver;
 import edu.usu.cs.planner.ffrisky.UniformCostFFriskySolver;
+import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 import edu.usu.cs.planner.ffvanilla.AStarSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
@@ -121,6 +122,7 @@ public class SearchTest {
 			} else if (args[3].equalsIgnoreCase("jdd")) {
 				solverOptions.setUseJDDGValue(true);
 				solverOptions.setUseJDDHeuristic(true);
+				RiskCounter.initialize(domain, problem);
 				solver = new FFriskySolver(domain, problem, searchStatistics,
 						solverOptions);
 			} else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
