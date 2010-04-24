@@ -69,9 +69,9 @@ public class FriskyVersusFF {
 
 		String[] algorithms = {
 
-				"frisky",
-//				"pode",
-				"friskylength",
+//				"frisky",
+				"pode",
+//				"friskylength",
 //				"friskyEHC",
 //				"friskyMS"
 		};
@@ -103,7 +103,7 @@ public class FriskyVersusFF {
 
 
 			//each probability of being incomplete
-			for(double p = 0.25; p <= 1.0; p+= 0.25){
+			for(double p = 1.0; p <= 1.0; p+= 0.25){
 
 
 					for(int j = 0; j < algorithms.length; j++){
@@ -121,7 +121,7 @@ public class FriskyVersusFF {
 							System.out.print(arg + " ");
 						}
 						System.out.println();
-//						SearchTest.main(args);
+						SearchTest.main(args);
 					}
 				}
 			}

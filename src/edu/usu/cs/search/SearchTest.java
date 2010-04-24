@@ -199,6 +199,8 @@ public class SearchTest {
 			System.out.println("Risk count: "
 					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
 							.getCriticalRisks().size());
+			System.out.println(((FFRiskyNode) searchStatistics.getSolutionNode())
+							.getCriticalRisks());
 		}
 		try {
 			FileWriter fstream = new FileWriter("Output/" + args[2], true);

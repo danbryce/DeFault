@@ -18,7 +18,7 @@ public class ActionSpike {
 	private List<Integer> rankEnd = new ArrayList<Integer>();
 	protected Map<Integer, ActionHeader> globalActionHeaders;
 	private Map<Integer, FactHeader> globalFactHeaders;
-	private StanPlanningGraph solver;
+	protected StanPlanningGraph solver;
 	protected Map<Integer, Map<Integer, ActionLevelInfo>> actionLevelInfos;
 
 	private static Logger logger = LoggerFactory.getLogger(ActionSpike.class.getName());
@@ -238,7 +238,7 @@ public class ActionSpike {
 		}
 		ActionLevelInfo ali = levelInfo.get(index);
 		if(ali == null){
-			ali = new ActionLevelInfo(globalActionHeaders.get(index));
+			ali = new ActionLevelInfo(globalActionHeaders.get(index), solver.getSolverOptions());
 			//System.out.println("made new ali for: " + ali.getActionHeader().getName() + " at level: " + i );
 			levelInfo.put(index, ali);
 		}		

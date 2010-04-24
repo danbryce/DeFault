@@ -20,6 +20,7 @@ import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 import edu.usu.cs.search.psp.UtilityFunction;
 
 public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
@@ -56,7 +57,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 		if(node instanceof FFRiskyNode){
 			FFRiskyNode fn = (FFRiskyNode)node;
 			for (Proposition proposition : fn.getPropositions().keySet()) {
-				Set<Risk> priorRisks = fn.getPropositions().get(proposition);
+				GeneralizedRiskSet priorRisks = fn.getPropositions().get(proposition);
 				if(priorRisks.size() > 0){
 					this.getFactSpike().getFactLevelInfo(0, proposition.getIndex()).setPossibleRisks(priorRisks);
 				}
@@ -191,8 +192,8 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 			ActionLevelInfo alim = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionWithFewestPossibleRisks.getIndex());
 
-			Set<Risk> criticalRisks = new HashSet<Risk>(alim.getCriticalRisks());
-			Set<Risk> possibleRisks = new HashSet<Risk>(alim.getPossibleRisks());
+			GeneralizedRiskSet criticalRisks = new GeneralizedRiskSet(alim.getCriticalRisks());
+			GeneralizedRiskSet possibleRisks = new GeneralizedRiskSet(alim.getPossibleRisks());
 			//possibleRisks.addAll(alim.getPossibleRisks()); //don't propagate possiblerisks
 
 			Set<ActionHeader> possSupporters = fli.getPossibleSupporters();
@@ -210,7 +211,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			//			for (ActionHeader actionHeader : actionsWithFewestCriticalRisks) {
 			//				ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
 			//		
-			//				Set<Risk> actPossRisks = new HashSet<Risk>(ali.getPossibleRisks());
+			//				Set<Risk> actPossRisks = new GeneralizedRiskSet(ali.getPossibleRisks());
 			//				if(fli.getPossibleSupporters().contains(actionHeader)){
 			//					String s = "UnlistedEffect " + actionHeader.getName() + " " + fact.getName();
 			//					Risk r = null;
@@ -222,11 +223,11 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			//					actPossRisks.add(r);
 			//				}
 			//				
-			//				Set<Risk> intersectRisks = new HashSet<Risk>();
+			//				Set<Risk> intersectRisks = new GeneralizedRiskSet();
 			//				intersectRisks.addAll(actPossRisks);
 			//				intersectRisks.retainAll(possibleRisks);
 			//				
-			//				Set<Risk> interSectCriticalRisk = new HashSet<Risk>(criticalRisks);
+			//				Set<Risk> interSectCriticalRisk = new GeneralizedRiskSet(criticalRisks);
 			//				interSectCriticalRisk.retainAll(ali.getCriticalRisks());
 			//				
 			//				if (criticalRisks.size() == interSectCriticalRisk.size() &&
@@ -276,10 +277,10 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			for(FactHeader factHeader : this.getFactSpike().getFactsByRank(this.getFactSpike().getCurrentRank() - 1)) {
 				FFRiskyPSPFactLevelInfo fliNow = (FFRiskyPSPFactLevelInfo) factSpike.getFactLevelInfo(factSpike.getCurrentRank()-1, factHeader.getPropositionIndex());
 				FFRiskyPSPFactLevelInfo fliPrev = (FFRiskyPSPFactLevelInfo) factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
-				Set<Risk> critRisks1 = fliNow.getCriticalRisks();
-				Set<Risk> critRisks2 = fliPrev.getCriticalRisks();
-				Set<Risk> possRisks1 = fliNow.getPossibleRisks();
-				Set<Risk> possRisks2 = fliPrev.getPossibleRisks();
+				GeneralizedRiskSet critRisks1 = fliNow.getCriticalRisks();
+				GeneralizedRiskSet critRisks2 = fliPrev.getCriticalRisks();
+				GeneralizedRiskSet possRisks1 = fliNow.getPossibleRisks();
+				GeneralizedRiskSet possRisks2 = fliPrev.getPossibleRisks();
 				double cost1 = fliNow.getCost();
 				double cost2 = fliPrev.getCost();
 				if(!critRisks1.equals(critRisks2)) {
@@ -304,10 +305,10 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 	}
 
 
-	public Set<Risk> getGoalRiskSet(Map<Proposition, Set<Risk>> goalsAchieved) {
+	public GeneralizedRiskSet getGoalRiskSet(Map<Proposition, GeneralizedRiskSet> goalsAchieved) {
 		// Once it has converged, we're almost done
 		// We just need to get all the critical risks in the goal action preconditions
-		Set<Risk> allGoalsCriticalRisks = new HashSet<Risk>();
+		GeneralizedRiskSet allGoalsCriticalRisks = new GeneralizedRiskSet(getSolverOptions().getRiskArity());
 		for(Proposition subgoal : this.getProblem().getGoalAction().getPreconditions()) {
 			FactHeader precHeader = this.getFactSpike().get(subgoal.getName());
 
@@ -321,21 +322,21 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			//			goalCriticalRisks.addAll(precHeader.getPossibleRisks(this.getActionSpike().getCurrentRank()));
 			FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-1, precHeader.getPropositionIndex());
 			
-			Set<Risk> goalCriticalRisks = new HashSet<Risk>();			
-			goalCriticalRisks.addAll(fli.getCriticalRisks());
-			goalCriticalRisks.addAll(fli.getPossibleRisks());
-			Set<Risk> priorRisks = goalsAchieved.get(subgoal);
+			GeneralizedRiskSet goalCriticalRisks = new GeneralizedRiskSet(getSolverOptions().getRiskArity());			
+			goalCriticalRisks.union(fli.getCriticalRisks());
+			goalCriticalRisks.union(fli.getPossibleRisks());
+			GeneralizedRiskSet priorRisks = goalsAchieved.get(subgoal);
 			if(priorRisks != null){
 				goalCriticalRisks.removeAll(priorRisks); //don't count risks already committed to goals
 			}
-			allGoalsCriticalRisks.addAll(goalCriticalRisks);
+			allGoalsCriticalRisks.union(goalCriticalRisks);
 		}
 
 		return allGoalsCriticalRisks;
 	}
 
 
-	private void getRelaxedPlan(Map<Proposition, Set<Risk>> goalsAcheived) {
+	private void getRelaxedPlan(Map<Proposition, GeneralizedRiskSet> goalsAcheived) {
 
 		int level = this.getFactSpike().getCurrentRank()-1;
 		Set<Proposition> goalAsPropositions = this.getProblem().getGoalAction().getPreconditions();
@@ -435,7 +436,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 
 	public double getRelaxedPlanBenefit(
-			Map<Proposition, Set<Risk>> goalsAchieved) {
+			Map<Proposition, GeneralizedRiskSet> goalsAchieved) {
 		if(plan == null){
 			getRelaxedPlan(goalsAchieved);
 		}
@@ -443,7 +444,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 	}
 
 
-	public double getRelaxedPlanCost(Map<Proposition, Set<Risk>> goalsAchieved) {
+	public double getRelaxedPlanCost(Map<Proposition, GeneralizedRiskSet> goalsAchieved) {
 		if(plan == null){
 			getRelaxedPlan(goalsAchieved);
 		}

@@ -12,11 +12,13 @@ import edu.usu.cs.heuristic.stanplangraph.incomplete.FFRiskyHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FriskySearch;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
@@ -134,6 +136,11 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			// Check to see if the solution is found in the node
 			if(solutionEvaluator.isSolution(problem, node)) {
 //				logger.debug("Found Solution: " + node);
+				searchStatistics.setSolutionNode(node);
+				GeneralizedRiskSet crisks = node.getCriticalRisks();
+				for(Proposition p : problem.getGoalAction().getPreconditions()){
+					crisks.union(node.getPropositions().get(p));
+				}
 				return extractSolution(node);
 			}
 
@@ -163,6 +170,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			searchStatistics.processNode(node);
 			System.out.print(preferredPriority + " " + notPreferredPriority + " ");
 			logger.debug(searchStatistics.toString());
+//			logger.debug(node.getCriticalRisks().toString());
 		}
 	}
 

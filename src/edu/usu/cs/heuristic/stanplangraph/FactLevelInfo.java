@@ -4,15 +4,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 
 public class FactLevelInfo {
-	Set<Risk> possibleRisks;
-	Set<Risk> criticalRisks;
+	GeneralizedRiskSet possibleRisks;
+	GeneralizedRiskSet criticalRisks;
 	Set<ActionHeader> trueSupporters;
 	Set<ActionHeader> possibleSupporters;
 	Set<ActionHeader> allSupporters;
 	Set<ActionHeader> chosenSupporters;
 	FactHeader fact;
+	SolverOptions solverOptions;
 
 	
 	public Set<ActionHeader> getTrueSupporters() {
@@ -28,25 +31,26 @@ public class FactLevelInfo {
 		this.allSupporters = allSupporters;
 	}
 	
-	public FactLevelInfo(FactHeader fact) {
+	public FactLevelInfo(FactHeader fact, SolverOptions solverOptions) {
 		this.fact = fact;
 		this.allSupporters = new HashSet<ActionHeader>();
 		this.trueSupporters = new HashSet<ActionHeader>();
 		this.possibleSupporters = new HashSet<ActionHeader>();
 		this.chosenSupporters = new HashSet<ActionHeader>();
-		this.possibleRisks = new HashSet<Risk>();
-		this.criticalRisks = new HashSet<Risk>();
+		this.solverOptions = solverOptions;
+		this.possibleRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
+		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 	}
-	public Set<Risk> getPossibleRisks() {
+	public GeneralizedRiskSet getPossibleRisks() {
 		return possibleRisks;
 	}
-	public void setPossibleRisks(Set<Risk> possibleRisks) {
+	public void setPossibleRisks(GeneralizedRiskSet possibleRisks) {
 		this.possibleRisks = possibleRisks;
 	}
-	public Set<Risk> getCriticalRisks() {
+	public GeneralizedRiskSet getCriticalRisks() {
 		return criticalRisks;
 	}
-	public void setCriticalRisks(Set<Risk> criticalRisks) {
+	public void setCriticalRisks(GeneralizedRiskSet criticalRisks) {
 		this.criticalRisks = criticalRisks;
 	}
 	public Set<ActionHeader> getPossibleSupporters() {

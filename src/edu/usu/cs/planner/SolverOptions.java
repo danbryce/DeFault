@@ -1,5 +1,7 @@
 package edu.usu.cs.planner;
 
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
+
 public class SolverOptions {
 
 	private boolean useHelpfulActions = false;
@@ -23,6 +25,7 @@ public class SolverOptions {
 	}
 	private boolean useJDDHeuristic = false;
 	private boolean ucs = false;
+	private int riskArity = 10;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}
@@ -54,10 +57,16 @@ public class SolverOptions {
 	public void setRiskHeuristicFirst(boolean riskHeuristicFirst) {
 		this.riskHeuristicFirst = riskHeuristicFirst;
 	}
+	public void setRiskArity(int riskArity) {
+		this.riskArity = riskArity;
+	}
 	public boolean isUCS() {
 		return ucs;
 	}
 	public void setUCS(boolean ucs) {
 		this.ucs = ucs;
+	}
+	public int getRiskArity() {
+		return riskArity;
 	}
 }

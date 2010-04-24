@@ -12,6 +12,7 @@ import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 
 public class FriskySolverTest {
 	
@@ -57,7 +58,7 @@ public class FriskySolverTest {
 		FFriskyRelaxedPlanningGraph friskySolver = new FFriskyRelaxedPlanningGraph(problem, domain, new SolverOptions());
 		System.out.println(friskySolver.toString());
 		
-		Set<Risk> goalRiskSet = friskySolver.getGoalRiskSet();
+		GeneralizedRiskSet goalRiskSet = friskySolver.getGoalRiskSet();
 		if(goalRiskSet == null) {
 			System.out.println("Couldn't find solution");
 		}
@@ -65,9 +66,7 @@ public class FriskySolverTest {
 		System.out.println(friskySolver.toString());
 		
 		System.out.println("\n************ Risks Found ************\n");
-		for(Risk risk : goalRiskSet) {
-			System.out.println(risk.toString());
-		}
+		System.out.println(goalRiskSet.toString());
 		System.out.println("risk count: " + goalRiskSet.size());
 
 //		boolean areNewFacts = true;

@@ -9,6 +9,7 @@ import java.util.Map;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.SolverOptions;
 
 public class FactSpike {
 	private final List<FactHeader> factHeaders = new ArrayList<FactHeader>();
@@ -17,10 +18,13 @@ public class FactSpike {
 	private StanPlanningGraph solver;
 	protected Map<Integer, Map<Integer, FactLevelInfo>> factLevelInfos;
 	private BitSet mask = new BitSet();
-
-	public FactSpike(Map<Integer, FactHeader> globalFactHeaders, StanPlanningGraph solver) {
+	protected SolverOptions solverOptions;
+	
+	public FactSpike(Map<Integer, FactHeader> globalFactHeaders, 
+					 StanPlanningGraph solver) {
 		this.globalFactHeaders = globalFactHeaders;
 		this.solver = solver;
+		this.solverOptions = this.solver.getSolverOptions();
 		factLevelInfos = new HashMap<Integer, Map<Integer, FactLevelInfo>>();
 	}
 
@@ -195,7 +199,7 @@ public class FactSpike {
 		}
 		FactLevelInfo fli = levelInfo.get(index);
 		if(fli == null){
-			fli = new FactLevelInfo(globalFactHeaders.get(index));
+			fli = new FactLevelInfo(globalFactHeaders.get(index), solverOptions);
 //			System.out.println("made new fli for: " + fli.getFact().getName() + " at level: " + i );
 
 			levelInfo.put(index, fli);

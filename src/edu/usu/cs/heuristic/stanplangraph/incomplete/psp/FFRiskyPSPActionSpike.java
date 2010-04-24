@@ -30,7 +30,7 @@ public class FFRiskyPSPActionSpike extends ActionSpike{
 		}
 		ActionLevelInfo ali = levelInfo.get(index);
 		if(ali == null){
-			ali = new FFRiskyPSPActionLevelInfo(globalActionHeaders.get(index));
+			ali = new FFRiskyPSPActionLevelInfo(globalActionHeaders.get(index), solver.getSolverOptions());
 			//System.out.println("made new ali for: " + ali.getActionHeader().getName() + " at level: " + i );
 			levelInfo.put(index, ali);
 		}		

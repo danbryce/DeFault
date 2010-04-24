@@ -47,9 +47,9 @@ public class BridgesTest {
 
 		for(int v = 1; v <= 3; v++) {
 			for(int gridSize = 2; gridSize <= maxGridSize; gridSize*=2) {
-				for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
+				for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
 					for(int alg = 0; alg < algorithms.length; alg++) {
-						for(int k = 1; k <= numFiles; k++) {
+						for(int k = numFiles-1; k <= numFiles-1; k++) {
 							args[0] = pathToDomains + "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 							args[1] = pathToProblems + "bridges_problem" + extension;
 							args[2] = "output_bridges.txt";

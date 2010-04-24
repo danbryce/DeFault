@@ -22,47 +22,47 @@ import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class DefaultSolver implements Solver {
-	
 
-	private static final Logger logger = Logger.getLogger(DefaultSolver.class.getName());
+	private static final Logger logger = Logger.getLogger(DefaultSolver.class
+			.getName());
 
-
-	private  Domain domain = null;
+	private Domain domain = null;
 	private Problem problem = null;
-	protected  List<ActionInstance> actionInstances = null;
+	protected List<ActionInstance> actionInstances = null;
 	protected List<ActionInstance> plan = null;
 	protected Search search = null;
 	protected SearchStatistics searchStatistics = null;
 	protected long maxHeapUsageSize = 0;
 	protected long maxRunTime = 0;
-	private static final long DEFAULT_MAX_HEAP_USAGE = 1024*1024*200;
-	private static final long DEFAULT_MAX_RUNTIME = 1000*60*1;
+	private static final long DEFAULT_MAX_HEAP_USAGE = 1024 * 1024 * 200;
+	private static final long DEFAULT_MAX_RUNTIME = 1000 * 60 * 1;
 	protected SolverOptions solverOptions = null;
 
-	
-	public DefaultSolver(Domain domain, Problem problem, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException
-	{
-		if(domain == null || problem == null) {
+	public DefaultSolver(Domain domain, Problem problem,
+			SearchStatistics searchStatistics, SolverOptions solverOptions)
+			throws IllDefinedProblemException {
+		if (domain == null || problem == null) {
 			throw new IllegalArgumentException("null domain/problem");
-			}
-		
-		long availableMemory = Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
-		
+		}
+
+		long availableMemory = Runtime.getRuntime().maxMemory()
+				- Runtime.getRuntime().freeMemory();
+
 		setMaxHeapUsage(Math.min(DEFAULT_MAX_HEAP_USAGE, availableMemory));
 		setMaxRunTime(DEFAULT_MAX_RUNTIME);
-		
+
 		this.domain = domain;
 		this.problem = problem;
 		this.solverOptions = solverOptions;
 		this.searchStatistics = searchStatistics;
- 		this.actionInstances = PddlImporter.createActionInstances(domain, problem);//createActionInstances(domain, problem);
+		this.actionInstances = PddlImporter.createActionInstances(domain,
+				problem);// createActionInstances(domain, problem);
 		this.problem.setActionInstances(this.actionInstances);
-		
+
 		logger.info("All action instances in problem:");
-		for(ActionInstance ai : actionInstances) {
+		for (ActionInstance ai : actionInstances) {
 			logger.info(ai.toString());
 		}
-
 
 	}
 
@@ -74,24 +74,25 @@ public class DefaultSolver implements Solver {
 		this.maxHeapUsageSize = defaultMaxHeapUsage;
 	}
 
-	public DefaultSolver(){
-		
+	public DefaultSolver() {
+
 	}
 
-	private List<DefaultActionInstance> createActionInstances(Domain domain, Problem problem) throws IllDefinedProblemException
-	{
+	private List<DefaultActionInstance> createActionInstances(Domain domain,
+			Problem problem) throws IllDefinedProblemException {
 		List<DefaultActionInstance> instances = new ArrayList<DefaultActionInstance>();
 		Set<PDDLObject> allObjects = problem.getObjects();
 
-		// Iterate over all actions, creating multiple instances for each (probably)
+		// Iterate over all actions, creating multiple instances for each
+		// (probably)
 		List<ActionDef> actionDefs = domain.getActions();
 		int actIndex = 1;
-		for (ActionDef action : actionDefs) 
-		{
-			List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(action, allObjects, problem.getStartState());
-			for (List<PDDLObject> actualArgs : allowedActualArgs) 
-			{
-				DefaultActionInstance instance = new DefaultActionInstance(action, actualArgs, allObjects, actIndex++);
+		for (ActionDef action : actionDefs) {
+			List<List<PDDLObject>> allowedActualArgs = getPossibleArguments(
+					action, allObjects, problem.getStartState());
+			for (List<PDDLObject> actualArgs : allowedActualArgs) {
+				DefaultActionInstance instance = new DefaultActionInstance(
+						action, actualArgs, allObjects, actIndex++);
 				instances.add(instance);
 			}
 		}
@@ -99,41 +100,46 @@ public class DefaultSolver implements Solver {
 	}
 
 	private List<List<PDDLObject>> getPossibleArguments(ActionDef action,
-			Set<PDDLObject> allObjects, 
-			ConsistentLiteralSet startState)
-			throws IllDefinedProblemException
-			{
+			Set<PDDLObject> allObjects, ConsistentLiteralSet startState)
+			throws IllDefinedProblemException {
 		final List<PDDLObject> noObjects = Collections.emptyList();
 		List<List<PDDLObject>> result = new ArrayList<List<PDDLObject>>();
 		List<FormalArgument> arguments = action.getArguments();
 
 		if (arguments.size() > allObjects.size()) {
-			throw new IllDefinedProblemException("Not enough objects for arguments of action " + action.getName());
+			throw new IllDefinedProblemException(
+					"Not enough objects for arguments of action "
+							+ action.getName());
 		} else if (arguments.size() == 0) {
 			result.add(noObjects);
 		} else {
 			// General case of 1 or more arguments
 
-			// Keep the results as a list of partial solutions, where each solution is a list of arguments
+			// Keep the results as a list of partial solutions, where each
+			// solution is a list of arguments
 			// First stage is one solution, with no arguments-so-far
 			result.add(noObjects);
 			final Set<PDDLObject> remainingObjs = new HashSet<PDDLObject>();
 
 			for (FormalArgument arg : arguments) {
-				// After dealing with argument one, newSolns will be a list of arrays of length one, etc
+				// After dealing with argument one, newSolns will be a list of
+				// arrays of length one, etc
 				List<List<PDDLObject>> newSolns = new ArrayList<List<PDDLObject>>();
 
 				for (List<PDDLObject> argsSoFar : result) {
-					// Get correct set of all objects not used in the argument list so far
+					// Get correct set of all objects not used in the argument
+					// list so far
 					remainingObjs.clear();
 					remainingObjs.addAll(allObjects);
 					remainingObjs.removeAll(argsSoFar);
 
 					for (PDDLObject obj : remainingObjs) {
 						if (arg.typeMatches(obj)) {
-							final List<PDDLObject> newArgList = new ArrayList<PDDLObject>(argsSoFar);
+							final List<PDDLObject> newArgList = new ArrayList<PDDLObject>(
+									argsSoFar);
 							newArgList.add(obj);
-							if(action.isLegalPartialInstantiation(newArgList, startState, allObjects)){
+							if (action.isLegalPartialInstantiation(newArgList,
+									startState, allObjects)) {
 								newSolns.add(newArgList);
 							}
 						}
@@ -143,8 +149,8 @@ public class DefaultSolver implements Solver {
 			}
 		}
 		return result;
-			}
-	
+	}
+
 	public Search getSearch() {
 		return search;
 	}

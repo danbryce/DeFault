@@ -17,6 +17,7 @@ import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 
 public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 
@@ -53,11 +54,11 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 				int index = actionHeader.getPreconditions().nextSetBit(0);
 				FactHeader prec = globalFactHeaders.get(index);
 				FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, index);
-				Set<Risk> criticalRisks = fli.getCriticalRisks();
-				Set<Risk> possibleRisks = fli.getPossibleRisks();
+				GeneralizedRiskSet criticalRisks = fli.getCriticalRisks();
+				GeneralizedRiskSet possibleRisks = fli.getPossibleRisks();
 
-				ali.setCriticalRisks(new HashSet<Risk>(criticalRisks));
-				ali.setPossibleRisks(new HashSet<Risk>(possibleRisks));
+				ali.setCriticalRisks(new GeneralizedRiskSet(criticalRisks));
+				ali.setPossibleRisks(new GeneralizedRiskSet(possibleRisks));
 				ali.getSupportingFacts().add(prec);
 				 
 				
@@ -67,14 +68,14 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 								}
 			}
 			else{
-				Set<Risk> criticalRisks = new HashSet<Risk>();
-				//Set<Risk> possibleRisks = new HashSet<Risk>();
+				GeneralizedRiskSet criticalRisks = new GeneralizedRiskSet(getSolverOptions().getRiskArity());
+				//GeneralizedRiskSet possibleRisks = new GeneralizedRiskSet();
 
 				//take union of precondition possible and critical risks
 				for(FactHeader factHeader : actionHeader.getPreconditionHeaders()){
 					FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
-					criticalRisks.addAll(fli.getCriticalRisks());
-					criticalRisks.addAll(fli.getPossibleRisks());
+					criticalRisks.union(fli.getCriticalRisks());
+					criticalRisks.union(fli.getPossibleRisks());
 					ali.getSupportingFacts().add(factHeader); 
 				}
 				for(Proposition possPre : actionHeader.getAction().getPossiblePreconditions()){
@@ -93,7 +94,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 					}
 					else{
 						FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
-						criticalRisks.addAll(fli.getCriticalRisks());
+						criticalRisks.union(fli.getCriticalRisks());
 						//possibleRisks.addAll(fli.getPossibleRisks());
 						ali.getSupportingFacts().add(factHeader);
 					}
@@ -202,8 +203,8 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 
 			ActionLevelInfo alim = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionWithFewestPossibleRisks.getIndex());
 
-			Set<Risk> criticalRisks = new HashSet<Risk>(alim.getCriticalRisks());
-			Set<Risk> possibleRisks = new HashSet<Risk>(alim.getPossibleRisks());
+			GeneralizedRiskSet criticalRisks = new GeneralizedRiskSet(alim.getCriticalRisks());
+			GeneralizedRiskSet possibleRisks = new GeneralizedRiskSet(alim.getPossibleRisks());
 			//possibleRisks.addAll(alim.getPossibleRisks()); //don't propagate possiblerisks
 
 			Set<ActionHeader> possSupporters = fli.getPossibleSupporters();
@@ -219,7 +220,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			}
 
 
-			if(solverOptions.isUseMultipleSupportersInPlanningGraph()){
+			if(getSolverOptions().isUseMultipleSupportersInPlanningGraph()){
 						// If there are any actionsWithFewestCriticalRisks that have the
 						// same critical risk set as actionsWithFewestPossibleRisks, the
 						// possible risks are the intersection of all these possible risk
@@ -227,25 +228,25 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 						for (ActionHeader actionHeader : actionsWithFewestCriticalRisks) {
 							ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
 					
-							Set<Risk> actPossRisks = new HashSet<Risk>(ali.getPossibleRisks());
+							GeneralizedRiskSet actPossRisks = new GeneralizedRiskSet(ali.getPossibleRisks());
 							if(fli.getPossibleSupporters().contains(actionHeader)){
 								Risk r = Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, actionHeader.getName(), fact.getName());
 								actPossRisks.add(r);
 							}
 							
-							Set<Risk> intersectRisks = new HashSet<Risk>();
-							intersectRisks.addAll(actPossRisks);
-							intersectRisks.retainAll(possibleRisks);
+							GeneralizedRiskSet intersectRisks = new GeneralizedRiskSet(getSolverOptions().getRiskArity());
+							intersectRisks.union(actPossRisks);
+							intersectRisks.crossProduct(possibleRisks);
 							
-							Set<Risk> interSectCriticalRisk = new HashSet<Risk>(criticalRisks);
-							interSectCriticalRisk.retainAll(ali.getCriticalRisks());
+							GeneralizedRiskSet interSectCriticalRisk = new GeneralizedRiskSet(criticalRisks);
+							interSectCriticalRisk.crossProduct(ali.getCriticalRisks());
 							
 							if (criticalRisks.size() == interSectCriticalRisk.size() &&
 									intersectRisks.size() < possibleRisks.size()) {
 			
 								
 			
-								possibleRisks.retainAll(intersectRisks);
+								possibleRisks.crossProduct(intersectRisks);
 								//criticalRisks.addAll(criticalRisks);
 								chosenSupportingActions.add(actionHeader);
 							}
@@ -277,10 +278,10 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 
 
 	//final static int MAX_LEVELS = 100;
-	public Set<Risk> getGoalRiskSet() {
+	public GeneralizedRiskSet getGoalRiskSet() {
 		// Once it has converged, we're almost done
 		// We just need to get all the critical risks in the goal action preconditions
-		Set<Risk> goalCriticalRisks = new HashSet<Risk>();
+		GeneralizedRiskSet goalCriticalRisks = new GeneralizedRiskSet(getSolverOptions().getRiskArity());
 		for(Proposition subgoal : this.getProblem().getGoalAction().getPreconditions()) {
 			FactHeader precHeader = this.getFactSpike().get(subgoal.getName());
 
@@ -293,8 +294,8 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			//			goalCriticalRisks.addAll(precHeader.getCriticalRisks(this.getActionSpike().getCurrentRank()));
 			//			goalCriticalRisks.addAll(precHeader.getPossibleRisks(this.getActionSpike().getCurrentRank()));
 			FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-1, precHeader.getPropositionIndex());
-			goalCriticalRisks.addAll(fli.getCriticalRisks());
-			goalCriticalRisks.addAll(fli.getPossibleRisks());
+			goalCriticalRisks.union(fli.getCriticalRisks());
+			goalCriticalRisks.union(fli.getPossibleRisks());
 		}
 
 		return goalCriticalRisks;
@@ -319,10 +320,10 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			for(FactHeader factHeader : this.getFactSpike().getFactsByRank(this.getFactSpike().getCurrentRank() - 1)) {
 				FactLevelInfo fliNow = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-1, factHeader.getPropositionIndex());
 				FactLevelInfo fliPrev = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
-				Set<Risk> critRisks1 = fliNow.getCriticalRisks();
-				Set<Risk> critRisks2 = fliPrev.getCriticalRisks();
-				Set<Risk> possRisks1 = fliNow.getPossibleRisks();
-				Set<Risk> possRisks2 = fliPrev.getPossibleRisks();
+				GeneralizedRiskSet critRisks1 = fliNow.getCriticalRisks();
+				GeneralizedRiskSet critRisks2 = fliPrev.getCriticalRisks();
+				GeneralizedRiskSet possRisks1 = fliNow.getPossibleRisks();
+				GeneralizedRiskSet possRisks2 = fliPrev.getPossibleRisks();
 				if(!critRisks1.equals(critRisks2)) {
 					hasConverged = false;
 					break;
@@ -346,7 +347,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 		if(node instanceof FFRiskyNode){
 			FFRiskyNode fn = (FFRiskyNode)node;
 			for (Proposition proposition : fn.getPropositions().keySet()) {
-				Set<Risk> priorRisks = fn.getPropositions().get(proposition);
+				GeneralizedRiskSet priorRisks = fn.getPropositions().get(proposition);
 				if(priorRisks.size() > 0){
 				this.getFactSpike().getFactLevelInfo(0, proposition.getIndex()).setPossibleRisks(priorRisks);
 				}

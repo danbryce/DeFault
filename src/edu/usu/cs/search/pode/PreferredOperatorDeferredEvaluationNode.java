@@ -24,25 +24,25 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 	public PreferredOperatorDeferredEvaluationNode(
 			PreferredOperatorDeferredEvaluationNode node) {
 		super(node);
-		// Copy the propositions with their associated risks
-		this.propositions = new HashMap<Proposition, Set<Risk>>();
-		for (Proposition prop : node.getPropositions().keySet()) {
-			Set<Risk> risks = new HashSet<Risk>();
-			for (Risk risk : node.getPropositions().get(prop)) {
-				risks.add(risk);
-			}
-			this.propositions.put(prop, risks);
-		}
-
-		// Copy the critical risks that were used to get to this node
-		this.criticalRisks = new HashSet<Risk>();
-		this.criticalRisks.addAll(node.getCriticalRisks());
-		this.parent = node.parent;
-		this.state = node.state;
-		this.action = node.action;		
-		this.dimension = node.dimension;
-		this.heuristic = node.heuristic;
-		this.solverOptions = node.solverOptions;
+//		// Copy the propositions with their associated risks
+//		this.propositions = new HashMap<Proposition, Set<Risk>>();
+//		for (Proposition prop : node.getPropositions().keySet()) {
+//			Set<Risk> risks = new HashSet<Risk>();
+//			for (Risk risk : node.getPropositions().get(prop)) {
+//				risks.add(risk);
+//			}
+//			this.propositions.put(prop, risks);
+//		}
+//
+//		// Copy the critical risks that were used to get to this node
+//		this.criticalRisks = new HashSet<Risk>();
+//		this.criticalRisks.addAll(node.getCriticalRisks());
+//		this.parent = node.parent;
+//		this.state = node.state;
+//		this.action = node.action;		
+//		this.dimension = node.dimension;
+//		this.heuristic = node.heuristic;
+//		this.solverOptions = node.solverOptions;
 	}
 	
 	@Override
@@ -71,28 +71,34 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 
 		if(subsequentNodes != null && usePreferredOperators){
 			//need to reset node after failing in local search
-			preferredOperators = null;
-			subsequentNodes = null;
+			//preferredOperators = null;
+			//subsequentNodes = null;
+			usePreferredOperators = false;
 		}
 
-		subsequentNodes = new ArrayList<StateNode>();
-
+		if(subsequentNodes == null){
+			subsequentNodes = new ArrayList<StateNode>();
+		}
+		List<StateNode> newNodes = new ArrayList<StateNode>();
+		
 		List<ActionInstance> actionsToExpand = null;
 
 		if(preferredOperators != null && usePreferredOperators){
 			actionsToExpand =  new ArrayList<ActionInstance>(preferredOperators);
 		}
 		else{
-			actionsToExpand = subsequentActions;
+			actionsToExpand = new ArrayList<ActionInstance>(subsequentActions);
+			actionsToExpand.removeAll(preferredOperators);
 		}
 
 		for(ActionInstance act : actionsToExpand){
 			PreferredOperatorDeferredEvaluationNode node = getSuccessorNode(act);
 			if(node != null && !node.equals(this.parent)){
+				newNodes.add(node);
 				subsequentNodes.add(node);
 			}
 		}
-		return subsequentNodes;
+		return newNodes;
 	}
 	
 	@Override

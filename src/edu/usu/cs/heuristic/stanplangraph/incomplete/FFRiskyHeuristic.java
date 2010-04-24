@@ -13,6 +13,7 @@ import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 
 public class FFRiskyHeuristic implements Heuristic {
 	Problem problem;
@@ -46,7 +47,7 @@ public class FFRiskyHeuristic implements Heuristic {
 		double[] values = new double[2];
 
 		solver.reachFixedPoint(node);
-		Set<Risk> goalRiskSet = solver.getGoalRiskSet();
+		GeneralizedRiskSet goalRiskSet = solver.getGoalRiskSet();
 		double relaxedPlanLength = solver.getRelaxedPlanLength();
 
 		// If goalRiskSet returns null, there is no solution in this path so return infinity

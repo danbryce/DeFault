@@ -13,6 +13,7 @@ import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 import edu.usu.cs.search.psp.UtilityFunction;
 
 /**
@@ -28,7 +29,7 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 	protected double utilityUpToNow = 0.0;
 	protected double costUpToNow = 0.0;
 
-	protected Map<Proposition, Set<Risk>> goalsAchieved = null;
+	protected Map<Proposition, GeneralizedRiskSet> goalsAchieved = null;
 	protected UtilityFunction goalUtilityFunction = null;
 
 	public FFRiskyPSPNode(Set<Proposition> propositions, UtilityFunction goalUtilityFunction, Heuristic heuristic, Problem problem, SolverOptions solverOptions) {
@@ -58,13 +59,13 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 		// Calculate utilityUpToNow
 		if(this.parent == null) {
 			// Set goalsAchieved to false for all subgoals
-			this.goalsAchieved = new HashMap<Proposition, Set<Risk>>();
+			this.goalsAchieved = new HashMap<Proposition, GeneralizedRiskSet>();
 		} else if (parent instanceof FFRiskyPSPNode){
 			FFRiskyPSPNode fpParent = (FFRiskyPSPNode)parent;
 			// Copy all achieved 
-			this.goalsAchieved = new HashMap<Proposition, Set<Risk>>();
+			this.goalsAchieved = new HashMap<Proposition, GeneralizedRiskSet>();
 			for(Proposition p : fpParent.goalsAchieved.keySet()){
-				this.goalsAchieved.put(p, new HashSet<Risk>(fpParent.getGoalsAchieved().get(p)));
+				this.goalsAchieved.put(p, new GeneralizedRiskSet(fpParent.getGoalsAchieved().get(p)));
 			}
 
 			//new HashSet<Proposition>(fpParent.getGoalsAchieved().size());
@@ -89,24 +90,24 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 		for(Proposition goal : problem.getGoalAction().getPreconditions()) {
 			if(state.contains(goal)){
 
-				Set<Risk> priorRisks = goalsAchieved.get(goal);
-				Set<Risk> currentRisks = propositions.get(goal);
-				Set<Risk> allRisks = null;
+				GeneralizedRiskSet priorRisks = goalsAchieved.get(goal);
+				GeneralizedRiskSet currentRisks = propositions.get(goal);
+				GeneralizedRiskSet allRisks = null;
 
 				if(priorRisks == null){
 					//only new risks can be current risks
 					if(currentRisks != null){
-						allRisks = new HashSet<Risk>(currentRisks);
+						allRisks = new GeneralizedRiskSet(currentRisks);
 					}
 				}
 				else{
 					//must intersect new risks with prior risks
 					if(currentRisks != null){
-						allRisks= new HashSet<Risk>(currentRisks);
-						allRisks.retainAll(priorRisks);
+						allRisks= new GeneralizedRiskSet(currentRisks);
+						allRisks.crossProduct(priorRisks);
 					}
 					else{
-						allRisks = new HashSet<Risk>(priorRisks);
+						allRisks = new GeneralizedRiskSet(priorRisks);
 					}
 				}
 
@@ -132,9 +133,9 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 						this.gvalue[i] = utilityUpToNow;
 					}
 					else if(i == 1){
-						Set<Risk> risks = new HashSet<Risk>(this.getCriticalRisks());
+						GeneralizedRiskSet risks = new GeneralizedRiskSet(this.getCriticalRisks());
 						for(Proposition p : goalsAchieved.keySet()){
-							risks.addAll(goalsAchieved.get(p));
+							risks.union(goalsAchieved.get(p));
 						}
 						//risks.removeAll(((FFRiskyNode)parent).getCriticalRisks());
 						this.gvalue[i] = risks.size();
@@ -177,7 +178,7 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 	}
 
 
-	public Map<Proposition, Set<Risk>> getGoalsAchieved() {
+	public Map<Proposition, GeneralizedRiskSet> getGoalsAchieved() {
 		return goalsAchieved;
 	}
 

@@ -10,6 +10,7 @@ import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
 
 public class FFRiskyPSPFactSpike extends FactSpike {
 
+	
 	public FFRiskyPSPFactSpike(Map<Integer, FactHeader> globalFactHeaders,
 			StanPlanningGraph solver) {
 		super(globalFactHeaders, solver);
@@ -24,7 +25,7 @@ public class FFRiskyPSPFactSpike extends FactSpike {
 		}
 		FactLevelInfo fli = levelInfo.get(index);
 		if(fli == null){
-			fli = new FFRiskyPSPFactLevelInfo(globalFactHeaders.get(index));
+			fli = new FFRiskyPSPFactLevelInfo(globalFactHeaders.get(index), solverOptions);
 //			System.out.println("made new fli for: " + fli.getFact().getName() + " at level: " + i );
 
 			levelInfo.put(index, fli);

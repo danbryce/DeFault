@@ -8,7 +8,7 @@
   <!-- mvn clean deploy -DperformRelease -->
 
   <scm>
-    <developerConnection>scm:svn:https://cmext.sri.com/svn/bl/graphplanner/tags/graphplanner-1.3.4</developerConnection>
+    <developerConnection>scm:svn:https://cmxt.sri.com/svn/bl/graphplanner/tags/graphplanner-1.3.4</developerConnection>
   </scm>
 
   <build>
@@ -80,6 +80,14 @@
       <version>${slf4j.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jdd</groupId>
+      <artifactId>jdd</artifactId>
+      <version>0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/jdd.jar</systemPath>
+    </dependency>
+    
   </dependencies>
 
   <properties>

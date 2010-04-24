@@ -10,6 +10,7 @@ import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 import edu.usu.cs.search.incomplete.psp.FFRiskyPSPNode;
 import edu.usu.cs.search.psp.UtilityFunction;
 
@@ -29,7 +30,7 @@ public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
 		double[] values = new double[node.getDimension()];
 
 		solver.reachFixedPoint(node);
-		Set<Risk> goalRiskSet = solver.getGoalRiskSet(node.getGoalsAchieved());
+		GeneralizedRiskSet goalRiskSet = solver.getGoalRiskSet(node.getGoalsAchieved());
 		
 		double benefit = solver.getRelaxedPlanBenefit(node.getGoalsAchieved());
 		double cost = solver.getRelaxedPlanCost(node.getGoalsAchieved());

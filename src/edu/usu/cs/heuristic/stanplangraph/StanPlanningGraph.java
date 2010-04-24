@@ -37,7 +37,7 @@ public class StanPlanningGraph {
 	protected Domain domain = null;
 	protected Set<ActionInstance> helpfulActions = null;
 	protected Set<ActionInstance> preferredActions = null;
-	protected SolverOptions solverOptions;
+	private SolverOptions solverOptions;
 	
 	//	public  StanPlanningGraph(IncompleteProblem problem1){
 	//		globalFactHeaders = new HashMap<Integer, FactHeader>();
@@ -54,7 +54,7 @@ public class StanPlanningGraph {
 		globalActionHeaders = new HashMap<Integer, ActionHeader>();
 		problem = problem2;
 		domain = domain2;
-		this.solverOptions = solverOptions;
+		this.setSolverOptions(solverOptions);
 	}
 	public Integer getAndIncrementFactIndex(Proposition p){
 		return currentFactIndex++;
@@ -636,6 +636,14 @@ public class StanPlanningGraph {
 		}
 
 		return relevantActionExtraction(subGoalsToBeAdded, level - 1, parallelPlan);
+	}
+
+	public void setSolverOptions(SolverOptions solverOptions) {
+		this.solverOptions = solverOptions;
+	}
+
+	public SolverOptions getSolverOptions() {
+		return solverOptions;
 	}
 
 
