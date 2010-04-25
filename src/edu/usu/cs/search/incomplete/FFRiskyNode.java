@@ -229,7 +229,7 @@ public class FFRiskyNode  extends AStarNode {
 					}
 					else if (i == 0 && !solverOptions.isUseJDDGValue()) {
 						GeneralizedRiskSet risks = new GeneralizedRiskSet(this.getCriticalRisks());
-						risks.removeAll(((FFRiskyNode)parent).getCriticalRisks());
+						//risks.removeAll(((FFRiskyNode)parent).getCriticalRisks());
 						this.gvalue[i] = risks.size();
 					} else if (i == 0 && solverOptions.isUseJDDGValue()) {
 						// Risk Counter g value
@@ -393,13 +393,22 @@ public class FFRiskyNode  extends AStarNode {
 	 */
 	private  GeneralizedRiskSet getPrecOpen(FFRiskyNode node, IncompleteActionInstance action) {
 		GeneralizedRiskSet precOpen = new GeneralizedRiskSet(solverOptions.getRiskArity());
-
+ 
 		for (Proposition possPrec : action.getPossiblePreconditions()) {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
 			if (!node.getPropositions().containsKey(possPrec)) {
 				precOpen.add(Risk.getRiskFromIndex(Risk.PRECOPEN, action.getName(), possPrec
 						.getName()));
+			}
+			else if(node.getPropositions().get(possPrec).size()>0){
+				//The precondition is present, but may have other risks
+				//Results in a higher-order interaction risk
+				GeneralizedRiskSet s1 = new GeneralizedRiskSet(solverOptions.getRiskArity());
+				s1.add(Risk.getRiskFromIndex(Risk.PRECOPEN, action.getName(), possPrec
+						.getName()));
+				s1.crossProduct(node.getPropositions().get(possPrec));
+				precOpen.union(s1);
 			}
 		}
 
@@ -444,11 +453,11 @@ public class FFRiskyNode  extends AStarNode {
 			// }
 		}
 
-		for (Proposition prec : action.getPossiblePreconditions()) {
-			if (node.getPropositions().containsKey(prec)) {
-				precRisks.union(node.getPropositions().get(prec));
-			}
-		}
+//		for (Proposition prec : action.getPossiblePreconditions()) {
+//			if (node.getPropositions().containsKey(prec)) {
+//				precRisks.union(node.getPropositions().get(prec));
+//			}
+//		}
 
 		return precRisks;
 	}

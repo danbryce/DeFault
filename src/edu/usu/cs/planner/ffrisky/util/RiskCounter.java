@@ -42,10 +42,12 @@ public class RiskCounter {
 		riskToBDD = new HashMap<Risk, Integer>();
 		bddToRisk = new HashMap<Integer, Risk>();
 		
+		int i = 1;
 		for (Risk risk : allRisks) {
 			int temp = bdd.createVar();
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
+//			System.out.println((i++) + " " + risk);
 		}
 		
 		isInitialized = true;
@@ -75,15 +77,26 @@ public class RiskCounter {
 		// Add the others
 		for (RiskCounterAction action : plan) {
 			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode(action));
+		//	bdd.printSet(nodes.get(nodes.size()-1).getCriticalRisks());
 		}
+		
+		//add critical risks for goals
+		int crs = nodes.get(nodes.size() - 1).getCriticalRisks();
+		for(Proposition p : problem.getGoalAction().getPreconditions()){
+			crs = bdd.and(crs, nodes.get(nodes.size() - 1).propositions.get(p));
+		}
+		
 		
 //		for (Risk risk : allRisks) {
 //			System.out.print("(" + risk.toString() + ") ");
 //		}
 //		System.out.println();
 //		bdd.printSet(nodes.get(nodes.size() - 1).getCriticalRisks());
+	
+	//	bdd.printSet(crs);
+		//bdd.printSet(bdd.not(crs));
 		
-		int solvableDomains = getSolvableDomains(nodes.get(nodes.size() - 1).getCriticalRisks());
+		int solvableDomains = getSolvableDomains(crs);
 		
 		return solvableDomains;
 	}

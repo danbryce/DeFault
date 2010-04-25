@@ -117,6 +117,7 @@ public class SearchTest {
 			} else if (args[3].equalsIgnoreCase("pode")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
+				//solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solver = new GreedyBestFirstFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
 			} else if (args[3].equalsIgnoreCase("jdd")) {
@@ -194,6 +195,7 @@ public class SearchTest {
 		System.out.println("Elapsed time: " + searchStatistics.getElapsedTime()
 				+ " milliseconds");
 		System.out.println("Nodes expanded: " + searchStatistics.getNodesExpanded());
+		
 		if (searchStatistics.getSolutionNode() != null
 				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
 			System.out.println("Risk count: "

@@ -32,7 +32,7 @@ public class StanPlanningGraph {
 	// private final Set<Proposition> remainingPropositions;
 	protected FactSpike factSpike = null;
 	protected ActionSpike actionSpike = null;
-	private static final int MAX_LEVELS = 20;
+	private static final int MAX_LEVELS = 200;
 	protected Problem problem = null;
 	protected Domain domain = null;
 	protected Set<ActionInstance> helpfulActions = null;
@@ -75,7 +75,7 @@ public class StanPlanningGraph {
 				return;
 			}
 		}
-		//System.out.println("Reached fixed point at level: " + this.getFactSpike().getCurrentRank());
+	//	System.out.println("Reached fixed point at level: " + this.getFactSpike().getCurrentRank());
 	}
 
 

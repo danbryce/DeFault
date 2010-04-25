@@ -30,7 +30,7 @@ public class GeneralizedRiskSet {
 		return set;
 	}
 
-	private int getMaxEltSize() {
+	public int getMaxEltSize() {
 		return maxEltSize;
 	}
 

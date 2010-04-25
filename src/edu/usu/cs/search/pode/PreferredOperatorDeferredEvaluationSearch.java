@@ -17,6 +17,7 @@ import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
@@ -168,8 +169,9 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			open.addAll(notPreferredNodes);
 			
 			searchStatistics.processNode(node);
-			System.out.print(preferredPriority + " " + notPreferredPriority + " ");
-			logger.debug(searchStatistics.toString());
+//			System.out.print(preferredPriority + " " + notPreferredPriority + " ");
+//			logger.debug(searchStatistics.toString());
+			System.out.println(searchStatistics.toString());
 //			logger.debug(node.getCriticalRisks().toString());
 		}
 	}
@@ -191,6 +193,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 		while(node != null && node.getAction() != null) {
 			actionsToGoal.add(0, node.getAction());
 			node = node.getParent();
+//			System.out.println(node.getAction() + "\n" + ((FFRiskyNode)node).getCriticalRisks());
 		}
 		
 		return actionsToGoal;
