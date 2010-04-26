@@ -57,7 +57,7 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.bdd = RiskCounter.getBDD();
 		this.riskToBDD = RiskCounter.getRiskToBDD();
 		
-		this.criticalRisks = bdd.getOne();
+		this.criticalRisks = node.getCriticalRisks();//bdd.getOne();
 		this.possibleRisks = bdd.getOne();
 	}
 	

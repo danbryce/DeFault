@@ -62,7 +62,7 @@ public class FFRiskyHeuristic implements Heuristic {
 			values[0] = goalRiskSet.size();
 
 
-			values[1] = 5*relaxedPlanLength;
+			values[1] = relaxedPlanLength;
 		}
 		//System.out.println("\t\t" + values[0] + " " + values[1] );
 

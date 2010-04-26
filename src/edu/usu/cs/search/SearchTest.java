@@ -123,7 +123,7 @@ public class SearchTest {
 			} else if (args[3].equalsIgnoreCase("jdd")) {
 				solverOptions.setUseJDDGValue(true);
 				solverOptions.setUseJDDHeuristic(true);
-				RiskCounter.initialize(domain, problem);
+				RiskCounter.initialize(domain, problem, null);
 				solver = new FFriskySolver(domain, problem, searchStatistics,
 						solverOptions);
 			} else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {

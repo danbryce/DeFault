@@ -42,13 +42,44 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 
 		for(ActionHeader actionHeader : actionSpike.getActionsByRank(actionSpike.getCurrentRank()-1)){
 
-			if(!actionSpike.preconditionRisksChanged(actionHeader, actionSpike.getCurrentRank())){
-				actionSpike.copyRisksFromPreviousLevel(actionHeader, actionSpike.getCurrentRank());
-				continue;
+//			if(!actionSpike.preconditionRisksChanged(actionHeader, actionSpike.getCurrentRank())){
+//				actionSpike.copyRisksFromPreviousLevel(actionHeader, actionSpike.getCurrentRank());
+//				continue;
+//			}
+
+			boolean changed = false;
+			for(FactHeader factHeader : actionHeader.getPreconditionHeaders()){
+				FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
+				if(fli.isChanged()){
+					changed = true;
+					break;
+				}
 			}
+			for(Proposition possPre : actionHeader.getAction().getPossiblePreconditions()){
+				FactHeader factHeader = factSpike.get(possPre.getName());
+				if(factHeader == null){	}
+				else { 
+					//precondition is present,
+					FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
+					if(fli.isChanged()){
+						changed = true;
+						break;
+					}
+				}
+			}		
 
 			ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
 
+			 
+			if(!changed){
+				ActionLevelInfo aliPrev = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-2, actionHeader.getIndex());
+				ali.setCriticalRisks(new GeneralizedRiskSet(aliPrev.getCriticalRisks()));
+				ali.setPossibleRisks(new GeneralizedRiskSet(aliPrev.getPossibleRisks()));				
+				ali.getSupportingFacts().addAll(aliPrev.getSupportingFacts());
+				ali.setChanged(false);
+			}
+			
+			
 			if(actionHeader.isNoop()){
 				//risks to action are same as risks to fact
 				int index = actionHeader.getPreconditions().nextSetBit(0);
@@ -112,6 +143,14 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 				ali.setCriticalRisks(criticalRisks);
 				//ali.getCriticalRisks().addAll(possibleRisks); //all precondition possible risks become critical because action is executed 
 				//ali.setPossibleRisks(possibleRisks); 
+
+				if(actionSpike.getCurrentRank()>=2){
+					ActionLevelInfo aliPrev = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-2, actionHeader.getIndex());
+					ali.setChanged(!aliPrev.getCriticalRisks().equals(ali.getCriticalRisks()));
+				}
+
+				
+				
 				if(ali.getCriticalRisks().size() > 0 || ali.getPossibleRisks().size() > 0){
 					logger.debug("Act " + actionHeader.getName() + " " + ali.getCriticalRisks().size() + " " + ali.getPossibleRisks().size());
 				}
@@ -144,14 +183,41 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			//copy previous supporters, new supporters were taken care of when they were added
 			FactLevelInfo fliPrev = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, fact.getPropositionIndex());
 
-
 			fli.getAllSupporters().addAll(fliPrev.getAllSupporters());
+
+			
+			boolean changed = false;
+			if(factSpike.getCurrentRank() == 2){//prev level was initial level
+				changed = true;
+			}
+			else if(fli.getAllSupporters().size() == fliPrev.getAllSupporters().size()){ 
+				//same number of supporters, need to check if supporters changed
+				for(ActionHeader a : fli.getAllSupporters()){
+					ActionLevelInfo ali = actionSpike.getActionLevelInfo(getActionSpike().getCurrentRank()-1, a.getIndex()); 
+					if(ali.isChanged()){
+						changed = true;
+						break;
+					}					
+				}
+			}
+			else{//got new supporters
+				changed = true;
+			}
+						
 			fli.getTrueSupporters().addAll(fliPrev.getTrueSupporters());
 			fli.getPossibleSupporters().addAll(fliPrev.getPossibleSupporters());
 
+
+			if(!changed){
+				fli.setCriticalRisks(new GeneralizedRiskSet(fliPrev.getCriticalRisks()));
+				fli.setPossibleRisks(new GeneralizedRiskSet(fliPrev.getPossibleRisks()));
+				fli.setChosenSupporters(new HashSet<ActionHeader>(fliPrev.getChosenSupporters()));
+				continue;
+			}
+
 			Set<ActionHeader> supportingActions = fli.getAllSupporters();
 			Set<ActionHeader> chosenSupportingActions = new HashSet<ActionHeader>();
-
+			
 			//			if(supportingActions.size() == 0){
 			//				supportingActions = null;
 			//			}
@@ -183,7 +249,6 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 					fewestCriticalRisks = ali.getCriticalRisks().size();										
 				} else if (ali.getCriticalRisks().size() == fewestCriticalRisks) {
 					actionsWithFewestCriticalRisks.add(actionHeader);
-
 				}
 			}
 
@@ -268,6 +333,13 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			fli.setPossibleRisks(possibleRisks);
 			fli.setChosenSupporters(chosenSupportingActions);
 
+			if(!fliPrev.getChosenSupporters().equals(fli.getChosenSupporters()) ||
+			   !fliPrev.getCriticalRisks().equals(fli.getCriticalRisks()) ||
+			   !fliPrev.getPossibleRisks().equals(fli.getPossibleRisks())
+			){
+				fli.setChanged(true);
+			}
+			
 			for(ActionHeader a : chosenSupportingActions){
 				if(!a.isNoop()){
 					logger.debug("Fact " + fact.getName() + " supported by " + a.getName());
@@ -333,10 +405,10 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 				GeneralizedRiskSet critRisks2 = fliPrev.getCriticalRisks();
 				GeneralizedRiskSet possRisks1 = fliNow.getPossibleRisks();
 				GeneralizedRiskSet possRisks2 = fliPrev.getPossibleRisks();
-				if(!critRisks1.equals(critRisks2)) {
-					hasConverged = false;
-					break;
-				}
+//				if(!critRisks1.equals(critRisks2)) {
+//					hasConverged = false;
+//					break;
+//				}
 				if(!possRisks1.equals(possRisks2)) {
 					hasConverged = false;
 					break;
@@ -344,7 +416,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			}
 
 		}
-		if(levelsPastClassicalLevelOff > 10){
+		if(levelsPastClassicalLevelOff > 0){
 			hasConverged = true;
 		}
 		return hasConverged;
@@ -357,6 +429,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			FFRiskyNode fn = (FFRiskyNode)node;
 			for (Proposition proposition : fn.getPropositions().keySet()) {
 				GeneralizedRiskSet priorRisks = fn.getPropositions().get(proposition);
+				priorRisks.removeAll(fn.getCriticalRisks());
 				if(priorRisks.size() > 0){
 					this.getFactSpike().getFactLevelInfo(0, proposition.getIndex()).setPossibleRisks(priorRisks);
 				}

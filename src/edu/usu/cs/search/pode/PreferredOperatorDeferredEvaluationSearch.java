@@ -111,21 +111,27 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 				return null;
 			}
 			
+			boolean pulledPreferred = true;
+			
 			// Don't remove anything from an empty queue
 			if(open.size() == 0) {
 				node = (PreferredOperatorDeferredEvaluationNode)openPreferred.remove();
 				preferredPriority--;
+				pulledPreferred = true;
 			} else if(openPreferred.size() == 0) {
 				node = (PreferredOperatorDeferredEvaluationNode)open.remove();
 				notPreferredPriority--;
+				pulledPreferred = false;
 			}
 			// pull node from queue with the greatest value
 			else if(preferredPriority >= notPreferredPriority) {
 				node = (PreferredOperatorDeferredEvaluationNode)openPreferred.remove();
 				preferredPriority--;
+				pulledPreferred = true;
 			} else {
 				node = (PreferredOperatorDeferredEvaluationNode)open.remove();
 				notPreferredPriority--;
+				pulledPreferred = false;
 			}
 			
 			// Check to see if this is a duplicate node
@@ -148,16 +154,6 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			// Compute node's H value
 			double[] hvalue = node.getHeuristicValue();
 			
-			// If the new h value is better than the current h value, add 1000 to 
-			// the preferred operator priority counter
-			if(hvalue[1] < currentBestHValue[1] || 
-					hvalue[1] == currentBestHValue[1] && 
-					hvalue[0] < currentBestHValue[0]) {
-				currentBestHValue[0] = hvalue[0];
-				currentBestHValue[1] = hvalue[1];
-				
-				preferredPriority += 1000;
-			}
 			
 			// Add the preferredOperator children to openPreferred
 			List<StateNode> preferredNodes = node.createSubsequentNodes(actionInstances);
@@ -167,12 +163,31 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			List<StateNode> notPreferredNodes = node.createSubsequentNodesIgnorePreferredOperators(actionInstances);
 			notPreferredNodes.removeAll(preferredNodes);
 			open.addAll(notPreferredNodes);
-			
 			searchStatistics.processNode(node);
-//			System.out.print(preferredPriority + " " + notPreferredPriority + " ");
-//			logger.debug(searchStatistics.toString());
-			System.out.println(searchStatistics.toString());
-//			logger.debug(node.getCriticalRisks().toString());
+			
+			
+			// If the new h value is better than the current h value, add 1000 to 
+			// the preferred operator priority counter
+			if(hvalue[1] < currentBestHValue[1] 
+			                                 || 
+					hvalue[1] == currentBestHValue[1] && 
+					hvalue[0] < currentBestHValue[0]
+					                              ) {
+				currentBestHValue[0] = hvalue[0];
+				currentBestHValue[1] = hvalue[1];
+				
+				if(pulledPreferred){
+					preferredPriority += 5;
+				}
+			
+//				System.out.print(preferredPriority + " " + notPreferredPriority + " ");
+//				logger.debug(searchStatistics.toString());
+				System.out.println(searchStatistics.toString());
+//				logger.debug(node.getCriticalRisks().toString());
+
+			}
+			
+
 		}
 	}
 

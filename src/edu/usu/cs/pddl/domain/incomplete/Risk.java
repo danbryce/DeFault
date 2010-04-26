@@ -8,7 +8,7 @@ import java.util.Set;
 /*
  * A risk is a potential source of execution failure due to incompleteness of the action model.
  */
-public class Risk {
+public class Risk implements Comparable {
 	// Risks in an action are the same risk in every instance of an action so we
 	// remove their uniqueness
 	// // This is a risk-specific id
@@ -148,5 +148,16 @@ public class Risk {
 	    }
 
 	    return temp;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		Risk r = (Risk)o;
+		if(this.hashCode() < r.hashCode())
+			return -1;
+		else if (this.hashCode() > r.hashCode())
+			return 1;
+		else
+			return 0;
 	}
 }

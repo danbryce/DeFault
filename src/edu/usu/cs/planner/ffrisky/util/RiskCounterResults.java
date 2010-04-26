@@ -15,7 +15,11 @@ public class RiskCounterResults {
 	public double solvableDomains;
 	public int instance;
 	public double probability;
+	public int unusedRisks;
 	
+	public RiskCounterResults() {
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder output = new StringBuilder();
@@ -36,7 +40,9 @@ public class RiskCounterResults {
 		output.append(nodesExpanded + "\t");
 		output.append(riskCount + "\t");
 		output.append(allRisksCount + "\t");
+		output.append(unusedRisks + "\t");
 		output.append(solvableDomains + "\n");
+
 		
 		return output.toString();
 	}

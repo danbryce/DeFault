@@ -14,12 +14,20 @@ public class ActionLevelInfo {
 	GeneralizedRiskSet possibleRisks;
 	Set<FactHeader> supportingFacts;
 	protected SolverOptions solverOptions;
-	
+	boolean changed;
 	
 
 //	public void setSupportingFacts(Set<FactHeader> supportingFacts) {
 //		this.supportingFacts = supportingFacts;
 //	}
+
+	public boolean isChanged() {
+		return changed;
+	}
+
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+	}
 
 	public ActionLevelInfo(ActionHeader actionHeader, SolverOptions solverOptions) {
 		super();
@@ -28,6 +36,7 @@ public class ActionLevelInfo {
 		this.possibleRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 		this.supportingFacts = new HashSet<FactHeader>();
 		this.solverOptions = solverOptions;
+		this.changed = false;
 	}
 
 	public GeneralizedRiskSet getCriticalRisks() {

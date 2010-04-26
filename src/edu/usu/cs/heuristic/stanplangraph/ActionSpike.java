@@ -247,16 +247,16 @@ public class ActionSpike {
 
 	}
 
-	public boolean preconditionRisksChanged(ActionHeader actionHeader,
-			int currentRank) {
-		//TODO implement me!
-		return true;
-	}
-
-	public void copyRisksFromPreviousLevel(ActionHeader actionHeader,
-			int currentRank) {
-		//TODO implement me!
-	}
+//	public boolean preconditionRisksChanged(ActionHeader actionHeader,
+//			int currentRank) {
+//		//TODO implement me!
+//		return true;
+//	}
+//
+//	public void copyRisksFromPreviousLevel(ActionHeader actionHeader,
+//			int currentRank) {
+//		//TODO implement me!
+//	}
 
 
 

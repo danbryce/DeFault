@@ -200,6 +200,15 @@ public class FactSpike {
 		FactLevelInfo fli = levelInfo.get(index);
 		if(fli == null){
 			fli = new FactLevelInfo(globalFactHeaders.get(index), solverOptions);
+			
+			Map<Integer, FactLevelInfo> prevLevelInfo = factLevelInfos.get(i-1);
+			FactLevelInfo fliPrev = null;
+			if(prevLevelInfo != null){
+				fliPrev = prevLevelInfo.get(index);
+			}
+			if(i == 0 || fliPrev == null){
+				fli.setChanged(true);
+			}
 //			System.out.println("made new fli for: " + fli.getFact().getName() + " at level: " + i );
 
 			levelInfo.put(index, fli);

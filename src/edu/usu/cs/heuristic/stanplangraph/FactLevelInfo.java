@@ -16,8 +16,14 @@ public class FactLevelInfo {
 	Set<ActionHeader> chosenSupporters;
 	FactHeader fact;
 	SolverOptions solverOptions;
-
+	boolean changed;	
 	
+	public boolean isChanged() {
+		return changed;
+	}
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+	}
 	public Set<ActionHeader> getTrueSupporters() {
 		return trueSupporters;
 	}
@@ -40,6 +46,7 @@ public class FactLevelInfo {
 		this.solverOptions = solverOptions;
 		this.possibleRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
+		this.changed = false;
 	}
 	public GeneralizedRiskSet getPossibleRisks() {
 		return possibleRisks;
