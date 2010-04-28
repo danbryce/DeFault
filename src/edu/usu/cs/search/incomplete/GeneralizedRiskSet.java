@@ -1,13 +1,15 @@
 package edu.usu.cs.search.incomplete;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 
-public class GeneralizedRiskSet {
+public class GeneralizedRiskSet implements Comparable {
 
 	private Set<Set<Risk>> set;
 	private int maxEltSize;
@@ -53,7 +55,6 @@ public class GeneralizedRiskSet {
 
 
 
-
 	private void removeSetsSubsumedBy(Set<Set<Risk>> mset, Set<Risk> rs1) {
 		//Set<Set<Risk>> toRemove = new TreeSet<Set<Risk>>(new SetComparator());
 		Set<Set<Risk>> toRemove = new HashSet<Set<Risk>>();
@@ -69,8 +70,14 @@ public class GeneralizedRiskSet {
 
 	public void crossProduct(GeneralizedRiskSet set1){
 		//union all pairs of risk sets, removing those larger than maxEltSize and removing subsumed
+		
+		
+
+		
 		//Set<Set<Risk>> newRiskSet = new TreeSet<Set<Risk>>(new SetComparator());
 		Set<Set<Risk>> newRiskSet = new HashSet<Set<Risk>>();
+		
+		
 		
 		for(Set<Risk> rs1 : set1.getSet()){
 			for(Set<Risk> rs : set){
@@ -85,10 +92,8 @@ public class GeneralizedRiskSet {
 				}
 			}
 		}
-		if(set1.size() > 0){
-			set = newRiskSet;			
-		}
-
+		set = newRiskSet;			
+		
 
 	}
 
@@ -153,7 +158,73 @@ public class GeneralizedRiskSet {
 		}
 	}
 
+	public Map<Integer, Integer> getSetSizeCounts(){
+		Map<Integer, Integer> counts = new HashMap<Integer, Integer>();
+		
+		for(Set<Risk> r : set){
+			int size = r.size();
+			if(counts.get(size) == null){
+				counts.put(size, 1);
+			}
+			else{
+				counts.put(size, counts.get(size)+1);
+			}
+		}
+		return counts;
+	}
+	
+	@Override
+	public int compareTo(Object o) {
+		//compare based on the number of models of each.
+		//model counting of prime implicants is NP-Hard, 
+		//so compute the symmetric difference of the sets
+		//and compare the number of increasing sized PIs 
+		
+		GeneralizedRiskSet grs = (GeneralizedRiskSet)o;
+		
+		GeneralizedRiskSet diff1 = new GeneralizedRiskSet(this);
+		GeneralizedRiskSet diff2 = new GeneralizedRiskSet(grs);
+		
+		diff1.removeAll(grs);
+		diff2.removeAll(this);
+		
+		Map<Integer, Integer> c1 = diff1.getSetSizeCounts();
+		Map<Integer, Integer> c2 = diff2.getSetSizeCounts();
+		
+		Set<Integer> sizes =  new TreeSet<Integer>();
+		sizes.addAll(c1.keySet());
+		sizes.addAll(c2.keySet());
+		
+		
+		for(Integer i : sizes){
+			Integer i1 = c1.get(i);
+			Integer i2 = c2.get(i);
+			
+			if(i1 == null) i1 = 0;
+			if(i2 == null) i2 = 0;
+			
+			
+			int diff = i1 - i2;
+			if(diff == 0){
+				continue;
+			}
+			else if(diff < 0){
+				return -1; //there are more i-sized sets in grs, meaning less models, thus this is better
+			}
+			else if(diff > 0){
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+
+	public void addEmpty() {
+		set.add(new TreeSet<Risk>());
+	}
+
 }
+
 
 
 
