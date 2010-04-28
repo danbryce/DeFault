@@ -185,8 +185,8 @@ public class GeneralizedRiskSet implements Comparable {
 		GeneralizedRiskSet diff1 = new GeneralizedRiskSet(this);
 		GeneralizedRiskSet diff2 = new GeneralizedRiskSet(grs);
 		
-		diff1.removeAll(grs);
-		diff2.removeAll(this);
+//		diff1.removeAll(grs);
+//		diff2.removeAll(this);
 		
 		Map<Integer, Integer> c1 = diff1.getSetSizeCounts();
 		Map<Integer, Integer> c2 = diff2.getSetSizeCounts();

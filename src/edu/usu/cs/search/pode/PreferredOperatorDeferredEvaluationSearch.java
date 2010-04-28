@@ -55,10 +55,12 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 //					for(int i = 0; i < 2; i++) {
 //						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
 //					}
-					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
+					int d = ((FFRiskyNode)first.getParent()).getCriticalRisks().compareTo(((FFRiskyNode)second.getParent()).getCriticalRisks());
+						
+					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
 					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
-					if(diffs[1] != 0) {
-						return diffs[1].intValue();
+					if(d != 0) {
+						return d;
 					}
 					else{
 						return diffs[0].intValue(); //same num risks, so compare length
