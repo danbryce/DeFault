@@ -8,6 +8,9 @@ import java.util.Set;
 
 import jdd.bdd.BDD;
 
+import edu.usu.cs.heuristic.Heuristic;
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.search.AbstractStateNode;
@@ -21,7 +24,7 @@ public class RiskCounterNode extends AbstractStateNode {
 	protected BDD bdd;
 	protected Map<Risk, Integer> riskToBDD;
 	
-	public RiskCounterNode(Set<Proposition> state) {
+	public RiskCounterNode(Problem problem, Set<Proposition> state, Heuristic heuristic) {
 		
 		this.bdd = RiskCounter.getBDD();
 		this.riskToBDD = RiskCounter.getRiskToBDD();
@@ -34,11 +37,12 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.criticalRisks = bdd.getOne();
 		this.possibleRisks = bdd.getOne();
 		
+		this.problem = problem;
 		this.parent = null;
 		this.state = state;
 		this.action = null;
 		this.dimension = 1;
-		this.heuristic = null;
+		this.heuristic = heuristic;
 	}
 	
 	public RiskCounterNode(RiskCounterNode node) {
@@ -59,6 +63,26 @@ public class RiskCounterNode extends AbstractStateNode {
 		
 		this.criticalRisks = node.getCriticalRisks();//bdd.getOne();
 		this.possibleRisks = bdd.getOne();
+		
+		this.problem = node.problem;
+	}
+	
+	public List<StateNode> createSubsequentNodes(
+			List<ActionInstance> subsequentActions) {
+		if (subsequentNodes != null) {
+			return subsequentNodes;
+		}
+		
+		subsequentNodes = new ArrayList<StateNode>();
+		
+		for (ActionInstance action : subsequentActions) {
+			RiskCounterNode node = getSuccessorNode((RiskCounterAction)action);
+			if (node != null && !node.equals(this.parent)) {
+				subsequentNodes.add(node);
+			}
+		}
+		
+		return subsequentNodes;
 	}
 	
 	public  RiskCounterNode getSuccessorNode(RiskCounterAction action) {
@@ -199,7 +223,7 @@ public class RiskCounterNode extends AbstractStateNode {
 		}
 	}
 	
-	private boolean isActionApplicable(RiskCounterAction action) {
+	public boolean isActionApplicable(RiskCounterAction action) {
 		return propositions.keySet().containsAll(action.getPreconditions());
 	}
 	
@@ -232,7 +256,7 @@ public class RiskCounterNode extends AbstractStateNode {
 			this.gvalue = new double[dimension];
 
 			// Calculate exactly how many risks are in the plan
-			double solvableRatio = RiskCounter.getRisks(
+			double solvableRatio = RiskCounter.getSolvableDomainCount(
 					problem.getDomain(), 
 					problem, 
 					getPlan());

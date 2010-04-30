@@ -7,3 +7,5 @@ rao-domain.pddl	rao-problem.pddl	jdd	2	250	2	1
 rao-domain.pddl	rao-problem.pddl	jdd	2	203	2	1
 rao-domain.pddl	rao-problem.pddl	jdd	2	219	2	1
 rao-domain.pddl	rao-problem.pddl	jdd	2	5938	2	1
+rao-domain.pddl	rao-problem.pddl	jdd	2	116516	2	0
+rao-domain.pddl	rao-problem.pddl	friskyriskfirst	2	1140	2	1

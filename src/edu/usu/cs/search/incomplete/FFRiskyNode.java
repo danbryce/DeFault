@@ -37,7 +37,7 @@ public class FFRiskyNode  extends AStarNode {
 	private boolean hashCodeInitialized = false;
 	protected SolverOptions solverOptions = null;
 
-	protected RiskCounterNode riskCounterNode = null;
+//	protected RiskCounterNode riskCounterNode = null;
 
 
 	/**
@@ -57,9 +57,9 @@ public class FFRiskyNode  extends AStarNode {
 		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 		this.state = propositions;
 		this.solverOptions = solverOptions;
-		if (solverOptions.isUseJDDGValue()) {
-			this.riskCounterNode = new RiskCounterNode(propositions);
-		}
+//		if (solverOptions.isUseJDDGValue()) {
+//			this.riskCounterNode = new RiskCounterNode(propositions);
+//		}
 	}
 
 	//	public FFRiskyNode(HashMap<Proposition, Set<Risk>> propositions,
@@ -97,9 +97,9 @@ public class FFRiskyNode  extends AStarNode {
 		this.action = node.action;		
 		this.dimension = node.dimension;
 		this.heuristic = node.heuristic;
-		if (solverOptions.isUseJDDGValue()) {
-			this.riskCounterNode = new RiskCounterNode(node.riskCounterNode);
-		}
+//		if (solverOptions.isUseJDDGValue()) {
+//			this.riskCounterNode = new RiskCounterNode(node.riskCounterNode);
+//		}
 	}
 	public HashMap<Proposition, GeneralizedRiskSet> getPropositions() {
 		return propositions;
@@ -231,9 +231,9 @@ public class FFRiskyNode  extends AStarNode {
 						GeneralizedRiskSet risks = new GeneralizedRiskSet(this.getCriticalRisks());
 						//risks.removeAll(((FFRiskyNode)parent).getCriticalRisks());
 						this.gvalue[i] = risks.size();
-					} else if (i == 0 && solverOptions.isUseJDDGValue()) {
-						// Risk Counter g value
-						this.gvalue[i] = RiskCounter.getUnsolvableDomainCount(riskCounterNode.getCriticalRisks());
+//					} else if (i == 0 && solverOptions.isUseJDDGValue()) {
+//						// Risk Counter g value
+//						this.gvalue[i] = RiskCounter.getUnsolvableDomainCount(riskCounterNode.getCriticalRisks());
 					}
 				}
 			}
@@ -361,9 +361,9 @@ public class FFRiskyNode  extends AStarNode {
 		
 		node.setSolverOptions(solverOptions);
 		
-		if (solverOptions.isUseJDDGValue()) {
-			node.riskCounterNode = this.riskCounterNode.getSuccessorNode(new RiskCounterAction(action));
-		}
+//		if (solverOptions.isUseJDDGValue()) {
+//			node.riskCounterNode = this.riskCounterNode.getSuccessorNode(new RiskCounterAction(action));
+//		}
 
 		return node;
 	}

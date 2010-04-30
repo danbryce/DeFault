@@ -3,5 +3,5 @@
     
     (:init (p1) )
 
-    (:goal (and (p1) (p2) (p3)))
+    (:goal (and (p3)))
 )

@@ -24,25 +24,29 @@ public class RiskCounterResults {
 	public String toString() {
 		StringBuilder output = new StringBuilder();
 		
-		output.append(instance + "\t");
-		output.append(probability + "\t");
-		output.append(domainFileName + "\t");
-		output.append(problemFileName + "\t");
-		output.append(solverName + "\t");
-		
-		if (plan == null) {
-			output.append("?\t?\t?\t?\t" + allRisksCount + "\t?\n");
-			return output.toString();
-		}
-		
-		output.append(planLength + "\t");
-		output.append(elapsedTime + "\t");
-		output.append(nodesExpanded + "\t");
-		output.append(riskCount + "\t");
-		output.append(allRisksCount + "\t");
-		output.append(unusedRisks + "\t");
-		output.append(solvableDomains + "\n");
+//		output.append(instance + "\t");
+//		output.append(probability + "\t");
+//		output.append(domainFileName + "\t");
+//		output.append(problemFileName + "\t");
+//		output.append(solverName + "\t");
+//		
+//		if (plan == null) {
+//			output.append("?\t?\t?\t?\t" + allRisksCount + "\t?\n");
+//			return output.toString();
+//		}
+//		
+//		output.append(planLength + "\t");
+//		output.append(elapsedTime + "\t");
+//		output.append(nodesExpanded + "\t");
+//		output.append(riskCount + "\t");
+//		output.append(allRisksCount + "\t");
+//		output.append(unusedRisks + "\t");
+//		output.append(solvableDomains + "\n");
 
+		// Risk Count // All Risks // Num Domains where plan fails //
+		if (plan != null && solvableDomains > 0.0) {
+			output.append(riskCount + "\t" + allRisksCount + "\t" + solvableDomains + "\t" + unusedRisks + "\n");
+		}
 		
 		return output.toString();
 	}

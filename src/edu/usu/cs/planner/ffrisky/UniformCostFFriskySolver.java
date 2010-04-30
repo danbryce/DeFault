@@ -1,9 +1,15 @@
 package edu.usu.cs.planner.ffrisky;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.planner.ffrisky.util.RiskCounterAction;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.FFRiskySolutionEvaluator;
 import edu.usu.cs.search.incomplete.FriskySearch;
@@ -15,6 +21,14 @@ public class UniformCostFFriskySolver extends DefaultSolver {
 	{
 		super(domain, problem,searchStatistics, solverOptions);
 		//this.incompleteProblem = PddlImporter.getProblem(domain, problem);
+		
+		if (solverOptions.isUseJDDGValue()) {
+			List<ActionInstance> newActions = new ArrayList<ActionInstance>();
+			for (ActionInstance action : actionInstances) {
+				newActions.add(new RiskCounterAction((IncompleteActionInstance)action));
+			}
+			actionInstances = newActions;
+		}
 		
 		search = new FriskySearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics, solverOptions);
 		search.initialize();
