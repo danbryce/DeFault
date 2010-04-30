@@ -1,6 +1,8 @@
 package edu.usu.cs.heuristic.stanplangraph.incomplete.psp;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import edu.usu.cs.heuristic.stanplangraph.ActionHeader;
 import edu.usu.cs.heuristic.stanplangraph.ActionLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.FactHeader;
 import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
+import edu.usu.cs.heuristic.stanplangraph.FactSpike;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.FFriskyRelaxedPlanningGraph;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -39,19 +42,22 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 	protected void initializePlanningGraph(StateNode node) {
 		this.remainingActions = new ArrayList<ActionInstance>(problem.getActions());
-		this.factSpike = new FFRiskyPSPFactSpike(globalFactHeaders, this);
+		this.tempPreconditionActionCountMap = new HashMap<ActionInstance, Integer>(preconditionActionCountMap);
+		this.factSpike = new FactSpike(globalFactHeaders, this, tempPreconditionActionCountMap, preconditionActionMap);
+
+		//this.factSpike = new FFRiskyPSPFactSpike(globalFactHeaders, this);
 		this.actionSpike = new FFRiskyPSPActionSpike(factSpike, globalActionHeaders, globalFactHeaders, this);
 		this.helpfulActions = new HashSet<ActionInstance>();
 		//reset fact indices
-		currentFactIndex = 0;
-		for(Integer header : globalFactHeaders.keySet()){
-			globalFactHeaders.get(header).setIndex(-1);
-		}
+//		currentFactIndex = 0;
+//		for(Integer header : globalFactHeaders.keySet()){
+//			globalFactHeaders.get(header).setIndex(-1);
+//		}
 
 		// Create the fact spike rank 0
 		for (Proposition proposition : node.getState()) {
-			this.getFactSpike().addFact(proposition);
-			globalFactHeaders.get(proposition.getIndex()).setIndex(getAndIncrementFactIndex(proposition));
+			this.getFactSpike().addFact(proposition,remainingActions);
+//			globalFactHeaders.get(proposition.getIndex()).setIndex(getAndIncrementFactIndex(proposition));
 		}	
 		this.getFactSpike().incrementRank();
 		if(node instanceof FFRiskyNode){
@@ -63,7 +69,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 				}
 			}
 		}
-		levelsPastClassicalLevelOff = 0;
+		levelsPastGoalsMet = 0;
 		this.benefit = Double.MAX_VALUE;
 		this.cost = 0;
 		this.plan = null;
@@ -92,7 +98,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 					ali.setCost(ali.getCost()+fli.getCost());
 				}
 				for(Proposition possPre : actionHeader.getAction().getPossiblePreconditions()){
-					FactHeader factHeader = factSpike.get(possPre.getName());
+					FactHeader factHeader = factSpike.get(possPre.getIndex());
 					if(factHeader == null){
 					}
 					else{
@@ -115,7 +121,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 
 
 
-		List<FactHeader> applicableFacts = this.getFactSpike().getFactsByRank(
+		Collection<FactHeader> applicableFacts = this.getFactSpike().getFactsByRank(
 				this.getFactSpike().getCurrentRank()-1);
 
 		for (FactHeader fact : applicableFacts) {
@@ -269,7 +275,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 		}
 		else{ //couldn't add new facts, check if risks level off
 
-			levelsPastClassicalLevelOff++;
+			levelsPastGoalsMet++;
 
 
 
@@ -298,7 +304,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 			}
 
 		}
-		if(levelsPastClassicalLevelOff > 10){
+		if(levelsPastGoalsMet > 10){
 			hasConverged = true;
 		}
 		return hasConverged;
@@ -310,7 +316,7 @@ public class FFriskyPSPRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph 
 		// We just need to get all the critical risks in the goal action preconditions
 		GeneralizedRiskSet allGoalsCriticalRisks = new GeneralizedRiskSet(getSolverOptions().getRiskArity());
 		for(Proposition subgoal : this.getProblem().getGoalAction().getPreconditions()) {
-			FactHeader precHeader = this.getFactSpike().get(subgoal.getName());
+			FactHeader precHeader = this.getFactSpike().get(subgoal.getIndex());
 
 			// If precHeader isn't in the propositions, there is no solution
 			if(precHeader == null) {

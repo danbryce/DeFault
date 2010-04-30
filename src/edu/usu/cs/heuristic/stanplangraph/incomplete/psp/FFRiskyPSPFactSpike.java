@@ -1,19 +1,23 @@
 package edu.usu.cs.heuristic.stanplangraph.incomplete.psp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.usu.cs.heuristic.stanplangraph.FactHeader;
 import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.FactSpike;
 import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
+import edu.usu.cs.pddl.domain.ActionInstance;
 
 public class FFRiskyPSPFactSpike extends FactSpike {
 
 	
 	public FFRiskyPSPFactSpike(Map<Integer, FactHeader> globalFactHeaders,
-			StanPlanningGraph solver) {
-		super(globalFactHeaders, solver);
+			StanPlanningGraph solver,
+			Map<ActionInstance, Integer> tempPreconditionActionCountMap, 
+			 Map<Integer, List<ActionInstance>> preconditionActionMap) {
+		super(globalFactHeaders, solver, tempPreconditionActionCountMap, preconditionActionMap);
 		
 	}
 

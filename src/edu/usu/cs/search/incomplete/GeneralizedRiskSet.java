@@ -13,6 +13,10 @@ public class GeneralizedRiskSet implements Comparable {
 
 	private Set<Set<Risk>> set;
 	private int maxEltSize;
+	private Map<Integer, Integer> sizeMap;
+	private boolean onlyEmpty;
+
+	private boolean sizeMapStale;
 	
 	public GeneralizedRiskSet(int maxEltSize) {
 		super();
@@ -20,19 +24,54 @@ public class GeneralizedRiskSet implements Comparable {
 		//this.set = new TreeSet<Set<Risk>>(new SetComparator());
 		this.set = new HashSet<Set<Risk>>();
 		this.maxEltSize = maxEltSize;
+		this.sizeMap = new HashMap<Integer, Integer>();
+		this.sizeMapStale = false;
+		this.onlyEmpty = true;
+//		this.updateSizeMap();
 	}
+
 
 
 	public GeneralizedRiskSet(GeneralizedRiskSet risks) {
 		this.maxEltSize = risks.getMaxEltSize();
 		//this.set = new TreeSet<Set<Risk>>(new SetComparator());
 		this.set = new HashSet<Set<Risk>>();
+		this.sizeMap = new HashMap<Integer, Integer>();
+		
 		for(Set<Risk> r : risks.getSet()){
 			set.add(new TreeSet<Risk>(r));
 			//set.add(new HashSet<Risk>(r));
 		}
+		this.sizeMapStale = true;
+		this.onlyEmpty = risks.onlyEmpty();
+//		this.updateSizeMap();
 	}
 
+	protected Map<Integer, Integer> getSizeMap() {
+		if(sizeMapStale)
+			updateSizeMap();
+		return sizeMap;
+	}
+
+	protected boolean isSizeMapStale() {
+		return sizeMapStale;
+	}
+
+
+	protected void setSizeMapStale(boolean sizeMapStale) {
+		this.sizeMapStale = sizeMapStale;
+	}
+
+	protected void updateSizeMap(){
+		for(int i = 0; i <= maxEltSize; i++){
+			this.sizeMap.put(i, 0);
+		}
+		for(Set<Risk> r : set){
+			this.sizeMap.put(r.size(), this.sizeMap.get(r.size())+1);
+		}
+		this.sizeMapStale = false;
+	}
+	
 	public Set<Set<Risk>> getSet() {
 		return set;
 	}
@@ -49,11 +88,14 @@ public class GeneralizedRiskSet implements Comparable {
 				removeSetsSubsumedBy(this.set, rs1);
 				//add rs1 to set
 				set.add(rs1);
+				if(rs1.size()>0)
+					onlyEmpty = false;
+				this.sizeMapStale = true;
 			}
 		}	
 	}
 
-
+	
 
 	private void removeSetsSubsumedBy(Set<Set<Risk>> mset, Set<Risk> rs1) {
 		//Set<Set<Risk>> toRemove = new TreeSet<Set<Risk>>(new SetComparator());
@@ -64,7 +106,8 @@ public class GeneralizedRiskSet implements Comparable {
 				toRemove.add(rs);
 			}
 		}
-		mset.removeAll(toRemove);
+		mset.removeAll(toRemove);		
+		
 	}
 
 
@@ -89,18 +132,19 @@ public class GeneralizedRiskSet implements Comparable {
 				if(rs2.size() <= maxEltSize && !subsumes(newRiskSet, rs2)){
 					removeSetsSubsumedBy(newRiskSet, rs2);
 					newRiskSet.add(rs2);
+					onlyEmpty = false;
 				}
 			}
 		}
 		set = newRiskSet;			
-		
+		this.sizeMapStale = true;
 
 	}
 
 
 	private boolean subsumes(Set<Set<Risk>> mset, Set<Risk> rs1) {
 		for(Set<Risk> rs : mset){
-			if(rs1.size() >= rs.size() && rs1.containsAll(rs)){
+			if(rs1.size() >= rs.size() && rs.size() > 0 && rs1.containsAll(rs)){
 				return true;
 			}
 		}
@@ -124,7 +168,7 @@ public class GeneralizedRiskSet implements Comparable {
 		}
 		b.append("}\nSize: ").append(set.size());
 		 */
-		for(int i = 1; i  <= maxEltSize; i++){
+		for(int i = 0; i  <= maxEltSize; i++){
 			b.append(i +":");
 			for(Set<Risk> rs : set){
 				if(rs.size() == i){
@@ -144,34 +188,28 @@ public class GeneralizedRiskSet implements Comparable {
 
 
 	public void add(Risk risk) {
+		
+		if(maxEltSize == 0)
+			return;
+		
 		Set<Risk> s = new TreeSet<Risk>();
 		//Set<Risk> s = new HashSet<Risk>();
 		s.add(risk);
 		removeSetsSubsumedBy(this.set, s);
 		set.add(s);
+		this.sizeMapStale = true;
+		if(s.size()>0)
+			onlyEmpty = false;
 	}
 
 
 	public void removeAll(GeneralizedRiskSet risks) {
 		for(Set<Risk> r : risks.getSet()){
 			set.remove(r);
+			this.sizeMapStale = true;
 		}
 	}
 
-	public Map<Integer, Integer> getSetSizeCounts(){
-		Map<Integer, Integer> counts = new HashMap<Integer, Integer>();
-		
-		for(Set<Risk> r : set){
-			int size = r.size();
-			if(counts.get(size) == null){
-				counts.put(size, 1);
-			}
-			else{
-				counts.put(size, counts.get(size)+1);
-			}
-		}
-		return counts;
-	}
 	
 	@Override
 	public int compareTo(Object o) {
@@ -182,19 +220,14 @@ public class GeneralizedRiskSet implements Comparable {
 		
 		GeneralizedRiskSet grs = (GeneralizedRiskSet)o;
 		
-		GeneralizedRiskSet diff1 = new GeneralizedRiskSet(this);
-		GeneralizedRiskSet diff2 = new GeneralizedRiskSet(grs);
 		
-//		diff1.removeAll(grs);
-//		diff2.removeAll(this);
-		
-		Map<Integer, Integer> c1 = diff1.getSetSizeCounts();
-		Map<Integer, Integer> c2 = diff2.getSetSizeCounts();
+		Map<Integer, Integer> c1 = this.getSizeMap();
+		Map<Integer, Integer> c2 = grs.getSizeMap();
 		
 		Set<Integer> sizes =  new TreeSet<Integer>();
-		sizes.addAll(c1.keySet());
-		sizes.addAll(c2.keySet());
-		
+//		sizes.addAll(c1.keySet());
+//		sizes.addAll(c2.keySet());
+		sizes.add(1);
 		
 		for(Integer i : sizes){
 			Integer i1 = c1.get(i);
@@ -221,6 +254,13 @@ public class GeneralizedRiskSet implements Comparable {
 
 	public void addEmpty() {
 		set.add(new TreeSet<Risk>());
+		
+	}
+
+
+
+	public boolean onlyEmpty() {
+		return onlyEmpty;
 	}
 
 }

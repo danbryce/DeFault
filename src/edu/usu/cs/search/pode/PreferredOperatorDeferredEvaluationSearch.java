@@ -55,10 +55,14 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 //					for(int i = 0; i < 2; i++) {
 //						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
 //					}
-					int d = ((FFRiskyNode)first.getParent()).getCriticalRisks().compareTo(((FFRiskyNode)second.getParent()).getCriticalRisks());
+					
+					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
+					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
+					
+					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
+					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
 						
 					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
-					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
 					if(d != 0) {
 						return d;
 					}
@@ -84,14 +88,29 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 //					for(int i = 0; i < 2; i++){
 //						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
 //					}
-					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
-					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
-					if(diffs[1] != 0) {
-						return diffs[1].intValue();
+//					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
+//					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
+//					if(diffs[1] != 0) {
+//						return diffs[1].intValue();
+//					}
+//					else{
+//						return diffs[0].intValue(); //same num risks, so compare length
+//					}
+					
+					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
+					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
+					
+					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
+					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
+						
+					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
+					if(d != 0) {
+						return d;
 					}
 					else{
 						return diffs[0].intValue(); //same num risks, so compare length
 					}
+
 				}
 				else{
 					double alpha = 0.6;
@@ -114,6 +133,8 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			}
 			
 			boolean pulledPreferred = true;
+			
+
 			
 			// Don't remove anything from an empty queue
 			if(open.size() == 0) {
@@ -155,7 +176,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 
 			// Compute node's H value
 			double[] hvalue = node.getHeuristicValue();
-			
+
 			
 			// Add the preferredOperator children to openPreferred
 			List<StateNode> preferredNodes = node.createSubsequentNodes(actionInstances);
@@ -188,7 +209,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 //				logger.debug(node.getCriticalRisks().toString());
 
 			}
-			
+			//System.out.println(searchStatistics.toString());
 
 		}
 	}
@@ -196,11 +217,11 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 	@Override
 	public void initialize() {
 		openPreferred.add(
-			new PreferredOperatorDeferredEvaluationNode(problem.getInitialState(), 
-			new FFRiskyHeuristic(
-				problem, 
-				domain, 
-				solverOptions),
+			new PreferredOperatorDeferredEvaluationNode(problem.getInitialState(),heuristic, 
+//			new FFRiskyHeuristic(
+//				problem, 
+//				domain, 
+//				solverOptions),
 			solverOptions));
 	}
 	

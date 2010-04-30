@@ -2,6 +2,7 @@ package edu.usu.cs.heuristic.stanplangraph;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,12 +23,12 @@ import edu.usu.cs.search.StateNode;
 
 public class StanPlanningGraph {
 	protected static Logger logger = LoggerFactory.getLogger(StanPlanningGraph.class.getName());
-	
+
 	protected  Map<Integer, FactHeader> globalFactHeaders = null; 
 	protected  Map<Integer, ActionHeader> globalActionHeaders = null;
 	//protected Map<String, Risk> globalRiskHeaders = new HashMap<String, Risk>();
 	//protected IncompleteProblem problem = null;
-	protected int currentFactIndex = 0;
+	//protected int currentFactIndex = 0;
 	protected List<ActionInstance> remainingActions;
 	// private final Set<Proposition> remainingPropositions;
 	protected FactSpike factSpike = null;
@@ -38,7 +39,12 @@ public class StanPlanningGraph {
 	protected Set<ActionInstance> helpfulActions = null;
 	protected Set<ActionInstance> preferredActions = null;
 	private SolverOptions solverOptions;
+
+	protected Map<Integer, List<ActionInstance>> preconditionActionMap = null;
+	protected Map<ActionInstance, Integer> preconditionActionCountMap = null;
+	protected Map<ActionInstance, Integer> tempPreconditionActionCountMap = null;
 	
+
 	//	public  StanPlanningGraph(IncompleteProblem problem1){
 	//		globalFactHeaders = new HashMap<Integer, FactHeader>();
 	//		globalActionHeaders = new HashMap<Integer, ActionHeader>();
@@ -55,10 +61,25 @@ public class StanPlanningGraph {
 		problem = problem2;
 		domain = domain2;
 		this.setSolverOptions(solverOptions);
+
+		this.preconditionActionMap = new HashMap<Integer, List<ActionInstance>>();
+		this.preconditionActionCountMap = new HashMap<ActionInstance, Integer>();
+
+		for(ActionInstance action : problem.getActions()){
+			preconditionActionCountMap.put(action, ((IncompleteActionInstance)action).getPreconditions().size());
+			for (Proposition prec : ((IncompleteActionInstance)action).getPreconditions()) {
+				List<ActionInstance> acts = preconditionActionMap.get(prec.getIndex());
+				if(acts == null){
+					acts = new ArrayList<ActionInstance>();					
+				}
+				preconditionActionMap.put(prec.getIndex(), acts);
+				acts.add(action);
+			}
+		}
 	}
-	public Integer getAndIncrementFactIndex(Proposition p){
-		return currentFactIndex++;
-	}
+	//	public Integer getAndIncrementFactIndex(Proposition p){
+	//		return currentFactIndex++;
+	//	}
 
 
 	public void reachFixedPoint(StateNode node) {
@@ -75,7 +96,7 @@ public class StanPlanningGraph {
 				return;
 			}
 		}
-	//	System.out.println("Reached fixed point at level: " + this.getFactSpike().getCurrentRank());
+	//		System.out.println("Reached fixed point at level: " + this.getFactSpike().getCurrentRank());
 	}
 
 
@@ -88,23 +109,19 @@ public class StanPlanningGraph {
 
 	protected void initializePlanningGraph(StateNode node) {
 		this.remainingActions = new ArrayList<ActionInstance>(problem.getActions());
-		this.factSpike = new FactSpike(globalFactHeaders, this);
+		this.tempPreconditionActionCountMap = new HashMap<ActionInstance, Integer>(preconditionActionCountMap);
+		this.factSpike = new FactSpike(globalFactHeaders, this, tempPreconditionActionCountMap, preconditionActionMap);
 		this.actionSpike = new ActionSpike(factSpike, globalActionHeaders, globalFactHeaders, this);
 		this.helpfulActions = new HashSet<ActionInstance>();
 		this.preferredActions = new HashSet<ActionInstance>();
-		//reset fact indices
-		currentFactIndex = 0;
-		for(Integer header : globalFactHeaders.keySet()){
-			globalFactHeaders.get(header).setIndex(-1);
-		}
+
 
 		// Create the fact spike rank 0
 		for (Proposition proposition : node.getState()) {
-			this.getFactSpike().addFact(proposition);
-			globalFactHeaders.get(proposition.getIndex()).setIndex(getAndIncrementFactIndex(proposition));
+			this.getFactSpike().addFact(proposition, remainingActions);
 		}	
 		this.getFactSpike().incrementRank();
-	
+
 	}
 
 
@@ -112,7 +129,7 @@ public class StanPlanningGraph {
 
 		FactHeader factHeader = globalFactHeaders.get(proposition.getIndex());
 		if(factHeader == null){
-			factHeader = new FactHeader(proposition, proposition.getIndex(), -1, -1);
+			factHeader = new FactHeader(proposition, proposition.getIndex(), -1);
 			globalFactHeaders.put(proposition.getIndex(), factHeader);
 		}
 		return factHeader;
@@ -347,25 +364,28 @@ public class StanPlanningGraph {
 	 */
 	protected void addApplicableActionsAndFacts() {
 
-		List<ActionInstance> newActions = new ArrayList<ActionInstance>();
-		for (ActionInstance action : remainingActions) {
-			ActionHeader header = globalActionHeaders.get(action);
-
-			if ((header != null && factSpike.isActionApplicable(header)) ||
-					(header == null && factSpike.isActionApplicable(action))
-			) {
-				// Add the applicable action to the newActions list to be
-				// removed from remainingActions.
-				newActions.add(action);
-			}
-		}
+//		List<ActionInstance> newActions = new ArrayList<ActionInstance>();
+		List<ActionInstance> activatedActions = new ArrayList<ActionInstance>(factSpike.getActivatedActions());
+//		for (ActionInstance action : remainingActions) {
+//			ActionHeader header = globalActionHeaders.get(action);
+//
+//			if ((header != null && factSpike.isActionApplicable(header)) ||
+//					(header == null && factSpike.isActionApplicable(action))
+//			) {
+//				// Add the applicable action to the newActions list to be
+//				// removed from remainingActions.
+//				newActions.add(action);
+//			}
+//		}
+		factSpike.clearActivatedActions();
 
 		// Remove all the actions from remaining that were created.
-		for (ActionInstance action : newActions) {
+		for (ActionInstance action : activatedActions) {
 			logger.debug("Adding Action: " + action.getName());
 			// Add the applicable action to the actionSpike
-			actionSpike.addAction(action, false);
 			remainingActions.remove(action);
+			actionSpike.addAction(action, false, remainingActions);
+
 		}
 	}
 
@@ -383,7 +403,7 @@ public class StanPlanningGraph {
 		int factCount = this.getFactSpike().size();
 
 		// Add all new propositions' noop actions
-		List<FactHeader> newFactHeaders = this.getFactSpike()
+		Collection<FactHeader> newFactHeaders = this.getFactSpike()
 		.getNewFactsByRank(this.getFactSpike().getCurrentRank() - 1);
 		for (FactHeader factHeader : newFactHeaders) {
 			this.getActionSpike().addNoopAction(factHeader);
@@ -430,8 +450,8 @@ public class StanPlanningGraph {
 		if(!containsSolution()){
 			return Double.MAX_VALUE;
 		}
-		
-		
+
+
 		int level = this.getFactSpike().getCurrentRank()-1;
 		Set<Proposition> goalAsPropositions = this.getProblem().getGoalAction().getPreconditions();
 		Set<FactHeader> goal = new HashSet<FactHeader>();
@@ -444,14 +464,14 @@ public class StanPlanningGraph {
 			//goal.add(factSpike.get(proposition.getName()));
 			FactHeader header = globalFactHeaders.get(proposition.getIndex());
 			if(header != null){
-			goal.add(header);
+				goal.add(header);
 			}
-			}
+		}
 
 		if(goal.size() == 0){
 			return Double.MAX_VALUE;
 		}
-		
+
 		// Get the relaxed plan as a parallel plan
 		List<Set<ActionHeader>> parallelPlan = new ArrayList<Set<ActionHeader>>();
 		for(int i = 0; i < level; i++) {
@@ -478,7 +498,7 @@ public class StanPlanningGraph {
 		}
 
 
-	//	System.out.println(plan.size());
+		//	System.out.println(plan.size());
 
 		return plan.size();
 
@@ -509,7 +529,7 @@ public class StanPlanningGraph {
 						preferredActions.add(act.getAction());
 					}
 				}
-				
+
 			}
 
 			for(ActionHeader actionHeader : fli.getChosenSupporters()){
@@ -533,16 +553,16 @@ public class StanPlanningGraph {
 	}
 
 	public Set<ActionInstance> getPreferredActions() {
-//		System.out.println("getPreferredActions()");
+		//		System.out.println("getPreferredActions()");
 		return preferredActions;
 	}
-	
+
 	public boolean containsSolution() {
 
 		// Iterate through each subgoal
 		for (Proposition subGoal : this.getProblem().getGoalAction()
 				.getPreconditions()) {
-			FactHeader subGoalAsFact = factSpike.get(subGoal.getName());
+			FactHeader subGoalAsFact = factSpike.get(subGoal.getIndex());
 			if (subGoalAsFact == null) {
 				return false;
 			}
@@ -556,7 +576,7 @@ public class StanPlanningGraph {
 	//		return null;
 	//	}
 
-	
+
 	public List<ActionInstance> getRelevantActions() {
 		int level = this.getFactSpike().getCurrentRank()-1;
 		Set<Proposition> goalAsPropositions = this.getProblem().getGoalAction().getPreconditions();
@@ -612,7 +632,7 @@ public class StanPlanningGraph {
 		//System.out.println("extract from: " + level);
 
 		logger.debug("=======Time: " + level + "========");
-		
+
 		Set<FactHeader> subGoalsToBeAdded = new HashSet<FactHeader>();
 
 		for (FactHeader subGoal : goal) {
@@ -627,7 +647,7 @@ public class StanPlanningGraph {
 
 				logger.debug("Supported By: " + actionHeader.getName());
 
-				
+
 				// Add the preconditions of the actions to the goal
 				ActionLevelInfo ali = actionSpike.getActionLevelInfo(level-1, actionHeader.getIndex());
 				subGoalsToBeAdded.addAll(ali.getSupportingFacts());
@@ -647,5 +667,5 @@ public class StanPlanningGraph {
 	}
 
 
-	
+
 }

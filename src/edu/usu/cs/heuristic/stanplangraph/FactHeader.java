@@ -19,7 +19,7 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
  */
 public class FactHeader {
 	private String name;
-	private int index;
+	//private int index;
 	private int propositionIndex;
 	private BitSet mask = new BitSet();
 	private int noop;
@@ -38,10 +38,10 @@ public class FactHeader {
 		this.supporterHeaders = supporterHeaders;
 	}
 
-	public FactHeader(Proposition proposition, int propositionIndex, int index, int noop) {
+	public FactHeader(Proposition proposition, int propositionIndex, int noop) {
 		
 		this.setName(proposition.getName());
-		this.setIndex(index);
+		//this.setIndex(index);
 		this.propositionIndex = propositionIndex;
 		this.getMask().set(propositionIndex);
 		this.setNoop(noop);
@@ -56,17 +56,17 @@ public class FactHeader {
 		this.name = name;
 	}
 
-	public int getIndex() {
-		return index;
-	}
+//	public int getIndex() {
+//		return index;
+//	}
 
 	public int getPropositionIndex() {
 		return propositionIndex;
 	}
 	
-	public void setIndex(int index) {
-		this.index = index;
-	}
+//	public void setIndex(int index) {
+//		this.index = index;
+//	}
 
 	public BitSet getMask() {
 		return mask;
@@ -142,7 +142,7 @@ public class FactHeader {
 
 	@Override
 	public String toString() {
-		return getIndex() + " " + getName();
+		return getPropositionIndex() + " " + getName();
 	}
 	
 	@Override
@@ -153,7 +153,7 @@ public class FactHeader {
 		
 		FactHeader otherFactHeader = (FactHeader) obj;
 		
-		if(this.getIndex() != otherFactHeader.getIndex()) {
+		if(this.getPropositionIndex() != otherFactHeader.getPropositionIndex()) {
 			return false;
 		}
 		if(!this.getName().equals(otherFactHeader.getName())) {
@@ -165,7 +165,7 @@ public class FactHeader {
 	
 	@Override
 	public int hashCode() {
-		return (getIndex() + " " + getName()).hashCode();
+		return (getPropositionIndex() + " " + getName()).hashCode();
 	}
 
 	public void addSupporter(ActionHeader actionHeader) {

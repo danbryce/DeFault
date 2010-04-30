@@ -65,7 +65,7 @@ public class DefaultSearch implements Search {
 			//System.out.println("Breadth First Search");
 			break;
 		case 1:
-			heuristic = new StanHeuristic(problem, domain, solverOptions);
+			//heuristic = new StanHeuristic(problem, domain, solverOptions);
 			//System.out.println("Relaxed Plan Graph");
 			break;
 		case 2:

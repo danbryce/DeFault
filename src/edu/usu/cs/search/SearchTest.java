@@ -117,7 +117,7 @@ public class SearchTest {
 			} else if (args[3].equalsIgnoreCase("pode")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
-				//solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solver = new GreedyBestFirstFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
 			} else if (args[3].equalsIgnoreCase("jdd")) {

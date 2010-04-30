@@ -46,6 +46,10 @@ public class AbstractStateNode implements StateNode {
 		this.dimension = dimension;
 	}
 
+	public boolean isHeuristicComputed(){
+		return hvalue != null;
+	}
+	
 	public double[] getHeuristicValue() {
 		if (hvalue == null) {
 			hvalue = heuristic.getValue(this);

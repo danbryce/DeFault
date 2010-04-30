@@ -1,5 +1,6 @@
 package edu.usu.cs.heuristic.stanplangraph.classic;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -133,7 +134,7 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 
 		// All facts from the previous state and applicableActions'
 		// addEffects/possAddEffects
-		List<FactHeader> applicableFacts = this.getFactSpike().getFactsByRank(
+		Collection<FactHeader> applicableFacts = this.getFactSpike().getFactsByRank(
 				this.getFactSpike().getCurrentRank()-1);
 
 		for (FactHeader fact : applicableFacts) {

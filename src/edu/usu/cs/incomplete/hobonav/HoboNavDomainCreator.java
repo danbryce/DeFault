@@ -21,12 +21,12 @@ public class HoboNavDomainCreator {
 	
 	private static String[] items = {
 		"bindle",				// collection of belongings wrapped in cloth and tied around a stick
-		"california blankets",	// newspapers, intended to be used for bedding
-		"glad rags",			// one's best clothes
-		"road stake",			// the small amount of money a hobo may have in case of an emergency
+		"california_blankets",	// newspapers, intended to be used for bedding
+		"glad_rags",			// one's best clothes
+		"road_stake",			// the small amount of money a hobo may have in case of an emergency
 		"snipes",				// cigarette butts "sniped" (eg. in ashtrays)
 		"banjo",				// (1) a small portable frying pan. (2) a short, "D" handled shovel
-		"mulligan stew", 		// a type of community stew, created by several hobos combining whatever food they have or can collect
+		"mulligan_stew", 		// a type of community stew, created by several hobos combining whatever food they have or can collect
 		"gump",					// a scrap of meat
 		"crumbs",				// lice
 		};

@@ -1,6 +1,7 @@
 package edu.usu.cs.search.incomplete;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class FFRiskyNode  extends AStarNode {
 		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 		this.dimension = 2;
 		this.heuristic = heuristic;
-		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
+		//this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 		this.state = propositions;
 		this.solverOptions = solverOptions;
 //		if (solverOptions.isUseJDDGValue()) {
@@ -79,7 +80,7 @@ public class FFRiskyNode  extends AStarNode {
 		// Copy the propositions with their associated risks
 		this.propositions = new HashMap<Proposition, GeneralizedRiskSet>();
 		for (Proposition prop : node.getPropositions().keySet()) {
-			GeneralizedRiskSet risks = new GeneralizedRiskSet(node.getPropositions().get(prop));
+			GeneralizedRiskSet risks = node.getPropositions().get(prop);
 			this.propositions.put(prop, risks);
 		}
 
@@ -164,36 +165,43 @@ public class FFRiskyNode  extends AStarNode {
 			return false;
 		}
 
-		//otherwise need to check risks
-		for(Proposition p : propositions.keySet()) {
-			
-//			// Check to see if the risk hashes are the same
-//			if(riskSetHash.get(p) == null) {
-//				riskSetHash.put(p, Risk.getRiskHash(propositions.get(p)));
-//			}
-//			if(objNode.riskSetHash.get(p) == null) {
-//				objNode.riskSetHash.put(p, Risk.getRiskHash(objNode.getPropositions().get(p)));
-//			}
-//			int riskHash = riskSetHash.get(p);
-//			int otherRiskHash = objNode.riskSetHash.get(p);
-//			if(riskHash != otherRiskHash) {
+//		//otherwise need to check risks
+//		for(Proposition p : propositions.keySet()) {
+//			
+////			// Check to see if the risk hashes are the same
+////			if(riskSetHash.get(p) == null) {
+////				riskSetHash.put(p, Risk.getRiskHash(propositions.get(p)));
+////			}
+////			if(objNode.riskSetHash.get(p) == null) {
+////				objNode.riskSetHash.put(p, Risk.getRiskHash(objNode.getPropositions().get(p)));
+////			}
+////			int riskHash = riskSetHash.get(p);
+////			int otherRiskHash = objNode.riskSetHash.get(p);
+////			if(riskHash != otherRiskHash) {
+////				return false;
+////			}
+//			
+//			// Check to see if the risks are the same
+//			if(!propositions.get(p).equals(objNode.getPropositions().get(p))){
 //				return false;
-//			}
-			
-			// Check to see if the risks are the same
-			if(!propositions.get(p).equals(objNode.getPropositions().get(p))){
-				return false;
-			}
-		}
+//			}		
+//		}
 
-		return true;
+		//if critical risks are more or equal, then discard set equal, otherwise its better, so set unequal
+		if(criticalRisks.compareTo(objNode.getCriticalRisks()) < 1)
+				return true;
+		else
+				return false;
+		
+		//return true;
 	}
 
 	@Override
 	public int hashCode() {
 		if (!hashCodeInitialized) {
-			String str = "";
-
+			//String str = "";
+			BitSet hashBits = new BitSet();
+			
 			// Sort the propositions first
 			List<Proposition> props = new ArrayList<Proposition>(propositions
 					.keySet());
@@ -205,11 +213,12 @@ public class FFRiskyNode  extends AStarNode {
 
 			// make them a big long string
 			for (Proposition proposition : props) {
-				str += proposition.toString() + " ";
+				//str += proposition.toString() + " ";
+				hashBits.set(proposition.getIndex());
 			}
 
 			// cache hash
-			hash = str.hashCode();
+			hash = hashBits.hashCode();//str.hashCode();
 			hashCodeInitialized = true;
 		}
 
@@ -492,8 +501,9 @@ public class FFRiskyNode  extends AStarNode {
 			// }
 
 			// Add possible clobbers to the risk set
-			propositions.get(effect).add(
-					Risk.getRiskFromIndex(Risk.POSSCLOB, action.getName(), effect.getName()));
+			GeneralizedRiskSet riskSet = new GeneralizedRiskSet(propositions.get(effect));
+			riskSet.add(Risk.getRiskFromIndex(Risk.POSSCLOB, action.getName(), effect.getName()));
+			propositions.put(effect, riskSet);
 		}
 	}
 
@@ -513,7 +523,7 @@ public class FFRiskyNode  extends AStarNode {
 
 				// If it was false before, risk set consists of any risk to the
 				// current action
-				GeneralizedRiskSet riskSet = new GeneralizedRiskSet(actRisks);
+				GeneralizedRiskSet riskSet = actRisks;
 
 				propositions.put(effect, riskSet);
 				continue;

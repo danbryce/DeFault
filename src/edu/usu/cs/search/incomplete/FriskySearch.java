@@ -11,7 +11,6 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.RickCounterHeuristic;
 import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
@@ -102,7 +101,7 @@ public class FriskySearch extends AStarSearch{
 //		}
 
 
-		this.riskHeuristic = new FFRiskyHeuristic(problem, domain, solverOptions);
+//		this.riskHeuristic = new FFRiskyHeuristic(problem, domain, solverOptions);
 		//this.lengthHeuristic = new StanHeuristic(problem);
 	}
 
@@ -113,7 +112,7 @@ public class FriskySearch extends AStarSearch{
 	public void initialize() {
 //		if(!solverOptions.isUseQuadQueue()) {
 		if (solverOptions.isUseJDDGValue()) {
-			open.add(new RiskCounterNode(problem, problem.getInitialState(), new RickCounterHeuristic(problem, domain, solverOptions)));
+			open.add(new RiskCounterNode(problem, problem.getInitialState(), new RiskCounterHeuristic(problem, domain, solverOptions)));
 		} else {
 			open.add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
 		}

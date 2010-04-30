@@ -20,7 +20,9 @@ public class ActionSpike {
 	private Map<Integer, FactHeader> globalFactHeaders;
 	protected StanPlanningGraph solver;
 	protected Map<Integer, Map<Integer, ActionLevelInfo>> actionLevelInfos;
-
+	private int currentRank;
+	private Map<ActionHeader, Integer> actRank;
+	
 	private static Logger logger = LoggerFactory.getLogger(ActionSpike.class.getName());
 
 	//	public ActionSpike(FactSpike factSpike) {
@@ -39,15 +41,28 @@ public class ActionSpike {
 		this.solver = solver;
 		this.actionHeaders = new ArrayList<ActionHeader>();
 		this.actionLevelInfos = new HashMap<Integer, Map<Integer,ActionLevelInfo>>();
+		this.currentRank = 0;
+		this.actRank = new HashMap<ActionHeader, Integer>();
 	}
 
 	
 	
-	public void addAction(ActionInstance maction, boolean noop) {
+	public  Integer getActRank(ActionHeader bestAct) {
+		Integer rank = actRank.get(bestAct);
+		if(rank == null){
+			return Integer.MAX_VALUE;
+		}
+		
+		return rank;
+	}
+
+
+
+	public void addAction(ActionInstance maction, boolean noop, List<ActionInstance> remainingActions) {
 		IncompleteActionInstance action = (IncompleteActionInstance)maction;
 		ActionHeader actionHeader = globalActionHeaders.get(action.getIndex());
 
-		
+		actRank.put(actionHeader, currentRank);
 
 		if(actionHeader == null){
 			actionHeader = solver.creatActionHeader(action, noop);
@@ -70,20 +85,20 @@ public class ActionSpike {
 		for (Proposition add : action.getAddEffects()) {
 			// factHeader of the proposition
 			FactHeader globalFactHeader = globalFactHeaders.get(add.getIndex()); 
-			FactHeader factHeader = getFactSpike().get(add.getName());
+			FactHeader factHeader = getFactSpike().get(add.getIndex());
 
 			// If the factHeader is null, the proposition doesn't exist in the
 			// factSpike, so it needs to be added
 			if (factHeader == null) {
 				if(globalFactHeader == null){
-					FactHeader newFactHeader = new FactHeader(add, add.getIndex(),0, 0);
+					FactHeader newFactHeader = new FactHeader(add, add.getIndex(),0);
 					globalFactHeaders.put(add.getIndex(), newFactHeader);
 				}
 				globalFactHeader = globalFactHeaders.get(add.getIndex());
 				
 				//globalFactHeaders.put(add.getIndex(), add);
-				globalFactHeader.setIndex(solver.getAndIncrementFactIndex(add));
-				getFactSpike().addFact(globalFactHeader);
+				//globalFactHeader.setIndex(solver.getAndIncrementFactIndex(add));
+				getFactSpike().addFact(globalFactHeader, remainingActions);
 			}
 			FactLevelInfo fli = factSpike.getFactLevelInfo(getCurrentRank()+1, add.getIndex());
 			logger.debug("Adding " + actionHeader.getIndex() + " " + actionHeader.getName() + " as supporter of " + fli.getFact().getName());
@@ -100,7 +115,7 @@ public class ActionSpike {
 		for (Proposition possAdd : action.getPossibleAddEffects()) {
 			// factHeader of the proposition
 			FactHeader globalFactHeader = globalFactHeaders.get(possAdd.getIndex()); 
-			FactHeader factHeader = getFactSpike().get(possAdd.getName());
+			FactHeader factHeader = getFactSpike().get(possAdd.getIndex());
 
 			//getFactSpike().get(possAdd.getName());
 
@@ -110,14 +125,14 @@ public class ActionSpike {
 			if (factHeader == null) {
 				
 				if(globalFactHeader == null){
-					FactHeader newFactHeader = new FactHeader(possAdd, possAdd.getIndex(),0, 0);
+					FactHeader newFactHeader = new FactHeader(possAdd, possAdd.getIndex(),0);
 					globalFactHeaders.put(possAdd.getIndex(), newFactHeader);
 				}
 				globalFactHeader = globalFactHeaders.get(possAdd.getIndex());
 				
 				//globalFactHeaders.put(add.getIndex(), add);
-				globalFactHeader.setIndex(solver.getAndIncrementFactIndex(possAdd));
-				getFactSpike().addFact(globalFactHeader);
+				//globalFactHeader.setIndex(solver.getAndIncrementFactIndex(possAdd));
+				getFactSpike().addFact(globalFactHeader, remainingActions);
 
 				
 			}
@@ -175,11 +190,13 @@ public class ActionSpike {
 
 
 	public int getCurrentRank() {
-		return rankEnd.size();
+		//return rankEnd.size();
+		return currentRank;
 	}
 
 	public void incrementRank() {
 		rankEnd.add(actionHeaders.size());
+		currentRank++;
 	}
 
 	/**
@@ -189,7 +206,7 @@ public class ActionSpike {
 	 * @return
 	 */
 	public List<ActionHeader> getActionsByRank(int rank) {
-		if(rank < 0 || rank >= rankEnd.size()) {
+		if(rank < 0 || rank >= currentRank) {
 			return null;
 		}
 
@@ -241,6 +258,22 @@ public class ActionSpike {
 			ali = new ActionLevelInfo(globalActionHeaders.get(index), solver.getSolverOptions());
 			//System.out.println("made new ali for: " + ali.getActionHeader().getName() + " at level: " + i );
 			levelInfo.put(index, ali);
+		}		
+
+		return ali;
+
+	}
+	
+	
+	public ActionLevelInfo getExistingActionLevelInfo(int i, int index) {
+
+		Map<Integer, ActionLevelInfo> levelInfo = actionLevelInfos.get(i);
+		if(levelInfo == null){
+			return null;
+		}
+		ActionLevelInfo ali = levelInfo.get(index);
+		if(ali == null){
+			return null;
 		}		
 
 		return ali;

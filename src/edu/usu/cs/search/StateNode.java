@@ -11,6 +11,9 @@ public interface StateNode extends Comparable<StateNode>{
 	public double[] getHeuristicValue();	
 	public double[] getFValue();
 	public double[] getGValue();
+	
+	public boolean isHeuristicComputed();
+
 
 	public int getDimension();
 	public ActionInstance getAction();
