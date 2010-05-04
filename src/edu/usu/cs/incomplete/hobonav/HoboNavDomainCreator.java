@@ -81,8 +81,14 @@ public class HoboNavDomainCreator {
 							possPrecs.add(items[i]);
 						}
 					}
-					
 					output.append(getMoveAction(x, y, x + 1, y, possPrecs));
+					
+					possPrecs.clear();
+					for (int i = 0; i < itemCount; i++) {
+						if (random.nextDouble() < tollDensity) {
+							possPrecs.add(items[i]);
+						}
+					}
 					output.append(getMoveAction(x + 1, y, x, y, possPrecs));
 				}
 				
@@ -95,8 +101,14 @@ public class HoboNavDomainCreator {
 							possPrecs.add(items[i]);
 						}
 					}
-					
 					output.append(getMoveAction(x, y, x, y + 1, possPrecs));
+					
+					possPrecs = new ArrayList<String>();
+					for (int i = 0; i < itemCount; i++) {
+						if (random.nextDouble() < tollDensity) {
+							possPrecs.add(items[i]);
+						}
+					}
 					output.append(getMoveAction(x, y + 1, x, y, possPrecs));
 				}
 			}
@@ -148,13 +160,20 @@ public class HoboNavDomainCreator {
 		output.append(" :parameters ()\n");
 		output.append(" :precondition (and (at_" + fromX + "_" + fromY + "))\n");
 		if (possPrecs.size() > 0) {
-			output.append( " :poss-precondition (and");
+			output.append(" :poss-precondition (and");
 			for (String possPrec : possPrecs) {
 				output.append(" (have_" + possPrec + ")");
 			}
 			output.append(")\n");
 		}
 		output.append(" :effect (and (not (at_" + fromX + "_" + fromY + ")) (at_" + toX + "_" + toY + "))\n");
+		if (possPrecs.size() > 0) {
+			output.append(" :poss-effect (and");
+			for (String possPrec : possPrecs) {
+				output.append(" (not (have_" + possPrec + "))");
+			}
+			output.append(")\n");
+		}
 		output.append(")\n");
 		return output.toString();
 	}

@@ -8,7 +8,7 @@ public class ParseFFRiskyOutputs {
 
 	private String extension = ".pddl";
 	private String[] algorithms = {
-			"friskylength", 
+//			"friskylength", 
 			"friskyRiskFirst", 
 			"friskyMSRiskFirst", 
 			"friskyLengthFirst", 
@@ -22,18 +22,6 @@ public class ParseFFRiskyOutputs {
 	String[] bridgesGridSizes = { "2", "4", "8", "16" };
 	String[] bridgesProbs = { "0.0", "0.25", "0.5", "0.75", "1.0" };
 	int bridgesInstanceCount = 10;
-	
-//	@Test
-	public void test() {
-		String[] args = new String[6];
-		args[0] = bridgesDomainPath + "bridges_v1_4_0.25_4.pddl";
-		args[1] = bridgesDomainPath + "bridges_problem.pddl";
-		args[2] = bridgesOutputPath + "bridges_v1_friskyRiskFirst_4_0.25_4.txt";
-		args[3] = bridgesOutputPath + "../stats_bridges.txt";
-		args[4] = "4";
-		args[5] = "0.25";
-		RiskCounter.main(args);
-	}
 	
 	@Test
 	public void bridgesParseOutputs() {
