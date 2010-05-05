@@ -20,7 +20,7 @@ public class BlindNavCreator {
 	private static int gridSize;
 	private static String outputDir;
 	private static int numFiles = 1;
-	private static Random random = new Random();
+	private static Random random = new Random(0);
 	
 	private static final String at_bus_stop = "at_bus_stop";
 	private static final String found = "found";

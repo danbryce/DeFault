@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -16,6 +17,7 @@ public class Parser {
 	private static final String SYNTHESIZE = "SYNTHESIZE";
 	private final File inputFile;
 	private String outputFileContents = null;
+	private Random random = new Random(0);
 
 	private double p1 = 0.5;
 	private double p2 = 0.5;
@@ -63,7 +65,7 @@ public class Parser {
 					// with probability P1 introduce a possible precondition for
 					// an available substrate (sample which substrate uniformly
 					// from all substrates not involved in the action)
-					if (Math.random() < p1) {
+					if (random.nextDouble() < p1) {
 						// Get to the :effect part and insert the possible
 						// precondition before that
 						currentLine = bufferedReader.readLine();
@@ -78,7 +80,7 @@ public class Parser {
 					// for the true precondition available substrate
 					String possClob = "";
 					boolean hasPossClob = false;
-					if (Math.random() < p2) {
+					if (random.nextDouble() < p2) {
 						currentLine = bufferedReader.readLine();
 						hasPossClob = true;
 						// Get the next line that has the word available in it
@@ -93,7 +95,7 @@ public class Parser {
 					// with probability P3 introduce a possible positive effect
 					// for a substrate (sample uniformly among substrates not
 					// involved)
-					if (Math.random() < p3) {
+					if (random.nextDouble() < p3) {
 						currentLine = bufferedReader.readLine();
 						while (!currentLine.startsWith(":effect")) {
 							outputFileContents += currentLine + "\n";
@@ -130,7 +132,7 @@ public class Parser {
 				} else if (actionName.startsWith(ASSOCIATE_CATALYZE)) {
 					// With probability P6 make the positive precondition that is not a
 					// negative effect into a possible precondition (the first one)
-					if(Math.random() < p6) {
+					if(random.nextDouble() < p6) {
 						String possPrec = "";
 						String prec = "";
 						// Find the precondition and switch it to a poss-precondition
@@ -162,7 +164,7 @@ public class Parser {
 
 					// with probability P5 make the negative effect a possible negative
 					// effect
-					if(Math.random() < p5) {
+					if(random.nextDouble() < p5) {
 						currentLine = bufferedReader.readLine();
 						while(!currentLine.startsWith(":effect")) {
 							outputFileContents += currentLine + "\n";
@@ -176,7 +178,7 @@ public class Parser {
 						outputFileContents += currentLine + "\n";
 					}
 				} else if (actionName.startsWith(ASSOCIATE)) {
-					if(Math.random() < p4) {
+					if(random.nextDouble() < p4) {
 						currentLine = bufferedReader.readLine();
 						while(!currentLine.startsWith(":effect")) {
 							outputFileContents += currentLine + "\n";

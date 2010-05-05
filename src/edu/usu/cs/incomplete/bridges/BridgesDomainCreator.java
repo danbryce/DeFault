@@ -16,7 +16,7 @@ public class BridgesDomainCreator {
 	private static double treasureInOtherLocationsDensity = 0.0;
 	private static String outputFileDestination;
 	private static int fileCount = 1;
-	private static Random random = new Random();
+	private static Random random = new Random(0);
 	private static int actionCount;
 	private static Set<String> bridgePredicates;
 	private static Set<String> treasurePredicates;
