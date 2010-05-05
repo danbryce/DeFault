@@ -52,25 +52,25 @@ public class RiskCounter {
 		unusedRisks = 0;
 		for (Risk risk : allRisks) {
 
-			boolean riskActionInPlan = false;
-			if (plan != null) {
-				for(ActionInstance a : plan){
-					if(a.getName().equals(risk.getActionName())){
-						riskActionInPlan = true;
-						break;
-					}
-				}
-			}	
-			if(riskActionInPlan || plan == null){
+//			boolean riskActionInPlan = false;
+//			if (plan != null) {
+//				for(ActionInstance a : plan){
+//					if(a.getName().equals(risk.getActionName())){
+//						riskActionInPlan = true;
+//						break;
+//					}
+//				}
+//			}	
+			//if(riskActionInPlan || plan == null){
 				int temp = bdd.createVar();
 				bdd.ref(temp);
 				riskToBDD.put(risk, temp);
 				bddToRisk.put(temp, risk);
 				//			logger.debug((i++) + " " + risk);
-			}
-			else{
-				unusedRisks++;
-			}
+//			}
+//			else{
+//				unusedRisks++;
+//			}
 		}
 
 

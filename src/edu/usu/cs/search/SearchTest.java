@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -219,12 +220,17 @@ public class SearchTest {
 //							.getCriticalRisks().size());
 //			logger.debug(((FFRiskyNode) searchStatistics.getSolutionNode())
 //							.getCriticalRisks());
+			
 			RiskCounter.initialize(domain, problem, plan);
-			logger.debug("Solvable Domains: " + 
-						 RiskCounter.getBigSolvableDomainCount(domain, problem, plan));
-			logger.debug("Total Domains: " +
-						 BigInteger.valueOf(1).shiftLeft(RiskCounter.getNumRisks()));
-			logger.debug("Number of Incomplete Features: " + RiskCounter.getNumRisks());
+			BigInteger total =BigInteger.valueOf(1).shiftLeft(RiskCounter.getNumRisks());
+			BigInteger solvable = RiskCounter.getBigSolvableDomainCount(domain, problem, plan); 
+			BigDecimal probability = new BigDecimal(solvable);
+			probability = probability.divide(new BigDecimal(total));
+				
+			logger.debug("Solvable Domains: " + solvable);
+			logger.debug("Total Domains: " + total);
+			logger.debug("Probability: " + probability);
+			logger.debug("Incomplete Features: " + RiskCounter.getNumRisks());
 
 		}
 		else if(searchStatistics.getSolutionNode() != null
