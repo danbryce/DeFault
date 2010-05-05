@@ -17,7 +17,7 @@ public class AStarSolver extends DefaultSolver
 {
 //	private final Domain domain;
 //	private final DefaultProblem problem;
-	private final Search search;
+	protected Search search;
 //	
 //	private final List<ActionInstance> actionInstances;
 //	
@@ -54,7 +54,11 @@ public class AStarSolver extends DefaultSolver
 
 
 	
-//	public int getNodesExpandedCount() {
+public AStarSolver() {
+	search = null;
+	}
+
+	//	public int getNodesExpandedCount() {
 //		if(plan == null){
 //			return 0;
 //		}

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class BridgesDomainCreator {
 	private static int gridSize;
 	private static double bridgeDensity;
@@ -18,6 +20,8 @@ public class BridgesDomainCreator {
 	private static int actionCount;
 	private static Set<String> bridgePredicates;
 	private static Set<String> treasurePredicates;
+	
+	private static Logger logger = Logger.getLogger(BridgesDomainCreator.class.getName());
 	
 	public static void main(String[] args) {
 		if(!IsInputValid(args)) {
@@ -275,7 +279,7 @@ public class BridgesDomainCreator {
 			// Close off the domain file
 			output.append(")");
 			
-//			System.out.println(output);
+//			logger.debug(output);
 			
 			// Create the file
 			try {
@@ -291,7 +295,7 @@ public class BridgesDomainCreator {
 				BufferedWriter out = new BufferedWriter(fstream);
 				out.write(output.toString());
 				out.close();
-				System.out.println("\nDomain file created at " + outputFile);
+				logger.debug("\nDomain file created at " + outputFile);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -305,7 +309,7 @@ public class BridgesDomainCreator {
 		output.append("    (:goal\n     (and\n      (at_0_0)\n      (holding_treasure_1)\n      (holding_treasure_2)\n      (holding_treasure_3)\n     )\n    )\n");
 		output.append(")");
 		
-//		System.out.println(output);
+//		logger.debug(output);
 		
 		// Create the file
 		try {
@@ -314,7 +318,7 @@ public class BridgesDomainCreator {
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(output.toString());
 			out.close();
-			System.out.println("\nProblem file created at " + outputFile);
+			logger.debug("\nProblem file created at " + outputFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -334,7 +338,7 @@ public class BridgesDomainCreator {
 				throw new NumberFormatException();
 			}
 		} catch(NumberFormatException e) {
-			System.out.println("Grid Size must be an integer value greater than 0.");
+			logger.debug("Grid Size must be an integer value greater than 0.");
 			usage();
 			return false;
 		}
@@ -349,7 +353,7 @@ public class BridgesDomainCreator {
 				throw new NumberFormatException();
 			}
 		} catch(NumberFormatException e) {
-			System.out.println("Bridge Density must be a decimal value between 0 and 1 (can be 0 or 1).");
+			logger.debug("Bridge Density must be a decimal value between 0 and 1 (can be 0 or 1).");
 			usage();
 			return false;
 		}
@@ -362,7 +366,7 @@ public class BridgesDomainCreator {
 					throw new NumberFormatException();
 				}
 			} catch(NumberFormatException e) {
-				System.out.println("Percentage of bad bridges must be between 0.0 and 1.0.");
+				logger.debug("Percentage of bad bridges must be between 0.0 and 1.0.");
 				usage();
 				return false;
 			}
@@ -378,7 +382,7 @@ public class BridgesDomainCreator {
 					throw new NumberFormatException();
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("Percentage Change of treasure being in other locations must be between 0.0 and 1.0.");
+				logger.debug("Percentage Change of treasure being in other locations must be between 0.0 and 1.0.");
 				usage();
 				return false;
 			}
@@ -392,7 +396,7 @@ public class BridgesDomainCreator {
 					throw new NumberFormatException();
 				}
 			} catch(NumberFormatException e) {
-				System.out.println("File count must be an integer value greater than 0.");
+				logger.debug("File count must be an integer value greater than 0.");
 				usage();
 				return false;
 			}
@@ -402,12 +406,12 @@ public class BridgesDomainCreator {
 	}
 	
 	private static void usage() {
-		System.out.println("usage:\tjava BridgesCreator [Grid Size] [Output Directory] [Bridge Density] [Optional: % of bridges where all treasure may be lost] [Optional: % chance each corner will hold each item] [Optional: Number of Domain Files]");
-		System.out.println("\tGrid Size\t\tInteger value from 1 to many.");
-		System.out.println("\tOutput Dir\t\tThe directory where the files will be created.");
-		System.out.println("\tBridge Density\t\tdecimal from 0 to 1 representing the percentage of connections that are bridges.");
-		System.out.println("\tPercent of Bridges \n\tthat may lose treasure\tOnly for Risk Types 2 and 3. Of all the bridges in the domain, the percent chance that a given bridge will have a PossClob risk that removes all treasure.");
-		System.out.println("\tPercent Chance each \n\ttreasure location will \n\thold a given treasure\tOnly for Risk Type 3. For each of the treasure location and for each treasure not normally held there, the percent chance that an UnlistedEffect risk will be there for the specified treasure.");
-		System.out.println("\tNumber of domain \n\tfiles to be created\tInteger value from 1 to many. Default is 1.");
+		logger.debug("usage:\tjava BridgesCreator [Grid Size] [Output Directory] [Bridge Density] [Optional: % of bridges where all treasure may be lost] [Optional: % chance each corner will hold each item] [Optional: Number of Domain Files]");
+		logger.debug("\tGrid Size\t\tInteger value from 1 to many.");
+		logger.debug("\tOutput Dir\t\tThe directory where the files will be created.");
+		logger.debug("\tBridge Density\t\tdecimal from 0 to 1 representing the percentage of connections that are bridges.");
+		logger.debug("\tPercent of Bridges \n\tthat may lose treasure\tOnly for Risk Types 2 and 3. Of all the bridges in the domain, the percent chance that a given bridge will have a PossClob risk that removes all treasure.");
+		logger.debug("\tPercent Chance each \n\ttreasure location will \n\thold a given treasure\tOnly for Risk Type 3. For each of the treasure location and for each treasure not normally held there, the percent chance that an UnlistedEffect risk will be there for the specified treasure.");
+		logger.debug("\tNumber of domain \n\tfiles to be created\tInteger value from 1 to many. Default is 1.");
 	}
 }

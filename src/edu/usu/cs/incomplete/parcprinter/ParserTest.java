@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class ParserTest {
+	private static Logger logger = Logger.getLogger(ParserTest.class.getName());
+	
 	public static void main(String[] args) {
 		if (args.length != 4) {
 			usage();
@@ -51,12 +55,12 @@ public class ParserTest {
 			return;
 		}
 
-		System.out.println(domainOutput);
+		logger.debug(domainOutput);
 		try {
 			FileWriter fstream = new FileWriter(args[2]);
 			fstream.write(domainOutput);
 			fstream.close();
-			System.out.println("Written to " + args[2]);
+			logger.debug("Written to " + args[2]);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
@@ -93,12 +97,12 @@ public class ParserTest {
 			return;
 		}
 
-		System.out.println(problemOutput);
+		logger.debug(problemOutput);
 		try {
 			FileWriter fstream = new FileWriter(args[3]);
 			fstream.write(problemOutput);
 			fstream.close();
-			System.out.println("Written to " + args[3]);
+			logger.debug("Written to " + args[3]);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
@@ -106,6 +110,6 @@ public class ParserTest {
 	}
 
 	private static void usage() {
-		System.out.println("ParserTest [input domain file] [input problem file] [output domain file] [output problem file]");
+		logger.debug("ParserTest [input domain file] [input problem file] [output domain file] [output problem file]");
 	}
 }

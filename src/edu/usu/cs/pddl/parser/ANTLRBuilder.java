@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
@@ -37,6 +36,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
+import org.apache.log4j.Logger;
 
 import edu.usu.cs.pddl.antlr.PddlLexer;
 import edu.usu.cs.pddl.antlr.PddlParser;
@@ -110,7 +110,7 @@ public abstract class ANTLRBuilder
 			final Tree req = reqs.getChild(i);
 			requirements.add(req.getText());
 		}
-		logger.fine("Requirements=" + requirements);
+		logger.debug("Requirements=" + requirements);
 	}
 
 	protected PDDLType findType(final String typeName, final String context) throws InvalidPDDLElementException

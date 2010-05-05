@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -23,11 +24,11 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class DefaultSolver implements Solver {
 
-	private static final Logger logger = Logger.getLogger(DefaultSolver.class
+	private static  Logger logger = Logger.getLogger(DefaultSolver.class
 			.getName());
 
-	private Domain domain = null;
-	private Problem problem = null;
+	protected Domain domain = null;
+	protected Problem problem = null;
 	protected List<ActionInstance> actionInstances = null;
 	protected List<ActionInstance> plan = null;
 	protected Search search = null;

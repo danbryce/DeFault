@@ -12,6 +12,7 @@ import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
 import edu.usu.cs.heuristic.stanplangraph.StanPlanningGraph;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.SolverOptions;
 
 public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
@@ -88,6 +89,32 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 		super(problem, domain, solverOptions);
 	}
 
+	private boolean actionLevelInfoChanged(ActionHeader actionHeader){
+		if(actionSpike.getCurrentRank() < 2)
+			return true;
+
+		boolean changed = false;
+		for(FactHeader factHeader : actionHeader.getPreconditionHeaders()){
+			FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
+			if(fli.isChanged()){
+				changed = true;
+				break;
+			}
+		}
+		for(Proposition possPre : actionHeader.getAction().getPossiblePreconditions()){
+			FactHeader factHeader = factSpike.get(possPre.getIndex());
+			if(factHeader == null){	}
+			else { 
+				//precondition is present,
+				FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
+				if(fli.isChanged()){
+					changed = true;
+					break;
+				}
+			}
+		}		
+		return changed;
+	}
 
 	protected void setActionLevelInfo() {
 	//	System.out.println("Level: " + (actionSpike.getCurrentRank()-1));
@@ -96,7 +123,14 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 		for(ActionHeader actionHeader : actionSpike.getActionsByRank(actionSpike.getCurrentRank()-1)){
 
 			ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
+			ActionLevelInfo aliPrev = actionSpike.getExistingActionLevelInfo(actionSpike.getCurrentRank()-2, actionHeader.getIndex());
+			if(!actionLevelInfoChanged(actionHeader) && aliPrev != null){				
+				ali.getSupportingFacts().addAll(aliPrev.getSupportingFacts());
+				ali.setChanged(false);
+				continue;
+			}
 
+			
 			if(actionHeader.isNoop()){
 				//risks to action are same as risks to fact
 				int index = actionHeader.getPreconditions().nextSetBit(0);
@@ -128,7 +162,27 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 		}
 	}
 
+	private boolean propositionLevelInfoChanged(FactLevelInfo fli, FactLevelInfo fliPrev){
+		boolean changed = false;
+		if(factSpike.getCurrentRank() == 2){//prev level was initial level
+			changed = true;
+		}
+		else if(fli.getAllSupporters().size() == fliPrev.getAllSupporters().size()){ 
+			//same number of supporters, need to check if supporters changed
+			for(ActionHeader a : fli.getAllSupporters()){
+				ActionLevelInfo ali = actionSpike.getActionLevelInfo(getActionSpike().getCurrentRank()-1, a.getIndex()); 
+				if(ali.isChanged()){
+					changed = true;
+					break;
+				}					
+			}
+		}
+		else{//got new supporters
+			changed = true;
+		}
 
+		return changed;
+	}
 
 	protected void setPropositionLevelInfo() {
 
@@ -146,6 +200,16 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 
 			fli.getAllSupporters().addAll(fliPrev.getAllSupporters());
 
+			
+			boolean changed = propositionLevelInfoChanged(fli, fliPrev);
+
+			if(!changed){
+				fli.setChosenSupporters(new HashSet<ActionHeader>(fliPrev.getChosenSupporters()));
+				fli.setChanged(false);
+				continue;
+			}
+
+			
 			Set<ActionHeader> supportingActions = fli.getAllSupporters();
 			Set<ActionHeader> chosenSupportingActions = new HashSet<ActionHeader>();
 
@@ -155,7 +219,8 @@ public class StanClassicalRelaxedPlanningGraph extends StanPlanningGraph {
 
 			// Get all actions with fewest critical risks
 			for (ActionHeader actionHeader : supportingActions) {
-				if (actionHeader.isNoop() || actionsWithLowestCost == null) {
+				if ( actionsWithLowestCost == null ||
+					 actionSpike.getActRank(actionHeader) < actionSpike.getActRank(actionsWithLowestCost)) {
 					actionsWithLowestCost = actionHeader;										
 				} 
 			}

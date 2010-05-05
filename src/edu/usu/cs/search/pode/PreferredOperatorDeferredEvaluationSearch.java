@@ -43,83 +43,6 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 	) throws IllDefinedProblemException
 	{
 		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solverOptions);
-
-		heuristic = new FFRiskyHeuristic(problem, domain, solverOptions);
-
-		// Comparisons are based on the parent heuristic only
-		open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
-			public int compare(StateNode first, StateNode second) {
-				boolean alphaCombo = false;
-				if(!alphaCombo){
-					Double[] diffs = new Double[2];
-//					for(int i = 0; i < 2; i++) {
-//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
-//					}
-					
-					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
-					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
-					
-					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
-					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
-						
-					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
-					if(d != 0) {
-						return d;
-					}
-					else{
-						return diffs[0].intValue(); //same num risks, so compare length
-					}
-				}
-				else{
-					double alpha = 0.6;
-					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
-					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
-					return value.intValue();
-				}
-			}
-		});
-
-		// Comparisons are based on the parent heuristic only
-		openPreferred = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
-			public int compare(StateNode first, StateNode second) {
-				boolean alphaCombo = false;
-				if(!alphaCombo){
-					Double[] diffs = new Double[2];
-//					for(int i = 0; i < 2; i++){
-//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
-//					}
-//					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
-//					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
-//					if(diffs[1] != 0) {
-//						return diffs[1].intValue();
-//					}
-//					else{
-//						return diffs[0].intValue(); //same num risks, so compare length
-//					}
-					
-					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
-					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
-					
-					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
-					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
-						
-					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
-					if(d != 0) {
-						return d;
-					}
-					else{
-						return diffs[0].intValue(); //same num risks, so compare length
-					}
-
-				}
-				else{
-					double alpha = 0.6;
-					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
-					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
-					return value.intValue();
-				}
-			}
-		});
 	}
 
 	@Override
@@ -205,7 +128,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			
 //				System.out.print(preferredPriority + " " + notPreferredPriority + " ");
 //				logger.debug(searchStatistics.toString());
-				System.out.println(searchStatistics.toString());
+				logger.debug(searchStatistics.toString());
 //				logger.debug(node.getCriticalRisks().toString());
 
 			}
@@ -216,6 +139,85 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 
 	@Override
 	public void initialize() {
+
+		heuristic = new FFRiskyHeuristic(problem, domain, solverOptions);
+
+		// Comparisons are based on the parent heuristic only
+		open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+			public int compare(StateNode first, StateNode second) {
+				boolean alphaCombo = false;
+				if(!alphaCombo){
+					Double[] diffs = new Double[2];
+//					for(int i = 0; i < 2; i++) {
+//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+//					}
+					
+					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
+					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
+					
+					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
+					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
+						
+					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
+					if(d != 0) {
+						return d;
+					}
+					else{
+						return diffs[0].intValue(); //same num risks, so compare length
+					}
+				}
+				else{
+					double alpha = 0.6;
+					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+					return value.intValue();
+				}
+			}
+		});
+
+		// Comparisons are based on the parent heuristic only
+		openPreferred = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
+			public int compare(StateNode first, StateNode second) {
+				boolean alphaCombo = false;
+				if(!alphaCombo){
+					Double[] diffs = new Double[2];
+//					for(int i = 0; i < 2; i++){
+//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
+//					}
+//					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
+//					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
+//					if(diffs[1] != 0) {
+//						return diffs[1].intValue();
+//					}
+//					else{
+//						return diffs[0].intValue(); //same num risks, so compare length
+//					}
+					
+					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
+					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
+					
+					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
+					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
+						
+					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
+					if(d != 0) {
+						return d;
+					}
+					else{
+						return diffs[0].intValue(); //same num risks, so compare length
+					}
+
+				}
+				else{
+					double alpha = 0.6;
+					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
+					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
+					return value.intValue();
+				}
+			}
+		});
+
+		
 		openPreferred.add(
 			new PreferredOperatorDeferredEvaluationNode(problem.getInitialState(),heuristic, 
 //			new FFRiskyHeuristic(
@@ -225,7 +227,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			solverOptions));
 	}
 	
-	private List<ActionInstance> extractSolution(StateNode node) {
+	protected List<ActionInstance> extractSolution(StateNode node) {
 		List<ActionInstance> actionsToGoal = new ArrayList<ActionInstance>();
 		
 		while(node != null && node.getAction() != null) {

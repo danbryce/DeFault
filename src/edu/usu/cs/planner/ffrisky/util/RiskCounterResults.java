@@ -1,9 +1,13 @@
 package edu.usu.cs.planner.ffrisky.util;
 
+import java.math.BigInteger;
 import java.util.List;
 
+import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+
 public class RiskCounterResults {
-	public List<RiskCounterAction> plan;
+	public List<ActionInstance> plan;
 	public String domainFileName;
 	public String problemFileName;
 	public String solverName;
@@ -12,7 +16,7 @@ public class RiskCounterResults {
 	public int nodesExpanded;
 	public int riskCount;
 	public double allRisksCount;
-	public double solvableDomains;
+	public BigInteger solvableDomains;
 	public int instance;
 	public double probability;
 	public int unusedRisks;
@@ -44,7 +48,7 @@ public class RiskCounterResults {
 //		output.append(solvableDomains + "\n");
 
 		// Risk Count // All Risks // Num Domains where plan fails //
-		if (plan != null && solvableDomains > 0.0) {
+		if (plan != null && solvableDomains.compareTo(BigInteger.valueOf(0)) > 0) {
 			output.append(riskCount + "\t" + allRisksCount + "\t" + solvableDomains + "\t" + unusedRisks + "\n");
 		}
 		

@@ -1,12 +1,14 @@
 package edu.usu.cs.plangraph;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import edu.usu.cs.search.SearchTest;
 
 
 public class FriskyVersusFF {
-
+private static Logger logger = Logger.getLogger(FriskyVersusFF.class.getName());
+	
 //	@Test
 //	public void runTestPathwaysClassical() {
 //		String pathToDomains = "testfiles/classical/pathways/";
@@ -118,9 +120,9 @@ public class FriskyVersusFF {
 								String.valueOf(k)};
 
 						for(String arg : args) {
-							System.out.print(arg + " ");
+							logger.debug(arg + " ");
 						}
-						System.out.println();
+						logger.debug("\n");
 						SearchTest.main(args);
 					}
 				}

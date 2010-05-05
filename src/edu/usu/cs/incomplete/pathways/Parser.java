@@ -6,8 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Parser {
+import org.apache.log4j.Logger;
 
+public class Parser {
+	private static Logger logger = Logger.getLogger(Parser.class.getName());
+	
 	private static final String ASSOCIATE = "ASSOCIATE";
 	private static final String ASSOCIATE_CATALYZE = "ASSOCIATE-WITH-CATALYZE";
 	private static final String SYNTHESIZE = "SYNTHESIZE";
@@ -208,7 +211,7 @@ public class Parser {
 		// negative effect into a possible precondition
 
 		fileReader.close();
-		System.out.println("parameterCounter: " + parameterCounter);
+		logger.debug("parameterCounter: " + parameterCounter);
 	}
 
 	public String getFileContents() {

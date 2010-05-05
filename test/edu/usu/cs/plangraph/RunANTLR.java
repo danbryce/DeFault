@@ -12,12 +12,15 @@ import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
+import org.apache.log4j.Logger;
 
 import edu.usu.cs.pddl.antlr.PddlLexer;
 import edu.usu.cs.pddl.antlr.PddlParser;
 
 public class RunANTLR {
 	static String[] tokenNames;
+	
+	private static Logger logger = Logger.getLogger(RunANTLR.class.getName());
 
 	public static void main(String[] args) throws Exception {
         if (args.length != 1) {
@@ -28,23 +31,23 @@ public class RunANTLR {
 		PddlLexer lex = new PddlLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lex);
 
-		//System.out.println("tokens="+tokens);
+		//logger.debug("tokens="+tokens);
 		PddlParser parser = new PddlParser(tokens);
 		tokenNames = parser.getTokenNames();
 
         PddlParser.pddlDoc_return t = parser.pddlDoc();
 		CommonTree tree = (CommonTree) t.getTree();
-		//System.out.println("Tree class: " + tree.getClass());
-		// System.out.println(tree.toStringTree());
+		//logger.debug("Tree class: " + tree.getClass());
+		// logger.debug(tree.toStringTree());
 
-		System.out.println("Tree:");
+		logger.debug("Tree:");
 		printTree(tree, "");
         
-        System.out.println("------------------------------------------------");
-        System.out.println(tree.toStringTree());
-        //System.out.println("Types: " + parser.types);
+        logger.debug("------------------------------------------------");
+        logger.debug(tree.toStringTree());
+        //logger.debug("Types: " + parser.types);
 
-//        System.out.println("------------------------------------------------");
+//        logger.debug("------------------------------------------------");
 //        CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
 //        PddlTreeWalker walker = new PddlTreeWalker(nodes);
 //        walker.pddlDoc();
@@ -52,7 +55,7 @@ public class RunANTLR {
 
 	private static void printTree(CommonTree t, String indent) {
 		String tokenType = tokenNames[t.getType()];
-		System.out.println(indent + tokenType + "\t" + t.getText());
+		logger.debug(indent + tokenType + "\t" + t.getText());
 
 		// Now print children
 		String childIndent = indent + "  ";

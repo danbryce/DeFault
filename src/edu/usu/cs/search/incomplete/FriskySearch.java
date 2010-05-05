@@ -112,7 +112,10 @@ public class FriskySearch extends AStarSearch{
 	public void initialize() {
 //		if(!solverOptions.isUseQuadQueue()) {
 		if (solverOptions.isUseJDDGValue()) {
-			open.add(new RiskCounterNode(problem, problem.getInitialState(), new RiskCounterHeuristic(problem, domain, solverOptions)));
+			open.add(new RiskCounterNode(problem, 
+					problem.getInitialState(), 
+					new RiskCounterHeuristic(problem, domain, solverOptions),
+					solverOptions));
 		} else {
 			open.add(new FFRiskyNode(problem.getInitialState(), new FFRiskyHeuristic(problem, domain, solverOptions), solverOptions));
 		}

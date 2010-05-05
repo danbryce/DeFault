@@ -40,7 +40,9 @@ public class IncompleteActionInstance  implements ActionInstance{
 	protected final Set<Proposition> possibleDeleteEffects;
 	protected int hash;
 	protected int index;
+	protected int actionRisks;
 
+	
 	protected  ActionDef definition;
 	protected Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
 
@@ -540,5 +542,12 @@ public class IncompleteActionInstance  implements ActionInstance{
 	public ActionDef getDefinition() {
 		// TODO Auto-generated method stub
 		return definition;
+	}
+	public void setActionRisks(int actionRisks) {
+		this.actionRisks = actionRisks;
+	}
+	
+	public int getActionRisks() {
+		return this.actionRisks;
 	}
 }

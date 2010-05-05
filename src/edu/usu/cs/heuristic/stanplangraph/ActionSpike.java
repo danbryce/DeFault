@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -23,7 +23,7 @@ public class ActionSpike {
 	private int currentRank;
 	private Map<ActionHeader, Integer> actRank;
 	
-	private static Logger logger = LoggerFactory.getLogger(ActionSpike.class.getName());
+	private static Logger logger = Logger.getLogger(ActionSpike.class.getName());
 
 	//	public ActionSpike(FactSpike factSpike) {
 	//		this.setFactSpike(factSpike);

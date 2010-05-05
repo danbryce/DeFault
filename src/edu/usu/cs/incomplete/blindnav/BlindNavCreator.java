@@ -5,8 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 public class BlindNavCreator {
-	
+
+	public static Logger logger = Logger.getLogger(BlindNavCreator.class.getName());
 	private static enum ObsType {
 		None,
 		Highly,
@@ -145,7 +148,7 @@ public class BlindNavCreator {
 				BufferedWriter out = new BufferedWriter(fstream);
 				out.write(output.toString());
 				out.close();
-				System.out.println("\nDomain file created at " + outputFile);
+				logger.debug("\nDomain file created at " + outputFile);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -159,7 +162,7 @@ public class BlindNavCreator {
 		output.append(String.format("    (:goal (and (%s)))\n", at_bus_stop));
 		output.append(")");
 		
-//		System.out.println(output);
+//		logger.debug(output);
 		
 		// Create the file
 		try {
@@ -168,7 +171,7 @@ public class BlindNavCreator {
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(output.toString());
 			out.close();
-			System.out.println("\nProblem file created at " + outputFile);
+			logger.debug("\nProblem file created at " + outputFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -256,7 +259,7 @@ public class BlindNavCreator {
 				throw new NumberFormatException();
 			}
 		} catch (NumberFormatException e) {
-			System.out.println("Grid Size must be an integer value greater than 0.");
+			logger.debug("Grid Size must be an integer value greater than 0.");
 			return false;
 		}
 		
@@ -269,7 +272,7 @@ public class BlindNavCreator {
 					throw new NumberFormatException();
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("File count must be an integer value greater than 0.");
+				logger.debug("File count must be an integer value greater than 0.");
 				return false;
 			}
 		}
@@ -286,9 +289,9 @@ public class BlindNavCreator {
 	}
 	
 	private static void usage() {
-		System.out.println("usage:\tjava BlindNavCreator [Grid Size] [Output Directory] [Optional: Number of Domain Files]");
-		System.out.println("\tGrid Size\t\tInteger value from 1 to many.");
-		System.out.println("\tOutput Dir\t\tThe directory where the files will be created.");
-		System.out.println("\tNumber of domain \n\tfiles to be created\tInteger value from 1 to many. Default is 1.");
+		logger.debug("usage:\tjava BlindNavCreator [Grid Size] [Output Directory] [Optional: Number of Domain Files]");
+		logger.debug("\tGrid Size\t\tInteger value from 1 to many.");
+		logger.debug("\tOutput Dir\t\tThe directory where the files will be created.");
+		logger.debug("\tNumber of domain \n\tfiles to be created\tInteger value from 1 to many. Default is 1.");
 	}
 }

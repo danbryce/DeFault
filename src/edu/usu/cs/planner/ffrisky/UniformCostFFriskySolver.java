@@ -3,19 +3,22 @@ package edu.usu.cs.planner.ffrisky;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.planner.DefaultSolver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.RiskCounterAction;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.FFRiskySolutionEvaluator;
 import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class UniformCostFFriskySolver extends DefaultSolver {
+	private static Logger logger = Logger.getLogger(UniformCostFFriskySolver.class.getName()); 
+	
 	//protected IncompleteProblem incompleteProblem = null; 
 	public UniformCostFFriskySolver(Domain domain, Problem problem, SearchStatistics searchStatistics, SolverOptions solverOptions) throws IllDefinedProblemException
 	{
@@ -25,7 +28,7 @@ public class UniformCostFFriskySolver extends DefaultSolver {
 		if (solverOptions.isUseJDDGValue()) {
 			List<ActionInstance> newActions = new ArrayList<ActionInstance>();
 			for (ActionInstance action : actionInstances) {
-				newActions.add(new RiskCounterAction((IncompleteActionInstance)action));
+				newActions.add(action);
 			}
 			actionInstances = newActions;
 		}
@@ -33,20 +36,20 @@ public class UniformCostFFriskySolver extends DefaultSolver {
 		search = new FriskySearch(domain, problem, actionInstances, new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), searchStatistics, solverOptions);
 		search.initialize();
 		
-//		System.out.println("Search algorithm: " + search.getClass().getSimpleName());
+//		logger.debug("Search algorithm: " + search.getClass().getSimpleName());
 //		//search.addNode(this.problem.getInitialNode());
 //
 //		// Create initial node
-//		System.out.println("Initial Node:\n" + this.problem.getInitialNode());
+//		logger.debug("Initial Node:\n" + this.problem.getInitialNode());
 //
 //		// Create goal node
-//		System.out.println("Goal:\n" + this.problem.getGoalAction());
+//		logger.debug("Goal:\n" + this.problem.getGoalAction());
 //
 //		// Get actions
-//		System.out.println("Action count: " + this.problem.getActions().size());
+//		logger.debug("Action count: " + this.problem.getActions().size());
 //
 //		// Get the plan
-//		//System.out.print("Branching factor for each iteration: ");
+//		//logger.debug("Branching factor for each iteration: ");
 
 	}
 	

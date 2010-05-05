@@ -27,6 +27,7 @@ public class Risk implements Comparable {
 	private static Map<String, Risk> possibleClobberRisks = new HashMap<String, Risk>();
 	private static Map<String, Risk> unlistedEffectRisks = new HashMap<String, Risk>();
 	private static Map<Integer, String> riskIndexMap = new HashMap<Integer, String>();
+	//private static Map<Risk, Integer> riskBddMap = new HashMap<Risk, Integer>();
 	
 	private final String riskName;
 	private final String action;

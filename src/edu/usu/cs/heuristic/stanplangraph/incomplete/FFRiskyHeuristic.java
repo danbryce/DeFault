@@ -16,9 +16,9 @@ import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 
 public class FFRiskyHeuristic implements Heuristic {
-	Problem problem;
-	Domain domain;
-	FFriskyRelaxedPlanningGraph solver;
+	protected Problem problem;
+	protected Domain domain;
+	protected FFriskyRelaxedPlanningGraph solver;
 
 	public FFRiskyHeuristic(Problem problem, Domain domain, SolverOptions solverOptions) {
 		this.problem = problem;
@@ -42,6 +42,10 @@ public class FFRiskyHeuristic implements Heuristic {
 	//		goalRiskSet.removeAll(node.getCriticalRisks());
 	//		return goalRiskSet.size();
 	//	}
+
+	public FFRiskyHeuristic() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public double[] getValue(FFRiskyNode node) {
 		double[] values = new double[2];

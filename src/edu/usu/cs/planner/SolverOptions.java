@@ -25,7 +25,7 @@ public class SolverOptions {
 	}
 	private boolean useJDDHeuristic = false;
 	private boolean ucs = false;
-	private int riskArity = 10;
+	private int riskArity = 2;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}

@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
 import edu.usu.cs.pddl.domain.DefaultGoalDesc;
 import edu.usu.cs.pddl.domain.Domain;
@@ -38,7 +40,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
  */
 public class GraphSolver
 {
-//    private static final Logger logger = Logger.getLogger(GraphSolver.class.getName());
+    private static final Logger logger = Logger.getLogger(GraphSolver.class.getName());
 
     private final Domain domain;
     private final Problem problem;
@@ -83,11 +85,11 @@ public class GraphSolver
             GraphSolver solver = new GraphSolver(domain, problem);
             List<GraphAction> plan = solver.solve();
             if (plan == null) {
-                System.out.println("No plan found");
+                logger.debug("No plan found");
             } else {
-                System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+                logger.debug("Plan found in " + solver.getNumLevels() + " levels:");
                 for (GraphAction action : plan) {
-                    System.out.println(action.toString());
+                    logger.debug(action.toString());
                 }
             }
         } catch (IOException e) {
@@ -288,7 +290,7 @@ public class GraphSolver
                         newSoln.add(action);
                         newCombinations.add(newSoln);
                         //// The added part
-//                        System.out.println("Solution found");
+//                        logger.debug("Solution found");
 //                        if(action.isMaintenanceAction()) {
 //                        	newCombinations = new ArrayList<Set<GraphAction>>();
 //                        	newCombinations.add(newSoln);

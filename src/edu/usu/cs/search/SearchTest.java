@@ -4,13 +4,17 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import edu.usu.cs.conformant.TranslationToCPP;
 import edu.usu.cs.conformant.TranslationToCPP.TranslationType;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
@@ -23,6 +27,7 @@ import edu.usu.cs.planner.ffrisky.FFriskySolver;
 import edu.usu.cs.planner.ffrisky.GreedyBestFirstFFriskySolver;
 import edu.usu.cs.planner.ffrisky.UniformCostFFriskySolver;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.planner.ffvanilla.AStarSolver;
 import edu.usu.cs.planner.pspffrisky.FFRiskyPSPSolver;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
@@ -30,7 +35,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class SearchTest {
 
-//	private static Logger logger = LoggerFactory.getLogger(SearchTest.class);
+	private static Logger logger = Logger.getLogger(SearchTest.class);
 
 	public static void main(String[] args) {
 		if (!(args.length == 3 || args.length == 4 || args.length == 5 || args.length == 6)) {
@@ -112,19 +117,29 @@ public class SearchTest {
 				solver = new UniformCostFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
 			} else if (args[3].equalsIgnoreCase("length")) {
-				solver = new AStarSolver(domain, problem, searchStatistics,
-						solverOptions);
+//				solver = new AStarSolver(domain, problem, searchStatistics,
+//						solverOptions);
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+				//solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+				solver = new GreedyBestFirstLengthSolver(domain, problem,
+						searchStatistics, solverOptions);
 			} else if (args[3].equalsIgnoreCase("pode")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+				solverOptions.setRiskArity(Integer.valueOf(args[4]));
 				solver = new GreedyBestFirstFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
+				
 			} else if (args[3].equalsIgnoreCase("jdd")) {
-				solverOptions.setUseJDDGValue(true);
-				solverOptions.setUseJDDHeuristic(true);
+//				solverOptions.setUseJDDGValue(true);
+//				solverOptions.setUseJDDHeuristic(true);
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				RiskCounter.initialize(domain, problem, null);
-				solver = new FFriskySolver(domain, problem, searchStatistics,
+				solver = new GreedyBestFirstJDDFFriskySolver(domain, problem, searchStatistics,
 						solverOptions);
 			} else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
 				// Convert domain and problem files to ppddl.
@@ -148,35 +163,35 @@ public class SearchTest {
 
 		if (plan == null) {
 //			logger.debug("\nNo plan found");
-			System.out.println("\nNo plan found");
+			logger.debug("\nNo plan found");
 			return;
 		}
 //		logger.debug("\nPlan found");
-		System.out.println("\nPlan found");
+		logger.debug("\nPlan found");
 		for (ActionInstance action : plan) {
 //			logger.debug(action.getName());
-			System.out.println(action.getName());
+			logger.debug(action.getName());
 		}
 
 		// // Output the state sequence and actions in the plan
-		// System.out.println("\n*********************************\n*** State Transition Sequence ***\n*********************************");
+		// logger.debug("\n*********************************\n*** State Transition Sequence ***\n*********************************");
 		// Node node = problem.getInitialNode();
 		// for (Action action : plan) {
-		// System.out.println(node);
-		// System.out.println(action);
+		// logger.debug(node);
+		// logger.debug(action);
 		// node = NodeUtilities.getSuccessorNode(node, action);
 		// }
-		// System.out.println(node);
-		// System.out.println(problem.getGoal());
+		// logger.debug(node);
+		// logger.debug(problem.getGoal());
 		// node = NodeUtilities.getSuccessorNode(node, problem.getGoal());
-		// System.out.println(node);
-		// System.out.println("*********************************\n*********************************");
+		// logger.debug(node);
+		// logger.debug("*********************************\n*********************************");
 
 		// // Output the risks
-		// System.out.println("\nRisks: " +
+		// logger.debug("\nRisks: " +
 		// finalNode.getCriticalRisks().size());
 		// for (Risk risk : finalNode.getCriticalRisks()) {
-		// System.out.println(risk);
+		// logger.debug(risk);
 		// }
 
 //		logger.debug("\nFinal Stats:\n");
@@ -190,19 +205,35 @@ public class SearchTest {
 //					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
 //							.getCriticalRisks().size());
 //		}
-		System.out.println("\nFinal Stats:\n");
-		System.out.println("Plan length: " + plan.size());
-		System.out.println("Elapsed time: " + searchStatistics.getElapsedTime()
+		logger.debug("\nFinal Stats:\n");
+		logger.debug("Plan length: " + plan.size());
+		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
 				+ " milliseconds");
-		System.out.println("Nodes expanded: " + searchStatistics.getNodesExpanded());
+		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
 		
 		if (searchStatistics.getSolutionNode() != null
-				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
-			System.out.println("Risk count: "
-					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-							.getCriticalRisks().size());
-			System.out.println(((FFRiskyNode) searchStatistics.getSolutionNode())
-							.getCriticalRisks());
+				//&& searchStatistics.getSolutionNode() instanceof FFRiskyNode
+				) {
+//			logger.debug("Risk count: "
+//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+//							.getCriticalRisks().size());
+//			logger.debug(((FFRiskyNode) searchStatistics.getSolutionNode())
+//							.getCriticalRisks());
+			RiskCounter.initialize(domain, problem, plan);
+			logger.debug("Solvable Domains: " + 
+						 RiskCounter.getBigSolvableDomainCount(domain, problem, plan));
+			logger.debug("Total Domains: " +
+						 BigInteger.valueOf(1).shiftLeft(RiskCounter.getNumRisks()));
+			logger.debug("Number of Incomplete Features: " + RiskCounter.getNumRisks());
+
+		}
+		else if(searchStatistics.getSolutionNode() != null
+				&& searchStatistics.getSolutionNode() instanceof RiskCounterNode) {
+			logger.debug("Risk count: "
+					+ ((RiskCounterNode) searchStatistics.getSolutionNode())
+							.getGValue()[0]);
+			RiskCounter.getBDD().printSet(RiskCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
+							.getCriticalRisks()));			
 		}
 		try {
 			FileWriter fstream = new FileWriter("Output/" + args[2], true);
@@ -244,7 +275,7 @@ public class SearchTest {
 						+ "\r\n");
 			}
 			out.close();
-			System.out.println("\ninformation written to Output/" + args[2]);
+			logger.debug("\ninformation written to Output/" + args[2]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

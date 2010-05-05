@@ -1,8 +1,11 @@
 package edu.usu.cs.jdd;
 
+import org.apache.log4j.Logger;
+
 import jdd.bdd.BDD;
 
 public class JDDTest {
+	private static Logger logger = Logger.getLogger(JDDTest.class.getName());
 	public static void main(String[] args) {
 		
 //		tutorial();
@@ -18,7 +21,7 @@ public class JDDTest {
 				bdd.or(bdd.not(b),c)
 				));
 		bdd.printSet(tree1);
-		System.out.println(bdd.getSetCount(tree1) + "\n");
+		logger.debug(bdd.getSetCount(tree1) + "\n");
 		
 		int x1 = bdd.createVar();
 		int x2 = bdd.createVar();
@@ -30,13 +33,13 @@ public class JDDTest {
 				bdd.and(x2, x3)
 		));
 		bdd.printSet(tree2);
-		System.out.println(bdd.getSetCount(tree2) + "\n");
+		logger.debug(bdd.getSetCount(tree2) + "\n");
 
 		BDD jdd = new BDD(10);
 		int x = jdd.createVar();
 		int xtree = jdd.ref(jdd.or(x, jdd.not(x)));
 		jdd.printSet(xtree);
-		System.out.println(jdd.getSetCount(xtree));
+		logger.debug(jdd.getSetCount(xtree));
 	}
 	
 //	private static void tutorial() {

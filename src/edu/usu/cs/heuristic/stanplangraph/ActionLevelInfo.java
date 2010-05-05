@@ -5,6 +5,7 @@ import java.util.Set;
 
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
 
 public class ActionLevelInfo {
@@ -12,6 +13,9 @@ public class ActionLevelInfo {
 	ActionHeader actionHeader;
 	GeneralizedRiskSet criticalRisks;
 	GeneralizedRiskSet possibleRisks;
+	int bddCriticalRisks;
+	int bddPossibleRisks;
+
 	Set<FactHeader> supportingFacts;
 	protected SolverOptions solverOptions;
 	boolean changed;
@@ -21,6 +25,25 @@ public class ActionLevelInfo {
 //		this.supportingFacts = supportingFacts;
 //	}
 
+	public int getBddCriticalRisks() {
+		return bddCriticalRisks;
+	}
+
+	public void setBddCriticalRisks(int bddCriticalRisks) {
+		RiskCounter.getBDD().deref(this.bddCriticalRisks);
+		this.bddCriticalRisks = bddCriticalRisks;
+		//RiskCounter.getBDD().ref(this.bddCriticalRisks);
+	}
+
+	public int getBddPossibleRisks() {
+		return bddPossibleRisks;
+	}
+
+	public void setBddPossibleRisks(int bddPossibleRisks) {
+		RiskCounter.getBDD().deref(this.bddPossibleRisks);
+		this.bddPossibleRisks = bddPossibleRisks;
+		//RiskCounter.getBDD().ref(this.bddPossibleRisks);
+	}
 	public boolean isChanged() {
 		return changed;
 	}

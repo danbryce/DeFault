@@ -42,7 +42,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 	}
 
 
-	private boolean actionLevelInfoChanged(ActionHeader actionHeader){
+	protected boolean actionLevelInfoChanged(ActionHeader actionHeader){
 		if(actionSpike.getCurrentRank() < 2)
 			return true;
 
@@ -128,7 +128,11 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 					ali.getSupportingFacts().add(factHeader); 
 				}
 				for(Proposition possPre : actionHeader.getAction().getPossiblePreconditions()){
-					FactHeader factHeader = factSpike.get(possPre.getIndex());
+					FactLevelInfo fli = factSpike.getExistingFactLevelInfo(factSpike.getCurrentRank()-2, possPre.getIndex());
+					FactHeader factHeader = null;
+					if(fli != null)
+						factHeader = fli.getFact();
+//		FactHeader factHeader = factSpike.get(possPre.getIndex());
 					if(factHeader == null){
 						//If precondition is not present, then incur a risk
 						Risk r = Risk.getRiskFromIndex(Risk.PRECOPEN, actionHeader.getName(), possPre.getName());
@@ -136,7 +140,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 					}
 					else { 
 						//precondition is present,
-						FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
+						//FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
 
 						//if no possible risks for precondition, then add no risks
 						//else if precondition is at risk, there is a higher order interaction
@@ -180,7 +184,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 		}
 	}
 
-	private boolean propositionLevelInfoChanged(FactLevelInfo fli, FactLevelInfo fliPrev){
+	protected boolean propositionLevelInfoChanged(FactLevelInfo fli, FactLevelInfo fliPrev){
 		boolean changed = false;
 		if(factSpike.getCurrentRank() == 2){//prev level was initial level
 			changed = true;
@@ -225,6 +229,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 				fli.setCriticalRisks(fliPrev.getCriticalRisks());
 				fli.setPossibleRisks(fliPrev.getPossibleRisks());
 				fli.setChosenSupporters(new HashSet<ActionHeader>(fliPrev.getChosenSupporters()));
+				fli.setChanged(false);
 				continue;
 			}
 
@@ -299,7 +304,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 				if(!getSolverOptions().isUseMultipleSupportersInPlanningGraph()){
 					break;
 				}
-				else if(chosenSupportingActions.size() > 0){
+				else if(chosenSupportingActions.size() > 1){
 					break;
 				}
 
@@ -578,7 +583,7 @@ public class FFriskyRelaxedPlanningGraph extends StanPlanningGraph {
 			}
 
 		}
-		if(levelsPastGoalsMet > 0){
+		if(levelsPastGoalsMet > 5){
 			hasConverged = true;
 		}
 		return hasConverged;

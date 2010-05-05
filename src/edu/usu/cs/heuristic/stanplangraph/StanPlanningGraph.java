@@ -91,12 +91,14 @@ public class StanPlanningGraph {
 
 			addedLevel = addLevel();
 
+			//System.out.print(".");
+			
 			int currentRank = this.getFactSpike().getCurrentRank();
 			if(currentRank > MAX_LEVELS){
 				return;
 			}
 		}
-	//		System.out.println("Reached fixed point at level: " + this.getFactSpike().getCurrentRank());
+			//System.out.println("Reached fixed point at level: " + this.getFactSpike().getCurrentRank());
 	}
 
 

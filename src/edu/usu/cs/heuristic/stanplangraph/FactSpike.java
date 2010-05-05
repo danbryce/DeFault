@@ -221,6 +221,21 @@ public class FactSpike {
 	//		return rankEnd.get(rankEnd.size() - 1);
 	//	}
 
+	
+	public FactLevelInfo getExistingFactLevelInfo(int i, int index) {
+
+		Map<Integer, FactLevelInfo> levelInfo = factLevelInfos.get(i);
+		if(levelInfo == null){
+			return null;
+		}
+		FactLevelInfo ali = levelInfo.get(index);
+		if(ali == null){
+			return null;
+		}		
+
+		return ali;
+
+	}
 	public FactLevelInfo getFactLevelInfo(int i, Integer index) {
 		Map<Integer, FactLevelInfo> levelInfo = factLevelInfos.get(i);
 		if(levelInfo == null){

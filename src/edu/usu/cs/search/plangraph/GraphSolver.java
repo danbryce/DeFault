@@ -16,7 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.ConsistentLiteralSet;
@@ -84,11 +85,11 @@ public class GraphSolver
             GraphSolver solver = new GraphSolver(domain, problem);
             List<ActionInstance> plan = solver.solve();
             if (plan == null) {
-                System.out.println("No plan found");
+                logger.debug("No plan found");
             } else {
-                System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+                logger.debug("Plan found in " + solver.getNumLevels() + " levels:");
                 for (ActionInstance action : plan) {
-                    System.out.println(action.toString());
+                    logger.debug(action.toString());
                 }
             }
         } catch (IOException e) {
@@ -201,7 +202,7 @@ public class GraphSolver
         Set<Literal> startState = level.getEndLiterals();
         for (Literal goal : goals) {
             if (!startState.contains(goal)) {
-                logger.fine("Failing search at start state for plan with first action " 
+                logger.debug("Failing search at start state for plan with first action " 
                             + plan.get(0).iterator().next());
                 return false; /***/
             }

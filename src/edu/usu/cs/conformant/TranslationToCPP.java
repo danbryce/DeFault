@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -17,8 +19,10 @@ import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.search.SearchTest;
 
 public class TranslationToCPP {
+	private static Logger logger = Logger.getLogger(TranslationToCPP.class);
 	
 	public enum TranslationType {
 		pond,
@@ -143,7 +147,7 @@ public class TranslationToCPP {
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(output.toString());
 			out.close();
-			System.out.println("\nDomain file created at " + outputFile);
+			logger.debug("\nDomain file created at " + outputFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -274,7 +278,7 @@ public class TranslationToCPP {
 		// Close
 		output.append(")\n");
 		
-//		System.out.println(output);
+//		logger.debug(output);
 		
 		// Create the file
 		try {
@@ -282,7 +286,7 @@ public class TranslationToCPP {
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(output.toString());
 			out.close();
-			System.out.println("\nProblem file written at " + outputFile);
+			logger.debug("\nProblem file written at " + outputFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -291,63 +295,63 @@ public class TranslationToCPP {
 	// Just for testing
 	protected static void outputDomain(Domain domain) {
 		// Now the domain
-		System.out.println("Domain");
-		System.out.println("Name: " + domain.getName() + "\n");
+		logger.debug("Domain");
+		logger.debug("Name: " + domain.getName() + "\n");
 		
 		// Print requirements
-		System.out.println("Requirements:");
+		logger.debug("Requirements:");
 		for(String requirement : domain.getRequirements()) {
-			System.out.println("\t" + requirement);
+			logger.debug("\t" + requirement);
 		}
-		System.out.println();
+		logger.debug("\n");
 		
 		// Print Predicates
-		System.out.println("Predicates:");
+		logger.debug("Predicates:");
 		for(PredicateDef predicate : domain.getPredicates()) {
-			System.out.println("\t" + predicate.getName());
+			logger.debug("\t" + predicate.getName());
 		}
-		System.out.println();
+		logger.debug("\n");
 
 		// Print Actions
-		System.out.println("Actions:");
+		logger.debug("Actions:");
 		for(ActionDef action : domain.getActions()) {
-			System.out.println("\t" + action.getName());
+			logger.debug("\t" + action.getName());
 		}
-		System.out.println();
+		logger.debug("\n");
 		
 		// Print Functions
-		System.out.println("Functions:");
+		logger.debug("Functions:");
 		for(FunctionDef function : domain.getFunctions()) {
-			System.out.println("\t" + function.getName());
+			logger.debug("\t" + function.getName());
 		}
-		System.out.println();
+		logger.debug("\n");
 	}
 	
 	// Just for testing
 	protected static void outputProblem(Problem problem) {
-		System.out.println("Problem");
-		System.out.println("Name: " + problem.getName() + "\n");
+		logger.debug("Problem");
+		logger.debug("Name: " + problem.getName() + "\n");
 		
 		// Print Actions, Goals, InitState,  
-		System.out.println("Initial State:");
+		logger.debug("Initial State:");
 		for(Proposition proposition : problem.getInitialState()) {
-			System.out.println("\t" + proposition.getName());
+			logger.debug("\t" + proposition.getName());
 		}
-		System.out.println();
+		logger.debug("\n");
 		
 		// Print Goals
-		System.out.println("Goals:");
-		System.out.println("\t" + problem.getGoalAction());
+		logger.debug("Goals:");
+		logger.debug("\t" + problem.getGoalAction());
 		for(GoalDesc goal : problem.getGoals()) {
-			System.out.println("\t" + goal);
+			logger.debug("\t" + goal);
 		}
-		System.out.println();
+		logger.debug("\n");
 		
 		// Print Actions
-		System.out.println("Actions:");
+		logger.debug("Actions:");
 		for(ActionInstance action : problem.getActions()) {
-			System.out.println(action.getName());
+			logger.debug(action.getName());
 		}
-		System.out.println("\n");
+		logger.debug("\n");
 	}
 }

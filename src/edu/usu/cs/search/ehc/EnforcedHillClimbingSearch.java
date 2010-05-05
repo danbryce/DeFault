@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -25,7 +27,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
  *
  */
 public class EnforcedHillClimbingSearch extends DefaultSearch implements Search {
-
+	private static Logger logger = Logger.getLogger(EnforcedHillClimbingSearch.class.getName());
 	protected StateNode startNode = null;
 
 	/**
@@ -82,7 +84,7 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 	}
 
 	private StateNode greedyFindBetterNode(StateNode parentNode) {
-		System.out.println("Local EHC");
+		logger.debug("Local EHC");
 		if(solutionEvaluator.isSolution(problem, parentNode) &&
 				solutionEvaluator.keepSolution(parentNode, solutions)){
 			return parentNode;
@@ -92,7 +94,7 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 		List<StateNode> subsequentNodes = parentNode.createSubsequentNodes(actionInstances);
 
 		searchStatistics.processNode(parentNode);
-		System.out.println(searchStatistics.toString());
+		logger.debug(searchStatistics.toString());
 		for(StateNode childNode : subsequentNodes) {
 			if(solutionEvaluator.isBetter(childNode, parentNode)){
 				return greedyFindBetterNode(childNode);
@@ -108,7 +110,7 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 
 
 	private StateNode globalFindBetterNode(StateNode parentNode) {
-	System.out.println("Global EHC");
+	logger.debug("Global EHC");
 		
 		LinkedList<StateNode> openBFS = new LinkedList<StateNode>();
 		openBFS.addAll(parentNode.getSubsequentNodes());
@@ -127,7 +129,7 @@ public class EnforcedHillClimbingSearch extends DefaultSearch implements Search 
 			if(currentNode.getSubsequentNodes() == null)
 				subsequentNodes = currentNode.createSubsequentNodes(actionInstances);
 			searchStatistics.processNode(currentNode);
-			System.out.println(searchStatistics.toString());
+			logger.debug(searchStatistics.toString());
 			for(StateNode childNode : subsequentNodes) {
 				
 				if(solutionEvaluator.closedContains(closedBFS, childNode)){

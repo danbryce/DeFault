@@ -72,8 +72,9 @@ public class AbstractStateNode implements StateNode {
 	public double[] getFValue() {
 		if (fvalue == null) {
 			fvalue = new double[dimension];
-			for (int i = 0; i < dimension; i++) {
-				fvalue[i] = getGValue()[i] + getHeuristicValue()[i]
+			for (int i = 0; i < dimension; i++) {				
+				fvalue[i] = getGValue()[i] + 
+				getHeuristicValue()[i]
 						* H_WEIGHT[i];
 			}
 		}

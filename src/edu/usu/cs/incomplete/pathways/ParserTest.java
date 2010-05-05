@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 public class ParserTest {
+	private static Logger logger = Logger.getLogger(ParserTest.class.getName());
 	
 	public static final String action = ":action";
 	
@@ -34,12 +37,12 @@ public class ParserTest {
 		}
 		
 		String fileContents = parser.getFileContents();
-		System.out.println(fileContents);
+		logger.debug(fileContents);
 		try {
 			FileWriter fstream = new FileWriter(outputFile);
 			fstream.write(fileContents);
 			fstream.close();
-			System.out.println("Written to " + args[1]);
+			logger.debug("Written to " + args[1]);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

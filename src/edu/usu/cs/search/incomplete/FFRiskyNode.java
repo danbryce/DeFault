@@ -16,7 +16,6 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Risk;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
-import edu.usu.cs.planner.ffrisky.util.RiskCounterAction;
 import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.astar.AStarNode;

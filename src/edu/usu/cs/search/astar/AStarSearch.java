@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import org.apache.log4j.Logger;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -18,7 +20,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class AStarSearch extends DefaultSearch implements Search 
 {
-//	private static Logger logger = LoggerFactory.getLogger(AStarSearch.class.getName());
+	private static Logger logger = Logger.getLogger(AStarSearch.class.getName());
 //	protected List<PriorityQueue<StateNode>> quadQueue = null;
 	protected List<PriorityQueue<StateNode>> riskQueue = null;
 	protected List<PriorityQueue<StateNode>> lengthQueue = null;
@@ -62,8 +64,7 @@ public class AStarSearch extends DefaultSearch implements Search
 			
 			// If there are no actions left in the priority queue, there's no solution
 			if(open.isEmpty()){
-//				logger.debug("Open List Empty");
-				System.out.println("Open List Empty");
+				logger.debug("Open List Empty");			
 				return extractSolution(solutions);
 			}
 			
@@ -91,7 +92,7 @@ public class AStarSearch extends DefaultSearch implements Search
 //					goal.add(this.problem.getGoalAction());
 					
 //					logger.debug("Found Solution: " + currentNode);
-					System.out.println("Found Solution: " + currentNode);
+					logger.debug("Found Solution: " + currentNode);
 //					for(int i = 0; i < goalNode.getDimension(); i++){
 //						logger.debug();
 //					}
@@ -105,7 +106,7 @@ public class AStarSearch extends DefaultSearch implements Search
 //					logger.debug("Stopping timer..." + stop.getTime());
 					totalTimeTaken = stopTotal.getTime() - startTotal.getTime();
 //					logger.debug("Soultion Set Complete");
-					System.out.println(String.format("Found solution using queue %d", currentQueue));
+					logger.debug(String.format("Found solution using queue %d", currentQueue));
 					return extractSolution(solutions);
 				}
 
@@ -143,7 +144,7 @@ public class AStarSearch extends DefaultSearch implements Search
 //					currentNode.getFValue()[0] );
 			searchStatistics.processNode(currentNode);
 //			logger.debug(searchStatistics.toString());
-			System.out.println(searchStatistics.toString());
+			logger.debug(searchStatistics.toString());
 			
 		}
 	}

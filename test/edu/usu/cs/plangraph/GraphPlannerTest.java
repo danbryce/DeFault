@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,7 +26,8 @@ import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class GraphPlannerTest {
-
+	private static Logger logger = Logger.getLogger(GraphPlannerTest.class.getName());
+	
 	@Test
 	public void testPlanner() {
 		Assert.assertTrue(true);
@@ -54,11 +56,11 @@ public class GraphPlannerTest {
 			Solver solver = new AStarSolver(domain, problem, searchStatistics, solverOptions);
 			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
-				System.out.println("No plan found");
+				logger.debug("No plan found");
 			} else {
-				//System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+				//logger.debug("Plan found in " + solver.getNumLevels() + " levels:");
 				for (ActionInstance action : plan) {
-					System.out.println(action.toString());
+					logger.debug(action.toString());
 				}
 			}
 
@@ -100,11 +102,11 @@ public class GraphPlannerTest {
 			AStarSolver solver = new AStarSolver(domain, problem, searchStatistics, solverOptions);
 			List<ActionInstance> plan = solver.run();
 			if (plan == null) {
-				System.out.println("No plan found");
+				logger.debug("No plan found");
 			} else {
-//				System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+//				logger.debug("Plan found in " + solver.getNumLevels() + " levels:");
 				for (ActionInstance action : plan) {
-					System.out.println(action.toString());
+					logger.debug(action.toString());
 				}
 			}
 
@@ -146,11 +148,11 @@ public class GraphPlannerTest {
 //			Solver solver = new PSPSolver(domain, problem, searchStatistics, solverOptions);
 //			List<ActionInstance> plan = solver.run();
 //			if (plan == null) {
-//				System.out.println("No plan found");
+//				logger.debug("No plan found");
 //			} else {
-//				//System.out.println("Plan found in " + solver.getNumLevels() + " levels:");
+//				//logger.debug("Plan found in " + solver.getNumLevels() + " levels:");
 //				for (ActionInstance action : plan) {
-//					System.out.println(action.toString());
+//					logger.debug(action.toString());
 //				}
 //			}
 //

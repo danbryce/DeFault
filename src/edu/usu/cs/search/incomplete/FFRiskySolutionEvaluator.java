@@ -8,7 +8,6 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.RiskCounterAction;
 import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
@@ -70,7 +69,7 @@ public class FFRiskySolutionEvaluator implements SolutionEvaluator {
 			return ((FFRiskyNode)node).isActionApplicable(problem.getGoalAction());
 		
 		} else if (node instanceof RiskCounterNode) {
-			return ((RiskCounterNode)node).isActionApplicable(new RiskCounterAction(problem.getGoalAction()));
+			return ((RiskCounterNode)node).isActionApplicable(problem.getGoalAction());
 		}
 		return false;
 	}

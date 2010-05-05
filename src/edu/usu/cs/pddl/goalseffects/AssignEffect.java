@@ -123,8 +123,7 @@ public class AssignEffect implements Effect
 
 	
 	public void getMethodDefs(Set<MethodDef> resultSet) {
-		if(target instanceof FunctionHeader) {
-			System.out.print("");
+		if(target instanceof FunctionHeader) {			
 			FunctionHeader fh = (FunctionHeader)target;
 			List<MethodDef> mdl = new ArrayList<MethodDef>();
 			fh.getMethods(mdl);
