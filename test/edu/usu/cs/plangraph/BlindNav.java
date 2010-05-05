@@ -6,13 +6,13 @@ import edu.usu.cs.search.SearchTest;
 
 public class BlindNav {
 	
-	private int maxSize = 6;
+	private int maxSize = 8;
 	private int createThisManyOfMaxSize = 10;
 	private String extension = ".pddl";
 	
 	@Test
 	public void createBlindNavDomains() {
-		for(int i = 6; i <= maxSize; i *= 2) {
+		for(int i = 2; i <= maxSize; i *= 2) {
 			String[] args = new String[3];
 			args[0] = Integer.toString(i);
 			args[1] = "testfiles/incomplete/blindnav";
