@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import edu.usu.cs.heuristic.stanplangraph.incomplete.FFRiskyHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -24,7 +24,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 
-	private static Logger logger = LoggerFactory.getLogger(PreferredOperatorDeferredEvaluationSearch.class.getName());
+	private static Logger logger = Logger.getLogger(PreferredOperatorDeferredEvaluationSearch.class.getName());
 
 	// open (in DefaultSearch) is the not preferred operators
 	protected PriorityQueue<StateNode> openPreferred = null;
@@ -132,7 +132,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 //				logger.debug(node.getCriticalRisks().toString());
 
 			}
-			//System.out.println(searchStatistics.toString());
+			System.out.println(searchStatistics.toString());
 
 		}
 	}

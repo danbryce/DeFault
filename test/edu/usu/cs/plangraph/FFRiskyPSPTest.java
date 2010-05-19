@@ -8,10 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -26,8 +25,7 @@ import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class FFRiskyPSPTest {
-	private static Logger logger = LoggerFactory
-	.getLogger(FFRiskyPSPTest.class);
+	private static Logger logger = Logger.getLogger(FFRiskyPSPTest.class);
 
 	
 	@Test

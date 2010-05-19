@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.DefaultActionInstance;
@@ -22,7 +22,7 @@ import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.StateNode;
 
 public class StanPlanningGraph {
-	protected static Logger logger = LoggerFactory.getLogger(StanPlanningGraph.class.getName());
+	protected static Logger logger = Logger.getLogger(StanPlanningGraph.class.getName());
 
 	protected  Map<Integer, FactHeader> globalFactHeaders = null; 
 	protected  Map<Integer, ActionHeader> globalActionHeaders = null;

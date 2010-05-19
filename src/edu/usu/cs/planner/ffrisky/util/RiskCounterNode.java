@@ -21,7 +21,7 @@ import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.RiskCounterHeuristic;
 
 public class RiskCounterNode extends AbstractStateNode {
-	
+
 
 	protected HashMap<Proposition, Integer> propositions = null;
 	protected int criticalRisks;
@@ -30,9 +30,9 @@ public class RiskCounterNode extends AbstractStateNode {
 	protected Map<Risk, Integer> riskToBDD;
 	private BigInteger domainCount;
 	private SolverOptions solverOptions;
-	
+
 	public RiskCounterNode(Problem problem, Set<Proposition> state, Heuristic heuristic, SolverOptions solverOptions) {
-		
+
 		this.bdd = RiskCounter.getBDD();
 		this.riskToBDD = RiskCounter.getRiskToBDD();
 		this.solverOptions = solverOptions;
@@ -42,10 +42,10 @@ public class RiskCounterNode extends AbstractStateNode {
 			bdd.ref(dd);
 			this.propositions.put(proposition, dd);
 		}
-		
+
 		this.criticalRisks = bdd.ref(bdd.getOne());
 		this.possibleRisks = bdd.ref(bdd.getOne());
-		
+
 		this.problem = problem;
 		this.parent = null;
 		this.state = state;
@@ -53,14 +53,14 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.dimension = 2;
 		this.heuristic = heuristic;
 	}
-	
+
 	public RiskCounterNode(RiskCounterNode node) {
 		// Copy the propositions with their associated risks
 		this.propositions = new HashMap<Proposition, Integer>();
 		for (Proposition prop : node.getPropositions().keySet()) {
 			this.propositions.put(prop, node.getPropositions().get(prop));
 		}
-		
+
 		// Copy the critical risks that were used to get to this node
 		this.parent = node.parent;
 		this.state = node.state;
@@ -70,33 +70,33 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.bdd = RiskCounter.getBDD();
 		this.riskToBDD = RiskCounter.getRiskToBDD();
 		this.solverOptions = node.solverOptions;
-		
+
 		this.criticalRisks = bdd.ref(node.getCriticalRisks());//bdd.getOne();
 		this.possibleRisks = bdd.ref(bdd.getOne());
-		
+
 		this.problem = node.problem;
 	}
-	
+
 	public List<StateNode> createSubsequentNodes(
 			List<ActionInstance> subsequentActions) {
 		if (subsequentNodes != null) {
 			return subsequentNodes;
 		}
-		
+
 		subsequentNodes = new ArrayList<StateNode>();
-		
+
 		for (ActionInstance action : subsequentActions) {
 			RiskCounterNode node = getSuccessorNode((IncompleteActionInstance)action);
 			if (node != null && !node.equals(this.parent)) {
 				subsequentNodes.add(node);
 			}
 		}
-		
+
 		return subsequentNodes;
 	}
-	
+
 	public  RiskCounterNode getSuccessorNode(IncompleteActionInstance action) {
-		
+
 		// If the action isn't applicable to the node, return null
 		if (!isActionApplicable(action)) {
 			return null;
@@ -105,9 +105,9 @@ public class RiskCounterNode extends AbstractStateNode {
 		// Create the new node and copy all the values from the old one to the
 		// new one
 		RiskCounterNode node = new RiskCounterNode(this);
- 
+
 		node.setActionRisks(this, action);
-		
+
 		// Add all risks associated with the new node
 		node.setCriticalRisks();
 
@@ -128,10 +128,10 @@ public class RiskCounterNode extends AbstractStateNode {
 
 		node.setHeuristic(this.getHeuristic());
 		node.setState(node.getPropositions().keySet());
-		
+
 		return node;
 	}
-	
+
 	private void setActionRisks(RiskCounterNode parent, IncompleteActionInstance action) {
 		int actionRisks = bdd.ref(bdd.and(getPrecRisks(parent, action), getPossPrecRisks(parent, action)));
 		action.setActionRisks(actionRisks);
@@ -146,10 +146,10 @@ public class RiskCounterNode extends AbstractStateNode {
 		bdd.ref(this.criticalRisks);
 		bdd.deref(tmp);		
 	}
-	
+
 	private int getPrecRisks(RiskCounterNode parent, IncompleteActionInstance action) {
 		int riskSet = bdd.ref(bdd.getOne());
-				
+
 		for (Proposition prec : action.getPreconditions()) {
 			int tmp = bdd.and(riskSet, parent.getPropositions().get(prec));
 			bdd.ref(tmp);
@@ -157,10 +157,10 @@ public class RiskCounterNode extends AbstractStateNode {
 			bdd.ref(riskSet);
 			bdd.deref(tmp);
 		}
-		
+
 		return riskSet;
 	}
-	
+
 	private int getPossPrecRisks(RiskCounterNode parent, IncompleteActionInstance action) {
 		int riskSet = bdd.ref(bdd.getOne());
 
@@ -178,70 +178,71 @@ public class RiskCounterNode extends AbstractStateNode {
 			precRiskSet = tmp;
 			bdd.ref(precRiskSet);
 			bdd.deref(tmp);
-			
+
 			tmp = bdd.ref(bdd.and(riskSet, precRiskSet));
 			bdd.deref(riskSet);
 			riskSet = tmp;
 			bdd.ref(riskSet);
 			bdd.deref(tmp);
 		}
-		
+
 		return riskSet;
 	}
-	
+
 	private void applyDeleteEffects(IncompleteActionInstance action) {
-		
+
 		// Delete all the propositions in the delete effects
 		for (Proposition proposition : action.getDeleteEffects()) {
 			this.getPropositions().remove(proposition);
 		}
 	}
-	
+
 	private void applyPossibleDeleteEffects(RiskCounterNode parent, IncompleteActionInstance action) {
-		
+
 		for (Proposition proposition : action.getPossibleDeleteEffects()) {
 			if (parent.getPropositions().containsKey(proposition)) {
 				int newRisks = bdd.ref(
-								bdd.and(
-										parent.getPropositions().get(proposition), 
-								        riskToBDD.get(Risk.getRiskFromIndex(Risk.POSSCLOB, action.getName(), proposition.getName()))/*)*/
-								));
+						bdd.and(
+								parent.getPropositions().get(proposition), 
+								bdd.ref(bdd.or(bdd.not(((IncompleteActionInstance)this.action).getActionRisks()),
+										riskToBDD.get(Risk.getRiskFromIndex(Risk.POSSCLOB, action.getName(), proposition.getName()))))/*)*/
+						));
 				this.getPropositions().put(proposition, newRisks);
 			}
 		}
 	}
-	
+
 	private void applyAddEffects(RiskCounterNode parent, IncompleteActionInstance action) {
-		
+
 		// Add all the propositions
 		for (Proposition proposition : action.getAddEffects()) {
-			
+
 			// If the proposition doesn't already exist, add it
 			if (!parent.getPropositions().containsKey(proposition)) {
 				this.getPropositions().put(proposition, bdd.ref(bdd.getZero()));
 			}
-			
+
 			// Figure out its risks
 			int newRisks = bdd.ref(
 					bdd.or(
 							this.getPropositions().get(proposition), 
 							((IncompleteActionInstance)this.action).getActionRisks()
-							));
+					));
 			bdd.deref(this.getPropositions().get(proposition));
 			this.getPropositions().put(proposition, newRisks);
 		}
 	}
-	
+
 	private void applyPossibleAddEffects(RiskCounterNode parent, IncompleteActionInstance action) {
-		
+
 		// Add all the propositions
 		for (Proposition proposition : action.getPossibleAddEffects()) {
-			
+
 			// If the proposition doesn't already exist, add it
 			if (!parent.getPropositions().containsKey(proposition)) {
 				this.getPropositions().put(proposition, bdd.ref(bdd.getZero()));
 			}
-			
+
 			// Figure out the risks
 			int tmp = bdd.ref(bdd.and(
 					action/*((IncompleteActionInstance)parent.getAction())*/.getActionRisks(), 
@@ -252,11 +253,11 @@ public class RiskCounterNode extends AbstractStateNode {
 			this.getPropositions().put(proposition, newRisks);
 		}
 	}
-	
+
 	public boolean isActionApplicable(ActionInstance action) {
 		return propositions.keySet().containsAll(((IncompleteActionInstance)action).getPreconditions());
 	}
-	
+
 	public HashMap<Proposition, Integer> getPropositions() {
 		return propositions;
 	}
@@ -264,15 +265,15 @@ public class RiskCounterNode extends AbstractStateNode {
 	public void setPropositions(HashMap<Proposition, Integer> propositions) {
 		this.propositions = propositions;
 	}
-	
+
 	public int getCriticalRisks() {
 		return this.criticalRisks;
 	}
-	
+
 	public void setCriticalRisks(int risks) {
 		this.criticalRisks = risks;
 	}
-	
+
 	public int getPossibleRisks() {
 		return possibleRisks;
 	}
@@ -291,24 +292,24 @@ public class RiskCounterNode extends AbstractStateNode {
 			//domainCount = solvableRatio;
 			if(this.parent != null && this.action != null)
 				this.gvalue[1] = this.parent.getGValue()[1]+this.action.getCost();
-			
+
 		}
 		return this.gvalue;
 	}
 
 	private List<IncompleteActionInstance> getPlan() {
 		StateNode currentNode = this;
-		
+
 		List<IncompleteActionInstance> actionsToGoal = new ArrayList<IncompleteActionInstance>();
-		
+
 		while(currentNode != null && currentNode.getAction() != null) {
 			actionsToGoal.add(0, (IncompleteActionInstance)currentNode.getAction());
 			currentNode = currentNode.getParent();
 		}
-		
+
 		return actionsToGoal;
 	}
-	
+
 	@Override
 	public String toString() {
 		String str = "Node: State:\n";
@@ -332,7 +333,7 @@ public class RiskCounterNode extends AbstractStateNode {
 			preferredOperators = heuristic.getHelpfulActions();
 			if (parent == null) {
 				List<ActionInstance> mRelevantActions = heuristic
-						.getRelevantActions();
+				.getRelevantActions();
 				if (mRelevantActions != null) {
 					relevantActions = mRelevantActions;
 				}
@@ -352,11 +353,11 @@ public class RiskCounterNode extends AbstractStateNode {
 		if(solverOptions.isUsePreferredOperators()) {
 			return createSubsequentNodes(actionInstances);
 		}
-		
+
 		solverOptions.setUsePreferredOperators(false);
 		List<StateNode> notPreferredNodes = createSubsequentNodes(actionInstances);
 		solverOptions.setUsePreferredOperators(true);
-		
+
 		return notPreferredNodes;
 	}
 }

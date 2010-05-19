@@ -6,7 +6,7 @@ import edu.usu.cs.search.SearchTest;
 
 public class BlindNav {
 	
-	private int maxSize = 8;
+	private int maxSize = 32;
 	private int createThisManyOfMaxSize = 10;
 	private String extension = ".pddl";
 	

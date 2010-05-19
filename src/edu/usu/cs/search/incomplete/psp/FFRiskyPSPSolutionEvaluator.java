@@ -6,6 +6,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -17,14 +19,11 @@ import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.FFRiskyNode;
 import edu.usu.cs.search.incomplete.FriskySearch;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class FFRiskyPSPSolutionEvaluator implements SolutionEvaluator {
 
-	private static Logger logger = LoggerFactory
-	.getLogger(FFRiskyPSPSolutionEvaluator.class);
+	private static Logger logger = Logger.getLogger(FFRiskyPSPSolutionEvaluator.class);
 
 
 	Problem incompleteProblem = null;

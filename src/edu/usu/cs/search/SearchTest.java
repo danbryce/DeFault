@@ -125,11 +125,11 @@ public class SearchTest {
 				//solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solver = new GreedyBestFirstLengthSolver(domain, problem,
 						searchStatistics, solverOptions);
-			} else if (args[3].equalsIgnoreCase("pode")) {
+			} else if (args[3].length() > 4 && args[3].subSequence(0,4).toString().equalsIgnoreCase("pode")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-				solverOptions.setRiskArity(Integer.valueOf(args[4]));
+				solverOptions.setRiskArity(Integer.valueOf(args[3].substring(4)));
 				solver = new GreedyBestFirstFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
 				

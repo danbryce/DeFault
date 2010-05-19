@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import edu.usu.cs.heuristic.stanplangraph.incomplete.psp.FFRiskyPSPRelaxedPlanHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -25,7 +25,7 @@ import edu.usu.cs.search.psp.UtilityFunction;
 
 public class FriskyPSPSearch extends DefaultSearch implements Search {
 	
-	protected static Logger logger = LoggerFactory.getLogger(FriskyPSPSearch.class.getName());
+	protected static Logger logger = Logger.getLogger(FriskyPSPSearch.class.getName());
 	
 	protected final Search search;
 	protected UtilityFunction goalUtilities;

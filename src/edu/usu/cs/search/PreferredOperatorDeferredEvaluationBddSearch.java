@@ -185,6 +185,8 @@ PreferredOperatorDeferredEvaluationSearch implements Search {
 				return extractSolution(node);
 			}
 
+			//logger.debug("H-computation start");
+			
 			// Compute node's H value
 			double[] hvalue = node.getHeuristicValue();
 
