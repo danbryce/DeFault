@@ -1,6 +1,5 @@
 package edu.usu.cs.incompletecompleteagentsim;
 
-import edu.usu.cs.incompletecompleteagentsim.Agent.QA_ActionAndPropChoice;
 import edu.usu.cs.pddl.goalseffects.*;
 import edu.usu.cs.pddl.domain.translation.*;
 import edu.usu.cs.pddl.domain.*;
@@ -25,7 +24,7 @@ public class SimulatorAgentEnvironment
 		if (args.length != 2)
 			env.usage();
 		
-		Double probability = 0.0;
+		Double probability = .5;
 		Integer seed = 0;
 		
 		String[] args2 = new String[4];
@@ -95,17 +94,17 @@ public class SimulatorAgentEnvironment
 			if(agent.selectTypeOfLearning().equals(Agent.LearningType.EXPLORATION))
 			{
 				//Learning by Exploration
-				ActionInstance actionChosen = agent.chooseAction_Exploration(currentState);
+				ActionInstance actionChosen = agent.explore_side.chooseAction_Exploration(currentState);
 				newState = sim.updateState(currentState, actionChosen);
-				agent.learnAboutActionTaken_Exploration(newState, currentState, actionChosen);
+				agent.explore_side.learnAboutActionTaken_Exploration(newState, currentState, actionChosen);
 				currentState = newState;
 			}
 			else
 			{
 				//Learning by QA
-				QA_ActionAndPropChoice agentsActionAndPropChoice = agent.chooseIncompleteActionAndProp_QA();
+				QA_Learning.QA_ActionAndPropChoice agentsActionAndPropChoice = agent.qa_side.chooseIncompleteActionAndProp_QA();
 				boolean isPossiblePropActual = sim.giveFeedbackForQuestion(agentsActionAndPropChoice);
-				agent.incorporateKnowledgeGained_QA(isPossiblePropActual, agentsActionAndPropChoice);
+				agent.qa_side.incorporateKnowledgeGained_QA(isPossiblePropActual, agentsActionAndPropChoice);
 			}
 			
 			System.out.println("\nPRESS ENTER TO CONTINUE...");

@@ -66,7 +66,7 @@ public class Simulator
 		return newState;
 	}
 	
-	public boolean giveFeedbackForQuestion (Agent.QA_ActionAndPropChoice actionWithQ)
+	public boolean giveFeedbackForQuestion (QA_Learning.QA_ActionAndPropChoice actionWithQ)
 	{
 		System.out.println("\n----------------------------------------------------------------");
 		System.out.println("SIM gives feedback about an action selected by agent");
