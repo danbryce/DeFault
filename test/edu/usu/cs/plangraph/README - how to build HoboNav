@@ -1,0 +1,1 @@
+The way to generate HoboNav domains and problems is to run HoboNavTest as a JUnit test.

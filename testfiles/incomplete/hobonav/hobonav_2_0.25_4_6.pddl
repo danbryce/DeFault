@@ -1,0 +1,118 @@
+(define (domain HoboNav)
+(:requirements :fluents :incomplete-domain)
+
+(:predicates
+ (at_0_0) (at_0_1)
+ (at_1_0) (at_1_1)
+ (have_bindle) (have_california_blankets) (have_glad_rags) (have_road_stake)
+)
+
+(:action move_0_0_1_0
+ :parameters ()
+ :precondition (and (at_0_0))
+ :effect (and (not (at_0_0)) (at_1_0))
+)
+
+(:action move_1_0_0_0
+ :parameters ()
+ :precondition (and (at_1_0))
+ :poss-precondition (and (have_glad_rags))
+ :effect (and (not (at_1_0)) (at_0_0))
+ :poss-effect (and (not (have_glad_rags)))
+)
+
+(:action move_0_0_0_1
+ :parameters ()
+ :precondition (and (at_0_0))
+ :poss-precondition (and (have_bindle) (have_california_blankets) (have_glad_rags) (have_road_stake))
+ :effect (and (not (at_0_0)) (at_0_1))
+ :poss-effect (and (not (have_bindle)) (not (have_california_blankets)) (not (have_glad_rags)) (not (have_road_stake)))
+)
+
+(:action move_0_1_0_0
+ :parameters ()
+ :precondition (and (at_0_1))
+ :poss-precondition (and (have_glad_rags))
+ :effect (and (not (at_0_1)) (at_0_0))
+ :poss-effect (and (not (have_glad_rags)))
+)
+
+(:action move_0_1_1_1
+ :parameters ()
+ :precondition (and (at_0_1))
+ :poss-precondition (and (have_bindle) (have_road_stake))
+ :effect (and (not (at_0_1)) (at_1_1))
+ :poss-effect (and (not (have_bindle)) (not (have_road_stake)))
+)
+
+(:action move_1_1_0_1
+ :parameters ()
+ :precondition (and (at_1_1))
+ :poss-precondition (and (have_glad_rags))
+ :effect (and (not (at_1_1)) (at_0_1))
+ :poss-effect (and (not (have_glad_rags)))
+)
+
+(:action move_1_0_1_1
+ :parameters ()
+ :precondition (and (at_1_0))
+ :poss-precondition (and (have_california_blankets))
+ :effect (and (not (at_1_0)) (at_1_1))
+ :poss-effect (and (not (have_california_blankets)))
+)
+
+(:action move_1_1_1_0
+ :parameters ()
+ :precondition (and (at_1_1))
+ :poss-precondition (and (have_bindle) (have_glad_rags) (have_road_stake))
+ :effect (and (not (at_1_1)) (at_1_0))
+ :poss-effect (and (not (have_bindle)) (not (have_glad_rags)) (not (have_road_stake)))
+)
+
+(:action gamble_california_blankets_0_0
+ :parameters ()
+ :precondition (and (at_0_0))
+ :effect (and )
+ :poss-effect (and (have_california_blankets))
+)
+
+(:action gamble_bindle_0_1
+ :parameters ()
+ :precondition (and (at_0_1))
+ :effect (and )
+ :poss-effect (and (have_bindle))
+)
+
+(:action gamble_road_stake_0_1
+ :parameters ()
+ :precondition (and (at_0_1))
+ :effect (and )
+ :poss-effect (and (have_road_stake))
+)
+
+(:action gamble_california_blankets_1_0
+ :parameters ()
+ :precondition (and (at_1_0))
+ :effect (and )
+ :poss-effect (and (have_california_blankets))
+)
+
+(:action gamble_bindle_1_1
+ :parameters ()
+ :precondition (and (at_1_1))
+ :effect (and )
+ :poss-effect (and (have_bindle))
+)
+
+(:action easymark_california_blankets_0_1
+ :parameters ()
+ :precondition (and (at_0_1))
+ :effect (and (have_california_blankets))
+)
+
+(:action easymark_glad_rags_1_1
+ :parameters ()
+ :precondition (and (at_1_1))
+ :effect (and (have_glad_rags))
+)
+)
