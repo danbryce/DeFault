@@ -17,7 +17,7 @@ public class BlindNav {
 			args[0] = Integer.toString(i);
 			args[1] = "testfiles/incomplete/blindnav";
 			args[2] = Integer.toString(createThisManyOfMaxSize);
-			BlindNavCreator.main(args);
+			//BlindNavCreator.main(args);
 		}
 	}
 	
@@ -27,7 +27,7 @@ public class BlindNav {
 		String blindnavInputDir = "testfiles/incomplete/blindnav/";
 		String blindnavCppDir = "testfiles/conformant/blindnav/" + translationType + "/";
 		
-		for(int gridSize = 6; gridSize <= maxSize; gridSize *= 2) {
+		for(int gridSize = 2; gridSize <= maxSize; gridSize *= 2) {
 			for(int instance = 1; instance <= createThisManyOfMaxSize; instance++) {
 				String[] args = new String[5];
 				args[0] = blindnavInputDir + "blindnav_" + gridSize + "_" + instance + extension;

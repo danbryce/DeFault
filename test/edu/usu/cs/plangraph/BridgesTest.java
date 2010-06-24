@@ -18,8 +18,8 @@ public class BridgesTest {
 		String[] args = new String[6];
 //		args[0] = Integer.toString(gridSize);
 		args[1] = outputFileLocation;
-		args[3] = Double.toString(0);//.5
-		args[4] = Double.toString(0);//.5
+		args[3] = Double.toString(0.5);//.5
+		args[4] = Double.toString(0.5);//.5
 		args[5] = Integer.toString(numFiles);
 		for(int gs = 2; gs <= maxGridSize; gs *= 2) {
 			for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
