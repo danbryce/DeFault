@@ -18,12 +18,21 @@ import edu.usu.cs.search.*;
 public class Simulator 
 {
 	List<ActionInstance> actionInstances;
+	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances_completeVersion_Hashtable;
 	
 	Simulator(Domain d, Problem p)
 	{
 		actionInstances = null;
 		try{actionInstances = PddlImporter.createActionInstances(d, p);
 		}catch(Exception e){System.out.println("Agent ActionInstances grab failed.");}
+		
+		incompleteActionInstances_completeVersion_Hashtable = new Hashtable<Integer, IncompleteActionInstance>();
+		
+		for(ActionInstance act: actionInstances)
+		{
+			IncompleteActionInstance a = (IncompleteActionInstance) act;
+			incompleteActionInstances_completeVersion_Hashtable.put(a.getIndex(), a);
+		}
 		
 		System.out.println("\n-----------------------------------------------------");
 		System.out.println("SIMULATOR ACTIONS AVAILABLE (no possibles): ");
@@ -32,7 +41,7 @@ public class Simulator
 		System.out.println("-----------------------------------------------------");
 	}
 	
-	public Set<Proposition> updateState(Set<Proposition> currentState, ActionInstance agentAction)
+	public Set<Proposition> updateState(Set<Proposition> currentState, IncompleteActionInstance incompleteActionChosen)
 	{
 		System.out.println("\n----------------------------------------------------------------");
 		System.out.println("SIM updates state based on agents action using its enhanced info");
@@ -47,20 +56,14 @@ public class Simulator
 		
 		Set<Proposition> newState = new HashSet<Proposition>(currentState);
 		
-		for(ActionInstance completeAction : actionInstances)
-			if(completeAction.getName().equals(agentAction.getName()))
-			{
-				IncompleteActionInstance a = (IncompleteActionInstance) completeAction;
+		IncompleteActionInstance a = incompleteActionInstances_completeVersion_Hashtable.get(incompleteActionChosen.getIndex());			
+		Agent.printIncompleteVersionOfActionInstance(a);
 				
-				Agent.printIncompleteVersionOfActionInstance(a);
-				
-				if(currentState.containsAll(a.getPreconditions()))
-				{
-					newState.removeAll(a.getDeleteEffects());
-					newState.addAll(a.getAddEffects());
-				}
-				break;
-			}
+		if(currentState.containsAll(a.getPreconditions()))
+		{
+			newState.removeAll(a.getDeleteEffects());
+			newState.addAll(a.getAddEffects());
+		}
 		
 		System.out.println("----------------------------------------------------------------\n");
 		return newState;
@@ -76,22 +79,18 @@ public class Simulator
 		
 		
 		IncompleteActionInstance a = null;
-		for(ActionInstance completeAction : actionInstances)
-			if(completeAction.getName().equals(actionWithQ.action.getName()))
-			{
-				System.out.println("Sim found complete version of action named: " +  actionWithQ.action.getName());		
-				a = (IncompleteActionInstance) completeAction;
-				Agent.printIncompleteVersionOfActionInstance(a);
-				break;
-			}
-	
+		
+		a = incompleteActionInstances_completeVersion_Hashtable.get(actionWithQ.action.getIndex());
+		
 		if(a == null)
 		{
-			System.out.println("ERROR: Sim did not find complete version of action named: " +  actionWithQ.action.getName());
+			System.out.println("ERROR: Sim did not find complete version of action: " +  actionWithQ.action.getName());
 			System.out.println("THIS SHOULD NEVER HAPPEN!");
 			return false;
 		}
-		
+		else
+			Agent.printIncompleteVersionOfActionInstance(a);
+			
 		//An incomplete action has 6 lists.  
 		//The known pres/adds/deletes are 1-3.
 		//The possible pre's/add/deletes are 4-6.
@@ -151,7 +150,6 @@ public class Simulator
 		
 		return isFound;
 	}
-	
 	
 	public void printIncompleteVersionOfActionInstances()
 	{

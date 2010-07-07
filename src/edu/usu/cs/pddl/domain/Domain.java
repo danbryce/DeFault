@@ -127,6 +127,11 @@ public class Domain
     public List<PredicateDef> getPredicates() {
         return predicates;
     }
+    
+    //Added in order to check what changes in a domain... cw 7/1/10
+    public Set <PredicateDef> getDynamicPredicates() {
+        return dynamicPredicates;
+    }
 
     public PredicateDef getPredicateByName(String name) {
         return predsByName.get(name);

@@ -34,6 +34,8 @@ public class AStarSearch extends DefaultSearch implements Search
 	
 	public AStarSearch(){}
 	
+	
+	
 	public AStarSearch(
 			Domain domain, 
 			Problem problem, 
@@ -47,13 +49,12 @@ public class AStarSearch extends DefaultSearch implements Search
 		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solverOptions);
 			}
 	
-	
+	//Calls problem get Initial State - can we just manipulate that for updated new initial state
 	public void initialize(){
 		open.add(new AStarNode(problem.getInitialState(), null, null, problem, heuristic));
 	}
 	
-
-	
+	//Is using action instances and solution evaluator, which uses... cw 7/1/10
 	public List<ActionInstance> getPath(){
 //		logger.debug("G\tH\tF");
 		Date startTotal = new Date();

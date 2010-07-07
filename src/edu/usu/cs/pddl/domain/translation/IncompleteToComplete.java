@@ -114,6 +114,9 @@ public class IncompleteToComplete
 		
 		System.out.println("domain.getPredicates(): ");
 		System.out.println(d.getPredicates());
+		
+		System.out.println("domain.getDynamicPredicates(): ");
+		System.out.println(d.getDynamicPredicates());
 				
 		System.out.println("\n----------------------------------------------");
 		System.out.println("BEGIN - ACTIONS");
@@ -143,8 +146,7 @@ public class IncompleteToComplete
 			System.out.print("a.getQuantifiedVariablesMap(): ");
 			System.out.println(a.getQuantifiedVariablesMap());
 		}
-		
-		
+			
 		System.out.println("\nEND - ACTIONS");
 		System.out.println("----------------------------------------------");
 	}
@@ -214,18 +216,23 @@ public class IncompleteToComplete
 				
 				if(l != null)
 				{
-					//if the rand gen yield a double higher than the probability, then add this
-					//possible as a real precondition, else discard
-					if(random.nextDouble() < probability) 
-					{
+					
 						if(newPreconditionsList == null)
 							newPreconditionsList = new ArrayList<GoalDesc>();
 						for (GoalDesc g : l)
 						{
-							if(debug) System.out.println(g);
-							newPreconditionsList.add(g);
+							if(debug) System.out.print(g);
+							
+							//if the rand gen yield a double higher than the probability, then add this
+							//possible as a real precondition, else discard
+							if(random.nextDouble() < probability) 
+							{
+								newPreconditionsList.add(g);
+								if(debug) System.out.println(" added to known pre's list.");
+							}
+							else
+								if(debug) System.out.println(" not added to known pre's list.");
 						}
-					}
 				}
 			}
 	
@@ -271,18 +278,23 @@ public class IncompleteToComplete
 			
 				if(l != null)
 				{
-					//if the rand gen yield a double higher than the probability, then add this
-					//possible as a real effect, else discard
-					if(random.nextDouble() < probability) 
-					{
+					
 						if(newEffectsList == null)
 							newEffectsList = new ArrayList<Effect>();
 						for (Effect ef : l)
 						{
-							if(debug) System.out.println(ef);
-							newEffectsList.add(ef);
+							if(debug) System.out.print(ef);
+							
+							//if the rand gen yield a double higher than the probability, then add this
+							//possible as a real effect, else discard
+							if(random.nextDouble() < probability) 
+							{
+								newEffectsList.add(ef);
+								if(debug) System.out.println(" added to effects list.");
+							}
+							else
+								if(debug) System.out.println(" not added to effects list.");
 						}
-					}
 				}
 			}
 

@@ -16,11 +16,17 @@ public class GreedyBestFirstLengthSolver extends AStarSolver implements Solver {
 			SearchStatistics searchStatistics, SolverOptions solverOptions)
 			throws IllDefinedProblemException {
 		//super(domain, problem, searchStatistics, solverOptions);
+		
+		//Calls super with nothing - is Domain and Problem accessed there? just gives us the search variable used below
 		super();
+		
+		//how does PreferredOperatorDeferredEvaluationClassicalSearch access actions and initial state?
 		search = new PreferredOperatorDeferredEvaluationClassicalSearch(
 				domain, problem, problem.getActions(), 
 				new ClassicalSolutionEvaluator(), 
 				searchStatistics, solverOptions);
+		
+
 		search.initialize();
 	}
 

@@ -45,11 +45,10 @@ public class IncompleteProblem implements Problem
 	//	private Map<PredicateDef, PredicateInstance> dynamicPredicates = null;
 	//	private Map<PredicateDef, PredicateInstance> staticPredicates = null;
 
+	public IncompleteProblem(){}
 
-	public IncompleteProblem(){
-
-	}
-
+	//Note the Consistent Literal Set for start State and GoalDesc for goals, how initialState is built, how goals are built.
+	//Can we simply replace these with our existing sets?
 	public IncompleteProblem(final String name, 
 			final Domain domain, 
 			final Set<PDDLObject> objects, 
@@ -73,8 +72,6 @@ public class IncompleteProblem implements Problem
 				}
 			}
 		}
-
-
 	}
 
 	public IncompleteProblem(final String name,
@@ -170,9 +167,6 @@ public class IncompleteProblem implements Problem
 //		return false;
 //	}
 
-
-
-
 	public String toString(){
 		StringWriter sw = new StringWriter();
 
@@ -202,9 +196,7 @@ public class IncompleteProblem implements Problem
 			else
 				sw.append("- ").append("object").append("\n");
 		}
-			
-			
-			
+					
 		sw.append(" )\n");
 		sw.append("(:init \n");
 		boolean partial = false;
@@ -261,9 +253,15 @@ public class IncompleteProblem implements Problem
 	}
 
 	@Override
-	public void setActionInstances(
-			List<ActionInstance> actionInstances) {
+	public void setActionInstances(List<ActionInstance> actionInstances) 
+	{
 		this.actionInstances = actionInstances;
+	}
+	
+	//Added by cw 7/1/10
+	public void setInitialState(Set<Proposition> initialState) 
+	{
+		this.initialState = initialState;
 	}
 
 

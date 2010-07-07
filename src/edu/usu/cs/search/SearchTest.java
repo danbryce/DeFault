@@ -117,13 +117,16 @@ public class SearchTest {
 				solverOptions.setUCS(true);
 				solver = new UniformCostFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
-			} else if (args[3].equalsIgnoreCase("length")) {
+			} 
+			
+//START HERE - for the learning agent using length solver ////////////////////////			
+			else if (args[3].equalsIgnoreCase("length")) {
 //				solver = new AStarSolver(domain, problem, searchStatistics,
 //						solverOptions);
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
 				//solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-				solver = new GreedyBestFirstLengthSolver(domain, problem,
+				solver = new GreedyBestFirstLengthSolver(domain, problem,  //Goes to GreedyBestFirstLengthSolver
 						searchStatistics, solverOptions);
 			} else if (args[3].equalsIgnoreCase("pode")) {
 				solverOptions.setUsePreferredOperators(true);
@@ -132,6 +135,8 @@ public class SearchTest {
 				solverOptions.setRiskArity(Integer.valueOf(args[4]));
 				solver = new GreedyBestFirstFFriskySolver(domain, problem,
 						searchStatistics, solverOptions);
+//STOP HERE - the length and the pod solver are the ones to focus on for now //////////////////////////
+				
 				
 			} else if (args[3].equalsIgnoreCase("jdd")) {
 //				solverOptions.setUseJDDGValue(true);
@@ -163,14 +168,11 @@ public class SearchTest {
 		// getPlan(search);
 
 		if (plan == null) {
-//			logger.debug("\nNo plan found");
 			logger.debug("\nNo plan found");
 			return;
 		}
-//		logger.debug("\nPlan found");
 		logger.debug("\nPlan found");
 		for (ActionInstance action : plan) {
-//			logger.debug(action.getName());
 			logger.debug(action.getName());
 		}
 

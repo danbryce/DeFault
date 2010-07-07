@@ -10,21 +10,19 @@ import edu.usu.cs.search.*;
 
 import java.util.*;
 
-public class SimulatorAgentEnvironment 
+public class RandomQAandExplorationLearningAgentSimTrial 
 {
 	
 	Domain incompleteDomain_agent;
 	Domain completeDomain_simulator;
 	Problem problem;
 	
-	public static void main (String[] args)
+	RandomQAandExplorationLearningAgentSimTrial(String[] args)
 	{
-		SimulatorAgentEnvironment env = new SimulatorAgentEnvironment();
-			
 		if (args.length != 2)
-			env.usage();
+			usage();
 		
-		Double probability = .5;
+		Double probability = 1.0;
 		Integer seed = 0;
 		
 		String[] args2 = new String[4];
@@ -32,60 +30,88 @@ public class SimulatorAgentEnvironment
 		args2[1] = args[1];
 		args2[2] = probability.toString();
 		args2[3] = seed.toString();
-	
+		
 		IncompleteToComplete domainMaker = new IncompleteToComplete(args2);
 		
-		env.incompleteDomain_agent = domainMaker.getOriginalIncompleteDomain();
-		env.completeDomain_simulator = domainMaker.getModifiedCompleteDomain();
-		env.problem = domainMaker.getProblem();
+		incompleteDomain_agent = domainMaker.getOriginalIncompleteDomain();
+		completeDomain_simulator = domainMaker.getModifiedCompleteDomain();
+		problem = domainMaker.getProblem();
 		
+		//TO CONFIRM THE DOMAINS AND PROBLEMS INITIALLY CREATED
+		//printDomainsAndProblem();
+	}
+	
+	void printDomainsAndProblem()
+	{
 		//First print the complete/translated domain to show that there was an adequate deep copy made of the actions
-/*		System.out.println("************************************************************************");
+		System.out.println("************************************************************************");
 		System.out.println("BEGIN - COMPLETE DOMAIN VERSION - to be used by simulator\n");
-		IncompleteToComplete.printDomain(env.completeDomain_simulator);
+		IncompleteToComplete.printDomain(completeDomain_simulator);
 		System.out.println("\nEND - COMPLETE DOMAIN VERSION");
 		System.out.println("************************************************************************\n");
 
 		System.out.println("************************************************************************");
 		System.out.println("BEGIN - INCOMPLETE DOMAIN VERSION - to be used by agent\n");
-		IncompleteToComplete.printDomain(env.incompleteDomain_agent);
+		IncompleteToComplete.printDomain(incompleteDomain_agent);
 		System.out.println("\nEND - INCOMPLETE DOMAIN VERSION");
 		System.out.println("************************************************************************\n");
-*/		
+				
 		System.out.println("************************************************************************");
 		System.out.println("BEGIN - INCOMPLETE PROBLEM VERSION");
 		System.out.println("\t(Note: in/complete problem versions are the same.)\n");
-		System.out.println(env.problem.toString());
+		System.out.println(problem.toString());
 		System.out.println("END - INCOMPLETE PROBLEM VERSION");
 		System.out.println("************************************************************************\n");
 		
-		Set<Proposition> currentState = env.problem.getInitialState();
+		Set<Proposition> currentState = problem.getInitialState();
 		System.out.println("************************************************************************");
 		System.out.println("BEGIN - INITIAL STATE:\n");
 		for (Proposition p : currentState)
-			System.out.println(p);
-		System.out.println("\nEND - INITIAL STATE");
+			System.out.print(p + " ");
+		System.out.println("\n\nEND - INITIAL STATE");
 		System.out.println("************************************************************************\n");
 		
+		System.out.println("************************************************************************");
+		System.out.println("BEGIN - INCOMPLETEACTION INSTANCE - GOAL ACTION:\n");
+		Agent.printIncompleteVersionOfActionInstance(problem.getGoalAction());
+		System.out.println("\nTHUS, GOAL STATE INCLUDES: " + problem.getGoalAction().getPreconditions());
+		System.out.println("\nEND - INCOMPLETEACTION INSTANCE - GOAL ACTION:\n");
+		System.out.println("************************************************************************\n");
 		
+	}
+	
+	public static void main (String[] args)
+	{
+		RandomQAandExplorationLearningAgentSimTrial env = new RandomQAandExplorationLearningAgentSimTrial(args);
+		
+		//TO CONFIRM THE DOMAINS AND PROBLEMS INITIALLY CREATED
+		//env.printDomainsAndProblem();
+		
+		//Random QA/Exploration Agent/Sim Trial using domain, problem, seed, and probability given.
+		env.randomQAAndExplorationAgentSimTrialOverGivenDomainAndProblem();
+	}
+	
+	public void randomQAAndExplorationAgentSimTrialOverGivenDomainAndProblem()
+	{
 		System.out.println("************************************************************************");
 		System.out.println("BEGIN - SIM-AGENT INTERACTION\n");
 		//Could send in the rand seed - currently 0 within these classes
-		Agent agent = new Agent(env.incompleteDomain_agent, env.problem);
-		Simulator sim = new Simulator(env.completeDomain_simulator, env.problem);
+		Agent agent = new Agent(incompleteDomain_agent, problem);
+		Simulator sim = new Simulator(completeDomain_simulator, problem);
 
+		Set<Proposition> currentState = problem.getInitialState();
 		System.out.println("\n----------------------------------");
 		System.out.println("INITIAL STATE:       " + currentState);
-		System.out.println("GOAL STATE INCLUDES: " + env.problem.getGoalAction().getPreconditions());
+		System.out.println("GOAL STATE INCLUDES: " + problem.getGoalAction().getPreconditions());
 		System.out.println("----------------------------------");
 		
-		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//THE INTERACTION BETWEEN SIM/AGENT
 		//the case where there is no action available from current state is uncaught 
 		//for this random sim/agent interaction
 		int loop = 1;
 		agent.startStopwatch();
-		while(!currentState.containsAll(env.problem.getGoalAction().getPreconditions()))
+		while(!currentState.containsAll(problem.getGoalAction().getPreconditions()))
 		{
 			System.out.println("\n----------------------------------------------------------------");
 			System.out.println("LOOP ITERATION #: " + (loop++));
@@ -94,9 +120,9 @@ public class SimulatorAgentEnvironment
 			if(agent.selectTypeOfLearning().equals(Agent.LearningType.EXPLORATION))
 			{
 				//Learning by Exploration
-				ActionInstance actionChosen = agent.explore_side.chooseAction_Exploration(currentState);
-				newState = sim.updateState(currentState, actionChosen);
-				agent.explore_side.learnAboutActionTaken_Exploration(newState, currentState, actionChosen);
+				IncompleteActionInstance incompleteActionChosen = agent.explore_side.chooseAction_Exploration(currentState);
+				newState = sim.updateState(currentState, incompleteActionChosen);
+				agent.explore_side.learnAboutActionTaken_Exploration(newState, currentState, incompleteActionChosen);
 				currentState = newState;
 			}
 			else
@@ -113,14 +139,15 @@ public class SimulatorAgentEnvironment
 		    
 		    System.out.println("----------------------------------------------------------------");
 		    System.out.println("CURRENT STATE:       " + currentState);
-		    System.out.println("GOAL STATE INCLUDES: " + env.problem.getGoalAction().getPreconditions());
+		    System.out.println("GOAL STATE INCLUDES: " + problem.getGoalAction().getPreconditions());
 		    System.out.println("----------------------------------------------------------------");
 		}
 		agent.stopStopwatch();
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		//FINAL RESULTS
 		System.out.println("\n----------------------------------");
-		System.out.println("GOAL ACHIEVED:           " + env.problem.getGoalAction().getPreconditions());
+		System.out.println("GOAL ACHIEVED:           " + problem.getGoalAction().getPreconditions());
 		System.out.println("EXISTS IN CURRENT STATE: " + currentState.toString());
 		System.out.println("----------------------------------");
 		
@@ -142,17 +169,4 @@ public class SimulatorAgentEnvironment
 		System.err.println("\t CURRENT: set to 1.0, 0.");
 		System.exit(1);
 	}
-	
-	private void printAction_abbr(ActionDef a)
-	{
-		System.out.println();
-		System.out.println("a.getName(): " + a.getName());
-
-		System.out.println("a.getPreCondition(): " + a.getPreCondition());
-		System.out.println("a.getPossPreCondition(): " + a.getPossPreCondition());
-				
-		System.out.println("a.getEffect(): " + a.getEffect());
-		System.out.println("a.getPossEffect(): " + a.getPossEffect());
-	}
-	
 }

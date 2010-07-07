@@ -12,7 +12,7 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class QA_Learning 
 {
-	List<ActionInstance> actionInstances;
+	List<IncompleteActionInstance> incompleteActionInstances;
 	
 	//Lists that exist for each actionInstance
 	public static final int KNOWNPRECONDITIONSLIST = 1;
@@ -34,9 +34,9 @@ public class QA_Learning
 	Integer numPossAddEffectsLearnedToNotExistByQA;
 	Integer numPossDeleteEffectsLearnedToNotExistByQA;
 	
-	QA_Learning(List<ActionInstance> a)
+	QA_Learning(List<IncompleteActionInstance> a)
 	{
-		actionInstances = a;
+		incompleteActionInstances = a;
 		
 		numTimesQALearnerCalled = 0;
 		
@@ -62,30 +62,27 @@ public class QA_Learning
 		
 		//Get all incomplete actions
 		System.out.println("\nThese actions are incomplete (contain possibles): ");
-		LinkedList<ActionInstance> actionsWithPossibles = new LinkedList<ActionInstance>();
-		for(ActionInstance act : actionInstances)
-		{
-			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			
+		LinkedList<IncompleteActionInstance> incompleteActionsWithPossibles = new LinkedList<IncompleteActionInstance>();
+		for(IncompleteActionInstance a : incompleteActionInstances)
+		{			
 			if(!Agent.isActionComplete(a))
 			{
 				System.out.println(" " + a.getName());
-				actionsWithPossibles.add(act);
+				incompleteActionsWithPossibles.add(a);
 			}
 		}
 		
 		//Check for no actions with possibles - this should never happen by
 		// the design of the the method selectTypeOfLearning()
-		if(actionsWithPossibles.size() == 0)
+		if(incompleteActionsWithPossibles.size() == 0)
 		{
 			System.out.println("ERROR: No actions found with possibles for QA.");
 			System.out.println(" THIS SHOULD NEVER HAPPEN!");
 			return null;
 		}
 		
-		Integer choice = Agent.random.nextInt(actionsWithPossibles.size()); //the choice of which action with possibles is made
-		ActionInstance act = actionsWithPossibles.get(choice);
-		IncompleteActionInstance a = (IncompleteActionInstance) act;
+		Integer choice = Agent.random.nextInt(incompleteActionsWithPossibles.size()); //the choice of which action with possibles is made
+		IncompleteActionInstance a = incompleteActionsWithPossibles.get(choice);
 		
 		System.out.println("\nACTION CHOSEN: ");
 		Agent.printIncompleteVersionOfActionInstance(a);
@@ -93,17 +90,11 @@ public class QA_Learning
 		//restrict the possible prop choice to learn about to the possible pre/add/delete lists that actually have possibles
 		LinkedList<Integer> ListsWithPossiblesForChosenAction = new LinkedList<Integer>();
 		if(a.getPossiblePreconditions().size() != 0 /*|| a.getPossiblePreconditions() != null*/)
-		{
 			ListsWithPossiblesForChosenAction.add(POSSPRECONDITIONSLIST);
-		}
 		if(a.getPossibleAddEffects().size() != 0 /*|| a.getPossibleAddEffects() != null*/)
-		{
 			ListsWithPossiblesForChosenAction.add(POSSADDEFFECTSLIST);
-		}
 		if(a.getPossibleDeleteEffects().size() != 0 /*|| a.getPossibleDeleteEffects() != null*/)
-		{
 			ListsWithPossiblesForChosenAction.add(POSSDELETEEFFECTSLIST);
-		}
 		
 		//choose a list from amongst those.
 		Integer randListChoice = Agent.random.nextInt(ListsWithPossiblesForChosenAction.size());
@@ -134,7 +125,7 @@ public class QA_Learning
 		
 		System.out.println("PROPOSITION CHOSEN: " + propToCheck);
 		
-		QA_ActionAndPropChoice qa_actionChoiceAndProp =  new QA_ActionAndPropChoice(act, listNumber, propToCheck);
+		QA_ActionAndPropChoice qa_actionChoiceAndProp =  new QA_ActionAndPropChoice(a, listNumber, propToCheck);
 		
 		System.out.println("----------------------------------------------------------------");
 		
@@ -149,66 +140,62 @@ public class QA_Learning
 		System.out.println("QA - AGENT IS LEARNING ABOUT ACTION SELECTED (" + qa_actionChoiceAndProp.action.getName() + ")...");
 		System.out.println("REGARDING THIS POSSIBLE PRE/ADD/DELETE PROPOSITION: " + qa_actionChoiceAndProp.propToLearnAbout);
 		
-		IncompleteActionInstance newVersionOfAction = Agent.makeDeepCopyOfIncompleteActionInstance((IncompleteActionInstance) qa_actionChoiceAndProp.action);
+		IncompleteActionInstance newVersionOfAction = qa_actionChoiceAndProp.action;
 
 		System.out.print("\nBelongs to the agent's possible ");
-		
 		switch(qa_actionChoiceAndProp.listOriginOfProp)
 		{
 			case(POSSPRECONDITIONSLIST):
 				System.out.println("pre's list.");
 				if(result)
 				{
-					Agent.newPreconditionsSet.add(qa_actionChoiceAndProp.propToLearnAbout);
+					newVersionOfAction.getPreconditions().add(qa_actionChoiceAndProp.propToLearnAbout);
 					numPossPresLearnedToKnownByQA++;
 				}
 				else
 					numPossPresLearnedToNotExistByQA++;
-				Agent.newPossPreconditionsSet.remove(qa_actionChoiceAndProp.propToLearnAbout);
+				newVersionOfAction.getPossiblePreconditions().remove(qa_actionChoiceAndProp.propToLearnAbout);
 				break;
 			case(POSSADDEFFECTSLIST):
 				System.out.println("adds list.");
 				if(result)
 				{
-					Agent.newAddEffectsSet.add(qa_actionChoiceAndProp.propToLearnAbout);
+					newVersionOfAction.getAddEffects().add(qa_actionChoiceAndProp.propToLearnAbout);
 					numPossAddEffectsLearnedToKnownByQA++;
 				}
 				else
 					numPossAddEffectsLearnedToNotExistByQA++;
-				Agent.newPossAddEffectsSet.remove(qa_actionChoiceAndProp.propToLearnAbout);
+				newVersionOfAction.getPossibleAddEffects().remove(qa_actionChoiceAndProp.propToLearnAbout);
 				break;
 			case(POSSDELETEEFFECTSLIST):
 				System.out.println("deletes list.");
 				if(result)
 				{
-					Agent.newDeleteEffectsSet.add(qa_actionChoiceAndProp.propToLearnAbout);
+					newVersionOfAction.getDeleteEffects().add(qa_actionChoiceAndProp.propToLearnAbout);
 					numPossDeleteEffectsLearnedToKnownByQA++;
 				}
 				else
 					numPossDeleteEffectsLearnedToNotExistByQA++;
-				Agent.newPossDeleteEffectsSet.remove(qa_actionChoiceAndProp.propToLearnAbout);
+				newVersionOfAction.getPossibleDeleteEffects().remove(qa_actionChoiceAndProp.propToLearnAbout);
 				break;
 		}
 		
 		System.out.print("Was it found in the sim's actual list?: ");
 		if(result) System.out.println("YES");
 		else System.out.println("NO");
-		
-		Integer location = actionInstances.indexOf(qa_actionChoiceAndProp.action);
-		actionInstances.set(location, newVersionOfAction);
-		
+	
 		System.out.println("\nNEW VERSION OF INCOMPLETE ACTION (AFTER LEARNING BY QA):");
-		Agent.printIncompleteVersionOfActionInstance((IncompleteActionInstance) actionInstances.get(location));
+		Agent.printIncompleteVersionOfActionInstance(newVersionOfAction);
 		System.out.println("----------------------------------------------------------------");
 	}
 		
 	class QA_ActionAndPropChoice
 	{
-		ActionInstance action;
+		IncompleteActionInstance action;
 		Integer listOriginOfProp;
 		Proposition propToLearnAbout;
-		
-		QA_ActionAndPropChoice(ActionInstance a, Integer l, Proposition p)
+			
+		QA_ActionAndPropChoice(IncompleteActionInstance a, Integer l, Proposition p)
 		{
 			action = a;
 			listOriginOfProp = l;

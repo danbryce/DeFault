@@ -17,7 +17,7 @@ public class Agent
 	static Random random;
 	private Integer range; 
 	
-	List<ActionInstance> actionInstances;
+	List<IncompleteActionInstance> incompleteActionInstances;
 	
 	//Lists that exist for each actionInstance
 	public static final int KNOWNPRECONDITIONSLIST = 1;
@@ -60,32 +60,42 @@ public class Agent
 	//Constructor
 	public Agent(Domain d, Problem p)
 	{
-		actionInstances = null;
+		List<ActionInstance> actionInstances = null;
 		try{actionInstances = PddlImporter.createActionInstances(d, p);
 		}catch(Exception e){System.out.println("Agent ActionInstances grab failed.");}
-		
-		qa_side = new QA_Learning(actionInstances);
-		explore_side = new Exploration_Learning(actionInstances);
 		
 		System.out.println("-----------------------------------------------------");
 		System.out.println("AGENT ACTIONS AVAILABLE (has possibles): ");
 		
 		//Showing to user what actions (and their properties) the agent can perform
 		//These will be updated/change as the agent learns
+		incompleteActionInstances = new ArrayList<IncompleteActionInstance>();
 		for(ActionInstance act : actionInstances)
 		{
 			System.out.println();
-			IncompleteActionInstance a = (IncompleteActionInstance) act;
+			IncompleteActionInstance a = (IncompleteActionInstance) act;	
+			incompleteActionInstances.add(a);
+			
 			printIncompleteVersionOfActionInstance(a);	
 		}
 		
 		System.out.println("\nEND - AGENT ACTIONS AVAILABLE");
 		System.out.println("-----------------------------------------------------");
 		
+		qa_side = new QA_Learning(incompleteActionInstances);
+		explore_side = new Exploration_Learning(incompleteActionInstances);
+		
 		random = new Random(0);
 						
 		//For results, collects the number of known/possible pre's, adds, deletes
 		setInitialListSizeCountForAllAgentsActionInstances();
+	}
+	
+	public List<ActionInstance> getIncompleteActionInstancesAsActionInstances()
+	{	ArrayList<ActionInstance> arr = new ArrayList<ActionInstance>();
+		for (IncompleteActionInstance ia : incompleteActionInstances)
+			arr.add((ActionInstance) ia);
+		return arr;
 	}
 	
 	//Current way to choose whether to ask a question vs. learn by exploring
@@ -102,16 +112,16 @@ public class Agent
 		//Range for doing random selection of QA vs. exploration
 		//	 based on only the current # of possibles + # of actions.
 		setCurrentPossibleListSizeCountForAllAgentsActionInstances();
-		range = actionInstances.size() + totalCurrNumPossiblePresAddsDeletes;
+		range = incompleteActionInstances.size() + totalCurrNumPossiblePresAddsDeletes;
 		Integer rand = random.nextInt(range);
 		
-		System.out.println(" # of actions               : " + actionInstances.size());
+		System.out.println(" # of actions               : " + incompleteActionInstances.size());
 		System.out.println(" Current # of possible props: " + totalCurrNumPossiblePresAddsDeletes);
 		System.out.println(" Range                      : " + range);
 		System.out.println(" Random #                   : " + rand); 
 		
 		LearningType type;
-		if(rand < actionInstances.size()) type = LearningType.EXPLORATION;
+		if(rand < incompleteActionInstances.size()) type = LearningType.EXPLORATION;
 		else type = LearningType.QA;
 		
 		System.out.println("\nTYPE LEARNING SELECTED: " + type);
@@ -139,10 +149,8 @@ public class Agent
 	int countCurrNumPropsInXListForAllActionInstances(int whichList)
 	{
 		int count = 0;
-		for(ActionInstance act : actionInstances)
-		{
-			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			
+		for(IncompleteActionInstance a : incompleteActionInstances)
+		{			
 			switch(whichList)
 			{
 				case KNOWNPRECONDITIONSLIST:
@@ -220,25 +228,25 @@ public class Agent
 	
 	public static void printIncompleteVersionOfActionInstance(IncompleteActionInstance a)
 	{
-			System.out.println("  Name     : " + a.getName());					//String
-			System.out.println("  Index    : " + a.getIndex());					//int
-			System.out.println("  Pres     : " + a.getPreconditions());			//Set<Proposition>
-			System.out.println("  Poss Pres: " + a.getPossiblePreconditions());	//Set<Proposition>
-			if (a.getPossiblePreconditions() == null) System.out.println("  Poss Pres is in fact null");				
-			System.out.println("  Adds     : " + a.getAddEffects());			//Set<Proposition>
-			System.out.println("  Poss Adds: " + a.getPossibleAddEffects());	//Set<Proposition>
-			if(a.getPossibleAddEffects() == null) System.out.println("  Poss Adds is in fact null");
-			System.out.println("  Deletes  : " + a.getDeleteEffects());			//Set<Proposition>
-			System.out.println("  Poss Dels: " + a.getPossibleDeleteEffects());	//Set<Proposition>
-			if(a.getPossibleDeleteEffects() == null) System.out.println("  Poss Dels is in fact null");
-			//a.getDefinition() -> an ActionDef object - original from Domain before transformation into ActionInstance - unchanges
+		System.out.println("  Name     : " + a.getName());					//String
+		System.out.println("  Index    : " + a.getIndex());					//int
+		System.out.println("  Pres     : " + a.getPreconditions());			//Set<Proposition>
+		System.out.println("  Poss Pres: " + a.getPossiblePreconditions());	//Set<Proposition>
+		if (a.getPossiblePreconditions() == null) System.out.println("  Poss Pres is in fact null");				
+		System.out.println("  Adds     : " + a.getAddEffects());			//Set<Proposition>
+		System.out.println("  Poss Adds: " + a.getPossibleAddEffects());	//Set<Proposition>
+		if(a.getPossibleAddEffects() == null) System.out.println("  Poss Adds is in fact null");
+		System.out.println("  Deletes  : " + a.getDeleteEffects());			//Set<Proposition>
+		System.out.println("  Poss Dels: " + a.getPossibleDeleteEffects());	//Set<Proposition>
+		if(a.getPossibleDeleteEffects() == null) System.out.println("  Poss Dels is in fact null");
+		//a.getDefinition() -> an ActionDef object - original from Domain before transformation into ActionInstance - unchanges
 			//a.equals(IncompleteActionInstance obj)
 	}
 	
 	void printDeepResults()
 	{
 		System.out.println("BEFORE LEARNING/SOLVING...");
-		System.out.println(" Total # of agent actions: " + actionInstances.size());
+		System.out.println(" Total # of agent actions: " + incompleteActionInstances.size());
 		System.out.println(" Total initial # of known pre's, add & delete effects: " + totalOriginalNumKnownPresAddsDeletes);
 		System.out.println("	Total initial # of known preconditions : " 			+ originalNumOfKnownPreconditions);
 		System.out.println("	Total initial # of known add effects   : " 			+ originalNumOfKnownAddEffects);
@@ -318,31 +326,5 @@ public class Agent
 		System.out.println("        Total # possible delete effects learned by QA: " + totalNumPossDeletesLearnedByQA);
 		System.out.println("            To exist (became known deletes)       : " + qa_side.numPossDeleteEffectsLearnedToKnownByQA);
 		System.out.println("            To not exist (were not actual deletes): " + qa_side.numPossDeleteEffectsLearnedToNotExistByQA);
-	}
-	
-	static Set<Proposition> newPreconditionsSet;
-	static Set<Proposition> newPossPreconditionsSet;
-	static Set<Proposition> newAddEffectsSet;
-	static Set<Proposition> newPossAddEffectsSet;
-	static Set<Proposition> newDeleteEffectsSet;
-	static Set<Proposition> newPossDeleteEffectsSet;
-	static IncompleteActionInstance makeDeepCopyOfIncompleteActionInstance(IncompleteActionInstance prevAction)
-	{
-		newPreconditionsSet     	= new HashSet<Proposition>(prevAction.getPreconditions());
-		newPossPreconditionsSet 	= new HashSet<Proposition>(prevAction.getPossiblePreconditions());
-		newAddEffectsSet 			= new HashSet<Proposition>(prevAction.getAddEffects());
-		newPossAddEffectsSet 		= new HashSet<Proposition>(prevAction.getPossibleAddEffects());
-		newDeleteEffectsSet 		= new HashSet<Proposition>(prevAction.getDeleteEffects());
-		newPossDeleteEffectsSet 	= new HashSet<Proposition>(prevAction.getPossibleDeleteEffects());
-		
-		IncompleteActionInstance newVersionOfAction = new IncompleteActionInstance
-		(
-			prevAction.getName(),
-			newPreconditionsSet, newAddEffectsSet, newDeleteEffectsSet,
-			newPossPreconditionsSet, newPossAddEffectsSet, newPossDeleteEffectsSet,
-			prevAction.getIndex()		
-		);
-		
-		return newVersionOfAction;
 	}
 }

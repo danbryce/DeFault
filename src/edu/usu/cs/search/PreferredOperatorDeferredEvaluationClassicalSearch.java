@@ -23,10 +23,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationSearch;
 
-public class PreferredOperatorDeferredEvaluationClassicalSearch extends
-AStarSearch implements Search {
-
-
+public class PreferredOperatorDeferredEvaluationClassicalSearch extends AStarSearch implements Search {
 
 	private static Logger logger = Logger.getLogger(PreferredOperatorDeferredEvaluationSearch.class.getName());
 
@@ -37,6 +34,9 @@ AStarSearch implements Search {
 	protected long notPreferredPriority = 0;
 	protected double[] currentBestHValue = {Double.MAX_VALUE, Double.MAX_VALUE};
 
+    //Constructor - it's accepting an actionlist - will it utilize this only 
+	// or also access the Domain version (ActionDef)?	
+	//Calls super with params - search this for above as well - cw 7/1/10
 	public PreferredOperatorDeferredEvaluationClassicalSearch(Domain domain,
 			Problem problem, List<ActionInstance> actionInstances,
 			ClassicalSolutionEvaluator solutionEvaluator,
