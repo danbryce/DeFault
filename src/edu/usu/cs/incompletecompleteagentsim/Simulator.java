@@ -26,17 +26,19 @@ public class Simulator
 		try{actionInstances = PddlImporter.createActionInstances(d, p);
 		}catch(Exception e){System.out.println("Agent ActionInstances grab failed.");}
 		
-		incompleteActionInstances_completeVersion_Hashtable = new Hashtable<Integer, IncompleteActionInstance>();
+		System.out.println("\n-----------------------------------------------------");
+		System.out.println("SIMULATOR ACTIONS AVAILABLE (no possibles): ");
 		
+		incompleteActionInstances_completeVersion_Hashtable = new Hashtable<Integer, IncompleteActionInstance>();
 		for(ActionInstance act: actionInstances)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;
 			incompleteActionInstances_completeVersion_Hashtable.put(a.getIndex(), a);
+			
+			System.out.println();
+			Agent.printIncompleteVersionOfActionInstance(a);
 		}
 		
-		System.out.println("\n-----------------------------------------------------");
-		System.out.println("SIMULATOR ACTIONS AVAILABLE (no possibles): ");
-		printIncompleteVersionOfActionInstances();
 		System.out.println("\nEND - SIMULATOR ACTIONS AVAILABLE");
 		System.out.println("-----------------------------------------------------");
 	}

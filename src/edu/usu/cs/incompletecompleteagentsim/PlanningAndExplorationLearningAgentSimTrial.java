@@ -43,7 +43,7 @@ public class PlanningAndExplorationLearningAgentSimTrial
 		args2[2] = probability.toString();
 		args2[3] = seed.toString();
 		args2[4] = "length";
-		args2[5] = "";
+		args2[5] = "1";
 		
 		String[] args3 = new String[4];
 		args3[0] = args2[0];
@@ -179,7 +179,50 @@ public class PlanningAndExplorationLearningAgentSimTrial
 			System.out.println("\n----------------------------------------------------------------");
 			System.out.println("LOOP ITERATION #: " + (loop++));
 
-			//Getting next action from plan
+			 
+			//If plan is now empty, then original plan did not work. Call the planner again.
+			if(plan.isEmpty())
+			{
+				System.out.println("\n----------------------------------------------------------------");
+				System.out.println("AGENT DETECTED THAT PLAN WAS EXHAUSTED WITHOUT ACHIEVING GOAL.");
+				System.out.println(" Calling planner again:");
+				System.out.println("  *initial state set to current state.");
+				System.out.println("  *actionlist updated to utilize what has been learned.");
+				
+				problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+				problem.setInitialState(currentState);
+				
+				try{
+					if (args2[4].equalsIgnoreCase("length")) 
+						solver = new GreedyBestFirstLengthSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
+					else if (args2[4].equalsIgnoreCase("pode")) 
+						solver = new GreedyBestFirstFFriskySolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
+				}catch (IllDefinedProblemException e) {e.printStackTrace();}
+				
+				//If placed here - it takes 14 actions instead of 11 for
+				//testfiles/incomplete/bridges/bridges_v3_2_0.5_1.pddl testfiles/incomplete/bridges/bridges_problem.pddl
+				//This means the heuristic might well be in play...
+				//problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());	
+				//problem.setInitialState(currentState);
+				
+				plan = solver.run();
+				
+				if(plan.isEmpty())
+				{
+					System.out.println("NO POSSIBLE PLAN FOUND");
+					System.exit(1);
+				}
+				else
+				{
+					System.out.println("PLAN FOUND: ");
+					for(ActionInstance a : plan)
+						System.out.println("\t" + a.getName());
+				}
+				
+				System.out.println("----------------------------------------------------------------");
+			}
+			
+			//Getting next action from plan - if plan has more actions.
 			IncompleteActionInstance incompleteActionChosen = (IncompleteActionInstance) plan.remove(0);
 			System.out.println("\n----------------------------------------------------------------");
 			System.out.println("ACTION SELECTED (BY PLANNER): ");
@@ -194,16 +237,6 @@ public class PlanningAndExplorationLearningAgentSimTrial
 			currentState = newState;
 			
 			//CHECK ON HOW PROBLEM AND DOMAIN ARE CHANGING
-			System.out.println("\n****************************************************************");
-			System.out.println("CHECK ON WHETHER DOMAIN  - action list AND ");
-			System.out.println("		 PROBLEM - initial state");
-			System.out.println("CHANGE SIMPLY BECAUSE OF THE REFERENCES.");
-			
-			problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
-			problem.setInitialState(currentState);
-			System.out.println("problem.getInitialState(): " + problem.getInitialState());
-			System.out.println("****************************************************************\n");
-			
 			
 			//If action was refused, get a new plan, use updated knowledge and current state as initial state.
 			if(!isActionAccepted)
@@ -222,6 +255,13 @@ public class PlanningAndExplorationLearningAgentSimTrial
 					else if (args2[4].equalsIgnoreCase("pode")) 
 						solver = new GreedyBestFirstFFriskySolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
 				}catch (IllDefinedProblemException e) {e.printStackTrace();}
+				
+				//If placed here - it takes 14 actions instead of 11 for
+				//testfiles/incomplete/bridges/bridges_v3_2_0.5_1.pddl testfiles/incomplete/bridges/bridges_problem.pddl
+				//This means the heuristic might well be in play...
+				
+				//problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+				//problem.setInitialState(currentState);
 				
 				plan = solver.run();
 				

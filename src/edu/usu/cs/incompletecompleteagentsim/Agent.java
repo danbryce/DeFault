@@ -17,7 +17,7 @@ public class Agent
 	static Random random;
 	private Integer range; 
 	
-	List<IncompleteActionInstance> incompleteActionInstances;
+	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances;
 	
 	//Lists that exist for each actionInstance
 	public static final int KNOWNPRECONDITIONSLIST = 1;
@@ -69,13 +69,13 @@ public class Agent
 		
 		//Showing to user what actions (and their properties) the agent can perform
 		//These will be updated/change as the agent learns
-		incompleteActionInstances = new ArrayList<IncompleteActionInstance>();
+		incompleteActionInstances = new Hashtable<Integer, IncompleteActionInstance>();
 		for(ActionInstance act : actionInstances)
 		{
-			System.out.println();
 			IncompleteActionInstance a = (IncompleteActionInstance) act;	
-			incompleteActionInstances.add(a);
+			incompleteActionInstances.put(a.getIndex(), a);
 			
+			System.out.println();
 			printIncompleteVersionOfActionInstance(a);	
 		}
 		
@@ -93,8 +93,8 @@ public class Agent
 	
 	public List<ActionInstance> getIncompleteActionInstancesAsActionInstances()
 	{	ArrayList<ActionInstance> arr = new ArrayList<ActionInstance>();
-		for (IncompleteActionInstance ia : incompleteActionInstances)
-			arr.add((ActionInstance) ia);
+		for (IncompleteActionInstance iai : incompleteActionInstances.values())
+			arr.add((ActionInstance) iai);
 		return arr;
 	}
 	
@@ -149,7 +149,7 @@ public class Agent
 	int countCurrNumPropsInXListForAllActionInstances(int whichList)
 	{
 		int count = 0;
-		for(IncompleteActionInstance a : incompleteActionInstances)
+		for(IncompleteActionInstance a : incompleteActionInstances.values())
 		{			
 			switch(whichList)
 			{

@@ -2,6 +2,7 @@ package edu.usu.cs.incompletecompleteagentsim;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class QA_Learning 
 {
-	List<IncompleteActionInstance> incompleteActionInstances;
+	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances;
 	
 	//Lists that exist for each actionInstance
 	public static final int KNOWNPRECONDITIONSLIST = 1;
@@ -34,7 +35,7 @@ public class QA_Learning
 	Integer numPossAddEffectsLearnedToNotExistByQA;
 	Integer numPossDeleteEffectsLearnedToNotExistByQA;
 	
-	QA_Learning(List<IncompleteActionInstance> a)
+	QA_Learning(Hashtable<Integer, IncompleteActionInstance> a)
 	{
 		incompleteActionInstances = a;
 		
@@ -51,10 +52,9 @@ public class QA_Learning
 		numPossDeleteEffectsLearnedToNotExistByQA = 0;	
 	}
 	
-	//This version of choosing an action for QA is random based, but only for the actions that are applicable 
-	// to the current state by their known pre's. Then it selects an action which has at least one
-	// possible from among that group. If no actions relevant to that state have an outstanding possible, then it will signal so.
-	// Otherwise, it randomly selects one possible to learn about.
+	//This version of choosing an action for QA is random based. It selects an action
+	// from among the group of actions with possible. 
+	// If no actions have possibles, then QA will not have been called.
 	public QA_ActionAndPropChoice chooseIncompleteActionAndProp_QA()
 	{
 		System.out.println("\n----------------------------------------------------------------");
@@ -63,7 +63,7 @@ public class QA_Learning
 		//Get all incomplete actions
 		System.out.println("\nThese actions are incomplete (contain possibles): ");
 		LinkedList<IncompleteActionInstance> incompleteActionsWithPossibles = new LinkedList<IncompleteActionInstance>();
-		for(IncompleteActionInstance a : incompleteActionInstances)
+		for(IncompleteActionInstance a : incompleteActionInstances.values())
 		{			
 			if(!Agent.isActionComplete(a))
 			{
@@ -186,6 +186,7 @@ public class QA_Learning
 	
 		System.out.println("\nNEW VERSION OF INCOMPLETE ACTION (AFTER LEARNING BY QA):");
 		Agent.printIncompleteVersionOfActionInstance(newVersionOfAction);
+		incompleteActionInstances.put(newVersionOfAction.getIndex(), newVersionOfAction);		
 		System.out.println("----------------------------------------------------------------");
 	}
 		

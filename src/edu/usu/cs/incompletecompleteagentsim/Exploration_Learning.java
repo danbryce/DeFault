@@ -1,6 +1,7 @@
 package edu.usu.cs.incompletecompleteagentsim;
 
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +12,7 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class Exploration_Learning 
 {
-	List<IncompleteActionInstance> incompleteActionInstances;
+	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances;
 	
 	//Lists that exist for each actionInstance
 	public static final int KNOWNPRECONDITIONSLIST = 1;
@@ -37,7 +38,7 @@ public class Exploration_Learning
 	Integer numPossAddEffectsLearnedToNotExistByExploration;
 	Integer numPossDeleteEffectsLearnedToNotExistByExploration;
 	
-	Exploration_Learning(List<IncompleteActionInstance> a)
+	Exploration_Learning(Hashtable<Integer, IncompleteActionInstance> a)
 	{
 		incompleteActionInstances = a;
 		
@@ -70,9 +71,9 @@ public class Exploration_Learning
 		System.out.println("\nKNOWN PRECONDITIONS WERE MET FOR THESE ACTIONS:");
 		
 		LinkedList<IncompleteActionInstance> bestActionToTry = new LinkedList<IncompleteActionInstance>();
-		for(IncompleteActionInstance a : incompleteActionInstances)
+		for(IncompleteActionInstance a : incompleteActionInstances.values())
 		{			
-			if(currentState.containsAll(a.getPreconditions()))
+			if(currentState.containsAll(a.getPreconditions()))//known pre's are sat by current state
 			{		
 				System.out.println(" " + a.getName());
 				
@@ -100,12 +101,6 @@ public class Exploration_Learning
 		Agent.printIncompleteVersionOfActionInstance((IncompleteActionInstance) bestActionToTry.get(choice));
 		System.out.println("----------------------------------------------------------------");
 
-		//The reason why we increment here is just because the sim is about to (try to) apply it...
-		//This action might end up failing, but we will just decrement this counter at that point
-		//	 in the "wasActionRefused" method.
-		numSuccessfulActions++;	
-		//This just keeps track of how many times the exploration-based learning type was called.
-		numTimesExplorationLearnerCalled++;
 		//There is always the case where there is no action available - presently uncaught/untested!
 		return bestActionToTry.get(choice);
 	}
@@ -118,6 +113,14 @@ public class Exploration_Learning
 	// props from a possibles list of the IAI instance might be removed.
 	public boolean learnAboutActionTaken_Exploration(Set<Proposition> newState, Set<Proposition> prevState, IncompleteActionInstance actionTaken)
 	{
+		//The reason why we increment here is just because the sim has just applied the action to the current state.
+		//This action might end up failing, but we will just decrement this counter at that point in the "wasActionRefused" method.
+		numSuccessfulActions++;	
+		//This just keeps track of how many times the exploration-based learning type was called.
+		//We do not increment in the above chooseActionExploration because the planner
+		// might be determining the next action, not the above method.
+		numTimesExplorationLearnerCalled++;
+		
 		boolean isActionAccepted = true;
 		
 		//This renaming is just for clarity's sake - might be better to remove it?
@@ -366,7 +369,15 @@ public class Exploration_Learning
 		}
 		
 		System.out.println("\nNEW VERSION OF INCOMPLETE ACTION (AFTER LEARNING BY EXPLORATION):");
-		Agent.printIncompleteVersionOfActionInstance(newVersionOfAction);		
+		Agent.printIncompleteVersionOfActionInstance(newVersionOfAction);
+		incompleteActionInstances.put(newVersionOfAction.getIndex(), newVersionOfAction);
+		
+		System.out.println("\nCHECK INCOMPLETE ACTIONS LIST TO SEE IF THESE CHANGES ARE RECORDED:");
+		for (IncompleteActionInstance a : incompleteActionInstances.values())
+		{
+			if(a.getIndex() == newVersionOfAction.getIndex())
+				Agent.printIncompleteVersionOfActionInstance(a);
+		}
 		System.out.println("----------------------------------------------------------------");
 		
 		return isActionAccepted;
