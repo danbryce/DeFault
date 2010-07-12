@@ -69,7 +69,7 @@ public class DefaultSolver implements Solver {
 
 	}
 
-	private void setMaxRunTime(long defaultMaxRuntime) {
+	public void setMaxRunTime(long defaultMaxRuntime) {
 		this.maxRunTime = defaultMaxRuntime;
 	}
 
