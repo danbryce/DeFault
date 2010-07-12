@@ -432,5 +432,9 @@ public class Exploration_Learning
 		
 		return isActionRefused;
 	}
-
+	
+	public int getTotalNumberOfActions()
+	{
+		return numSuccessfulActions + numFailedActions;
+	}
 }

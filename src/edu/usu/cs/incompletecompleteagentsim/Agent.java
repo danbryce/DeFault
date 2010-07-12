@@ -17,6 +17,7 @@ public class Agent
 	static Random random;
 	private Integer range; 
 	
+	List<ActionInstance> originalIncompleteActionInstances;
 	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances;
 	
 	//Lists that exist for each actionInstance
@@ -60,8 +61,8 @@ public class Agent
 	//Constructor
 	public Agent(Domain d, Problem p)
 	{
-		List<ActionInstance> actionInstances = null;
-		try{actionInstances = PddlImporter.createActionInstances(d, p);
+		try{
+			originalIncompleteActionInstances = PddlImporter.createActionInstances(d, p);
 		}catch(Exception e){System.out.println("Agent ActionInstances grab failed.");}
 		
 		System.out.println("-----------------------------------------------------");
@@ -70,7 +71,7 @@ public class Agent
 		//Showing to user what actions (and their properties) the agent can perform
 		//These will be updated/change as the agent learns
 		incompleteActionInstances = new Hashtable<Integer, IncompleteActionInstance>();
-		for(ActionInstance act : actionInstances)
+		for(ActionInstance act : originalIncompleteActionInstances)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;	
 			incompleteActionInstances.put(a.getIndex(), a);
@@ -96,6 +97,11 @@ public class Agent
 		for (IncompleteActionInstance iai : incompleteActionInstances.values())
 			arr.add((ActionInstance) iai);
 		return arr;
+	}
+	
+	public List<ActionInstance> getOriginalIncompleteActionInstancesList()
+	{	
+		return originalIncompleteActionInstances;
 	}
 	
 	//Current way to choose whether to ask a question vs. learn by exploring
@@ -220,7 +226,7 @@ public class Agent
 	
 	void stopStopwatch(){finishTime = System.currentTimeMillis();}
 	
-	private Double getTimeToSolve()
+	public Double getTimeToSolve()
 	{
 		if(startTime == null || finishTime == null) return -1.0;
 		else return (finishTime - startTime)/1000.0;
@@ -326,5 +332,10 @@ public class Agent
 		System.out.println("        Total # possible delete effects learned by QA: " + totalNumPossDeletesLearnedByQA);
 		System.out.println("            To exist (became known deletes)       : " + qa_side.numPossDeleteEffectsLearnedToKnownByQA);
 		System.out.println("            To not exist (were not actual deletes): " + qa_side.numPossDeleteEffectsLearnedToNotExistByQA);
+	}
+	
+	public int getTotalNumberOfActions()
+	{
+		return explore_side.numSuccessfulActions + explore_side.numFailedActions;
 	}
 }

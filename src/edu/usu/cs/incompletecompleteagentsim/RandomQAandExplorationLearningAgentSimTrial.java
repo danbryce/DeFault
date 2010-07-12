@@ -17,6 +17,7 @@ public class RandomQAandExplorationLearningAgentSimTrial
 	Domain completeDomain_simulator;
 	Problem problem;
 	
+	String[] args2;
 	RandomQAandExplorationLearningAgentSimTrial(String[] args)
 	{
 		if (args.length != 2)
@@ -25,16 +26,14 @@ public class RandomQAandExplorationLearningAgentSimTrial
 		Double probability = 1.0;
 		Integer seed = 0;
 		
-		String[] args2 = new String[4];
+		args2 = new String[2];
 		args2[0] = args[0];
 		args2[1] = args[1];
-		args2[2] = probability.toString();
-		args2[3] = seed.toString();
-		
-		IncompleteToComplete domainMaker = new IncompleteToComplete(args2);
+				
+		DomainAndProblemMaker domainMaker = new DomainAndProblemMaker(args2);
 		
 		incompleteDomain_agent = domainMaker.getOriginalIncompleteDomain();
-		completeDomain_simulator = domainMaker.getModifiedCompleteDomain();
+		//completeDomain_simulator = domainMaker.getModifiedCompleteDomain();
 		problem = domainMaker.getProblem();
 		
 		//TO CONFIRM THE DOMAINS AND PROBLEMS INITIALLY CREATED
@@ -42,27 +41,7 @@ public class RandomQAandExplorationLearningAgentSimTrial
 	}
 	
 	void printDomainsAndProblem()
-	{
-		//First print the complete/translated domain to show that there was an adequate deep copy made of the actions
-		System.out.println("************************************************************************");
-		System.out.println("BEGIN - COMPLETE DOMAIN VERSION - to be used by simulator\n");
-		IncompleteToComplete.printDomain(completeDomain_simulator);
-		System.out.println("\nEND - COMPLETE DOMAIN VERSION");
-		System.out.println("************************************************************************\n");
-
-		System.out.println("************************************************************************");
-		System.out.println("BEGIN - INCOMPLETE DOMAIN VERSION - to be used by agent\n");
-		IncompleteToComplete.printDomain(incompleteDomain_agent);
-		System.out.println("\nEND - INCOMPLETE DOMAIN VERSION");
-		System.out.println("************************************************************************\n");
-				
-		System.out.println("************************************************************************");
-		System.out.println("BEGIN - INCOMPLETE PROBLEM VERSION");
-		System.out.println("\t(Note: in/complete problem versions are the same.)\n");
-		System.out.println(problem.toString());
-		System.out.println("END - INCOMPLETE PROBLEM VERSION");
-		System.out.println("************************************************************************\n");
-		
+	{		
 		Set<Proposition> currentState = problem.getInitialState();
 		System.out.println("************************************************************************");
 		System.out.println("BEGIN - INITIAL STATE:\n");
@@ -76,8 +55,7 @@ public class RandomQAandExplorationLearningAgentSimTrial
 		Agent.printIncompleteVersionOfActionInstance(problem.getGoalAction());
 		System.out.println("\nTHUS, GOAL STATE INCLUDES: " + problem.getGoalAction().getPreconditions());
 		System.out.println("\nEND - INCOMPLETEACTION INSTANCE - GOAL ACTION:\n");
-		System.out.println("************************************************************************\n");
-		
+		System.out.println("************************************************************************\n");	
 	}
 	
 	public static void main (String[] args)
@@ -97,7 +75,7 @@ public class RandomQAandExplorationLearningAgentSimTrial
 		System.out.println("BEGIN - SIM-AGENT INTERACTION\n");
 		//Could send in the rand seed - currently 0 within these classes
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(completeDomain_simulator, problem);
+		Simulator sim = new Simulator(agent.getIncompleteActionInstancesAsActionInstances(), Integer.valueOf(args2[3]));
 
 		Set<Proposition> currentState = problem.getInitialState();
 		System.out.println("\n----------------------------------");

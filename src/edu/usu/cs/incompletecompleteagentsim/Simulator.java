@@ -17,14 +17,27 @@ import edu.usu.cs.search.*;
 
 public class Simulator 
 {
+	boolean debug;
+	
+	private static Random random;
+	double probability;
+	
 	List<ActionInstance> actionInstances;
 	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances_completeVersion_Hashtable;
 	
-	Simulator(Domain d, Problem p)
+	Simulator(List<ActionInstance> actionInstancesOfAgent, int seed)
 	{
-		actionInstances = null;
-		try{actionInstances = PddlImporter.createActionInstances(d, p);
-		}catch(Exception e){System.out.println("Agent ActionInstances grab failed.");}
+		debug = true;
+		
+		random = new Random(seed);
+		probability = .5;
+		
+		System.out.println("\n-----------------------------------------------------");
+		System.out.println("IN SIMULATOR CONSTRUCTOR\n");
+		System.out.println("seed: " + seed);
+		System.out.println("probability:" + probability);
+		
+		createActionsWithNoPossiblesByProbabilityAndSeed(actionInstancesOfAgent);
 		
 		System.out.println("\n-----------------------------------------------------");
 		System.out.println("SIMULATOR ACTIONS AVAILABLE (no possibles): ");
@@ -41,7 +54,12 @@ public class Simulator
 		
 		System.out.println("\nEND - SIMULATOR ACTIONS AVAILABLE");
 		System.out.println("-----------------------------------------------------");
+		
+		System.out.println("\nLEAVING SIMULATOR CONSTRUCTOR...");
+		System.out.println("-----------------------------------------------------\n");
 	}
+	
+	public List<ActionInstance> getActionInstances(){ return actionInstances; }
 	
 	public Set<Proposition> updateState(Set<Proposition> currentState, IncompleteActionInstance incompleteActionChosen)
 	{
@@ -158,18 +176,114 @@ public class Simulator
 		for(ActionInstance action : actionInstances)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) action;
-			System.out.println();
-			System.out.println("  Name     : " + a.getName());					//String
-			System.out.println("  Index    : " + a.getIndex());					//int
-			System.out.println("  Pres     : " + a.getPreconditions());			//Set<Proposition>
-			System.out.println("  Poss Pres: " + a.getPossiblePreconditions());	//Set<Proposition>
-			System.out.println("  Adds     : " + a.getAddEffects());			//Set<Proposition>
-			System.out.println("  Deletes  : " + a.getDeleteEffects());			//Set<Proposition>
-			System.out.println("  Poss Adds: " + a.getPossibleAddEffects());	//Set<Proposition>
-			System.out.println("  Poss Dels: " + a.getPossibleDeleteEffects());	//Set<Proposition>
-			//a.getDefinition() -> an ActionDef object - original from Domain	//
-			//a.equals(IncompleteActionInstance obj)
+			printIncompleteVersionOfActionInstance(a);
 		}
 	}
-
+	
+	public void printIncompleteVersionOfActionInstance(IncompleteActionInstance a)
+	{
+		System.out.println("  Name        : " + a.getName());					//String
+		System.out.println("  Index       : " + a.getIndex());					//int
+		System.out.println("  Pres        : " + a.getPreconditions());			//Set<Proposition>
+		System.out.println("  Poss Pres   : " + a.getPossiblePreconditions());	//Set<Proposition>
+		System.out.println("  Adds        : " + a.getAddEffects());				//Set<Proposition>
+		System.out.println("  Poss Adds   : " + a.getPossibleAddEffects());		//Set<Proposition>
+		System.out.println("  Deletes     : " + a.getDeleteEffects());			//Set<Proposition>
+		System.out.println("  Poss Dels   : " + a.getPossibleDeleteEffects());	//Set<Proposition>
+		System.out.println("   ActionRisks: " + a.getActionRisks());				//int
+		System.out.println("   ArgMapping : " + a.getArgMapping());				//Map<FormalArgument, PDDLObject>
+		System.out.println("   Cost       : " + a.getCost());				    //double
+		System.out.println("   Definition : " + a.getDefinition());				//ActionDef
+		System.out.println();
+	}
+	
+	private void createActionsWithNoPossiblesByProbabilityAndSeed(List<ActionInstance> actionInstancesOfAgent)
+	{
+		actionInstances = new ArrayList<ActionInstance>();
+		
+		HashSet<Proposition> newPreconditionsSet;
+		HashSet<Proposition> newAddEffectsSet;
+		HashSet<Proposition> newDeleteEffectsSet;
+		HashSet<Proposition> newEmptySet;
+	
+		for(ActionInstance a : actionInstancesOfAgent)
+		{
+			IncompleteActionInstance ia = (IncompleteActionInstance) a;
+			
+			System.out.println("\n----------------------------------------------------------------");
+			System.out.println("CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
+			System.out.println("\nOriginal incomplete action: ");
+			printIncompleteVersionOfActionInstance(ia);
+			
+			newPreconditionsSet = new HashSet<Proposition>(ia.getPreconditions());
+			newAddEffectsSet 	= new HashSet<Proposition>(ia.getAddEffects());
+			newDeleteEffectsSet = new HashSet<Proposition>(ia.getDeleteEffects());
+			newEmptySet 		= new HashSet<Proposition>();
+			
+			//Preconditions
+			for(Proposition p : ia.getPossiblePreconditions())
+			{			
+				//if the rand gen yield a double higher than the probability, then add this
+				//possible as a real precondition, else discard
+				Double nextDouble = random.nextDouble();
+				if(debug) System.out.println("nextRandDouble: " +  nextDouble);
+				if(nextDouble > probability) 
+				{
+					newPreconditionsSet.add(p);
+					if(debug) System.out.println(" " + p + " added to known pre's.");
+				}
+				else
+					if(debug) System.out.println(" " + p +" not added to known pre's.");
+			}
+			
+			//Adds
+			for(Proposition p : ia.getPossibleAddEffects())
+			{			
+				//if the rand gen yield a double higher than the probability, then add this
+				//possible as a real add effect, else discard
+				Double nextDouble = random.nextDouble();
+				if(debug) System.out.println("nextRandDouble: " +  nextDouble);
+				if(nextDouble > probability) 
+				{
+					newAddEffectsSet.add(p);
+					if(debug) System.out.println(" " + p + " added to known addEffects.");
+				}
+				else
+					if(debug) System.out.println(" " + p +" not added to known addEffects.");
+			}
+			
+			//Deletes
+			for(Proposition p : ia.getPossibleDeleteEffects())
+			{			
+				//if the rand gen yield a double higher than the probability, then add this
+				//possible as a real delete effect, else discard
+				Double nextDouble = random.nextDouble();
+				if(debug) System.out.println("nextRandDouble: " +  nextDouble);
+				if(nextDouble > probability) 
+				{
+					newDeleteEffectsSet.add(p);
+					if(debug) System.out.println(" " + p + " added to known deleteEffects.");
+				}
+				else
+					if(debug) System.out.println(" " + p +" not added to known deleteEffects.");
+			}
+			
+			//Create a new actionInstance with above changes and stick it into sim's actions list
+			//String name, Set<Proposition> preconditions,
+			//Set<Proposition> addEffects, Set<Proposition> deleteEffects,
+			//Set<Proposition> possiblePreconditions,
+			//Set<Proposition> possiblePositiveEffects,
+			//Set<Proposition> possibleNegativeEffects,
+			//int index)
+			IncompleteActionInstance newIA = new IncompleteActionInstance(ia.getName(), newPreconditionsSet,
+					newAddEffectsSet, newDeleteEffectsSet, newEmptySet, newEmptySet, newEmptySet, ia.getIndex());
+			actionInstances.add(newIA);
+			
+			System.out.println("\nNew complete version of action for sim: ");
+			printIncompleteVersionOfActionInstance(newIA);
+			
+			System.out.println("END - CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
+			System.out.println("----------------------------------------------------------------");	
+		}			
+	}
 }
