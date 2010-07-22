@@ -45,7 +45,7 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 			ActionLevelInfo aliPrev = actionSpike.getExistingActionLevelInfo(actionSpike.getCurrentRank()-2, actionHeader.getIndex());
 			if(!actionLevelInfoChanged(actionHeader) && aliPrev != null){				
 				//ali.setCriticalRisks(new GeneralizedRiskSet(aliPrev.getCriticalRisks()));
-				ali.setBddCriticalRisks(bdd.ref(aliPrev.getBddCriticalRisks()));
+				//ali.setBddCriticalRisks(bdd.ref(aliPrev.getBddCriticalRisks()));
 				//ali.setPossibleRisks(new GeneralizedRiskSet(aliPrev.getPossibleRisks()));				
 				ali.setBddPossibleRisks(bdd.ref(aliPrev.getBddPossibleRisks()));
 				ali.getSupportingFacts().addAll(aliPrev.getSupportingFacts());
@@ -61,27 +61,27 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 				int index = actionHeader.getPreconditions().nextSetBit(0);
 				FactHeader prec = globalFactHeaders.get(index);
 				FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, index);
-				ali.setBddCriticalRisks(bdd.ref(fli.getBddCriticalRisks()));
+				//ali.setBddCriticalRisks(bdd.ref(fli.getBddCriticalRisks()));
 				ali.setBddPossibleRisks(bdd.ref(fli.getBddPossibleRisks()));
 				ali.getSupportingFacts().add(prec);
 			}
 			else{
-				int criticalRisks = 1;
+				int possibleRisks = 1;
 				
 				//take union of precondition possible and critical risks
 				for(FactHeader factHeader : actionHeader.getPreconditionHeaders()){
 					FactLevelInfo fli = factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
 
-					int tmp = bdd.ref(bdd.and(criticalRisks, fli.getBddCriticalRisks()));
-					bdd.deref(criticalRisks);
-					criticalRisks = tmp;
-					bdd.ref(criticalRisks);
-					bdd.deref(tmp);
-
-					tmp = bdd.ref(bdd.and(criticalRisks, fli.getBddPossibleRisks()));
-					bdd.deref(criticalRisks);
-					criticalRisks = tmp;
-					bdd.ref(criticalRisks);
+//					int tmp = bdd.ref(bdd.and(criticalRisks, fli.getBddCriticalRisks()));
+//					bdd.deref(criticalRisks);
+//					criticalRisks = tmp;
+//					bdd.ref(criticalRisks);
+//					bdd.deref(tmp);
+//
+					int tmp = bdd.ref(bdd.and(possibleRisks, fli.getBddPossibleRisks()));
+					bdd.deref(possibleRisks);
+					possibleRisks = tmp;
+					bdd.ref(possibleRisks);
 					bdd.deref(tmp);
 
 					ali.getSupportingFacts().add(factHeader); 
@@ -94,10 +94,10 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 					if(factHeader == null){
 						//If precondition is not present, then incur a risk
 						Risk r = Risk.getRiskFromIndex(Risk.PRECOPEN, actionHeader.getName(), possPre.getName());
-						int tmp = bdd.ref(bdd.and(criticalRisks, RiskCounter.getRiskToBDD().get(r)));
-						bdd.deref(criticalRisks);
-						criticalRisks = tmp;
-						bdd.ref(criticalRisks);
+						int tmp = bdd.ref(bdd.and(possibleRisks, RiskCounter.getRiskToBDD().get(r)));
+						bdd.deref(possibleRisks);
+						possibleRisks = tmp;
+						bdd.ref(possibleRisks);
 						bdd.deref(tmp);
 					}
 					else { 
@@ -107,21 +107,21 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 						//if no possible risks for precondition, then add no risks
 						//else if precondition is at risk, there is a higher order interaction
 						if(fli.getBddPossibleRisks() == 1){
-							int tmp = bdd.ref(bdd.and(criticalRisks, fli.getBddCriticalRisks()));
-							bdd.deref(criticalRisks);
-							criticalRisks = tmp;
-							bdd.ref(criticalRisks);
-							bdd.deref(tmp);
-							
+//							int tmp = bdd.ref(bdd.and(criticalRisks, fli.getBddCriticalRisks()));
+//							bdd.deref(criticalRisks);
+//							criticalRisks = tmp;
+//							bdd.ref(criticalRisks);
+//							bdd.deref(tmp);
+//							
 						}
 						else {
 							Risk r = Risk.getRiskFromIndex(Risk.PRECOPEN, actionHeader.getName(), possPre.getName());
 							int tmp = bdd.ref(bdd.or(RiskCounter.getRiskToBDD().get(r), fli.getBddPossibleRisks()));
-							int tmp1 = bdd.ref(bdd.and(criticalRisks, tmp));
-							bdd.deref(criticalRisks);
+							int tmp1 = bdd.ref(bdd.and(possibleRisks, tmp));
+							bdd.deref(possibleRisks);
 							bdd.deref(tmp);
-							criticalRisks = tmp1;
-							bdd.ref(criticalRisks);
+							possibleRisks = tmp1;
+							bdd.ref(possibleRisks);
 							bdd.deref(tmp1);
 						}
 
@@ -129,10 +129,10 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 					}
 				}
 				//bdd.printSet(criticalRisks);
-				ali.setBddCriticalRisks(criticalRisks);
+				ali.setBddPossibleRisks(possibleRisks);
 
 				if(aliPrev != null){
-					ali.setChanged(aliPrev.getBddCriticalRisks() != ali.getBddCriticalRisks());
+					ali.setChanged(aliPrev.getBddPossibleRisks() != ali.getBddPossibleRisks());
 				}
 
 
@@ -161,7 +161,7 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 
 
 			if(!changed){
-				fli.setBddCriticalRisks(bdd.ref(fliPrev.getBddCriticalRisks()));
+				//fli.setBddCriticalRisks(bdd.ref(fliPrev.getBddCriticalRisks()));
 				fli.setBddPossibleRisks(bdd.ref(fliPrev.getBddPossibleRisks()));
 				fli.setChosenSupporters(new HashSet<ActionHeader>(fliPrev.getChosenSupporters()));
 				fli.setChanged(false);
@@ -171,12 +171,12 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 			Set<ActionHeader> supportingActions = fli.getAllSupporters();
 			Set<ActionHeader> chosenSupportingActions = new HashSet<ActionHeader>();
 
-			Map<ActionHeader, Integer> actCriticalRisks = new HashMap<ActionHeader, Integer>();
+			//Map<ActionHeader, Integer> actCriticalRisks = new HashMap<ActionHeader, Integer>();
 			Map<ActionHeader, Integer> actPossibleRisks = new HashMap<ActionHeader, Integer>();
 
 			for (ActionHeader actionHeader : supportingActions) {
 				ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
-				actCriticalRisks.put(actionHeader, ali.getBddCriticalRisks());
+				//actCriticalRisks.put(actionHeader, ali.getBddCriticalRisks());
 				actPossibleRisks.put(actionHeader, ali.getBddCriticalRisks());
 				if(fli.getPossibleSupporters().contains(actionHeader)){
 					Risk r = Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, actionHeader.getName(), fact.getName());
@@ -187,7 +187,7 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 			}
 
 			//Map<ActionHeader, GeneralizedRiskSet> sortedCriticalRisks = sortActionsWithRisks(unsortedCriticalRisks);
-			int criticalRisks = bdd.ref(bdd.getZero());
+			//int criticalRisks = bdd.ref(bdd.getZero());
 			int possibleRisks = bdd.ref(bdd.getZero());
 			while (actPossibleRisks.size() > 0) {
 				int bestRiskSet = 0;
@@ -256,9 +256,9 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 					chosenSupportingActions.add(bestAct);
 					actPossibleRisks.remove(bestAct);
 
-					int tmp = bdd.ref(bdd.or(criticalRisks, actCriticalRisks.get(bestAct)));
-					bdd.deref(criticalRisks);
-					criticalRisks = tmp;
+					//int tmp = bdd.ref(bdd.or(criticalRisks, actCriticalRisks.get(bestAct)));
+					//bdd.deref(criticalRisks);
+					//criticalRisks = tmp;
 				}
 				else{
 					break;
@@ -274,12 +274,12 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 			}
 
 //			bdd.printSet(possibleRisks);
-			fli.setBddCriticalRisks(criticalRisks);
+			//fli.setBddCriticalRisks(criticalRisks);
 			fli.setBddPossibleRisks(possibleRisks);
 			fli.setChosenSupporters(chosenSupportingActions);
 
 			if(!fliPrev.getChosenSupporters().equals(fli.getChosenSupporters()) ||
-					fliPrev.getBddCriticalRisks() != fli.getBddCriticalRisks() ||
+					//fliPrev.getBddCriticalRisks() != fli.getBddCriticalRisks() ||
 					fliPrev.getBddPossibleRisks() != fli.getBddPossibleRisks()
 			){
 				fli.setChanged(true);
@@ -337,12 +337,12 @@ public class BddRelaxedPlanningGraph extends FFriskyRelaxedPlanningGraph {
 			RiskCounterNode fn = (RiskCounterNode)node;
 			for (Proposition proposition : fn.getPropositions().keySet()) {
 				int priorRisks = fn.getPropositions().get(proposition);
-				priorRisks = bdd.and(priorRisks, fn.getCriticalRisks());
+				priorRisks = bdd.and(priorRisks, fn.getActRisks());
 				FactLevelInfo fli =this.getFactSpike().getFactLevelInfo(0, proposition.getIndex()); 
 				if(priorRisks != 0){
 					fli.setBddPossibleRisks(bdd.ref(priorRisks));					
 				}
-				fli.setBddCriticalRisks(bdd.ref(fn.getCriticalRisks()));
+				//fli.setBddCriticalRisks(bdd.ref(fn.getActRisks()));
 			}
 		}
 		levelsPastGoalsMet = 0;

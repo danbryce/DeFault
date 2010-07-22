@@ -31,11 +31,12 @@ import edu.usu.cs.search.astar.AStarNode;
 public class FFRiskyNode  extends AStarNode {
 	protected HashMap<Proposition, GeneralizedRiskSet> propositions = null;
 	protected HashMap<Proposition, Integer> riskSetHash = null;
-	protected GeneralizedRiskSet criticalRisks = null;
+	//protected GeneralizedRiskSet criticalRisks = null;
 	//protected IncompleteActionInstance action = null;
 	private int hash;
 	private boolean hashCodeInitialized = false;
 	protected SolverOptions solverOptions = null;
+	protected GeneralizedRiskSet actRisks = null;
 
 //	protected RiskCounterNode riskCounterNode = null;
 
@@ -51,7 +52,9 @@ public class FFRiskyNode  extends AStarNode {
 			this.propositions.put(proposition, new GeneralizedRiskSet(solverOptions.getRiskArity()));
 		}
 		this.riskSetHash = new HashMap<Proposition, Integer>();
-		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
+		//this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
+		this.actRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
+
 		this.dimension = 2;
 		this.heuristic = heuristic;
 		//this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
@@ -82,16 +85,18 @@ public class FFRiskyNode  extends AStarNode {
 			GeneralizedRiskSet risks = node.getPropositions().get(prop);
 			this.propositions.put(prop, risks);
 		}
+		this.solverOptions = node.solverOptions;
+
+		this.actRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 
 		this.riskSetHash = new HashMap<Proposition, Integer>();
 		for(Proposition p : node.riskSetHash.keySet()) {
 			this.riskSetHash.put(p, node.riskSetHash.get(p));
 		}
 		// Copy the critical risks that were used to get to this node
-		this.solverOptions = node.solverOptions;
-
-		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
-		this.criticalRisks.union(node.getCriticalRisks());
+		
+//		this.criticalRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
+//		this.criticalRisks.union(node.getCriticalRisks());
 		this.parent = node.parent;
 		this.state = node.state;
 		this.action = node.action;		
@@ -109,13 +114,13 @@ public class FFRiskyNode  extends AStarNode {
 		this.propositions = propositions;
 	}
 
-	public GeneralizedRiskSet getCriticalRisks() {
-		return criticalRisks;
-	}
-
-	public void setCriticalRisks(GeneralizedRiskSet criticalRisks) {
-		this.criticalRisks = criticalRisks;
-	}
+//	public GeneralizedRiskSet getCriticalRisks() {
+//		return criticalRisks;
+//	}
+//
+//	public void setCriticalRisks(GeneralizedRiskSet criticalRisks) {
+//		this.criticalRisks = criticalRisks;
+//	}
 
 
 
@@ -144,7 +149,7 @@ public class FFRiskyNode  extends AStarNode {
 		}
 
 		str += "\tRisk set:\n";
-		str += "\t\t" + criticalRisks.toString() + "\n";
+		//str += "\t\t" + criticalRisks.toString() + "\n";
 		return str;
 	}
 
@@ -187,12 +192,17 @@ public class FFRiskyNode  extends AStarNode {
 //		}
 
 		//if critical risks are more or equal, then discard set equal, otherwise its better, so set unequal
-		if(criticalRisks.compareTo(objNode.getCriticalRisks()) < 1)
+		if(actRisks.compareTo(objNode.getActRisks()) < 1)//criticalRisks.compareTo(objNode.getCriticalRisks()) < 1)
 				return true;
 		else
 				return false;
 		
 		//return true;
+	}
+
+	public GeneralizedRiskSet getActRisks() {
+		// TODO Auto-generated method stub
+		return actRisks;
 	}
 
 	@Override
@@ -236,7 +246,7 @@ public class FFRiskyNode  extends AStarNode {
 						this.gvalue[i] = parent.getGValue()[i] + this.action.getCost();
 					}
 					else if (i == 0 && !solverOptions.isUseJDDGValue()) {
-						GeneralizedRiskSet risks = new GeneralizedRiskSet(this.getCriticalRisks());
+						GeneralizedRiskSet risks = new GeneralizedRiskSet(this.getActRisks());
 						//risks.removeAll(((FFRiskyNode)parent).getCriticalRisks());
 						this.gvalue[i] = risks.size();
 //					} else if (i == 0 && solverOptions.isUseJDDGValue()) {
@@ -345,7 +355,9 @@ public class FFRiskyNode  extends AStarNode {
 		FFRiskyNode node = new FFRiskyNode(this);
 
 		// Add all risks associated with the new node
-		node.addCriticalRisks(action, this);
+		//node.addCriticalRisks(action, this);
+		actRisks.union(getPrecOpen(this, action));
+		actRisks.union(getPrecRisks(this, action));
 
 		// Remove any absolute delete effect from node
 		node.applyDeleteEffects(this, action);
@@ -399,7 +411,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * @param action
 	 * @return
 	 */
-	private  GeneralizedRiskSet getPrecOpen(FFRiskyNode node, IncompleteActionInstance action) {
+	protected  GeneralizedRiskSet getPrecOpen(FFRiskyNode node, IncompleteActionInstance action) {
 		GeneralizedRiskSet precOpen = new GeneralizedRiskSet(solverOptions.getRiskArity());
  
 		for (Proposition possPrec : action.getPossiblePreconditions()) {
@@ -452,7 +464,7 @@ public class FFRiskyNode  extends AStarNode {
 	 * @param action
 	 * @return
 	 */
-	private  GeneralizedRiskSet getPrecRisks(FFRiskyNode node, IncompleteActionInstance action) {
+	protected  GeneralizedRiskSet getPrecRisks(FFRiskyNode node, IncompleteActionInstance action) {
 		GeneralizedRiskSet precRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
 
 		for (Proposition prec : action.getPreconditions()) {
@@ -512,10 +524,7 @@ public class FFRiskyNode  extends AStarNode {
 	 */
 	protected  void applyAddEffects(FFRiskyNode initialNode, IncompleteActionInstance action) {
 
-		GeneralizedRiskSet actRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
-		actRisks.union(getPrecOpen(initialNode, action));
-		actRisks.union(getPrecRisks(initialNode, action));
-
+		
 		for (Proposition effect : action.getAddEffects()) {
 			// If the proposition isn't in the node (it's absolutely false)
 			if (!initialNode.getPropositions().containsKey(effect)) {
@@ -553,10 +562,7 @@ public class FFRiskyNode  extends AStarNode {
 	protected  void applyPossibleAddEffects(FFRiskyNode initialNode,
 			IncompleteActionInstance action) {
 
-		GeneralizedRiskSet actRisks = new GeneralizedRiskSet(solverOptions.getRiskArity());
-		actRisks.union(getPrecOpen(initialNode, action));
-		actRisks.union(getPrecRisks(initialNode, action));
-
+	
 		for (Proposition effect : action.getPossibleAddEffects()) {
 			// If the proposition isn't in the node add it with an unlisted effect risk
 			if (!initialNode.getPropositions().containsKey(effect)) {
@@ -597,11 +603,11 @@ public class FFRiskyNode  extends AStarNode {
 	 * Unions critical risks from the node with new critical risks from the
 	 * action
 	 */
-	protected  void addCriticalRisks(IncompleteActionInstance action, FFRiskyNode initialNode) {
-		// Union the action's precondition risks with the node's critical risks
-		criticalRisks.union(getPrecRisks(initialNode, action));
-
-		// Union the action's prec open risks with the node's critical risks
-		criticalRisks.union(getPrecOpen(initialNode, action));
-	}
+//	protected  void addCriticalRisks(IncompleteActionInstance action, FFRiskyNode initialNode) {
+//		// Union the action's precondition risks with the node's critical risks
+//		criticalRisks.union(getPrecRisks(initialNode, action));
+//
+//		// Union the action's prec open risks with the node's critical risks
+//		criticalRisks.union(getPrecOpen(initialNode, action));
+//	}
 }

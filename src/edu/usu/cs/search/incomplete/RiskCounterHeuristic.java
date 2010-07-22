@@ -65,7 +65,7 @@ public class RiskCounterHeuristic extends FFRiskyHeuristic implements Heuristic 
 		}
 		else{
 			// Remove all critical risks that have been added already
-			int tmp = RiskCounter.getBDD().ref(RiskCounter.getBDD().and(goalRiskSet, rnode.getCriticalRisks()));
+			int tmp = RiskCounter.getBDD().ref(RiskCounter.getBDD().and(goalRiskSet, rnode.getActRisks()));
 			RiskCounter.getBDD().deref(goalRiskSet);
 			goalRiskSet = tmp;
 			values[0] = 0;//RiskCounter.getUnsolvableDomainCount(goalRiskSet);

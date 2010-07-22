@@ -90,7 +90,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			if(solutionEvaluator.isSolution(problem, node)) {
 //				logger.debug("Found Solution: " + node);
 				searchStatistics.setSolutionNode(node);
-				GeneralizedRiskSet crisks = node.getCriticalRisks();
+				GeneralizedRiskSet crisks = node.getActRisks();
 				for(Proposition p : problem.getGoalAction().getPreconditions()){
 					crisks.union(node.getPropositions().get(p));
 				}
@@ -156,7 +156,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
 					
 					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
-					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
+					int d = ((FFRiskyNode)n1).getActRisks().compareTo(((FFRiskyNode)n2).getActRisks());
 						
 					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
 					if(d != 0) {
@@ -197,7 +197,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
 					
 					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
-					int d = ((FFRiskyNode)n1).getCriticalRisks().compareTo(((FFRiskyNode)n2).getCriticalRisks());
+					int d = ((FFRiskyNode)n1).getActRisks().compareTo(((FFRiskyNode)n2).getActRisks());
 						
 					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
 					if(d != 0) {

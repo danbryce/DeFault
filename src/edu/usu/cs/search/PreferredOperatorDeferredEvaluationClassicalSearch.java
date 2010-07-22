@@ -114,7 +114,7 @@ AStarSearch implements Search {
 			if(solutionEvaluator.isSolution(problem, node)) {
 				//				logger.debug("Found Solution: " + node);
 				searchStatistics.setSolutionNode(node);
-				GeneralizedRiskSet crisks = node.getCriticalRisks();
+				GeneralizedRiskSet crisks = node.getActRisks();
 				for(Proposition p : problem.getGoalAction().getPreconditions()){
 					crisks.union(node.getPropositions().get(p));
 				}

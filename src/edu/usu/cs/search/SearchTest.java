@@ -239,7 +239,7 @@ public class SearchTest {
 					+ ((RiskCounterNode) searchStatistics.getSolutionNode())
 							.getGValue()[0]);
 			RiskCounter.getBDD().printSet(RiskCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
-							.getCriticalRisks()));			
+							.getActRisks()));			
 		}
 		try {
 			FileWriter fstream = new FileWriter("Output/" + args[2], true);
@@ -261,7 +261,7 @@ public class SearchTest {
 						+ searchStatistics.getNodesExpanded()
 						+ "\t"
 						+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-								.getCriticalRisks().size() + "\r\n");
+								.getActRisks().size() + "\r\n");
 			} else {
 				out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t"
 						: "")

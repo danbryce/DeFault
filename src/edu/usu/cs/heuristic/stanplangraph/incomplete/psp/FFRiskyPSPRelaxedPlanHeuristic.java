@@ -43,7 +43,7 @@ public class FFRiskyPSPRelaxedPlanHeuristic implements Heuristic {
 		}
 		else{
 			// Remove all critical risks that have been added already
-			goalRiskSet.removeAll(node.getCriticalRisks());
+			goalRiskSet.removeAll(node.getActRisks());
 			values[0] = benefit;
 			values[1] = goalRiskSet.size();
 			values[2] = cost;

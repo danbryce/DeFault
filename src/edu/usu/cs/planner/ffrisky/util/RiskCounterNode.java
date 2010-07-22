@@ -24,7 +24,7 @@ public class RiskCounterNode extends AbstractStateNode {
 
 
 	protected HashMap<Proposition, Integer> propositions = null;
-	protected int criticalRisks;
+	protected int actRisks;
 	protected int possibleRisks;
 	protected BDD bdd;
 	protected Map<Risk, Integer> riskToBDD;
@@ -43,7 +43,7 @@ public class RiskCounterNode extends AbstractStateNode {
 			this.propositions.put(proposition, dd);
 		}
 
-		this.criticalRisks = bdd.ref(bdd.getOne());
+		this.actRisks = bdd.ref(bdd.getOne());
 		this.possibleRisks = bdd.ref(bdd.getOne());
 
 		this.problem = problem;
@@ -71,7 +71,7 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.riskToBDD = RiskCounter.getRiskToBDD();
 		this.solverOptions = node.solverOptions;
 
-		this.criticalRisks = bdd.ref(node.getCriticalRisks());//bdd.getOne();
+		this.actRisks = bdd.ref(node.getActRisks());//bdd.getOne();
 		this.possibleRisks = bdd.ref(bdd.getOne());
 
 		this.problem = node.problem;
@@ -140,10 +140,10 @@ public class RiskCounterNode extends AbstractStateNode {
 	}
 
 	private void setCriticalRisks() {
-		int tmp = bdd.ref(bdd.and(this.criticalRisks, ((IncompleteActionInstance)this.action).getActionRisks()));
-		bdd.deref(this.criticalRisks);
-		this.criticalRisks = tmp;
-		bdd.ref(this.criticalRisks);
+		int tmp = bdd.ref(bdd.and(this.actRisks, ((IncompleteActionInstance)this.action).getActionRisks()));
+		bdd.deref(this.actRisks);
+		this.actRisks = tmp;
+		bdd.ref(this.actRisks);
 		bdd.deref(tmp);		
 	}
 
@@ -266,12 +266,12 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.propositions = propositions;
 	}
 
-	public int getCriticalRisks() {
-		return this.criticalRisks;
+	public int getActRisks() {
+		return this.actRisks;
 	}
 
 	public void setCriticalRisks(int risks) {
-		this.criticalRisks = risks;
+		this.actRisks = risks;
 	}
 
 	public int getPossibleRisks() {

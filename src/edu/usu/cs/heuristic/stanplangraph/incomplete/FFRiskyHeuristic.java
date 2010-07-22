@@ -62,7 +62,25 @@ public class FFRiskyHeuristic implements Heuristic {
 		}
 		else{
 			// Remove all critical risks that have been added already
-			goalRiskSet.removeAll(node.getCriticalRisks());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			goalRiskSet.removeAll(node.getActRisks());
 			values[0] = goalRiskSet.size();
 
 

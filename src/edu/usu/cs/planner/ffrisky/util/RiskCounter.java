@@ -139,7 +139,7 @@ public class RiskCounter {
 		//	bdd.printSet(nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.printSet(bdd.not(crs));
 
-		BigInteger solvableDomains = getBigSolvableDomainCount(nodes.get(nodes.size() - 1).getCriticalRisks());
+		BigInteger solvableDomains = getBigSolvableDomainCount(nodes.get(nodes.size() - 1).getActRisks());
 		//bdd.ref(solvableDomains);
 		
 		return solvableDomains;

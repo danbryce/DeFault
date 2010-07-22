@@ -176,7 +176,7 @@ PreferredOperatorDeferredEvaluationSearch implements Search {
 			if(solutionEvaluator.isSolution(problem, node)) {
 				//				logger.debug("Found Solution: " + node);
 				searchStatistics.setSolutionNode(node);
-				int crisks = node.getCriticalRisks();
+				int crisks = node.getActRisks();
 				for(Proposition p : problem.getGoalAction().getPreconditions()){
 					int tmp = RiskCounter.getBDD().ref(RiskCounter.getBDD().and(node.getPropositions().get(p), crisks));
 					RiskCounter.getBDD().deref(crisks);

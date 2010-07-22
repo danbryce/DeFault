@@ -133,7 +133,7 @@ public class FFRiskyPSPNode  extends FFRiskyNode {
 						this.gvalue[i] = utilityUpToNow;
 					}
 					else if(i == 1){
-						GeneralizedRiskSet risks = new GeneralizedRiskSet(this.getCriticalRisks());
+						GeneralizedRiskSet risks = new GeneralizedRiskSet(this.getActRisks());
 						for(Proposition p : goalsAchieved.keySet()){
 							risks.union(goalsAchieved.get(p));
 						}

@@ -115,7 +115,9 @@ public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
 		PreferredOperatorDeferredEvaluationNode node = new PreferredOperatorDeferredEvaluationNode(this);
 
 		// Add all risks associated with the new node
-		node.addCriticalRisks(action, this);
+		//node.addCriticalRisks(action, this);
+		actRisks.union(getPrecOpen(this, action));
+		actRisks.union(getPrecRisks(this, action));
 
 		// Remove any absolute delete effect from node
 		node.applyDeleteEffects(this, action);
