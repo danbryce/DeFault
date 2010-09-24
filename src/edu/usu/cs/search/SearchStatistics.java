@@ -2,13 +2,15 @@ package edu.usu.cs.search;
 
 import java.util.Date;
 
+import edu.usu.cs.planner.PlanMetric;
+
 public class SearchStatistics {
 	private int nodesExpanded = 0;
 	private Long startTime = null;
 	private Long elapsedTime = null;
-	private double[] lastGValue = null;
-	private double[] lastHValue = null;
-	private double[] lastFValue = null;
+	private PlanMetric[] lastGValue = null;
+	private PlanMetric[] lastHValue = null;
+	private PlanMetric[] lastFValue = null;
 	private int lastBranchingFactor = 0;
 	private StateNode solutionNode = null;
 	
@@ -53,9 +55,9 @@ public class SearchStatistics {
 	}
 	
 	public void processNode(StateNode node){
-		lastGValue = node.getGValue();
+//		lastGValue = node.getGValue();
 		lastHValue = node.getHeuristicValue();
-		lastFValue = node.getFValue();
+//		lastFValue = node.getFValue();
 		if(node.getSubsequentNodes() != null)
 			lastBranchingFactor  = node.getSubsequentNodes().size();
 		else
@@ -69,12 +71,12 @@ public class SearchStatistics {
 		sb.append(getTimeSinceStart()/1000.0).append("\t");
 		sb.append(lastBranchingFactor).append("\t");
 		sb.append(nodesExpanded).append("\t");
-		for(int i = 0; i < lastFValue.length; i++){
-			sb.append(lastFValue[i]).append("\t");
-		}
-		for(int i = 0; i < lastGValue.length; i++){
-			sb.append(lastGValue[i]).append("\t");
-		}
+//		for(int i = 0; i < lastFValue.length; i++){
+//			sb.append(lastFValue[i]).append("\t");
+//		}
+//		for(int i = 0; i < lastGValue.length; i++){
+//			sb.append(lastGValue[i]).append("\t");
+//		}
 		for(int i = 0; i < lastHValue.length; i++){
 			sb.append(lastHValue[i]).append("\t");
 		}

@@ -10,150 +10,20 @@ import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.pddl.domain.incomplete.Fault;
+import edu.usu.cs.planner.PlanMetric;
+import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.search.AbstractStateNode;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
 
-public class PreferredOperatorDeferredEvaluationNode extends FFRiskyNode {
+public interface PreferredOperatorDeferredEvaluationNode extends StateNode {
 
-	public PreferredOperatorDeferredEvaluationNode(Set<Proposition> propositions, Heuristic heuristic, SolverOptions solverOptions) {
-		super(propositions, heuristic, solverOptions);
-	}
+	Set<ActionInstance> getPreferredOperators();
+	void setPreferredOperators (Set<ActionInstance> acts);
+	boolean deadEnd();
 	
-	public PreferredOperatorDeferredEvaluationNode(
-			PreferredOperatorDeferredEvaluationNode node) {
-		super(node);
-//		// Copy the propositions with their associated risks
-//		this.propositions = new HashMap<Proposition, Set<Risk>>();
-//		for (Proposition prop : node.getPropositions().keySet()) {
-//			Set<Risk> risks = new HashSet<Risk>();
-//			for (Risk risk : node.getPropositions().get(prop)) {
-//				risks.add(risk);
-//			}
-//			this.propositions.put(prop, risks);
-//		}
-//
-//		// Copy the critical risks that were used to get to this node
-//		this.criticalRisks = new HashSet<Risk>();
-//		this.criticalRisks.addAll(node.getCriticalRisks());
-//		this.parent = node.parent;
-//		this.state = node.state;
-//		this.action = node.action;		
-//		this.dimension = node.dimension;
-//		this.heuristic = node.heuristic;
-//		this.solverOptions = node.solverOptions;
-	}
-	
-	@Override
-	public double[] getHeuristicValue() {
-		if(hvalue == null){
-			hvalue = heuristic.getValue(this);
-			preferredOperators = heuristic.getPreferredOperators( );
-			if(parent == null){
-				List<ActionInstance> mRelevantActions = heuristic.getRelevantActions();
-				if(mRelevantActions != null){
-					relevantActions =  mRelevantActions;
-				}
-			}
-			H_WEIGHT = new double[dimension];
-			for(int i = 0; i < dimension; i++){
-				H_WEIGHT[i] = 1;
-			} 
-		}
-		return hvalue;
-	}
 
-	@Override
-	public List<StateNode> createSubsequentNodes(List<ActionInstance> subsequentActions) {
 
-		boolean usePreferredOperators = solverOptions.isUsePreferredOperators();
 
-		if(subsequentNodes != null && usePreferredOperators){
-			//need to reset node after failing in local search
-			//preferredOperators = null;
-			//subsequentNodes = null;
-			usePreferredOperators = false;
-		}
-
-		if(subsequentNodes == null){
-			subsequentNodes = new ArrayList<StateNode>();
-		}
-		List<StateNode> newNodes = new ArrayList<StateNode>();
-		
-		List<ActionInstance> actionsToExpand = null;
-
-		if(preferredOperators != null && usePreferredOperators){
-			actionsToExpand =  new ArrayList<ActionInstance>(preferredOperators);
-		}
-		else{
-			actionsToExpand = new ArrayList<ActionInstance>(subsequentActions);
-			actionsToExpand.removeAll(preferredOperators);
-		}
-
-		for(ActionInstance act : actionsToExpand){
-			PreferredOperatorDeferredEvaluationNode node = getSuccessorNode(act);
-			if(node != null && !node.equals(this.parent)){
-				newNodes.add(node);
-				subsequentNodes.add(node);
-			}
-		}
-		return newNodes;
-	}
-	
-	@Override
-	public  PreferredOperatorDeferredEvaluationNode getSuccessorNode(ActionInstance action1) {
-		IncompleteActionInstance action = (IncompleteActionInstance)action1;
-		
-		// If the action isn't applicable to the node, return null
-		if (!isActionApplicable(action)) {
-			return null;
-		}
-
-		// Create the new node and copy all the values from the old one to the
-		// new one
-		PreferredOperatorDeferredEvaluationNode node = new PreferredOperatorDeferredEvaluationNode(this);
-
-		// Add all risks associated with the new node
-		//node.addCriticalRisks(action, this);
-		actRisks.union(getPrecOpen(this, action));
-		actRisks.union(getPrecRisks(this, action));
-
-		// Remove any absolute delete effect from node
-		node.applyDeleteEffects(this, action);
-
-		// Apply possible delete effects
-		node.applyPossibleDeleteEffects(this, action);
-
-		// Apply absolute add effects
-		node.applyAddEffects(this, action);
-
-		// Apply possible add effects
-		node.applyPossibleAddEffects(this, action);
-
-		// addCriticalRisks(node, action);
-
-		node.setParent(this);
-		node.setAction(action);
-
-		node.setHeuristic(this.getHeuristic());
-		node.setState(node.getPropositions().keySet());
-		
-		node.setSolverOptions(solverOptions);
-
-		return node;
-	}
-
-	public List<StateNode> createSubsequentNodesIgnorePreferredOperators(
-			List<ActionInstance> actionInstances) {
-		if(solverOptions.isUsePreferredOperators()) {
-			return createSubsequentNodes(actionInstances);
-		}
-		
-		solverOptions.setUsePreferredOperators(false);
-		List<StateNode> notPreferredNodes = createSubsequentNodes(actionInstances);
-		solverOptions.setUsePreferredOperators(true);
-		
-		return notPreferredNodes;
-	}
 }

@@ -20,14 +20,20 @@ public class Proposition {
 	public Proposition(String name) {
 		this.name = name;
 		if(propositionIndices.get(name) == null){
-			propositionIndices.put(name, propositionIndex++);
-			propositionIndexMap.put(propositionIndex-1, this);
+			int index = propositionIndex;
+			propositionIndex++;
+			propositionIndices.put(name, index);
+			propositionIndexMap.put(index, this);
 		}
 	}
 	
 	public static Integer getPropositionIndex(String name) {
 		Integer index =propositionIndices.get(name); 
 		return index;
+	}
+	
+	public static Proposition getPropositionFromIndex(Integer index){
+		return propositionIndexMap.get(index);
 	}
 	
 	

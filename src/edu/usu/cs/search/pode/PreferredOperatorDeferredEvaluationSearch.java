@@ -2,36 +2,42 @@ package edu.usu.cs.search.pode;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.FFRiskyHeuristic;
+import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.NumericMetric;
+import edu.usu.cs.planner.PlanMetric;
+import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
+import edu.usu.cs.search.AbstractSearch;
+import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.FFRiskyNode;
-import edu.usu.cs.search.incomplete.FriskySearch;
-import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
+import edu.usu.cs.search.incomplete.PIRiskSet;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
-public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
+public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch implements Search {
 
 	private static Logger logger = Logger.getLogger(PreferredOperatorDeferredEvaluationSearch.class.getName());
 
 	// open (in DefaultSearch) is the not preferred operators
 	protected PriorityQueue<StateNode> openPreferred = null;
-
 	protected long preferredPriority = 0;
 	protected long notPreferredPriority = 0;
-	protected double[] currentBestHValue = {Double.MAX_VALUE, Double.MAX_VALUE};
+	//protected PlanMetric[] currentBestHValue = null;
+	protected StateNode bestNode = null;
 
 	public PreferredOperatorDeferredEvaluationSearch(
 			Domain domain, 
@@ -39,26 +45,39 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 			List<ActionInstance> actionInstances,
 			SolutionEvaluator solutionEvaluator,
 			SearchStatistics searchStatistics,
-			SolverOptions solverOptions
+			Solver solver
 	) throws IllDefinedProblemException
 	{
-		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solverOptions);
+		super(domain, problem, actionInstances, solutionEvaluator, searchStatistics, solver);
+		closed = new HashSet<StateNode>();
+		open = new PriorityQueue<StateNode>();
+		openPreferred = new PriorityQueue<StateNode>();
 	}
+
+
+	@Override
+	public void initialize(StateNode node) {
+		//node.getHeuristicValue();
+		//solver.getHeuristic()
+		openPreferred.add(node);
+
+	}
+
+
 
 	@Override
 	public List<ActionInstance> getPath() {
+		long expanded = 0;
 		while(true) {
 			PreferredOperatorDeferredEvaluationNode node;
-			
+
 			// If both queues are empty, there is no solution
 			if(open.size() == 0 && openPreferred.size() == 0) {
 				return null;
 			}
-			
-			boolean pulledPreferred = true;
-			
 
-			
+			boolean pulledPreferred = true;
+
 			// Don't remove anything from an empty queue
 			if(open.size() == 0) {
 				node = (PreferredOperatorDeferredEvaluationNode)openPreferred.remove();
@@ -70,7 +89,8 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 				pulledPreferred = false;
 			}
 			// pull node from queue with the greatest value
-			else if(preferredPriority >= notPreferredPriority) {
+			else if(//expandPreferred){//
+					preferredPriority >= notPreferredPriority) {
 				node = (PreferredOperatorDeferredEvaluationNode)openPreferred.remove();
 				preferredPriority--;
 				pulledPreferred = true;
@@ -79,163 +99,115 @@ public class PreferredOperatorDeferredEvaluationSearch extends FriskySearch {
 				notPreferredPriority--;
 				pulledPreferred = false;
 			}
-			
+
 			// Check to see if this is a duplicate node
 			if(closed.contains(node)) {
 				continue;
 			}
-			closed.add(node);
-			
+
+
 			// Check to see if the solution is found in the node
 			if(solutionEvaluator.isSolution(problem, node)) {
-//				logger.debug("Found Solution: " + node);
+				//				logger.debug("Found Solution: " + node);
 				searchStatistics.setSolutionNode(node);
-				GeneralizedRiskSet crisks = node.getActRisks();
-				for(Proposition p : problem.getGoalAction().getPreconditions()){
-					crisks.union(node.getPropositions().get(p));
-				}
+				//				GeneralizedRiskSet crisks = node.getCriticalRisks();
+				//				for(Proposition p : problem.getGoalAction().getPreconditions()){
+				//					crisks.union(node.getPropositions().get(p));
+				//				}
 				return extractSolution(node);
 			}
 
-			// Compute node's H value
-			double[] hvalue = node.getHeuristicValue();
+//			if(((PreferredOperatorDeferredEvaluationNode)node).isHeuristicComputed()){
+//				// Add the notPreferredOperator children to open
+//				List<StateNode> notPreferredNodes = node.createSubsequentNodes(
+//						solver.getRelevantActions()
+//						//actionInstances
+//						, node.getPreferredOperators());
+//				//				for(StateNode cnode : notPreferredNodes)
+//				//					cnode.getHeuristicValue();
+//
+//				open.addAll(notPreferredNodes);
+//				((PreferredOperatorDeferredEvaluationNode)bestNode).setPreferredOperators(null);
+//				closed.add(node);
+//
+//			}
+//			else{
+//
+//
+//				// Compute node's H value
+//				node.getHeuristicValue();
+//
+//				if(((Double)((NumericMetric)node.getHeuristicValue()[0]).getValue()).equals(Double.MAX_VALUE)){
+//					closed.add(node);
+//					continue;
+//				}
+//
+//				// Add the preferredOperator children to openPreferred
+//				//List<ActionInstance> po = new ArrayList<ActionInstance>(node.getPreferredOperators());
+//				List<StateNode> preferredNodes = node.createSubsequentNodes(node.getPreferredOperators(), null);
+//
+//				openPreferred.addAll(preferredNodes);
+//				open.add(node);
+//				//				for(StateNode cnode : preferredNodes)
+//				//					cnode.getHeuristicValue();
+//
+//
+//			}
 
+						// Compute node's H value
+						node.getHeuristicValue();
+						
+						if(node.deadEnd()){
+							closed.add(node);
+							continue;
+						}
 			
-			// Add the preferredOperator children to openPreferred
-			List<StateNode> preferredNodes = node.createSubsequentNodes(actionInstances);
-			openPreferred.addAll(preferredNodes);
+						// Add the notPreferredOperator children to open
+						List<StateNode> notPreferredNodes = node.createSubsequentNodes(
+								solver.getRelevantActions(), node.getPreferredOperators());
 			
-			// Add the notPreferredOperator children to open
-			List<StateNode> notPreferredNodes = node.createSubsequentNodesIgnorePreferredOperators(actionInstances);
-			notPreferredNodes.removeAll(preferredNodes);
-			open.addAll(notPreferredNodes);
+						open.addAll(notPreferredNodes);
+			
+			
+			
+			
+						// Add the preferredOperator children to openPreferred
+						List<StateNode> preferredNodes = node.createSubsequentNodes(node.getPreferredOperators(), null);
+			
+						openPreferred.addAll(preferredNodes);
+						closed.add(node);
+
+
 			searchStatistics.processNode(node);
-			
-			
+			expanded++;
+
 			// If the new h value is better than the current h value, add 1000 to 
 			// the preferred operator priority counter
-			if(hvalue[1] < currentBestHValue[1] 
-			                                 || 
-					hvalue[1] == currentBestHValue[1] && 
-					hvalue[0] < currentBestHValue[0]
-					                              ) {
-				currentBestHValue[0] = hvalue[0];
-				currentBestHValue[1] = hvalue[1];
-				
+			if(bestNode == null ||
+					node.compareTo(bestNode) < 0 ) {
+				bestNode = node;
 				if(pulledPreferred){
-					preferredPriority += 5;
-				}
-			
-//				System.out.print(preferredPriority + " " + notPreferredPriority + " ");
-//				logger.debug(searchStatistics.toString());
-				logger.debug(searchStatistics.toString());
-//				logger.debug(node.getCriticalRisks().toString());
+//										for(StateNode cnode : preferredNodes)
+//											cnode.getHeuristicValue();
+					
 
+					preferredPriority += 5*preferredNodes.size();
+				}
+				else{
+					//					for(StateNode cnode : notPreferredNodes)
+					//						cnode.getHeuristicValue();
+
+				}
+				logger.debug(searchStatistics.toString()+" " + expanded);
+				expanded = 0;
 			}
-			System.out.println(searchStatistics.toString());
+
+
+
+
+			//logger.debug(searchStatistics.toString());
 
 		}
 	}
 
-	@Override
-	public void initialize() {
-
-		heuristic = new FFRiskyHeuristic(problem, domain, solverOptions);
-
-		// Comparisons are based on the parent heuristic only
-		open = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
-			public int compare(StateNode first, StateNode second) {
-				boolean alphaCombo = false;
-				if(!alphaCombo){
-					Double[] diffs = new Double[2];
-//					for(int i = 0; i < 2; i++) {
-//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
-//					}
-					
-					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
-					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
-					
-					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
-					int d = ((FFRiskyNode)n1).getActRisks().compareTo(((FFRiskyNode)n2).getActRisks());
-						
-					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
-					if(d != 0) {
-						return d;
-					}
-					else{
-						return diffs[0].intValue(); //same num risks, so compare length
-					}
-				}
-				else{
-					double alpha = 0.6;
-					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
-					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
-					return value.intValue();
-				}
-			}
-		});
-
-		// Comparisons are based on the parent heuristic only
-		openPreferred = new PriorityQueue<StateNode>(20, new Comparator<StateNode>() {
-			public int compare(StateNode first, StateNode second) {
-				boolean alphaCombo = false;
-				if(!alphaCombo){
-					Double[] diffs = new Double[2];
-//					for(int i = 0; i < 2; i++){
-//						diffs[i] = first.getFValue()[i] - second.getFValue()[i];
-//					}
-//					diffs[1] = first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1];
-//					diffs[0] = first.getParent().getHeuristicValue()[0] - second.getParent().getHeuristicValue()[0];
-//					if(diffs[1] != 0) {
-//						return diffs[1].intValue();
-//					}
-//					else{
-//						return diffs[0].intValue(); //same num risks, so compare length
-//					}
-					
-					StateNode n1 = (first.isHeuristicComputed() ? first : first.getParent());
-					StateNode n2 = (second.isHeuristicComputed() ? second : second.getParent());
-					
-					diffs[0] = n1.getHeuristicValue()[0] - n2.getHeuristicValue()[0];
-					int d = ((FFRiskyNode)n1).getActRisks().compareTo(((FFRiskyNode)n2).getActRisks());
-						
-					//	int d = (int)(first.getParent().getHeuristicValue()[1] - second.getParent().getHeuristicValue()[1]);
-					if(d != 0) {
-						return d;
-					}
-					else{
-						return diffs[0].intValue(); //same num risks, so compare length
-					}
-
-				}
-				else{
-					double alpha = 0.6;
-					Double value = (alpha*first.getFValue()[0] + (1-alpha)*first.getFValue()[1]) - 
-					(alpha*second.getFValue()[0] + (1-alpha)*second.getFValue()[1]);
-					return value.intValue();
-				}
-			}
-		});
-
-		
-		openPreferred.add(
-			new PreferredOperatorDeferredEvaluationNode(problem.getInitialState(),heuristic, 
-//			new FFRiskyHeuristic(
-//				problem, 
-//				domain, 
-//				solverOptions),
-			solverOptions));
-	}
-	
-	protected List<ActionInstance> extractSolution(StateNode node) {
-		List<ActionInstance> actionsToGoal = new ArrayList<ActionInstance>();
-		
-		while(node != null && node.getAction() != null) {
-			actionsToGoal.add(0, node.getAction());
-			node = node.getParent();
-//			System.out.println(node.getAction() + "\n" + ((FFRiskyNode)node).getCriticalRisks());
-		}
-		
-		return actionsToGoal;
-	}
 }

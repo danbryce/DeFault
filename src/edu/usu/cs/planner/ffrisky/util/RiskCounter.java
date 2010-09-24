@@ -16,23 +16,26 @@ import org.apache.log4j.Logger;
 
 import jdd.bdd.BDD;
 
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
+import edu.usu.cs.planner.Solver;
+import edu.usu.cs.search.FaultSet;
 
 public class RiskCounter {
 
 	private static BDD bdd;
-	private static Map<Risk, Integer> riskToBDD;
-	private static Map<Integer, Risk> bddToRisk;
-	private static List<Risk> allRisks;
+	private static Map<Fault, Integer> riskToBDD;
+	private static Map<Integer, Fault> bddToRisk;
+	private static List<Fault> allRisks;
 	private static boolean isInitialized = false;
 	private static int unusedRisks = 0;
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
@@ -44,13 +47,13 @@ public class RiskCounter {
 
 		bdd = new BDD(10000, 10000);
 
-		riskToBDD = new HashMap<Risk, Integer>();
-		bddToRisk = new HashMap<Integer, Risk>();
+		riskToBDD = new HashMap<Fault, Integer>();
+		bddToRisk = new HashMap<Integer, Fault>();
 		
 		
 		int i = 1;
 		unusedRisks = 0;
-		for (Risk risk : allRisks) {
+		for (Fault risk : allRisks) {
 
 //			boolean riskActionInPlan = false;
 //			if (plan != null) {
@@ -90,7 +93,7 @@ public class RiskCounter {
 		return allRisks.size();
 	}
 
-	public static BigInteger getBigSolvableDomainCount(Domain domain, Problem problem, List<ActionInstance> plan) {
+	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
 		if (!isInitialized) {
 			initialize(domain, problem, plan);
@@ -101,7 +104,7 @@ public class RiskCounter {
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
 
 		// Add the initial state
-		nodes.add(new RiskCounterNode(problem, problem.getInitialState(), null, null));
+		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver));
 
 		// Add the others
 		for (ActionInstance action : plan) {
@@ -111,23 +114,23 @@ public class RiskCounter {
 		}
 
 //		//add critical risks for goals
-//		int crs = nodes.get(nodes.size() - 1).getCriticalRisks();
-//		bdd.ref(crs);
-//		for(Proposition p : problem.getGoalAction().getPreconditions()){
-//			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);
-//			if(risk != null){
-//				int tmp = bdd.ref(bdd.and(crs, risk.intValue()));
-//				bdd.deref(crs);
-//				crs = tmp;
-//				bdd.ref(crs);
-//			}
-//			else{
-//				bdd.deref(crs);
-//				crs = bdd.getZero();
-//				bdd.ref(crs);
-//				break;
-//			}
-//		}
+		int crs = nodes.get(nodes.size() - 1).getActRisks();
+		bdd.ref(crs);
+		for(Proposition p : problem.getGoalAction().getPreconditions()){
+			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);
+			if(risk != null){
+				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
+				bdd.deref(crs);
+				crs = tmp;
+				bdd.ref(crs);
+			}
+			else{
+				bdd.deref(crs);
+				crs = bdd.getOne();
+				bdd.ref(crs);
+				break;
+			}
+		}
 
 
 		//		for (Risk risk : allRisks) {
@@ -139,7 +142,7 @@ public class RiskCounter {
 		//	bdd.printSet(nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.printSet(bdd.not(crs));
 
-		BigInteger solvableDomains = getBigSolvableDomainCount(nodes.get(nodes.size() - 1).getActRisks());
+		BigInteger solvableDomains = getBigSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.ref(solvableDomains);
 		
 		return solvableDomains;
@@ -150,7 +153,7 @@ public class RiskCounter {
 //	}
 
 
-	public static BigInteger getBigSolvableDomainCount(int bdd) {
+	public static BigInteger getModelCount(int bdd) {
 		if(bdd == 1)
 			return BigInteger.valueOf(2).pow(allRisks.size());
 		else if(bdd == 0)
@@ -160,16 +163,32 @@ public class RiskCounter {
 		
 		return solvableDomains;
 	}
-
-	public static BigInteger getBigUnsolvableDomainCount(int bdd) {
-		//System.out.print("[");
-		int notdd = RiskCounter.bdd.not(bdd);
-		RiskCounter.bdd.ref(notdd);	
-		BigInteger unsolvableDomains = getBigSolvableDomainCount(notdd);		
-		RiskCounter.bdd.deref(notdd);
-		//System.out.print("]");
-		return unsolvableDomains;
+	public static BigInteger getBigUnSolvableDomainCount(FaultSet faultSet) {
+		return getModelCount(((BDDRiskSet)faultSet).getFaults());
 	}
+
+	public static BigInteger getBigUnSolvableDomainCount(int faultSet) {
+		return getModelCount(faultSet);
+	}
+	public static BigInteger getBigSolvableDomainCount(FaultSet faultSet) {
+		return getModelCount(bdd.not(((BDDRiskSet)faultSet).getFaults()));
+	}
+	public static BigInteger getBigSolvableDomainCount(int faultSet) {
+		return getModelCount(bdd.not(faultSet));
+	}
+	
+//	public static BigInteger getBigUnsolvableDomainCount(FaultSet faultSet) {
+//		//System.out.print("[");
+//		BDDRiskSet brs = (BDDRiskSet)faultSet;
+//		
+//		
+////		int notdd = RiskCounter.bdd.not(faultSet);
+////		RiskCounter.bdd.ref(notdd);	
+//		BigInteger unsolvableDomains = getBigUnSolvableDomainCount(brs.getFaults());		
+////		RiskCounter.bdd.deref(notdd);
+//		//System.out.print("]");
+//		return unsolvableDomains;
+//	}
 
 	
 	public static BDD getBDD() {
@@ -180,41 +199,41 @@ public class RiskCounter {
 		RiskCounter.bdd = bdd;
 	}
 
-	public static Map<Risk, Integer> getRiskToBDD() {
+	public static Map<Fault, Integer> getRiskToBDD() {
 		return riskToBDD;
 	}
 
-	public static void setRiskToBDD(Map<Risk, Integer> riskToBDD) {
+	public static void setRiskToBDD(Map<Fault, Integer> riskToBDD) {
 		RiskCounter.riskToBDD = riskToBDD;
 	}
 
-	public static Map<Integer, Risk> getBddToRisk() {
+	public static Map<Integer, Fault> getBddToRisk() {
 		return bddToRisk;
 	}
 
-	public static void setBddToRisk(Map<Integer, Risk> bddToRisk) {
+	public static void setBddToRisk(Map<Integer, Fault> bddToRisk) {
 		RiskCounter.bddToRisk = bddToRisk;
 	}
 
-	private static List<Risk> getAllRisks(Problem problem) {
-		List<Risk> risks = new ArrayList<Risk>();
+	private static List<Fault> getAllRisks(Problem problem) {
+		List<Fault> risks = new ArrayList<Fault>();
 
 		for (ActionInstance a : problem.getActions()) {
 			IncompleteActionInstance action = (IncompleteActionInstance)a;
 
 			// Poss-prec
 			for (Proposition possprec : action.getPossiblePreconditions()) {
-				risks.add(Risk.getRiskFromIndex(Risk.PRECOPEN, action.getName(), possprec.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possprec.getName()));
 			}
 
 			// Poss-del
 			for (Proposition possdel : action.getPossibleDeleteEffects()) {
-				risks.add(Risk.getRiskFromIndex(Risk.POSSCLOB, action.getName(), possdel.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), possdel.getName()));
 			}
 
 			// Poss-add
 			for (Proposition possadd : action.getPossibleAddEffects()) {
-				risks.add(Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, action.getName(), possadd.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(), possadd.getName()));
 			}
 		}
 
@@ -279,7 +298,7 @@ public class RiskCounter {
 		// If there was a plan, get the number of solvable domains
 		if (results.plan != null)
 		{
-			results.solvableDomains = getBigSolvableDomainCount(domain, problem, results.plan);
+			results.solvableDomains = getModelCount(domain, problem, results.plan, null);
 		}
 
 		try {

@@ -42,7 +42,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 	protected int index;
 	protected int actionRisks;
 
-	
+
 	protected  ActionDef definition;
 	protected Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
 
@@ -54,7 +54,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 
 	private boolean hashInitialized = false;
 
-//	private static int numActions = 0;
+	//	private static int numActions = 0;
 
 	public IncompleteActionInstance(String name, Set<Proposition> preconditions,
 			Set<Proposition> addEffects, Set<Proposition> deleteEffects,
@@ -206,9 +206,9 @@ public class IncompleteActionInstance  implements ActionInstance{
 		else if (actPrecondition != null){
 			precondList.add(actPrecondition);
 		}
-		
-		
-//		for (LiteralInstance precondition : preconditions) {
+
+
+		//		for (LiteralInstance precondition : preconditions) {
 		for(GoalDesc g : precondList){
 			if(g instanceof PredicateInstance){
 				PredicateInstance pi = (PredicateInstance)g;
@@ -257,7 +257,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 						if(p != null) {
 							this.addEffects.add(p);
 						}
-//						this.addEffects.add(new Proposition(result));						
+						//						this.addEffects.add(new Proposition(result));						
 					}
 				} else {
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
@@ -267,12 +267,12 @@ public class IncompleteActionInstance  implements ActionInstance{
 						if(p != null) {
 							this.deleteEffects.add(p);
 						}
-//						this.deleteEffects.add(new Proposition(result));
+						//						this.deleteEffects.add(new Proposition(result));
 
 					}
 				}
 			}
-			
+
 			// Remove any delete effect that is in the add effects
 			this.deleteEffects.removeAll(this.addEffects);
 		}
@@ -284,7 +284,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 		GoalDesc actPossPrecondition = action.getPossPreCondition().instantiate(argMapping, allObjects);
 		if(actPossPrecondition != null){
 			actPossPrecondition.getLiteralsUsed(possiblePreconditions);
-			
+
 			actPossPrecondition.getLiteralsUsed(
 					possiblePreconditions);
 			for (LiteralInstance precondition : possiblePreconditions) {
@@ -543,11 +543,33 @@ public class IncompleteActionInstance  implements ActionInstance{
 		// TODO Auto-generated method stub
 		return definition;
 	}
-	public void setActionRisks(int actionRisks) {
-		this.actionRisks = actionRisks;
-	}
-	
-	public int getActionRisks() {
-		return this.actionRisks;
+//	public void setActionRisks(int actionRisks) {
+//		this.actionRisks = actionRisks;
+//	}
+//
+//	public int getActionRisks() {
+//		return this.actionRisks;
+//	}
+
+	public void removeIrrelevant(Set<Integer> set) {
+
+		Set<Proposition>[] elements = new Set[6];
+		elements[0] = preconditions;
+		elements[1] = possiblePreconditions;
+		elements[2] = addEffects;
+		elements[3] = possibleAddEffects;
+		elements[4] = deleteEffects;
+		elements[5] = possibleDeleteEffects;
+		List<Proposition> toRemove = new ArrayList<Proposition>();
+		
+		for(int i = 0; i < 6; i++){
+			
+			for(Proposition p : (Set<Proposition>)elements[i]){
+				if(!set.contains(p.getIndex()))
+					toRemove.add(p);
+			}
+			elements[i].removeAll(toRemove);
+			toRemove.clear();
+		}
 	}
 }
