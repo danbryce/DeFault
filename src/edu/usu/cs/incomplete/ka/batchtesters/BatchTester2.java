@@ -16,17 +16,19 @@ public class BatchTester2
 		String pathToProblems = "testfiles/incomplete/bridges/";
 		String extension = ".pddl";
 	
+		//Just mess around with the for loop values...
+		
 		//Grid size
-		for(int gridSize = 8; gridSize <= 8; gridSize*=2) //2-32
+		for(int gridSize = 4; gridSize <= 4; gridSize*=2) //2-32
 		{
 			//Bridge density
-			for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
+			for(double bridgeDensity = .5; bridgeDensity <= .5; bridgeDensity += 0.25) //0.0 - 1.0
 			{		
 				//Version
-				for(int v = 1; v <= 1; v++)//1-3
+				for(int v = 3; v <= 3; v++)//1-3
 				{
 					//Num file
-					for(int k = 1; k <= 10; k++) //numFiles 1-10
+					for(int k = 1; k <= 1; k++) //numFiles 1-10
 					{				
 						args[0] = pathToDomains + "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 						args[1] = pathToProblems + "bridges_problem" + extension;
