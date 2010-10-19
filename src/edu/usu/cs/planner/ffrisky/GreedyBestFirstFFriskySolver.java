@@ -18,12 +18,28 @@ public class GreedyBestFirstFFriskySolver extends DefaultSolver {
 		super(domain, problem, searchStatistics, solverOptions);
 		
 	}
-	@Override
+	
+//	Changed sometime in 8.10 by CW
+//	@Override
+//	public List<ActionInstance> run() {
+//		try {
+//			search = new PreferredOperatorDeferredEvaluationSearch(
+//					domain, problem, actionInstances, 
+//					new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), 
+//					searchStatistics, solverOptions);
+//		} catch (IllDefinedProblemException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		search.initialize();
+//		return search.getPath();
+//	}
+	
 	public List<ActionInstance> run() {
 		try {
 			search = new PreferredOperatorDeferredEvaluationSearch(
-					domain, problem, actionInstances, 
-					new FFRiskySolutionEvaluator(domain, problem, actionInstances,problem,searchStatistics), 
+					domain, problem, problem.getActions(), 
+					new FFRiskySolutionEvaluator(domain, problem, problem.getActions(),problem,searchStatistics), 
 					searchStatistics, solverOptions);
 		} catch (IllDefinedProblemException e) {
 			// TODO Auto-generated catch block
