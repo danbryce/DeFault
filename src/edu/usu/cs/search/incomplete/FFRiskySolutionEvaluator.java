@@ -64,14 +64,33 @@ public class FFRiskySolutionEvaluator implements SolutionEvaluator {
 	@Override
 	public boolean isSolution(Problem problem, StateNode node) {
 		// TODO Auto-generated method stub
-		if(node instanceof FFRiskyNode){
-			
+		if(node instanceof FFRiskyNode)
+		{			
+//			if(((FFRiskyNode)node).isActionApplicable(problem.getGoalAction()))
+//			{
+//				System.out.println("****************************************************************************");
+//				System.out.println("IN FFRiskySolutionEvaluator.isSolution");
+//				System.out.println("Node's state: " + node.getState());
+//				System.out.println("Problem.getGoalAction().getPreconditions(): " + problem.getGoalAction().getPreconditions());
+//				System.out.println("****************************************************************************");
+//				
+//			}	
 			return ((FFRiskyNode)node).isActionApplicable(problem.getGoalAction());
 		
 		} else if (node instanceof RiskCounterNode) {
 			return ((RiskCounterNode)node).isActionApplicable(problem.getGoalAction());
 		}
 		return false;
+
+//Original version. Above version had option to check if node was presenting solution state.
+//		if(node instanceof FFRiskyNode){
+//			
+//			return ((FFRiskyNode)node).isActionApplicable(problem.getGoalAction());
+//		
+//		} else if (node instanceof RiskCounterNode) {
+//			return ((RiskCounterNode)node).isActionApplicable(problem.getGoalAction());
+//		}
+//		return false;
 	}
 
 	@Override
