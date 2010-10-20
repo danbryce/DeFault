@@ -1,16 +1,27 @@
 package edu.usu.cs.planner;
 
-import edu.usu.cs.search.incomplete.GeneralizedRiskSet;
+import edu.usu.cs.search.incomplete.PIRiskSet;
 
 public class SolverOptions {
 
+	
+	public static enum FAULT_TYPE  { PI_FAULTS, BDD_FAULTS };
+	
 	private boolean useHelpfulActions = false;
 	private boolean useMultipleSupportersInPlanningGraph = false;
 	private boolean useDeferredEvaluation = false;
 	private boolean usePreferredOperators = false;
 	private boolean riskHeuristicFirst = false;
 	private boolean useJDDGValue = false;
+	private FAULT_TYPE faultType = FAULT_TYPE.PI_FAULTS;
 	
+	
+	public FAULT_TYPE getFaultType() {
+		return faultType;
+	}
+	public void setFaultType(FAULT_TYPE faultType) {
+		this.faultType = faultType;
+	}
 	public boolean isUseJDDGValue() {
 		return useJDDGValue;
 	}

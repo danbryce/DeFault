@@ -4,14 +4,20 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.search.StateNode;
 
 public interface Heuristic {
-	public double[] getValue(StateNode abstractStateNode);
+	public PlanMetric[] getValue(StateNode abstractStateNode);
 
 	public Set<ActionInstance> getHelpfulActions();
 
-	public List<ActionInstance> getRelevantActions();
 
 	public Set<ActionInstance> getPreferredOperators();
+
+	public Set[] getRelevant();
+
+	public void removeIrrelevant(Set[] relevant);
+
+	
 }

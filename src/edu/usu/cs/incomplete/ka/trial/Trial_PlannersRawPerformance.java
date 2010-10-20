@@ -7,10 +7,10 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.planner.PODEFFSolver;
+import edu.usu.cs.planner.PODEPISolver;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.GreedyBestFirstFFriskySolver;
-import edu.usu.cs.search.GreedyBestFirstLengthSolver;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -222,7 +222,7 @@ public class Trial_PlannersRawPerformance
 		solverOptions.setUsePreferredOperators(true);
 		solverOptions.setUseDeferredEvaluation(true);
 		try{
-			solver = new GreedyBestFirstLengthSolver(domain_incomplete, problem, searchStatistics, solverOptions);
+			solver = new PODEFFSolver(domain_incomplete, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {e.printStackTrace();}
 		
 		//Run Amir/length solver
@@ -246,7 +246,7 @@ public class Trial_PlannersRawPerformance
 		solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 		solverOptions.setRiskArity(Integer.valueOf(1));//arity 1 only
 		try{
-			solver = new GreedyBestFirstFFriskySolver(domain_incomplete, problem, searchStatistics, solverOptions);
+			solver = solver = new PODEPISolver(domain_incomplete, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {e.printStackTrace();}
 		
 		//Run Bryce/DeFault solver

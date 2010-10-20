@@ -22,6 +22,10 @@ public class ParserTest {
 			System.err.println("Unable to find input PDDL domain file " + args[0]);
 			usage();
 		}
+		if(outputFile.exists()){
+			System.err.println(outputFile.getName() + " exists");
+			return;
+		}
 		
 		Parser parser = new Parser(inputFile);
 		if(args.length == 3) {
@@ -37,7 +41,7 @@ public class ParserTest {
 		}
 		
 		String fileContents = parser.getFileContents();
-		logger.debug(fileContents);
+		//logger.debug(fileContents);
 		try {
 			FileWriter fstream = new FileWriter(outputFile);
 			fstream.write(fileContents);

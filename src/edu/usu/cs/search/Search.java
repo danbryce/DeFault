@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.planner.SolverOptions;
 
 public interface Search {
 //	public Node getNextNode();
@@ -14,12 +15,13 @@ public interface Search {
 
 
 	
-	public void initialize();
+	public void initialize(StateNode node);
 	public List<ActionInstance> getPath();
 	public int getNodesExpandedCount();
 	public long getTotalTimeTaken();
 	public long getHeuristicTimeTaken();
 	public PriorityQueue<StateNode> getOpen();
 	public void setRelevantActions(List<ActionInstance> actions);
+	
 	
 }

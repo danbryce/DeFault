@@ -1,6 +1,8 @@
 package edu.usu.cs.plangraph;
 
 import org.junit.Test;
+
+import edu.usu.cs.incomplete.bridges.BridgesDomainCreator;
 import edu.usu.cs.search.SearchTest;
 
 public class BridgesTest 
@@ -67,16 +69,16 @@ public class BridgesTest
 						}
 					}
 				}
+
 			}
 		}
 	}
-	
-	
-	
+
+}	
 //	@Test
 //	public void RunBridges() {
 //		// Run Bridges
-//		int maxGridSize = 32;
+//		int maxGridSize = 16;
 //		String[] args = new String[6];
 //		String pathToDomains = "testfiles/incomplete/bridges/";
 //		String pathToProblems = "testfiles/incomplete/bridges/";
@@ -108,7 +110,7 @@ public class BridgesTest
 //			}
 //		}
 //	}
-}
+//}
 
 //String[] args = {pathToDomains+"domain_"+problem+"_"+p+"_"+k+extension, 
 //pathToProblems+problem+extension, 

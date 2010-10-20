@@ -1,5 +1,7 @@
 package edu.usu.cs.search;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -7,91 +9,83 @@ import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.PlanMetric;
+import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.SolverOptions;
 
 public class AbstractStateNode implements StateNode {
 
-	protected Set<Proposition> state = null;
+	//protected Set<Proposition> state = null;
 	protected ActionInstance action = null;
 	protected StateNode parent = null;
 
-	protected Problem problem = null;
+	//protected Problem problem = null;
 
 	// Cost to get to this action
-	protected double[] gvalue = null;
-	protected double[] hvalue = null;
-	protected double[] fvalue = null;
-	protected Heuristic heuristic = null;
-	protected List<StateNode> subsequentNodes = null;
-	protected Set<ActionInstance> preferredOperators = null;
-	protected List<ActionInstance> relevantActions = null;
+	protected PlanMetric[] gvalue = null;
+	protected PlanMetric[] hvalue = null;
+	protected PlanMetric[] fvalue = null;
+	//protected Heuristic heuristic = null;
+	//protected List<StateNode> subsequentNodes = null;
+	//protected List<ActionInstance> relevantActions = null;
 	protected int hash;
 	protected boolean hashInitialized = false;
-
-	protected void setRelevantActions(List<ActionInstance> relevantActions) {
-		this.relevantActions = relevantActions;
+	//protected SolverOptions solverOptions = null;
+	protected Solver solver = null;
+	protected boolean heuristicComputed = false;
+	
+	
+	public AbstractStateNode(ActionInstance action, StateNode parent, Solver solver) {
+		super();
+		this.action = action;
+		this.parent = parent;
+		this.solver = solver;
+		int dimension = solver.getMetricDimension();
+		//gvalue = new PlanMetric[dimension];
+		hvalue = new PlanMetric[dimension];
+		//fvalue = new PlanMetric[dimension];
+		//this.subsequentNodes = new ArrayList<StateNode>();
 	}
 
-	public List<ActionInstance> getRelevantActions() {
-		return relevantActions;
+	public AbstractStateNode(StateNode node) {
+		this.solver  = ((AbstractStateNode)node).solver;
+		int dimension = solver.getMetricDimension();
+		//gvalue = new PlanMetric[dimension];
+		hvalue = new PlanMetric[dimension];
+		//fvalue = new PlanMetric[dimension];
 	}
 
-	protected double[] H_WEIGHT = null;
-	protected int dimension = 1;
+//	protected void setRelevantActions(List<ActionInstance> relevantActions) {
+//		this.relevantActions = relevantActions;
+//	}
+//
+//	public List<ActionInstance> getRelevantActions() {
+//		return relevantActions;
+//	}
 
-	public int getDimension() {
-		return dimension;
-	}
+	//	protected double[] H_WEIGHT = null;
 
-	public void setDimension(int dimension) {
-		this.dimension = dimension;
+
+	public AbstractStateNode() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public boolean isHeuristicComputed(){
-		return hvalue != null;
+		return heuristicComputed;
 	}
-	
-	public double[] getHeuristicValue() {
-		if (hvalue == null) {
-			hvalue = heuristic.getValue(this);
-			preferredOperators = heuristic.getHelpfulActions();
-			if (parent == null) {
-				List<ActionInstance> mRelevantActions = heuristic
-						.getRelevantActions();
-				if (mRelevantActions != null) {
-					relevantActions = mRelevantActions;
-				}
-			}
-			H_WEIGHT = new double[dimension];
-			for (int i = 0; i < dimension; i++) {
-				H_WEIGHT[i] = 1;
-			}
-		}
+
+	public PlanMetric[] getHeuristicValue() {
 		return hvalue;
 	}
 
-	public double[] getFValue() {
-		if (fvalue == null) {
-			fvalue = new double[dimension];
-			for (int i = 0; i < dimension; i++) {				
-				fvalue[i] = getGValue()[i] + 
-				getHeuristicValue()[i]
-						* H_WEIGHT[i];
-			}
+	public PlanMetric[] getFValue() {
+		for (int i = 0; i < fvalue.length; i++) {				
+			fvalue[i] = getGValue()[i].aggregate(getHeuristicValue()[i]);
 		}
 		return fvalue;
 	}
 
-	public double[] getGValue() {
-		if (gvalue == null) {
-			gvalue = new double[dimension];
-			for (int i = 0; i < dimension; i++) {
-				if (parent == null) {
-					gvalue[i] = 0.0;
-				} else {
-					gvalue[i] = parent.getGValue()[i] + action.getCost();
-				}
-			}
-		}
+	public PlanMetric[] getGValue() {
 		return gvalue;
 	}
 
@@ -100,45 +94,55 @@ public class AbstractStateNode implements StateNode {
 	// }
 
 	public ActionInstance getAction() {
-		// TODO Auto-generated method stub
 		return action;
 	}
 
 	public StateNode getParent() {
-		// TODO Auto-generated method stub
 		return parent;
 	}
 
 	public int compareTo(StateNode o) {
-		double cmp = this.getFValue()[0] - o.getFValue()[0];
-		return (cmp < 0 ? -1 : (cmp > 0 ? 1 : 0));
+		return 0;
 	}
 
-	@Override
-	public Set<Proposition> getState() {
-		// TODO Auto-generated method stub
-		return state;
+	public  StateNode getSuccessorNode(ActionInstance action1) {
+		return null;
+	}
+	
+	public List<StateNode> createSubsequentNodes(Set<ActionInstance> subsequentActions,
+												 Set<ActionInstance> toIgnore) {
+		//Set<ActionInstance> toIgnore = new HashSet<ActionInstance>();
+//		if(actionsToIgnore != null)
+//			toIgnore.addAll(actionsToIgnore);
+		List<StateNode> newNodes = new ArrayList<StateNode>();
+		for(ActionInstance act : subsequentActions){
+			if(toIgnore != null && toIgnore.contains(act)){
+				continue;
+			}
+			StateNode node = getSuccessorNode(act);
+			if(node != null && !node.equals(this) && (node.getParent() == null || node.getParent().getParent() == null || node.getParent().getParent() != node) ){
+				newNodes.add(node);
+				//subsequentNodes.add(node);
+			}
+		}
+		return newNodes;
 	}
 
-	public List<StateNode> createSubsequentNodes(
-			List<ActionInstance> actionInstances) {
-		// TODO Auto-generated method stub
+
+	
+	public List<StateNode> getSubsequentNodes() {
+		//return subsequentNodes;
 		return null;
 	}
 
-	@Override
-	public List<StateNode> getSubsequentNodes() {
+	public boolean isActionApplicable(ActionInstance action) {
 		// TODO Auto-generated method stub
-		return subsequentNodes;
+		return false;
 	}
 
-	public Heuristic getHeuristic() {
-		return heuristic;
-	}
-
-	public void setHeuristic(Heuristic heuristic) {
-		this.heuristic = heuristic;
-	}
+//	public void setHeuristic(Heuristic heuristic) {
+//		this.heuristic = heuristic;
+//	}
 
 	public void setAction(ActionInstance action2) {
 		this.action = action2;
@@ -148,27 +152,35 @@ public class AbstractStateNode implements StateNode {
 		this.parent = parent;
 	}
 
-	public void setState(Set<Proposition> keySet) {
-		state = keySet;
-	}
 
 	@Override
 	public int hashCode() {
-		if (hashInitialized) {
-			return hash;
-		}
-
-		hash = Proposition.getNodeHash(this.getState());
+//		if (hashInitialized) {
+//			return hash;
+//		}
+//
+//		hash = Proposition.getNodeHash(this.getState());
 
 		hashInitialized = true;
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof AbstractStateNode))
-			return false;
-
-		return state.equals(((AbstractStateNode) o).state);
+	public boolean equals(StateNode o) {
+		return true;
 	}
+
+	@Override
+	public Set<Proposition> getState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean satisfies(Set<Proposition> goal) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 }

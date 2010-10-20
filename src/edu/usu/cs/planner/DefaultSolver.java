@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.DefaultActionInstance;
@@ -17,6 +18,7 @@ import edu.usu.cs.pddl.domain.FormalArgument;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
@@ -31,6 +33,7 @@ public class DefaultSolver implements Solver {
 	protected Problem problem = null;
 	protected List<ActionInstance> actionInstances = null;
 	protected List<ActionInstance> plan = null;
+	protected Heuristic heuristic = null;
 	protected Search search = null;
 	protected SearchStatistics searchStatistics = null;
 	protected long maxHeapUsageSize = 0;
@@ -38,6 +41,18 @@ public class DefaultSolver implements Solver {
 	private static final long DEFAULT_MAX_HEAP_USAGE = 1024 * 1024 * 200;
 	private static final long DEFAULT_MAX_RUNTIME = 1000 * 60 * 1;
 	protected SolverOptions solverOptions = null;
+	protected int metricDimension = 1;
+
+	protected Set<ActionInstance> relevantActions = null;
+	protected Set<Integer> relevantFacts = null;
+	
+	public Set<Integer> getRelevantFacts() {
+		return relevantFacts;
+	}
+
+	public void setRelevantFacts(Set<Integer> relevantFacts) {
+		this.relevantFacts = relevantFacts;
+	}
 
 	public DefaultSolver(Domain domain, Problem problem,
 			SearchStatistics searchStatistics, SolverOptions solverOptions)
@@ -71,6 +86,10 @@ public class DefaultSolver implements Solver {
 			logger.info(ai.toString());
 		}
 
+	}
+
+	public int getMetricDimension() {
+		return metricDimension;
 	}
 
 	public void setMaxRunTime(long defaultMaxRuntime) {
@@ -166,5 +185,35 @@ public class DefaultSolver implements Solver {
 	public List<ActionInstance> run() {
 		return search.getPath();
 	}
+
+	@Override
+	public SolverOptions getSolverOptions() {	
+		return solverOptions;
+	}
+
+	@Override
+	public Heuristic getHeuristic() {
+		// TODO Auto-generated method stub
+		return heuristic;
+	}
+
+	@Override
+	public Set<ActionInstance> getRelevantActions() {
+		// TODO Auto-generated method stub
+		return relevantActions;
+	}
+
+	@Override
+	public void setRelevantActions(Set<ActionInstance> mRelevantActions) {
+		relevantActions = mRelevantActions;
+	}
+
+	@Override
+	public Set<ActionInstance> getActionInstances() {
+		// TODO Auto-generated method stub
+		return new HashSet<ActionInstance>(actionInstances);
+	}
+
+	
 
 }

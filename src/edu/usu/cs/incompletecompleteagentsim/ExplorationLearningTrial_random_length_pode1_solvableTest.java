@@ -8,10 +8,10 @@ import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.PODEFFSolver;
+import edu.usu.cs.planner.PODEPISolver;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.GreedyBestFirstFFriskySolver;
-import edu.usu.cs.search.GreedyBestFirstLengthSolver;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -263,14 +263,29 @@ public class ExplorationLearningTrial_random_length_pode1_solvableTest
 	{
 		//Init appropriate planner (a CLA)
 		try{
-			if (args2[3].equalsIgnoreCase("length")) 
-				solver = new GreedyBestFirstLengthSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
-			else if (args2[3].equalsIgnoreCase("pode1")) 
-				solver = new GreedyBestFirstFFriskySolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
+			if (args2[3].equalsIgnoreCase("length")) {
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+
+				solverOptions.setUseMultipleSupportersInPlanningGraph(false);
+				solver = new PODEFFSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
+			}
+			else if (args2[3].equalsIgnoreCase("pode1")){ 
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+				solverOptions.setRiskArity(Integer.valueOf(args2[4].substring(4)));
+				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
+				solver = new PODEPISolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
+			}
 			else if (args2[3].equalsIgnoreCase("solvableCheck")) 
 			{
 				System.out.println("GreedyBestFirstLengthSolver");
-				solver = new GreedyBestFirstLengthSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+
+				solverOptions.setUseMultipleSupportersInPlanningGraph(false);
+				solver = new PODEFFSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
 			}
 		}catch (IllDefinedProblemException e) {e.printStackTrace();}
 		
