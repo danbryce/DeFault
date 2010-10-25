@@ -57,7 +57,7 @@ public class Agent
 	Long finishTime;
 	
 	public QA_Learning qa_side;
-	public Exploration_Learning explore_side;
+	public Passive_Learning explore_side;
 	
 	boolean debug;
 	
@@ -95,7 +95,7 @@ public class Agent
 		}
 		
 		qa_side = new QA_Learning(incompleteActionInstances);
-		explore_side = new Exploration_Learning(incompleteActionInstances);
+		explore_side = new Passive_Learning(incompleteActionInstances);
 		
 		random = new Random(0);
 						

@@ -10,7 +10,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
-public class Exploration_Learning 
+public class Passive_Learning 
 {
 	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances;
 	
@@ -40,7 +40,7 @@ public class Exploration_Learning
 	
 	boolean debug;
 	
-	Exploration_Learning(Hashtable<Integer, IncompleteActionInstance> a)
+	Passive_Learning(Hashtable<Integer, IncompleteActionInstance> a)
 	{
 		debug = false;
 		
