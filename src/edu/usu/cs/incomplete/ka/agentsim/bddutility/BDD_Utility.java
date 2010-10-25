@@ -8,7 +8,7 @@ import jdd.bdd.BDD;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.pddl.domain.incomplete.Risk;
+import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
@@ -17,8 +17,8 @@ import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 public class BDD_Utility 
 {
 	private BDD bdd;
-	private Map<Risk, Integer> riskToBDD;
-	private Map<Integer, Risk> bddToRisk;
+	private Map<Fault, Integer> riskToBDD;
+	private Map<Integer, Fault> bddToRisk;
 	private Integer bddRef;
 	
 	BDD_Utility()
@@ -26,8 +26,8 @@ public class BDD_Utility
 		bdd = new BDD(10000, 10000);
 		bddRef = bdd.ref(bdd.getOne());
 		
-		riskToBDD = new HashMap<Risk, Integer>();
-		bddToRisk = new HashMap<Integer, Risk>();
+		riskToBDD = new HashMap<Fault, Integer>();
+		bddToRisk = new HashMap<Integer, Fault>();
 	}
 	
 	public static void main(String[] args)
@@ -37,7 +37,7 @@ public class BDD_Utility
 		Problem problem 	 = util.buildProblem("hobonav_2_1.0_4_1.pddl", "hobonav_problem_2.pddl");
 		//util.printIncompleteActionInstances(problem);
 		
-		List<Risk> risks     = util.getAllRisks(problem);
+		List<Fault> risks     = util.getAllRisks(problem);
 		//util.printRisks(risks);
 		
 		util.createRiskMaps(risks);
@@ -51,7 +51,7 @@ public class BDD_Utility
 		//We have learned that "have_bindle" IS an add effect.
 		//We must encode this new knowledge in the BDD.
 		//The risk associated with this knowledge piece is:
-		Risk risk = Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, currAct.getName(), "have_bindle");
+		Fault risk = Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, currAct.getName(), "have_bindle");
 		//Prove we got the risk:
 		System.out.println(risk.toString());
 		//We insert this knowledge into the BDD
@@ -70,7 +70,7 @@ public class BDD_Utility
 		//We have learned that "have_bindle" IS NOT a delete effect.
 		//We must encode this new knowledge in the BDD.
 		//The risk associated with this knowledge piece is:
-		Risk risk2 = Risk.getRiskFromIndex(Risk.POSSCLOB, currAct.getName(), "have_bindle");
+		Fault risk2 = Fault.getRiskFromIndex(Fault.POSSCLOB, currAct.getName(), "have_bindle");
 		//Prove we got the risk:
 		System.out.println(risk2.toString());
 		//We insert this knowledge into the BDD
@@ -84,7 +84,7 @@ public class BDD_Utility
 		currAct 	= util.getActionWithName(problem, "move_0_0_0_1");
 		util.printIncompleteActionInstance(currAct);
 		//Let's setup up a query about a risk that is not in the BDD
-		Risk risk3 = Risk.getRiskFromIndex(Risk.POSSCLOB, currAct.getName(), "have_bindle");
+		Fault risk3 = Fault.getRiskFromIndex(Fault.POSSCLOB, currAct.getName(), "have_bindle");
 		//Let's query the BDD to see what it says about this risk.
 		System.out.println("* " + util.bdd.and(util.riskToBDD.get(risk3), util.bddRef));//164
 		System.out.println("* " + util.bdd.and(util.bdd.not(util.riskToBDD.get(risk3)), util.bddRef));//166
@@ -105,7 +105,7 @@ public class BDD_Utility
 	}
 	
 	//For single props learned only
-	void learnedIntoBDD(Risk risk, boolean isTrue)
+	void learnedIntoBDD(Fault risk, boolean isTrue)
 	{
 		Integer reference = riskToBDD.get(risk);
 		
@@ -150,20 +150,20 @@ public class BDD_Utility
 	}
 	
 	//PrecOpen = possible precondition, PossClob = possible delete effect, UnlistedEffect = possible add effect
-	void printRisks(List<Risk> risks)
+	void printRisks(List<Fault> risks)
 	{
 		System.out.println("********************************************************************************");
 		System.out.println("RISKS for given problem/domain.\n");
 		
-		for(Risk r : risks)
+		for(Fault r : risks)
 			System.out.println(r.toString());
 		
 		System.out.println("\n********************************************************************************\n");
 	}
 	
-	void createRiskMaps(List<Risk> risks)
+	void createRiskMaps(List<Fault> risks)
 	{
-		for (Risk risk : risks)
+		for (Fault risk : risks)
 		{
 			int temp = bdd.createVar();
 			riskToBDD.put(risk, temp);
@@ -171,9 +171,9 @@ public class BDD_Utility
 		}		
 	}
 	
-	private List<Risk> getAllRisks(Problem problem) 
+	private List<Fault> getAllRisks(Problem problem) 
 	{
-		List<Risk> risks = new ArrayList<Risk>();
+		List<Fault> risks = new ArrayList<Fault>();
 
 		for (ActionInstance a : problem.getActions()) 
 		{
@@ -181,15 +181,15 @@ public class BDD_Utility
 
 			// Poss-prec
 			for (Proposition possprec : action.getPossiblePreconditions())
-				risks.add(Risk.getRiskFromIndex(Risk.PRECOPEN, action.getName(), possprec.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possprec.getName()));
 
 			// Poss-del
 			for (Proposition possdel : action.getPossibleDeleteEffects())
-				risks.add(Risk.getRiskFromIndex(Risk.POSSCLOB, action.getName(), possdel.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), possdel.getName()));
 
 			// Poss-add
 			for (Proposition possadd : action.getPossibleAddEffects())
-				risks.add(Risk.getRiskFromIndex(Risk.UNLISTEDEFFECT, action.getName(), possadd.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(), possadd.getName()));
 		}
 
 		return risks;
