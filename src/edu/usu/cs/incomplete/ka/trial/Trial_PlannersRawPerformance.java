@@ -1,7 +1,7 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.*;
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
+import edu.usu.cs.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.ka.agentsystem.utilities.*;
 
 import java.util.List;
 import edu.usu.cs.pddl.domain.ActionInstance;

@@ -1,8 +1,4 @@
-package edu.usu.cs.incomplete.ka.batchtesters;
-
-import java.io.*;
-
-import edu.usu.cs.search.SearchTest;
+package edu.usu.cs.ka.batchtesters;
 
 public class BatchTester 
 {
