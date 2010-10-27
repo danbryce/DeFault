@@ -2,9 +2,9 @@ package edu.usu.cs.incomplete.ka.trial;
 
 import java.util.*;
 
-import edu.usu.cs.incomplete.ka.agentsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
-import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -114,7 +114,7 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 	public void generatePlanForSimVersionOfActions_noUncertainty()
 	{
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
 		
 		//System.out.println("HERE");
 		//IncompleteToComplete.printDomain(completeDomain_simulator);
@@ -144,7 +144,7 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		System.out.println("BEGIN - SIM-AGENT INTERACTION\n");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
 		//Makes complete version of actions using a 
 
 		Set<Proposition> currentState = problem.getInitialState();

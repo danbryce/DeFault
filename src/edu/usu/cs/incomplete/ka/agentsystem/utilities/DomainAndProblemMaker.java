@@ -1,4 +1,4 @@
-package edu.usu.cs.incomplete.ka.agentsystem;
+package edu.usu.cs.incomplete.ka.agentsystem.utilities;
 
 import java.io.File;
 import java.io.IOException;

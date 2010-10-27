@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
 
-import edu.usu.cs.incomplete.ka.agentsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
-import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -94,7 +94,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 		args2[0] = args[0];
 		args2[1] = args[1];
 		
-		//Simulator seed
+		//DomainExpert seed
 		int isSolvableFound = 0;
 		for(int simSeed = 0; (simSeed < 1000) && (isSolvableFound < 10); simSeed++) //0-?
 		{
@@ -176,7 +176,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 		isSolvable = false;
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));		
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));		
 		problem.setActionInstances(sim.getActionInstances());
 		
 		agent.startStopwatch();
@@ -198,7 +198,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 	public void randomExplorationLearningAgentOverGivenDomainAndProblem()
 	{
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
 
 		Set<Proposition> currentState = problem.getInitialState();
 		
@@ -247,7 +247,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 	public void planningAndExplorationLearningAgentSimTrialOverGivenDomainAndProblem()
 	{		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
 		//Makes complete version of actions using agent's version of actions
 
 		Set<Proposition> currentState = problem.getInitialState();

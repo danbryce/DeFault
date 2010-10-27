@@ -1,8 +1,8 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import edu.usu.cs.incomplete.ka.agentsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
-import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
 
 import java.util.List;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -23,7 +23,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 	
 	//args[0] 	== domain name
 	//extension == .pddl
-	//args[2] -> by this seed, the Simulator makes random/different complete domain versions 
+	//args[2] -> by this seed, the DomainExpert makes random/different complete domain versions 
 	 				using the incomplete domain's incomplete features.
  */
 
@@ -37,7 +37,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 
 	Amir <?> <?> pode1 <?> <?>
-	//checks the planners performance using the Simulator's complete version of the actions by these metrics:
+	//checks the planners performance using the DomainExpert's complete version of the actions by these metrics:
 		//# of actions in (complete) plan
 		//time to solve
 
@@ -90,7 +90,7 @@ public class Trial_PlannersRawPerformance
 		//Should only run on solvable seeds - use the complete action version of domain as randomly created by sim
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Agent agent1 = new Agent(trial1.domain_incomplete, trial1.problem);
-		Simulator sim1 = new Simulator(agent1.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim1 = new DomainExpert(agent1.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		trial1.problem.setActionInstances(sim1.getActionInstances());
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +119,7 @@ public class Trial_PlannersRawPerformance
 		//Setup again
 		Trial_PlannersRawPerformance trial2 = new Trial_PlannersRawPerformance(args);
 		Agent agent2 = new Agent(trial2.domain_incomplete, trial2.problem);
-		Simulator sim2 = new Simulator(agent2.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim2 = new DomainExpert(agent2.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		trial2.problem.setActionInstances(sim2.getActionInstances());
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +144,7 @@ public class Trial_PlannersRawPerformance
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Trial_PlannersRawPerformance trial3 = new Trial_PlannersRawPerformance(args);
 		Agent agent3 = new Agent(trial3.domain_incomplete, trial3.problem);
-//		Simulator sim3 = new Simulator(agent3.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+//		DomainExpert sim3 = new DomainExpert(agent3.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 //		trial3.problem.setActionInstances(agent3.getIncompleteActionInstancesAsActionInstances());
 		
 		/*
@@ -187,7 +187,7 @@ public class Trial_PlannersRawPerformance
 		//Setup again
 		Trial_PlannersRawPerformance trial4 = new Trial_PlannersRawPerformance(args);
 		Agent agent4 = new Agent(trial4.domain_incomplete, trial4.problem);
-		//Simulator sim4 = new Simulator(agent4.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		//DomainExpert sim4 = new DomainExpert(agent4.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		//trial4.problem.setActionInstances(agent4.getIncompleteActionInstancesAsActionInstances());
 			
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////

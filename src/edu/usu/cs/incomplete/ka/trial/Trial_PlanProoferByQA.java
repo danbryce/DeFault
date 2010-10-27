@@ -1,8 +1,8 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import edu.usu.cs.incomplete.ka.agentsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
-import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
 
 
 import java.util.List;
@@ -89,7 +89,7 @@ public class Trial_PlanProoferByQA
 		//System.out.print(args[0] + " " + args[2] + " isSolvableCheck");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		problem.setActionInstances(sim.getActionInstances());
 		
 		List<ActionInstance> plan = initSolverGetPlan("solvableCheck");
@@ -114,7 +114,7 @@ public class Trial_PlanProoferByQA
 		System.out.print(" length");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		
 		List<ActionInstance> plan;
 		int num_incompleteActions;
@@ -155,7 +155,7 @@ public class Trial_PlanProoferByQA
 		System.out.print(" pode1");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		
 		List<ActionInstance> plan;
 		int num_incompleteActions;

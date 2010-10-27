@@ -1,9 +1,9 @@
-package edu.usu.cs.incomplete.ka.agentsystem;
+package edu.usu.cs.incomplete.ka.agentsystem.mainsystem;
 
 import java.util.*;
 
 
-import edu.usu.cs.incomplete.ka.agentsystem.QA_Learning.QA_ActionAndPropChoice;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.QA_Learning.QA_ActionAndPropChoice;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
@@ -15,7 +15,7 @@ import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.search.*;
 
-public class Simulator 
+public class DomainExpert 
 {
 	boolean debug;
 	
@@ -25,7 +25,7 @@ public class Simulator
 	List<ActionInstance> actionInstances;
 	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances_completeVersion_Hashtable;
 	
-	public Simulator(List<ActionInstance> actionInstancesOfAgent, int seed)
+	public DomainExpert(List<ActionInstance> actionInstancesOfAgent, int seed)
 	{
 		debug = false;
 		

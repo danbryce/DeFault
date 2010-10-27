@@ -1,4 +1,4 @@
-package edu.usu.cs.incomplete.ka.agentsystem;
+package edu.usu.cs.incomplete.ka.bddtesting;
 
 import org.apache.log4j.Logger;
 

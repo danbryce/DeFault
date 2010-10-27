@@ -1,9 +1,9 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import edu.usu.cs.incomplete.ka.agentsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
-import edu.usu.cs.incomplete.ka.agentsystem.QA_Learning;
-import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.QA_Learning;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
 import edu.usu.cs.pddl.goalseffects.*;
 import edu.usu.cs.pddl.domain.translation.*;
 import edu.usu.cs.pddl.domain.*;
@@ -78,7 +78,7 @@ public class Trial_RandomQAandExplorationLearningAgentSim
 		System.out.println("BEGIN - SIM-AGENT INTERACTION\n");
 		//Could send in the rand seed - currently 0 within these classes
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getIncompleteActionInstancesAsActionInstances(), Integer.valueOf(args2[3]));
+		DomainExpert sim = new DomainExpert(agent.getIncompleteActionInstancesAsActionInstances(), Integer.valueOf(args2[3]));
 
 		Set<Proposition> currentState = problem.getInitialState();
 		System.out.println("\n----------------------------------");

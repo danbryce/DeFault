@@ -65,7 +65,7 @@ public class BatchTester
 //						args2[0] = pathToDomains + "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 //						args2[1] = pathToProblems + "bridges_problem" + extension;
 //						
-//						//Simulator seed
+//						//DomainExpert seed
 //						int isSolvableFound = 0;
 //						for(int simSeed = 0; (simSeed < 1000) && (isSolvableFound < 10); simSeed++) //0-?
 //						{

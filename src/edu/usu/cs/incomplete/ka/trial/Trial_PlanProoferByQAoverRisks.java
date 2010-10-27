@@ -4,9 +4,9 @@ import java.util.*;
 
 import javax.print.DocFlavor.STRING;
 
-import edu.usu.cs.incomplete.ka.agentsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
-import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -91,7 +91,7 @@ public class Trial_PlanProoferByQAoverRisks
 		//System.out.print(args[0] + " " + args[2] + " isSolvableCheck");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		problem.setActionInstances(sim.getActionInstances());
 		
 		List<ActionInstance> plan = initSolverGetPlan("solvableCheck");
@@ -114,7 +114,7 @@ public class Trial_PlanProoferByQAoverRisks
 		if(debug) System.out.print(" ");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		
 		List<ActionInstance> plan;
 		int num_riskyActions;
@@ -169,7 +169,7 @@ public class Trial_PlanProoferByQAoverRisks
 		System.out.print(" " + qa_total + ":" + plan.size() + ":" + count + ":" + agent.getTimeToSolve());
 	}
 	
-	boolean isActionWithPossiblesRisky(int actionBeingTestedForRiskiness, Agent agent, Simulator sim, List<ActionInstance> plan)
+	boolean isActionWithPossiblesRisky(int actionBeingTestedForRiskiness, Agent agent, DomainExpert sim, List<ActionInstance> plan)
 	{	
 		Set<Proposition> projectedState = new HashSet(problem.getInitialState());
 	
@@ -226,7 +226,7 @@ public class Trial_PlanProoferByQAoverRisks
 		System.out.print(" pode1");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		Simulator sim = new Simulator(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		
 		List<ActionInstance> plan;		
 		int num_riskyActions;
