@@ -1,7 +1,6 @@
 package edu.usu.cs.incomplete.ka.agentsystem.utilities;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import jdd.bdd.BDD;
@@ -11,8 +10,6 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
-import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
-import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 
 public class BDD_Utility 
 {

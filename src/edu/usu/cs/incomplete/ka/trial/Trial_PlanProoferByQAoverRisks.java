@@ -2,11 +2,9 @@ package edu.usu.cs.incomplete.ka.trial;
 
 import java.util.*;
 
-import javax.print.DocFlavor.STRING;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
 
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -55,13 +53,8 @@ public class Trial_PlanProoferByQAoverRisks
 		
 		if (args.length !=3)
 			usage(args);
-		
-		String pathToDomains = "testfiles/incomplete/bridges/";
-		String[] args2 = new String[2];
-		args2[0] = pathToDomains + args[0];
-		args2[1] = pathToDomains + args[1];
 			
-		DomainAndProblemMaker domainMaker = new DomainAndProblemMaker(args2);	
+		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(args[0], args[1]);	
 		incompleteDomain_agent = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
 				
@@ -123,7 +116,10 @@ public class Trial_PlanProoferByQAoverRisks
 		agent.startStopwatch();
 		do
 		{
-			problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+			Hashtable temp = agent.getIncompleteActionInstanceHT();
+			List temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
+			problem.setActionInstances(temp2);
+			
 			plan = initSolverGetPlan("length");
 			if(plan == null)
 			{
@@ -144,7 +140,7 @@ public class Trial_PlanProoferByQAoverRisks
 			for (int i = 0; i < plan.size(); i++)
 			{
 				IncompleteActionInstance ia = (IncompleteActionInstance) plan.get(i);
-				if(!Agent.isActionComplete(ia))
+				if(!Actions_Utility.isIncompleteActionComplete(ia))
 				{
 					boolean isRisky = isActionWithPossiblesRisky(i, agent, sim, plan);
 					if(debug){System.out.print("\n" + plan.get(i) + " " + isRisky);}
@@ -235,7 +231,9 @@ public class Trial_PlanProoferByQAoverRisks
 		agent.startStopwatch();
 		do
 		{
-			problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+			Hashtable temp = agent.getIncompleteActionInstanceHT();
+			List temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
+			problem.setActionInstances(temp2);
 		
 			plan = initSolverGetPlan("pode1");
 			if(plan == null)
@@ -257,7 +255,7 @@ public class Trial_PlanProoferByQAoverRisks
 			for (int i = 0; i < plan.size(); i++)
 			{			
 				IncompleteActionInstance ia = (IncompleteActionInstance) plan.get(i);
-				if (!Agent.isActionComplete(ia))
+				if (!Actions_Utility.isIncompleteActionComplete(ia))
 				{
 					boolean isRisky = isActionWithPossiblesRisky(i, agent, sim, plan);
 					if(debug){System.out.print("\n" + plan.get(i) + " " + isRisky);}

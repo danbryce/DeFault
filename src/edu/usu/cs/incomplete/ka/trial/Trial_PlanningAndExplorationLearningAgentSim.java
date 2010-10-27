@@ -2,21 +2,14 @@ package edu.usu.cs.incomplete.ka.trial;
 
 import java.util.*;
 
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.planner.PODEFFSolver;
-import edu.usu.cs.planner.PODEPISolver;
-import edu.usu.cs.planner.Solver;
-import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.search.SearchStatistics;
-import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 
 //For solvableTest, length, pode1
@@ -25,11 +18,8 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 	Domain incompleteDomain_agent;
 	Problem problem;
 	
-	Solver solver;
-	SearchStatistics searchStatistics;
-	SolverOptions solverOptions;
-	
-	String[] args2;
+	Integer seed;
+		
 	Trial_PlanningAndExplorationLearningAgentSim(String[] args)
 	{				
 		if (args.length !=4)
@@ -40,35 +30,15 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		//[2]<seed(int)> - for seed of sim version of actions - [0-9]
 		//[3]<planner ["solvableCheck" | "random" | "length" | "pode1"]> 
 		
-		args2 = args;
-						
-		String[] args3 = new String[2];
-		args3[0] = args[0];
-		args3[1] = args[1];
+		seed = Integer.valueOf(args[2]);
 		
-		DomainAndProblemMaker domainMaker = new DomainAndProblemMaker(args3);	
+		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(args[0], args[1]);	
+		
 		incompleteDomain_agent = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
 				
-		solver = null;
-		searchStatistics = new SearchStatistics();
-		solverOptions = new SolverOptions();
-		
-		if (args2[3].equalsIgnoreCase("length") || args2[3].equalsIgnoreCase("solvableCheck")) 
-		{
-			solverOptions.setUsePreferredOperators(true);
-			solverOptions.setUseDeferredEvaluation(true);
-		} 
-		else if (args2[3].equalsIgnoreCase("pode1")) 
-		{
-			solverOptions.setUsePreferredOperators(true);
-			solverOptions.setUseDeferredEvaluation(true);
-			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-			solverOptions.setRiskArity(Integer.valueOf(1));//arity 1 only
-		}
-		
 		//Check Problems initial state and goal action
-		printProblemInitialStateAndGoalAction();
+		DomainAndProblemMaker_Utility.printProblemInitialStateAndGoalAction(problem);
 	}
 		
 	public static void main (String[] args)
@@ -76,45 +46,19 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		Trial_PlanningAndExplorationLearningAgentSim env = new Trial_PlanningAndExplorationLearningAgentSim(args);
 		
 		//Planner-based trial on uncertain actions involving exploration learning
-		if(env.args2[3].equalsIgnoreCase("pode1") || env.args2[3].equalsIgnoreCase("length"))
-			env.planningAndExplorationLearningAgentSimTrialOverGivenDomainAndProblem();
+		if(args[3].equalsIgnoreCase("pode1") || args[3].equalsIgnoreCase("length"))
+			env.planningAndExplorationLearningAgentSimTrialOverGivenDomainAndProblem(args[3]);
 		//Uses sim's complete version of actions, determined by a seed given
-		else if(env.args2[3].equalsIgnoreCase("solvableCheck"))
-			env.generatePlanForSimVersionOfActions_noUncertainty();
+		else if(args[3].equalsIgnoreCase("solvableCheck"))
+			env.generatePlanForSimVersionOfActions_noUncertainty(args[3]);
 		else
-			System.out.println("wrong: " + env.args2[4]);
+			System.out.println("wrong: " + args[3]);
 	}
-	
-	void printProblemInitialStateAndGoalAction()
-	{	
-		System.out.println("problem: " + problem);
 		
-		System.out.println("problem.getObjects(): " + problem.getObjects());
-		System.out.println("problem.getStartState(): "  + problem.getStartState());
-		System.out.println("problem.getStartState().getFunctionLiterals(): "  + problem.getStartState().getFunctionLiterals());
-		System.out.println("problem.getStartState().getLiterals(): "  + problem.getStartState().getLiterals());
-		System.out.println("problem.getStartState().getPredicateLiterals(): "  + problem.getStartState().getPredicateLiterals());
-		
-		Set<Proposition> currentState = problem.getInitialState();
-		System.out.println("************************************************************************");
-		System.out.println("BEGIN - INITIAL STATE:\n");
-		for (Proposition p : currentState)
-			System.out.print(p + " ");
-		System.out.println("\n\nEND - INITIAL STATE");
-		System.out.println("************************************************************************\n");
-		
-		System.out.println("************************************************************************");
-		System.out.println("BEGIN - INCOMPLETEACTION INSTANCE - GOAL ACTION:\n");
-		Agent.printIncompleteVersionOfActionInstance(problem.getGoalAction());
-		System.out.println("\nTHUS, GOAL STATE INCLUDES: " + problem.getGoalAction().getPreconditions());
-		System.out.println("\nEND - INCOMPLETEACTION INSTANCE - GOAL ACTION:\n");
-		System.out.println("************************************************************************\n");	
-	}
-	
-	public void generatePlanForSimVersionOfActions_noUncertainty()
+	public void generatePlanForSimVersionOfActions_noUncertainty(String plannerType)
 	{
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), seed);
 		
 		//System.out.println("HERE");
 		//IncompleteToComplete.printDomain(completeDomain_simulator);
@@ -125,7 +69,7 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		agent.startStopwatch();
 		
 		//Init the planner and get plan
-		List<ActionInstance> plan = initSolverGetPlan();
+		List<ActionInstance> plan = initSolverGetPlan(plannerType);
 		
 		//for(ActionInstance a : plan)
 		//{
@@ -138,13 +82,13 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		System.out.println("solvableCheck - #Actions: " + plan.size() + " Time: " + agent.getTimeToSolve());
 	}
 	
-	public void planningAndExplorationLearningAgentSimTrialOverGivenDomainAndProblem()
+	public void planningAndExplorationLearningAgentSimTrialOverGivenDomainAndProblem(String plannerType)
 	{
 		System.out.println("************************************************************************");
 		System.out.println("BEGIN - SIM-AGENT INTERACTION\n");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
-		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args2[2]));
+		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), seed);
 		//Makes complete version of actions using a 
 
 		Set<Proposition> currentState = problem.getInitialState();
@@ -159,7 +103,7 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		agent.startStopwatch();
 		
 		//Init the planner and get plan
-		List<ActionInstance> plan = initSolverGetPlan();
+		List<ActionInstance> plan = initSolverGetPlan(plannerType);
 		
 		//Repeat until currentState contains goal state or no plan is found
 		while(!currentState.containsAll(problem.getGoalAction().getPreconditions()))
@@ -171,7 +115,7 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 			IncompleteActionInstance incompleteActionChosen = (IncompleteActionInstance) plan.remove(0);
 			System.out.println("\n----------------------------------------------------------------");
 			System.out.println("ACTION SELECTED (BY PLANNER): ");
-			Agent.printIncompleteVersionOfActionInstance(incompleteActionChosen);
+			Actions_Utility.printIncompleteActionInstance(incompleteActionChosen);
 			System.out.println("----------------------------------------------------------------");
 			
 			//Sim updating state using sim's complete knowledge of action
@@ -182,9 +126,11 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 			currentState = newState;
 			
 			//After agent has learned, send new version of actions, new state, and call planner again
-			problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+			Hashtable temp = agent.getIncompleteActionInstanceHT();
+			List temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
+			problem.setActionInstances(temp2);
 			problem.setInitialState(currentState);
-			plan = initSolverGetPlan();
+			plan = initSolverGetPlan(plannerType);
 			
 			//Misc details before next iteration
 			System.out.println("\nPRESS ENTER TO CONTINUE...");
@@ -218,38 +164,21 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		System.out.println("************************************************************************\n");	
 	}
 	
-	private List<ActionInstance> initSolverGetPlan()
+	private List<ActionInstance> initSolverGetPlan(String plannerType)
 	{
-		//Init appropriate planner (a CLA)
-		try{
-			if (args2[3].equalsIgnoreCase("length")) {
-				solverOptions.setUsePreferredOperators(true);
-				solverOptions.setUseDeferredEvaluation(true);
-
-				solverOptions.setUseMultipleSupportersInPlanningGraph(false);
-				solver = new PODEFFSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
-			}
-			else if (args2[3].subSequence(0,4).toString().equalsIgnoreCase("pode")){ 
-				solverOptions.setUsePreferredOperators(true);
-				solverOptions.setUseDeferredEvaluation(true);
-				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-				solverOptions.setRiskArity(Integer.valueOf(args2[3].substring(4)));
-				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
-				solver = new PODEPISolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
-			}
-			else if (args2[3].equalsIgnoreCase("solvableCheck")) 
-			{
-				System.out.println("GreedyBestFirstLengthSolver");
-				solverOptions.setUsePreferredOperators(true);
-				solverOptions.setUseDeferredEvaluation(true);
-
-				solverOptions.setUseMultipleSupportersInPlanningGraph(false);
-				solver = new PODEFFSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
-			}
-		}catch (IllDefinedProblemException e) {e.printStackTrace();}
+		Planner planner = new Planner(incompleteDomain_agent, problem);
+		List<ActionInstance> plan = null;
 		
-		//Get plan
-		List<ActionInstance> plan = solver.run();
+		//Init appropriate planner (a CLA)
+
+		if (plannerType.equalsIgnoreCase("length")) 
+			plan = planner.runAmirPlanner();
+		else if (plannerType.subSequence(0,4).toString().equalsIgnoreCase("pode")) 
+			plan = planner.runBrycePlanner();
+		else if (plannerType.equalsIgnoreCase("solvableCheck")) 
+			plan = planner.runAmirPlanner();
+
+		
 		if(plan == null)
 		{
 			System.out.println("NO POSSIBLE PLAN FOUND");

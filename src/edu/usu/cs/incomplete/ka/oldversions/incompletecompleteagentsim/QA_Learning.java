@@ -1,11 +1,9 @@
-package edu.usu.cs.incomplete.ka.agentsystem.mainsystem;
+package edu.usu.cs.incomplete.ka.oldversions.incompletecompleteagentsim;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Set;
-
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
 
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
@@ -64,7 +62,7 @@ public class QA_Learning
 		LinkedList<IncompleteActionInstance> incompleteActionsWithPossibles = new LinkedList<IncompleteActionInstance>();
 		for(IncompleteActionInstance a : incompleteActionInstances.values())
 		{			
-			if(!Actions_Utility.isIncompleteActionComplete(a))
+			if(!Agent.isActionComplete(a))
 			{
 				System.out.println(" " + a.getName());
 				incompleteActionsWithPossibles.add(a);
@@ -84,7 +82,7 @@ public class QA_Learning
 		IncompleteActionInstance a = incompleteActionsWithPossibles.get(choice);
 		
 		System.out.println("\nACTION CHOSEN: ");
-		Actions_Utility.printIncompleteVersionOfActionInstance(a);
+		Agent.printIncompleteVersionOfActionInstance(a);
 		
 		//restrict the possible prop choice to learn about to the possible pre/add/delete lists that actually have possibles
 		LinkedList<Integer> ListsWithPossiblesForChosenAction = new LinkedList<Integer>();
@@ -184,12 +182,12 @@ public class QA_Learning
 		else System.out.println("NO");
 	
 		System.out.println("\nNEW VERSION OF INCOMPLETE ACTION (AFTER LEARNING BY QA):");
-		Actions_Utility.printIncompleteVersionOfActionInstance(newVersionOfAction);
+		Agent.printIncompleteVersionOfActionInstance(newVersionOfAction);
 		incompleteActionInstances.put(newVersionOfAction.getIndex(), newVersionOfAction);		
 		System.out.println("----------------------------------------------------------------");
 	}
 		
-	public class QA_ActionAndPropChoice
+	class QA_ActionAndPropChoice
 	{
 		IncompleteActionInstance action;
 		Integer listOriginOfProp;

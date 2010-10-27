@@ -1,4 +1,4 @@
-package edu.usu.cs.incomplete.ka.agentsystem.utilities;
+package edu.usu.cs.incomplete.ka.oldversions.incompletecompleteagentsim;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,9 +26,9 @@ public class DomainAndProblemMaker
 		if (args.length != 2) { usage();}
 		else
 		{			
-			//System.out.println("domain:      " + args[0]);
-			//System.out.println("problem:     " + args[1]);
-			//System.out.println();
+			System.out.println("domain:      " + args[0]);
+			System.out.println("problem:     " + args[1]);
+			System.out.println();
 		}
 		
 		//random = new Random(seed);

@@ -1,8 +1,7 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
 
 import java.util.List;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -23,7 +22,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 	
 	//args[0] 	== domain name
 	//extension == .pddl
-	//args[2] -> by this seed, the DomainExpert makes random/different complete domain versions 
+	//args[2] -> by this seed, the Simulator makes random/different complete domain versions 
 	 				using the incomplete domain's incomplete features.
  */
 
@@ -37,7 +36,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 
 	Amir <?> <?> pode1 <?> <?>
-	//checks the planners performance using the DomainExpert's complete version of the actions by these metrics:
+	//checks the planners performance using the Simulator's complete version of the actions by these metrics:
 		//# of actions in (complete) plan
 		//time to solve
 
@@ -62,7 +61,6 @@ public class Trial_PlannersRawPerformance
 		
 	public static int numSuccesses = 0;
 		
-	String[] args2;
 	public Trial_PlannersRawPerformance(String[] args)
 	{				
 		if (args.length !=3)
@@ -71,13 +69,7 @@ public class Trial_PlannersRawPerformance
 			System.exit(1);
 		}
 		
-		//Initting args to send to DomainAndProblemMaker
-		String pathToDomains = "testfiles/incomplete/bridges/";
-		args2 = new String[2];
-		args2[0] = pathToDomains + args[0];
-		args2[1] = pathToDomains + args[1];
-		
-		DomainAndProblemMaker domainMaker = new DomainAndProblemMaker(args2);	
+		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(args[0], args[1]);	
 		domain_incomplete = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
 	}
@@ -144,7 +136,7 @@ public class Trial_PlannersRawPerformance
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Trial_PlannersRawPerformance trial3 = new Trial_PlannersRawPerformance(args);
 		Agent agent3 = new Agent(trial3.domain_incomplete, trial3.problem);
-//		DomainExpert sim3 = new DomainExpert(agent3.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+//		Simulator sim3 = new Simulator(agent3.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 //		trial3.problem.setActionInstances(agent3.getIncompleteActionInstancesAsActionInstances());
 		
 		/*
@@ -187,7 +179,7 @@ public class Trial_PlannersRawPerformance
 		//Setup again
 		Trial_PlannersRawPerformance trial4 = new Trial_PlannersRawPerformance(args);
 		Agent agent4 = new Agent(trial4.domain_incomplete, trial4.problem);
-		//DomainExpert sim4 = new DomainExpert(agent4.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
+		//Simulator sim4 = new Simulator(agent4.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		//trial4.problem.setActionInstances(agent4.getIncompleteActionInstancesAsActionInstances());
 			
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,7 +258,7 @@ public class Trial_PlannersRawPerformance
 		for(ActionInstance a : p)
 		{
 			IncompleteActionInstance act = (IncompleteActionInstance) a;	
-			if(!Agent.isActionComplete(act))
+			if(!Actions_Utility.isIncompleteActionComplete(act))
 				count++;
 		}
 		return count;
@@ -278,7 +270,7 @@ public class Trial_PlannersRawPerformance
 		for(ActionInstance a : p)
 		{
 			IncompleteActionInstance act = (IncompleteActionInstance) a;	
-			if(!Agent.isActionComplete(act))
+			if(!Actions_Utility.isIncompleteActionComplete(act))
 			{
 				if(act.getPossibleAddEffects() != null) 	count += act.getPossibleAddEffects().size();
 				if(act.getPossibleDeleteEffects() != null) 	count += act.getPossibleDeleteEffects().size();

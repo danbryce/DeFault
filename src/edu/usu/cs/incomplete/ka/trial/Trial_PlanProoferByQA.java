@@ -1,13 +1,9 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
 
-
-import java.util.List;
-import javax.print.DocFlavor.STRING;
-
+import java.util.*;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -18,8 +14,6 @@ import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
-
-
 
 //Output to screen:
 //bridges_v3_4_0.5_1.pddl 1 isSolvableCheck 51:18 length 29:40 12:98 0:18 3:0.967 pode1 4:16 1:16 0:16 3:2.057
@@ -53,13 +47,8 @@ public class Trial_PlanProoferByQA
 	{				
 		if (args.length !=3)
 			usage(args);
-		
-		String pathToDomains = "testfiles/incomplete/bridges/";
-		String[] args2 = new String[2];
-		args2[0] = pathToDomains + args[0];
-		args2[1] = pathToDomains + args[1];
 			
-		DomainAndProblemMaker domainMaker = new DomainAndProblemMaker(args2);	
+		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(args[0], args[1]);	
 		incompleteDomain_agent = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
 				
@@ -123,7 +112,9 @@ public class Trial_PlanProoferByQA
 		agent.startStopwatch();
 		do
 		{
-			problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+			Hashtable temp = agent.getIncompleteActionInstanceHT();
+			List<ActionInstance> temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
+			problem.setActionInstances(temp2);
 			plan = initSolverGetPlan("length");
 			
 			num_incompleteActions = 0;
@@ -131,7 +122,7 @@ public class Trial_PlanProoferByQA
 			for (ActionInstance a : plan)
 			{			
 				IncompleteActionInstance ia = (IncompleteActionInstance) a;
-				if (!Agent.isActionComplete(ia))
+				if (!Actions_Utility.isIncompleteActionComplete(ia))
 				{
 					completeVersionByQA = sim.getSimVersionOfIncompleteActionInstanceByID(ia.getIndex());
 					agent.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
@@ -164,7 +155,9 @@ public class Trial_PlanProoferByQA
 		agent.startStopwatch();
 		do
 		{
-			problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+			Hashtable temp = agent.getIncompleteActionInstanceHT();
+			List<ActionInstance> temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
+			problem.setActionInstances(temp2);
 		
 			plan = initSolverGetPlan("pode1");
 			num_incompleteActions = 0;
@@ -173,7 +166,7 @@ public class Trial_PlanProoferByQA
 			for (ActionInstance a : plan)
 			{			
 				IncompleteActionInstance ia = (IncompleteActionInstance) a;
-				if (!Agent.isActionComplete(ia))
+				if (!Actions_Utility.isIncompleteActionComplete(ia))
 				{
 					completeVersionByQA = sim.getSimVersionOfIncompleteActionInstanceByID(ia.getIndex());
 					agent.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);

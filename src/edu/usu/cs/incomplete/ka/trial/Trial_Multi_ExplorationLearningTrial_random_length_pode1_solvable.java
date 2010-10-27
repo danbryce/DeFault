@@ -1,13 +1,11 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.*;
 
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.Agent;
-import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.DomainExpert;
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.DomainAndProblemMaker;
+import edu.usu.cs.incomplete.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
+
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -52,10 +50,10 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 		
 		System.gc();
 								
-		DomainAndProblemMaker domainMaker = new DomainAndProblemMaker(args);	
+		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(args[0], args[1]);	
 		
 		incompleteDomain_agent = domainMaker.getOriginalIncompleteDomain();
-		if(debug){DomainAndProblemMaker.printDomain(incompleteDomain_agent);}
+		if(debug){DomainAndProblemMaker_Utility.printDomain(incompleteDomain_agent);}
 		problem = domainMaker.getProblem();
 				
 		solver = null;
@@ -94,7 +92,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 		args2[0] = args[0];
 		args2[1] = args[1];
 		
-		//DomainExpert seed
+		//Simulator seed
 		int isSolvableFound = 0;
 		for(int simSeed = 0; (simSeed < 1000) && (isSolvableFound < 10); simSeed++) //0-?
 		{
@@ -276,7 +274,8 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 			//After agent has learned, send new version of actions, new state, and call planner again
 			if(!isValidAction || (!currentState.containsAll(problem.getGoalAction().getPreconditions()) && plan.size() == 0) )
 			{
-				problem.setActionInstances(agent.getIncompleteActionInstancesAsActionInstances());
+				List temp = Actions_Utility.getIncompleteActionInstancesAsActionInstances(agent.getIncompleteActionInstanceHT());
+				problem.setActionInstances(temp);
 				problem.setInitialState(currentState);
 				plan = initSolverGetPlan();
 				if(plan == null) break;
@@ -369,12 +368,13 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 		
 		System.out.println("************************************************************************");
 		System.out.println("BEGIN - INCOMPLETEACTION INSTANCE - GOAL ACTION:\n");
-		Agent.printIncompleteVersionOfActionInstance(problem.getGoalAction());
+		Actions_Utility.printIncompleteVersionOfActionInstance(problem.getGoalAction());
 		System.out.println("\nTHUS, GOAL STATE INCLUDES: " + problem.getGoalAction().getPreconditions());
 		System.out.println("\nEND - INCOMPLETEACTION INSTANCE - GOAL ACTION:\n");
 		System.out.println("************************************************************************\n");	
 	}
 	
+	@Override
 	protected void finalize() throws Throwable 
 	{
 	    try{out.close();}        // close open files

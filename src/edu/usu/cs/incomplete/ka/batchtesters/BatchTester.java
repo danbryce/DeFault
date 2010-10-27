@@ -1,9 +1,5 @@
 package edu.usu.cs.incomplete.ka.batchtesters;
 
-import java.io.*;
-
-import edu.usu.cs.search.SearchTest;
-
 public class BatchTester 
 {
 //	static FileWriter fstream;
@@ -65,7 +61,7 @@ public class BatchTester
 //						args2[0] = pathToDomains + "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 //						args2[1] = pathToProblems + "bridges_problem" + extension;
 //						
-//						//DomainExpert seed
+//						//Simulator seed
 //						int isSolvableFound = 0;
 //						for(int simSeed = 0; (simSeed < 1000) && (isSolvableFound < 10); simSeed++) //0-?
 //						{

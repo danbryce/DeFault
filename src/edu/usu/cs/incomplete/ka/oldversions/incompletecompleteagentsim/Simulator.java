@@ -1,13 +1,13 @@
-package edu.usu.cs.incomplete.ka.agentsystem.mainsystem;
+package edu.usu.cs.incomplete.ka.oldversions.incompletecompleteagentsim;
 
 import java.util.*;
 
-import edu.usu.cs.incomplete.ka.agentsystem.utilities.*;
+
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.*;
 
-public class DomainExpert 
+public class Simulator 
 {
 	boolean debug;
 	
@@ -17,81 +17,59 @@ public class DomainExpert
 	List<ActionInstance> actionInstances;
 	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances_completeVersion_Hashtable;
 	
-	public DomainExpert(List<ActionInstance> actionInstancesOfAgent, int seed)
+	Simulator(List<ActionInstance> actionInstancesOfAgent, int seed)
 	{
-		debug = false;
+		debug = true;
 		
 		random = new Random(seed);
 		probability = .5;
 		
-		if(debug){
-			System.out.println("\n-----------------------------------------------------");
-			System.out.println("IN SIMULATOR CONSTRUCTOR\n");
-			System.out.println("seed: " + seed);
-			System.out.println("probability:" + probability);
-			System.out.println("\n-----------------------------------------------------");
-			System.out.println("SIMULATOR ACTIONS AVAILABLE (no possibles): ");
-		}
+		System.out.println("\n-----------------------------------------------------");
+		System.out.println("IN SIMULATOR CONSTRUCTOR\n");
+		System.out.println("seed: " + seed);
+		System.out.println("probability:" + probability);
+		
 		createActionsWithNoPossiblesByProbabilityAndSeed(actionInstancesOfAgent);
+		
+		System.out.println("\n-----------------------------------------------------");
+		System.out.println("SIMULATOR ACTIONS AVAILABLE (no possibles): ");
+		
 		incompleteActionInstances_completeVersion_Hashtable = new Hashtable<Integer, IncompleteActionInstance>();
 		for(ActionInstance act: actionInstances)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;
 			incompleteActionInstances_completeVersion_Hashtable.put(a.getIndex(), a);
 			
-			if(debug){
-				System.out.println();
-				Actions_Utility.printIncompleteVersionOfActionInstance(a);
-			}
+			System.out.println();
+			Agent.printIncompleteVersionOfActionInstance(a);
 		}
 		
-		if(debug){
-			System.out.println("\nEND - SIMULATOR ACTIONS AVAILABLE");
-			System.out.println("-----------------------------------------------------");
-			System.out.println("\nLEAVING SIMULATOR CONSTRUCTOR...");
-			System.out.println("-----------------------------------------------------\n");
-		}
-	}
-	
-	public int getCountOfFeaturesInSimVersionOfActions()
-	{
-		int count = 0;
-		for(ActionInstance act: actionInstances)
-		{
-			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			if(a.getPreconditions() != null) count += a.getPreconditions().size();
-			if(a.getAddEffects() != null) count += a.getAddEffects().size();
-			if(a.getDeleteEffects() != null) count += a.getDeleteEffects().size();	
-		}
-		return count;
-	}
-	
-	public IncompleteActionInstance getSimVersionOfIncompleteActionInstanceByID(Integer id)
-	{
-		return incompleteActionInstances_completeVersion_Hashtable.get(id);
+		System.out.println("\nEND - SIMULATOR ACTIONS AVAILABLE");
+		System.out.println("-----------------------------------------------------");
+		
+		System.out.println("\nLEAVING SIMULATOR CONSTRUCTOR...");
+		System.out.println("-----------------------------------------------------\n");
 	}
 	
 	public List<ActionInstance> getActionInstances(){ return actionInstances; }
 	
 	public Set<Proposition> updateState(Set<Proposition> currentState, IncompleteActionInstance incompleteActionChosen)
 	{
-		if(debug){
-			System.out.println("\n----------------------------------------------------------------");
-			System.out.println("SIM updates state based on agents action using its enhanced info");
-			System.out.println(" about pres and effects. The updated state shows the changes.");
-			System.out.println(" Agent will have to discover which of the possible pres/effects");
-			System.out.println(" for each of his actions are real for this particular domain.");
-			System.out.println(" Sim DOES NOT tell Agent that the action was a success/failure.");
-			System.out.println(" (Note: an accepted action might not change state -");
-			System.out.println("        consider the same action taken twice in a row or");
-			System.out.println("        actions whose add effects already exist and");
-			System.out.println("        whose delete effects already don't exist...\n");
-		}
+		System.out.println("\n----------------------------------------------------------------");
+		System.out.println("SIM updates state based on agents action using its enhanced info");
+		System.out.println(" about pres and effects. The updated state shows the changes.");
+		System.out.println(" Agent will have to discover which of the possible pres/effects");
+		System.out.println(" for each of his actions are real for this particular domain.");
+		System.out.println(" Sim DOES NOT tell Agent that the action was a success/failure.");
+		System.out.println(" (Note: an accepted action might not change state -");
+		System.out.println("        consider the same action taken twice in a row or");
+		System.out.println("        actions whose add effects already exist and");
+		System.out.println("        whose delete effects already don't exist...\n");
 		
 		Set<Proposition> newState = new HashSet<Proposition>(currentState);
 		
 		IncompleteActionInstance a = incompleteActionInstances_completeVersion_Hashtable.get(incompleteActionChosen.getIndex());			
-		if(debug){Actions_Utility.printIncompleteVersionOfActionInstance(a);}
+		Agent.printIncompleteVersionOfActionInstance(a);
 				
 		if(currentState.containsAll(a.getPreconditions()))
 		{
@@ -99,7 +77,7 @@ public class DomainExpert
 			newState.addAll(a.getAddEffects());
 		}
 		
-		if(debug){System.out.println("----------------------------------------------------------------\n");}
+		System.out.println("----------------------------------------------------------------\n");
 		return newState;
 	}
 	
@@ -123,7 +101,7 @@ public class DomainExpert
 			return false;
 		}
 		else
-			Actions_Utility.printIncompleteVersionOfActionInstance(a);
+			Agent.printIncompleteVersionOfActionInstance(a);
 			
 		//An incomplete action has 6 lists.  
 		//The known pres/adds/deletes are 1-3.
@@ -136,7 +114,7 @@ public class DomainExpert
 		boolean isFound = false;
 		switch(listToCheck)
 		{
-			case (Actions_Utility.KNOWNPRECONDITIONSLIST):
+			case (Agent.KNOWNPRECONDITIONSLIST):
 				if(a.getPreconditions().contains(actionWithQ.propToLearnAbout))
 				{
 					System.out.println("Sim found: " + actionWithQ.propToLearnAbout);
@@ -149,7 +127,7 @@ public class DomainExpert
 					System.out.println(" in the complete action version's preconditions list.");
 				}
 				break;
-			case (Actions_Utility.KNOWNADDEFFECTSLIST):
+			case (Agent.KNOWNADDEFFECTSLIST):
 				if(a.getAddEffects().contains(actionWithQ.propToLearnAbout))
 				{
 					System.out.println("Sim found: " + actionWithQ.propToLearnAbout);
@@ -162,7 +140,7 @@ public class DomainExpert
 					System.out.println(" in the complete action version's add effects list.");
 				}
 				break;
-			case (Actions_Utility.KNOWNDELETEEFFECTSLIST):
+			case (Agent.KNOWNDELETEEFFECTSLIST):
 				if(a.getDeleteEffects().contains(actionWithQ.propToLearnAbout))
 				{
 					System.out.println("Sim found: " + actionWithQ.propToLearnAbout);
@@ -224,10 +202,10 @@ public class DomainExpert
 		{
 			IncompleteActionInstance ia = (IncompleteActionInstance) a;
 			
-			//System.out.println("\n----------------------------------------------------------------");
-			//System.out.println("CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
-			//System.out.println("\nOriginal incomplete action: ");
-			//printIncompleteVersionOfActionInstance(ia);
+			System.out.println("\n----------------------------------------------------------------");
+			System.out.println("CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
+			System.out.println("\nOriginal incomplete action: ");
+			printIncompleteVersionOfActionInstance(ia);
 			
 			newPreconditionsSet = new HashSet<Proposition>(ia.getPreconditions());
 			newAddEffectsSet 	= new HashSet<Proposition>(ia.getAddEffects());
@@ -293,11 +271,11 @@ public class DomainExpert
 					newAddEffectsSet, newDeleteEffectsSet, newEmptySet, newEmptySet, newEmptySet, ia.getIndex());
 			actionInstances.add(newIA);
 			
-			//System.out.println("\nNew complete version of action for sim: ");
-			//printIncompleteVersionOfActionInstance(newIA);
+			System.out.println("\nNew complete version of action for sim: ");
+			printIncompleteVersionOfActionInstance(newIA);
 			
-			//System.out.println("END - CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
-			//System.out.println("----------------------------------------------------------------");	
+			System.out.println("END - CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
+			System.out.println("----------------------------------------------------------------");	
 		}			
 	}
 }

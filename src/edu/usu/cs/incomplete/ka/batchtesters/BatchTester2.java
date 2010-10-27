@@ -2,8 +2,6 @@ package edu.usu.cs.incomplete.ka.batchtesters;
 
 import edu.usu.cs.incomplete.ka.trial.*;
 
-import java.io.*;
-
 public class BatchTester2
 {
 	private static final int numFiles = 10;
