@@ -1,6 +1,9 @@
 package edu.usu.cs.incomplete.ka.trial;
 
-import edu.usu.cs.incomplete.ka.agentsim.*;
+import edu.usu.cs.incomplete.ka.agentsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
+import edu.usu.cs.incomplete.ka.agentsystem.QA_Learning;
+import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
 import edu.usu.cs.pddl.goalseffects.*;
 import edu.usu.cs.pddl.domain.translation.*;
 import edu.usu.cs.pddl.domain.*;

@@ -4,7 +4,9 @@ import java.util.*;
 
 import javax.print.DocFlavor.STRING;
 
-import edu.usu.cs.incomplete.ka.agentsim.*;
+import edu.usu.cs.incomplete.ka.agentsystem.Agent;
+import edu.usu.cs.incomplete.ka.agentsystem.DomainAndProblemMaker;
+import edu.usu.cs.incomplete.ka.agentsystem.Simulator;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;

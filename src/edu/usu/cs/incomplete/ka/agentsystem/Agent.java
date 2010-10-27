@@ -1,4 +1,4 @@
-package edu.usu.cs.incomplete.ka.agentsim;
+package edu.usu.cs.incomplete.ka.agentsystem;
 
 import java.util.*;
 

@@ -1,8 +1,9 @@
-package edu.usu.cs.incomplete.ka.agentsim;
+package edu.usu.cs.incomplete.ka.agentsystem;
 
 import java.util.*;
 
 
+import edu.usu.cs.incomplete.ka.agentsystem.QA_Learning.QA_ActionAndPropChoice;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;

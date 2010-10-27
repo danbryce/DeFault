@@ -1,4 +1,4 @@
-package edu.usu.cs.incomplete.ka.agentsim.bddstuff;
+package edu.usu.cs.incomplete.ka.agentsystem;
 
 import org.apache.log4j.Logger;
 
