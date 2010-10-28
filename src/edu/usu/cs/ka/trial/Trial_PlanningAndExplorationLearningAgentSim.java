@@ -122,13 +122,11 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 			Set<Proposition> newState = sim.updateState(currentState, incompleteActionChosen);
 			
 			//Agent learning by exploration - doesn't matter if action succeeded or failed
-			agent.explore_side.learnAboutActionTaken_Exploration(newState, currentState, incompleteActionChosen);
+			agent.explore_side.learnAboutActionTaken(newState, currentState, incompleteActionChosen);
 			currentState = newState;
 			
 			//After agent has learned, send new version of actions, new state, and call planner again
-			Hashtable temp = agent.getIncompleteActionInstanceHT();
-			List temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
-			problem.setActionInstances(temp2);
+			//Problem's action list is auto-updated by Agent.
 			problem.setInitialState(currentState);
 			plan = initSolverGetPlan(plannerType);
 			

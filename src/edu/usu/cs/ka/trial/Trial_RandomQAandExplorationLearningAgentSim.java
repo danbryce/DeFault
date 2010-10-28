@@ -68,12 +68,12 @@ public class Trial_RandomQAandExplorationLearningAgentSim
 			System.out.println("LOOP ITERATION #: " + (loop++));
 			
 			Set<Proposition> newState;
-			if(agent.selectTypeOfLearning().equals(Agent.LearningType.EXPLORATION))
+			if(agent.selectTypeOfLearning_randSwitch().equals(Agent.LearningType.EXPLORATION))
 			{
 				//Learning by Exploration
-				IncompleteActionInstance incompleteActionChosen = agent.explore_side.chooseAction_Exploration(currentState);
+				IncompleteActionInstance incompleteActionChosen = agent.explore_side.chooseAction_Random(currentState);
 				newState = sim.updateState(currentState, incompleteActionChosen);
-				agent.explore_side.learnAboutActionTaken_Exploration(newState, currentState, incompleteActionChosen);
+				agent.explore_side.learnAboutActionTaken(newState, currentState, incompleteActionChosen);
 				currentState = newState;
 			}
 			else

@@ -95,7 +95,7 @@ public class Trial_PlannersRawPerformance
 		{
 			System.out.print(args[0] + "_" + args[2] + " Complete ");
 			System.out.print(agent1.getOriginalIncompleteActionInstancesList().size() + " ");
-			System.out.print(sim1.getCountOfFeaturesInSimVersionOfActions() + " ");
+			System.out.print(sim1.getCountOfFeaturesInActionsCV() + " ");
 						
 			System.out.print("Amir ");
 			System.out.print(plan1.size() + " " + agent1.getTimeToSolve() + " ");
@@ -145,9 +145,9 @@ public class Trial_PlannersRawPerformance
 		 */
 		
 		System.out.print("Incomplete ");
-		System.out.print(agent3.totalOriginalIncompleteActions + " ");
+		System.out.print(agent3.getTotalOriginalIncompleteActions() + " ");
 		System.out.print(agent3.getTotalInitialNumberOfFeatures() + " ");
-		System.out.print(agent3.totalOriginalNumPossiblePresAddsDeletes + " ");
+		System.out.print(agent3.getTotalOriginalNumPossiblePresAddsDeletes() + " ");
 	
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Run Amir/length solver on domain's incomplete action versions

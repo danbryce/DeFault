@@ -9,295 +9,154 @@ import edu.usu.cs.pddl.domain.*;
 
 public class DomainExpert 
 {
-	boolean debug;
+	private static Random random;//Expert takes a sim seed to init the rand generator
+	double probability;//Expert chooses whether or not a poss feature is to become an actual feature at this # [0-1]
 	
-	private static Random random;
-	double probability;
-	
-	List<ActionInstance> actionInstances;
-	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances_completeVersion_Hashtable;
+	List<ActionInstance> actionsCV;//complete version
+	Hashtable<Integer, IncompleteActionInstance> actionsCV_HT;//hashtable
 	
 	public DomainExpert(List<ActionInstance> actionInstancesOfAgent, int seed)
-	{
-		debug = false;
-		
+	{	
 		random = new Random(seed);
 		probability = .5;
 		
-		if(debug){
-			System.out.println("\n-----------------------------------------------------");
-			System.out.println("IN SIMULATOR CONSTRUCTOR\n");
-			System.out.println("seed: " + seed);
-			System.out.println("probability:" + probability);
-			System.out.println("\n-----------------------------------------------------");
-			System.out.println("SIMULATOR ACTIONS AVAILABLE (no possibles): ");
-		}
-		createActionsWithNoPossiblesByProbabilityAndSeed(actionInstancesOfAgent);
-		incompleteActionInstances_completeVersion_Hashtable = new Hashtable<Integer, IncompleteActionInstance>();
-		for(ActionInstance act: actionInstances)
+		createActions_CompleteVersion(actionInstancesOfAgent);
+		
+		//Load HT
+		actionsCV_HT = new Hashtable<Integer, IncompleteActionInstance>();
+		for(ActionInstance act: actionsCV)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			incompleteActionInstances_completeVersion_Hashtable.put(a.getIndex(), a);
-			
-			if(debug){
-				System.out.println();
-				Actions_Utility.printIncompleteVersionOfActionInstance(a);
-			}
-		}
-		
-		if(debug){
-			System.out.println("\nEND - SIMULATOR ACTIONS AVAILABLE");
-			System.out.println("-----------------------------------------------------");
-			System.out.println("\nLEAVING SIMULATOR CONSTRUCTOR...");
-			System.out.println("-----------------------------------------------------\n");
+			actionsCV_HT.put(a.getIndex(), a);
 		}
 	}
 	
-	public int getCountOfFeaturesInSimVersionOfActions()
+	public int getCountOfFeaturesInActionsCV()
 	{
 		int count = 0;
-		for(ActionInstance act: actionInstances)
+		for(ActionInstance act: actionsCV)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			if(a.getPreconditions() != null) count += a.getPreconditions().size();
-			if(a.getAddEffects() != null) count += a.getAddEffects().size();
-			if(a.getDeleteEffects() != null) count += a.getDeleteEffects().size();	
+			count += a.getPreconditions().size();
+			count += a.getAddEffects().size();
+			count += a.getDeleteEffects().size();	
 		}
 		return count;
 	}
 	
-	public IncompleteActionInstance getSimVersionOfIncompleteActionInstanceByID(Integer id)
-	{
-		return incompleteActionInstances_completeVersion_Hashtable.get(id);
-	}
+	public IncompleteActionInstance getActionCVByID(Integer id){ return actionsCV_HT.get(id); }
 	
-	public List<ActionInstance> getActionInstances(){ return actionInstances; }
+	public List<ActionInstance> getActionInstances(){ return actionsCV; }
 	
+	/*
+	 * DE here gives accurate state update using its CV of action chosen by agent.
+	 * Agent then must learn about the action it selected - it does not know whether the action succeeded or failed.
+	 * Note that it is possible an action may have succeeded but will not change the state.
+	*/
 	public Set<Proposition> updateState(Set<Proposition> currentState, IncompleteActionInstance incompleteActionChosen)
-	{
-		if(debug){
-			System.out.println("\n----------------------------------------------------------------");
-			System.out.println("SIM updates state based on agents action using its enhanced info");
-			System.out.println(" about pres and effects. The updated state shows the changes.");
-			System.out.println(" Agent will have to discover which of the possible pres/effects");
-			System.out.println(" for each of his actions are real for this particular domain.");
-			System.out.println(" Sim DOES NOT tell Agent that the action was a success/failure.");
-			System.out.println(" (Note: an accepted action might not change state -");
-			System.out.println("        consider the same action taken twice in a row or");
-			System.out.println("        actions whose add effects already exist and");
-			System.out.println("        whose delete effects already don't exist...\n");
-		}
-		
+	{		
 		Set<Proposition> newState = new HashSet<Proposition>(currentState);
 		
-		IncompleteActionInstance a = incompleteActionInstances_completeVersion_Hashtable.get(incompleteActionChosen.getIndex());			
-		if(debug){Actions_Utility.printIncompleteVersionOfActionInstance(a);}
+		IncompleteActionInstance a = actionsCV_HT.get(incompleteActionChosen.getIndex());			
 				
 		if(currentState.containsAll(a.getPreconditions()))
 		{
 			newState.removeAll(a.getDeleteEffects());
 			newState.addAll(a.getAddEffects());
 		}
-		
-		if(debug){System.out.println("----------------------------------------------------------------\n");}
+
 		return newState;
 	}
 	
+	/*
+	 *If Agent is performing QA Learning, then the DE here gives feedback about the Q asked of it - 
+	 * is the chosen possible feature of a chosen action for its chosen list a real feature or not?
+	 * The agent has told the DE which possibles list the prop came from.
+	 * The DE looks up the prop in its appropriate knowns list (# of possibles list - 3)
+	 *  
+	 *  QA_ActionAndPropChoice class data members:
+	 * 	 IncompleteActionInstance action;
+	 *   Integer listOriginOfProp;
+	 *   Proposition propToLearnAbout;
+	*/
 	public boolean giveFeedbackForQuestion (QA_Learning.QA_ActionAndPropChoice actionWithQ)
 	{
-		System.out.println("\n----------------------------------------------------------------");
-		System.out.println("SIM gives feedback about an action selected by agent");
-		System.out.println(" that contains possibles.");
-		System.out.println(" This feedback will tell the agent whether or not a particular");
-		System.out.println(" possible is in fact an actual precondition or add/delete effect.\n");
-		
-		
-		IncompleteActionInstance a = null;
-		
-		a = incompleteActionInstances_completeVersion_Hashtable.get(actionWithQ.action.getIndex());
-		
-		if(a == null)
-		{
-			System.out.println("ERROR: Sim did not find complete version of action: " +  actionWithQ.action.getName());
-			System.out.println("THIS SHOULD NEVER HAPPEN!");
-			return false;
-		}
-		else
-			Actions_Utility.printIncompleteVersionOfActionInstance(a);
+		IncompleteActionInstance actCV = actionsCV_HT.get(actionWithQ.action.getIndex());
 			
-		//An incomplete action has 6 lists.  
-		//The known pres/adds/deletes are 1-3.
-		//The possible pre's/add/deletes are 4-6.
-		//See Agent constants for each list.
-		//The agent has told the sim which possibles list the prop came from.
-		//The sim looks up the prop in its appropriate knowns list.
+		//An incomplete action has 6 lists. See Actions_Utility class...  
 		int listToCheck = actionWithQ.listOriginOfProp - 3; 
 		
 		boolean isFound = false;
 		switch(listToCheck)
 		{
-			case (Actions_Utility.KNOWNPRECONDITIONSLIST):
-				if(a.getPreconditions().contains(actionWithQ.propToLearnAbout))
-				{
-					System.out.println("Sim found: " + actionWithQ.propToLearnAbout);
-					System.out.println(" in the complete action version's preconditions list.");
-					isFound = true;
-				}
-				else
-				{
-					System.out.println("Sim did not find: " + actionWithQ.propToLearnAbout);
-					System.out.println(" in the complete action version's preconditions list.");
-				}
+			case (Actions_Utility.KNOWNPRECONDITIONSLIST): //1
+				if(actCV.getPreconditions().contains(actionWithQ.propToLearnAbout)) isFound = true;
 				break;
-			case (Actions_Utility.KNOWNADDEFFECTSLIST):
-				if(a.getAddEffects().contains(actionWithQ.propToLearnAbout))
-				{
-					System.out.println("Sim found: " + actionWithQ.propToLearnAbout);
-					System.out.println(" in the complete action version's add effects list.");
-					isFound = true;
-				}
-				else
-				{
-					System.out.println("Sim did not find: " + actionWithQ.propToLearnAbout);
-					System.out.println(" in the complete action version's add effects list.");
-				}
+			case (Actions_Utility.KNOWNADDEFFECTSLIST): //2
+				if(actCV.getAddEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
 				break;
-			case (Actions_Utility.KNOWNDELETEEFFECTSLIST):
-				if(a.getDeleteEffects().contains(actionWithQ.propToLearnAbout))
-				{
-					System.out.println("Sim found: " + actionWithQ.propToLearnAbout);
-					System.out.println(" in the complete action version's delete effects list.");
-					isFound = true;
-				}
-				else
-				{
-					System.out.println("Sim did not find: " + actionWithQ.propToLearnAbout);
-					System.out.println(" in the complete action version's delete effects list.");
-				}
+			case (Actions_Utility.KNOWNDELETEEFFECTSLIST): //3
+				if(actCV.getDeleteEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
 				break;
 			default:
-				System.out.println("ERROR: Sim did not find right list.");
-				System.out.println(" THIS SHOULD NEVER HAPPEN!");
+				System.out.println("ERROR: Sim did not find right list. THIS SHOULD NEVER HAPPEN!");
 		}
-				
-		System.out.println("----------------------------------------------------------------\n");
 		
 		return isFound;
 	}
 	
-	public void printIncompleteVersionOfActionInstances()
+	/*
+	 * Uses the probability and simSeed found in the DE constructor to create complete version (CV)
+	 * of the agent's/problem's incomplete actions (AgentVersion - they contain possible features).
+	 *If the rand gen yields a double higher than the probability, then add the
+	 * possible feature as a real feature, else discard
+	*/ 
+	private void createActions_CompleteVersion(List<ActionInstance> actionsAV)
 	{
-		for(ActionInstance action : actionInstances)
-		{
-			IncompleteActionInstance a = (IncompleteActionInstance) action;
-			printIncompleteVersionOfActionInstance(a);
-		}
-	}
-	
-	public void printIncompleteVersionOfActionInstance(IncompleteActionInstance a)
-	{
-		System.out.println("  Name        : " + a.getName());					//String
-		System.out.println("  Index       : " + a.getIndex());					//int
-		System.out.println("  Pres        : " + a.getPreconditions());			//Set<Proposition>
-		System.out.println("  Poss Pres   : " + a.getPossiblePreconditions());	//Set<Proposition>
-		System.out.println("  Adds        : " + a.getAddEffects());				//Set<Proposition>
-		System.out.println("  Poss Adds   : " + a.getPossibleAddEffects());		//Set<Proposition>
-		System.out.println("  Deletes     : " + a.getDeleteEffects());			//Set<Proposition>
-		System.out.println("  Poss Dels   : " + a.getPossibleDeleteEffects());	//Set<Proposition>
-		System.out.println("   ActionRisks: " + a.getActionRisks());				//int
-		System.out.println("   ArgMapping : " + a.getArgMapping());				//Map<FormalArgument, PDDLObject>
-		System.out.println("   Cost       : " + a.getCost());				    //double
-		System.out.println("   Definition : " + a.getDefinition());				//ActionDef
-		System.out.println();
-	}
-	
-	private void createActionsWithNoPossiblesByProbabilityAndSeed(List<ActionInstance> actionInstancesOfAgent)
-	{
-		actionInstances = new ArrayList<ActionInstance>();
+		actionsCV = new ArrayList<ActionInstance>();
 		
-		HashSet<Proposition> newPreconditionsSet;
-		HashSet<Proposition> newAddEffectsSet;
-		HashSet<Proposition> newDeleteEffectsSet;
+		HashSet<Proposition> newPresSet;
+		HashSet<Proposition> newAddsSet;
+		HashSet<Proposition> newDelsSet;
 		HashSet<Proposition> newEmptySet;
 	
-		for(ActionInstance a : actionInstancesOfAgent)
+		for(ActionInstance a : actionsAV)
 		{
 			IncompleteActionInstance ia = (IncompleteActionInstance) a;
 			
-			//System.out.println("\n----------------------------------------------------------------");
-			//System.out.println("CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
-			//System.out.println("\nOriginal incomplete action: ");
-			//printIncompleteVersionOfActionInstance(ia);
-			
-			newPreconditionsSet = new HashSet<Proposition>(ia.getPreconditions());
-			newAddEffectsSet 	= new HashSet<Proposition>(ia.getAddEffects());
-			newDeleteEffectsSet = new HashSet<Proposition>(ia.getDeleteEffects());
-			newEmptySet 		= new HashSet<Proposition>();
+			newPresSet 	= new HashSet<Proposition>(ia.getPreconditions());
+			newAddsSet 	= new HashSet<Proposition>(ia.getAddEffects());
+			newDelsSet 	= new HashSet<Proposition>(ia.getDeleteEffects());
+			newEmptySet = new HashSet<Proposition>();
 			
 			//Preconditions
 			for(Proposition p : ia.getPossiblePreconditions())
 			{			
-				//if the rand gen yield a double higher than the probability, then add this
-				//possible as a real precondition, else discard
 				Double nextDouble = random.nextDouble();
-				if(debug) System.out.println("nextRandDouble: " +  nextDouble);
-				if(nextDouble > probability) 
-				{
-					newPreconditionsSet.add(p);
-					if(debug) System.out.println(" " + p + " added to known pre's.");
-				}
-				else
-					if(debug) System.out.println(" " + p +" not added to known pre's.");
+				if(nextDouble > probability) { newPresSet.add(p); }
 			}
 			
 			//Adds
 			for(Proposition p : ia.getPossibleAddEffects())
-			{			
-				//if the rand gen yield a double higher than the probability, then add this
-				//possible as a real add effect, else discard
+			{
 				Double nextDouble = random.nextDouble();
-				if(debug) System.out.println("nextRandDouble: " +  nextDouble);
-				if(nextDouble > probability) 
-				{
-					newAddEffectsSet.add(p);
-					if(debug) System.out.println(" " + p + " added to known addEffects.");
-				}
-				else
-					if(debug) System.out.println(" " + p +" not added to known addEffects.");
+				if(nextDouble > probability) newAddsSet.add(p);
 			}
 			
 			//Deletes
 			for(Proposition p : ia.getPossibleDeleteEffects())
 			{			
-				//if the rand gen yield a double higher than the probability, then add this
-				//possible as a real delete effect, else discard
 				Double nextDouble = random.nextDouble();
-				if(debug) System.out.println("nextRandDouble: " +  nextDouble);
-				if(nextDouble > probability) 
-				{
-					newDeleteEffectsSet.add(p);
-					if(debug) System.out.println(" " + p + " added to known deleteEffects.");
-				}
-				else
-					if(debug) System.out.println(" " + p +" not added to known deleteEffects.");
+				if(nextDouble > probability) newDelsSet.add(p);
 			}
 			
-			//Create a new actionInstance with above changes and stick it into sim's actions list
-			//String name, Set<Proposition> preconditions,
-			//Set<Proposition> addEffects, Set<Proposition> deleteEffects,
-			//Set<Proposition> possiblePreconditions,
-			//Set<Proposition> possiblePositiveEffects,
-			//Set<Proposition> possibleNegativeEffects,
-			//int index)
-			IncompleteActionInstance newIA = new IncompleteActionInstance(ia.getName(), newPreconditionsSet,
-					newAddEffectsSet, newDeleteEffectsSet, newEmptySet, newEmptySet, newEmptySet, ia.getIndex());
-			actionInstances.add(newIA);
+			//Create a new actionInstance with above changes and stick it into sim's actionsCV list
+			//String name, Set<Proposition> pres, Set<Proposition> adds, Set<Proposition> dels,
+			//Set<Proposition> possPres, Set<Proposition> possAdds, Set<Proposition> possDels, int index)
+			IncompleteActionInstance newIA = new IncompleteActionInstance(ia.getName(), newPresSet,
+					newAddsSet, newDelsSet, newEmptySet, newEmptySet, newEmptySet, ia.getIndex());
 			
-			//System.out.println("\nNew complete version of action for sim: ");
-			//printIncompleteVersionOfActionInstance(newIA);
-			
-			//System.out.println("END - CREATING SIM (COMPLETE) VERSION OF AGENT'S ACTION:");
-			//System.out.println("----------------------------------------------------------------");	
+			actionsCV.add(newIA);
 		}			
 	}
 }

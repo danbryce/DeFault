@@ -112,9 +112,7 @@ public class Trial_PlanProoferByQA
 		agent.startStopwatch();
 		do
 		{
-			Hashtable temp = agent.getIncompleteActionInstanceHT();
-			List<ActionInstance> temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
-			problem.setActionInstances(temp2);
+			//Problem's action list is auto-updated by Agent.
 			plan = initSolverGetPlan("length");
 			
 			num_incompleteActions = 0;
@@ -124,8 +122,8 @@ public class Trial_PlanProoferByQA
 				IncompleteActionInstance ia = (IncompleteActionInstance) a;
 				if (!Actions_Utility.isIncompleteActionComplete(ia))
 				{
-					completeVersionByQA = sim.getSimVersionOfIncompleteActionInstanceByID(ia.getIndex());
-					agent.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
+					completeVersionByQA = sim.getActionCVByID(ia.getIndex());
+					agent.qa_side.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
 					num_incompleteActions++;
 				}		
 			}
@@ -155,10 +153,7 @@ public class Trial_PlanProoferByQA
 		agent.startStopwatch();
 		do
 		{
-			Hashtable temp = agent.getIncompleteActionInstanceHT();
-			List<ActionInstance> temp2 = Actions_Utility.getIncompleteActionInstancesAsActionInstances(temp);
-			problem.setActionInstances(temp2);
-		
+			//Problem's action list is auto-updated by Agent.
 			plan = initSolverGetPlan("pode1");
 			num_incompleteActions = 0;
 			
@@ -168,8 +163,8 @@ public class Trial_PlanProoferByQA
 				IncompleteActionInstance ia = (IncompleteActionInstance) a;
 				if (!Actions_Utility.isIncompleteActionComplete(ia))
 				{
-					completeVersionByQA = sim.getSimVersionOfIncompleteActionInstanceByID(ia.getIndex());
-					agent.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
+					completeVersionByQA = sim.getActionCVByID(ia.getIndex());
+					agent.qa_side.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
 					num_incompleteActions++;
 				}		
 			}

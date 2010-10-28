@@ -8,19 +8,27 @@ import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
 import edu.usu.cs.pddl.domain.incomplete.*;
 
-//Assumption: no set of propositions in an IncompleteActionInstance class instance is ever null.
-//Even "goal" is an IncompleteActionInstance object for incomplete domains.
-//Go to IAI class and uncomment constructor println statements if you like...
+/*Assumption: no set of propositions in an IncompleteActionInstance class instance is ever null.
+ * Even "goal" is an IncompleteActionInstance object for incomplete domains.
+ * Go to IAI class and uncomment constructor println statements if you like...
+ * 	
+ *Note: the ActionList being passed around is a shallow copy of Problem's version:
+ * When an action is updated in the Agent HT, it is updated in the Agent List.
+ * When an action is updated in the Agent List, it is updated in the Agent HT.
+ * When an action is updated in the Agent class, it also updates the Problem's version of the action.
+ * It does not change the DomainExpert's version of the action.
+*/
 public class Agent 
-{	
-	Domain incompleteDomain;
-	Problem problem;
+{
 	
-	static Random random;
-	private Integer range; 
+//	Domain incompleteDomain;
+//	Problem problem;
 	
-	List<ActionInstance> originalIncompleteActionInstanceList;
-	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstanceHT;
+	static Random random;//for random action/qa selection
+	private Integer range;//for random action/qa selection 
+	
+	List<ActionInstance> actions;
+	Hashtable<Integer, IncompleteActionInstance> actionsHT; //hashtable for speedier access - a shallow copy of actions List
 		
 	//Types of learning the agent can perform
 	public static enum LearningType {QA, EXPLORATION};
@@ -33,10 +41,10 @@ public class Agent
 	Integer originalNumOfPossAddEffects;
 	Integer originalNumOfPossDeleteEffects;
 	
-	public Integer totalOriginalIncompleteActions;
-	public Integer totalOriginalNumKnownPresAddsDeletes;
-	public Integer totalOriginalNumPossiblePresAddsDeletes;
-	
+	Integer totalOriginalIncompleteActions;
+	Integer totalOriginalNumKnownPresAddsDeletes;
+	Integer totalOriginalNumPossiblePresAddsDeletes;
+
 	Integer currNumOfKnownPreconditions;
 	Integer currNumOfKnownAddEffects;
 	Integer currNumOfKnownDeleteEffects;
@@ -53,137 +61,105 @@ public class Agent
 	public QA_Learning qa_side;
 	public Passive_Learning explore_side;
 	
-	boolean debug;
-	
 	//Constructor
 	public Agent(Domain d, Problem p)
-	{
-		debug = false;
+	{	
+		actions = p.getActions();
 		
-		try{
-			originalIncompleteActionInstanceList = PddlImporter.createActionInstances(d, p);
-		}catch(Exception e){System.out.println("Agent ActionInstances grab failed.");}
-		
-		if(debug){
-			System.out.println("-----------------------------------------------------");
-			System.out.println("AGENT ACTIONS AVAILABLE (has possibles): ");
-		}
-		
-		//Showing to user what actions (and their properties) the agent can perform
 		//These will be updated/change as the agent learns
-		incompleteActionInstanceHT = new Hashtable<Integer, IncompleteActionInstance>();
-		for(ActionInstance act : originalIncompleteActionInstanceList)
+		actionsHT = new Hashtable<Integer, IncompleteActionInstance>();
+		for(ActionInstance act : actions)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;	
-			incompleteActionInstanceHT.put(a.getIndex(), a);
-			
-			if(debug){
-				System.out.println();
-				Actions_Utility.printIncompleteVersionOfActionInstance(a);
-			}
+			actionsHT.put(a.getIndex(), a);
 		}
 		
-		if(debug){
-			System.out.println("\nEND - AGENT ACTIONS AVAILABLE");
-			System.out.println("-----------------------------------------------------");
-		}
-		
-		qa_side = new QA_Learning(incompleteActionInstanceHT);
-		explore_side = new Passive_Learning(incompleteActionInstanceHT);
+		qa_side = new QA_Learning(actionsHT);
+		explore_side = new Passive_Learning(actionsHT);
 		
 		random = new Random(0);
 						
 		//For results, checks actions to count how many have possibles
-		Actions_Utility.getCountOfActionsThatAreIncomplete(originalIncompleteActionInstanceList);
+		Actions_Utility.getCountOfActionsThatAreIncomplete(actions);
+		
 		//For results, collects the number of known/possible pre's, adds, deletes
 		setInitialListSizeCountForAllAgentsActionInstances();
-	}
+	}//end constructor
 	
-	public List<ActionInstance> getOriginalIncompleteActionInstancesList(){	return originalIncompleteActionInstanceList; }
+	public Integer getTotalOriginalIncompleteActions() { return totalOriginalIncompleteActions; }
+	public Integer getTotalOriginalNumKnownPresAddsDeletes() { return totalOriginalNumKnownPresAddsDeletes; }
+	public Integer getTotalOriginalNumPossiblePresAddsDeletes() { return totalOriginalNumPossiblePresAddsDeletes; }
+	public Integer getTotalInitialNumberOfFeatures(){ return totalOriginalNumKnownPresAddsDeletes + totalOriginalNumPossiblePresAddsDeletes; }
 	
-	public Hashtable<Integer, IncompleteActionInstance> getIncompleteActionInstanceHT() { return incompleteActionInstanceHT;}
-	
-	//Current way to choose whether to ask a question vs. learn by exploring
-	//is to add the # of agents actions and total # of possibles, get a random int in that range.
-	//If the random int is in the range of number of actions, then learn by exploring, else
-	//ask a question.
-	//!!!!This version takes the initial # of possibles only!!!!
-	public LearningType selectTypeOfLearning()
-	{	
-		System.out.println("----------------------------------------------------------------");
-		System.out.println("AGENT IS CHOOSING WHICH TYPE OF LEARNING TO PERFORM");
-		System.out.println(" If rand number is < # of actions, then Exploration, else QA.\n");
-		
-		//Range for doing random selection of QA vs. exploration
-		//	 based on only the current # of possibles + # of actions.
-		setCurrentListSizeCountForAllAgentsActionInstances();
-		range = incompleteActionInstanceHT.size() + totalCurrNumPossiblePresAddsDeletes;
-		Integer rand = random.nextInt(range);
-		
-		System.out.println(" # of actions               : " + incompleteActionInstanceHT.size());
-		System.out.println(" Current # of possible props: " + totalCurrNumPossiblePresAddsDeletes);
-		System.out.println(" Range                      : " + range);
-		System.out.println(" Random #                   : " + rand); 
-		
-		LearningType type;
-		if(rand < incompleteActionInstanceHT.size()) type = LearningType.EXPLORATION;
-		else type = LearningType.QA;
-		
-		System.out.println("\nTYPE LEARNING SELECTED: " + type);
-		System.out.println("----------------------------------------------------------------");
-		return type;
-	}
-						
+	public List<ActionInstance> getOriginalIncompleteActionInstancesList(){	return actions; }
+			
+	//Init these before the agent begins learning
 	void setInitialListSizeCountForAllAgentsActionInstances()
 	{
-		//Init these before the agents begins learning, print them at end
-		originalNumOfKnownPreconditions = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNPRECONDITIONSLIST, originalIncompleteActionInstanceList);
-		originalNumOfKnownAddEffects    = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNADDEFFECTSLIST, originalIncompleteActionInstanceList);
-		originalNumOfKnownDeleteEffects = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNDELETEEFFECTSLIST, originalIncompleteActionInstanceList);
-		originalNumOfPossPreconditions 	= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSPRECONDITIONSLIST, originalIncompleteActionInstanceList);
-		originalNumOfPossAddEffects		= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSADDEFFECTSLIST, originalIncompleteActionInstanceList);
-		originalNumOfPossDeleteEffects	= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSDELETEEFFECTSLIST, originalIncompleteActionInstanceList);
+		originalNumOfKnownPreconditions = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNPRECONDITIONSLIST, actions);
+		originalNumOfKnownAddEffects    = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNADDEFFECTSLIST, actions);
+		originalNumOfKnownDeleteEffects = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNDELETEEFFECTSLIST, actions);
+		
+		originalNumOfPossPreconditions 	= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSPRECONDITIONSLIST, actions);
+		originalNumOfPossAddEffects		= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSADDEFFECTSLIST, actions);
+		originalNumOfPossDeleteEffects	= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSDELETEEFFECTSLIST, actions);
 		
 		totalOriginalNumKnownPresAddsDeletes    = originalNumOfKnownPreconditions + originalNumOfKnownAddEffects + originalNumOfKnownDeleteEffects;
 		totalOriginalNumPossiblePresAddsDeletes = originalNumOfPossPreconditions + originalNumOfPossAddEffects + originalNumOfPossDeleteEffects;
 	}
 	
-	public Integer getTotalInitialNumberOfFeatures()
-	{
-		return totalOriginalNumKnownPresAddsDeletes + totalOriginalNumPossiblePresAddsDeletes;
-	}
-	
 	void setCurrentListSizeCountForAllAgentsActionInstances()
 	{
-		List<ActionInstance> temp = Actions_Utility.getIncompleteActionInstancesAsActionInstances(incompleteActionInstanceHT);
+		List<ActionInstance> temp = Actions_Utility.getIncompleteActionInstancesAsActionInstances(actionsHT);
 		
 		currNumOfKnownPreconditions = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNPRECONDITIONSLIST, temp);
 		currNumOfKnownAddEffects    = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNADDEFFECTSLIST, temp);
 		currNumOfKnownDeleteEffects = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.KNOWNDELETEEFFECTSLIST, temp);
-	
-		totalCurrNumKnownPresAddsDeletes    = currNumOfKnownPreconditions + currNumOfKnownAddEffects + currNumOfKnownDeleteEffects;
 		
 		currNumOfPossPreconditions 	= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSPRECONDITIONSLIST, temp);
 		currNumOfPossAddEffects 	= Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSADDEFFECTSLIST, temp);
 		currNumOfPossDeleteEffects  = Actions_Utility.getCountOfPropsInXListForAllActionInstances(Actions_Utility.POSSDELETEEFFECTSLIST, temp);
 
+		totalCurrNumKnownPresAddsDeletes    = currNumOfKnownPreconditions + currNumOfKnownAddEffects + currNumOfKnownDeleteEffects;
 		totalCurrNumPossiblePresAddsDeletes = currNumOfPossPreconditions + currNumOfPossAddEffects + currNumOfPossDeleteEffects;
 	}
-		
-	public void startStopwatch(){startTime = System.currentTimeMillis();}
 	
-	public void stopStopwatch(){finishTime = System.currentTimeMillis();}
+	public int getTotalNumberOfActions(){ return explore_side.numSuccessfulActions + explore_side.numFailedActions; }
+		
+	public void startStopwatch(){ startTime = System.currentTimeMillis(); }
+	
+	public void stopStopwatch(){ finishTime = System.currentTimeMillis(); }
 	
 	public Double getTimeToSolve()
 	{
 		if(startTime == null || finishTime == null) return -1.0;
 		else return (finishTime - startTime)/1000.0;
 	}
+	
+	//Current way to randomly choose whether to ask a question vs. learn by exploring
+	//is to add the # of agents actions and total # of possibles, get a random int in that range.
+	//If the random int is in the range of number of actions, then learn by exploring, else
+	//ask a question == If rand number is < # of actions, then Exploration, else QA.
+	public LearningType selectTypeOfLearning_randSwitch()
+	{		
+		//Range for doing random selection of QA vs. exploration is based on the current # of possibles + # of actions.
+		setCurrentListSizeCountForAllAgentsActionInstances();
+		range = actionsHT.size() + totalCurrNumPossiblePresAddsDeletes;
+		Integer rand = random.nextInt(range);
+		
+		LearningType type;
+		if(rand < actionsHT.size()) 
+			type = LearningType.EXPLORATION;
+		else 
+			type = LearningType.QA;
+
+		return type;
+	}
 		
 	public void printDeepResults()
 	{
 		System.out.println("BEFORE LEARNING/SOLVING...");
-		System.out.println(" Total # of agent actions: " + incompleteActionInstanceHT.size());
+		System.out.println(" Total # of agent actions: " + actionsHT.size());
 		System.out.println(" Total initial # of known pre's, add & delete effects: " + totalOriginalNumKnownPresAddsDeletes);
 		System.out.println("	Total initial # of known preconditions : " 			+ originalNumOfKnownPreconditions);
 		System.out.println("	Total initial # of known add effects   : " 			+ originalNumOfKnownAddEffects);
@@ -199,11 +175,11 @@ public class Agent
 		System.out.println("AFTER LEARNING/SOLVING...");
 		System.out.println(" # of steps/actions taken in finding solution (not a hard fail): " + explore_side.numSuccessfulActions);
 		System.out.println(" Time to solution (secs): " + getTimeToSolve());
-		System.out.println("  # of times the exploration learner was called: " + explore_side.numTimesExplorationLearnerCalled);
+		System.out.println("  # of times the exploration learner was called: " + explore_side.numTimesPassiveLearnerCalled);
 		System.out.println("  # of times the QA learner was called         : " + qa_side.numTimesQALearnerCalled);
 		System.out.println("    # of times a failed action occurred          : " + explore_side.numFailedActions);
 		System.out.println("        # of times the QA learner failed         : 0 (does not take actions.)" );
-		System.out.println("        # of times the exploration learner failed: " + explore_side.numFailedActionsByExplorationLearner);
+		System.out.println("        # of times the exploration learner failed: " + explore_side.numFailedActionsByPassiveLearner);
 		System.out.println("    # of times a no state change action occurred : " +  explore_side.numNoStateChangeActionsWithoutFailure);
 		System.out.println();
 		
@@ -218,12 +194,12 @@ public class Agent
 		System.out.println("	Total remaining # of possible delete effects: " + currNumOfPossDeleteEffects);
 		System.out.println();
 				
-		Integer totalNumPossPresLearnedByExploration = explore_side.numPossPresLearnedToKnownByExploration + 
-		explore_side.numPossPresLearnedToNotExistByExploration;
-		Integer totalNumPossAddsLearnedByExploration = explore_side.numPossAddEffectsLearnedToKnownByExploration + 
-		explore_side.numPossAddEffectsLearnedToNotExistByExploration;
-		Integer totalNumPossDeletesLearnedByExploration = explore_side.numPossDeleteEffectsLearnedToKnownByExploration + 
-		explore_side.numPossDeleteEffectsLearnedToNotExistByExploration;
+		Integer totalNumPossPresLearnedByExploration = explore_side.numPossPresLearnedToKnownByPassiveLearning + 
+		explore_side.numPossPresLearnedToNotExistByPassiveLearning;
+		Integer totalNumPossAddsLearnedByExploration = explore_side.numPossAddEffectsLearnedToKnownByPassiveLearning + 
+		explore_side.numPossAddEffectsLearnedToNotExistByPassiveLearning;
+		Integer totalNumPossDeletesLearnedByExploration = explore_side.numPossDeleteEffectsLearnedToKnownByPassiveLearning + 
+		explore_side.numPossDeleteEffectsLearnedToNotExistByPassiveLearning;
 		Integer totalNumPossPresAddsDeletesLearnedByExploration = totalNumPossPresLearnedByExploration + 
 						totalNumPossAddsLearnedByExploration + totalNumPossDeletesLearnedByExploration;
 		
@@ -245,14 +221,14 @@ public class Agent
 		System.out.println("        Total # possible delete effects learned: " + totalNumPossDeletesLearned);
 		System.out.println("    Total # of possibles pre's, add & delete effects learned by exploration: " + totalNumPossPresAddsDeletesLearnedByExploration);
 		System.out.println("        Total # possible preconditions learned by exploration: " + totalNumPossPresLearnedByExploration);
-		System.out.println("            To exist (became known pre's)       : " + explore_side.numPossPresLearnedToKnownByExploration);
-		System.out.println("            To not exist (were not actual pre's): " + explore_side.numPossPresLearnedToNotExistByExploration);
+		System.out.println("            To exist (became known pre's)       : " + explore_side.numPossPresLearnedToKnownByPassiveLearning);
+		System.out.println("            To not exist (were not actual pre's): " + explore_side.numPossPresLearnedToNotExistByPassiveLearning);
 		System.out.println("        Total # possible add effects learned by exploration: " + totalNumPossAddsLearnedByExploration);
-		System.out.println("            To exist (became known adds)       : " + explore_side.numPossAddEffectsLearnedToKnownByExploration);
-		System.out.println("            To not exist (were not actual adds): " + explore_side.numPossAddEffectsLearnedToNotExistByExploration);
+		System.out.println("            To exist (became known adds)       : " + explore_side.numPossAddEffectsLearnedToKnownByPassiveLearning);
+		System.out.println("            To not exist (were not actual adds): " + explore_side.numPossAddEffectsLearnedToNotExistByPassiveLearning);
 		System.out.println("        Total # possible delete effects learned by exploration: " + totalNumPossDeletesLearnedByExploration);
-		System.out.println("            To exist (became known deletes)       : " + explore_side.numPossDeleteEffectsLearnedToKnownByExploration);
-		System.out.println("            To not exist (were not actual deletes): " + explore_side.numPossDeleteEffectsLearnedToNotExistByExploration);
+		System.out.println("            To exist (became known deletes)       : " + explore_side.numPossDeleteEffectsLearnedToKnownByPassiveLearning);
+		System.out.println("            To not exist (were not actual deletes): " + explore_side.numPossDeleteEffectsLearnedToNotExistByPassiveLearning);
 		System.out.println("    Total # of possibles pre's, add & delete effects learned by QA: " + totalNumPossPresAddsDeletesLearnedByQA);
 		System.out.println("        Total # possible preconditions learned by QA: " + totalNumPossPresLearnedByQA);
 		System.out.println("            To exist (became known pre's)       : " + qa_side.numPossPresLearnedToKnownByQA);
@@ -263,15 +239,5 @@ public class Agent
 		System.out.println("        Total # possible delete effects learned by QA: " + totalNumPossDeletesLearnedByQA);
 		System.out.println("            To exist (became known deletes)       : " + qa_side.numPossDeleteEffectsLearnedToKnownByQA);
 		System.out.println("            To not exist (were not actual deletes): " + qa_side.numPossDeleteEffectsLearnedToNotExistByQA);
-	}
-	
-	public int getTotalNumberOfActions()
-	{
-		return explore_side.numSuccessfulActions + explore_side.numFailedActions;
-	}
-
-	public void replaceIncompleteActionInstanceWithNewVersion(IncompleteActionInstance a)
-	{
-		incompleteActionInstanceHT.put(a.getIndex(), a);
 	}
 }

@@ -12,15 +12,15 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 public class QA_Learning 
 {
-	Hashtable<Integer, IncompleteActionInstance> incompleteActionInstances;
+	Hashtable<Integer, IncompleteActionInstance> actions;
 	
 	//Lists that exist for each actionInstance
-	public static final int KNOWNPRECONDITIONSLIST = 1;
+	public static final int KNOWNPRECONDITIONSLIST 	= 1;
 	public static final int KNOWNADDEFFECTSLIST 	= 2;
-	public static final int KNOWNDELETEEFFECTSLIST = 3;
-	public static final int POSSPRECONDITIONSLIST  = 4;
-	public static final int POSSADDEFFECTSLIST     = 5;
-	public static final int POSSDELETEEFFECTSLIST  = 6;
+	public static final int KNOWNDELETEEFFECTSLIST 	= 3;
+	public static final int POSSPRECONDITIONSLIST  	= 4;
+	public static final int POSSADDEFFECTSLIST     	= 5;
+	public static final int POSSDELETEEFFECTSLIST  	= 6;
 	
 	Integer numTimesQALearnerCalled;
 	
@@ -36,7 +36,7 @@ public class QA_Learning
 	
 	QA_Learning(Hashtable<Integer, IncompleteActionInstance> a)
 	{
-		incompleteActionInstances = a;
+		actions = a;
 		
 		numTimesQALearnerCalled = 0;
 		
@@ -52,17 +52,17 @@ public class QA_Learning
 	}
 	
 	//This version of choosing an action for QA is random based. It selects an action
-	// from among the group of actions with possible. 
-	// If no actions have possibles, then QA will not have been called.
+	// from among the group of actionsCV with possible. 
+	// If no actionsCV have possibles, then QA will not have been called.
 	public QA_ActionAndPropChoice chooseIncompleteActionAndProp_QA()
 	{
 		System.out.println("\n----------------------------------------------------------------");
 		System.out.println("QA - AGENT IS CHOOSING AN INCOMPLETE ACTION FOR QA");
 		
-		//Get all incomplete actions
-		System.out.println("\nThese actions are incomplete (contain possibles): ");
+		//Get all incomplete actionsCV
+		System.out.println("\nThese actionsCV are incomplete (contain possibles): ");
 		LinkedList<IncompleteActionInstance> incompleteActionsWithPossibles = new LinkedList<IncompleteActionInstance>();
-		for(IncompleteActionInstance a : incompleteActionInstances.values())
+		for(IncompleteActionInstance a : actions.values())
 		{			
 			if(!Actions_Utility.isIncompleteActionComplete(a))
 			{
@@ -71,11 +71,11 @@ public class QA_Learning
 			}
 		}
 		
-		//Check for no actions with possibles - this should never happen by
+		//Check for no actionsCV with possibles - this should never happen by
 		// the design of the the method selectTypeOfLearning()
 		if(incompleteActionsWithPossibles.size() == 0)
 		{
-			System.out.println("ERROR: No actions found with possibles for QA.");
+			System.out.println("ERROR: No actionsCV found with possibles for QA.");
 			System.out.println(" THIS SHOULD NEVER HAPPEN!");
 			return null;
 		}
@@ -185,8 +185,13 @@ public class QA_Learning
 	
 		System.out.println("\nNEW VERSION OF INCOMPLETE ACTION (AFTER LEARNING BY QA):");
 		Actions_Utility.printIncompleteVersionOfActionInstance(newVersionOfAction);
-		incompleteActionInstances.put(newVersionOfAction.getIndex(), newVersionOfAction);		
+		actions.put(newVersionOfAction.getIndex(), newVersionOfAction);		
 		System.out.println("----------------------------------------------------------------");
+	}
+	
+	public void replaceIncompleteActionInstanceWithNewVersion(IncompleteActionInstance a)
+	{
+		actions.put(a.getIndex(), a);
 	}
 		
 	public class QA_ActionAndPropChoice

@@ -211,11 +211,11 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 			Set<Proposition> newState;
 
 			//Learning by Exploration
-			IncompleteActionInstance incompleteActionChosen = agent.explore_side.chooseAction_Exploration(currentState);
+			IncompleteActionInstance incompleteActionChosen = agent.explore_side.chooseAction_Random(currentState);
 			if(incompleteActionChosen == null) break;
 			
 			newState = sim.updateState(currentState, incompleteActionChosen);
-			agent.explore_side.learnAboutActionTaken_Exploration(newState, currentState, incompleteActionChosen);
+			agent.explore_side.learnAboutActionTaken(newState, currentState, incompleteActionChosen);
 			currentState = newState;
 		}
 		agent.stopStopwatch();
@@ -267,15 +267,14 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 			Set<Proposition> newState = sim.updateState(currentState, incompleteActionChosen);
 			
 			//Agent learning by exploration - doesn't matter if action succeeded or failed
-			boolean isValidAction = agent.explore_side.learnAboutActionTaken_Exploration(newState, currentState, incompleteActionChosen);
+			boolean isValidAction = agent.explore_side.learnAboutActionTaken(newState, currentState, incompleteActionChosen);
 			
 			currentState = newState;
 			
 			//After agent has learned, send new version of actions, new state, and call planner again
+			//Problem's action list is auto-updated by Agent.
 			if(!isValidAction || (!currentState.containsAll(problem.getGoalAction().getPreconditions()) && plan.size() == 0) )
 			{
-				List temp = Actions_Utility.getIncompleteActionInstancesAsActionInstances(agent.getIncompleteActionInstanceHT());
-				problem.setActionInstances(temp);
 				problem.setInitialState(currentState);
 				plan = initSolverGetPlan();
 				if(plan == null) break;

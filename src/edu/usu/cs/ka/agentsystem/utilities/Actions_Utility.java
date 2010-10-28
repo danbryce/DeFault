@@ -8,35 +8,44 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 public class Actions_Utility 
 {
 	//Lists that exist for each actionInstance
-	public static final int KNOWNPRECONDITIONSLIST = 1;
+	public static final int KNOWNPRECONDITIONSLIST 	= 1;
 	public static final int KNOWNADDEFFECTSLIST 	= 2;
-	public static final int KNOWNDELETEEFFECTSLIST = 3;
-	public static final int POSSPRECONDITIONSLIST  = 4;
-	public static final int POSSADDEFFECTSLIST     = 5;
-	public static final int POSSDELETEEFFECTSLIST  = 6;
+	public static final int KNOWNDELETEEFFECTSLIST 	= 3;
+	public static final int POSSPRECONDITIONSLIST  	= 4;
+	public static final int POSSADDEFFECTSLIST     	= 5;
+	public static final int POSSDELETEEFFECTSLIST  	= 6;
 	
 	
 	public static void printIncompleteActionInstance(IncompleteActionInstance a)
 	{
+		System.out.println();
 		System.out.println("  Name     : " + a.getName());					//String
 		System.out.println("  Index    : " + a.getIndex());					//int
 		System.out.println("  Pres     : " + a.getPreconditions());			//Set<Proposition>
-		System.out.println("  Poss Pres: " + a.getPossiblePreconditions());	//Set<Proposition>
-		if (a.getPossiblePreconditions() == null) System.out.println("  Poss Pres is in fact null");				
+		System.out.println("  Poss Pres: " + a.getPossiblePreconditions());	//Set<Proposition>			
 		System.out.println("  Adds     : " + a.getAddEffects());			//Set<Proposition>
 		System.out.println("  Poss Adds: " + a.getPossibleAddEffects());	//Set<Proposition>
-		if(a.getPossibleAddEffects() == null) System.out.println("  Poss Adds is in fact null");
 		System.out.println("  Deletes  : " + a.getDeleteEffects());			//Set<Proposition>
 		System.out.println("  Poss Dels: " + a.getPossibleDeleteEffects());	//Set<Proposition>
-		if(a.getPossibleDeleteEffects() == null) System.out.println("  Poss Dels is in fact null");
-		//a.getDefinition() -> an ActionDef object - original from Domain before transformation into ActionInstance - unchanges
-			//a.equals(IncompleteActionInstance obj)
+		//System.out.println("   ActionRisks: " + a.getActionRisks());				//int
+		//System.out.println("   ArgMapping : " + a.getArgMapping());				//Map<FormalArgument, PDDLObject>
+		//System.out.println("   Cost       : " + a.getCost());				    //double
+		//System.out.println("   Definition : " + a.getDefinition());				//ActionDef
+		//System.out.println();
 	}
 	
 	public static void printIncompleteVersionOfActionInstance(ActionInstance a)
 	{
 		IncompleteActionInstance act = (IncompleteActionInstance) a;
 		printIncompleteActionInstance(act);
+	}
+		
+	public static void printListOfActions(List<ActionInstance> actions)
+	{
+		for(ActionInstance act : actions)
+			printIncompleteVersionOfActionInstance(act);
+		
+		System.out.println();
 	}
 	
 	public static List<ActionInstance> getIncompleteActionInstancesAsActionInstances(List<IncompleteActionInstance> incompleteActionInstanceList)
@@ -63,7 +72,7 @@ public class Actions_Utility
 			return false;	
 	}
 	
-	//When called, this method return the # of propositions in an actions list (actionInstances).  
+	//When called, this method return the # of propositions in an actions list (actions).  
 	//This # changes as agents takes actions, because it is learning...
 	public static int getCountOfPropsInXListForAllActionInstances(int whichList, List<ActionInstance> actions)
 	{
