@@ -1,19 +1,23 @@
-package edu.usu.cs.ka.trial;
-
-import edu.usu.cs.ka.agentsystem.mainsystem.*;
-import edu.usu.cs.ka.agentsystem.utilities.*;
+package edu.usu.cs.ka.oldversions.Nov_28_10.simulator;
 
 import java.util.*;
+
+import edu.usu.cs.ka.oldversions.Nov_28_10.mainsystem.*;
+import edu.usu.cs.ka.agentsystem.utilities.*;
+
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.PODEFFSolver;
 import edu.usu.cs.planner.PODEPISolver;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
+
+
 
 //Output to screen:
 //bridges_v3_4_0.5_1.pddl 1 isSolvableCheck 51:18 length 29:40 12:98 0:18 3:0.967 pode1 4:16 1:16 0:16 3:2.057
@@ -32,7 +36,7 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 
 //This class should be accessed by running the Tester_PlanProoferByQA class
-public class Trial_PlanProoferByQA 
+public class Simulation_PlanProoferByQAoverRisks 
 {
 	Domain incompleteDomain_agent;
 	Problem problem;
@@ -41,10 +45,12 @@ public class Trial_PlanProoferByQA
 	SearchStatistics searchStatistics;
 	SolverOptions solverOptions;
 	
-	public static int numSuccesses = 0;
+	boolean debug;
 		
-	Trial_PlanProoferByQA(String[] args)
-	{				
+	Simulation_PlanProoferByQAoverRisks(String[] args)
+	{
+		debug = false;
+		
 		if (args.length !=3)
 			usage(args);
 			
@@ -59,7 +65,7 @@ public class Trial_PlanProoferByQA
 	
 	public static void main(String[] args) 
 	{
-		Trial_PlanProoferByQA unfailingPlan = new Trial_PlanProoferByQA(args);
+		Simulation_PlanProoferByQAoverRisks unfailingPlan = new Simulation_PlanProoferByQAoverRisks(args);
 		
 		//Should only run on solvable seeds
 		boolean isSolvable = unfailingPlan.runIsPlanSolvableCheck(args);
@@ -86,9 +92,6 @@ public class Trial_PlanProoferByQA
 		{
 			System.out.print(args[0] + " " + args[2] + " isSolvableCheck");
 			System.out.print(" " + sim.getActionInstances().size() + ":" + plan.size());
-			
-			numSuccesses++;
-			
 			return true;
 		}
 		else
@@ -101,42 +104,115 @@ public class Trial_PlanProoferByQA
 	void runPlanProoferByQA_lengthPlanner(String[] args)
 	{
 		System.out.print(" length");
+		if(debug) System.out.print(" ");
 		
 		Agent agent = new Agent(incompleteDomain_agent, problem);
 		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		
 		List<ActionInstance> plan;
-		int num_incompleteActions;
+		int num_riskyActions;
 		int count = 0;
 		int qa_total = 0;
 		agent.startStopwatch();
 		do
 		{
 			//Problem's action list is auto-updated by Agent.
-			plan = initSolverGetPlan("length");
 			
-			num_incompleteActions = 0;
+			plan = initSolverGetPlan("length");
+			if(plan == null)
+			{
+				System.out.print(" ?:?:?:?");
+				return;
+			}
+			else
+			{
+				if(debug){
+					System.out.println("\n");
+					for(ActionInstance a: plan)
+						System.out.println(a);
+				}
+			}
+			
+			num_riskyActions = 0;
 			IncompleteActionInstance completeVersionByQA;
-			for (ActionInstance a : plan)
-			{			
-				IncompleteActionInstance ia = (IncompleteActionInstance) a;
-				if (!Actions_Utility.isIncompleteActionComplete(ia))
+			for (int i = 0; i < plan.size(); i++)
+			{
+				IncompleteActionInstance ia = (IncompleteActionInstance) plan.get(i);
+				if(!Actions_Utility.isIncompleteActionComplete(ia))
 				{
-					completeVersionByQA = sim.getActionCVByID(ia.getIndex());
-					agent.qa_side.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
-					num_incompleteActions++;
+					boolean isRisky = isActionWithPossiblesRisky(i, agent, sim, plan);
+					if(debug){System.out.print("\n" + plan.get(i) + " " + isRisky);}
+					
+					if(isRisky)
+					{
+						completeVersionByQA = sim.getActionCVByID(ia.getIndex());
+						agent.qa_side.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
+						num_riskyActions++;
+					}
 				}		
 			}
 			//# of incomplete actions: # actions
-			//System.out.print(" " + num_incompleteActions + ":" + plan.size());
-			qa_total += num_incompleteActions;
+			//System.out.println(" " + num_riskyActions + ":" + plan.size());
+			qa_total += num_riskyActions;
 			count++;
-		}while(num_incompleteActions > 0);
+		}while(num_riskyActions > 0);
 		agent.stopStopwatch();
 		
 		//System.out.print(" " + count + ":" + agent.getTimeToSolve());
 		//A better output?: <planner> <Total # of QA>:<#actions in final plan>:<Total # times planner called>:<Total time taken>
 		System.out.print(" " + qa_total + ":" + plan.size() + ":" + count + ":" + agent.getTimeToSolve());
+	}
+	
+	boolean isActionWithPossiblesRisky(int actionBeingTestedForRiskiness, Agent agent, DomainExpert sim, List<ActionInstance> plan)
+	{	
+		Set<Proposition> projectedState = new HashSet(problem.getInitialState());
+	
+		for(int i = 0; i < plan.size(); i++)
+		{
+			IncompleteActionInstance ia = (IncompleteActionInstance) plan.get(i);
+			
+			if(i == actionBeingTestedForRiskiness)
+			{				
+				if(!projectedState.containsAll(ia.getPreconditions()))
+				{
+					if(debug) System.out.print("4");
+					return true;
+				}
+				else if(!projectedState.containsAll(ia.getPossiblePreconditions()))
+				{
+					if(debug) System.out.print("3");
+					return true;
+				}
+				else
+				{
+					projectedState.addAll(ia.getAddEffects());
+					projectedState.removeAll(ia.getDeleteEffects());
+					projectedState.removeAll(ia.getPossibleDeleteEffects());
+				}
+			}
+			else if (i != actionBeingTestedForRiskiness)
+			{
+				if(!projectedState.containsAll(ia.getPreconditions()))
+				{
+					if(debug) System.out.print("2");
+					return true;
+				}
+				else
+				{
+					projectedState.addAll(ia.getAddEffects());
+					projectedState.removeAll(ia.getDeleteEffects());
+				}
+			}
+		}
+		
+		if(!projectedState.containsAll(problem.getGoalAction().getPreconditions()))
+		{
+			if(debug) System.out.print("1");
+			return true;
+		}
+
+		if(debug) System.out.print("0");
+		return false;
 	}
 	
 	void runPlanProoferByQA_defaultPlanner(String[] args)
@@ -146,33 +222,53 @@ public class Trial_PlanProoferByQA
 		Agent agent = new Agent(incompleteDomain_agent, problem);
 		DomainExpert sim = new DomainExpert(agent.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		
-		List<ActionInstance> plan;
-		int num_incompleteActions;
+		List<ActionInstance> plan;		
+		int num_riskyActions;
 		int count = 0;
 		int qa_total = 0;
 		agent.startStopwatch();
 		do
 		{
 			//Problem's action list is auto-updated by Agent.
+		
 			plan = initSolverGetPlan("pode1");
-			num_incompleteActions = 0;
+			if(plan == null)
+			{
+				System.out.print(" ?:?:?:?");
+				return;
+			}
+			else
+			{
+				if(debug){
+					System.out.println("\n");
+					for(ActionInstance a: plan)
+						System.out.println(a);
+				}
+			}
 			
+			num_riskyActions = 0;
 			IncompleteActionInstance completeVersionByQA;
-			for (ActionInstance a : plan)
+			for (int i = 0; i < plan.size(); i++)
 			{			
-				IncompleteActionInstance ia = (IncompleteActionInstance) a;
+				IncompleteActionInstance ia = (IncompleteActionInstance) plan.get(i);
 				if (!Actions_Utility.isIncompleteActionComplete(ia))
 				{
-					completeVersionByQA = sim.getActionCVByID(ia.getIndex());
-					agent.qa_side.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
-					num_incompleteActions++;
+					boolean isRisky = isActionWithPossiblesRisky(i, agent, sim, plan);
+					if(debug){System.out.print("\n" + plan.get(i) + " " + isRisky);}
+					
+					if(isRisky)
+					{
+						completeVersionByQA = sim.getActionCVByID(ia.getIndex());
+						agent.qa_side.replaceIncompleteActionInstanceWithNewVersion(completeVersionByQA);
+						num_riskyActions++;
+					}
 				}		
 			}
 			//# of incomplete actions: # actions
 			//System.out.print(" " + num_incompleteActions + ":" + plan.size());
-			qa_total += num_incompleteActions;
+			qa_total += num_riskyActions;
 			count++;
-		}while(num_incompleteActions > 0);
+		}while(num_riskyActions > 0);
 		agent.stopStopwatch();
 	
 		//A better output?: <planner> <Total # of QA>:<#actions in final plan>:<Total # times planner called>:<Total time taken>
@@ -211,9 +307,6 @@ public class Trial_PlanProoferByQA
 				solverOptions.setUseMultipleSupportersInPlanningGraph(false);
 				solver = new PODEFFSolver(incompleteDomain_agent, problem, searchStatistics, solverOptions);
 			}
-
-			
-		
 		}catch (IllDefinedProblemException e) {e.printStackTrace();}
 				
 		List<ActionInstance> plan = solver.run();					

@@ -1,12 +1,12 @@
-package edu.usu.cs.ka.trial;
+package edu.usu.cs.ka.oldversions.Nov_28_10.simulator;
 
-import edu.usu.cs.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.ka.oldversions.Nov_28_10.mainsystem.*;
 import edu.usu.cs.ka.agentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
 import java.util.*;
 
-public class Trial_RandomQAandExplorationLearningAgentSim 
+public class Simulation_RandomQAandExplorationLearningAgentSim 
 {
 	
 	Domain incompleteDomain_agent;
@@ -14,7 +14,7 @@ public class Trial_RandomQAandExplorationLearningAgentSim
 	Problem problem;
 	
 	String[] args2;
-	Trial_RandomQAandExplorationLearningAgentSim(String[] args)
+	Simulation_RandomQAandExplorationLearningAgentSim(String[] args)
 	{
 		if (args.length != 2)
 			usage();
@@ -33,7 +33,7 @@ public class Trial_RandomQAandExplorationLearningAgentSim
 		
 	public static void main (String[] args)
 	{
-		Trial_RandomQAandExplorationLearningAgentSim env = new Trial_RandomQAandExplorationLearningAgentSim(args);
+		Simulation_RandomQAandExplorationLearningAgentSim env = new Simulation_RandomQAandExplorationLearningAgentSim(args);
 		
 		//TO CONFIRM THE DOMAINS AND PROBLEMS INITIALLY CREATED
 		//env.printDomainsAndProblem();

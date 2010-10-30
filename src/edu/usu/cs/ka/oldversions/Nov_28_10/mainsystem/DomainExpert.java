@@ -1,4 +1,4 @@
-package edu.usu.cs.ka.agentsystem.mainsystem;
+package edu.usu.cs.ka.oldversions.Nov_28_10.mainsystem;
 
 import java.util.*;
 
@@ -10,9 +10,8 @@ import edu.usu.cs.pddl.domain.*;
 public class DomainExpert 
 {
 	//Domain and Problem stuff
-	String domainFileString;
-	String problemFileString;
-	int seed;
+	String domainFile;
+	String problemFile;
 	
     Domain domain;
     Problem problem;
@@ -22,12 +21,27 @@ public class DomainExpert
 	
 	List<ActionInstance> actionsCV;//complete version
 	Hashtable<Integer, IncompleteActionInstance> actionsCV_HT;//hashtable
-		
-	public DomainExpert(String dFileString, String pFileString, String seedString)
+	
+	public DomainExpert(List<ActionInstance> actionInstancesOfAgent, int seed)
 	{	
-		domainFileString = dFileString;
-		problemFileString = pFileString;
-		seed = Integer.valueOf(seedString);
+		random = new Random(seed);
+		probability = .5;
+		
+		createActions_CompleteVersion(actionInstancesOfAgent);
+		
+		//Load HT
+		actionsCV_HT = new Hashtable<Integer, IncompleteActionInstance>();
+		for(ActionInstance act: actionsCV)
+		{
+			IncompleteActionInstance a = (IncompleteActionInstance) act;
+			actionsCV_HT.put(a.getIndex(), a);
+		}
+	}
+	
+	public DomainExpert(String dFile, String pFile, int seed)
+	{	
+		domainFile = dFile;
+		problemFile = pFile;
 		
 		setDomainAndProblem();
 		
@@ -47,7 +61,7 @@ public class DomainExpert
 	
 	public void setDomainAndProblem()
 	{
-		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(domainFileString, problemFileString);	
+		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(domainFile, problemFile);	
 		domain = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
 	}
@@ -100,31 +114,31 @@ public class DomainExpert
 	 *   Integer listOriginOfProp;
 	 *   Proposition propToLearnAbout;
 	*/
-//	public boolean giveFeedbackForQuestion (QA_Learning.QA_ActionAndPropChoice actionWithQ)
-//	{
-//		IncompleteActionInstance actCV = actionsCV_HT.get(actionWithQ.action.getIndex());
-//			
-//		//An incomplete action has 6 lists. See Actions_Utility class...  
-//		int listToCheck = actionWithQ.listOriginOfProp - 3; 
-//		
-//		boolean isFound = false;
-//		switch(listToCheck)
-//		{
-//			case (Actions_Utility.KNOWNPRECONDITIONSLIST): //1
-//				if(actCV.getPreconditions().contains(actionWithQ.propToLearnAbout)) isFound = true;
-//				break;
-//			case (Actions_Utility.KNOWNADDEFFECTSLIST): //2
-//				if(actCV.getAddEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
-//				break;
-//			case (Actions_Utility.KNOWNDELETEEFFECTSLIST): //3
-//				if(actCV.getDeleteEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
-//				break;
-//			default:
-//				System.out.println("ERROR: Sim did not find right list. THIS SHOULD NEVER HAPPEN!");
-//		}
-//		
-//		return isFound;
-//	}
+	public boolean giveFeedbackForQuestion (QA_Learning.QA_ActionAndPropChoice actionWithQ)
+	{
+		IncompleteActionInstance actCV = actionsCV_HT.get(actionWithQ.action.getIndex());
+			
+		//An incomplete action has 6 lists. See Actions_Utility class...  
+		int listToCheck = actionWithQ.listOriginOfProp - 3; 
+		
+		boolean isFound = false;
+		switch(listToCheck)
+		{
+			case (Actions_Utility.KNOWNPRECONDITIONSLIST): //1
+				if(actCV.getPreconditions().contains(actionWithQ.propToLearnAbout)) isFound = true;
+				break;
+			case (Actions_Utility.KNOWNADDEFFECTSLIST): //2
+				if(actCV.getAddEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
+				break;
+			case (Actions_Utility.KNOWNDELETEEFFECTSLIST): //3
+				if(actCV.getDeleteEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
+				break;
+			default:
+				System.out.println("ERROR: Sim did not find right list. THIS SHOULD NEVER HAPPEN!");
+		}
+		
+		return isFound;
+	}
 	
 	/*
 	 * Uses the probability and simSeed found in the DE constructor to create complete version (CV)

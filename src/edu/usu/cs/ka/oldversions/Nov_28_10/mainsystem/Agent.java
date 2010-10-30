@@ -1,4 +1,4 @@
-package edu.usu.cs.ka.agentsystem.mainsystem;
+package edu.usu.cs.ka.oldversions.Nov_28_10.mainsystem;
 
 import java.util.*;
 
@@ -19,10 +19,12 @@ import edu.usu.cs.pddl.domain.incomplete.*;
  * It does not change the DomainExpert's version of the action.
 */
 public class Agent 
-{
+{	
+	String domainFile;
+	String problemFile;
 	
-//	Domain incompleteDomain;
-//	Problem problem;
+	Domain domain;
+	Problem problem;
 	
 	static Random random;//for random action/qa selection
 	private Integer range;//for random action/qa selection 
@@ -85,6 +87,42 @@ public class Agent
 		//For results, collects the number of known/possible pre's, adds, deletes
 		setInitialListSizeCountForAllAgentsActionInstances();
 	}//end constructor
+	
+	//Constructor
+	public Agent(String dFile, String pFile)
+	{	
+		domainFile = dFile;
+		problemFile = pFile;
+		setDomainAndProblem();
+		
+		actions = problem.getActions();
+		
+		//These will be updated/change as the agent learns
+		actionsHT = new Hashtable<Integer, IncompleteActionInstance>();
+		for(ActionInstance act : actions)
+		{
+			IncompleteActionInstance a = (IncompleteActionInstance) act;	
+			actionsHT.put(a.getIndex(), a);
+		}
+		
+		qa_side = new QA_Learning(actionsHT);
+		explore_side = new Passive_Learning(actionsHT);
+		
+		random = new Random(0);
+						
+		//For results, checks actions to count how many have possibles
+		Actions_Utility.getCountOfActionsThatAreIncomplete(actions);
+		
+		//For results, collects the number of known/possible pre's, adds, deletes
+		setInitialListSizeCountForAllAgentsActionInstances();
+	}//end constructor
+	
+	public void setDomainAndProblem()
+	{
+		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(domainFile, problemFile);	
+		domain = domainMaker.getOriginalIncompleteDomain();
+		problem = domainMaker.getProblem();
+	}
 	
 	public Integer getTotalOriginalIncompleteActions() { return totalOriginalIncompleteActions; }
 	public Integer getTotalOriginalNumKnownPresAddsDeletes() { return totalOriginalNumKnownPresAddsDeletes; }

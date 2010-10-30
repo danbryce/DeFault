@@ -1,6 +1,6 @@
-package edu.usu.cs.ka.trial;
+package edu.usu.cs.ka.oldversions.Nov_28_10.simulator;
 
-import edu.usu.cs.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.ka.oldversions.Nov_28_10.mainsystem.*;
 import edu.usu.cs.ka.agentsystem.utilities.*;
 
 import java.util.List;
@@ -54,14 +54,14 @@ import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 */
 
 //This class should be accessed by running the BatchTester_PlannersRawPerformance class main method.
-public class Trial_PlannersRawPerformance 
+public class Simulation_PlannersRawPerformance 
 {
 	Domain 	domain_incomplete;
 	Problem problem;
 		
 	public static int numSuccesses = 0;
 		
-	public Trial_PlannersRawPerformance(String[] args)
+	public Simulation_PlannersRawPerformance(String[] args)
 	{				
 		if (args.length !=3)
 		{
@@ -76,7 +76,7 @@ public class Trial_PlannersRawPerformance
 	
 	public static void main(String[] args) 
 	{
-		Trial_PlannersRawPerformance trial1 = new Trial_PlannersRawPerformance(args);
+		Simulation_PlannersRawPerformance trial1 = new Simulation_PlannersRawPerformance(args);
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Should only run on solvable seeds - use the complete action version of domain as randomly created by sim
@@ -109,7 +109,7 @@ public class Trial_PlannersRawPerformance
 		plan1  = null;
 		
 		//Setup again
-		Trial_PlannersRawPerformance trial2 = new Trial_PlannersRawPerformance(args);
+		Simulation_PlannersRawPerformance trial2 = new Simulation_PlannersRawPerformance(args);
 		Agent agent2 = new Agent(trial2.domain_incomplete, trial2.problem);
 		DomainExpert sim2 = new DomainExpert(agent2.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		trial2.problem.setActionInstances(sim2.getActionInstances());
@@ -134,7 +134,7 @@ public class Trial_PlannersRawPerformance
 		// and performance of the planners for the complete domain version has been tested,
 		// see how the planners do against the original incomplete domain.
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		Trial_PlannersRawPerformance trial3 = new Trial_PlannersRawPerformance(args);
+		Simulation_PlannersRawPerformance trial3 = new Simulation_PlannersRawPerformance(args);
 		Agent agent3 = new Agent(trial3.domain_incomplete, trial3.problem);
 //		Simulator sim3 = new Simulator(agent3.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 //		trial3.problem.setActionInstances(agent3.getIncompleteActionInstancesAsActionInstances());
@@ -177,7 +177,7 @@ public class Trial_PlannersRawPerformance
 		plan3  = null;
 		
 		//Setup again
-		Trial_PlannersRawPerformance trial4 = new Trial_PlannersRawPerformance(args);
+		Simulation_PlannersRawPerformance trial4 = new Simulation_PlannersRawPerformance(args);
 		Agent agent4 = new Agent(trial4.domain_incomplete, trial4.problem);
 		//Simulator sim4 = new Simulator(agent4.getOriginalIncompleteActionInstancesList(), Integer.valueOf(args[2]));
 		//trial4.problem.setActionInstances(agent4.getIncompleteActionInstancesAsActionInstances());
@@ -284,7 +284,7 @@ public class Trial_PlannersRawPerformance
 	private void usage(String[] args) 
 	{
 		System.err.println("args: " + args.toString());
-		System.err.println("Trial_PlannersRawPerformance args:");
+		System.err.println("Simulation_PlannersRawPerformance args:");
 		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<simSeed>");
 	}
 	

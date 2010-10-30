@@ -1,6 +1,6 @@
-package edu.usu.cs.ka.batchtesters;
+package edu.usu.cs.ka.oldversions.Nov_28_10.batchtesters;
 
-import edu.usu.cs.ka.trial.*;
+import edu.usu.cs.ka.oldversions.Nov_28_10.simulator.*;
 
 public class BatchTester_PlannersRawPerformance 
 {
@@ -27,18 +27,18 @@ public class BatchTester_PlannersRawPerformance
 						args[0] = "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 						args[1] = "bridges_problem" + extension;
 						
-						for(int simSeed = 0; simSeed < 10000 && Trial_PlannersRawPerformance.numSuccesses < 1; simSeed++)
+						for(int simSeed = 0; simSeed < 10000 && Simulation_PlannersRawPerformance.numSuccesses < 1; simSeed++)
 						{							
 							args[2] = String.valueOf(simSeed);
 							try{
-								Trial_PlannersRawPerformance.main(args);
+								Simulation_PlannersRawPerformance.main(args);
 							}catch(Error e){System.out.println("\nError\n"); e.printStackTrace();}
 						}
 						
-						if(Trial_PlannersRawPerformance.numSuccesses == 0)
+						if(Simulation_PlannersRawPerformance.numSuccesses == 0)
 							System.out.println(args[0]);
 						else
-							Trial_PlannersRawPerformance.numSuccesses = 0;
+							Simulation_PlannersRawPerformance.numSuccesses = 0;
 					}//end for num file
 				}//end for version
 			}//end for bridge density

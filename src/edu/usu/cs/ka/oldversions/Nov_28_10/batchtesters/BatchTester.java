@@ -1,4 +1,4 @@
-package edu.usu.cs.ka.batchtesters;
+package edu.usu.cs.ka.oldversions.Nov_28_10.batchtesters;
 
 public class BatchTester 
 {

@@ -1,8 +1,8 @@
-package edu.usu.cs.ka.trial;
+package edu.usu.cs.ka.oldversions.Nov_28_10.simulator;
 
 import java.util.*;
 
-import edu.usu.cs.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.ka.oldversions.Nov_28_10.mainsystem.*;
 import edu.usu.cs.ka.agentsystem.utilities.*;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -13,14 +13,14 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 
 //For solvableTest, length, pode1
-public class Trial_PlanningAndExplorationLearningAgentSim 
+public class Simulation_PlanningAndExplorationLearningAgentSim 
 {
 	Domain incompleteDomain_agent;
 	Problem problem;
 	
 	Integer seed;
 		
-	Trial_PlanningAndExplorationLearningAgentSim(String[] args)
+	Simulation_PlanningAndExplorationLearningAgentSim(String[] args)
 	{				
 		if (args.length !=4)
 			usage(args);
@@ -43,7 +43,7 @@ public class Trial_PlanningAndExplorationLearningAgentSim
 		
 	public static void main (String[] args)
 	{
-		Trial_PlanningAndExplorationLearningAgentSim env = new Trial_PlanningAndExplorationLearningAgentSim(args);
+		Simulation_PlanningAndExplorationLearningAgentSim env = new Simulation_PlanningAndExplorationLearningAgentSim(args);
 		
 		//Planner-based trial on uncertain actions involving exploration learning
 		if(args[3].equalsIgnoreCase("pode1") || args[3].equalsIgnoreCase("length"))

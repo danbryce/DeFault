@@ -1,9 +1,9 @@
-package edu.usu.cs.ka.trial;
+package edu.usu.cs.ka.oldversions.Nov_28_10.simulator;
 
 import java.io.*;
 import java.util.*;
 
-import edu.usu.cs.ka.agentsystem.mainsystem.*;
+import edu.usu.cs.ka.oldversions.Nov_28_10.mainsystem.*;
 import edu.usu.cs.ka.agentsystem.utilities.*;
 
 
@@ -19,7 +19,7 @@ import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
-public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable 
+public class Simulation_Multi_ExplorationLearningTrial_random_length_pode1_solvable 
 {
 	Domain incompleteDomain_agent;
 	Problem problem;
@@ -41,7 +41,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 	
 	String domainName;
 	
-	Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable(String[] args)
+	Simulation_Multi_ExplorationLearningTrial_random_length_pode1_solvable(String[] args)
 	{	
 		debug = false;
 		
@@ -99,7 +99,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 			args2[2] = Integer.toString(simSeed);
 			args2[3] = algorithms[0]; //solvableCheck first
 			
-			Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable env = new Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable(args);
+			Simulation_Multi_ExplorationLearningTrial_random_length_pode1_solvable env = new Simulation_Multi_ExplorationLearningTrial_random_length_pode1_solvable(args);
 			
 			//For length planner - solvableCheck 
 			env.solverOptions.setUsePreferredOperators(true);
@@ -129,7 +129,7 @@ public class Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable
 				//Call the other type solvers - Alg = random, length, pode1
 				for(int alg = 1; alg < algorithms.length; alg++) 
 				{
-					env = new Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable(args);
+					env = new Simulation_Multi_ExplorationLearningTrial_random_length_pode1_solvable(args);
 					
 					args2[3] = algorithms[alg];
 					System.out.print(" " + args2[3] + " ");

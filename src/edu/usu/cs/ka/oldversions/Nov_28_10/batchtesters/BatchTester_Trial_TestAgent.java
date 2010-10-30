@@ -1,6 +1,6 @@
-package edu.usu.cs.ka.batchtesters;
+package edu.usu.cs.ka.oldversions.Nov_28_10.batchtesters;
 
-import edu.usu.cs.ka.trial.Trial_TestAgent;
+import edu.usu.cs.ka.agentsystem.simulator.Simulation_TestAgentAndDomainExpertStub;
 
 public class BatchTester_Trial_TestAgent 
 {
@@ -28,20 +28,20 @@ public class BatchTester_Trial_TestAgent
 					//Num file
 					for(int k = 1; k <= 1; k++) //numFiles 1-10
 					{	
-						for(int simSeed = 0; simSeed < 1 && Trial_TestAgent.numSuccesses < 1; simSeed++)
+						for(int simSeed = 0; simSeed < 1 && Simulation_TestAgentAndDomainExpertStub.numSuccesses < 1; simSeed++)
 						{							
 							args[0] = pathToDomains + "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 							args[1] = pathToProblems + "bridges_problem" + extension;
 							args[2] = String.valueOf(simSeed);
 							
-							try{ Trial_TestAgent.main(args); }
+							try{ Simulation_TestAgentAndDomainExpertStub.main(args); }
 							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 						}//end for seed
 						
-						if(Trial_TestAgent.numSuccesses == 0)
+						if(Simulation_TestAgentAndDomainExpertStub.numSuccesses == 0)
 							System.out.println("bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension);
 						else
-							Trial_TestAgent.numSuccesses = 0;
+							Simulation_TestAgentAndDomainExpertStub.numSuccesses = 0;
 
 					}//end for num file
 					System.out.println();

@@ -1,4 +1,4 @@
-package edu.usu.cs.ka.bddtesting;
+package edu.usu.cs.ka.oldversions.Nov_28_10.bddtesting;
 
 import org.apache.log4j.Logger;
 

@@ -1,6 +1,6 @@
-package edu.usu.cs.ka.batchtesters;
+package edu.usu.cs.ka.oldversions.Nov_28_10.batchtesters;
 
-import edu.usu.cs.ka.trial.*;
+import edu.usu.cs.ka.oldversions.Nov_28_10.simulator.*;
 
 public class BatchTester2
 {
@@ -32,7 +32,7 @@ public class BatchTester2
 						args[1] = pathToProblems + "bridges_problem" + extension;
 						
 						try{
-							Trial_Multi_ExplorationLearningTrial_random_length_pode1_solvable.main(args);
+							Simulation_Multi_ExplorationLearningTrial_random_length_pode1_solvable.main(args);
 						}catch(Error e){System.out.println("\nError\n"); e.printStackTrace();}
 					}//end for num file
 					System.out.println();

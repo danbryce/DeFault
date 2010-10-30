@@ -1,8 +1,8 @@
-package edu.usu.cs.ka.batchtesters;
+package edu.usu.cs.ka.oldversions.Nov_28_10.batchtesters;
 
-import edu.usu.cs.ka.trial.*;
+import edu.usu.cs.ka.oldversions.Nov_28_10.simulator.*;
 
-public class BatchTester_PlanProoferByQAoverRisks 
+public class BatchTester_PlanProoferByQA 
 {
 	private static final int numFiles = 10;
 
@@ -13,29 +13,31 @@ public class BatchTester_PlanProoferByQAoverRisks
 		String extension = ".pddl";
 	
 		//Grid size
-		for(int gridSize = 4; gridSize <= 4; gridSize*=2) //2-32
+		for(int gridSize = 4; gridSize <= 8; gridSize*=2) //2-32
 		{
 			//Bridge density
-			for(double bridgeDensity = .5; bridgeDensity <= .5; bridgeDensity += 0.25) //0.0 - 1.0
+			for(double bridgeDensity = .0; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
 			{		
 				//Version
-				for(int v = 3; v <= 3; v++)//1-3
+				for(int v = 1; v <= 3; v++)//1-3
 				{
 					//Num file
-					for(int k = 1; k <= 1; k++) //numFiles 1-10
+					for(int k = 1; k <= 10; k++) //numFiles 1-10
 					{				
 						args[0] = "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 						args[1] = "bridges_problem" + extension;
 						
-						for(int simSeed = 0; simSeed < 10; simSeed++)
-						{
+						for(int simSeed = 0; simSeed < 10000 && Simulation_PlanProoferByQA.numSuccesses < 10; simSeed++)
+						{							
 							args[2] = String.valueOf(simSeed);
 							try{
-								Trial_PlanProoferByQAoverRisks.main(args);
+								Simulation_PlanProoferByQA.main(args);
 							}catch(Error e){System.out.println("\nError\n"); e.printStackTrace();}
 						}
+						
+						Simulation_PlanProoferByQA.numSuccesses = 0;
+						System.out.println();
 					}//end for num file
-					System.out.println();
 				}//end for bridge density
 			}//end for version
 		}//end for size
