@@ -40,16 +40,22 @@ public class RiskCounter {
 	private static int unusedRisks = 0;
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
 	
+	public static void resetIsInitialized()
+	{
+		isInitialized = false;
+		logger = Logger.getLogger(RiskCounter.class.getName());
+	}
+	
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
 		if (isInitialized) return;
-
+		Fault.resetStaticHashMaps();
+		
 		allRisks = getAllRisks(problem);
 
 		bdd = new BDD(10000, 10000);
 
 		riskToBDD = new HashMap<Fault, Integer>();
 		bddToRisk = new HashMap<Integer, Fault>();
-		
 		
 		int i = 1;
 		unusedRisks = 0;
@@ -95,10 +101,8 @@ public class RiskCounter {
 
 	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
-		if (!isInitialized) {
-			initialize(domain, problem, plan);
-
-		}
+		if (!isInitialized) 
+			{initialize(domain, problem, plan);}
 
 		// Figure out which risks are true right now
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
@@ -107,7 +111,8 @@ public class RiskCounter {
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver));
 
 		// Add the others
-		for (ActionInstance action : plan) {
+		for (ActionInstance action : plan) 
+		{
 			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
 			//			bdd.printSet(nodes.get(nodes.size()-1).getCriticalRisks());
 			//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));

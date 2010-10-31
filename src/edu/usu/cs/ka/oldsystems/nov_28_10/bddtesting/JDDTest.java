@@ -11,15 +11,29 @@ public class JDDTest {
 //		tutorial();
 		
 		BDD bdd = new BDD(5);
+		int bddRef = bdd.ref(bdd.getOne());
 		
 		int a = bdd.createVar();
 		int b = bdd.createVar();
 		int c = bdd.createVar();
 		
-		int tree1 = bdd.ref(bdd.and(
-				bdd.or(a, b),
-				bdd.or(bdd.not(b),c)
-				));
+		int failSentence = bdd.ref(bdd.getZero());
+		
+		int refTempFS = bdd.ref(bdd.or(a, failSentence));
+		bdd.deref(failSentence);
+		failSentence = refTempFS;
+		
+		int refTemp = bdd.ref(bdd.and(bddRef, failSentence));
+		bdd.deref(bddRef);
+		bddRef = refTemp;
+		
+		System.out.println(bdd.and(bddRef, bdd.not(a)));
+		System.out.println(bdd.and(bddRef, a));
+		
+		bdd.printSet(bddRef);
+
+/*		
+ 		int tree1 = bdd.ref(bdd.and(bdd.or(a, b),bdd.or(bdd.not(b),c)));
 		bdd.printSet(tree1);
 		logger.debug(bdd.getSetCount(tree1) + "\n");
 		
@@ -27,11 +41,7 @@ public class JDDTest {
 		int x2 = bdd.createVar();
 		int x3 = bdd.createVar();
 		
-		int tree2 = bdd.ref(bdd.or(
-				bdd.and(bdd.not(x1), bdd.not(x2), bdd.not(x3)),
-				bdd.and(x1, x2),
-				bdd.and(x2, x3)
-		));
+		int tree2 = bdd.ref(bdd.or(bdd.and(bdd.not(x1), bdd.not(x2), bdd.not(x3)), bdd.and(x1, x2), bdd.and(x2, x3)));
 		bdd.printSet(tree2);
 		logger.debug(bdd.getSetCount(tree2) + "\n");
 
@@ -40,6 +50,7 @@ public class JDDTest {
 		int xtree = jdd.ref(jdd.or(x, jdd.not(x)));
 		jdd.printSet(xtree);
 		logger.debug(jdd.getSetCount(xtree));
+*/
 	}
 	
 /*  

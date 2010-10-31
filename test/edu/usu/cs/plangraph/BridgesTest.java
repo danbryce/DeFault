@@ -47,17 +47,17 @@ public class BridgesTest
 	@Test
 	public void RunBridges() 
 	{
-		int maxGridSize = 32;
+		int maxGridSize = 4;
 		String[] args = new String[6];
 		String pathToDomains = "testfiles/incomplete/bridges/";
 		String pathToProblems = "testfiles/incomplete/bridges/";
 		String extension = ".pddl";
 		String[] algorithms = {"random","length","pode1"};
 
-		for(int v = 1; v <= 3; v++) {
-			for(int gridSize = 2; gridSize <= maxGridSize; gridSize*=2) {
-				for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
-					for(int alg = 0; alg < algorithms.length; alg++) {
+		for(int v = 3; v <= 3; v++) {
+			for(int gridSize = 4; gridSize <= maxGridSize; gridSize*=2) {
+				for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
+					for(int alg = 1; alg < algorithms.length; alg++) {
 						for(int k = 1; k <= numFiles; k++) {
 							args[0] = pathToDomains + "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;
 							args[1] = pathToProblems + "bridges_problem" + extension;
@@ -69,7 +69,6 @@ public class BridgesTest
 						}
 					}
 				}
-
 			}
 		}
 	}

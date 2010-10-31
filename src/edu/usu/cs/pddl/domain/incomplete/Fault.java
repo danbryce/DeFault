@@ -34,10 +34,18 @@ public class Fault implements Comparable {
 	private final String proposition;
 	int hash;
 	boolean hashInitialized = false;
-
+	
+	public static void resetStaticHashMaps()
+	{
+		preconditionOpenRisks = new HashMap<String, Fault>();
+		possibleClobberRisks = new HashMap<String, Fault>();
+		unlistedEffectRisks = new HashMap<String, Fault>();
+		riskIndexMap = new HashMap<Integer, String>();
+	}
+	
 	// private int id;
 
-	private Fault(String riskName, String action, String proposition) {
+	public Fault(String riskName, String action, String proposition) {
 		this.riskName = riskName;
 		this.action = action;
 		this.proposition = proposition;
@@ -65,10 +73,7 @@ public class Fault implements Comparable {
 			riskIndexMap.put(riskIndexMap.size(), risk.getRiskName());
 		}
 		return risk;
-		
-		
 	}
-	
 	
 	public String getRiskName() {
 		return riskName;

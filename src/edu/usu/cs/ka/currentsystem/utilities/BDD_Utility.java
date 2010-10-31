@@ -165,7 +165,9 @@ public class BDD_Utility
 			int temp = bdd.createVar();
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
-		}		
+		}
+		
+		bdd.printSet(bddRef);
 	}
 	
 	private List<Fault> getAllRisks(Problem problem) 

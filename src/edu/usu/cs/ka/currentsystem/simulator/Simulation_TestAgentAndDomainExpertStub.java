@@ -23,7 +23,7 @@ public class Simulation_TestAgentAndDomainExpertStub
 	public static void main(String [] args)
 	{
 		Simulation_TestAgentAndDomainExpertStub trial = new Simulation_TestAgentAndDomainExpertStub(args);
-		Agent_RG agent = new Agent_RG(args[0], args[1]);
+		Agent agent = new Agent(args[0], args[1]);
 		DomainExpert expert = new DomainExpert(args[0], args[1], args[2]);		
 	}
 	

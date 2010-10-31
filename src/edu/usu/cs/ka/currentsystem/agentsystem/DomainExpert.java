@@ -34,7 +34,7 @@ public class DomainExpert
 		random = new Random(seed);
 		probability = .5;
 		
-		createActions_CompleteVersion(problem.getActions());
+		createActions_CompleteVersion();//makes CV of problem's actions, set problem's actionList to this CV.
 		
 		//Load HT
 		actionsCV_HT = new Hashtable<Integer, IncompleteActionInstance>();
@@ -52,6 +52,10 @@ public class DomainExpert
 		problem = domainMaker.getProblem();
 	}
 	
+	public Problem getProblem() { return problem;}
+	
+	
+	
 	public int getCountOfFeaturesInActionsCV()
 	{
 		int count = 0;
@@ -67,7 +71,7 @@ public class DomainExpert
 	
 	public IncompleteActionInstance getActionCVByID(Integer id){ return actionsCV_HT.get(id); }
 	
-	public List<ActionInstance> getActionInstances(){ return actionsCV; }
+	public List<ActionInstance> getActions(){ return actionsCV; }
 	
 	/*
 	 * DE here gives accurate state update using its CV of action chosen by agent.
@@ -132,7 +136,7 @@ public class DomainExpert
 	 *If the rand gen yields a double higher than the probability, then add the
 	 * possible feature as a real feature, else discard
 	*/ 
-	private void createActions_CompleteVersion(List<ActionInstance> actionsAV)
+	private void createActions_CompleteVersion()
 	{
 		actionsCV = new ArrayList<ActionInstance>();
 		
@@ -141,7 +145,7 @@ public class DomainExpert
 		HashSet<Proposition> newDelsSet;
 		HashSet<Proposition> newEmptySet;
 	
-		for(ActionInstance a : actionsAV)
+		for(ActionInstance a : problem.getActions())
 		{
 			IncompleteActionInstance ia = (IncompleteActionInstance) a;
 			
@@ -178,6 +182,8 @@ public class DomainExpert
 					newAddsSet, newDelsSet, newEmptySet, newEmptySet, newEmptySet, ia.getIndex());
 			
 			actionsCV.add(newIA);
-		}			
+		}
+		
+		problem.setActionInstances(actionsCV); 
 	}
 }
