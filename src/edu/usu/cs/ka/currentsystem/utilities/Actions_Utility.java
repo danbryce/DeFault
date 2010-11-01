@@ -44,8 +44,6 @@ public class Actions_Utility
 	{
 		for(ActionInstance act : actions)
 			printIncompleteVersionOfActionInstance(act);
-		
-		System.out.println();
 	}
 	
 	public static List<ActionInstance> getIncompleteActionInstancesAsActionInstances(List<IncompleteActionInstance> incompleteActionInstanceList)

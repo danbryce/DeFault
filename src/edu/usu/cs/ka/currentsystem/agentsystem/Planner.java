@@ -30,13 +30,24 @@ public class Planner
 	Long startTime;
 	Long finishTime;
 	
+	int numTimesAmirPlannerCalled;
+	int numTimesBrycePlannerCalled;
+	
 	public Planner(String dFile, String pFile)
 	{
 		domainFile = dFile;
 		problemFile = pFile;
 		
 		setDomainAndProblem();
+		
+		numTimesAmirPlannerCalled = 0;
+		numTimesBrycePlannerCalled = 0;
 	}
+	
+	public int getNumTimesAmirPlannerCalled() { return numTimesAmirPlannerCalled; }
+	public int getNumTimesBrycePlannerCalled() { return numTimesBrycePlannerCalled; }
+	
+	public void decrementNumTimesAmirPlannerCalled() { numTimesAmirPlannerCalled--; }
 	
 	private void setDomainAndProblem()
 	{
@@ -55,6 +66,8 @@ public class Planner
 	 */
 	public List<ActionInstance> runAmirPlanner()
 	{
+		numTimesAmirPlannerCalled++;
+		
 		Solver solver = null;
 		RiskCounter.resetIsInitialized();
 		Fault.resetStaticHashMaps(); //This might now be accounted for in RiskCounter...
@@ -85,6 +98,8 @@ public class Planner
 	 */
 	public List<ActionInstance> runBrycePlanner()
 	{
+		numTimesBrycePlannerCalled++;
+		
 		Solver solver = null;
 		RiskCounter.resetIsInitialized();
 		Fault.resetStaticHashMaps(); //This might now be accounted for in RiskCounter...

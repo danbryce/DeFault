@@ -14,7 +14,7 @@ import jdd.bdd.*;
  *  Take actions even if they might fail - risky(R)
  *  Take actions even if the plan has a guaranteed future failure - greedy(G)
  */
-public class Agent 
+public class Agent_a 
 {
 	//Domain and Problem stuff
 	String domainFile;
@@ -39,7 +39,7 @@ public class Agent
 	Long finishTime;
 	int actionsCount;
 	
-	public Agent(String dFile, String pFile)
+	public Agent_a(String dFile, String pFile)
 	{
 		domainFile = dFile;
 		problemFile = pFile;
@@ -148,19 +148,25 @@ public class Agent
 	 */
 	public void learnAboutActionTaken(ActionInstance act, Set<Proposition> prevState, Set<Proposition> currState)
 	{
+		System.out.println("AGENT LEARNS: \n      action: " + act.getName());
+		
 		IncompleteActionInstance a = (IncompleteActionInstance) act;
 		
 		if(!areActionPreConditionsSat(a, prevState))
 		{
 			System.out.println("Should not have been learning here.");
 			System.out.println("An action with unsat pre's should never be applied.");
+			System.out.println("AGENT LEARNS END\n");
 			return; 
 		}
 		
 		actionsCount++;
 		
 		if(Actions_Utility.isIncompleteActionComplete(a)) //No incomplete features exist
+		{
+			System.out.println("AGENT LEARNS END\n");
 			return; 
+		}
 			
 		int successSentence = bdd.ref(bdd.getOne());  //Temp sentence for actionSucceeded case
 		int failureSentence = bdd.ref(bdd.getZero()); //Temp sentence for actionFailed case
@@ -169,6 +175,7 @@ public class Agent
 		{
 			if(!prevState.contains(p)) 
 			{	
+				System.out.println("       +-pre: " + p + " (depends on action failure/success)");	
 				successSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), successSentence, false, true); //AND: -possPre, -pre	
 				failureSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), failureSentence, true, false); //OR: might be pre 
 			}
@@ -177,28 +184,47 @@ public class Agent
 		for(Proposition p : a.getPossibleAddEffects())
 		{			
 			if(!prevState.contains(p) && currState.contains(p)) //-possAdd, add
+			{
+				System.out.println("\t+add: " + p);
 				successSentence = addPropToSentence(Fault.UNLISTEDEFFECT, a.getName(), p.getName(), successSentence, true, true);
+			}
 			
 			if(!prevState.contains(p) && !currState.contains(p)) //-possAdd, -add
+			{
+				System.out.println("\t-add: " + p);
 				successSentence = addPropToSentence(Fault.UNLISTEDEFFECT, a.getName(), p.getName(), successSentence, false, true);
+			}
 		}
 		
 		for(Proposition p : a.getPossibleDeleteEffects())
 		{
 			if(prevState.contains(p) && !currState.contains(p)) //-possDel, del
+			{
+				System.out.println("\t+del: " + p);
 				successSentence = addPropToSentence(Fault.POSSCLOB, a.getName(), p.getName(), successSentence, true, true);
+			}
 			
 			if(prevState.contains(p) && currState.contains(p)) //-possDel, -del
+			{
+				System.out.println("\t-del: " + p);
 				successSentence = addPropToSentence(Fault.POSSCLOB, a.getName(), p.getName(), successSentence, false, true);
+			}
 		}
 
 		int tempRefToNewKB;
 		if(!prevState.equals(currState)) //Action succeeded
+		{
+			System.out.println("      result: success");
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef, successSentence));
+		}
 		else if(isActionFailure(a, prevState, currState)) //Action failed
+		{
+			System.out.println("      result: failure");
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef, failureSentence));
+		}
 		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState)) //action failure not known, combine two Trees of cases above
 		{
+			System.out.println("      result: unknown");
 			int tempRefSF = bdd.ref(bdd.or(successSentence, failureSentence));
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef, tempRefSF));
 			bdd.deref(tempRefSF);
@@ -208,6 +234,8 @@ public class Agent
 		bdd.deref(failureSentence);
 		bdd.deref(bddRef);
 		bddRef = tempRefToNewKB;
+		
+		System.out.println("AGENT LEARNS END\n");
 	}
 	
 	/**
@@ -284,6 +312,8 @@ public class Agent
 	 */
 	public void updateActions()
 	{
+		System.out.println("AGENT REMEMBERS: ");
+		
 		ArrayList<Fault> risksLearned = new ArrayList<Fault>();
 		for(Fault r : risks)
 		{
@@ -324,15 +354,24 @@ public class Agent
 		
 			if(resultT == 0 || resultF == 0) //In either case, the possFeature is no more.
 			{
+				System.out.println("  resultT: " + resultT);
+				System.out.println("  resultF: " + resultF);
+				System.out.println("\t-: " + r); 
+				
 				possSet.remove(propLearned);
 				risksLearned.add(r);
 			}
 		
 			if(resultF == 0) //If the negation of the feature ^ KB == 0, then the possFeature is now a knownFeatuere.
+			{	
+				System.out.println("\t+: " + r); 
 				knownSet.add(propLearned);
+			}
 		}
 		
 		risks.removeAll(risksLearned); //The risks learned are removed from the risks list
+		
+		System.out.println("AGENT REMEMBERS END\n");
 	}
 	
 	public void startStopwatch(){ startTime = System.currentTimeMillis(); }

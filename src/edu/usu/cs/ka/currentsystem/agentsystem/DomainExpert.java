@@ -53,8 +53,8 @@ public class DomainExpert
 	}
 	
 	public Problem getProblem() { return problem;}
-	
-	
+	public IncompleteActionInstance getActionCVByID(Integer id){ return actionsCV_HT.get(id); }
+	public List<ActionInstance> getActions(){ return actionsCV; }
 	
 	public int getCountOfFeaturesInActionsCV()
 	{
@@ -67,18 +67,18 @@ public class DomainExpert
 			count += a.getDeleteEffects().size();	
 		}
 		return count;
-	}
-	
-	public IncompleteActionInstance getActionCVByID(Integer id){ return actionsCV_HT.get(id); }
-	
-	public List<ActionInstance> getActions(){ return actionsCV; }
-	
-	/*
+	}	
+		
+	/**
 	 * DE here gives accurate state update using its CV of action chosen by agent.
 	 * Agent then must learn about the action it selected - it does not know whether the action succeeded or failed.
 	 * Note that it is possible an action may have succeeded but will not change the state.
-	*/
-	public Set<Proposition> updateState(Set<Proposition> currentState, IncompleteActionInstance incompleteActionChosen)
+	 * 
+	 * @param currentState
+	 * @param incompleteActionChosen
+	 * @return Set<Proposition> newState
+	 */
+	public Set<Proposition> applyAction(Set<Proposition> currentState, IncompleteActionInstance incompleteActionChosen)
 	{		
 		Set<Proposition> newState = new HashSet<Proposition>(currentState);
 		
@@ -130,12 +130,12 @@ public class DomainExpert
 //		return isFound;
 //	}
 	
-	/*
-	 * Uses the probability and simSeed found in the DE constructor to create complete version (CV)
-	 * of the agent's/problem's incomplete actions (AgentVersion - they contain possible features).
-	 *If the rand gen yields a double higher than the probability, then add the
-	 * possible feature as a real feature, else discard
-	*/ 
+	/**
+	 * Uses the probability and simSeed found in the DE constructor to create a complete version (CV)
+	 *  of the agent's/problem's incomplete actions (AgentVersion - they contain possible features).
+	 * If the rand gen yields a double higher than the probability, then add the
+	 *  possible feature as a real feature, else discard.
+	 */
 	private void createActions_CompleteVersion()
 	{
 		actionsCV = new ArrayList<ActionInstance>();
