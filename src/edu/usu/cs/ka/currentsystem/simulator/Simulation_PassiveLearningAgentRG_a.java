@@ -28,7 +28,7 @@ public class Simulation_PassiveLearningAgentRG_a
 		planners.setProblem(expert.getProblem());
 		if(planners.runAmirPlanner() == null) return; //Not a solvable seed for given domain
 		
-		planners.decrementNumTimesAmirPlannerCalled();
+		planners.resetPlannersCalledCount();
 		numSuccesses++;
 		
 		System.out.println(args[0] + "_" + args[2] + "\n");
@@ -72,7 +72,7 @@ public class Simulation_PassiveLearningAgentRG_a
 		Actions_Utility.printListOfActions(agent.getActions());
 		System.out.println("*AGENTS ACTIONS (TO START) END*\n");
 		
-		Set<Proposition> prevState, currState;
+		Set<Proposition> currState, nextState;
 		IncompleteActionInstance currAction;
 		List<ActionInstance> plan;
 		
@@ -80,38 +80,38 @@ public class Simulation_PassiveLearningAgentRG_a
 
 		agent.startStopwatch();
 		
-		prevState = currState = agent.getProblem().getInitialState();
+		currState = nextState = agent.getProblem().getInitialState();
 		System.out.print("INITIAL STATE: ");
-		for (Proposition prop : prevState) System.out.print(prop + " ");
+		for (Proposition prop : currState) System.out.print(prop + " ");
 		System.out.println("\n");
 		
 		plan = getPlan(plannerType); //Should never be null to start
 		System.out.println("PLAN:"); Planner.printPlanShort(plan); System.out.println("PLAN END\n");
 		
-		do 
+		while(agent.getNumActionsTaken() < 1000) 
 		{			
 			currAction = (IncompleteActionInstance) plan.remove(0);
 			
 			System.out.println("ATTEMPTING ACTION: " + currAction.getName() + "\n");
 			
-			if(agent.areActionPreConditionsSat(currAction, prevState))
+			if(agent.areActionPreConditionsSat(currAction, currState))
 			{
 				System.out.println("ACTION APPLIED.\n");
 				
-				currState = expert.applyAction(prevState, currAction);
+				nextState = expert.applyAction(currState, currAction);
 				
 				System.out.print("NEW STATE: ");
-				for (Proposition prop : currState) System.out.print(prop + " ");
+				for (Proposition prop : nextState) System.out.print(prop + " ");
 				System.out.println("\n");
 				
-				agent.learnAboutActionTaken(currAction, prevState, currState);
+				agent.learnAboutActionTaken(currAction, currState, nextState);
 							
-				if(currState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
+				if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 					break;
 			}
 			
-			if(agent.isActionFailure(currAction, prevState, currState) || plan.size() == 0 || 
-				!agent.areActionPreConditionsSat(currAction, prevState))
+			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || 
+				!agent.areActionPreConditionsSat(currAction, currState))
 			{
 				System.out.println("REPLANNING...\n");
 				agent.updateActions();
@@ -120,7 +120,7 @@ public class Simulation_PassiveLearningAgentRG_a
 				Actions_Utility.printListOfActions(agent.getActions());
 				System.out.println("*AGENTS ACTIONS END*\n");
 				
-				agent.getProblem().setInitialState(currState);
+				agent.getProblem().setInitialState(nextState);
 				plan = getPlan(plannerType);
 												
 				if(plan == null) 
@@ -140,21 +140,20 @@ public class Simulation_PassiveLearningAgentRG_a
 			    System.out.println("**************************\n");
 			    
 				System.out.print("CURRENT STATE: ");
-				for (Proposition prop : currState) System.out.print(prop + " ");
+				for (Proposition prop : nextState) System.out.print(prop + " ");
 				System.out.println("\n");
 			}
 			
-			prevState = currState;
-					
-		}while(!prevState.containsAll(agent.getProblem().getGoalAction().getPreconditions()));
+			currState = nextState;		
+		}
 				
 		agent.stopStopwatch();
 		
 		System.out.println("****************************************************************************");
-		if(currState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
+		if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{
 			System.out.println("SIM SUCCESSFUL!:");
-			System.out.println(" currState: " + currState);
+			System.out.println(" currState: " + nextState);
 			System.out.println(" goal pres: " + agent.getProblem().getGoalAction().getPreconditions());
 			
 			System.out.print(" " + plannerType + " ");
@@ -165,7 +164,7 @@ public class Simulation_PassiveLearningAgentRG_a
 		else
 		{
 			System.out.println("SIM FAILED:");
-			System.out.println(" currState: " + currState);
+			System.out.println(" currState: " + nextState);
 			System.out.println(" goal pres: " + agent.getProblem().getGoalAction().getPreconditions());
 			System.out.println(" " + plannerType + " ? ? ?");
 		}

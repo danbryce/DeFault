@@ -47,7 +47,7 @@ public class Planner
 	public int getNumTimesAmirPlannerCalled() { return numTimesAmirPlannerCalled; }
 	public int getNumTimesBrycePlannerCalled() { return numTimesBrycePlannerCalled; }
 	
-	public void decrementNumTimesAmirPlannerCalled() { numTimesAmirPlannerCalled--; }
+	public void resetPlannersCalledCount() { numTimesAmirPlannerCalled = 0; numTimesBrycePlannerCalled = 0; }
 	
 	private void setDomainAndProblem()
 	{

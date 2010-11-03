@@ -28,7 +28,7 @@ public class Simulation_PassiveLearningAgentRG
 		planners.setProblem(expert.getProblem());
 		if(planners.runAmirPlanner() == null) return; //Not a solvable seed for given domain
 		
-		planners.decrementNumTimesAmirPlannerCalled();
+		planners.resetPlannersCalledCount();
 		numSuccesses++;
 		
 		System.out.println(args[0] + "_" + args[2] + "\n");
@@ -55,47 +55,45 @@ public class Simulation_PassiveLearningAgentRG
 		planners.setProblem(agent.getProblem()); //Set planner problem to agent's incomplete version
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
 		
-		Set<Proposition> prevState, currState;
+		Set<Proposition> currState, nextState;
 		IncompleteActionInstance currAction;
 		List<ActionInstance> plan;
 
 		agent.startStopwatch();
 		
-		prevState = currState = agent.getProblem().getInitialState();
-		
+		currState = nextState = agent.getProblem().getInitialState();
 		plan = getPlan(plannerType); //Should never be null to start
 		
-		do 
+		while(agent.getNumActionsTaken() < 1000)
 		{			
 			currAction = (IncompleteActionInstance) plan.remove(0);
-			
-			if(agent.areActionPreConditionsSat(currAction, prevState))
+			if(agent.areActionPreConditionsSat(currAction, currState))
 			{			
-				currState = expert.applyAction(prevState, currAction);
-				agent.learnAboutActionTaken(currAction, prevState, currState);
+				nextState = expert.applyAction(currState, currAction);
+				agent.learnAboutActionTaken(currAction, currState, nextState);
 							
-				if(currState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
+				if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 					break;
 			}
 			
-			if(agent.isActionFailure(currAction, prevState, currState) || plan.size() == 0 || 
-				!agent.areActionPreConditionsSat(currAction, prevState))
+			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || 
+				!agent.areActionPreConditionsSat(currAction, currState))
 			{
 				agent.updateActions();
-				agent.getProblem().setInitialState(currState);
+				
+				agent.getProblem().setInitialState(nextState);
 				plan = getPlan(plannerType);
 												
 				if(plan == null) 
 					break;
 			}
 			
-			prevState = currState;
-					
-		}while(!prevState.containsAll(agent.getProblem().getGoalAction().getPreconditions()));
+			currState = nextState;		
+		}
 				
 		agent.stopStopwatch();
 		
-		if(currState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
+		if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{
 			System.out.print(" " + plannerType + " ");
 			if(plannerType.equals("Amir")) System.out.print(planners.getNumTimesAmirPlannerCalled());
