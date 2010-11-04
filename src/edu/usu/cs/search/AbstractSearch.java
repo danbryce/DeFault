@@ -23,7 +23,7 @@ public class AbstractSearch implements Search {
 	protected List<ActionInstance> actionInstances = null;
 	
 	protected PriorityQueue<StateNode> open = null;
-	protected Set<StateNode> closed = null;
+	protected HashSet<StateNode> closed = null;
 	
 	protected final int whichHeuristic = 1;
 	protected Heuristic heuristic = null;

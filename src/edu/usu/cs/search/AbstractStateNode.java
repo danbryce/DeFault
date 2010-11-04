@@ -120,7 +120,7 @@ public class AbstractStateNode implements StateNode {
 				continue;
 			}
 			StateNode node = getSuccessorNode(act);
-			if(node != null && !node.equals(this) && (node.getParent() == null || node.getParent().getParent() == null || node.getParent().getParent() != node) ){
+			if(node != null && !node.equals(this) && (node.getParent() == null || node.getParent().getParent() == null || !node.getParent().getParent().equals(node)) ){
 				newNodes.add(node);
 				//subsequentNodes.add(node);
 			}
@@ -155,11 +155,11 @@ public class AbstractStateNode implements StateNode {
 
 	@Override
 	public int hashCode() {
-//		if (hashInitialized) {
-//			return hash;
-//		}
-//
-//		hash = Proposition.getNodeHash(this.getState());
+		if (hashInitialized) {
+			return hash;
+		}
+
+		hash = Proposition.getNodeHash(this.getState());
 
 		hashInitialized = true;
 		return hash;
@@ -169,7 +169,12 @@ public class AbstractStateNode implements StateNode {
 	public boolean equals(StateNode o) {
 		return true;
 	}
+	@Override
+	public boolean equals(Object o) {
+		return equals((StateNode)o);
+	}
 
+	
 	@Override
 	public Set<Proposition> getState() {
 		// TODO Auto-generated method stub

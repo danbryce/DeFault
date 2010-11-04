@@ -17,13 +17,13 @@ import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.AbstractStateNode;
 import edu.usu.cs.search.StateNode;
 
-public interface PreferredOperatorDeferredEvaluationNode extends StateNode {
+public interface PreferredOperatorDeferredEvaluationNode extends StateNode
+{
 
 	Set<ActionInstance> getPreferredOperators();
 	void setPreferredOperators (Set<ActionInstance> acts);
 	boolean deadEnd();
-	
-
-
+	boolean equals(PreferredOperatorDeferredEvaluationNode node);
+	boolean equals(StateNode node);
 
 }

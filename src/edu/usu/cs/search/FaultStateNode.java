@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import edu.usu.cs.heuristic.stanplangraph.FactHeader;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.PIMetric;
@@ -18,27 +20,20 @@ import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.incomplete.PIRiskSet;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
+import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationSearch;
 
 public class FaultStateNode extends AbstractStateNode implements
-PreferredOperatorDeferredEvaluationNode {
+PreferredOperatorDeferredEvaluationNode, StateNode {
 	protected Map<Proposition, FaultSet> state;
 	protected Set<ActionInstance> preferredOperators = null;
 	protected FaultSet criticalRisks = null;
+		private static Logger logger = Logger.getLogger(FaultStateNode.class.getName());
 
 
 	public FaultStateNode(ActionInstance action, StateNode parent, Solver solver) {
 		super(action, parent, solver);
 		state = new HashMap<Proposition, FaultSet>();
 
-
-//		if(parent != null)
-//			gvalue[1] = new NumericMetric(((NumericMetric)parent.getGValue()[1]).getValue()+action.getCost());
-//		else
-//			gvalue[1] = new NumericMetric(0);
-		//subsequentNodes = new ArrayList<StateNode>();
-
-
-		// TODO Auto-generated constructor stub
 	}
 
 	public FaultStateNode(FaultStateNode incompletePINode) {
@@ -60,8 +55,41 @@ PreferredOperatorDeferredEvaluationNode {
 	public Set<Proposition> getState(){
 		return state.keySet();
 	}
+
+	@Override
 	public boolean equals(StateNode node){
-		return node.getState().equals(getState());
+		return equals(((FaultStateNode)node));
+	}
+	
+	//@Override
+	public boolean equals(PreferredOperatorDeferredEvaluationNode node){
+		return equals(((FaultStateNode)node));
+	}
+	
+	public boolean equals(FaultStateNode node){
+		//logger.debug("Compare "+  this.getPropositions().keySet() + " " +  ((FaultStateNode)node).getPropositions().keySet());
+		
+		Map<Proposition, FaultSet> nState = ((FaultStateNode)node).getPropositions();
+		if(state.size() != nState.size()){
+			return false;
+		}
+		else if (!state.keySet().containsAll(nState.keySet())  || !nState.keySet().containsAll(state.keySet())){
+			return false;
+		}
+		else{
+			for(Proposition p : state.keySet()){
+				FaultSet f = state.get(p);
+				FaultSet nf = nState.get(p);
+				if(!f.equals(nf)){
+					return false;
+				}
+			}
+		}
+		//logger.debug("EQ");
+		return true;
+		
+		
+		//return node.getState().equals(getState());
 	}
 	@Override
 	public  StateNode getSuccessorNode(ActionInstance action1) {

@@ -101,6 +101,10 @@ PreferredOperatorDeferredEvaluationNode {
 	public boolean satisfies(Set<Proposition> goal) {		
 		return state.containsAll(goal);
 	}
+	
+	public boolean equals(PreferredOperatorDeferredEvaluationNode node){
+		return equals((StateNode)node);
+	}
 
 	public boolean equals(StateNode node){
 		if(node instanceof ClassicalNode){
@@ -137,5 +141,7 @@ PreferredOperatorDeferredEvaluationNode {
 		// TODO Auto-generated method stub
 		return 	((Double)((NumericMetric)getHeuristicValue()[0]).getValue()).equals(Double.MAX_VALUE);
 	}
+
+	
 
 }
