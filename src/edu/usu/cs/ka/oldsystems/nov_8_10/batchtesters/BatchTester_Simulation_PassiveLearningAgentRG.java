@@ -1,8 +1,8 @@
-package edu.usu.cs.ka.currentsystem.batchtesters;
+package edu.usu.cs.ka.oldsystems.nov_8_10.batchtesters;
 
-import edu.usu.cs.ka.currentsystem.simulator.Test_PlannerRawPerformance;
+import edu.usu.cs.ka.currentsystem.simulator.Simulation_PassiveLearningAgentRG;
 
-public class BatchTester_Test_PlannerRawPerformance 
+public class BatchTester_Simulation_PassiveLearningAgentRG 
 {
 	private static final int numFiles = 10;
 
@@ -16,30 +16,28 @@ public class BatchTester_Test_PlannerRawPerformance
 	
 		//Just mess around with the for loop values...
 		
-		for(int gridSize = 2; gridSize <= 4; gridSize*=2) //2-32
+		for(int gridSize = 2; gridSize <= 2; gridSize*=2) //2-32
 		{
-			for(double bridgeDensity = 0; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
+			for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
 			{	
-				for(int version = 1; version <= 3; version++)//1-3
+				for(int version = 3; version <= 3; version++)//1-3
 				{
-					for(int numFile = 1; numFile <= 10; numFile++) //numFiles 1-10
+					for(int numFile = 1; numFile <= 1; numFile++) //numFiles 1-10
 					{
-						for(int simSeed = 0; simSeed < 10000 && Test_PlannerRawPerformance.numSuccesses < 10; simSeed++)
+						for(int simSeed = 38; simSeed < 1000 && Simulation_PassiveLearningAgentRG.numSuccesses < 1; simSeed++)
 						{	
 							args[0] = pathToDomains + "bridges_v" + version + "_" + gridSize + "_" + bridgeDensity + "_" + numFile + extension;
 							args[1] = pathToProblems + "bridges_problem" + extension;
 							args[2] = String.valueOf(simSeed);
 							
-							try{ Test_PlannerRawPerformance.main(args); }
+							try{ Simulation_PassiveLearningAgentRG.main(args); }
 							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 						}//end for seed
 						
-						if(Test_PlannerRawPerformance.numSuccesses == 0)
+						if(Simulation_PassiveLearningAgentRG.numSuccesses == 0)
 							System.out.println(args[0]);
 						else
-							Test_PlannerRawPerformance.numSuccesses = 0;
-						
-						System.out.println();
+							Simulation_PassiveLearningAgentRG.numSuccesses = 0;
 
 					}//end for num file
 					System.out.println();
