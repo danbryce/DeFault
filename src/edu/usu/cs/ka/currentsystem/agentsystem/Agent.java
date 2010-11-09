@@ -1,13 +1,10 @@
 package edu.usu.cs.ka.currentsystem.agentsystem;
 
-import java.math.BigInteger;
 import java.util.*;
 
 import edu.usu.cs.ka.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
-import edu.usu.cs.planner.Solver;
-import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import jdd.bdd.*;
 
 /**
@@ -346,54 +343,6 @@ public class Agent
 	{
 		if(startTime == null || finishTime == null) return -1.0;
 		else return (finishTime - startTime)/1000.0;
-	}
-	
-
-	/**
-	 * This is an adapted version of planner.ffrisky.util.RiskCounter's getModelCount method.
-	 * It finds out which risks are true given the problem's initial/current state
-	 * and the problem's current actionList
-	 * 
-	 * @param domain
-	 * @param problem
-	 * @param plan
-	 * @param solver
-	 * @return int - this should be the reference to the plan's failure explanation BDD
-	 */
-	public int getFailureModel(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) 
-	{
-		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);	
-		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state
-		for (ActionInstance action : plan) // Add the others
-		{
-			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
-			//			bdd.printSet(nodes.get(nodes.size()-1).getCriticalRisks());
-			//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
-		}
-	
-		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
-		bdd.ref(crs);
-		
-		for(Proposition p : problem.getGoalAction().getPreconditions())
-		{
-			Integer risk = nodes.get(nodes.size() - 1).getPropositions().get(p);
-			if(risk != null)
-			{
-				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
-				bdd.deref(crs);
-				crs = tmp;
-				bdd.ref(crs);
-			}
-			else
-			{
-				bdd.deref(crs);
-				crs = bdd.getOne();
-				bdd.ref(crs);
-				break;
-			}
-		}
-		
-		return crs;
 	}
 	
 }//end class
