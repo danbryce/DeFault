@@ -135,8 +135,10 @@ public class ClassicalRelaxedPlanningGraph extends AbstractPlanningGraph {
 					ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, actionHeader.getIndex());
 					int cost = ali.getCost();
 					if ( actionsWithLowestCost == null ||
-							actionHeader.isNoop() || 
-							( !actionsWithLowestCost.isNoop() && cost < supporterCost) 
+							//actionHeader.isNoop() || 
+							//( !actionsWithLowestCost.isNoop() && 
+									cost < supporterCost
+									//) 
 					) {
 						supporterCost = cost;
 						actionsWithLowestCost = actionHeader;										

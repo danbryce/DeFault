@@ -246,13 +246,27 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 							//							}
 
 							int cmp = incumbentFaultSet.compareTo(bestFaultSet);
-							if(// a.isNoop() ||
-									cmp == -1 ||
-									(cmp == 0 && a.isNoop()) ||
-									(cmp == 0 && !bestAct.isNoop() 
-											&& incumbentCost < bestCost)
+//							if( a.isNoop() ||
+//									cmp == -1 ||
+//									(cmp == 0 && a.isNoop()) ||
+//									(cmp == 0 && !bestAct.isNoop() 
+//											&& incumbentCost < bestCost)
+//							){
+							if(//a.isNoop() ||
+									(//!bestAct.isNoop() && 
+											((cmp == -1 //&& incumbentCost <= bestCost
+													)||  
+											 (//cmp == 0 &&
+													 incumbentCost < bestCost)) )
+											 //||
+//									(cmp == 0 && a.isNoop()) ||
+//									(//cmp == 0 && 
+//											!bestAct.isNoop() 
+//											&& incumbentCost < bestCost)
 							){
-								bestFaultSet = incumbentFaultSet;
+//0.0001220703125
+//0.0000152587890625
+							bestFaultSet = incumbentFaultSet;
 								bestAct = a;
 								bestCost = incumbentCost;
 //								if(a.isNoop()){

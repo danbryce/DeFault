@@ -8,7 +8,7 @@ import edu.usu.cs.search.SearchTest;
 public class BridgesTest 
 {
 	private final int numFiles = 10;
-	
+
 	@Test
 	public void CreateBridges() 
 	{
@@ -22,28 +22,41 @@ public class BridgesTest
 		//v1 is precopen only          => args[3] && args[4] == 0
 		//v2 is precopen and possclob  => args[3] == .5
 		//v3 is all                    => args[3] && args[4] == .5
-		
+
 		String outputFileLocation = "testfiles/incomplete/bridges";
 		int maxGridSize = 32;
-		
 		// Create Bridges
-		String[] args = new String[6];
-		//args[0] = Integer.toString(gridSize);
-		args[1] = outputFileLocation;
-		args[3] = Double.toString(0.5);
-		args[4] = Double.toString(0.0);
-		args[5] = Integer.toString(numFiles);
-		for(int gs = 2; gs <= maxGridSize; gs *= 2) 
-		{
-			for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) 
+
+		for (int v = 1; v <=3; v++){
+
+			String[] args = new String[6];
+			//args[0] = Integer.toString(gridSize);
+			args[1] = outputFileLocation;
+			if(v == 1){
+			args[3] = Double.toString(0.0);
+			args[4] = Double.toString(0.0);
+			}
+			else if(v == 2){
+				args[3] = Double.toString(0.5);
+				args[4] = Double.toString(0.0);
+				}
+			else if(v == 3){
+				args[3] = Double.toString(0.0);
+				args[4] = Double.toString(0.5);
+				}
+			args[5] = Integer.toString(numFiles);
+			for(int gs = 2; gs <= maxGridSize; gs *= 2) 
 			{
-				args[0] = Integer.toString(gs);
-				args[2] = Double.toString(bridgeDensity);
-				edu.usu.cs.incomplete.bridges.BridgesDomainCreator.main(args);
+				for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) 
+				{
+					args[0] = Integer.toString(gs);
+					args[2] = Double.toString(bridgeDensity);
+					edu.usu.cs.incomplete.bridges.BridgesDomainCreator.main(args);
+				}
 			}
 		}
 	}
-	
+
 	@Test
 	public void RunBridges() 
 	{
