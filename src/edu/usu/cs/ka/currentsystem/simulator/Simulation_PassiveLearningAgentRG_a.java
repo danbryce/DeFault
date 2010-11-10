@@ -94,7 +94,7 @@ public class Simulation_PassiveLearningAgentRG_a
 			
 			System.out.println("ATTEMPTING ACTION: " + currAction.getName() + "\n");
 			
-			if(agent.areActionPreConditionsSat(currAction, currState))
+			if(agent.isActionApplicable(currAction, currState))
 			{
 				System.out.println("ACTION APPLIED.\n");
 				

@@ -33,22 +33,16 @@ import edu.usu.cs.search.FaultSet;
 public class RiskCounter {
 
 	private static BDD bdd;
+	private static int bddRef;
 	private static Map<Fault, Integer> riskToBDD;
 	private static Map<Integer, Fault> bddToRisk;
 	private static List<Fault> allRisks;
 	private static boolean isInitialized = false;
 	private static int unusedRisks = 0;
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
-	
-	public static void resetIsInitialized()
-	{
-		isInitialized = false;
-		logger = Logger.getLogger(RiskCounter.class.getName());
-	}
-	
+		
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
 		if (isInitialized) return;
-		Fault.resetStaticHashMaps();
 		
 		allRisks = getAllRisks(problem);
 
@@ -85,9 +79,44 @@ public class RiskCounter {
 
 		isInitialized = true;
 	}
+	
+	
+	/**
+	 * This method is a slightly altered version of the original version above.
+	 * It is called by the ka.Agent class. Note that it sets isInitialized to true.
+	 * Thus, all calls to the method above will terminate without resetting any data members,
+	 *  unless isInitialized is reset to false.
+	 * 
+	 * @param domain
+	 * @param problem
+	 */
+	public static void initialize(Domain domain, Problem problem) 
+	{
+		if (isInitialized) return;
+		
+		Fault.resetStaticHashMaps();
+		
+		allRisks = getAllRisks(problem);
 
-	public static void deref() {
-		// Hopefully this will deref everything
+		bdd = new BDD(10000, 10000);
+		bddRef = bdd.ref(bdd.getOne());
+
+		riskToBDD = new HashMap<Fault, Integer>();
+		bddToRisk = new HashMap<Integer, Fault>();
+
+		for (Fault risk : allRisks) 
+		{
+			int temp = bdd.createVar();
+			riskToBDD.put(risk, temp);
+			bddToRisk.put(temp, risk);
+		}
+
+		isInitialized = true;
+	}
+	
+	// Hopefully this will deref everything
+	public static void deref() 
+	{
 		bdd = null;
 		riskToBDD = null;
 		bddToRisk = null;
@@ -95,9 +124,17 @@ public class RiskCounter {
 		isInitialized = false;
 	}
 	
-	public static int getNumRisks(){
-		return allRisks.size();
+	//A different form of the deref method above - used by ka.Agent
+	public static void resetIsInitialized()
+	{
+		isInitialized = false;
+		logger = Logger.getLogger(RiskCounter.class.getName());
+		
+		Fault.resetStaticHashMaps();
 	}
+	
+	public static int getNumRisks(){ return allRisks.size(); }
+	public static List<Fault> getAllRisks(){ return allRisks;}
 
 	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
@@ -152,6 +189,65 @@ public class RiskCounter {
 		
 		return solvableDomains;
 	}
+	
+	//Added for use by ka.Agent to grab the Failure explanation sentence bddRef built in the getFailureExplanation method below.
+	private static int bddRef_failureExplanationSentence;
+	
+	/**
+	 * This method is altered from the above mthod getmodelCount for use by the ka.Agent.
+	 * It currently assumes: 
+	 * 	the solver instance parameter is not important in the RiskCounterNode's getSuccessorNode method.
+	 *  the domain instance is not important.
+	 * It thus requires only the following params:
+	 * @param problem - updated actions to current level of ka.Agent's knowledge
+	 * @param plan - the most current plan.
+	 * @return int bddRef_failureExplanationSentence
+	 * This failure explanation sentence must be:
+	 *  created in the initialize method 
+	 *  deref'ed upon entrance to this method
+	 *  built and returned
+	 *  preserved for use by ka.Agent until this method is called again.
+	 *  
+	 *  Note: Make sure the problem's initial state and actions are updated before the planner
+	 *  	and this method are called, of course.
+	 */
+	public static int getFailureExplanationSentence_BDDRef(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) 
+	{
+		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1); // Figure out which risks are true right now
+
+		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, null)); // Add the initial state - note: solver is null
+
+		for (ActionInstance action : plan) // Add the others
+			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+
+		//Is this enough, or should I work through the for loop below?
+		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
+		
+		bdd.ref(crs);
+		for(Proposition p : problem.getGoalAction().getPreconditions())
+		{
+			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);//propositions here gets the bddRef to Prop p
+			if(risk != null)
+			{
+				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
+				bdd.deref(crs);
+				bddRef_failureExplanationSentence = crs = tmp;
+			}
+			//Here, if one Precondition prop in the GoalAction isn't found in the last node,
+			//then the failure explanation is trivially true - the plan will definitely fail.
+			else 
+			{
+				bdd.deref(crs);
+				crs = bdd.getOne();
+				int tmp = bdd.ref(crs);
+				bddRef_failureExplanationSentence = crs = tmp;
+				break;
+			}
+		}
+		
+		return bddRef_failureExplanationSentence;
+	}
+	
 
 //	public static int getSolvableDomains(int bdd) {
 //		return RiskCounter.bdd.getSetCount(bdd);

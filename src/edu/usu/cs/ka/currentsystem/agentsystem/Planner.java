@@ -62,6 +62,11 @@ public class Planner
 	/**
 	 * Setting up and running the Amir/Length solver.
 	 * 
+	 * Note that it does NOT reset the Fault class's StaticHashMaps or RiskCounter's datamembers.
+	 * This is done by the Agent constructor. 
+	 * This Agent will use those same elements many times in simulating execution
+	 * though a problem that involves many calls to the planner for new plans...
+	 * 
 	 * @return List<ActionInstance> plan
 	 */
 	public List<ActionInstance> runAmirPlanner()
@@ -69,8 +74,6 @@ public class Planner
 		numTimesAmirPlannerCalled++;
 		
 		Solver solver = null;
-		RiskCounter.resetIsInitialized();
-		Fault.resetStaticHashMaps(); //This might now be accounted for in RiskCounter...
 		System.gc();
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
@@ -94,6 +97,11 @@ public class Planner
 	/**
 	 * Setting up and running the Bryce/DeFault solver.
 	 * 
+	 * Note that it does NOT reset the Fault class's StaticHashMaps or RiskCounter's datamembers.
+	 * This is done by the Agent constructor. 
+	 * This Agent will use those same elements many times in simulating execution
+	 * though a problem that involves many calls to the planner for new plans...
+	 * 
 	 * @return List<ActionInstance> plan
 	 */
 	public List<ActionInstance> runBrycePlanner()
@@ -101,8 +109,6 @@ public class Planner
 		numTimesBrycePlannerCalled++;
 		
 		Solver solver = null;
-		RiskCounter.resetIsInitialized();
-		Fault.resetStaticHashMaps(); //This might now be accounted for in RiskCounter...
 		System.gc();
 		
 		SearchStatistics searchStatistics = new SearchStatistics();

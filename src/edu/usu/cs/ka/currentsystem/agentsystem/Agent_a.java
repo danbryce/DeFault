@@ -5,6 +5,7 @@ import java.util.*;
 import edu.usu.cs.ka.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
+import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 import jdd.bdd.*;
 
 /**
@@ -16,6 +17,8 @@ import jdd.bdd.*;
  */
 public class Agent_a 
 {
+	//Have made changes to Fault and RiskCounter classes
+	
 	//Domain and Problem stuff
 	String domainFile;
 	String problemFile;
@@ -26,9 +29,9 @@ public class Agent_a
     List<ActionInstance> actions;
     Hashtable<String, IncompleteActionInstance> actionsHT;
 	
-    //BDD stuff
+    //BDD stuff - will be initialized via RiskCounter
 	BDD bdd;
-	int bddRef;
+	int bddRef_KB;
 	
 	List<Fault> risks;
 	private Map<Fault, Integer> riskToBDD;
@@ -47,12 +50,16 @@ public class Agent_a
 		setDomainAndProblem();
 		setActions();
 		loadActionsHT();
-				
-		bdd = new BDD(10000,10000);
-		bddRef = bdd.ref(bdd.getOne());
 		
-		setAllRisks();
-		setBDDVarsAndRiskMaps();
+		RiskCounter.resetIsInitialized();//The Fault.StaticHashMaps are also reset in this method
+		RiskCounter.initialize(domain, problem);
+				
+		bdd = RiskCounter.getBDD();
+		bddRef_KB = bdd.ref(bdd.getOne());
+		
+		risks = RiskCounter.getAllRisks();
+		riskToBDD = RiskCounter.getRiskToBDD();
+		bddToRisk = RiskCounter.getBddToRisk();
 		
 		actionsCount = 0;
 	}
@@ -73,49 +80,6 @@ public class Agent_a
 	 *  are also made to the Agent's problem's actionList.
 	 */
 	public void setActions() { actions = problem.getActions(); }
-		
-	/**
-	 * Taken from the planner.ffrisky.util.RiskCounter class getAllRisks method.
-	 * Be careful here: the Fault class has static Hashmaps to which we are adding risks.
-	 *  Does it ever die? Revision - made Fault class constructor public. This constructor
-	 *  does not add Faults to these static Maps.
-	 */
-	private void setAllRisks() 
-	{
-		risks = new ArrayList<Fault>();
-		
-		for (ActionInstance a : actions) 
-		{
-			IncompleteActionInstance action = (IncompleteActionInstance) a;
-			
-			for (Proposition possprec : action.getPossiblePreconditions()) //possPre
-				risks.add(new Fault(Fault.PRECOPEN, action.getName(), possprec.getName()));
-
-			for (Proposition possadd : action.getPossibleAddEffects()) //possAdd
-				risks.add(new Fault(Fault.UNLISTEDEFFECT, action.getName(), possadd.getName()));
-
-			for (Proposition possdel : action.getPossibleDeleteEffects()) //possDel
-				risks.add(new Fault(Fault.POSSCLOB, action.getName(), possdel.getName()));
-		}
-	}
-		
-	/**
-	 * Taken from the planner.ffrisky.util.RiskCounter class initialize method.
-	 * Be careful here: the Fault class has static hashmaps to which we are adding!!!
-	 * This could be a reason for planner test deterioration
-	 */
-	void setBDDVarsAndRiskMaps()
-	{
-		riskToBDD = new HashMap<Fault, Integer>();
-		bddToRisk = new HashMap<Integer, Fault>();
-		
-		for (Fault risk : risks)
-		{
-			int temp = bdd.createVar();
-			riskToBDD.put(risk, temp);
-			bddToRisk.put(temp, risk);
-		}		
-	}
 	
 	/**
 	 * Speedy action lookup when revising actions using KB.
@@ -215,25 +179,25 @@ public class Agent_a
 		if(!prevState.equals(currState)) //Action succeeded
 		{
 			System.out.println("      result: success");
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef, successSentence));
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
 		}
 		else if(isActionFailure(a, prevState, currState)) //Action failed
 		{
 			System.out.println("      result: failure");
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef, failureSentence));
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
 		}
 		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState)) //action failure not known, combine two Trees of cases above
 		{
 			System.out.println("      result: unknown");
 			int tempRefSF = bdd.ref(bdd.or(successSentence, failureSentence));
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef, tempRefSF));
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
 			bdd.deref(tempRefSF);
 		}
 		
 		bdd.deref(successSentence);
 		bdd.deref(failureSentence);
-		bdd.deref(bddRef);
-		bddRef = tempRefToNewKB;
+		bdd.deref(bddRef_KB);
+		bddRef_KB = tempRefToNewKB;
 		
 		System.out.println("AGENT LEARNS END\n");
 	}
@@ -300,6 +264,25 @@ public class Agent_a
 		else return false;
 	}
 	
+	public boolean areActionPossPreConditionsSat(IncompleteActionInstance currAction, Set<Proposition> prevState)
+	{
+		if(prevState.containsAll(currAction.getPossiblePreconditions())) return true;
+		else return false;
+	}
+	
+	//This method provides the coverage for the RISKY vs. CONSERVATIVE Agent
+	public boolean isActionApplicable(IncompleteActionInstance currAction, Set<Proposition> prevState)
+	{
+		//RISKY - always keep
+		if(!areActionPreConditionsSat(currAction, prevState))		return false;
+		
+		//CONSERVATIVE - comment out if Agent is RISKY
+		if(!areActionPossPreConditionsSat(currAction, prevState))	return false;
+		
+		return true;
+		
+	}
+	
 	/**
 	 * This method transforms the agent's actions based on what's been learned about their possible features.
 	 * The KB knows about these possFeatures from method learnAboutActionTaken.
@@ -317,8 +300,8 @@ public class Agent_a
 		ArrayList<Fault> risksLearned = new ArrayList<Fault>();
 		for(Fault r : risks)
 		{
-			int resultT = bdd.and(riskToBDD.get(r), bddRef); 		  	//Query returns 0 if -prop - don't add to known list
-			int resultF = bdd.and(bdd.not(riskToBDD.get(r)), bddRef); 	//Query returns 0 if prop  - add to known list
+			int resultT = bdd.and(riskToBDD.get(r), bddRef_KB); 		  	//Query returns 0 if -prop - don't add to known list
+			int resultF = bdd.and(bdd.not(riskToBDD.get(r)), bddRef_KB); 	//Query returns 0 if prop  - add to known list
 						
 			IncompleteActionInstance a = actionsHT.get(r.getActionName());
 			
