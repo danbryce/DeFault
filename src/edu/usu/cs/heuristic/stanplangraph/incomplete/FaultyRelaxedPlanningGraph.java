@@ -246,18 +246,24 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 							//							}
 
 							int cmp = incumbentFaultSet.compareTo(bestFaultSet);
-							if(// a.isNoop() ||
-									cmp == -1 ||
-									(cmp == 0 && a.isNoop()) ||
-									(cmp == 0 && !bestAct.isNoop() 
-											&& incumbentCost < bestCost)
+							if(//a.isNoop() ||
+									(//!bestAct.isNoop() && 
+											((cmp == -1 //&& incumbentCost <= bestCost
+													)||  
+											 (//cmp == 0 &&
+													 incumbentCost < bestCost)) )
+											 //||
+//									(cmp == 0 && a.isNoop()) ||
+//									(//cmp == 0 && 
+//											!bestAct.isNoop() 
+//											&& incumbentCost < bestCost)
 							){
 								bestFaultSet = incumbentFaultSet;
 								bestAct = a;
 								bestCost = incumbentCost;
-//								if(a.isNoop()){
-//									break;
-//								}
+								if(a.isNoop()){
+									break;
+								}
 							}
 						}								
 					}
@@ -266,8 +272,10 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 					//				RiskCounter.getBDD().printSet(((BDDRiskSet)bestFaultSet).getFaults());
 					//				RiskCounter.getBDD().printSet(((BDDRiskSet)faults).getFaults());
 					//				}
-					if(chosenSupportingActions.size() == 0 ||
-							bestFaultSet.compareTo(faults) < 0){
+					if(chosenSupportingActions.size() == 0 
+							//||
+							//bestFaultSet.compareTo(faults) < 0
+							){
 
 						faults = bestFaultSet;
 						chosenSupportingActions.add(bestAct);
@@ -350,7 +358,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 		//fixed point if: goalsMet and labels static or goalsMet and 5 after
 
-		if(levelsPastGoalsMet > 5) {
+		if(levelsPastGoalsMet > 0) {
 			return true;
 		}
 		else if(goalsMet){	

@@ -51,9 +51,18 @@ implements PreferredOperatorDeferredEvaluationNode{
 
 
 
+//	@Override
+//	public boolean equals(StateNode o){
+//		return super.equals(o);
+//	}
+	
+//
+//	
+//	public boolean equals(IncompletePINode o){
+//		return super.equals(o);
+//	}
 
-
-
+	
 	@Override
 	public PlanMetric[] getHeuristicValue() {
 		if(!heuristicComputed){
