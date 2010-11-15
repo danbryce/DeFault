@@ -28,7 +28,6 @@ public class Simulation_PassiveLearningAgentRG_a
 		planners.setProblem(expert.getProblem());
 		if(planners.runAmirPlanner() == null) return; //Not a solvable seed for given domain
 		
-		planners.resetPlannersCalledCount();
 		numSuccesses++;
 		
 		System.out.println(args[0] + "_" + args[2] + "\n");
@@ -43,7 +42,7 @@ public class Simulation_PassiveLearningAgentRG_a
 		Simulation_PassiveLearningAgentRG_a sim = new Simulation_PassiveLearningAgentRG_a(args);
 		
 		System.out.println("RUNNING AGENT_PL_RG_a w/ AMIR PLANNER...\n");
-		sim.runSimPassiveLearning("Amir",  args);
+		sim.runSimPassiveLearning("Amir",  args, true, false);
 		
 		System.out.println("**************************");
 		System.out.print("PRESS ENTER TO CONTINUE...");
@@ -51,7 +50,7 @@ public class Simulation_PassiveLearningAgentRG_a
 	    System.out.println("**************************\n");
 		
 	    System.out.println("RUNNING AGENT_PL_RG_a w/ BRYCE PLANNER...\n");
-		sim.runSimPassiveLearning("Bryce", args);
+		sim.runSimPassiveLearning("Bryce", args, true, false);
 	}
 	
 	private List<ActionInstance> getPlan(String plannerType)
@@ -62,11 +61,12 @@ public class Simulation_PassiveLearningAgentRG_a
 		return null;
 	}
 	
-	private void runSimPassiveLearning(String plannerType, String [] args)
+	private void runSimPassiveLearning(String plannerType, String [] args, boolean isForgiving, boolean isAssumptive)
 	{
 		agent = new Agent_a(args[0], args[1]);
 		planners.setProblem(agent.getProblem()); //Set planner problem to agent's incomplete version
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
+		planners.resetPlannersCalledCount();
 		
 		System.out.print("*AGENTS ACTIONS (TO START)*");
 		Actions_Utility.printListOfActions(agent.getActions());
@@ -88,13 +88,13 @@ public class Simulation_PassiveLearningAgentRG_a
 		plan = getPlan(plannerType); //Should never be null to start
 		System.out.println("PLAN:"); Planner.printPlanShort(plan); System.out.println("PLAN END\n");
 		
-		while(agent.getNumActionsTaken() < 1000) 
+		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannersCalled() < 50))
 		{			
 			currAction = (IncompleteActionInstance) plan.remove(0);
 			
 			System.out.println("ATTEMPTING ACTION: " + currAction.getName() + "\n");
 			
-			if(agent.isActionApplicable(currAction, currState))
+			if(agent.isActionApplicable(currAction, currState, plan))
 			{
 				System.out.println("ACTION APPLIED.\n");
 				
@@ -111,27 +111,57 @@ public class Simulation_PassiveLearningAgentRG_a
 			}
 			
 			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || 
-				!agent.areActionPreConditionsSat(currAction, currState))
+				!agent.isActionApplicable(currAction, currState, plan))
 			{
+				if(agent.isActionFailure(currAction, currState, nextState) && !isForgiving)
+				{
+					System.out.println("Action failed. No forgiveness. Done.\n");
+					break;
+				}
+				
 				System.out.println("REPLANNING...\n");
-				agent.updateActions();
 				
 				System.out.print("*AGENTS ACTIONS*");
 				Actions_Utility.printListOfActions(agent.getActions());
 				System.out.println("*AGENTS ACTIONS END*\n");
 				
-				agent.getProblem().setInitialState(nextState);
-				plan = getPlan(plannerType);
-												
+				plan = getPlan(plannerType);//Note that the problem has been updated within agent								
 				if(plan == null) 
 				{
 					System.out.println("NO PLAN FOUND\n");
 					break;
 				}
 				
-				if(plan.size() != 0) 
+				if(plan.size() != 0)
 				{
 					System.out.println("PLAN:"); Planner.printPlanShort(plan); System.out.println("PLAN END\n");
+					
+					//An ASSUMPTIVE Agent will here check if the plan's first action is == last action tried.
+					//If so, he will learn that this action's unsat possPre's to be real pre's.
+					if(plan.get(0).equals(currAction) && isAssumptive)
+					{
+						System.out.println("ASSUMPTION...\n");
+						Actions_Utility.printIncompleteVersionOfActionInstance(currAction);
+						
+						agent.learnUnsatPossPreconditionsAndUpdateAction(currAction);
+						
+						System.out.println("REPLANNING...\n");
+						
+						System.out.print("*AGENTS ACTIONS*");
+						Actions_Utility.printListOfActions(agent.getActions());
+						System.out.println("*AGENTS ACTIONS END*\n");
+						
+						plan = getPlan(plannerType);//Note that the problem has been updated within agent
+														
+						if(plan == null) 
+						{
+							System.out.println("NO PLAN FOUND\n");
+							break;
+						}
+						
+						System.out.println("END ASSUMPTION MADE...\n");
+						
+					}
 				}
 				
 				System.out.println("**************************");
@@ -148,7 +178,7 @@ public class Simulation_PassiveLearningAgentRG_a
 		}
 				
 		agent.stopStopwatch();
-		
+
 		System.out.println("****************************************************************************");
 		if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{
@@ -166,7 +196,11 @@ public class Simulation_PassiveLearningAgentRG_a
 			System.out.println("SIM FAILED:");
 			System.out.println(" currState: " + nextState);
 			System.out.println(" goal pres: " + agent.getProblem().getGoalAction().getPreconditions());
-			System.out.println(" " + plannerType + " ? ? ?");
+			
+			if((agent.getNumActionsTaken() == 1000) || (planners.getNumTimesPlannersCalled() == 50))
+				System.out.println(" " + plannerType + " X X X");
+			else
+				System.out.println(" " + plannerType + " ? ? ?");
 		}
 		System.out.println("****************************************************************************\n");
 	}

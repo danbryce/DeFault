@@ -38,8 +38,12 @@ public class RiskCounter {
 	private static Map<Integer, Fault> bddToRisk;
 	private static List<Fault> allRisks;
 	private static boolean isInitialized = false;
-	private static int unusedRisks = 0;
+	private static int unusedRisks = 0;//currently unused
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
+	
+	//Added for use by ka.Agent to grab the Failure explanation sentence bddRef.
+	//See method getFailureExplanation().
+	private static int bddRef_failureExplanationSentence;
 		
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
 		if (isInitialized) return;
@@ -100,6 +104,9 @@ public class RiskCounter {
 
 		bdd = new BDD(10000, 10000);
 		bddRef = bdd.ref(bdd.getOne());
+		
+		//Trivially set this ref, which is deref'd in method getFailureExplanation()
+		bddRef_failureExplanationSentence = bdd.ref(bdd.getZero());
 
 		riskToBDD = new HashMap<Fault, Integer>();
 		bddToRisk = new HashMap<Integer, Fault>();
@@ -189,10 +196,7 @@ public class RiskCounter {
 		
 		return solvableDomains;
 	}
-	
-	//Added for use by ka.Agent to grab the Failure explanation sentence bddRef built in the getFailureExplanation method below.
-	private static int bddRef_failureExplanationSentence;
-	
+		
 	/**
 	 * This method is altered from the above mthod getmodelCount for use by the ka.Agent.
 	 * It currently assumes: 
@@ -211,11 +215,16 @@ public class RiskCounter {
 	 *  Note: Make sure the problem's initial state and actions are updated before the planner
 	 *  	and this method are called, of course.
 	 */
-	public static int getFailureExplanationSentence_BDDRef(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) 
+	public static int getFailureExplanationSentence_BDDRef(Problem problem, List<ActionInstance> plan, ActionInstance currAction) 
 	{
-		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1); // Figure out which risks are true right now
+		bdd.deref(bddRef_failureExplanationSentence);
+		
+		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 2); // Figure out which risks are true right now
 
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, null)); // Add the initial state - note: solver is null
+		
+		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)currAction));//Add currAction
+		//currAction was popped off in the execution sim alg, but needs to be applied here for continuity 
 
 		for (ActionInstance action : plan) // Add the others
 			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
@@ -231,7 +240,8 @@ public class RiskCounter {
 			{
 				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
 				bdd.deref(crs);
-				bddRef_failureExplanationSentence = crs = tmp;
+				bdd.ref(tmp);
+				crs = tmp;
 			}
 			//Here, if one Precondition prop in the GoalAction isn't found in the last node,
 			//then the failure explanation is trivially true - the plan will definitely fail.
@@ -240,12 +250,12 @@ public class RiskCounter {
 				bdd.deref(crs);
 				crs = bdd.getOne();
 				int tmp = bdd.ref(crs);
-				bddRef_failureExplanationSentence = crs = tmp;
+				crs = tmp;
 				break;
 			}
 		}
 		
-		return bddRef_failureExplanationSentence;
+		return bddRef_failureExplanationSentence = crs;
 	}
 	
 

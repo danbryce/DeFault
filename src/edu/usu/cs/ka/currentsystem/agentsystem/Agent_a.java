@@ -32,6 +32,7 @@ public class Agent_a
     //BDD stuff - will be initialized via RiskCounter
 	BDD bdd;
 	int bddRef_KB;
+	int failVar;
 	
 	List<Fault> risks;
 	private Map<Fault, Integer> riskToBDD;
@@ -60,6 +61,11 @@ public class Agent_a
 		risks = RiskCounter.getAllRisks();
 		riskToBDD = RiskCounter.getRiskToBDD();
 		bddToRisk = RiskCounter.getBddToRisk();
+		
+		failVar = bdd.createVar();
+		
+		//Create a var for FAIL. and make sure it exists in the BDD
+		//Print out the size of the risks List and printSet of the BDD to see the vars are the same size.
 		
 		actionsCount = 0;
 	}
@@ -116,18 +122,19 @@ public class Agent_a
 		
 		IncompleteActionInstance a = (IncompleteActionInstance) act;
 		
-		if(!areActionPreConditionsSat(a, prevState))
-		{
-			System.out.println("Should not have been learning here.");
-			System.out.println("An action with unsat pre's should never be applied.");
-			System.out.println("AGENT LEARNS END\n");
-			return; 
-		}
+		//This test should occur in execution sim before applying action
+//		if(!isActionApplicable(a, prevState))
+//		{
+//			System.out.println("This will never happen.");
+//			System.out.println("AGENT LEARNS END\n");
+//			return; 
+//		}
 		
 		actionsCount++;
 		
 		if(Actions_Utility.isIncompleteActionComplete(a)) //No incomplete features exist
 		{
+			System.out.println("Action is complete - there is nothing to learn.");
 			System.out.println("AGENT LEARNS END\n");
 			return; 
 		}
@@ -175,34 +182,17 @@ public class Agent_a
 			}
 		}
 
-		int tempRefToNewKB;
-		if(!prevState.equals(currState)) //Action succeeded
-		{
-			System.out.println("      result: success");
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
-		}
-		else if(isActionFailure(a, prevState, currState)) //Action failed
-		{
-			System.out.println("      result: failure");
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
-		}
-		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState)) //action failure not known, combine two Trees of cases above
-		{
-			System.out.println("      result: unknown");
-			int tempRefSF = bdd.ref(bdd.or(successSentence, failureSentence));
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
-			bdd.deref(tempRefSF);
-		}
-		
-		bdd.deref(successSentence);
-		bdd.deref(failureSentence);
-		bdd.deref(bddRef_KB);
-		bddRef_KB = tempRefToNewKB;
+		insertSandorFSentenceIntoKB(successSentence, failureSentence, a, prevState, currState);
 		
 		System.out.println("AGENT LEARNS END\n");
+		
+		updateActions();
+		//Because the LookAhead Agent requires the KB to be current up to the current action,
+		//The transformation of the problem's action list by using the KB now occurs constantly.
 	}
 	
 	/**
+	 * This private helper method serves to build up the SF sentences for the method learnAboutActionTaken().
 	 * SF means Success/Failure, the two types of sentences being expanded here. 
 	 * Takes a ref to a bdd sentence being built up before being inserted into the primary BBD KB tree
 	 * Returns the new ref which should be reassigned to the appropriate BDD sentence ref back in the calling method.
@@ -216,7 +206,7 @@ public class Agent_a
 	 * @param isAND 		- is the prop to be and'd or or'd to the sentence
 	 * @return - int 		- the reference to the newly expanded sentence
 	 */
-	int addPropToSentence(String faultType, String actionName, String propName, int bddRefSF, boolean isTrue, boolean isAND) 
+	private int addPropToSentence(String faultType, String actionName, String propName, int bddRefSF, boolean isTrue, boolean isAND) 
 	{	
 		Fault riskLearned = Fault.getRiskFromIndex(faultType, actionName, propName);	
 		Integer ref = riskToBDD.get(riskLearned);
@@ -233,7 +223,132 @@ public class Agent_a
 		bdd.deref(bddRefSF);
 		return temp;	
 	}
-
+	
+	/**
+	 * This private helper method inserts either the successSentence or failureSentence built by the method
+	 * 	learnAboutActionTaken(...) into the KB.
+	 * This method will be replaced by addPropToSentence_withFailVarAndOP
+	 * @param successSentence
+	 * @param failureSentence
+	 * @param act
+	 * @param prevState
+	 * @param currState
+	 */
+	private void insertSandorFSentenceIntoKB( int successSentence, int failureSentence, 
+											  IncompleteActionInstance incompleteAction, 
+			                                  Set<Proposition> prevState, Set<Proposition> currState)
+	{
+		int tempRefToNewKB;
+		if(!prevState.equals(currState)) //Action succeeded
+		{
+			System.out.println("      result: success");
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
+			problem.setInitialState(currState);
+		}
+		else if(isActionFailure(incompleteAction, prevState, currState)) //Action failed
+		{
+			System.out.println("      result: failure");
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
+		}
+		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
+		//action failure not known, combine two Trees of cases above	
+		{
+			System.out.println("      result: unknown");
+			int tempRefSF = bdd.ref(bdd.or(successSentence, failureSentence));
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
+			bdd.deref(tempRefSF);
+		}
+		
+		bdd.deref(successSentence);
+		bdd.deref(failureSentence);
+		bdd.deref(bddRef_KB);
+		bddRef_KB = tempRefToNewKB;
+   }
+	
+	/**
+	 * This private helper method inserts either the successSentence or failureSentence built by the method
+	 * 	learnAboutActionTaken(...) into the KB. 
+	 * The OPTIMISTIC vs. PESSIMISTIC Agent is involved here:
+	 *  OPTIMISTIC  - does not consider "don't know" as a failure, but considers both possibilities (see below)
+	 *  PESSIMISTIC - considers no change of state to be a failure. This Agent might make a better case
+	 *   if the Agent were simply to re-plan after taking every incomplete action.
+	 *   
+	 * The new directive for the "don't know" case involves adding a "FAIL" or "-FAIL" to each of the 
+	 * sentences before adding them to the KB. This allows the Agent to discover if a plan being executed
+	 * now entails "FAIL" - something down the road has proved that an action in the past failed.
+	 * This FAIL must be removed from the KB before the next planner call.
+	 * @param successSentence
+	 * @param failureSentence
+	 * @param act
+	 * @param prevState
+	 * @param currState
+	 */
+	private void insertSandorFSentenceIntoKB_withFailVarAndOP( int successSentence, int failureSentence, 
+											  				IncompleteActionInstance incompleteAction, 
+											  				Set<Proposition> prevState, Set<Proposition> currState)
+	{
+		int tempRefToNewKB;
+		if(!prevState.equals(currState)) //Action succeeded
+		{
+			System.out.println("      result: success");
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
+		}
+		//Here the PESSIMISTIC agent assumes the action has failed
+//		else if(prevState.equals(currState))
+//		{
+//			System.out.println("      result: failure");
+//			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
+//		}
+		//Here the OPTIMISTIC Agent learns more accurately
+		else if(isActionFailure(incompleteAction, prevState, currState)) //Action failed
+		{
+			System.out.println("      result: failure");
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
+		}
+		//Here the OPTIMISTIC Agent learns more accurately
+		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
+		//action failure not known, combine two Trees of cases above
+		{
+			System.out.println("      result: unknown");
+			
+			int tempRefFailureSentenceAndFailVar = bdd.ref(bdd.and(failureSentence, failVar));
+			int tempRefSuccessSentenceAndNotFailVar = bdd.ref(bdd.and(failureSentence, bdd.not(failVar)));
+			
+			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, tempRefSuccessSentenceAndNotFailVar));
+			bdd.deref(tempRefFailureSentenceAndFailVar);
+			bdd.deref(tempRefSuccessSentenceAndNotFailVar);
+			
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
+			bdd.deref(tempRefSF);
+		}
+		
+		bdd.deref(successSentence);
+		bdd.deref(failureSentence);
+		bdd.deref(bddRef_KB);
+		bddRef_KB = tempRefToNewKB;
+	}
+	
+	/**
+	 * This method removes the FAIL variable from clauses in the KB because they were only relevant to 
+	 * the previous plan.
+	 * v[v.length-1] should be the failVar, which was created in Agent constructor -  
+	 * the constructor calls RiskCounter.initialize, which creates the bdd vars for each Risk -
+	 * after these risk vars. It is the only var to be set to true. 
+	 * The default value of a boolean in an array is false.
+	 * bdd.exists returns a ref to a bdd with all failVar references removed.
+	 */
+	public void removeFailFromKBForNewPlan()
+	{
+		boolean[] v = new boolean[risks.size() + 1];
+		v[v.length-1] = true;
+		
+		int cube = bdd.cube(v);
+		
+		int temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
+		bdd.deref(bddRef_KB);
+		bddRef_KB = temp;
+	}
+	
 	/**
 	 * This method tells if an action was definitively refused. 
 	 * It checks whether the action has: 
@@ -270,17 +385,30 @@ public class Agent_a
 		else return false;
 	}
 	
-	//This method provides the coverage for the RISKY vs. CONSERVATIVE Agent
-	public boolean isActionApplicable(IncompleteActionInstance currAction, Set<Proposition> prevState)
+	/**
+	 * This method provides the coverage for the RISKY vs. CONSERVATIVE Agents
+	 * As well as the GREEDY vs LOOKAHEAD Agents
+	 * @param currAction
+	 * @param prevState
+	 * @return
+	 */
+	public boolean isActionApplicable(IncompleteActionInstance currAction, Set<Proposition> prevState, List<ActionInstance> plan)
 	{
 		//RISKY - always keep
 		if(!areActionPreConditionsSat(currAction, prevState))		return false;
 		
 		//CONSERVATIVE - comment out if Agent is RISKY
-		if(!areActionPossPreConditionsSat(currAction, prevState))	return false;
+		//if(!areActionPossPreConditionsSat(currAction, prevState))	return false;
+		
+		//LOOKAHEAD - comment out if agent is GREEDY
+		// Requires that problem be current - initial state is currState, currentActions). 
+		// The plan must also be current plan.
+		// When planFailExp is tested for entailment against the current KB, it may return failure. 
+		// If so, action is not applicable.
+		//int planFailExp = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction);
+		//if(bdd.and(bddRef_KB, bdd.not(planFailExp)) == 0) return false;
 		
 		return true;
-		
 	}
 	
 	/**
@@ -352,9 +480,19 @@ public class Agent_a
 			}
 		}
 		
+		//Should I do this?
 		risks.removeAll(risksLearned); //The risks learned are removed from the risks list
 		
 		System.out.println("AGENT REMEMBERS END\n");
+	}
+	
+	/**
+	 * This method is used by an ASSUMPTIVE agent and is called in the execution sim.
+	 * @param currAction
+	 */
+	public void learnUnsatPossPreconditionsAndUpdateAction(IncompleteActionInstance currAction)
+	{
+		//TO DO:
 	}
 	
 	public void startStopwatch(){ startTime = System.currentTimeMillis(); }
