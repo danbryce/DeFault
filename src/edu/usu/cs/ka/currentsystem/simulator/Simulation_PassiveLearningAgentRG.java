@@ -41,7 +41,7 @@ public class Simulation_PassiveLearningAgentRG
 	{	
 		Simulation_PassiveLearningAgentRG sim = new Simulation_PassiveLearningAgentRG(args);
 		
-		if(!sim.isSolvableDomain()) return;
+//		if(!sim.isSolvableDomain()) return;
 		
 		System.out.print(args[0] + "_" + args[2] + " " + sim.planners.getInitialModelCount());
 
@@ -90,7 +90,7 @@ public class Simulation_PassiveLearningAgentRG
 					numFailedActions++;
 				
 				agent.getProblem().setInitialState(nextState);
-				//agent.removeFailFromKBForNewPlan();
+				agent.removeFailFromKBForNewPlan();
 				
 				plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent								
 				if(plan == null || plan.size() == 0) break;

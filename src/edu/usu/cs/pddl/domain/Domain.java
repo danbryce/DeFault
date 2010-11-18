@@ -92,6 +92,7 @@ public class Domain
 //        		resultSet.addAll(ad.getPreconditionMethods());
         		ad.getEffect().getMethodDefs(resultSet);
         		ad.getPossEffect().getMethodDefs(resultSet);
+        		ad.getPossPreCondition().getMethods(resultSet);
 //        		ad.getEffect().getLiteralsUsed(resultSet);
         		if(resultSet.contains(pd)){
         			dynamic = true;

@@ -97,7 +97,7 @@ public class ComparisonGoalDesc implements GoalDesc
     }
 
 	
-	public void getMethods(List<MethodDef> preconditionMethods) {
+	public void getMethods(Set<MethodDef> preconditionMethods) {
 		firstOperand.getMethods(preconditionMethods);
 		secondOperand.getMethods(preconditionMethods);
 		

@@ -67,7 +67,7 @@ public class UnaryMinusExpr implements NumericExpr
     }
 
 	
-	public void getMethods(List<MethodDef> preconditionMethods) {
+	public void getMethods(Set<MethodDef> preconditionMethods) {
 		operand.getMethods(preconditionMethods);
 	}
 }

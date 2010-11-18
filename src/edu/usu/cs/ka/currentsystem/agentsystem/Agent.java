@@ -62,7 +62,7 @@ public abstract class Agent
 		riskToBDD = RiskCounter.getRiskToBDD();
 		bddToRisk = RiskCounter.getBddToRisk();
 		
-		//failVar = bdd.createVar();
+		failVar = bdd.createVar();
 		
 		//Create a var for FAIL. and make sure it exists in the BDD
 		//Print out the size of the risks List and printSet of the BDD to see the vars are the same size.
@@ -162,9 +162,12 @@ public abstract class Agent
 			if(prevState.contains(p) && currState.contains(p)) //-possDel, -del
 				successSentence = addPropToSentence(Fault.POSSCLOB, a.getName(), p.getName(), successSentence, false, true);
 		}
-
-		insertSandorFSentenceIntoKB(successSentence, failureSentence, a, prevState, currState);
-		//insertSandorFSentenceIntoKB_withFailVar(successSentence, failureSentence, a, prevState, currState);
+//		System.out.println("");
+//		bdd.printSet(failureSentence);
+//		bdd.printSet(successSentence);
+		
+		//insertSandorFSentenceIntoKB(successSentence, failureSentence, a, prevState, currState);
+		insertSandorFSentenceIntoKB_withFailVar(successSentence, failureSentence, a, prevState, currState);
 		
 		updateActions();
 		//Because the LookAhead Agent requires the KB to be current up to the current action,
@@ -269,6 +272,8 @@ public abstract class Agent
 			int tempRefSuccessSentenceAndNotFailVar = bdd.ref(bdd.and(successSentence, bdd.not(failVar)));
 			
 			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, tempRefSuccessSentenceAndNotFailVar));
+			
+			//bdd.printSet(tempRefSF);
 			bdd.deref(tempRefFailureSentenceAndFailVar);
 			bdd.deref(tempRefSuccessSentenceAndNotFailVar);
 			
@@ -297,8 +302,9 @@ public abstract class Agent
 		v[v.length-1] = true;
 		
 		int cube = bdd.cube(v);
-		
+		//bdd.printSet(cube);
 		int temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
+		//bdd.printSet(temp);
 		bdd.deref(bddRef_KB);
 		bddRef_KB = temp;
 	}

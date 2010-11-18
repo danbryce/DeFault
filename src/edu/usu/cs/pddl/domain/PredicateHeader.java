@@ -85,7 +85,7 @@ public class PredicateHeader implements GoalDesc
 	}
 
 	@Override
-	public void getMethods(List<MethodDef> preconditionMethods) {
+	public void getMethods(Set<MethodDef> preconditionMethods) {
 		preconditionMethods.add(this.definition);
 	}
 

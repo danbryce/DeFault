@@ -10,6 +10,7 @@ package edu.usu.cs.pddl.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class ActionDef
 	private List<FormalArgument> arguments = null;
 	private GoalDesc preCondition = null;
 	private Effect effect = null;
-	private List<MethodDef> preconditionMethods = null;
+	private Set<MethodDef> preconditionMethods = null;
 	private GoalDesc possPreCondition = null;
 	private Effect possEffect = null;
 	private Map<FormalArgument, PDDLObject> quantifiedVariablesMap = null;
@@ -45,7 +46,7 @@ public class ActionDef
 		}
 
 		@Override
-		public void getMethods(List<MethodDef> preconditionMethods) {
+		public void getMethods(Set<MethodDef> preconditionMethods) {
 			//none
 		}
 
@@ -130,7 +131,7 @@ public class ActionDef
 		this.effect = effect;
 		this.possEffect = possEffect;
 
-		this.preconditionMethods = new ArrayList<MethodDef>(); 
+		this.preconditionMethods = new HashSet<MethodDef>(); 
 		preCondition.getMethods(this.preconditionMethods);
 
 	}
@@ -163,7 +164,7 @@ public class ActionDef
 		return "\n" + name + arguments + "\nPRECOND: " + preCondition + "\nEFFECT: " + effect;
 	}
 
-	public List<MethodDef> getPreconditionMethods() {
+	public Set<MethodDef> getPreconditionMethods() {
 		return preconditionMethods;
 	}
 

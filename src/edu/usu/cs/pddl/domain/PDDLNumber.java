@@ -44,7 +44,7 @@ public class PDDLNumber implements NumericExpr
     }
 
 	
-	public void getMethods(List<MethodDef> preconditionMethods) {
+	public void getMethods(Set<MethodDef> preconditionMethods) {
 		// TODO Auto-generated method stub
 		
 	}

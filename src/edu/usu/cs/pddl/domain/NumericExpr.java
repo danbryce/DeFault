@@ -9,6 +9,7 @@
 package edu.usu.cs.pddl.domain;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Corresponds to fExp in PDDL - a function-based expression.
@@ -17,5 +18,5 @@ public interface NumericExpr extends LiteralOperation
 {
     public int evaluate(ConsistentLiteralSet literals);
 
-	public void getMethods(List<MethodDef> preconditionMethods);
+	public void getMethods(Set<MethodDef> preconditionMethods);
 }

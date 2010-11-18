@@ -9,6 +9,7 @@
 package edu.usu.cs.pddl.goalseffects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -125,7 +126,7 @@ public class AssignEffect implements Effect
 	public void getMethodDefs(Set<MethodDef> resultSet) {
 		if(target instanceof FunctionHeader) {			
 			FunctionHeader fh = (FunctionHeader)target;
-			List<MethodDef> mdl = new ArrayList<MethodDef>();
+			Set<MethodDef> mdl = new HashSet<MethodDef>();
 			fh.getMethods(mdl);
 			resultSet.addAll(mdl);
 		} else {
