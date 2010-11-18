@@ -1,18 +1,13 @@
 package edu.usu.cs.ka.currentsystem.agentsystem;
 
-import java.util.List;
+import java.math.BigInteger;
+import java.util.*;
 
-import edu.usu.cs.ka.currentsystem.utilities.Actions_Utility;
-import edu.usu.cs.ka.currentsystem.utilities.DomainAndProblemMaker_Utility;
-import edu.usu.cs.pddl.domain.Domain;
-import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.pddl.domain.ActionInstance;
-import edu.usu.cs.pddl.domain.incomplete.Fault;
-import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
-import edu.usu.cs.planner.PODEFFSolver;
-import edu.usu.cs.planner.PODEPISolver;
-import edu.usu.cs.planner.Solver;
-import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.ka.currentsystem.utilities.*;
+
+import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.pddl.domain.incomplete.*;
+import edu.usu.cs.planner.*;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
@@ -25,13 +20,15 @@ public class Planner
 	
     Domain domain;
     Problem problem;
+    BigInteger initialModelCount;
+    
+    Solver solver;
 
 	//Results stuff
 	Long startTime;
 	Long finishTime;
 	
-	int numTimesAmirPlannerCalled;
-	int numTimesBrycePlannerCalled;
+	int numTimesPlannerCalled;
 	
 	public Planner(String dFile, String pFile)
 	{
@@ -40,15 +37,12 @@ public class Planner
 		
 		setDomainAndProblem();
 		
-		numTimesAmirPlannerCalled = 0;
-		numTimesBrycePlannerCalled = 0;
+		RiskCounter.resetIsInitialized();
+		RiskCounter.initialize(domain, problem);
+		initialModelCount = RiskCounter.getModelCount(1);
+		
+		numTimesPlannerCalled = 0;
 	}
-	
-	public int getNumTimesAmirPlannerCalled() { return numTimesAmirPlannerCalled; }
-	public int getNumTimesBrycePlannerCalled() { return numTimesBrycePlannerCalled; }
-	public int getNumTimesPlannersCalled(){return numTimesAmirPlannerCalled + numTimesBrycePlannerCalled;}
-	
-	public void resetPlannersCalledCount() { numTimesAmirPlannerCalled = 0; numTimesBrycePlannerCalled = 0; }
 	
 	private void setDomainAndProblem()
 	{
@@ -57,8 +51,34 @@ public class Planner
 		problem = domainMaker.getProblem();
 	}
 	
-	//This allows for the actionInstances of problem to be manipulated
+	/**
+	 * If one wished to use this constructor, one would have to set the domain and problem manually,
+	 *  as well as the preservedInitialState. 
+	 */
+	public Planner() { numTimesPlannerCalled = 0; }
+	public void setDomainAndProblem(Domain d, Problem p) { domain = d; problem = p; }
+	public BigInteger getInitialModelCount(){return initialModelCount;}
+		
+	public int getNumTimesPlannerCalled(){return numTimesPlannerCalled;}
+	public void resetNumTimesPlannerCalledCount() { numTimesPlannerCalled = 0;}
+	
+	/**
+	 * This allows for the actionInstances of problem to be set to Agent's (current) problem instance.
+	 * the Agent's actions becomes the planner's actions, and the initial state of the problem
+	 * can be reset using the Agent.
+	 * 
+	 * @param p
+	 */
 	public void setProblem(Problem p){problem = p;}
+	
+	public List<ActionInstance> getPlan(String plannerType)
+	{
+		if(plannerType.equals("jdd")) return runJDDplanner();
+		if(plannerType.equals("pode1")) return runPODE1planner();
+		if(plannerType.equals("amir"))  return runAMIRplanner();
+		
+		return null;
+	}
 	
 	/**
 	 * Setting up and running the Amir/Length solver.
@@ -66,15 +86,15 @@ public class Planner
 	 * Note that it does NOT reset the Fault class's StaticHashMaps or RiskCounter's datamembers.
 	 * This is done by the Agent constructor. 
 	 * This Agent will use those same elements many times in simulating execution
-	 * though a problem that involves many calls to the planner for new plans...
+	 * through a problem that involves many calls to the planner for new plans...
 	 * 
 	 * @return List<ActionInstance> plan
 	 */
-	public List<ActionInstance> runAmirPlanner()
+	private List<ActionInstance> runAMIRplanner()
 	{
-		numTimesAmirPlannerCalled++;
+		numTimesPlannerCalled++;
 		
-		Solver solver = null;
+		solver = null;
 		System.gc();
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
@@ -101,15 +121,15 @@ public class Planner
 	 * Note that it does NOT reset the Fault class's StaticHashMaps or RiskCounter's datamembers.
 	 * This is done by the Agent constructor. 
 	 * This Agent will use those same elements many times in simulating execution
-	 * though a problem that involves many calls to the planner for new plans...
+	 * through a problem that involves many calls to the planner for new plans...
 	 * 
 	 * @return List<ActionInstance> plan
 	 */
-	public List<ActionInstance> runBrycePlanner()
+	private List<ActionInstance> runPODE1planner()
 	{
-		numTimesBrycePlannerCalled++;
+		numTimesPlannerCalled++;
 		
-		Solver solver = null;
+		solver = null;
 		System.gc();
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
@@ -131,7 +151,50 @@ public class Planner
 
 		return plan;	
 	}
-			
+	
+	/**
+	 * Setting up and running the Bryce/DeFault solver.
+	 * 
+	 * Note that it does NOT reset the Fault class's StaticHashMaps or RiskCounter's datamembers.
+	 * This is done by the Agent constructor. 
+	 * This Agent will use those same elements many times in simulating execution
+	 * through a problem that involves many calls to the planner for new plans...
+	 * 
+	 * @return List<ActionInstance> plan
+	 */
+	private List<ActionInstance> runJDDplanner()
+	{
+		numTimesPlannerCalled++;
+		
+		solver = null;
+		System.gc();
+		
+		SearchStatistics searchStatistics = new SearchStatistics();
+		SolverOptions solverOptions = new SolverOptions();
+		
+		solverOptions.setUsePreferredOperators(true);
+		solverOptions.setUseDeferredEvaluation(true);
+		solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+		solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+		
+		try{
+			solver = new PODEBDDSolver(domain, problem, searchStatistics, solverOptions);
+		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
+		
+		startStopwatch();
+		List<ActionInstance> plan = solver.run();
+		stopStopwatch();
+
+		return plan;	
+	}
+					
+	public BigInteger getFinalModelCount()
+	{
+		RiskCounter.resetIsInitialized();
+		RiskCounter.initialize(domain, problem);
+		return RiskCounter.getModelCount(1);
+	}
+	
 	private void startStopwatch(){startTime = System.currentTimeMillis();}
 	
 	private void stopStopwatch(){finishTime = System.currentTimeMillis();}

@@ -10,15 +10,15 @@ import java.util.*;
 /* This class has been built to check if the changes made to an ActionInstance 
  * show up in both the HT and the List containers of the problem's ActionInstances.
  */
-public class Simulation_PassiveLearningAgentRG_a 
+public class Simulation_PassiveLearningAgentRG_All_Annotated 
 {	
 	public static int numSuccesses = 0;
 	
 	Planner planners;
 	DomainExpert expert;
-	Agent_a agent;
+	Agent_All_Annotated agent;
 		
-	Simulation_PassiveLearningAgentRG_a(String [] args)
+	Simulation_PassiveLearningAgentRG_All_Annotated(String [] args)
 	{		
 		if (args.length !=3) { usage(args); System.exit(1); } 
 		
@@ -26,7 +26,7 @@ public class Simulation_PassiveLearningAgentRG_a
 		expert = new DomainExpert(args[0], args[1], args[2]);
 		
 		planners.setProblem(expert.getProblem());
-		if(planners.runAmirPlanner() == null) return; //Not a solvable seed for given domain
+		if(planners.getPlan("amir") == null) return; //Not a solvable seed for given domain
 		
 		numSuccesses++;
 		
@@ -39,7 +39,7 @@ public class Simulation_PassiveLearningAgentRG_a
 	
 	public static void main(String [] args)
 	{	
-		Simulation_PassiveLearningAgentRG_a sim = new Simulation_PassiveLearningAgentRG_a(args);
+		Simulation_PassiveLearningAgentRG_All_Annotated sim = new Simulation_PassiveLearningAgentRG_All_Annotated(args);
 		
 		System.out.println("RUNNING AGENT_PL_RG_a w/ AMIR PLANNER...\n");
 		sim.runSimPassiveLearning("Amir",  args, true, false);
@@ -53,20 +53,12 @@ public class Simulation_PassiveLearningAgentRG_a
 		sim.runSimPassiveLearning("Bryce", args, true, false);
 	}
 	
-	private List<ActionInstance> getPlan(String plannerType)
-	{
-		if(plannerType.equals("Bryce")) return planners.runBrycePlanner();
-		if(plannerType.equals("Amir"))  return planners.runAmirPlanner();
-		
-		return null;
-	}
-	
 	private void runSimPassiveLearning(String plannerType, String [] args, boolean isForgiving, boolean isAssumptive)
 	{
-		agent = new Agent_a(args[0], args[1]);
+		agent = new Agent_All_Annotated(args[0], args[1]);
 		planners.setProblem(agent.getProblem()); //Set planner problem to agent's incomplete version
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
-		planners.resetPlannersCalledCount();
+		planners.resetNumTimesPlannerCalledCount();
 		
 		System.out.print("*AGENTS ACTIONS (TO START)*");
 		Actions_Utility.printListOfActions(agent.getActions());
@@ -85,10 +77,10 @@ public class Simulation_PassiveLearningAgentRG_a
 		for (Proposition prop : currState) System.out.print(prop + " ");
 		System.out.println("\n");
 		
-		plan = getPlan(plannerType); //Should never be null to start
+		plan = planners.getPlan(plannerType); //Should never be null to start
 		System.out.println("PLAN:"); Planner.printPlanShort(plan); System.out.println("PLAN END\n");
 		
-		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannersCalled() < 50))
+		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 50))
 		{			
 			currAction = (IncompleteActionInstance) plan.remove(0);
 			
@@ -125,7 +117,7 @@ public class Simulation_PassiveLearningAgentRG_a
 				Actions_Utility.printListOfActions(agent.getActions());
 				System.out.println("*AGENTS ACTIONS END*\n");
 				
-				plan = getPlan(plannerType);//Note that the problem has been updated within agent								
+				plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent								
 				if(plan == null) 
 				{
 					System.out.println("NO PLAN FOUND\n");
@@ -151,7 +143,7 @@ public class Simulation_PassiveLearningAgentRG_a
 						Actions_Utility.printListOfActions(agent.getActions());
 						System.out.println("*AGENTS ACTIONS END*\n");
 						
-						plan = getPlan(plannerType);//Note that the problem has been updated within agent
+						plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent
 														
 						if(plan == null) 
 						{
@@ -186,9 +178,7 @@ public class Simulation_PassiveLearningAgentRG_a
 			System.out.println(" currState: " + nextState);
 			System.out.println(" goal pres: " + agent.getProblem().getGoalAction().getPreconditions());
 			
-			System.out.print(" " + plannerType + " ");
-			if(plannerType.equals("Amir")) System.out.print(planners.getNumTimesAmirPlannerCalled());
-			if(plannerType.equals("Bryce")) System.out.print(planners.getNumTimesBrycePlannerCalled());
+			System.out.print(" " + plannerType + " " + planners.getNumTimesPlannerCalled());
 			System.out.println(" " + agent.getNumActionsTaken() + " " + agent.getTimeToSolve());
 		}
 		else
@@ -197,7 +187,7 @@ public class Simulation_PassiveLearningAgentRG_a
 			System.out.println(" currState: " + nextState);
 			System.out.println(" goal pres: " + agent.getProblem().getGoalAction().getPreconditions());
 			
-			if((agent.getNumActionsTaken() == 1000) || (planners.getNumTimesPlannersCalled() == 50))
+			if((agent.getNumActionsTaken() == 1000) || (planners.getNumTimesPlannerCalled()== 50))
 				System.out.println(" " + plannerType + " X X X");
 			else
 				System.out.println(" " + plannerType + " ? ? ?");

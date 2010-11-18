@@ -1,8 +1,8 @@
 package edu.usu.cs.ka.currentsystem.batchtesters;
 
-import edu.usu.cs.ka.currentsystem.simulator.Test_PlannerRawPerformance;
+import edu.usu.cs.ka.currentsystem.simulator.Simulation_PassiveLearningAgentRG_All_Annotated;
 
-public class BatchTester_Test_PlannerRawPerformance_version 
+public class BatchTester_Simulation_PassiveLearningAgentRG_All_Annotated 
 {
 	private static final int numFiles = 10;
 
@@ -18,33 +18,26 @@ public class BatchTester_Test_PlannerRawPerformance_version
 		
 		for(int gridSize = 2; gridSize <= 2; gridSize*=2) //2-32
 		{
-			for(double bridgeDensity = 0.75; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
+			for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
 			{	
-				for(int version = 2; version <= 3; version++)//1-3
+				for(int version = 3; version <= 3; version++)//1-3
 				{
-					for(int numFile = 5; numFile <= 10; numFile++) //numFiles 1-10
+					for(int numFile = 1; numFile <= 1; numFile++) //numFiles 1-10
 					{
-						for(int simSeed = 0; simSeed < 10000 && Test_PlannerRawPerformance.numSuccesses < 10; simSeed++)
-						{							
+						for(int simSeed = 38; simSeed < 1000 && Simulation_PassiveLearningAgentRG_All_Annotated.numSuccesses < 1; simSeed++)
+						{	
 							args[0] = pathToDomains + "bridges_v" + version + "_" + gridSize + "_" + bridgeDensity + "_" + numFile + extension;
 							args[1] = pathToProblems + "bridges_problem" + extension;
 							args[2] = String.valueOf(simSeed);
-														
-							try
-							{ 
-								System.out.print(args[0] + " " + args[2] + " ");
-								Test_PlannerRawPerformance.main(args); 
-								System.out.println();
-							}
+							
+							try{ Simulation_PassiveLearningAgentRG_All_Annotated.main(args); }
 							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 						}//end for seed
 						
-						if(Test_PlannerRawPerformance.numSuccesses == 0)
+						if(Simulation_PassiveLearningAgentRG_All_Annotated.numSuccesses == 0)
 							System.out.println(args[0]);
 						else
-							Test_PlannerRawPerformance.numSuccesses = 0;
-						
-						System.out.println();
+							Simulation_PassiveLearningAgentRG_All_Annotated.numSuccesses = 0;
 
 					}//end for num file
 					System.out.println();

@@ -15,7 +15,7 @@ import jdd.bdd.*;
  *  Take actions even if they might fail - risky(R)
  *  Take actions even if the plan has a guaranteed future failure - greedy(G)
  */
-public class Agent_a 
+public class Agent_All_Annotated 
 {
 	//Have made changes to Fault and RiskCounter classes
 	
@@ -43,7 +43,7 @@ public class Agent_a
 	Long finishTime;
 	int actionsCount;
 	
-	public Agent_a(String dFile, String pFile)
+	public Agent_All_Annotated(String dFile, String pFile)
 	{
 		domainFile = dFile;
 		problemFile = pFile;

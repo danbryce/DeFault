@@ -65,7 +65,7 @@ public class BridgesTest
 		String pathToDomains = "testfiles/incomplete/bridges/";
 		String pathToProblems = "testfiles/incomplete/bridges/";
 		String extension = ".pddl";
-		String[] algorithms = {"random","length","pode1"};
+		String[] algorithms = {"length","pode1", "jdd"};
 
 		for(int v = 3; v <= 3; v++) {
 			for(int gridSize = 4; gridSize <= maxGridSize; gridSize*=2) {
