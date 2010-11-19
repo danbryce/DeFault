@@ -27,7 +27,7 @@ public abstract class Agent
 	protected Problem problem;
     
 	protected List<ActionInstance> actions;
-	protected Hashtable<String, IncompleteActionInstance> actionsHT;
+	public Hashtable<String, IncompleteActionInstance> actionsHT;
 	
     //BDD stuff - will be initialized via RiskCounter
 	protected BDD bdd;
@@ -375,7 +375,7 @@ public abstract class Agent
 	{
 		ArrayList<Fault> risksLearned = new ArrayList<Fault>();
 		for(Fault r : risks)
-		{
+		{			
 			int resultT = bdd.and(riskToBDD.get(r), bddRef_KB); 		  	//Query returns 0 if -prop - don't add to known list
 			int resultF = bdd.and(bdd.not(riskToBDD.get(r)), bddRef_KB); 	//Query returns 0 if prop  - add to known list
 						
@@ -405,20 +405,23 @@ public abstract class Agent
 			{
 				for(Proposition p : possSet)
 					if(p.getName().equals(r.getPropositionName()))
-					{
+					{						
 						propLearned = p;
 						break;
 					}
 			}
-		
-			if(resultT == 0 || resultF == 0) //In either case, the possFeature is no more.
-			{		
-				possSet.remove(propLearned);
-				risksLearned.add(r);
+			
+			if(propLearned != null)
+			{
+				if(resultF == 0) //If the negation of the feature ^ KB == 0, then the possFeature is now a knownFeatuere.
+					knownSet.add(propLearned);
+			
+				if(resultT == 0 || resultF == 0) //In either case, the possFeature is no more.
+				{					
+					possSet.remove(propLearned);
+					risksLearned.add(r);
+				}
 			}
-		
-			if(resultF == 0) //If the negation of the feature ^ KB == 0, then the possFeature is now a knownFeatuere.
-				knownSet.add(propLearned);
 		}
 		
 		//Should I do this?

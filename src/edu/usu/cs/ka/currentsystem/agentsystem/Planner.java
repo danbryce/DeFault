@@ -19,7 +19,7 @@ public class Planner
 	String problemFile;
 	
     Domain domain;
-    Problem problem;
+    public Problem problem;
     BigInteger initialModelCount;
     
     Solver solver;
@@ -39,6 +39,7 @@ public class Planner
 		
 		RiskCounter.resetIsInitialized();
 		RiskCounter.initialize(domain, problem);
+		
 		initialModelCount = RiskCounter.getModelCount(1);
 		
 		numTimesPlannerCalled = 0;
@@ -140,15 +141,15 @@ public class Planner
 		solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 		solverOptions.setRiskArity(Integer.valueOf(1));//arity 1 only
 		solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
-		
+
 		try{
 			solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
-		
+				
 		startStopwatch();
 		List<ActionInstance> plan = solver.run();
 		stopStopwatch();
-
+		
 		return plan;	
 	}
 	
@@ -192,6 +193,7 @@ public class Planner
 	{
 		RiskCounter.resetIsInitialized();
 		RiskCounter.initialize(domain, problem);
+		
 		return RiskCounter.getModelCount(1);
 	}
 	

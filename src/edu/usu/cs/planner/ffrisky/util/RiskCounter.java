@@ -40,10 +40,6 @@ public class RiskCounter {
 	private static boolean isInitialized = false;
 	private static int unusedRisks = 0;//currently unused
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
-	
-	//Added for use by ka.Agent to grab the Failure explanation sentence bddRef.
-	//See method getFailureExplanation().
-	private static int bddRef_failureExplanationSentence;
 		
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
 		if (isInitialized) return;
@@ -104,9 +100,6 @@ public class RiskCounter {
 
 		bdd = new BDD(10000, 10000);
 		bddRef = bdd.ref(bdd.getOne());
-		
-		//Trivially set this ref, which is deref'd in method getFailureExplanation()
-		bddRef_failureExplanationSentence = bdd.ref(bdd.getZero());
 
 		riskToBDD = new HashMap<Fault, Integer>();
 		bddToRisk = new HashMap<Integer, Fault>();
@@ -198,7 +191,7 @@ public class RiskCounter {
 	}
 		
 	/**
-	 * This method is altered from the above mthod getmodelCount for use by the ka.Agent.
+	 * This method is altered from the above method getmodelCount for use by the ka.Agent.
 	 * It currently assumes: 
 	 * 	the solver instance parameter is not important in the RiskCounterNode's getSuccessorNode method.
 	 *  the domain instance is not important.
@@ -207,19 +200,14 @@ public class RiskCounter {
 	 * @param plan - the most current plan.
 	 * @return int bddRef_failureExplanationSentence
 	 * This failure explanation sentence must be:
-	 *  created in the initialize method 
-	 *  deref'ed upon entrance to this method
 	 *  built and returned
-	 *  preserved for use by ka.Agent until this method is called again.
+	 *  deref'ed by ka.Agent after use.
 	 *  
-	 *  Note: Make sure the problem's initial state and actions are updated before the planner
-	 *  	and this method are called, of course.
+	 *  Note: Make sure the problem's initial state and actions are updated before this method (and the planner) are called, of course.
 	 */
 	public static int getFailureExplanationSentence_BDDRef(Problem problem, List<ActionInstance> plan, ActionInstance currAction) 
-	{
-		bdd.deref(bddRef_failureExplanationSentence);
-		
-		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 2); // Figure out which risks are true right now
+	{		
+		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1); // Figure out which risks are true right now
 
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, null)); // Add the initial state - note: solver is null
 		
@@ -255,14 +243,12 @@ public class RiskCounter {
 			}
 		}
 		
-		return bddRef_failureExplanationSentence = crs;
+		return crs;
 	}
 	
-
 //	public static int getSolvableDomains(int bdd) {
 //		return RiskCounter.bdd.getSetCount(bdd);
 //	}
-
 
 	public static BigInteger getModelCount(int bdd) {
 		if(bdd == 1)
@@ -274,6 +260,7 @@ public class RiskCounter {
 		
 		return solvableDomains;
 	}
+	
 	public static BigInteger getBigUnSolvableDomainCount(FaultSet faultSet) {
 		return getModelCount(((BDDRiskSet)faultSet).getFaults());
 	}

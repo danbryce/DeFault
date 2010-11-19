@@ -8,9 +8,9 @@ import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 
 
-public class Agent_RG extends Agent {
+public class Agent_CL extends Agent {
 
-	public Agent_RG(String dFile, String pFile)
+	public Agent_CL(String dFile, String pFile)
 	{
 		super(dFile, pFile);
 	}
@@ -30,9 +30,27 @@ public class Agent_RG extends Agent {
 		//RISKY - always keep
 		if(!areActionPreConditionsSat(currAction, currState)) return false;
 		
-		//Did we fail in the past?
-		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0) return false;
+		//failVar - did we fail in the past?
+		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0) 
+		{
+			System.out.print(" $");
+			return false;
+		}
 		
+		//CONSERVATIVE
+		if(!areActionPossPreConditionsSat(currAction, currState)) return false;
+		
+		//LOOKAHEAD
+		problem.setInitialState(currState);
+		int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction);
+		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
+		{
+			bdd.deref(failureExplanationSentence_bddRef);
+			System.out.print(" &");
+			return false;
+		}
+		
+		bdd.deref(failureExplanationSentence_bddRef);
 		return true;
 	}
 				

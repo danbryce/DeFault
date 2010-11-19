@@ -28,12 +28,16 @@ public class Simulation_PassiveLearningAgentRG
 	}
 	
 	public boolean isSolvableDomain()
-	{
+	{	
 		planners.setProblem(expert.getProblem());
 		if(planners.getPlan("amir") == null) return false;
 		if(planners.getPlan("pode1") == null) return false;
+		if(planners.getPlan("jdd") == null) return false;
 		
 		numSuccesses++;
+		
+		Proposition.clearAll();
+		
 		return true;
 	}
 	
@@ -41,19 +45,19 @@ public class Simulation_PassiveLearningAgentRG
 	{	
 		Simulation_PassiveLearningAgentRG sim = new Simulation_PassiveLearningAgentRG(args);
 		
-	if(!sim.isSolvableDomain()) return;
+		if(!sim.isSolvableDomain()) return;
 		
 		System.out.print(args[0] + "_" + args[2] + " " + sim.planners.getInitialModelCount());
 
-		sim.runSimPassiveLearning_RG("amir",  args, true, false);
-		sim.runSimPassiveLearning_RG("pode1", args, true, false);
-		sim.runSimPassiveLearning_RG("jdd", args, true, false);
+		sim.runSimPassiveLearning_RG("amir",  args);
+		sim.runSimPassiveLearning_RG("pode1", args);
+		sim.runSimPassiveLearning_RG("jdd", args);
 		
 		System.out.println();
 	}
 		
-	private void runSimPassiveLearning_RG(String plannerType, String [] args, boolean isForgiving, boolean isAssumptive)
-	{
+	private void runSimPassiveLearning_RG(String plannerType, String [] args)
+	{		
 		agent = new Agent_RG(args[0], args[1]);
 		planners.setProblem(agent.getProblem()); //Sets planner's problem to agent's incomplete version.
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
@@ -93,7 +97,8 @@ public class Simulation_PassiveLearningAgentRG
 				agent.removeFailFromKBForNewPlan();
 				
 				plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent								
-				if(plan == null || plan.size() == 0) break;
+				if(plan == null || plan.size() == 0) 
+					break;
 			}
 			
 			currState = nextState;		
@@ -114,6 +119,7 @@ public class Simulation_PassiveLearningAgentRG
 			else
 				System.out.print(" " + plannerType + " ? ? ? ? ?");
 		}
+		
 		Proposition.clearAll();
 	}
 	
