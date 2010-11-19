@@ -14,7 +14,7 @@ public class Agent_RG extends Agent {
 	{
 		super(dFile, pFile);
 	}
-				
+
 	/**
 	 * RISKY - check only the action's known preconditions.
 	 * 	Check abstract base class Agent note for further details.
@@ -29,11 +29,27 @@ public class Agent_RG extends Agent {
 	{
 		//RISKY - always keep
 		if(!areActionPreConditionsSat(currAction, currState)) return false;
-		
+
+		int posspres = bdd.ref(bdd.getZero());
+		for(Proposition p : currAction.getPossiblePreconditions()){
+			if(!currState.contains(p)){
+				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
+				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
+				bdd.deref(posspres);
+				posspres = tmp;
+			}
+		}
+
+		if(bdd.and(bddRef_KB, bdd.not(posspres)) == bdd.getZero()){
+			bdd.deref(posspres);
+			return false;
+		}
+		bdd.deref(posspres);
+
 		//Did we fail in the past?
 		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0) return false;
-		
+
 		return true;
 	}
-				
+
 }//end class
