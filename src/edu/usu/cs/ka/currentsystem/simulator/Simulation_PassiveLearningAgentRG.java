@@ -114,6 +114,7 @@ public class Simulation_PassiveLearningAgentRG
 			else
 				System.out.print(" " + plannerType + " ? ? ? ? ?");
 		}
+		Proposition.clearAll();
 	}
 	
 	private void usage(String[] args) 
