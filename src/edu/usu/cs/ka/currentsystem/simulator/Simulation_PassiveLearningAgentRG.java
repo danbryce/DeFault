@@ -45,7 +45,7 @@ public class Simulation_PassiveLearningAgentRG
 	{	
 		Simulation_PassiveLearningAgentRG sim = new Simulation_PassiveLearningAgentRG(args);
 		
-//		if(!sim.isSolvableDomain()) return;
+		if(!sim.isSolvableDomain()) return;
 		
 		System.out.print(args[0] + "_" + args[2] + " " + sim.planners.getInitialModelCount());
 
