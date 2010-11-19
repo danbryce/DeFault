@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{hyperref} 
+\usepackage{algorithmic, algorithm}
 %\jairheading{0}{2010}{1-1}{3/10}{3/10} \ShortHeadings{Planning in Incomplete Domains}{Bryce \&
 %Robertson}
 
@@ -138,7 +139,13 @@
 \maketitle
 
 \begin{abstract}
-%Engineering complete planning domain descriptions is often very costly because of human-error or lack of domain knowledge.  While many have studied knowledge acquisition, relatively few have studied the synthesis of plans when the domain model is incomplete (i.e., actions have incomplete preconditions or effects).  Prior work has evaluated the correctness of plans synthesized by disregarding such incomplete features, but not how to synthesize plans by reasoning about the incompleteness.  In this work, we describe several techniques for reasoning with the action incompleteness to increase the number of interpretations under which the plans will succeed.  Among the techniques, we show that representing explanations of plan failure with prime implicants provides a natural approach to comparing plans by counting prime implicants instead of models -- leading to better scalability and comparable quality plans.
+Engineering complete planning domain descriptions is often very costly because of human-error or lack of domain knowledge. Learning complete domain descriptions is also challenging because many features are irrelevant to achieving the goals.  We present an approach to planning and acting in incomplete domains that i) synthesizes plans to avoid execution failure due to ignorance of the domain model, and ii) passively learns about the domain model during execution to improve later re-planning attempts.  We learn about the incomplete domain in a goal-directed fashion and re-plan when our knowledge proves that the current plan will fail.  
+
+Our planner is the first to synthesize plans in incomplete domains and reason about the incompleteness to avoid potential plan failure.  Our execution strategy is novel in that it does not assume that the environment provides perfect feedback about failed actions, and that it can determine early if a plan will fail. Our planner, DeFault, reasons about incompleteness by computing failure explanations as Boolean sentences and counting propositional models to bias plan search.  We evaluate a number of alternative Boolean sentence representations and model counting approaches, and find that counting prime implicants (not models) leads to scale-up in several domains.  We also show that by reasoning about incompleteness, instead of ignoring it, leads to more effective agents that take less time, actions, and re-planning episodes to achieve their goals.
+
+%We evaluate both planning and execution on a number of domains 
+%
+%While many have studied knowledge acquisition, relatively few have studied the synthesis of plans when the domain model is incomplete (i.e., actions have incomplete preconditions or effects).  Prior work has evaluated the correctness of plans synthesized by disregarding such incomplete features, but not how to synthesize plans by reasoning about the incompleteness.  In this work, we describe several techniques for reasoning with the action incompleteness to increase the number of interpretations under which the plans will succeed.  Among the techniques, we show that representing explanations of plan failure with prime implicants provides a natural approach to comparing plans by counting prime implicants instead of models -- leading to better scalability and comparable quality plans.
 %
 %We present and empirically evaluate a forward heuristic search planner, called \FFRISKY{}, that synthesizes plans by propagating information about faults due to incompleteness both within the state space and the relaxed planning space.  We also provide a translation from incomplete planning domains to conformant probabilistic planning, where action incompleteness is represented by state incompleteness.  We compare \FFRISKY{} with a control planner that uses the FF heuristic (measuring plan length and ignoring incompleteness), and with the conformant probabilistic planner POND.  The results show that \FFRISKY{} i) scales better than POND, ii) scales comparable to the planner using the FF heuristic (while finding better solutions), and iii) scales better when counting prime implicants than models.
 %
@@ -1091,7 +1098,7 @@ $h^{\sim M}$ measures the number of interpretations that fail to reach the goals
 
 We assume that each agent maintains a propositional sentence $\phi_t$ defined over ${\cal F}(\tilde{D}) \cup fail$ which describes their knowledge at time $t$ of the incomplete domain.  The proposition $fail$ denotes whether the agent believes that its current plan failed -- it is not always possible to determine if an action applied in the past did not have its preconditions satisfied.  Initially, the agent believes $\phi_0 = \top$, denoting it complete lack of knowledge of which interpretation of the incomplete domain is the actual domain and whether its current plan will fail. If the agent's history consists of the action and state sequence $(a_{-1}, s_0, a_1, s_1, ... s_t)$, then its knowledge of the incomplete domain and its current plan is represented by $\phi_t$.   If the agent executes an action $a_t$ in state $s_t$, then it can update its knowledge as $\phi_{t+1} = \phi_t \wedge o_t(s_t, a_t, s_{t+1})$, where 
 $o_t(s_t, a_t, s_{t+1})= \left\{ \begin{array}{ll}
-(fail \wedge o^-) \vee (\neg fail \wedge o^+)  &: s_t = s_{t+1}\\
+(fail \leftarrow o^-) \vee (\neg fail \rightarrow o^+)  &: s_t = s_{t+1}\\
 o^+  & : s_t \not= s_{t+1}
 \end{array}\right.$,
 
@@ -1106,6 +1113,55 @@ Our optimistic agent will execute an action if it will not fail, even if later a
 
 In addition to our two agent types, we investigate two types of environments, differing in their semantics for failed action application.  The first, which is consistent with the assumptions of \FFRISKY{}, assumes that applying an action when its preconditions are not satisfied will lead to an undefined state where no further actions can be applied.  The second assumes that applying an action with unsatisfied preconditions will result in no change to the state and further actions are allowed.  In both cases, a failed action application will result in no change of state reported by the environment, but the former will report no change for all actions, and the latter will report changes for subsequent actions whose preconditions are satisfied.  The purpose of using two types of environments is to illustrate the relative benefits of the pessimistic and optimistic agents.
 
+\begin{algorithm}
+\caption{$OptimisticAgent(s, G, \tilde{A})$}\label{alg:replan}
+\begin{algorithmic}
+\STATE $\phi \gets \top$
+\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
+\WHILE{$\pi \not= ()$ and $G\not\subseteq s$}
+\STATE $a \gets \pi.first()$
+\STATE $\pi \gets \pi.rest()$
+
+\IF{$\phi \not\models d(a)$\COMMENT{Action may succeed}} 
+	\STATE $s ' \gets Execute(a)$
+	\STATE $\phi \gets Filter(s, a, s')$
+	\STATE $s \gets s'$
+\ELSE
+	\STATE $\phi \gets \phi \wedge fail$
+\ENDIF
+
+\IF{$\phi \models fail$ \COMMENT{Plan Failed}}
+	\STATE $\phi \gets \exists fail . \phi$
+	\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
+\ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{$PessimisticAgent(s, G, \tilde{A})$}\label{alg:replan}
+\begin{algorithmic}
+\STATE $\phi \gets \top$
+\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
+\WHILE{$\pi \not= ()$ and $G\not\subseteq s$}
+\STATE $a \gets \pi.first()$
+\STATE $\pi \gets \pi.rest()$
+
+\IF{$\phi \wedge d(a) = \perp$\COMMENT{Action will succeed}} 
+	\STATE $s ' \gets Execute(a)$
+	\STATE $\phi \gets Filter(s, a, s')$
+	\STATE $s \gets s'$
+\ELSE
+	\STATE $\phi \gets \phi \wedge fail$
+\ENDIF
+
+\IF{$\phi \models fail$ \COMMENT{Plan Failed} or\\ \hspace*{0.4cm}$\phi \models d(\pi)$ \COMMENT{Plan will Fail}}
+	\STATE $\phi \gets \exists fail . \phi$
+	\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
+\ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
 
 
 \section{Empirical Evaluation}\label{sec:empirical}

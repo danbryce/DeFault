@@ -165,7 +165,7 @@ public abstract class Agent
 //		System.out.println("");
 //		bdd.printSet(failureSentence);
 //		bdd.printSet(successSentence);
-		
+//		
 		//insertSandorFSentenceIntoKB(successSentence, failureSentence, a, prevState, currState);
 		insertSandorFSentenceIntoKB_withFailVar(successSentence, failureSentence, a, prevState, currState);
 		
@@ -267,9 +267,9 @@ public abstract class Agent
 		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
 		//action failure not known, combine two Trees of cases above
 		{
-			System.out.print(" * ");
+			//System.out.print(" * ");
 			int tempRefFailureSentenceAndFailVar = bdd.ref(bdd.and(failureSentence, failVar));
-			int tempRefSuccessSentenceAndNotFailVar = bdd.ref(bdd.and(successSentence, bdd.not(failVar)));
+			int tempRefSuccessSentenceAndNotFailVar = bdd.ref(successSentence);//bdd.ref(bdd.and(successSentence, bdd.not(failVar)));
 			
 			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, tempRefSuccessSentenceAndNotFailVar));
 			
@@ -298,7 +298,7 @@ public abstract class Agent
 	 */
 	public void removeFailFromKBForNewPlan()
 	{
-		boolean[] v = new boolean[risks.size() + 1];
+		boolean[] v = new boolean[bdd.numberOfVariables()];
 		v[v.length-1] = true;
 		
 		int cube = bdd.cube(v);

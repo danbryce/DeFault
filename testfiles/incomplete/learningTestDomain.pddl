@@ -9,12 +9,8 @@
  	 :parameters ()
  	 :precondition (and)
  	 :poss-precondition (and (r) (p))
- 	 :effect (and (not (r)))
+ 	 :effect (and )
  	 :poss-effect (and (q))
  	 )
- 	; (:action a2
- 	;  :parameters ()
- 	;  :precondition (and)
- 	;  :effect (q)
- 	;  )
+ 	
  	 )
