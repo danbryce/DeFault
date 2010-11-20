@@ -16,8 +16,13 @@ public class Agent_RG extends Agent {
 	}
 
 	/**
-	 * RISKY - check only the action's known preconditions.
-	 * 	Check abstract base class Agent note for further details.
+	 * RISKY 
+	 * 		- check the action's known preconditions.
+	 * 		- check whether the unsat possPre combination has already produced failure.
+	 * 		- check for failure in the past using failVar.
+	 * GREEDY - do not check entailment of the plan's failure explanation ^ the KB.
+	 * 	
+	 * Check abstract base class Agent note for further details.
 	 * 
 	 * @param currAction 	- IncompleteActionInstance
 	 * @param prevState 	- Set<Proposition>
@@ -27,12 +32,15 @@ public class Agent_RG extends Agent {
 	@Override
 	public boolean isActionApplicable(IncompleteActionInstance currAction, Set<Proposition> currState, List<ActionInstance> plan)
 	{
-		//RISKY - always keep
+		//Check the action's known preconditions.
 		if(!areActionPreConditionsSat(currAction, currState)) return false;
 
+		//Check whether the unsat possPre combination has already produced failure.
 		int posspres = bdd.ref(bdd.getZero());
-		for(Proposition p : currAction.getPossiblePreconditions()){
-			if(!currState.contains(p)){
+		for(Proposition p : currAction.getPossiblePreconditions())
+		{
+			if(!currState.contains(p))
+			{
 				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
 				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
 				bdd.deref(posspres);
@@ -40,14 +48,21 @@ public class Agent_RG extends Agent {
 			}
 		}
 
-		if(bdd.and(bddRef_KB, bdd.not(posspres)) == bdd.getZero()){
+		if(bdd.and(bddRef_KB, bdd.not(posspres)) == bdd.getZero())
+		{
+			System.out.print(" %");
 			bdd.deref(posspres);
 			return false;
 		}
 		bdd.deref(posspres);
 
-		//Did we fail in the past?
-		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0) return false;
+		//Check for failure in the past using failVar.
+		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0)
+		{
+			System.out.print(" $");
+			this.incrementFailedActionsCount();
+			return false;
+		}
 
 		return true;
 	}

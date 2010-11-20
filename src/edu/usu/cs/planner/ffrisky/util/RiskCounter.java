@@ -289,29 +289,13 @@ public class RiskCounter {
 //	}
 
 	
-	public static BDD getBDD() {
-		return bdd;
-	}
-
-	public static void setBdd(BDD bdd) {
-		RiskCounter.bdd = bdd;
-	}
-
-	public static Map<Fault, Integer> getRiskToBDD() {
-		return riskToBDD;
-	}
-
-	public static void setRiskToBDD(Map<Fault, Integer> riskToBDD) {
-		RiskCounter.riskToBDD = riskToBDD;
-	}
-
-	public static Map<Integer, Fault> getBddToRisk() {
-		return bddToRisk;
-	}
-
-	public static void setBddToRisk(Map<Integer, Fault> bddToRisk) {
-		RiskCounter.bddToRisk = bddToRisk;
-	}
+	public static BDD 					getBDD() 									{ return bdd; }
+	public static void 					setBdd(BDD bdd) 							{ RiskCounter.bdd = bdd; }
+	public static int 					get_bddRef()								{ return bddRef; }
+	public static Map<Fault, Integer> 	getRiskToBDD() 								{ return riskToBDD; }
+	public static void 					setRiskToBDD(Map<Fault, Integer> riskToBDD) { RiskCounter.riskToBDD = riskToBDD; }
+	public static Map<Integer, Fault> 	getBddToRisk() 								{ return bddToRisk; }
+	public static void 					setBddToRisk(Map<Integer, Fault> bddToRisk) { RiskCounter.bddToRisk = bddToRisk; }
 
 	private static List<Fault> getAllRisks(Problem problem) {
 		List<Fault> risks = new ArrayList<Fault>();

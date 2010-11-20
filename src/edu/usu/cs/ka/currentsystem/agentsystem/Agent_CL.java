@@ -16,8 +16,14 @@ public class Agent_CL extends Agent {
 	}
 				
 	/**
-	 * RISKY - check only the action's known preconditions.
-	 * 	Check abstract base class Agent note for further details.
+	 * CONSERVATIVE - includes all RISKY checks++:
+	 * 		RISKY - check the action's known preconditions.
+	 * 			  - check whether the unsat possPre combination has already produced failure.
+	 * 			  - check for failure in the past using failVar.
+	 *  	CONSERVATIVE - check the possPre's.
+	 * LOOKAHEAD - check for entailment of the plan's failure explanation ^ the KB.
+	 *
+	 * Check abstract base class Agent note for further details.
 	 * 
 	 * @param currAction 	- IncompleteActionInstance
 	 * @param prevState 	- Set<Proposition>
@@ -27,30 +33,54 @@ public class Agent_CL extends Agent {
 	@Override
 	public boolean isActionApplicable(IncompleteActionInstance currAction, Set<Proposition> currState, List<ActionInstance> plan)
 	{
-		//RISKY - always keep
+		//RISKY
+		//Check the action's known preconditions.
 		if(!areActionPreConditionsSat(currAction, currState)) return false;
-		
-		//failVar - did we fail in the past?
-		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0) 
+
+		//Check whether the unsat possPre combination has already produced failure.
+		int posspres = bdd.ref(bdd.getZero());
+		for(Proposition p : currAction.getPossiblePreconditions())
 		{
-			System.out.print(" $");
+			if(!currState.contains(p))
+			{
+				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
+				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
+				bdd.deref(posspres);
+				posspres = tmp;
+			}
+		}
+
+		if(bdd.and(bddRef_KB, bdd.not(posspres)) == bdd.getZero())
+		{
+			System.out.print(" %");
+			bdd.deref(posspres);
 			return false;
 		}
-		
-		//CONSERVATIVE
+		bdd.deref(posspres);
+
+		//Check for failure in the past using failVar.
+		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0)
+		{
+			System.out.print(" $");
+			this.incrementFailedActionsCount();
+			return false;
+		}
+
+		//CONSERVATIVE - Check the possPre's.
 		if(!areActionPossPreConditionsSat(currAction, currState)) return false;
 		
-		//LOOKAHEAD
+		//LOOKAHEAD - Check for entailment of the plan's failure explanation ^ the KB.
 		problem.setInitialState(currState);
 		int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction);
 		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
 		{
-			bdd.deref(failureExplanationSentence_bddRef);
 			System.out.print(" &");
+			bdd.deref(failureExplanationSentence_bddRef);
 			return false;
 		}
 		
 		bdd.deref(failureExplanationSentence_bddRef);
+		
 		return true;
 	}
 				

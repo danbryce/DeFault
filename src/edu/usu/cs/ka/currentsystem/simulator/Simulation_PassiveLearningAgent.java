@@ -7,9 +7,10 @@ import edu.usu.cs.ka.currentsystem.agentsystem.*;
 import edu.usu.cs.ka.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
+import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 
 
-public class Simulation_PassiveLearningAgentRG
+public class Simulation_PassiveLearningAgent
 {	
 	public static int numSuccesses = 0;
 	
@@ -17,7 +18,7 @@ public class Simulation_PassiveLearningAgentRG
 	DomainExpert expert;
 	Agent_RG agent;
 		
-	Simulation_PassiveLearningAgentRG(String[] args)
+	Simulation_PassiveLearningAgent(String[] args)
 	{	
 		if (args.length !=3) { usage(args); System.exit(1); }
 		
@@ -30,9 +31,9 @@ public class Simulation_PassiveLearningAgentRG
 	public boolean isSolvableDomain()
 	{	
 		planners.setProblem(expert.getProblem());
-		if(planners.getPlan("amir") == null) return false;
+		//if(planners.getPlan("amir") == null) return false;
 		if(planners.getPlan("pode1") == null) return false;
-		if(planners.getPlan("jdd") == null) return false;
+		//if(planners.getPlan("jdd") == null) return false;
 		
 		numSuccesses++;
 		
@@ -43,7 +44,7 @@ public class Simulation_PassiveLearningAgentRG
 	
 	public static void main(String[] args)
 	{	
-		Simulation_PassiveLearningAgentRG sim = new Simulation_PassiveLearningAgentRG(args);
+		Simulation_PassiveLearningAgent sim = new Simulation_PassiveLearningAgent(args);
 		
 		if(!sim.isSolvableDomain()) return;
 		
@@ -57,7 +58,10 @@ public class Simulation_PassiveLearningAgentRG
 	}
 		
 	private void runSimPassiveLearning_RG(String plannerType, String [] args)
-	{		
+	{	
+		Proposition.clearAll();
+		boolean noBDD_PlannerError = true;
+		
 		agent = new Agent_RG(args[0], args[1]);
 		planners.setProblem(agent.getProblem()); //Sets planner's problem to agent's incomplete version.
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
@@ -74,7 +78,7 @@ public class Simulation_PassiveLearningAgentRG
 		
 		plan = planners.getPlan(plannerType); //Should never be null to start
 		
-		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100))
+		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100) && (plan.size() != 0))
 		{			
 			currAction = (IncompleteActionInstance) plan.remove(0);
 			
@@ -91,17 +95,23 @@ public class Simulation_PassiveLearningAgentRG
 			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || !agent.isActionApplicable(currAction, currState, plan))
 			{	
 				if(agent.isActionFailure(currAction, currState, nextState)) 
-					numFailedActions++;
+					agent.incrementFailedActionsCount();
 				
 				agent.getProblem().setInitialState(nextState);
-				agent.removeFailFromKBForNewPlan();
+				
+				noBDD_PlannerError = agent.removeFailFromKBForNewPlan();
+				if(!noBDD_PlannerError)
+					break;
 				
 				plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent								
-				if(plan == null || plan.size() == 0) 
+				//Planner.printPlanShort(plan);
+				
+				if(plan == null || plan.size() == 0)
 					break;
 			}
-			
-			currState = nextState;		
+	
+			//System.out.println("END LOOP");
+			currState = nextState;	
 		}
 				
 		agent.stopStopwatch();
@@ -109,18 +119,18 @@ public class Simulation_PassiveLearningAgentRG
 		if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{	
 			System.out.print(" " + plannerType + " " + planners.getNumTimesPlannerCalled());
-			System.out.print(" " + agent.getNumActionsTaken() + " " + numFailedActions);
+			System.out.print(" " + agent.getNumActionsTaken() + " " + agent.getNumFailedActions());
 			System.out.print(" " + agent.getTimeToSolve() + " " + planners.getFinalModelCount());
 		}
 		else
 		{			
 			if((agent.getNumActionsTaken() == 1000) || (planners.getNumTimesPlannerCalled() == 500))
 				System.out.print(" " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + agent.getNumActionsTaken() + " X X X");
+			else if(!noBDD_PlannerError)
+				System.out.print(" " + plannerType + " E E E E E");
 			else
 				System.out.print(" " + plannerType + " ? ? ? ? ?");
 		}
-		
-		Proposition.clearAll();
 	}
 	
 	private void usage(String[] args) 

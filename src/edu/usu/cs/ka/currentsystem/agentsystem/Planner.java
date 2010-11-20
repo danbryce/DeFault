@@ -183,12 +183,34 @@ public class Planner
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
 		
 		startStopwatch();
+		
+//		if(Agent.getBDD() != null)
+//		{
+//			System.out.println("\nIN PLANNER.runJDDplanner() - PHI PRE NEW PLAN: ");
+//			Agent.getBDD().printSet(Agent.get_bddRef_KB());
+//		}
+		
 		List<ActionInstance> plan = solver.run();
+		
+//		if(Agent.getBDD() != null)
+//		{
+//			System.out.println("\nIN PLANNER.runJDDplanner() - PHI POST NEW PLAN: ");
+//			Agent.getBDD().printSet(Agent.get_bddRef_KB());
+//		}
+		
 		stopStopwatch();
 
 		return plan;	
 	}
-					
+	
+	/**
+	 * This method uses the RiskCounter class method to obtain the # of models of the domain.
+	 *  That model uses the # of risks existing in the problem's actions list.
+	 *  As the Agent learns about the risks, that number is reduced.
+	 *  The RiskCounter must be reset & re-initted to obtain the problem's final/current # of risks.
+	 *  
+	 * @return BigInteger - # of models
+	 */
 	public BigInteger getFinalModelCount()
 	{
 		RiskCounter.resetIsInitialized();

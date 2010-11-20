@@ -30,8 +30,8 @@ public abstract class Agent
 	public Hashtable<String, IncompleteActionInstance> actionsHT;
 	
     //BDD stuff - will be initialized via RiskCounter
-	protected BDD bdd;
-	protected int bddRef_KB;
+	protected static BDD bdd;
+	protected static int bddRef_KB;
 	protected int failVar;
 	
 	protected List<Fault> risks;
@@ -41,7 +41,9 @@ public abstract class Agent
 	//Results stuff
 	protected Long startTime;
 	protected Long finishTime;
+	
 	protected int actionsCount;
+	protected int failedActionsCount;
 	
 	public Agent(String dFile, String pFile)
 	{
@@ -56,7 +58,7 @@ public abstract class Agent
 		RiskCounter.initialize(domain, problem);
 				
 		bdd = RiskCounter.getBDD();
-		bddRef_KB = bdd.ref(bdd.getOne());
+		bddRef_KB = RiskCounter.get_bddRef();
 		
 		risks = RiskCounter.getAllRisks();
 		riskToBDD = RiskCounter.getRiskToBDD();
@@ -68,6 +70,7 @@ public abstract class Agent
 		//Print out the size of the risks List and printSet of the BDD to see the vars are the same size.
 		
 		actionsCount = 0;
+		failedActionsCount = 0;
 	}
 	
 	public void setDomainAndProblem()
@@ -77,15 +80,21 @@ public abstract class Agent
 		problem = domainMaker.getProblem();
 	}
 	
-	public Problem getProblem() { return problem; }
-	public List<ActionInstance> getActions() { return actions; }
-	public int getNumActionsTaken() { return actionsCount; }
-	
+	public Problem getProblem() 				{ return problem; }
+	public List<ActionInstance> getActions() 	{ return actions; }
+
 	/**
 	 * This method's simple assignment statement means that any changes to the Agent's actionList
 	 *  are also made to the Agent's problem's actionList.
 	 */
 	public void setActions() { actions = problem.getActions(); }
+	
+	public int getNumActionsTaken() 			{ return actionsCount; }
+	public int getNumFailedActions()			{ return failedActionsCount; }
+	public void incrementFailedActionsCount() 	{ failedActionsCount++; }
+	
+	public static BDD getBDD() {return bdd;}
+	public static int get_bddRef_KB() {return bddRef_KB;}
 	
 	/**
 	 * Speedy action lookup when revising actions using KB.
@@ -208,15 +217,16 @@ public abstract class Agent
 	}
 	
 	/**
-	 * This private helper method inserts either the successSentence or failureSentence built by the method
+	 * This old private helper method inserts either the successSentence or failureSentence built by the method
 	 * 	learnAboutActionTaken(...) into the KB.
-	 * This method will be replaced by addPropToSentence_withFailVarAndOP
+	 * This method is now replaced by addPropToSentence_withFailVar
 	 * @param successSentence
 	 * @param failureSentence
 	 * @param act
 	 * @param prevState
 	 * @param currState
 	 */
+	/*
 	private void insertSandorFSentenceIntoKB( int successSentence, int failureSentence, 
 											  IncompleteActionInstance incompleteAction, 
 			                                  Set<Proposition> prevState, Set<Proposition> currState)
@@ -239,15 +249,15 @@ public abstract class Agent
 		bdd.deref(failureSentence);
 		bdd.deref(bddRef_KB);
 		bddRef_KB = tempRefToNewKB;
-   }
+	}
+	*/
 	
 	/**
 	 * This private helper method inserts either the successSentence or failureSentence built by the method
 	 * 	learnAboutActionTaken(...) into the KB. 
 	 *   
-	 * The new directive for the "don't know" case involves adding a "FAIL" or "-FAIL" to each of the 
-	 * sentences before adding them to the KB. This allows the Agent to discover if a plan being executed
-	 * now entails "FAIL" - something down the road has proved that an action in the past failed.
+	 *	Current "unknown" case sentence: (F ^ fail) v S - and it to PHI (bddRef_KB)
+	 *
 	 * This FAIL must be removed from the KB before the next planner call.
 	 * @param successSentence
 	 * @param failureSentence
@@ -267,16 +277,10 @@ public abstract class Agent
 		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
 		//action failure not known, combine two Trees of cases above
 		{
-			//System.out.print(" * ");
+			System.out.print(" * ");
 			int tempRefFailureSentenceAndFailVar = bdd.ref(bdd.and(failureSentence, failVar));
-			int tempRefSuccessSentenceAndNotFailVar = bdd.ref(successSentence);//bdd.ref(bdd.and(successSentence, bdd.not(failVar)));
-			
-			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, tempRefSuccessSentenceAndNotFailVar));
-			
-			//bdd.printSet(tempRefSF);
-			bdd.deref(tempRefFailureSentenceAndFailVar);
-			bdd.deref(tempRefSuccessSentenceAndNotFailVar);
-			
+			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, successSentence));
+			bdd.deref(tempRefFailureSentenceAndFailVar);	
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
 			bdd.deref(tempRefSF);
 		}
@@ -296,17 +300,21 @@ public abstract class Agent
 	 * The default value of a boolean in an array is false.
 	 * bdd.exists returns a ref to a bdd with all failVar references removed.
 	 */
-	public void removeFailFromKBForNewPlan()
+	public boolean removeFailFromKBForNewPlan()
 	{
 		boolean[] v = new boolean[bdd.numberOfVariables()];
 		v[v.length-1] = true;
 		
 		int cube = bdd.cube(v);
-		//bdd.printSet(cube);
-		int temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
-		//bdd.printSet(temp);
+		int temp;
+		try{
+			temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
+		}catch(Exception e){System.out.print(" !"); /*e.printStackTrace();*/ return false;}
+		
 		bdd.deref(bddRef_KB);
 		bddRef_KB = temp;
+		
+		return true;
 	}
 	
 	/**
@@ -348,7 +356,9 @@ public abstract class Agent
 	/**
 	 * This method provides the coverage for:
 	 *	RISKY vs. CONSERVATIVE Agents:
-	 * 		RISKY - check only the action's known preconditions.
+	 * 		RISKY - check the action's known preconditions
+	 * 			  - check whether the unsat possPre combination has already produced failure
+	 * 			  - check for failure in the past using failVar.
 	 *  	CONSERVATIVE - check the possPre's as well.
 	 *	GREEDY vs LOOKAHEAD Agents:
 	 *		GREEDY - do not check entailment of the plan's failure explanation ^ the KB..
