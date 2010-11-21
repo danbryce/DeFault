@@ -160,11 +160,11 @@ Our planner is the first to synthesize plans in incomplete domains and reason ab
 %
 %%Planning with incomplete domains is important in applications (incl BL)
 %
-%The knowledge engineering required to create complete and correct domain descriptions for planning problems is often very costly and difficult \citep{modellite,arms}.  Machine learning techniques have been applied with some success \citep{arms, ickeps09}, but still suffer from impoverished data and limitations of the algorithms \citep{modellite}.   In particular, we are motivated by applications in instructable computing \citep{mable} where a domain expert teaches an intelligent system about a particular domain, but can often leave out whole procedures (plans) and aspects of action descriptions.   In such cases, the alternative to making domains complete, is to plan around the incompleteness.  That is, given knowledge of the possible action descriptions, we seek out plans that will succeed despite any (or most) incompleteness in the domain formulation. 
+The knowledge engineering required to create complete and correct domain descriptions for planning problems is often very costly and difficult \citep{modellite,arms}.  Machine learning techniques have been applied with some success \citep{arms, ickeps09}, but still suffer from impoverished data and limitations of the algorithms \citep{modellite}.   In particular, we are motivated by applications in instructable computing \citep{mable} where a domain expert teaches an intelligent system about a particular domain, but can often leave out whole procedures (plans) and aspects of action descriptions.   In such cases, the alternative to making domains complete, is to plan around the incompleteness.  That is, given knowledge of the possible action descriptions, we seek out plans that will succeed despite any (or most) incompleteness in the domain formulation. 
 %
 %%Prior work does not look at synthesis, just computes critical faults
 %
-%While prior work \citep{Garland02} has categorized faults to a plan's correctness and described plan quality metrics in terms of the faults (essentially single-fault diagnoses of plan failure \citep{dekleer,reiter}), no prior work has sought to deliberately synthesize low-fault plans.  Specifically, \citet{Garland02} (henceforth abbreviated, GL) identify four types of plan faults: open preconditions (due to incomplete preconditions), possible clobberers (due to incomplete delete effects), unlisted effects (due to incomplete add effects), and false preconditions.  GL develop an algorithm that steps backward through the plan to identify the ``critical faults'' -- those instances where incomplete domain features can cause plan failure.  For example, a possible clobber is a critical fault when (if it is truly a delete effect) it threatens a precondition or goal.  The number of critical faults is an important measure of plan quality/correctness, that, unfortunately, no known planners seek to minimize (aside from our prior work \citep{robertsonBryce09} on single-fault planning, upon which this work is based).    
+While prior work \citep{Garland02} has categorized faults to a plan's correctness and described plan quality metrics in terms of the faults (essentially single-fault diagnoses of plan failure \citep{dekleer,reiter}), no prior work has sought to deliberately synthesize low-fault plans.  Specifically, \citet{Garland02} (henceforth abbreviated, GL) identify four types of plan faults: open preconditions (due to incomplete preconditions), possible clobberers (due to incomplete delete effects), unlisted effects (due to incomplete add effects), and false preconditions.  GL develop an algorithm that steps backward through the plan to identify the ``critical faults'' -- those instances where incomplete domain features can cause plan failure.  For example, a possible clobber is a critical fault when (if it is truly a delete effect) it threatens a precondition or goal.  The number of critical faults is an important measure of plan quality/correctness, that, unfortunately, no known planners seek to minimize.    
 %
 %\und{Example} Consider the following action, that is taken from a modified version of the International Planning Competition (IPC) \citep{ipc5} PARC printer domain:  
 %
@@ -841,28 +841,27 @@ Our definition the plan semantics sets a loose requirement that plans with incom
 
 We present a forward state space planner called \FFRISKY{} that attempts to minimize the number of interpretations of the incomplete domain that can result in plan failure.  \FFRISKY{} generates states reached under the optimistic interpretation of the incomplete domain, but labels each state proposition with the interpretations where it will be impossible to achieve the proposition.  As such, the number of interpretations labeling the goals reached by a plan indicates the number of failed interpretations.  By counting interpretations (i.e., propositional model counting), we can determine the quality (robustness) of a plan.
 
-\und{Label Propagation}  \FFRISKY{} labels propositions and actions with domain interpretations that will respectively fail to achieve the proposition or fail to achieve the precondition of an action.  Labels $d_t(\cdot)$ are represented as  propositional sentences over ${\cal F}(\tilde{D})$, whose models correspond to domain interpretations.  
+\und{Label Propagation}  \FFRISKY{} labels propositions and actions with domain interpretations that will respectively fail to achieve the proposition or fail to achieve the precondition of an action.  Labels $d(\cdot)$ are represented as  propositional sentences over ${\cal F}(\tilde{D})$, whose models correspond to domain interpretations.  
 
-Initially, the label $d_{-1}(\tilde{a}_{-1}) = \perp$ to denote that there are no failed interpretations affecting the initial state.  For all states $s_{t+1}$, $t \geq 0$, we define: \\
-\noindent$d_{t+1}(p) = \left\{
+Initially, the label $d(\tilde{a}_{-1}) = \perp$ to denote that there are no failed interpretations affecting the initial state.  For all propositions $p_{t+1} \in s_{t+1}$, $t \geq 0$, we define: 
+
+ \begin{align}
+\hspace*{-.1cm}d(p_{t+1}) &= \left\{
 \begin{array}{l@{\;}l@{\;}r}
-d_t(p) \wedge d_t(\tilde{a}_t) & : p \in \text{add}(\tilde{a}_t) \\
-d_t(p) \wedge  (d_t(\tilde{a}_t) \vee \neg\widetilde{\text{add}}(\tilde{a}_t, p)) & : p \in \widetilde{\text{add}}(\tilde{a}_t)\\
+d(p_t) \wedge d(\tilde{a}_t) & : p \in \text{add}(\tilde{a}_t) \\
+d(p_t) \wedge  (d(\tilde{a}_t) \vee \\
+\hspace*{1.25cm} \neg\widetilde{\text{add}}(\tilde{a}_t, p)) & : p \in \widetilde{\text{add}}(\tilde{a}_t)\\
 \top & : p \in \text{del}(\tilde{a}_t)\\
-d_t(p) \vee  \widetilde{\text{del}}(\tilde{a}_t, p) % \;\text{or}\; \\
- %d_t(p) \vee  {\tt PC}(\tilde{a}_t, p) 
+d(p_t) \vee  \widetilde{\text{del}}(\tilde{a}_t, p) % \;\text{or}\; \\
+ %d(p_t) \vee  {\tt PC}(\tilde{a}_t, p) 
  &: p \in \widetilde{\text{del}}(\tilde{a}_t)\\
-d_t(p) & : \text{otherwise} 
+d(p_t) & : \text{otherwise} 
 \end{array}
-\right. $
-
-\noindent where the interpretations failing to successfully support the preconditions of $\tilde{a}_t$ are defined:
-$d_t(\tilde{a}_t) =  %\left\{
-%\begin{array}{r@{\;}l@{\;}r}
-%\bigvee\limits_{p \in \text{pre}(\tilde{a})} d_t(p) \vee \bigvee\limits_{p \in \widetilde{\text{pre}}(\tilde{a})} (d_t(p) \wedge {\tt OP}(\tilde{a}_t, p)  ) & : \text{t = 0}\\
-d_{t-1}(\tilde{a}_{t-1}) \vee \bigvee\limits_{p \in \text{pre}(\tilde{a})} d_t(p) \vee \bigvee\limits_{p \in \widetilde{\text{pre}}(\tilde{a})} (d_t(p) \wedge \widetilde{\text{pre}}(\tilde{a}_t, p)  ) %& : \text{ t $\geq$ 1 }
+\right. \\
+d(\tilde{a}_t) &=  
+d(\tilde{a}_{t-1}) \vee \hspace*{-.35cm}\bigvee\limits_{p \in \text{pre}(\tilde{a})}\hspace*{-.39cm} d(p_t) \vee\hspace*{-.35cm} \bigvee\limits_{p \in \widetilde{\text{pre}}(\tilde{a})} \hspace*{-.35cm}(d(p_t)\hspace*{-.09cm}\wedge\hspace*{-.09cm} \widetilde{\text{pre}}(\tilde{a}_t, p)  ) %& : \text{ t $\geq$ 1 }
 %\end{array}\right.
-$.
+\end{align}
 
 %\noindent and the interpretations under which the plan leading to $s_{t+1}$ are defined:
 %
@@ -877,15 +876,15 @@ $.
 %In the above, note the correspondence to the ATMS propagation rules.  
 %The definition of $d_{t+1}(p)$ refers to the combination of the assumptions of two ATMS clauses, one describing the persistence of $p$ and the other describing the action adding $p$.   Delete effects are false (failed to be true) under all interpretations, which corresponds to the lack of clauses that can prove the proposition in the previous section.  Propositions given as possible delete effects have their faults defined as any faults previously affecting the proposition or a fault introduced when it is in fact deleted.  Propositions not affected by the action persist their faults, corresponding to the persistence clauses in the previous section.  Any interpretation where one of the action's preconditions are unsatisfied will cause the action to fail, and any interpretation where the most previous action or any prior action fails will cause the plan to fail.
 
-\noindent  The intuition behind the label propagation is that an action will fail $d_t(\tilde{a}_t)$ in the domain interpretations where a prior action failed, a known precondition is not satisfied, or a possible precondition (which is a known precondition for the interpretation) is not satisfied.  A proposition will fail to be achieved in a state at time $t+1$ for all interpretations where i) the plan failed to achieve the proposition at time $t$ and the action cannot add the proposition because its preconditions are not satisfied, ii) the plan failed to achieve the proposition at time $t$ and the action cannot add the proposition because it either failed or it does not add the proposition in the interpretation, iii) the action deletes the proposition, iv) the plan failed to achieve the proposition at time $t$ or in the interpretation the action deletes the proposition, or v) the action does not affect the proposition in any interpretation and any prior failed interpretations still apply.
+\noindent  The intuition behind the label propagation is that an action will fail $d(\tilde{a}_t)$ in the domain interpretations where a prior action failed, a known precondition is not satisfied, or a possible precondition (which is a known precondition for the interpretation) is not satisfied.  A proposition will fail to be achieved in a state at time $t+1$ for all interpretations where i) the plan failed to achieve the proposition at time $t$ and the action cannot add the proposition because its preconditions are not satisfied, ii) the plan failed to achieve the proposition at time $t$ and the action cannot add the proposition because it either failed or it does not add the proposition in the interpretation, iii) the action deletes the proposition, iv) the plan failed to achieve the proposition at time $t$ or in the interpretation the action deletes the proposition, or v) the action does not affect the proposition in any interpretation and any prior failed interpretations still apply.
 
-A consequence of our definition of action failures is that each action fails if any prior action fails.  This definition follows from the fact that the state becomes undefined if we apply an action whose preconditions are not satisfied.  While we use this notion in plan synthesis, we explore this semantics and the semantics that the state does not change (i.e., it is defined) upon failure when we discuss acting in incomplete domains.  The reason that we define action failures in this manner is that we can determine all failed interpretations affecting a plan $d(\tilde{\pi})$  by inspecting $d_n(\tilde{a}_n)$.
+A consequence of our definition of action failures is that each action fails if any prior action fails.  This definition follows from the semantics that the state becomes undefined if we apply an action whose preconditions are not satisfied.  While we use this notion in plan synthesis, we explore this semantics and the semantics that the state does not change (i.e., it is defined) upon failure when we discuss acting in incomplete domains.  The reason that we define action failures in this manner is that we can determine all failed interpretations affecting a plan $d(\tilde{\pi})$  by inspecting $d(\tilde{a}_n)$.
 %%Note that under the incomplete semantics, the rules never negate a single explanation.  The cost of using prime implicants to represent the explanations arises through distributing disjunction over conjunction and removing subsumed clauses.    
 %
 %Finally, to count the number of interpretations under which a plan fails, we count the models of,
 %$d(\tilde{\pi}) = d_n(\tilde{a}_n)$,
 %\noindent which expresses the interpretations where any of the actions did not have its preconditions satisfied or the goal was not satisfied.  Recall that we require valid plans to achieve the goal under the optimistic semantics, so we are guaranteed that if $\text{pre}(a_n) \subseteq s_n$, then the plan will succeed in at least one interpretation of the incomplete domain.  
-It is possible to determine the interpretations that fail to successfully execute the plan up to and including time $t$ by computing $d_t(\tilde{a}_t)$.  We also note that as long as $n$ is the earliest time that the goal is achieved, we are guaranteed that $d_{t}(\tilde{a}_{t}) \models d(\tilde{\pi})$.  
+It is possible to determine the interpretations that fail to successfully execute the plan up to and including time $t$ by computing $d(\tilde{a}_t)$.  We also note that as long as $n$ is the earliest time that the goal is achieved, we are guaranteed that $d(\tilde{a}_{t}) \models d(\tilde{\pi})$.  
 
 %We illustrate the fault propagation for the example plan, as follows.  
 %
@@ -1043,8 +1042,8 @@ It is possible to determine the interpretations that fail to successfully execut
 
 Similar to propagating failed interpretation labels in a plan, we can propagate labels in the relaxed planning problem to compute a search heuristic.  The heuristic is the number of actions in a relaxed plan, and, while we do not use the number of failed domain interpretations as the primary heuristic, we use the failure labels to bias the selection of the relaxed plan actions and break ties between search nodes with an equivalent number of actions in their relaxed plans.  We solve the relaxed planning problem using a planning graph.  We start with a brief description of planning graphs in STRIPS domains.
 
-\und{Planning Graph Heuristics}   A relaxed planning graph  is a layered graph of sets of vertices $({\cal P}_t, {\cal A}_t, ..., {\cal A}_{t+m}, {\cal P}_{t+m+1})$.  The planning graph built w.r.t. a state $s_t$ defines ${\cal P}_t = s_t$, ${\cal A}_{t+k} = \{ a | \text{pre}(a) \subseteq {\cal P}_{t+k}, a \in A \cup A(P)\}$, and ${\cal P}_{t+k+1} = \{p | a \in {\cal A}_{t+k}, p \in \text{add}(a)\}$, for $k = 0, ..., m$.  The set $A(P)$ includes noop actions for each proposition, such that $A(P) = \{a_p | p \in P, \text{pre}(a_p) =\text{add}(a_p)=p, \text{del}(a_p)=\emptyset\}$.
-A simple heuristic, $h^{+}$ for the number of actions to achieve the goal $\text{pre}(a_{n})$ from $s_t$ is equivalent to the minimum level $k$ where the goal propositions are reached,  $h^{max} =\max_{g \in G} \min_{k: g \in {\cal P}_{t+k}} k$.  The $h^{FF}$  heuristic \citep{hoffmann:nebel:jair-01} solves this relaxed planning problem by choosing actions from ${\cal A}_{t+m}$ to support the goals in ${\cal P}_{t+m+1}$, and recursively for each chosen action's preconditions, counting the number of chosen actions.
+\und{Planning Graph Heuristics}   A relaxed planning graph  is a layered graph of sets of vertices $({\cal P}_t, {\cal A}_t, ..., {\cal A}_{t+m}, {\cal P}_{t+m+1})$.  The planning graph built w.r.t. a state $s_t$ defines ${\cal P}_t = \{p_t | p \in s_t\}$, ${\cal A}_{t+k} = \{ a_t | \forall_{ p \in \text{pre}(a)} p_t \in {\cal P}_{t+k}, a \in A \cup A(P)\}$, and ${\cal P}_{t+k+1} = \{p_{t+k+1} | a_{t+k} \in {\cal A}_{t+k}, p \in \text{add}(a)\}$, for $k = 0, ..., m$.  The set $A(P)$ includes noop actions for each proposition, such that $A(P) = \{a(p) | p \in P, \text{pre}(a(p)) =\text{add}(a(p))=p, \text{del}(a(p))=\emptyset\}$.
+A simple heuristic, $h^{max}$ for the number of actions to achieve the goal $\text{pre}(a_{n})$ from $s_t$ is equivalent to the minimum level $k$ where the goal propositions are reached,  $h^{max} =\max_{g \in G} \min_{k: g_{t+k} \in {\cal P}_{t+k}} k$.  The $h^{FF}$  heuristic \citep{hoffmann:nebel:jair-01} solves this relaxed planning problem by choosing actions from ${\cal A}_{t+m}$ to support the goals in ${\cal P}_{t+m+1}$, and recursively for each chosen action's preconditions, counting the number of chosen actions.
 
 %\und{Diagnoses}  When planning in incomplete domains, we would like to minimize the number of interpretations of the incomplete domain under which the plan fails.  A heuristic should measure and attempt to minimize the number of failed interpretations in the estimated suffix of a plan.   As in the state space, we propagate information about failed interpretations in the planning graph to estimate the quality of a plan completion starting in the current state.  
 %%Each relaxed planning graph layers contains a set of propositions (which approximates a set of states), whereas each step of a plan determines a unique state; thus, in the planning graph we track critical faults to each proposition instead of critical faults to achieving a state.  The union of the critical faults to a set of propositions in the planning graph approximates the critical faults to a state containing the propositions (e.g., in the planning graph, the critical faults to the goal is the union of critical faults to each goal proposition).
@@ -1055,23 +1054,22 @@ In a level of the relaxed planning graph, there are potentially many actions sup
 
 A relaxed planning graph with propagated labels is a layered
 graph of sets of vertices of the form $(\hat{\cal P}_t, \hat{\cal A}_t, ..., \hat{\cal
-A}_{t+m}, \hat{\cal P}_{t+m+1})$. The relaxed planning graph built w.r.t. a state $\tilde{s}_t$ defines $\hat{\cal P}_0 = \tilde{s}_t$, $\hat{\cal A}_{t+k} = \{ \tilde{a} | \text{pre}(\tilde{a}) \subseteq \hat{\cal P}_{t+k}, \tilde{a} \in \tilde{A} \cup A(P)\}$, and $\hat{\cal P}_{t+1} = \{p | \tilde{a} \in \hat{\cal A}_t, p \in \text{add}(\tilde{a}) \cup \widetilde{\text{add}}(\tilde{a})\}$, for $k = 0, ..., m$.  Much like the successor function used to compute next states, the relaxed planning graph assumes an optimistic semantics for action effects by adding possible add effects to proposition layers, but, as we will explain below, it associates failed interpretations with the possible adds.  Each proposition $p$ has a label, denoted $\hat{d}_t(p)$.  Each action also has a label, denoted $\widehat{d}_{t+k}(\tilde{a})$.
+A}_{t+m}, \hat{\cal P}_{t+m+1})$. The relaxed planning graph built w.r.t. a state $\tilde{s}_t$ defines $\hat{\cal P}_0 = \{\hat{p}_t | p \in \tilde{s}_t\}$, $\hat{\cal A}_{t+k} = \{ \tilde{a}_{t+k} | \forall_{p \in \text{pre}(\tilde{a})} \hat{p}_{t+k} \in \hat{\cal P}_{t+k}, \tilde{a} \in \tilde{A} \cup A(P)\}$, and $\hat{\cal P}_{t+k+1} = \{p_{t+k+1} | \tilde{a}_{t+k} \in \hat{\cal A}_{t+k}, p \in \text{add}(\tilde{a}) \cup \widetilde{\text{add}}(\tilde{a})\}$, for $k = 0, ..., m$.  Much like the successor function used to compute next states, the relaxed planning graph assumes an optimistic semantics for action effects by adding possible add effects to proposition layers, but, as we will explain below, it associates failed interpretations with the possible adds.  Each proposition $p_{t}$ vertex has a label, denoted $\hat{d}(p_t)$.  Each action vertex also has a label, denoted $\widehat{d}(\tilde{a}_{t+k})$.
 
-The faults $\hat{d}_t(p) $ affecting a proposition are defined by its supporting action $\hat{a}_{t+k}(p)$, such that $\hat{d}_t(p) = d_t(p)$, and for $k \geq 0$, $\hat{d}_{t+k+1}(p) =$ 
-$\left\{\begin{array}{lll}
-\widehat{d}_{t+k}(\hat{a}_{t+k}(p)) & : p \in \text{add}(\hat{a}_{t+k}(p))\\
-\widehat{d}_{t+k}(\hat{a}_{t+k}(p)) \vee \neg\widetilde{\text{add}}(\hat{a}_{t+k}(p) & : p \in \widetilde{\text{add}}(\hat{a}_{t+k}(p))\end{array}\right.$
+The faults $\hat{d}(p_t) $ affecting a proposition are defined by its supporting action $\hat{a}_{t+k}(p)$, such that $\hat{d}(p_t) = d(p_t)$, and for $k \geq 0$, 
 
-\noindent and the faults affecting an action are defined by the faults for the action's preconditions, 
-$\widehat{d}_{t+k}(\tilde{a}) =$
-$\left(\bigvee\limits_{p \in \text{pre}(\tilde{a}) }  \hat{d}_{t+k}(p)\right) \vee
-\left(\bigvee\limits_{p \in \widetilde{\text{pre}}(\tilde{a})}   \hat{d}_{t+k}(p)  \wedge  \widetilde{\text{pre}}(\tilde{a}, p) \right)$% \vee \left(\bigvee_{\substack{ a\in \hat{\cal S}_{t+k-1}(p),\\ p \in \text{pre}(\tilde{a}) \cup  \widetilde{\text{pre}}(\tilde{a})}} d_{t+k-1}(\tilde{a}) \right)$
+\begin{align}
+ \hspace*{-.6cm} \hat{d}(p_{t+k+1}) &= 
+\left\{\begin{array}{l@{\;}l@{\;}r}
+\widehat{d}(\hat{a}_{t+k}(p)) & : p \in \text{add}(\hat{a}_{t+k}(p))\\
+\widehat{d}(\hat{a}_{t+k}(p)) \vee \\
+\neg\widetilde{\text{add}}(\hat{a}_{t+k}(p), p) & : p \in \widetilde{\text{add}}(\hat{a}_{t+k}(p))\end{array}\right. \hspace*{-.1cm}\\
+\widehat{d}(\tilde{a}_{t+k}) &= \hspace*{-.2cm} 
+\bigvee\limits_{p \in \text{pre}(\tilde{a}) } \hspace*{-.2cm}   \hat{d}(p_{t+k}) \vee \hspace*{-.25cm} 
+\bigvee\limits_{p \in \widetilde{\text{pre}}(\tilde{a})} \hspace*{-.25cm}  \hat{d}(p_{t+k})  \wedge  \widetilde{\text{pre}}(\tilde{a}, p) 
+\end{align}
 
-%\noindent The critical faults to a proposition are defined by faults invalidating its supporting actions:
-%\begin{align*}
-%\hat{c}_{t+k}(p) =  \bigcup\limits_{\tilde{a} \in \hat{\cal S}_{t+k}(p)} \widehat{\text{inv}}_{t+k}(\tilde{a}) \notag
-%\end{align*}
-\noindent Propositions in the planning graph initially have the same faults associated with them as in state $\tilde{s}_t$ and are defined by $d_t(\cdot)$.  Every action in every level $k$ of the planning graph will fail in any interpretation where any of their preconditions are not supported.  A proposition will fail to be achieved in any interpretations where the chosen supporting action fails to add the proposition.
+\noindent Propositions in the planning graph initially have the same faults associated with them as in state $\tilde{s}_t$ and are defined by $d(\cdot)$.  Every action in every level $k$ of the planning graph will fail in any interpretation where any of their preconditions are not supported.  A proposition will fail to be achieved in any interpretations where the chosen supporting action fails to add the proposition.
 
 We note that the rules for propagating labels in the planning graph differ from the rules propagating labels in the state space.  In the state space, the action failure labels include interpretations for any prior action failing.  In the relaxed planning problem, the action failure labels include only interpretations affecting the action's preconditions, and not prior actions.  In the relaxed planning problem, it is not clear which actions will be executed prior to achieving a proposition because many actions may be used to achieve other propositions at the same time step.  
 
@@ -1085,27 +1083,33 @@ We note that the rules for propagating labels in the planning graph differ from 
 
 
 \und{Heuristic Computation}   We terminate the relaxed planning graph expansion at the level $t+k+1$ where one of the following conditions is met: i) the planning graph reaches a fix-point where the
-labels do not change, $\hat{d}_{t+k}(p) = \hat{d}_{t+k+1}(p)$ for all $p$, or ii) the goals have been reached at $t+k+1$ and the fixed point has not yet been reached. Our heuristic $h^{\sim FF}$ heuristic makes use of the chosen supporting actions $\hat{a}_{t+k}(p)$ for each proposition that requires support in the relaxed plan, and, hence, measures the number of actions used while attempting to minimize fault.  The other heuristic
-$h^{\sim M}$ measures the number of interpretations that fail to reach the goals in the last level (i.e., such that  $h^{\sim M} = |M(\vee_{g \in \text{pre}(\tilde{a}_n})\hat{d}_{t+m+1}(g))|$, where $m+1$ is the last level of the planning graph and $M(\phi)$ is the set of models of a propositional sentence $\phi$.  \FFRISKY{} uses both heuristics, treating  $h^{\sim FF}$ as the primary heuristic and using $h^{\sim M}$ to break ties.
+labels do not change, $\hat{d}(p_{t+k}) = \hat{d}(p_{t+k+1})$ for all $p$, or ii) the goals have been reached at $t+k+1$ and the fixed point has not yet been reached. Our heuristic $h^{\sim FF}$ heuristic makes use of the chosen supporting actions $\hat{a}_{t+k}(p)$ for each proposition that requires support in the relaxed plan, and, hence, measures the number of actions used while attempting to minimize fault.  The other heuristic
+$h^{\sim M}$ measures the number of interpretations that fail to reach the goals in the last level (i.e., such that  $h^{\sim M} = |M(\vee_{g \in \text{pre}(\tilde{a}_n)}\hat{d}(g_{t+m+1}))|$, where $m+1$ is the last level of the planning graph and $M(\phi)$ is the set of models of a propositional sentence $\phi$.  \FFRISKY{} uses both heuristics, treating  $h^{\sim FF}$ as the primary heuristic and using $h^{\sim M}$ to break ties.
 
 \section{Alternatives to Model Counting}
 
-\section{Acting in Incomplete Domains} Acting in incomplete domains provides an opportunity to learn about the domain by observing the states resulting from action application.  In the following, we describe what an agent can learn from acting in incomplete domains and how they might achieve their goals.  We explore two strategies for planning and acting that differ in how optimistic or pessimistic the agent assesses their knowledge of the incomplete domain.  Namely, these agents differ in how they will: 
-\begin{packed_itemize}
-\item {\bf Execute:} risk executing an action whose preconditions may be unsatisfied
-\item {\bf Replan:} select a time to abandon a plan and replan
-\end{packed_itemize}
+\section{Acting in Incomplete Domains} Acting in incomplete domains provides an opportunity to learn about the domain by observing the states resulting from action application.  In the following, we describe what an agent can learn from acting in incomplete domains and how they might achieve their goals.  We explore two strategies for plan execution that differ in how optimistic or pessimistic the agent assesses their knowledge of the incomplete domain.  Namely, these agents differ in how they will determine that a plan has failed, necessitating re-planning.  The optimistic agent will continue to execute a plan until it is faced with an action that is guaranteed to fail, and the pessimistic agent executes a plan until either the current action may fail or a future action is guaranteed to fail.
 
-We assume that each agent maintains a propositional sentence $\phi_t$ defined over ${\cal F}(\tilde{D}) \cup fail$ which describes their knowledge at time $t$ of the incomplete domain.  The proposition $fail$ denotes whether the agent believes that its current plan failed -- it is not always possible to determine if an action applied in the past did not have its preconditions satisfied.  Initially, the agent believes $\phi_0 = \top$, denoting it complete lack of knowledge of which interpretation of the incomplete domain is the actual domain and whether its current plan will fail. If the agent's history consists of the action and state sequence $(a_{-1}, s_0, a_1, s_1, ... s_t)$, then its knowledge of the incomplete domain and its current plan is represented by $\phi_t$.   If the agent executes an action $a_t$ in state $s_t$, then it can update its knowledge as $\phi_{t+1} = \phi_t \wedge o_t(s_t, a_t, s_{t+1})$, where 
-$o_t(s_t, a_t, s_{t+1})= \left\{ \begin{array}{ll}
-(fail \leftarrow o^-) \vee (\neg fail \rightarrow o^+)  &: s_t = s_{t+1}\\
-o^+  & : s_t \not= s_{t+1}
-\end{array}\right.$,
 
-\noindent  $o^+=\left(\bigwedge\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p \not\in s_t} }\hspace*{-0.5cm}\neg \widetilde{\text{pre}}(\tilde{a},p)  \right)\wedge  \left(\bigwedge\limits_{\substack{\widetilde{\text{add}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p\in s_{t+1}\backslash s_t} }\hspace*{-0.5cm}\widetilde{\text{add}}(\tilde{a},p)  \right) \wedge  \left(\bigwedge\limits_{\substack{\widetilde{\text{del}}(\tilde{a},p) \in {\cal F}(\tilde{a}): \\p \in s_t\backslash s_{t+1}}} \hspace*{-0.25cm}\widetilde{\text{del}}(\tilde{a},p)  \right) \wedge \left(\bigwedge\limits_{\substack{\widetilde{\text{add}}(\tilde{a},p) \in {\cal F}(\tilde{a}): \\ p \not\in  s_t\cup s_{t+1}}} \hspace*{-0.25cm}\neg \widetilde{\text{add}}(\tilde{a},p)  \right)\wedge  \left(\bigwedge\limits_{\substack{\widetilde{\text{del}}(\tilde{a},p) \in {cal F}(\tilde{a}):\\ p \not\in s_t\cap s_{t+1}}} \hspace*{-0.25cm}\neg \widetilde{\text{del}}(\tilde{a},p)  \right) $
+%: 
+%\begin{packed_itemize}
+%\item {\bf Execute:} risk executing an action whose preconditions may be unsatisfied
+%\item {\bf Replan:} select a time to abandon a plan and replan
+%\end{packed_itemize}
 
-\noindent and 
-$o^- = \left(\bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p \not\in s_t} } \widetilde{\text{pre}}(\tilde{a},p)  \right)$.
+We assume that each agent maintains a propositional sentence $\phi$ defined over ${\cal F}(\tilde{D}) \cup fail$ which describes their current knowledge of the incomplete domain.  The proposition $fail$ denotes whether the agent believes that its current plan failed -- it is not always possible to determine if an action applied in the past did not have its preconditions satisfied.  Initially, the agent believes $\phi = \top$, denoting it complete lack of knowledge of which interpretation of the incomplete domain is the actual domain and whether its current plan will fail.    If the agent executes an action $a$ in state $s$ and transitions to state $s'$, then it can update its knowledge $\phi$ as $\phi \wedge o(s, a, s')$, where 
+
+\noindent \begin{eqnarray}
+o(s, a, s') &=& \left\{ \begin{array}{ll}
+(fail \wedge o^-) \vee  o^+  &: s = s'\\
+o^+  & : s \not= s'
+\end{array}\right.\\
+o^- &=& \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p)  \\
+o^+ &=& o^{pre} \wedge o^{add} \wedge o^{del}\\
+o^{pre} &=& \bigwedge\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p \not\in s} }\hspace*{-0.5cm}\neg \widetilde{\text{pre}}(\tilde{a},p)  \\
+o^{add} &=&  \hspace*{-.5cm}\bigwedge\limits_{\substack{\widetilde{\text{add}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p\in s'\backslash s} }\hspace*{-0.75cm}\widetilde{\text{add}}(\tilde{a},p)   \wedge  \hspace*{-0.5cm}\bigwedge\limits_{\substack{\widetilde{\text{add}}(\tilde{a},p) \in {\cal F}(\tilde{a}): \\ p \not\in  s\cup s'}} \hspace*{-0.75cm}\neg \widetilde{\text{add}}(\tilde{a},p)   \\
+o^{del} &=& \hspace*{-.5cm} \bigwedge\limits_{\substack{\widetilde{\text{del}}(\tilde{a},p) \in {\cal F}(\tilde{a}): \\p \in s \backslash s'}} \hspace*{-0.75cm}\widetilde{\text{del}}(\tilde{a},p)  \wedge  \hspace*{-0.5cm}\bigwedge\limits_{\substack{\widetilde{\text{del}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p \not\in s\cap s'}} \hspace*{-0.75cm}\neg \widetilde{\text{del}}(\tilde{a},p)  
+\end{eqnarray}
 
 Using $\phi_t$, it is possible to determine if the next action in a plan, or any subsequent action, can or will fail.  If  for $a_{t+k}$, $k \geq 0$, $\phi_t \wedge d_{t+k}(a_{t+k})$ is satisfiable, then $a_{t+k}$ {\em can} fail, and if $\phi_t \models d_{t+k}(a_{t+k})$, then $a_{t+k}$ {\em will}  fail.
 
@@ -1113,8 +1117,8 @@ Our optimistic agent will execute an action if it will not fail, even if later a
 
 In addition to our two agent types, we investigate two types of environments, differing in their semantics for failed action application.  The first, which is consistent with the assumptions of \FFRISKY{}, assumes that applying an action when its preconditions are not satisfied will lead to an undefined state where no further actions can be applied.  The second assumes that applying an action with unsatisfied preconditions will result in no change to the state and further actions are allowed.  In both cases, a failed action application will result in no change of state reported by the environment, but the former will report no change for all actions, and the latter will report changes for subsequent actions whose preconditions are satisfied.  The purpose of using two types of environments is to illustrate the relative benefits of the pessimistic and optimistic agents.
 
-\begin{algorithm}
-\caption{$OptimisticAgent(s, G, \tilde{A})$}\label{alg:replan}
+\begin{algorithm}[t]
+\caption{$Act(s, G, \tilde{A})$}\label{alg:replan}
 \begin{algorithmic}
 \STATE $\phi \gets \top$
 \STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
@@ -1122,46 +1126,63 @@ In addition to our two agent types, we investigate two types of environments, di
 \STATE $a \gets \pi.first()$
 \STATE $\pi \gets \pi.rest()$
 
-\IF{$\phi \not\models d(a)$\COMMENT{Action may succeed}} 
+\IF{$CanApply(s, a, \phi, \pi)$}
+%$\phi \not\models d(a)$\COMMENT{Action may succeed}} 
 	\STATE $s ' \gets Execute(a)$
-	\STATE $\phi \gets Filter(s, a, s')$
+	\STATE $\phi \gets \phi \wedge o(s, a, s')$
 	\STATE $s \gets s'$
 \ELSE
 	\STATE $\phi \gets \phi \wedge fail$
 \ENDIF
 
 \IF{$\phi \models fail$ \COMMENT{Plan Failed}}
-	\STATE $\phi \gets \exists fail . \phi$
+	\STATE $\phi \gets \exists_{fail}  \phi$
 	\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
 \ENDIF
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
-\caption{$PessimisticAgent(s, G, \tilde{A})$}\label{alg:replan}
-\begin{algorithmic}
-\STATE $\phi \gets \top$
-\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
-\WHILE{$\pi \not= ()$ and $G\not\subseteq s$}
-\STATE $a \gets \pi.first()$
-\STATE $\pi \gets \pi.rest()$
 
-\IF{$\phi \wedge d(a) = \perp$\COMMENT{Action will succeed}} 
-	\STATE $s ' \gets Execute(a)$
-	\STATE $\phi \gets Filter(s, a, s')$
-	\STATE $s \gets s'$
-\ELSE
-	\STATE $\phi \gets \phi \wedge fail$
-\ENDIF
+The optimistic agent uses the following condition for $CanApply$
 
-\IF{$\phi \models fail$ \COMMENT{Plan Failed} or\\ \hspace*{0.4cm}$\phi \models d(\pi)$ \COMMENT{Plan will Fail}}
-	\STATE $\phi \gets \exists fail . \phi$
-	\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
-\ENDIF
-\ENDWHILE
-\end{algorithmic}
-\end{algorithm}
+\begin{align}
+\phi \not\models \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p)
+\end{align}
+
+\noindent indicating that it is not the case that a subset of the unsatisfied possible preconditions must be preconditions (i.e., it is possible that the unsatisfied possible preconditions need not be satisfied).  The pessimistic agent uses the condition
+
+\begin{align}
+\phi \models \bigwedge\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal F}(\tilde{a}):\\ p \not\in s} }\neg \widetilde{\text{pre}}(\tilde{a},p) \text{and} \phi \not\models d(\pi)
+\end{align}
+
+\noindent stating that the action can be applied only if each unsatisfied possible precondition is known to not be a precondition and the plan may still succeed.
+
+
+%\begin{algorithm}
+%\caption{$PessimisticAgent(s, G, \tilde{A})$}\label{alg:replan}
+%\begin{algorithmic}
+%\STATE $\phi \gets \top$
+%\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
+%\WHILE{$\pi \not= ()$ and $G\not\subseteq s$}
+%\STATE $a \gets \pi.first()$
+%\STATE $\pi \gets \pi.rest()$
+%
+%\IF{$\phi \wedge d(a) = \perp$\COMMENT{Action will succeed}} 
+%	\STATE $s ' \gets Execute(a)$
+%	\STATE $\phi \gets Filter(s, a, s')$
+%	\STATE $s \gets s'$
+%\ELSE
+%	\STATE $\phi \gets \phi \wedge fail$
+%\ENDIF
+%
+%\IF{$\phi \models fail$ \COMMENT{Plan Failed} or\\ \hspace*{0.4cm}$\phi \models d(\pi)$ \COMMENT{Plan will Fail}}
+%	\STATE $\phi \gets \exists fail . \phi$
+%	\STATE $\pi \gets Plan(s, G, \tilde{A}, \phi)$
+%\ENDIF
+%\ENDWHILE
+%\end{algorithmic}
+%\end{algorithm}
 
 
 \section{Empirical Evaluation}\label{sec:empirical}
@@ -1200,6 +1221,14 @@ The Barter World domain involves navigating a grid and bartering items to travel
 %
 %%
 %
+
+
+\begin{figure*}[t]
+\includegraphics[width=.5\linewidth]{./alldom-deadline.eps}
+\includegraphics[width=.5\linewidth]{./alldom-deadline-time.eps}
+\caption{\label{fig:plan} Cumulative Plan Success and Planning Time}
+\end{figure*}		
+
 \subsection{Test Setup} The tests were run on a machine running Linux with a 3 Ghz Xeon processor, a memory limit of 2GB, and a time limit of 20 minutes per run.  All code was written in Java and run on the 1.6 JVM.  Both \FFRISKY{} and the control planner share the same greedy best first search implementation that uses deferred heuristic evaluation and a dual-queue for preferred and non-preferred operators \citep{DBLP:journals/jair/Helmert06}.  Both planners also use the same planning graph implementation.  
 %POND was run using ten planning graph samples per search node heuristic evaluation in a weighted (w=5) A* search, and  $\overline{\tau}$ equal to the minimum proportion of incomplete action instances that any other method satisfies the goal for the same problem.  
 The planners are compared by the proportion of interpretations of the incomplete domain that achieve the goal and total planning time in seconds.  
@@ -1213,6 +1242,8 @@ The second configuration, based on the prime implicant representation of fault d
 
 The third configuration, based on counting models (domain interpretations), is called \FFRISKY{}-All to highlight the fact that it does not approximate the representation of the faulty domain interpretations.  Its representation of the interpretations makes use of the JDD \cite{jdd} package for OBDDs to implement conjunction, disjunction, and model counting.
 
+\begin{table}																						\begin{tabular}{|l|r|rrrr|}																						\hline																						Domain	&		FF		&		PI1		&		PI2		&		PI3		&		BDD		\\ \hline	\hlinePARCprinter 	&		169		&		97		&		97		&		100		&	{\bf	140}	\\	\hline\hlineBridges1 0.0 	&		40		&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	\\	Bridges1 0.25 	&		40		&		26		&		26		&		26		&	{\bf	28}	\\	Bridges1 0.5 	&		40		&		22		&		22		&		22		&	{\bf	29}	\\	Bridges1 0.75 	&		40		&		22		&		21		&		21		&	{\bf	28}	\\	Bridges1 1.0 	&		40		&		20		&		20		&		20		&	{\bf	30}	\\	Bridges2 0.0 	&		40		&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	\\	Bridges2 0.25 	&		40		&		26		&		26		&		26		&	{\bf	28}	\\	Bridges2 0.5 	&		40		&		22		&		22		&		22		&	{\bf	29}	\\	Bridges2 0.75 	&		40		&		21		&		21		&		21		&	{\bf	27}	\\	Bridges2 1.0 	&		40		&		20		&		20		&		20		&	{\bf	29}	\\	Bridges3 0.0 	&		40		&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	\\	Bridges3 0.25 	&		40		&	{\bf	32}	&	{\bf	32}	&	{\bf	32}	&		31		\\	Bridges3 0.5 	&		40		&		36		&		36		&		36		&	{\bf	38}	\\	Bridges3 0.75 	&		40		&		28		&		28		&		28		&	{\bf	34}	\\	Bridges3 1.0 	&		40		&	{\bf	30}	&	{\bf	30}	&	{\bf	30}	&	{\bf	30}	\\	\hlineBridges 	&		600		&		425		&		424		&		424		&	{\bf	481}	\\	\hline\hlineBarter 0.25 	&		120		&	{\bf	120}	&	{\bf	120}	&	{\bf	120}	&	{\bf	120}	\\Barter 0.5 	&		120		&	{\bf	120}	&	{\bf	120}	&	{\bf	120}	&		117		\\	Barter 0.75 	&		120		&	{\bf	120}	&		119		&	{\bf	120}	&		111		\\	Barter 1.0 	&		12		&	{\bf	12}	&	{\bf	12}	&	{\bf	12}	&		11		\\	\hlineBarter 	&		372		&	{\bf	372}	&		371		&	{\bf	372}	&		359		\\	\hline\hlinePathways 0.01 	&		140		&	{\bf	50}	&	{\bf	50}	&	{\bf	50}	&	{\bf	50}	\\	Pathways 0.0 	&		130		&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	&	{\bf	40}	\\	Pathways 0.25 	&		140		&		50		&		40		&		40		&	{\bf	60}	\\	Pathways 0.5 	&		140		&	{\bf	70}	&		60		&		50		&		60		\\	Pathways 0.75 	&		150		&	{\bf	60}	&		40		&		40		&	{\bf	60}	\\	Pathways 1.0 	&		170		&		50		&		60		&		60		&	{\bf	70}	\\	\hlinePathways 	&		870		&		320		&		290		&		280		&	{\bf	340}	\\	\hline\hlineTotal	&		2011		&		1214		&		1182		&		1176		&	{\bf	1320}	\\	\hline																						\end{tabular}	\caption{\label{tab:solved} Instances Solved By Domain}																					\end{table}																										
+								
 
 \subsection{Results}
 
