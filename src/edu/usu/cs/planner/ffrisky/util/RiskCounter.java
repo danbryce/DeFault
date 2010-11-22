@@ -259,7 +259,14 @@ public class RiskCounter {
 		else if(bdd == 0)
 			return BigInteger.valueOf(0);
 		
-		BigInteger solvableDomains = RiskCounter.bdd.bigSatCount(bdd);
+		BigInteger solvableDomains;
+		try{
+			solvableDomains = RiskCounter.bdd.bigSatCount(bdd);
+		}catch (Exception e)
+		{
+			System.out.print(" !");
+			return BigInteger.valueOf(2).pow(allRisks.size());
+		}
 		
 		return solvableDomains;
 	}
