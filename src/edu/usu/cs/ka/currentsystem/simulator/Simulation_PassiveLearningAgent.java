@@ -16,11 +16,11 @@ public class Simulation_PassiveLearningAgent
 	
 	Planner planners;
 	DomainExpert expert;
-	Agent_RG agent;
+	Agent agent;
 		
 	Simulation_PassiveLearningAgent(String[] args)
 	{	
-		if (args.length !=3) { usage(args); System.exit(1); }
+		if (args.length !=4) { usage(args); System.exit(1); }
 		
 		planners = new Planner(args[0], args[1]);
 		expert = new DomainExpert(args[0], args[1], args[2]);
@@ -59,10 +59,13 @@ public class Simulation_PassiveLearningAgent
 		
 	private void runSimPassiveLearning_RG(String plannerType, String [] args)
 	{	
-		Proposition.clearAll();
-		boolean noBDD_PlannerError = true;
+		boolean endlessLoop = false;
 		
-		agent = new Agent_RG(args[0], args[1]);
+		if(args[3].equals("RG"))
+			agent = new Agent_RG(args[0], args[1]);
+		else if(args[3].equals("CL"))
+			agent = new Agent_CL(args[0], args[1]);
+		
 		planners.setProblem(agent.getProblem()); //Sets planner's problem to agent's incomplete version.
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
 		planners.resetNumTimesPlannerCalledCount();
@@ -70,44 +73,40 @@ public class Simulation_PassiveLearningAgent
 		Set<Proposition> currState, nextState;
 		IncompleteActionInstance currAction;
 		List<ActionInstance> plan;
-		int numFailedActions = 0;
 
 		agent.startStopwatch();
 		
 		currState = nextState = agent.getProblem().getInitialState();
-		
 		plan = planners.getPlan(plannerType); //Should never be null to start
-		
 		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100) && (plan.size() != 0))
 		{			
-			currAction = (IncompleteActionInstance) plan.remove(0);
-			
+			currAction = (IncompleteActionInstance) plan.remove(0);	
 			if(agent.isActionApplicable(currAction, currState, plan))
 			{		
 				nextState = expert.applyAction(currState, currAction);
-				
 				agent.learnAboutActionTaken(currAction, currState, nextState);
-							
 				if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 					break;
 			}
 			
 			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || !agent.isActionApplicable(currAction, currState, plan))
 			{	
-				if(agent.isActionFailure(currAction, currState, nextState)) 
+				if(agent.isActionFailure(currAction, currState, nextState) || agent.existsActionFailureInPastEntailFailVar()) 
 					agent.incrementFailedActionsCount();
 				
 				agent.getProblem().setInitialState(nextState);
-				
-				noBDD_PlannerError = agent.removeFailFromKBForNewPlan();
-				if(!noBDD_PlannerError)
-					break;
-				
+				agent.removeFailFromKBForNewPlan();
 				plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent								
 				//Planner.printPlanShort(plan);
-				
 				if(plan == null || plan.size() == 0)
 					break;
+				
+				if(plan.get(0).equals(currAction))
+				{
+					endlessLoop = true;
+					System.out.print(" @");
+					break;
+				}
 			}
 	
 			//System.out.println("END LOOP");
@@ -126,8 +125,8 @@ public class Simulation_PassiveLearningAgent
 		{			
 			if((agent.getNumActionsTaken() == 1000) || (planners.getNumTimesPlannerCalled() == 500))
 				System.out.print(" " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + agent.getNumActionsTaken() + " X X X");
-			else if(!noBDD_PlannerError)
-				System.out.print(" " + plannerType + " E E E E E");
+			else if(endlessLoop)
+				System.out.print(" " + plannerType + " L L L L L");
 			else
 				System.out.print(" " + plannerType + " ? ? ? ? ?");
 		}
@@ -136,7 +135,7 @@ public class Simulation_PassiveLearningAgent
 	private void usage(String[] args) 
 	{
 		System.err.println("args: " + args.toString());
-		System.err.println("Simulation_TestAgentAndDomainExpertStub args:");
-		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<simSeed>");
+		System.err.println("Simulation_PassiveLearningAgent args:");
+		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<simSeed> [3]<agentType>");
 	}
 }

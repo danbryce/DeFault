@@ -67,9 +67,9 @@ public class BridgesTest
 		String extension = ".pddl";
 		String[] algorithms = {"length","pode1", "jdd"};
 
-		for(int v = 3; v <= 3; v++) {
+		for(int v = 1; v <= 3; v++) {
 			for(int gridSize = 4; gridSize <= maxGridSize; gridSize*=2) {
-				for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
+				for(double bridgeDensity = .0; bridgeDensity <= 1.0; bridgeDensity += 0.25) {
 					for(int alg = 1; alg < algorithms.length; alg++) {
 						for(int k = 1; k <= numFiles; k++) {
 							args[0] = pathToDomains + "bridges_v" + v + "_" + gridSize + "_" + bridgeDensity + "_" + k + extension;

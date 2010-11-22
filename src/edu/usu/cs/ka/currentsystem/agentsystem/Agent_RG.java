@@ -19,7 +19,7 @@ public class Agent_RG extends Agent {
 	 * RISKY 
 	 * 		- check the action's known preconditions.
 	 * 		- check whether the unsat possPre combination has already produced failure.
-	 * 		- check for failure in the past using failVar.
+	 * 		- check for failure in the past using failVar entailment.
 	 * GREEDY - do not check entailment of the plan's failure explanation ^ the KB.
 	 * 	
 	 * Check abstract base class Agent note for further details.
@@ -32,35 +32,22 @@ public class Agent_RG extends Agent {
 	@Override
 	public boolean isActionApplicable(IncompleteActionInstance currAction, Set<Proposition> currState, List<ActionInstance> plan)
 	{
+		//RISKY
 		//Check the action's known preconditions.
-		if(!areActionPreConditionsSat(currAction, currState)) return false;
+		if(!areActionPreConditionsSat(currAction, currState)) 
+			return false;
 
 		//Check whether the unsat possPre combination has already produced failure.
-		int posspres = bdd.ref(bdd.getZero());
-		for(Proposition p : currAction.getPossiblePreconditions())
-		{
-			if(!currState.contains(p))
-			{
-				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
-				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
-				bdd.deref(posspres);
-				posspres = tmp;
-			}
-		}
-
-		if(bdd.and(bddRef_KB, bdd.not(posspres)) == bdd.getZero())
+		if(existsFailureInPastWithThisUnsatPossPreCombination(currAction, currState))
 		{
 			System.out.print(" %");
-			bdd.deref(posspres);
 			return false;
 		}
-		bdd.deref(posspres);
 
-		//Check for failure in the past using failVar.
-		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0)
+		//Check for failure in the past by failVar entailment.
+		if(existsActionFailureInPastEntailFailVar())
 		{
 			System.out.print(" $");
-			this.incrementFailedActionsCount();
 			return false;
 		}
 

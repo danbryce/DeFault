@@ -50,15 +50,18 @@ public abstract class Agent
 		domainFile = dFile;
 		problemFile = pFile;
 		
+		Proposition.clearAll();	
+		
 		setDomainAndProblem();
 		setActions();
 		loadActionsHT();
 		
 		RiskCounter.resetIsInitialized();//The Fault.StaticHashMaps are also reset in this method
 		RiskCounter.initialize(domain, problem);
-				
+		
 		bdd = RiskCounter.getBDD();
-		bddRef_KB = RiskCounter.get_bddRef();
+		//bddRef_KB = RiskCounter.get_bddRef();
+		bddRef_KB = bdd.ref(bdd.getOne());
 		
 		risks = RiskCounter.getAllRisks();
 		riskToBDD = RiskCounter.getRiskToBDD();
@@ -277,7 +280,7 @@ public abstract class Agent
 		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
 		//action failure not known, combine two Trees of cases above
 		{
-			System.out.print(" * ");
+			System.out.print(" *");
 			int tempRefFailureSentenceAndFailVar = bdd.ref(bdd.and(failureSentence, failVar));
 			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, successSentence));
 			bdd.deref(tempRefFailureSentenceAndFailVar);	
@@ -299,22 +302,22 @@ public abstract class Agent
 	 * after these risk vars. It is the only var to be set to true. 
 	 * The default value of a boolean in an array is false.
 	 * bdd.exists returns a ref to a bdd with all failVar references removed.
+	 *
+	 * A version of this existed that return a boolean based on whether exists threw an exception.
+	 * That exception source was solved.
 	 */
-	public boolean removeFailFromKBForNewPlan()
+	public void removeFailFromKBForNewPlan()
 	{
+		bdd.ref(bddRef_KB);
+		
 		boolean[] v = new boolean[bdd.numberOfVariables()];
 		v[v.length-1] = true;
 		
 		int cube = bdd.cube(v);
-		int temp;
-		try{
-			temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
-		}catch(Exception e){System.out.print(" !"); /*e.printStackTrace();*/ return false;}
+		int temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
 		
 		bdd.deref(bddRef_KB);
 		bddRef_KB = temp;
-		
-		return true;
 	}
 	
 	/**
@@ -351,6 +354,38 @@ public abstract class Agent
 	{
 		if(prevState.containsAll(currAction.getPossiblePreconditions())) return true;
 		else return false;
+	}
+	
+	//unsat possPre combination has already produced failure
+	public boolean existsFailureInPastWithThisUnsatPossPreCombination(IncompleteActionInstance currAction, Set<Proposition> currState)
+	{
+		int posspres = bdd.ref(bdd.getZero());
+		for(Proposition p : currAction.getPossiblePreconditions())
+		{
+			if(!currState.contains(p))
+			{
+				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
+				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
+				bdd.deref(posspres);
+				posspres = tmp;
+			}
+		}
+
+		if(bdd.and(bddRef_KB, bdd.not(posspres)) == bdd.getZero())
+		{
+			bdd.deref(posspres);
+			return true;
+		}
+		
+		bdd.deref(posspres);
+		return false;
+	}
+	
+	//Check for failure in the past using failVar.
+	public boolean existsActionFailureInPastEntailFailVar()
+	{
+		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0) return true;	
+		return false;
 	}
 	
 	/**

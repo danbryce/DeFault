@@ -22,7 +22,7 @@ public class Planner
     public Problem problem;
     BigInteger initialModelCount;
     
-    Solver solver;
+    static public Solver solver;
 
 	//Results stuff
 	Long startTime;
@@ -35,8 +35,10 @@ public class Planner
 		domainFile = dFile;
 		problemFile = pFile;
 		
+		Proposition.clearAll();//Or below setDomainAndProblem?
+				
 		setDomainAndProblem();
-		
+
 		RiskCounter.resetIsInitialized();
 		RiskCounter.initialize(domain, problem);
 		
@@ -96,7 +98,7 @@ public class Planner
 		numTimesPlannerCalled++;
 		
 		solver = null;
-		System.gc();
+		//System.gc();
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
 		SolverOptions solverOptions = new SolverOptions();
@@ -131,7 +133,7 @@ public class Planner
 		numTimesPlannerCalled++;
 		
 		solver = null;
-		System.gc();
+		//System.gc();
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
 		SolverOptions solverOptions = new SolverOptions();
@@ -161,6 +163,8 @@ public class Planner
 	 * This Agent will use those same elements many times in simulating execution
 	 * through a problem that involves many calls to the planner for new plans...
 	 * 
+	 *Could use: Agent.getBDD().printSet(Agent.get_bddRef_KB()); To see BDD for debugging.
+
 	 * @return List<ActionInstance> plan
 	 */
 	private List<ActionInstance> runJDDplanner()
@@ -168,7 +172,7 @@ public class Planner
 		numTimesPlannerCalled++;
 		
 		solver = null;
-		System.gc();
+		//System.gc();
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
 		SolverOptions solverOptions = new SolverOptions();
@@ -183,20 +187,8 @@ public class Planner
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
 		
 		startStopwatch();
-		
-//		if(Agent.getBDD() != null)
-//		{
-//			System.out.println("\nIN PLANNER.runJDDplanner() - PHI PRE NEW PLAN: ");
-//			Agent.getBDD().printSet(Agent.get_bddRef_KB());
-//		}
-		
+	
 		List<ActionInstance> plan = solver.run();
-		
-//		if(Agent.getBDD() != null)
-//		{
-//			System.out.println("\nIN PLANNER.runJDDplanner() - PHI POST NEW PLAN: ");
-//			Agent.getBDD().printSet(Agent.get_bddRef_KB());
-//		}
 		
 		stopStopwatch();
 

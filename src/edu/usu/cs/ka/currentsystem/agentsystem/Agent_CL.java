@@ -19,8 +19,8 @@ public class Agent_CL extends Agent {
 	 * CONSERVATIVE - includes all RISKY checks++:
 	 * 		RISKY - check the action's known preconditions.
 	 * 			  - check whether the unsat possPre combination has already produced failure.
-	 * 			  - check for failure in the past using failVar.
-	 *  	CONSERVATIVE - check the possPre's.
+	 * 			  - check for failure in the past using failVar entailment.
+	 * CONSERVATIVE - check the possPre's.
 	 * LOOKAHEAD - check for entailment of the plan's failure explanation ^ the KB.
 	 *
 	 * Check abstract base class Agent note for further details.
@@ -35,43 +35,30 @@ public class Agent_CL extends Agent {
 	{
 		//RISKY
 		//Check the action's known preconditions.
-		if(!areActionPreConditionsSat(currAction, currState)) return false;
-
+		if(!areActionPreConditionsSat(currAction, currState)) 
+			return false;
+		
 		//Check whether the unsat possPre combination has already produced failure.
-		int posspres = bdd.ref(bdd.getZero());
-		for(Proposition p : currAction.getPossiblePreconditions())
-		{
-			if(!currState.contains(p))
-			{
-				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
-				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
-				bdd.deref(posspres);
-				posspres = tmp;
-			}
-		}
-
-		if(bdd.and(bddRef_KB, bdd.not(posspres)) == bdd.getZero())
+		if(existsFailureInPastWithThisUnsatPossPreCombination(currAction, currState))
 		{
 			System.out.print(" %");
-			bdd.deref(posspres);
 			return false;
 		}
-		bdd.deref(posspres);
 
-		//Check for failure in the past using failVar.
-		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0)
+		//Check for failure in the past
+		if(existsActionFailureInPastEntailFailVar())
 		{
 			System.out.print(" $");
-			this.incrementFailedActionsCount();
 			return false;
 		}
-
-		//CONSERVATIVE - Check the possPre's.
-		if(!areActionPossPreConditionsSat(currAction, currState)) return false;
 		
+		//CONSERVATIVE - Check the possPre's.
+		if(!areActionPossPreConditionsSat(currAction, currState)) 
+			return false;
+
 		//LOOKAHEAD - Check for entailment of the plan's failure explanation ^ the KB.
 		problem.setInitialState(currState);
-		int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction);
+		int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
 		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
 		{
 			System.out.print(" &");

@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import jdd.bdd.BDD;
 
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
+import edu.usu.cs.ka.currentsystem.agentsystem.Planner;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -205,11 +206,11 @@ public class RiskCounter {
 	 *  
 	 *  Note: Make sure the problem's initial state and actions are updated before this method (and the planner) are called, of course.
 	 */
-	public static int getFailureExplanationSentence_BDDRef(Problem problem, List<ActionInstance> plan, ActionInstance currAction) 
+	public static int getFailureExplanationSentence_BDDRef(Problem problem, List<ActionInstance> plan, ActionInstance currAction, Solver solver) 
 	{		
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1); // Figure out which risks are true right now
 
-		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, null)); // Add the initial state - note: solver is null
+		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state - note: solver is null
 		
 		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)currAction));//Add currAction
 		//currAction was popped off in the execution sim alg, but needs to be applied here for continuity 
@@ -250,7 +251,9 @@ public class RiskCounter {
 //		return RiskCounter.bdd.getSetCount(bdd);
 //	}
 
-	public static BigInteger getModelCount(int bdd) {
+	public static BigInteger getModelCount(int bdd) 
+	{
+		//System.out.println("\n bdd: " + bdd);
 		if(bdd == 1)
 			return BigInteger.valueOf(2).pow(allRisks.size());
 		else if(bdd == 0)
