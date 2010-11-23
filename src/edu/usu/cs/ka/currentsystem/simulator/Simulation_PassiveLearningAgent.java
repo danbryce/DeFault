@@ -16,17 +16,19 @@ public class Simulation_PassiveLearningAgent
 	DomainExpert expert;
 	Agent agent;
 	
-	static int numSuccesses;
+	static int timeLimit;
 	String resultString;
 		
 	Simulation_PassiveLearningAgent(String[] args, int simSeed)
 	{	
-		if (args.length != 2) { System.out.println(" " + args.length); usage(args); System.exit(1); }
+		if (args.length != 3) { System.out.println(" " + args.length); usage(args); System.exit(1); }
+		
+		timeLimit = Integer.valueOf(args[2]) * 1000;
 		
 		planners = new Planner(args[0], args[1]);
 		expert = new DomainExpert(args[0], args[1], simSeed);
 
-		resultString = "";
+		resultString = "";	
 	}
 	
 	public boolean isSolvableDomain()
@@ -39,14 +41,12 @@ public class Simulation_PassiveLearningAgent
 		//if(planners.getPlan("pode1") == null) return false;
 		//if(planners.getPlan("jdd") == null) return false;
 		
-		numSuccesses++;
-		
 		return true;
 	}
 	
 	public static void main(String[] args)
 	{	
-		numSuccesses = 0;
+		int numSuccesses = 0;
 		
 		for(int simSeed = 0; (simSeed < 10000) && (numSuccesses < 10); simSeed++)
 		{
@@ -57,24 +57,26 @@ public class Simulation_PassiveLearningAgent
 				{
 					sim.resultString += args[0] + "_" + simSeed + " " + sim.planners.getInitialModelCount() + " RG";
 			
-					sim.runSimPassiveLearning_RG("amir",  args, "RG");
-					sim.runSimPassiveLearning_RG("pode1", args, "RG");
-					sim.runSimPassiveLearning_RG("jdd", args, "RG");
+					sim.runSimulation("amir",  args, "RG");
+					sim.runSimulation("pode1", args, "RG");
+					sim.runSimulation("jdd", args, "RG");
 					
 					sim.resultString += " CL";
 					
-					sim.runSimPassiveLearning_RG("amir",  args, "CL");
-					sim.runSimPassiveLearning_RG("pode1", args, "CL");
-					sim.runSimPassiveLearning_RG("jdd", args, "CL");
+					sim.runSimulation("amir",  args, "CL");
+					sim.runSimulation("pode1", args, "CL");
+					sim.runSimulation("jdd", args, "CL");
 					
 					System.out.println(sim.resultString);
+					
+					numSuccesses++;
 				}
 			}catch(Exception e){System.out.println("\nSHOULD NEVER HAVE HAPPENED: "); e.printStackTrace();}
 		}
 	}
 	
 	boolean timeout;
-	private void runSimPassiveLearning_RG(String plannerType, String [] args, String agentType)
+	private void runSimulation(String plannerType, String [] args, String agentType)
 	{	
 		boolean endlessLoop = false;
 		        timeout 	= false;
@@ -158,8 +160,6 @@ public class Simulation_PassiveLearningAgent
 		
 	private List<ActionInstance> runPlannerThread(String plannerType)
 	{
-		int timeLimit = 10000; //The time limit for each run given in milliseconds
-
 		ExecThread execThread = new ExecThread(Thread.currentThread(), planners, plannerType);
 		
 		long start = System.currentTimeMillis();
@@ -212,8 +212,8 @@ public class Simulation_PassiveLearningAgent
 	
 	private void usage(String[] args) 
 	{
-		System.err.println("args: " + args[0] + " " + args[1]);
+		System.err.println("args: " + args[0] + " " + args[1] + " " + args[2]);
 		System.err.println("Simulation_PassiveLearningAgent args:");
-		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file>");
+		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<threadLimit>");
 	}
 }

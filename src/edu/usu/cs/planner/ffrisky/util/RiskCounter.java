@@ -207,15 +207,18 @@ public class RiskCounter {
 	 */
 	public static int getFailureExplanationSentence_BDDRef(Problem problem, List<ActionInstance> plan, ActionInstance currAction, Solver solver) 
 	{		
-		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1); // Figure out which risks are true right now
+		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 2); // Figure out which risks are true right now
 
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state - note: solver is null
-		
+				
 		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)currAction));//Add currAction
 		//currAction was popped off in the execution sim alg, but needs to be applied here for continuity 
 
-		for (ActionInstance action : plan) // Add the others
-			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+		if(plan.size() != 0 && plan.get(0) != null)
+		{
+			for (ActionInstance action : plan) // Add the others
+				nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+		}
 
 		//Is this enough, or should I work through the for loop below?
 		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals

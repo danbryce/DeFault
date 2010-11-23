@@ -57,16 +57,20 @@ public class Agent_CL extends Agent {
 			return false;
 
 		//LOOKAHEAD - Check for entailment of the plan's failure explanation ^ the KB.
-		problem.setInitialState(currState);
-		int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
-		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
+		if(plan.size() != 0)
 		{
-			//System.out.print(" &");
+			bdd.ref(bddRef_KB);
+			problem.setInitialState(currState);
+			int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
+			if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
+			{
+				//System.out.print(" &");
+				bdd.deref(failureExplanationSentence_bddRef);
+				return false;
+			}
+			
 			bdd.deref(failureExplanationSentence_bddRef);
-			return false;
 		}
-		
-		bdd.deref(failureExplanationSentence_bddRef);
 		
 		return true;
 	}
