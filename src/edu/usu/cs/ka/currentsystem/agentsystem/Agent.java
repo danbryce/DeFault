@@ -280,7 +280,7 @@ public abstract class Agent
 		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
 		//action failure not known, combine two Trees of cases above
 		{
-			System.out.print(" *");
+			//System.out.print(" *");
 			int tempRefFailureSentenceAndFailVar = bdd.ref(bdd.and(failureSentence, failVar));
 			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, successSentence));
 			bdd.deref(tempRefFailureSentenceAndFailVar);	

@@ -11,59 +11,77 @@ import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 
 
 public class Simulation_PassiveLearningAgent
-{	
-	public static int numSuccesses = 0;
-	
+{		
 	Planner planners;
 	DomainExpert expert;
 	Agent agent;
+	
+	static int numSuccesses;
+	String resultString;
 		
-	Simulation_PassiveLearningAgent(String[] args)
+	Simulation_PassiveLearningAgent(String[] args, int simSeed)
 	{	
-		if (args.length !=4) { usage(args); System.exit(1); }
+		if (args.length != 2) { System.out.println(" " + args.length); usage(args); System.exit(1); }
 		
 		planners = new Planner(args[0], args[1]);
-		expert = new DomainExpert(args[0], args[1], args[2]);
-	
-		planners.setProblem(expert.getProblem());
+		expert = new DomainExpert(args[0], args[1], simSeed);
+
+		resultString = "";
 	}
 	
 	public boolean isSolvableDomain()
 	{	
 		planners.setProblem(expert.getProblem());
+		
+		if(runPlannerThread("pode1") == null) return false;
+		
 		//if(planners.getPlan("amir") == null) return false;
-		if(planners.getPlan("pode1") == null) return false;
+		//if(planners.getPlan("pode1") == null) return false;
 		//if(planners.getPlan("jdd") == null) return false;
 		
 		numSuccesses++;
-		
-		Proposition.clearAll();
 		
 		return true;
 	}
 	
 	public static void main(String[] args)
 	{	
-		Simulation_PassiveLearningAgent sim = new Simulation_PassiveLearningAgent(args);
+		numSuccesses = 0;
 		
-		if(!sim.isSolvableDomain()) return;
-		
-		System.out.print(args[0] + "_" + args[2] + " " + sim.planners.getInitialModelCount());
-
-		sim.runSimPassiveLearning_RG("amir",  args);
-		sim.runSimPassiveLearning_RG("pode1", args);
-		sim.runSimPassiveLearning_RG("jdd", args);
-		
-		System.out.println();
+		for(int simSeed = 0; (simSeed < 10000) && (numSuccesses < 10); simSeed++)
+		{
+			try
+			{
+				Simulation_PassiveLearningAgent sim = new Simulation_PassiveLearningAgent(args, simSeed);
+				if(sim.isSolvableDomain())
+				{
+					sim.resultString += args[0] + "_" + simSeed + " " + sim.planners.getInitialModelCount() + " RG";
+			
+					sim.runSimPassiveLearning_RG("amir",  args, "RG");
+					sim.runSimPassiveLearning_RG("pode1", args, "RG");
+					sim.runSimPassiveLearning_RG("jdd", args, "RG");
+					
+					sim.resultString += " CL";
+					
+					sim.runSimPassiveLearning_RG("amir",  args, "CL");
+					sim.runSimPassiveLearning_RG("pode1", args, "CL");
+					sim.runSimPassiveLearning_RG("jdd", args, "CL");
+					
+					System.out.println(sim.resultString);
+				}
+			}catch(Exception e){System.out.println("\nSHOULD NEVER HAVE HAPPENED: "); e.printStackTrace();}
+		}
 	}
-		
-	private void runSimPassiveLearning_RG(String plannerType, String [] args)
+	
+	boolean timeout;
+	private void runSimPassiveLearning_RG(String plannerType, String [] args, String agentType)
 	{	
 		boolean endlessLoop = false;
+		        timeout 	= false;
 		
-		if(args[3].equals("RG"))
+		if(agentType.equals("RG"))
 			agent = new Agent_RG(args[0], args[1]);
-		else if(args[3].equals("CL"))
+		else if(agentType.equals("CL"))
 			agent = new Agent_CL(args[0], args[1]);
 		
 		planners.setProblem(agent.getProblem()); //Sets planner's problem to agent's incomplete version.
@@ -96,7 +114,12 @@ public class Simulation_PassiveLearningAgent
 				
 				agent.getProblem().setInitialState(nextState);
 				agent.removeFailFromKBForNewPlan();
-				plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent								
+				
+				//plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent
+				plan = runPlannerThread(plannerType);
+				
+				if(timeout) break;
+				
 				//Planner.printPlanShort(plan);
 				if(plan == null || plan.size() == 0)
 					break;
@@ -104,12 +127,11 @@ public class Simulation_PassiveLearningAgent
 				if(plan.get(0).equals(currAction))
 				{
 					endlessLoop = true;
-					System.out.print(" @");
+					//System.out.print(" @");
 					break;
 				}
 			}
-	
-			//System.out.println("END LOOP");
+			
 			currState = nextState;	
 		}
 				
@@ -117,25 +139,81 @@ public class Simulation_PassiveLearningAgent
 
 		if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{	
-			System.out.print(" " + plannerType + " " + planners.getNumTimesPlannerCalled());
-			System.out.print(" " + agent.getNumActionsTaken() + " " + agent.getNumFailedActions());
-			System.out.print(" " + agent.getTimeToSolve() + " " + planners.getFinalModelCount());
+			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled();
+			resultString += " " + agent.getNumActionsTaken() + " " + agent.getNumFailedActions();
+			resultString += " " + agent.getTimeToSolve() + " " + planners.getFinalModelCount();
 		}
 		else
 		{			
 			if((agent.getNumActionsTaken() == 1000) || (planners.getNumTimesPlannerCalled() == 500))
-				System.out.print(" " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + agent.getNumActionsTaken() + " X X X");
+				resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + agent.getNumActionsTaken() + " X X X";
 			else if(endlessLoop)
-				System.out.print(" " + plannerType + " L L L L L");
+				resultString += " " + plannerType + " L L L L L";
+			else if(timeout)
+				resultString += " " + plannerType + " T T T T T";
 			else
-				System.out.print(" " + plannerType + " ? ? ? ? ?");
+				resultString += " " + plannerType + " ? ? ? ? ?";
+		}
+	}
+		
+	private List<ActionInstance> runPlannerThread(String plannerType)
+	{
+		int timeLimit = 10000; //The time limit for each run given in milliseconds
+
+		ExecThread execThread = new ExecThread(Thread.currentThread(), planners, plannerType);
+		
+		long start = System.currentTimeMillis();
+		long now = System.currentTimeMillis();
+		execThread.start();
+		while (now - start < timeLimit)
+		{
+			try { Thread.sleep(500); } catch (Exception e){}
+			
+			now = System.currentTimeMillis();
+			
+			if(execThread.done) 
+				break;
+		}
+		
+		execThread.stop();	
+		if(now - start >= timeLimit)
+			timeout = true;
+
+		return execThread.plan;
+	}
+	
+	class ExecThread extends Thread 
+	{
+		Thread callingThread;
+		public boolean done = false;
+		
+		Planner planner;
+		String plannerType;
+		List<ActionInstance> plan = null;
+		
+		ExecThread(Thread CallingThread, Planner p, String pType)
+		{
+			planner = p;
+			plannerType = pType;
+			callingThread = CallingThread;
+			done = false;
+		}
+		
+		public void run()
+		{			
+			try { plan = planner.getPlan(plannerType); }
+			catch (java.lang.OutOfMemoryError e){}
+			catch (Exception e){}
+			
+			callingThread.interrupt();
+			done = true;
 		}
 	}
 	
 	private void usage(String[] args) 
 	{
-		System.err.println("args: " + args.toString());
+		System.err.println("args: " + args[0] + " " + args[1]);
 		System.err.println("Simulation_PassiveLearningAgent args:");
-		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<simSeed> [3]<agentType>");
+		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file>");
 	}
 }

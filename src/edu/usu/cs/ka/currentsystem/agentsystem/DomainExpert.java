@@ -23,11 +23,11 @@ public class DomainExpert
 	List<ActionInstance> actionsCV;//complete version
 	Hashtable<Integer, IncompleteActionInstance> actionsCV_HT;//hashtable
 		
-	public DomainExpert(String dFileString, String pFileString, String seedString)
+	public DomainExpert(String dFileString, String pFileString, int simSeed)
 	{	
 		domainFileString = dFileString;
 		problemFileString = pFileString;
-		seed = Integer.valueOf(seedString);
+		seed = simSeed;
 		
 		setDomainAndProblem();
 		

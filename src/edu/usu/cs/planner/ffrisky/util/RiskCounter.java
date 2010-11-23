@@ -139,8 +139,7 @@ public class RiskCounter {
 
 	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
-		if (!isInitialized) 
-			{initialize(domain, problem, plan);}
+		if (!isInitialized) {initialize(domain, problem, plan);}
 
 		// Figure out which risks are true right now
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
@@ -262,9 +261,10 @@ public class RiskCounter {
 		BigInteger solvableDomains;
 		try{
 			solvableDomains = RiskCounter.bdd.bigSatCount(bdd);
-		}catch (Exception e)
+		}catch (Exception e)//Added due to odd negative exponent exception
 		{
-			System.out.print(" !");
+			//System.out.print(" !");
+			//e.printStackTrace();
 			return BigInteger.valueOf(2).pow(allRisks.size());
 		}
 		

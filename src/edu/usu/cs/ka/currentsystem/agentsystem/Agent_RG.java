@@ -40,14 +40,14 @@ public class Agent_RG extends Agent {
 		//Check whether the unsat possPre combination has already produced failure.
 		if(existsFailureInPastWithThisUnsatPossPreCombination(currAction, currState))
 		{
-			System.out.print(" %");
+			//System.out.print(" %");
 			return false;
 		}
 
 		//Check for failure in the past by failVar entailment.
 		if(existsActionFailureInPastEntailFailVar())
 		{
-			System.out.print(" $");
+			//System.out.print(" $");
 			return false;
 		}
 

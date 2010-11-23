@@ -41,14 +41,14 @@ public class Agent_CL extends Agent {
 		//Check whether the unsat possPre combination has already produced failure.
 		if(existsFailureInPastWithThisUnsatPossPreCombination(currAction, currState))
 		{
-			System.out.print(" %");
+			//System.out.print(" %");
 			return false;
 		}
 
 		//Check for failure in the past
 		if(existsActionFailureInPastEntailFailVar())
 		{
-			System.out.print(" $");
+			//System.out.print(" $");
 			return false;
 		}
 		
@@ -61,7 +61,7 @@ public class Agent_CL extends Agent {
 		int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
 		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
 		{
-			System.out.print(" &");
+			//System.out.print(" &");
 			bdd.deref(failureExplanationSentence_bddRef);
 			return false;
 		}
