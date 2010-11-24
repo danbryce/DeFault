@@ -336,10 +336,22 @@ public abstract class Agent
 	 */
 	public boolean isActionFailure(IncompleteActionInstance currAction, Set<Proposition> prevState, Set<Proposition> currState)
 	{
-		if (!currState.containsAll(currAction.getAddEffects())) return true;
+		if (!currState.containsAll(currAction.getAddEffects()))
+		{
+			for(Proposition p : currAction.getAddEffects())
+				if(!currState.contains(p))
+					System.out.println("\nACTION FAILURE. For action: " + currAction.getName() + ", this add effect is missing: " + p);
+			return true;
+		}
 	
 		for (Proposition p : currAction.getDeleteEffects())
-			if(currState.contains(p)) return true;
+		{
+			if(currState.contains(p))
+			{
+//				System.out.println("\nACTION: " + currAction.getName() + " DELETE IS THERE : " + p);
+				return true;
+			}
+		}
 			
 		return false;
 	}

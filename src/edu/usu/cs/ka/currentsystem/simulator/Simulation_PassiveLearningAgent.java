@@ -18,6 +18,10 @@ public class Simulation_PassiveLearningAgent
 	
 	static int timeLimit;
 	String resultString;
+	
+	//Results stuff
+	static Long startTime;
+	static Long finishTime;
 		
 	Simulation_PassiveLearningAgent(String[] args, int simSeed)
 	{	
@@ -33,6 +37,8 @@ public class Simulation_PassiveLearningAgent
 	
 	public boolean isSolvableDomain()
 	{	
+		//runPlannerThread("amir");//maybe if the incomplete version of the problem inits first? Answer: no.
+		
 		planners.setProblem(expert.getProblem());
 		
 		if(runPlannerThread("pode1") == null) return false;
@@ -48,6 +54,13 @@ public class Simulation_PassiveLearningAgent
 	{	
 		int numSuccesses = 0;
 		
+		//System.out.println();
+		//System.out.println("domainFile: " + args[0]);
+		//System.out.println("problemFile: " + args[1]);
+		//System.out.println("thread timeLimit: " + args[2]);
+		//System.out.println("tests startTime: " + startStopwatch());
+		//System.out.println();
+
 		for(int simSeed = 0; (simSeed < 10000) && (numSuccesses < 10); simSeed++)
 		{
 			try
@@ -63,27 +76,34 @@ public class Simulation_PassiveLearningAgent
 					
 					sim.resultString += " CL";
 					
-					sim.runSimulation("amir",  args, "CL");
-					sim.runSimulation("pode1", args, "CL");
-					sim.runSimulation("jdd", args, "CL");
+					try{ sim.runSimulation("amir",  args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " amir E E E E E";}
+					try{ sim.runSimulation("pode1", args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
+					try{ sim.runSimulation("jdd", args, "CL");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
 					
 					System.out.println(sim.resultString);
 					
 					numSuccesses++;
 				}
-			}catch(Exception e){System.out.println("\nSHOULD NEVER HAVE HAPPENED: "); e.printStackTrace();}
+			}catch(Exception e){System.out.println("\nUnhandled Exception"); e.printStackTrace();}
 		}
+		
+		//System.out.println();
+		//System.out.println("numSuccesses    : " + numSuccesses);
+		//System.out.println("tests finishTime: " + stopStopwatch());
+		//System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
 	}
 	
 	boolean timeout;
 	private void runSimulation(String plannerType, String [] args, String agentType)
 	{	
+		System.out.println("\n" + plannerType + " " + agentType + "\n");
+		
 		boolean endlessLoop = false;
 		        timeout 	= false;
 		
-		if(agentType.equals("RG"))
+		if(agentType.equals("RG")) 		
 			agent = new Agent_RG(args[0], args[1]);
-		else if(agentType.equals("CL"))
+		else if(agentType.equals("CL"))	
 			agent = new Agent_CL(args[0], args[1]);
 		
 		planners.setProblem(agent.getProblem()); //Sets planner's problem to agent's incomplete version.
@@ -97,12 +117,16 @@ public class Simulation_PassiveLearningAgent
 		agent.startStopwatch();
 		
 		currState = nextState = agent.getProblem().getInitialState();
+		
+		badActionMaintenenceChecker("BEFORE");
 		plan = planners.getPlan(plannerType); //Should never be null to start
+		badActionMaintenenceChecker("AFTER");
+		
 		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100) && (plan.size() != 0))
-		{			
+		{	
 			currAction = (IncompleteActionInstance) plan.remove(0);	
 			if(agent.isActionApplicable(currAction, currState, plan))
-			{		
+			{					
 				nextState = expert.applyAction(currState, currAction);
 				agent.learnAboutActionTaken(currAction, currState, nextState);
 				if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
@@ -111,7 +135,7 @@ public class Simulation_PassiveLearningAgent
 			
 			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || !agent.isActionApplicable(currAction, currState, plan))
 			{	
-				if(agent.isActionFailure(currAction, currState, nextState) || agent.existsActionFailureInPastEntailFailVar()) 
+				if(agent.isActionFailure(currAction, currState, nextState) || agent.existsActionFailureInPastEntailFailVar())
 					agent.incrementFailedActionsCount();
 				
 				agent.getProblem().setInitialState(nextState);
@@ -210,10 +234,29 @@ public class Simulation_PassiveLearningAgent
 		}
 	}
 	
+	private static Long startStopwatch(){ startTime = System.currentTimeMillis(); return startTime; }
+	private static Long stopStopwatch() { finishTime = System.currentTimeMillis();return finishTime;}
+	
 	private void usage(String[] args) 
 	{
 		System.err.println("args: " + args[0] + " " + args[1] + " " + args[2]);
 		System.err.println("Simulation_PassiveLearningAgent args:");
 		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<threadLimit>");
+	}
+	
+	public void badActionMaintenenceChecker(String when)
+	{
+		List<ActionInstance> expertHTlist  = Actions_Utility.getListFrom_Int_IAI_HT(expert.actionsCV_HT);		
+		List<ActionInstance> agentHTList = Actions_Utility.getListFrom_String_IAI_HT(agent.actionsHT);
+		
+		System.out.println(when);
+		System.out.print("Agent           List: "); Actions_Utility.showActionsCountPADAndPossPADs(agent.getActions());
+		System.out.print("Agent             HT: "); Actions_Utility.showActionsCountPADAndPossPADs(agentHTList);
+		System.out.print("Agent   problem List: "); Actions_Utility.showActionsCountPADAndPossPADs(agent.getProblem().getActions());
+		System.out.print("Expert          List: "); Actions_Utility.showActionsCountPADAndPossPADs(expert.getActions());
+		System.out.print("Expert            HT: "); Actions_Utility.showActionsCountPADAndPossPADs(expertHTlist);
+		System.out.print("Expert  problem List: "); Actions_Utility.showActionsCountPADAndPossPADs(expert.getProblem().getActions());
+		System.out.print("Planner problem List: "); Actions_Utility.showActionsCountPADAndPossPADs(planners.problem.getActions());
+		System.out.println();
 	}
 }

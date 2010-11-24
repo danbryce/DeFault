@@ -46,6 +46,13 @@ public class Actions_Utility
 			printIncompleteVersionOfActionInstance(act);
 	}
 	
+	public static void printActionInListOfActions(List<ActionInstance> actions, String name)
+	{
+		for(ActionInstance act : actions)
+			if(act.getName().equals(name))
+				printIncompleteVersionOfActionInstance(act);
+	}
+	
 	public static List<ActionInstance> getIncompleteActionInstancesAsActionInstances(List<IncompleteActionInstance> incompleteActionInstanceList)
 	{	
 		ArrayList<ActionInstance> arr = new ArrayList<ActionInstance>();
@@ -121,6 +128,53 @@ public class Actions_Utility
 		}
 		
 		return count;
+	}
+	
+	public static void showActionsCountPADAndPossPADs(List<ActionInstance> actions)
+	{
+		int numPres = 0;
+		int numAdds = 0;
+		int numDels = 0;
+		int numPossPres = 0;
+		int numPossAdds = 0;
+		int numPossDels = 0;
+		
+		for(ActionInstance act: actions)
+		{
+			IncompleteActionInstance temp = (IncompleteActionInstance) act;
+			
+			numPres += temp.getPreconditions().size();
+			numAdds += temp.getAddEffects().size();
+			numDels += temp.getDeleteEffects().size();
+			numPossPres += temp.getPossiblePreconditions().size();
+			numPossAdds += temp.getPossibleAddEffects().size();
+			numPossDels += temp.getPossibleDeleteEffects().size();
+		}
+		
+		System.out.println("pres: " + numPres +
+				           "\t adds: " + numAdds +
+				           "\t dels: " + numDels +
+				           "\t possPres: " + numPossPres +
+				           "\t possAdds: " + numPossAdds +
+				           "\t possDels: " + numPossDels);
+	}
+	
+	public static List<ActionInstance> getListFrom_Int_IAI_HT(Hashtable<Integer, IncompleteActionInstance> ht)
+	{
+		List<ActionInstance> list = new ArrayList<ActionInstance>();
+		for(IncompleteActionInstance i: ht.values())
+			list.add((ActionInstance) i );
+		
+		return list;
+	}
+	
+	public static List<ActionInstance> getListFrom_String_IAI_HT(Hashtable<String, IncompleteActionInstance> ht)
+	{
+		List<ActionInstance> list = new ArrayList<ActionInstance>();
+		for(IncompleteActionInstance i: ht.values())
+			list.add((ActionInstance) i );
+		
+		return list;
 	}
 	
 }

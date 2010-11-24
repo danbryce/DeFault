@@ -107,15 +107,23 @@ public class Planner
 		solverOptions.setUseDeferredEvaluation(true);
 		solverOptions.setUseMultipleSupportersInPlanningGraph(false);
 		
+//		System.out.println("!");
+//		Actions_Utility.printActionInListOfActions(problem.getActions(), "initialize");
+//		System.out.println();
+		
 		try{
 			solver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
-		
+				
 		startStopwatch();
 		List<ActionInstance> plan = null;
 		try{ plan = solver.run(); }
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
+		
+//		System.out.println("!!");
+//		Actions_Utility.printActionInListOfActions(problem.getActions(), "initialize");
+//		System.out.println();
 		
 		return plan;
 	}

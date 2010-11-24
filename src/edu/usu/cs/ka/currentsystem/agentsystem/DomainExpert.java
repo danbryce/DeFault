@@ -21,7 +21,7 @@ public class DomainExpert
 	double probability;//Expert chooses whether or not a poss feature is to become an actual feature at this # [0-1]
 	
 	List<ActionInstance> actionsCV;//complete version
-	Hashtable<Integer, IncompleteActionInstance> actionsCV_HT;//hashtable
+	public Hashtable<Integer, IncompleteActionInstance> actionsCV_HT;//hashtable
 		
 	public DomainExpert(String dFileString, String pFileString, int simSeed)
 	{	
@@ -43,6 +43,9 @@ public class DomainExpert
 			IncompleteActionInstance a = (IncompleteActionInstance) act;
 			actionsCV_HT.put(a.getIndex(), a);
 		}
+		
+//		Actions_Utility.printActionInListOfActions(actionsCV, "initialize");
+//		Actions_Utility.printIncompleteActionInstance(actionsCV_HT.get(1));
 	}
 	
 	public void setDomainAndProblem()
@@ -82,8 +85,8 @@ public class DomainExpert
 	{		
 		Set<Proposition> newState = new HashSet<Proposition>(currentState);
 		
-		IncompleteActionInstance a = actionsCV_HT.get(incompleteActionChosen.getIndex());			
-				
+		IncompleteActionInstance a = actionsCV_HT.get(incompleteActionChosen.getIndex());
+					
 		if(currentState.containsAll(a.getPreconditions()))
 		{
 			newState.removeAll(a.getDeleteEffects());

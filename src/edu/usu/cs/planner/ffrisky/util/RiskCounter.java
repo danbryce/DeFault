@@ -147,13 +147,14 @@ public class RiskCounter {
 		// Add the initial state
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver));
 
-		// Add the others
+
 		for (ActionInstance action : plan) 
 		{
 			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
-			//			bdd.printSet(nodes.get(nodes.size()-1).getCriticalRisks());
-			//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
+//			bdd.printSet(nodes.get(nodes.size()-1).getCriticalRisks());
+//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
 		}
+
 
 //		//add critical risks for goals
 		int crs = nodes.get(nodes.size() - 1).getActRisks();
@@ -214,13 +215,33 @@ public class RiskCounter {
 		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)currAction));//Add currAction
 		//currAction was popped off in the execution sim alg, but needs to be applied here for continuity 
 
-		if(plan.size() != 0 && plan.get(0) != null)
+		//Original version of Add the others
+		if ((plan != null) && (plan.size() > 0))
 		{
 			for (ActionInstance action : plan) // Add the others
 				nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
 		}
-
-		//Is this enough, or should I work through the for loop below?
+//		//New version 1
+//		for (ActionInstance action : plan) // Add the others
+//		{ 
+//			try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));}
+//			catch(Exception e){return bdd.getZero();} //or bdd.getOne(), it makes no difference
+//		}
+//		
+//		//Still requires this line
+//		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
+		
+//		//New version 2
+//		for (ActionInstance action : plan) // Add the others
+//		{ 
+//			try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));}
+//			catch(Exception e){}
+//		}
+//		
+//		//Still requires this line
+//		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
+		
+		//Without the removal of the line above, this line returns the Exception
 		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
 		
 		bdd.ref(crs);
