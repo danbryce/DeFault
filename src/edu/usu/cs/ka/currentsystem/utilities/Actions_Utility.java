@@ -3,6 +3,7 @@ package edu.usu.cs.ka.currentsystem.utilities;
 import java.util.*;
 
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.ActionInstance;
 
 public class Actions_Utility 
@@ -27,11 +28,11 @@ public class Actions_Utility
 		System.out.println("  Poss Adds: " + a.getPossibleAddEffects());	//Set<Proposition>
 		System.out.println("  Deletes  : " + a.getDeleteEffects());			//Set<Proposition>
 		System.out.println("  Poss Dels: " + a.getPossibleDeleteEffects());	//Set<Proposition>
-		//System.out.println("   ActionRisks: " + a.getActionRisks());				//int
-		//System.out.println("   ArgMapping : " + a.getArgMapping());				//Map<FormalArgument, PDDLObject>
-		//System.out.println("   Cost       : " + a.getCost());				    //double
-		//System.out.println("   Definition : " + a.getDefinition());				//ActionDef
-		//System.out.println();
+		System.out.println("   ActionRisks: " + a.getActionRisks());				//int
+		System.out.println("   ArgMapping : " + a.getArgMapping());				//Map<FormalArgument, PDDLObject>
+		System.out.println("   Cost       : " + a.getCost());				    //double
+		System.out.println("   Definition : " + a.getDefinition());				//ActionDef
+		System.out.println();
 	}
 	
 	public static void printIncompleteVersionOfActionInstance(ActionInstance a)
@@ -177,4 +178,43 @@ public class Actions_Utility
 		return list;
 	}
 	
+	//Be selective about the data members
+	public static List<ActionInstance> makeActionsListDeepCopy(List<ActionInstance> list)
+	{
+		ArrayList<ActionInstance> newList = new ArrayList<ActionInstance>();
+		
+		for(ActionInstance action : list)
+		{
+			IncompleteActionInstance a = (IncompleteActionInstance) action;
+			IncompleteActionInstance  newVersion = makeActionDeepCopy(a);
+			newList.add((ActionInstance) newVersion);		
+		}
+	
+		return newList;
+	}
+	
+	private static IncompleteActionInstance makeActionDeepCopy(IncompleteActionInstance a)
+	{		
+		HashSet<Proposition> pres = new HashSet<Proposition>(a.getPreconditions());
+		HashSet<Proposition> adds = new HashSet<Proposition>(a.getAddEffects());
+		HashSet<Proposition> dels = new HashSet<Proposition>(a.getDeleteEffects());
+		HashSet<Proposition> possPres = new HashSet<Proposition>(a.getPossiblePreconditions());
+		HashSet<Proposition> possAdds = new HashSet<Proposition>(a.getPossibleAddEffects());
+		HashSet<Proposition> possDels = new HashSet<Proposition>(a.getPossibleDeleteEffects());
+
+		IncompleteActionInstance newAction = new IncompleteActionInstance(
+				a.getName(), pres, adds, dels, possPres, possAdds, possDels, a.getIndex());
+
+		return newAction;
+	}
+	
+	public static ActionInstance getActionInListOfActions(String name, List<ActionInstance> actions)
+	{
+		for(ActionInstance act : actions)
+			if(act.getName().equals(name))
+				return act;
+		
+		return null;
+	}
+		
 }

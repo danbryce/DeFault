@@ -19,7 +19,7 @@ public class Planner
 	String problemFile;
 	
     Domain domain;
-    public Problem problem;
+    Problem problem;
     BigInteger initialModelCount;
     
     static public Solver solver;
@@ -46,22 +46,15 @@ public class Planner
 		
 		numTimesPlannerCalled = 0;
 	}
-	
+		
 	private void setDomainAndProblem()
 	{
 		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(domainFile, problemFile);	
 		domain = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
 	}
-	
-	/**
-	 * If one wished to use this constructor, one would have to set the domain and problem manually,
-	 *  as well as the preservedInitialState. 
-	 */
-	public Planner() { numTimesPlannerCalled = 0; }
-	public void setDomainAndProblem(Domain d, Problem p) { domain = d; problem = p; }
-	public BigInteger getInitialModelCount(){return initialModelCount;}
-		
+
+	public BigInteger getInitialModelCount(){return initialModelCount;}	
 	public int getNumTimesPlannerCalled(){return numTimesPlannerCalled;}
 	public void resetNumTimesPlannerCalledCount() { numTimesPlannerCalled = 0;}
 	
@@ -73,14 +66,41 @@ public class Planner
 	 * @param p
 	 */
 	public void setProblem(Problem p){problem = p;}
+	public Problem getProblem(){return problem;}
 	
+	/**
+	 * This master planner call method calls the designated planner to get a plan.
+	 * Because the planners remove props that are not active in the plan's formulation
+	 *  for parcprinter and pathways domains, this method preserves the original actions,
+	 *  and restores the problem's actions list after the planner call. 
+	 * It is up to the agent and expert to restore their action lists via the 
+	 *  appropriate method restoreActionsToStateBeforePlannerCall().
+	 * Note here that both the agent and expert set the planner's problem to their problem
+	 *  before they call the planner getPlan method.
+	 * The plan's actions are also restored to their original state.  
+	 * 
+	 * @param plannerType
+	 * @return List<ActionInstance> plan - with the actions that have no removed props
+	 */
 	public List<ActionInstance> getPlan(String plannerType)
 	{
-		if(plannerType.equals("jdd")) return runJDDplanner();
-		if(plannerType.equals("pode1")) return runPODE1planner();
-		if(plannerType.equals("amir"))  return runAMIRplanner();
+		List<ActionInstance> preservedActionsList = Actions_Utility.makeActionsListDeepCopy(problem.getActions());
 		
-		return null;
+		List<ActionInstance> plan = null;
+		if(plannerType.equals("jdd")) 	plan = runJDDplanner();
+		if(plannerType.equals("pode1")) plan = runPODE1planner();
+		if(plannerType.equals("amir"))  plan = runAMIRplanner();
+		
+		problem.setActionInstances(preservedActionsList);
+		
+		ArrayList<ActionInstance> planWithPreservedActions = new ArrayList<ActionInstance>();
+		for(ActionInstance a: plan)
+		{
+			ActionInstance goodVersion = Actions_Utility.getActionInListOfActions(a.getName(), preservedActionsList);
+			planWithPreservedActions.add(goodVersion);
+		}
+		
+		return planWithPreservedActions;
 	}
 	
 	/**

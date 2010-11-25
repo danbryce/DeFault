@@ -42,11 +42,8 @@ public class IncompleteActionInstance  implements ActionInstance{
 	protected int index;
 	protected int actionRisks;
 
-
 	protected  ActionDef definition;
 	protected Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
-
-
 
 	public int getIndex() {
 		return index;
@@ -321,11 +318,6 @@ public class IncompleteActionInstance  implements ActionInstance{
 				}
 			}
 		}
-
-
-
-
-
 	}
 
 	public String getName() {

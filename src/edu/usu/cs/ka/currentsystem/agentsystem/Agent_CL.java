@@ -59,6 +59,7 @@ public class Agent_CL extends Agent {
 		}
 		
 		//LOOKAHEAD - Check for entailment of the plan's failure explanation ^ the KB.
+		//FailureExplanationSentence is entailed when should be. 
 		if(plan.size() != 0)
 		{
 			//bdd.ref(bddRef_KB);
@@ -66,7 +67,7 @@ public class Agent_CL extends Agent {
 			int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
 			if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
 			{
-				System.out.print(" &");
+				//System.out.print(" &");
 				bdd.deref(failureExplanationSentence_bddRef);
 				return false;
 			}

@@ -116,6 +116,20 @@ public abstract class Agent
 	}
 	
 	/**
+	 * Due to the planner removing add effects from actions for parcprinter and pathways.
+	 * The Planner.getPlan method preserves the actionsList.
+	 * The planner's problem is set to the Agent's.  
+	 * When the planner is used to test whether a domain/problem is solvable in the sim,
+	 *  the planner resets the problem's actions back to their original form.
+	 * Then this method must be called to restore the agent's actions.
+	 */
+	public void restoreActionsToStateBeforePlannerCall()
+	{
+		actions = problem.getActions();
+		loadActionsHT();
+	}
+	
+	/**
 	 * This rather lengthy method tracks what can be learned after an action has been executed.
 	 * For each type of possible feature, it principally finds:
 	 *  whether it can be removed from its possibles list
@@ -338,20 +352,17 @@ public abstract class Agent
 	{
 		if (!currState.containsAll(currAction.getAddEffects()))
 		{
+			LinkedList<Proposition> missingProps = new LinkedList<Proposition>();
 			for(Proposition p : currAction.getAddEffects())
 				if(!currState.contains(p))
-					System.out.println("\nACTION FAILURE. For action: " + currAction.getName() + ", this add effect is missing: " + p);
+					missingProps.add(p);
+					
 			return true;
 		}
 	
 		for (Proposition p : currAction.getDeleteEffects())
-		{
 			if(currState.contains(p))
-			{
-//				System.out.println("\nACTION: " + currAction.getName() + " DELETE IS THERE : " + p);
 				return true;
-			}
-		}
 			
 		return false;
 	}

@@ -34,18 +34,8 @@ public class DomainExpert
 		random = new Random(seed);
 		probability = .5;
 		
-		createActions_CompleteVersion();//makes CV of problem's actions, set problem's actionList to this CV.
-		
-		//Load HT
-		actionsCV_HT = new Hashtable<Integer, IncompleteActionInstance>();
-		for(ActionInstance act: actionsCV)
-		{
-			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			actionsCV_HT.put(a.getIndex(), a);
-		}
-		
-//		Actions_Utility.printActionInListOfActions(actionsCV, "initialize");
-//		Actions_Utility.printIncompleteActionInstance(actionsCV_HT.get(1));
+		createActions_CompleteVersion();//makes CV of problem's actions, set problem's actionList to this CV.	
+		loadActionsHT();
 	}
 	
 	public void setDomainAndProblem()
@@ -53,6 +43,30 @@ public class DomainExpert
 		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(domainFileString, problemFileString);	
 		domain = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
+	}
+	
+	/**
+	 * Due to the planner removing add effects from actions for parcprinter and pathways.
+	 * The Planner.getPlan method preserves the actionsList.
+	 * The planner's problem is set to the Expert's.  
+	 * When the planner is used to test whether a domain/problem is solvable in the sim,
+	 *  the planner resets the problem's actions back to their original form.
+	 * Then this method must be called to restore the expert's actions.
+	 */
+	public void restoreActionsToStateBeforePlannerCall()
+	{
+		actionsCV = problem.getActions();
+		loadActionsHT();
+	}
+	
+	private void loadActionsHT()
+	{
+		actionsCV_HT = new Hashtable<Integer, IncompleteActionInstance>();
+		for(ActionInstance act: actionsCV)
+		{
+			IncompleteActionInstance a = (IncompleteActionInstance) act;
+			actionsCV_HT.put(a.getIndex(), a);
+		}
 	}
 	
 	public Problem getProblem() { return problem;}

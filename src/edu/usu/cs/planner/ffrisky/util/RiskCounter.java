@@ -216,30 +216,26 @@ public class RiskCounter {
 		//currAction was popped off in the execution sim alg, but needs to be applied here for continuity 
 
 		//Original version of Add the others
+		// Note that the null isn't caught for getSuccessorNode() call.
+		// That method returns a null is the action is found to be not applicable.
+//		for (ActionInstance action : plan) // Add the others
+//			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+		
+		//Current version - removes the Exception.
+		//Added some unnecessary protection around it.
+		//The null node just means that the goal can't be reached according to the way
+		//RiskCounterNode builds up the propositions - which seems a bit tight actually.
 		if ((plan != null) && (plan.size() > 0))
 		{
 			for (ActionInstance action : plan) // Add the others
-				nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+			{
+				try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance) action));}
+				catch(Exception e){break;}
+			}
 		}
-//		//New version 1
-//		for (ActionInstance action : plan) // Add the others
-//		{ 
-//			try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));}
-//			catch(Exception e){return bdd.getZero();} //or bdd.getOne(), it makes no difference
-//		}
-//		
-//		//Still requires this line
-//		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
-		
-//		//New version 2
-//		for (ActionInstance action : plan) // Add the others
-//		{ 
-//			try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));}
-//			catch(Exception e){}
-//		}
-//		
-//		//Still requires this line
-//		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
+
+		//Requires this line - might have added a null node, causing the next line to break.
+		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
 		
 		//Without the removal of the line above, this line returns the Exception
 		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
