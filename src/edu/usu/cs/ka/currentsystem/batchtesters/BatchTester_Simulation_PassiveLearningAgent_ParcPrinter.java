@@ -1,6 +1,6 @@
 package edu.usu.cs.ka.currentsystem.batchtesters;
 
-import edu.usu.cs.ka.currentsystem.simulator.Simulation_PassiveLearningAgent;
+import edu.usu.cs.ka.currentsystem.simulator.Simulation;
 
 public class BatchTester_Simulation_PassiveLearningAgent_ParcPrinter 
 {
@@ -32,7 +32,7 @@ public class BatchTester_Simulation_PassiveLearningAgent_ParcPrinter
 				args[1] = pathToProblems + fileName +"-problem-incomplete" + extension;
 				args[2] = String.valueOf(timeLimits[i]);
 
-				try{ Simulation_PassiveLearningAgent.main(args); }
+				try{ Simulation.main(args); }
 				catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 
 				//System.out.println();

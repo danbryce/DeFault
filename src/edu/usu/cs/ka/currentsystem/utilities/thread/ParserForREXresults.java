@@ -5,6 +5,10 @@ import java.io.*;
 
 public class ParserForREXresults 
 {	
+	static String directory = "/Users/CHW/Desktop/";
+	static String bigResultsFolder = "Results - 11.26.10.6AM/";
+	static String outputFolderDateTimeAppend = "11.26.10.6AM";
+	
 	public static void main(String[] args) 
 	{
 		HoboNavResults();
@@ -42,20 +46,24 @@ public class ParserForREXresults
 						filename += instance;
 						filename += ".txt";
 						
-						File file = new File("/Users/CHW/Desktop/Hobonav - 11.23.10/" + filename);
+						File file = new File(directory + bigResultsFolder + filename);
 						
 						String metaResult = filename + " ";
 						
 						int countSuccesses = 0;
+						boolean completed = false;
+						String totalTime = "";
+						
 						try 
 						{
 							Scanner scanner = new Scanner(file);
 							while (scanner.hasNextLine()) 
 							{
 								String line = scanner.nextLine();							
-								if(line.contains("cweber"))
+								if(line.contains("cweber") && !line.contains("File"))
 								{
 									line = line.replace("/home/cweber/graphplanner/testfiles/incomplete/hobonav/", "");
+									line = bugCheck(line);
 									results.add(line);
 									
 									countSuccesses++;
@@ -64,10 +72,23 @@ public class ParserForREXresults
 								if(line.contains("Exception") && !metaResult.contains("*"))
 									metaResult += "* ";
 								
+								if(line.contains("totalTime"))
+								{
+									int colonLocation = line.indexOf(":");
+									totalTime = line.substring(colonLocation);
+									completed = true;
+								}
 							}
 						} catch (FileNotFoundException e) {metaResult += "DNE ";}
 						
-						metaResult += countSuccesses;
+						if(!metaResult.contains("DNE"))
+							metaResult += countSuccesses;
+						
+						if(completed) 
+							metaResult += " " + totalTime;
+						else if(!completed && !metaResult.contains("DNE"))
+							metaResult += " DNF";
+						
 						metaResults.add(metaResult);
 					}
 				}
@@ -85,7 +106,7 @@ public class ParserForREXresults
 		metaResults.add("END HoboNav///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Hobonav Results - 11.23.10", results);
+		writeResultsToFile("Hobonav Results - " + outputFolderDateTimeAppend, results);
 	}
 	
 	//parcprinter_pode3_22_6.txt
@@ -114,20 +135,24 @@ public class ParserForREXresults
 				filename += instance;
 				filename += ".txt";
 				
-				File file = new File("/Users/CHW/Desktop/ParcPrinter - 11.23.10/" + filename);
+				File file = new File(directory + bigResultsFolder + filename);
 				
 				String metaResult = filename + " ";
 				
 				int countSuccesses = 0;
+				boolean completed = false;
+				String totalTime = "";
+				
 				try 
 				{
 					Scanner scanner = new Scanner(file);
 					while (scanner.hasNextLine()) 
 					{
 						String line = scanner.nextLine();							
-						if(line.contains("cweber"))
+						if(line.contains("cweber") && !line.contains("File"))
 						{
 							line = line.replace("/home/cweber/graphplanner/testfiles/incomplete/parcprinter/", "");
+							line = bugCheck(line);
 							results.add(line);
 							
 							countSuccesses++;
@@ -135,10 +160,24 @@ public class ParserForREXresults
 						
 						if(line.contains("Exception") && !metaResult.contains("*"))
 							metaResult += "* ";
+						
+						if(line.contains("totalTime"))
+						{
+							int colonLocation = line.indexOf(":");
+							totalTime = line.substring(colonLocation);
+							completed = true;
+						}
 					}
 				} catch (FileNotFoundException e) {metaResult += "DNE ";}	
 				
-				metaResult += countSuccesses;
+				if(!metaResult.contains("DNE"))
+					metaResult += countSuccesses;
+				
+				if(completed) 
+					metaResult += " " + totalTime;
+				else if(!completed && !metaResult.contains("DNE"))
+					metaResult += " DNF";
+				
 				metaResults.add(metaResult);
 			}
 		}
@@ -154,7 +193,7 @@ public class ParserForREXresults
 		metaResults.add("END ParcPrinter///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("ParcPrinter Results - 11.23.10", results);
+		writeResultsToFile("ParcPrinter Results - " + outputFolderDateTimeAppend, results);
 	}
 	
 	//pathways_p01_0.0_jdd_1.txt
@@ -184,20 +223,24 @@ public class ParserForREXresults
 					filename += instance;
 					filename += ".txt";
 					
-					File file = new File("/Users/CHW/Desktop/Pathways - 11.23.10/" + filename);
+					File file = new File(directory + bigResultsFolder + filename);
 					
 					String metaResult = filename + " ";
 					
 					int countSuccesses = 0;
+					boolean completed = false;
+					String totalTime = "";
+					
 					try 
 					{
 						Scanner scanner = new Scanner(file);
 						while (scanner.hasNextLine()) 
 						{
 							String line = scanner.nextLine();							
-							if(line.contains("cweber"))
+							if(line.contains("cweber") && !line.contains("File"))
 							{
 								line = line.replace("/home/cweber/graphplanner/testfiles/incomplete/pathways/", "");
+								line = bugCheck(line);
 								results.add(line);
 								
 								countSuccesses++;
@@ -205,10 +248,24 @@ public class ParserForREXresults
 							
 							if(line.contains("Exception") && !metaResult.contains("*"))
 								metaResult += "* ";
+							
+							if(line.contains("totalTime"))
+							{
+								int colonLocation = line.indexOf(":");
+								totalTime = line.substring(colonLocation);
+								completed = true;
+							}
 						}
 					} catch (FileNotFoundException e) {metaResult += "DNE ";}	
 					
-					metaResult += countSuccesses;
+					if(!metaResult.contains("DNE"))
+						metaResult += countSuccesses;
+					
+					if(completed) 
+						metaResult += " " + totalTime;
+					else if(!completed && !metaResult.contains("DNE"))
+						metaResult += " DNF";
+					
 					metaResults.add(metaResult);
 				}
 			}
@@ -226,7 +283,7 @@ public class ParserForREXresults
 		metaResults.add("END Pathways///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Pathways Results - 11.23.10", results);
+		writeResultsToFile("Pathways Results - " + outputFolderDateTimeAppend, results);
 	}
 	
 	//bridges_v2_length_16_0.0_10.txt
@@ -256,20 +313,24 @@ public class ParserForREXresults
 						filename += instance;
 						filename += ".txt";
 						
-						File file = new File("/Users/CHW/Desktop/Bridges - 11.23.10/" + filename);
+						File file = new File(directory + bigResultsFolder + filename);
 						
 						String metaResult = filename + " ";
 						
 						int countSuccesses = 0;
+						boolean completed = false;
+						String totalTime = "";
+						
 						try 
 						{
 							Scanner scanner = new Scanner(file);
 							while (scanner.hasNextLine()) 
 							{
 								String line = scanner.nextLine();							
-								if(line.contains("cweber"))
+								if(line.contains("cweber") && !line.contains("File"))
 								{
 									line = line.replace("/home/cweber/graphplanner/testfiles/incomplete/bridges/", "");
+									line = bugCheck(line);
 									results.add(line);
 									
 									countSuccesses++;
@@ -277,16 +338,30 @@ public class ParserForREXresults
 								
 								if(line.contains("Exception") && !metaResult.contains("*"))
 									metaResult += "* ";
+								
+								if(line.contains("totalTime"))
+								{
+									int colonLocation = line.indexOf(":");
+									totalTime = line.substring(colonLocation);
+									completed = true;
+								}
 							}
 						} catch (FileNotFoundException e) {metaResult += "DNE ";}	
 						
-						metaResult += countSuccesses;
+						if(!metaResult.contains("DNE"))
+							metaResult += countSuccesses;
+						
+						if(completed) 
+							metaResult += " " + totalTime;
+						else if(!completed && !metaResult.contains("DNE"))
+							metaResult += " DNF";
+						
 						metaResults.add(metaResult);
 					}
 				}
 			}
 		}
-				
+
 		for(String r : metaResults)
 			System.out.println(r);
 
@@ -298,7 +373,7 @@ public class ParserForREXresults
 		metaResults.add("END Bridges///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Bridges Results - 11.23.10", results);
+		writeResultsToFile("Bridges Results - " + outputFolderDateTimeAppend, results);
 	}
 	
 	static void writeResultsToFile(String filename, LinkedList<String> results)
@@ -317,7 +392,7 @@ public class ParserForREXresults
 	static void writeMetaResultsToFile(LinkedList<String> metaResults)
 	{
 	      try{
-	    	    FileWriter fstream = new FileWriter("/Users/CHW/Desktop/MetaResults.txt", true);
+	    	    FileWriter fstream = new FileWriter("/Users/CHW/Desktop/MetaResults - " + outputFolderDateTimeAppend + ".txt", true);
 	    	    BufferedWriter out = new BufferedWriter(fstream);
 	    	    
 	    	    for(String r : metaResults)
@@ -325,5 +400,43 @@ public class ParserForREXresults
 
 	    	    out.close();
 	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
-	}	
+	}
+	
+	static String bugCheck(String line)
+	{
+		String[] lineTokens = line.split(" ");
+		
+		if(!lineTokens[25].equals("0") && !lineTokens[25].equals("L") && !lineTokens[25].equals("T") && !lineTokens[25].equals("?"))
+		{
+			lineTokens[23] = "B";
+			lineTokens[24] = "B";
+			lineTokens[25] = "B";
+			lineTokens[26] = "B";
+			lineTokens[27] = "B";
+		}
+		
+		if(!lineTokens[31].equals("0") && !lineTokens[31].equals("L") && !lineTokens[31].equals("T") && !lineTokens[31].equals("?"))
+		{
+			lineTokens[29] = "B";
+			lineTokens[30] = "B";
+			lineTokens[31] = "B";
+			lineTokens[32] = "B";
+			lineTokens[33] = "B";
+		}
+		
+		if(!lineTokens[37].equals("0") && !lineTokens[37].equals("L") && !lineTokens[37].equals("T") && !lineTokens[37].equals("?"))
+		{
+			lineTokens[35] = "B";
+			lineTokens[36] = "B";
+			lineTokens[37] = "B";
+			lineTokens[38] = "B";
+			lineTokens[39] = "B";
+		}
+
+		line = "";
+		for (int i = 0; i < lineTokens.length; i++)
+			line += lineTokens[i] + " ";
+		
+		return line;
+	}
 }

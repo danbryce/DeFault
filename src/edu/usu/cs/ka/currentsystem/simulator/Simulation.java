@@ -10,7 +10,7 @@ import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 
 
-public class Simulation_PassiveLearningAgent
+public class Simulation
 {		
 	Planner planners;
 	DomainExpert expert;
@@ -23,7 +23,7 @@ public class Simulation_PassiveLearningAgent
 	static Long startTime;
 	static Long finishTime;
 		
-	Simulation_PassiveLearningAgent(String[] args, int simSeed)
+	Simulation(String[] args, int simSeed)
 	{	
 		if (args.length != 3) { System.out.println(" " + args.length); usage(args); System.exit(1); }
 		
@@ -35,18 +35,30 @@ public class Simulation_PassiveLearningAgent
 		resultString = "";	
 	}
 	
+
+	/**
+	 * Choose any planner, as all perform comparably on the classical version of the problem.
+	 * @return boolean is Solvable
+	 */
 	static boolean isSolvableTest;
 	public boolean isSolvableDomain()
 	{	
 		isSolvableTest = true;
 		
 		planners.setProblem(expert.getProblem());
-		
-		//if(runPlannerThread("pode1") == null) return false;
-		//expert.restoreActionsToStateBeforePlannerCall();
-		//if(runPlannerThread("pode1") == null) return false;
-		//expert.restoreActionsToStateBeforePlannerCall();
-		if(runPlannerThread("amir") == null) return false;
+
+		Random randomGenerator = new Random();
+		int randomInt = randomGenerator.nextInt(3);
+		switch(randomInt)
+		{
+			case 0: if(runPlannerThread("amir") == null) 	return false;
+					break;
+			case 1: if(runPlannerThread("pode1") == null) 	return false;
+					break;
+			case 2: if(runPlannerThread("jdd") == null) 	return false;
+					break;
+		}
+
 		expert.restoreActionsToStateBeforePlannerCall();
 		
 		isSolvableTest = false;
@@ -70,7 +82,7 @@ public class Simulation_PassiveLearningAgent
 		{
 			try
 			{
-				Simulation_PassiveLearningAgent sim = new Simulation_PassiveLearningAgent(args, simSeed);
+				Simulation sim = new Simulation(args, simSeed);
 				if(sim.isSolvableDomain())
 				{
 					gotAResult = false;
@@ -132,9 +144,13 @@ public class Simulation_PassiveLearningAgent
 		agent.restoreActionsToStateBeforePlannerCall();	
 		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100) && (plan != null) && (plan.size() != 0))
 		{	
+			boolean actionTaken = false;
+			
 			currAction = (IncompleteActionInstance) plan.remove(0);	
 			if(agent.isActionApplicable(currAction, currState, plan))
-			{					
+			{	
+				actionTaken = true;
+				
 				nextState = expert.applyAction(currState, currAction);
 				agent.learnAboutActionTaken(currAction, currState, nextState);
 				if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
@@ -143,8 +159,12 @@ public class Simulation_PassiveLearningAgent
 			
 			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || !agent.isActionApplicable(currAction, currState, plan))
 			{	
-				if(agent.isActionFailure(currAction, currState, nextState) || agent.existsActionFailureInPastEntailFailVar())
-					agent.incrementFailedActionsCount();
+				if((agent.isActionFailure(currAction, currState, nextState) && actionTaken) || 
+				   (agent.existsActionFailureInPastEntailFailVar() && !actionTaken))
+						agent.incrementFailedActionsCount();
+				
+				if((agentType.equals("CL")) && (agent.getNumFailedActions() > 0))
+					break;
 				
 				agent.getProblem().setInitialState(nextState);
 				agent.removeFailFromKBForNewPlan();
@@ -204,10 +224,7 @@ public class Simulation_PassiveLearningAgent
 		if(isSolvableTest) 	
 			maxTime = timeLimit;
 		else
-		{
-			double 	maxTimeDouble = timeLimit * 1.5;
-			maxTime = (int) maxTimeDouble;
-		}
+			maxTime = timeLimit * 2;
 		
 		while (now - start < maxTime)
 		{

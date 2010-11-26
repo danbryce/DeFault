@@ -1,30 +1,32 @@
 package edu.usu.cs.ka.currentsystem;
 
-public class LittleTester {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.Random;
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) 
+public class LittleTester 
+{
+	/** Generate 10 random integers in the range 0..99. */ 
+	public static final void main(String... aArgs)
 	{
-//		boolean[] v = new boolean[10];
-//		
-//		for(boolean var : v)
-//			System.out.println(var);
-		
-		String temp1 = "move_0_0_0_1";
-		String temp2 = "move_1_0_0_0";
-		String temp3 = "move_1_0_1_1";
-		String temp4 = "move_1_1_1_0";
-		
-		System.out.println(temp1.hashCode());
-		System.out.println(temp2.hashCode());
-		System.out.println(temp3.hashCode());
-		System.out.println(temp4.hashCode());
-		
-		if(temp1.equals(temp2))
-			System.out.println("EQUAL");
-
+	    log("Generating 10 random integers in range 0..99.");
+	    
+	    //note a single Random object is reused here
+	    Random randomGenerator = new Random();
+	    for (int idx = 1; idx <= 100; ++idx)
+	    {
+	      int randomInt = randomGenerator.nextInt(3);
+	      log("Generated : " + randomInt);
+	    }
+	    
+	    log("Done.");
 	}
-
+	  
+	  private static void log(String aMessage)
+	  {
+	    System.out.println(aMessage);
+	  }
 }
+
