@@ -89,9 +89,9 @@ public class Simulation
 					
 					sim.resultString += args[0] + "_" + simSeed + " " + sim.planners.getInitialModelCount() + " RG";
 			
-					sim.runSimulation("amir",  args, "RG");
-					sim.runSimulation("pode1", args, "RG");
-					sim.runSimulation("jdd", args, "RG");
+					try{ sim.runSimulation("amir",  args, "RG"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " amir E E E E E";}
+					try{ sim.runSimulation("pode1", args, "RG"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
+					try{ sim.runSimulation("jdd", args, "RG");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
 					
 					sim.resultString += " CL";
 					
@@ -170,7 +170,9 @@ public class Simulation
 				agent.removeFailFromKBForNewPlan();
 				
 				plan = runPlannerThread(plannerType); //plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent
-				if(timeout) break;
+				
+				if(timeout) 
+					break;
 
 				if(plan == null || plan.size() == 0)
 					break;
@@ -219,14 +221,14 @@ public class Simulation
 		long now = System.currentTimeMillis();
 		execThread.start();
 		
-		int 	maxTime = 0;
+		int	maxTime = 0;
 		
-		if(isSolvableTest) 	
-			maxTime = timeLimit;
-		else
-			maxTime = timeLimit * 2;
+		if(isSolvableTest) 	maxTime = timeLimit / 4;
+		else				maxTime = timeLimit * 2;
 		
-		while (now - start < maxTime)
+		System.out.println(maxTime);
+
+		while ((now - start) < maxTime)
 		{
 			try { Thread.sleep(500); } catch (Exception e){}
 			now = System.currentTimeMillis();
@@ -235,7 +237,7 @@ public class Simulation
 		}
 		
 		execThread.stop();	
-		if(now - start >= timeLimit)
+		if((now - start) >= maxTime)
 			timeout = true;
 
 		return execThread.plan;

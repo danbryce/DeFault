@@ -3,6 +3,14 @@ import java.util.*;
 import java.io.*;
 
 
+/**
+ * Outputs the times for all solvers combined for domains/problems
+ *  in a logical order of size grid or problem number by max first.
+ * 
+ * Uses Bryce files in this directory location:
+ * /Users/CHW/Desktop/out_112110/
+ * /Users/CHW/Desktop/out - bridges wout at_0_0 - 11.22.10/
+ */
 public class ParserForMaxTime 
 {
 	static String[] algorithms = {"pode1", "jdd", "length"};

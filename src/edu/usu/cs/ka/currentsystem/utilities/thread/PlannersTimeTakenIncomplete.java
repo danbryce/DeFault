@@ -2,8 +2,15 @@ package edu.usu.cs.ka.currentsystem.utilities.thread;
 import java.util.*;
 import java.io.*;
 
-
-public class ParserForPlannersTimeTaken 
+/**
+ * Outputs the times for each solver for domains/problems
+ *  in a logical order of size grid or problem number by max first.
+ * 
+ * Uses Bryce files in this directory location:
+ * /Users/CHW/Desktop/out_112110/
+ * /Users/CHW/Desktop/out - bridges wout at_0_0 - 11.22.10/
+ */
+public class PlannersTimeTakenIncomplete 
 {	
 static String[] algorithms = {"pode1", "jdd", "length"};
 	
