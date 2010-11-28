@@ -6,13 +6,17 @@ import java.io.*;
  * Outputs the times for each solver for domains/problems
  *  in a logical order of size grid or problem number by max first.
  * 
- * Uses Bryce files in this directory location:
- * /Users/CHW/Desktop/out_112110/
- * /Users/CHW/Desktop/out - bridges wout at_0_0 - 11.22.10/
+ * Uses Bryce files in these folders:
+ * ~/.../out_112110/
+ * ~/.../out_112210_newBridges/
  */
 public class PlannersTimeTakenIncomplete 
 {	
-static String[] algorithms = {"pode1", "jdd", "length"};
+	static String directory = "/Users/CHW/Desktop/KA_Bryce_&_REX-Work_&_Results/Results_Bryce/";
+	static String subDirectory = "out_112110/";
+	static String subDirectory2 = "out_112210_newBridges/";
+	
+	static String[] algorithms = {"pode1", "jdd", "length"};
 	
 	public static void main(String[] args) 
 	{
@@ -58,7 +62,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 								filename += algorithm;
 								filename += ".txt";
 								
-								File file = new File("/Users/CHW/Desktop/out_112110/" + filename);
+								File file = new File(directory + subDirectory + filename);
 								
 								//System.out.print(filename + " ");
 								
@@ -124,7 +128,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 		
 		for(int i = 0; i < intResultsAmir.size(); i++)
 		{
-			System.out.println("\n" + "*" + i + " \\\\\\");
+			System.out.println("*" + i + " \\\\\\");
 			
 			int totalA = 0;
 			int totalP = 0;
@@ -138,7 +142,6 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 			for(Integer time : intResultsJDD.get(i))
 				totalJ += time;
 			
-			System.out.println();
 			if(intResultsAmir.get(i).size() != 0) 
 				System.out.println("Average time Amir (" + intResultsAmir.get(i).size() + "): " + totalA/intResultsAmir.get(i).size());
 			if(intResultsPode.get(i).size() != 0) 
@@ -181,7 +184,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 					filename += instance;
 					filename += ".txt";
 					
-					File file = new File("/Users/CHW/Desktop/out_112110/" + filename);
+					File file = new File(directory + subDirectory + filename);
 					
 					//System.out.print(filename + " ");
 					
@@ -200,7 +203,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 								if(algorithm.equals("jdd")) resultForSizeJDD.add(st[2]);
 							}
 						}
-					} catch (FileNotFoundException e) {e.printStackTrace();}	
+					} catch (FileNotFoundException e) {}	
 				}
 			}
 			resultsAmir.add(resultForSizeAmir);
@@ -240,7 +243,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 		
 		for(int i = 0; i < intResultsAmir.size(); i++)
 		{
-			System.out.println("\n" + "*" + i + " \\\\\\");
+			System.out.println("*" + i + " \\\\\\");
 			
 			int totalA = 0;
 			int totalP = 0;
@@ -253,8 +256,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 			
 			for(Integer time : intResultsJDD.get(i))
 				totalJ += time;
-			
-			System.out.println();
+
 			if(intResultsAmir.get(i).size() != 0) 
 				System.out.println("Average time Amir (" + intResultsAmir.get(i).size() + "): " + totalA/intResultsAmir.get(i).size());
 			if(intResultsPode.get(i).size() != 0) 
@@ -300,10 +302,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 						filename += instance;
 						filename += ".txt";
 						
-						File file = new File("/Users/CHW/Desktop/out_112110/" + filename);
-						
-						//System.out.print(filename + " ");
-						
+						File file = new File(directory + subDirectory + filename);			
 						try 
 						{
 							Scanner scanner = new Scanner(file);
@@ -319,7 +318,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 									if(algorithm.equals("jdd")) resultForSizeJDD.add(st[2]);
 								}
 							}
-						} catch (FileNotFoundException e) {e.printStackTrace();}	
+						} catch (FileNotFoundException e) {}	
 					}
 				}
 			}
@@ -360,7 +359,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 		
 		for(int i = 0; i < intResultsAmir.size(); i++)
 		{
-			System.out.println("\n" + "*" + i + " \\\\\\");
+			System.out.println("*" + i + " \\\\\\");
 			
 			int totalA = 0;
 			int totalP = 0;
@@ -374,7 +373,6 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 			for(Integer time : intResultsJDD.get(i))
 				totalJ += time;
 			
-			System.out.println();
 			if(intResultsAmir.get(i).size() != 0) 
 				System.out.println("Average time Amir (" + intResultsAmir.get(i).size() + "): " + totalA/intResultsAmir.get(i).size());
 			if(intResultsPode.get(i).size() != 0) 
@@ -420,10 +418,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 							filename += instance;
 							filename += ".txt";
 							
-							File file = new File("/Users/CHW/Desktop/out - bridges wout at_0_0 - 11.22.10/" + filename);
-							
-							//System.out.print(filename + " ");
-							
+							File file = new File(directory + subDirectory2 + filename);	
 							try 
 							{
 								Scanner scanner = new Scanner(file);
@@ -439,7 +434,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 										if(algorithm.equals("jdd")) resultForSizeJDD.add(st[2]);
 									}
 								}
-							} catch (FileNotFoundException e) {e.printStackTrace();}	
+							} catch (FileNotFoundException e) {}	
 						}
 					}
 				}
@@ -482,7 +477,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 		
 		for(int i = 0; i < intResultsAmir.size(); i++)
 		{
-			System.out.println("\n" + "*" + i + " \\\\\\");
+			System.out.println("*" + i + " \\\\\\");
 			
 			int totalA = 0;
 			int totalP = 0;
@@ -496,7 +491,6 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 			for(Integer time : intResultsJDD.get(i))
 				totalJ += time;
 			
-			System.out.println();
 			if(intResultsAmir.get(i).size() != 0) 
 				System.out.println("Average time Amir (" + intResultsAmir.get(i).size() + "): " + totalA/intResultsAmir.get(i).size());
 			if(intResultsPode.get(i).size() != 0) 

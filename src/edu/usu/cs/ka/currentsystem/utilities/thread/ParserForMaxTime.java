@@ -13,6 +13,10 @@ import java.io.*;
  */
 public class ParserForMaxTime 
 {
+	static String directory = "/Users/CHW/Desktop/KA_Bryce_&_REX-Work_&_Results/Results_Bryce/";
+	static String subDirectory = "out_112110/";
+	static String subDirectory2 = "out_112210_newBridges/";
+	
 	static String[] algorithms = {"pode1", "jdd", "length"};
 	
 	public static void main(String[] args) 
@@ -55,7 +59,7 @@ public class ParserForMaxTime
 								filename += algorithm;
 								filename += ".txt";
 								
-								File file = new File("/Users/CHW/Desktop/out_112110/" + filename);
+								File file = new File(directory + subDirectory + filename);
 								
 								//System.out.print(filename + " ");
 								
@@ -139,7 +143,7 @@ public class ParserForMaxTime
 					filename += instance;
 					filename += ".txt";
 					
-					File file = new File("/Users/CHW/Desktop/out_112110/" + filename);
+					File file = new File(directory + subDirectory + filename);
 					
 					//System.out.print(filename + " ");
 					
@@ -156,7 +160,7 @@ public class ParserForMaxTime
 								resultForSize.add(st[2]);
 							}
 						}
-					} catch (FileNotFoundException e) {e.printStackTrace();}	
+					} catch (FileNotFoundException e) {}	
 				}
 			}
 			results.add(resultForSize);
@@ -222,7 +226,7 @@ public class ParserForMaxTime
 						filename += instance;
 						filename += ".txt";
 						
-						File file = new File("/Users/CHW/Desktop/out_112110/" + filename);
+						File file = new File(directory + subDirectory + filename);
 						
 						//System.out.print(filename + " ");
 						
@@ -239,7 +243,7 @@ public class ParserForMaxTime
 									resultForSize.add(st[2]);
 								}
 							}
-						} catch (FileNotFoundException e) {e.printStackTrace();}	
+						} catch (FileNotFoundException e) {}	
 					}
 				}
 			}
@@ -305,7 +309,7 @@ public class ParserForMaxTime
 							filename += instance;
 							filename += ".txt";
 							
-							File file = new File("/Users/CHW/Desktop/out - bridges wout at_0_0 - 11.22.10/" + filename);
+							File file = new File(directory + subDirectory2 + filename);
 							
 							//System.out.print(filename + " ");
 							
@@ -322,7 +326,7 @@ public class ParserForMaxTime
 										resultForSize.add(st[2]);
 									}
 								}
-							} catch (FileNotFoundException e) {e.printStackTrace();}	
+							} catch (FileNotFoundException e) {}	
 						}
 					}
 				}
@@ -385,7 +389,7 @@ public class ParserForMaxTime
 					filename += algorithm;
 					filename += ".txt";
 					
-					File file = new File("/Users/CHW/Desktop/out_112110/" + filename);
+					File file = new File(directory + subDirectory + filename);
 					
 					//System.out.print(filename + " ");
 					
@@ -402,7 +406,7 @@ public class ParserForMaxTime
 								resultForSize.add(st[2]);
 							}
 						}
-					} catch (FileNotFoundException e) {e.printStackTrace();}	
+					} catch (FileNotFoundException e) {}	
 				}
 			}
 			

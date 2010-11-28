@@ -12,7 +12,9 @@ import java.text.*;
  */
 public class PlannersTimeTakenCompleteVsIncomplete 
 {	
-static String[] algorithms = {"pode1", "jdd", "length"};
+	static String directory = "/Users/CHW/Desktop/KA_Bryce_&_REX-Work_&_Results/Results_Planner_Raw_Performance/";
+	
+	static String[] algorithms = {"pode1", "jdd", "length"};
 	
 	public static void main(String[] args) 
 	{
@@ -60,7 +62,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 						filename += instance;
 						filename += ".txt";
 						
-						File file = new File("/Users/CHW/Desktop/PRP_Results/" + filename);
+						File file = new File(directory + filename);
 						try 
 						{
 							Scanner scanner = new Scanner(file);
@@ -139,7 +141,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 				filename += instance;
 				filename += ".txt";
 				
-				File file = new File("/Users/CHW/Desktop/PRP_Results/" + filename);
+				File file = new File(directory + filename);
 				try 
 				{
 					Scanner scanner = new Scanner(file);
@@ -219,7 +221,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 					filename += instance;
 					filename += ".txt";
 					
-					File file = new File("/Users/CHW/Desktop/PRP_Results/" + filename);
+					File file = new File(directory + filename);
 					try 
 					{
 						Scanner scanner = new Scanner(file);
@@ -271,7 +273,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 		System.out.println("Bridges_new - by gridSize (2, 4, 8, 16)");
 		
 		int instanceCount = 10;
-		int maxGridSize = 16/2;
+		int maxGridSize = 16;
 		
 		LinkedList<LinkedList<String>> resultsAmirComplete = new LinkedList<LinkedList<String>>();
 		LinkedList<LinkedList<String>> resultsPodeComplete = new LinkedList<LinkedList<String>>();
@@ -301,7 +303,7 @@ static String[] algorithms = {"pode1", "jdd", "length"};
 						filename += instance;
 						filename += ".txt";
 						
-						File file = new File("/Users/CHW/Desktop/PRP_Results/" + filename);
+						File file = new File(directory + filename);
 						try 
 						{
 							Scanner scanner = new Scanner(file);

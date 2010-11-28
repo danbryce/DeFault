@@ -6,8 +6,8 @@ import java.io.*;
 public class ParserForREXresults 
 {	
 	static String directory = "/Users/CHW/Desktop/";
-	static String bigResultsFolder = "Results - 11.26.10.6AM/";
-	static String outputFolderDateTimeAppend = "11.26.10.6AM";
+	static String bigResultsFolder = "Results - 11.27.10/";
+	static String outputFolderDateTimeAppend = "11.27.10.6PM";
 	
 	public static void main(String[] args) 
 	{

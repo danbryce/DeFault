@@ -225,8 +225,6 @@ public class Simulation
 		
 		if(isSolvableTest) 	maxTime = timeLimit / 4;
 		else				maxTime = timeLimit * 2;
-		
-		System.out.println(maxTime);
 
 		while ((now - start) < maxTime)
 		{
