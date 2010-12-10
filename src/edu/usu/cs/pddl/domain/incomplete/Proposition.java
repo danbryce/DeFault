@@ -36,7 +36,11 @@ public class Proposition {
 		return propositionIndexMap.get(index);
 	}
 	
-	
+	public static void clearAll(){
+		propositionIndex = 0;
+		propositionIndices.clear();
+		propositionIndexMap.clear();
+	}
 	
 	public Integer getIndex(){
 		return getPropositionIndex(name);

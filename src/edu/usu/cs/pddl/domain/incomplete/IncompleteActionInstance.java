@@ -42,11 +42,8 @@ public class IncompleteActionInstance  implements ActionInstance{
 	protected int index;
 	protected int actionRisks;
 
-
 	protected  ActionDef definition;
 	protected Map<FormalArgument, PDDLObject> argMapping = new HashMap<FormalArgument, PDDLObject>();
-
-
 
 	public int getIndex() {
 		return index;
@@ -321,11 +318,6 @@ public class IncompleteActionInstance  implements ActionInstance{
 				}
 			}
 		}
-
-
-
-
-
 	}
 
 	public String getName() {
@@ -546,10 +538,11 @@ public class IncompleteActionInstance  implements ActionInstance{
 //	public void setActionRisks(int actionRisks) {
 //		this.actionRisks = actionRisks;
 //	}
-//
-//	public int getActionRisks() {
-//		return this.actionRisks;
-//	}
+
+	public int getActionRisks() {
+		return this.actionRisks;
+	}
+
 
 	public void removeIrrelevant(Set<Integer> set) {
 
