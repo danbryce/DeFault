@@ -6,7 +6,8 @@ import java.util.List;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 
-public class RiskCounterResults {
+public class RiskCounterResults 
+{
 	public List<ActionInstance> plan;
 	public String domainFileName;
 	public String problemFileName;
@@ -21,11 +22,11 @@ public class RiskCounterResults {
 	public double probability;
 	public int unusedRisks;
 	
-	public RiskCounterResults() {
-	}
+	public RiskCounterResults() {}
 
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		StringBuilder output = new StringBuilder();
 		
 //		output.append(instance + "\t");
@@ -34,10 +35,7 @@ public class RiskCounterResults {
 //		output.append(problemFileName + "\t");
 //		output.append(solverName + "\t");
 //		
-//		if (plan == null) {
-//			output.append("?\t?\t?\t?\t" + allRisksCount + "\t?\n");
-//			return output.toString();
-//		}
+//		if (plan == null) { output.append("?\t?\t?\t?\t" + allRisksCount + "\t?\n"); return output.toString(); }
 //		
 //		output.append(planLength + "\t");
 //		output.append(elapsedTime + "\t");
@@ -49,8 +47,7 @@ public class RiskCounterResults {
 
 		// Risk Count // All Risks // Num Domains where plan fails //
 		if (plan != null && solvableDomains.compareTo(BigInteger.valueOf(0)) > 0) {
-			output.append(riskCount + "\t" + allRisksCount + "\t" + solvableDomains + "\t" + unusedRisks + "\n");
-		}
+			output.append(riskCount + "\t" + allRisksCount + "\t" + solvableDomains + "\t" + unusedRisks + "\n"); }
 		
 		return output.toString();
 	}

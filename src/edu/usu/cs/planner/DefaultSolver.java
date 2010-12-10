@@ -61,8 +61,7 @@ public class DefaultSolver implements Solver {
 			throw new IllegalArgumentException("null domain/problem");
 		}
 
-		long availableMemory = Runtime.getRuntime().maxMemory()
-				- Runtime.getRuntime().freeMemory();
+		long availableMemory = Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
 
 		setMaxHeapUsage(Math.min(DEFAULT_MAX_HEAP_USAGE, availableMemory));
 		setMaxRunTime(DEFAULT_MAX_RUNTIME);
@@ -71,9 +70,16 @@ public class DefaultSolver implements Solver {
 		this.problem = problem;
 		this.solverOptions = solverOptions;
 		this.searchStatistics = searchStatistics;
-		this.actionInstances = PddlImporter.createActionInstances(domain,
-				problem);// createActionInstances(domain, problem);
-		this.problem.setActionInstances(this.actionInstances);
+		if(this.problem.getActions() == null)//This is a change created by CW during 8.10
+		{
+			System.out.println("IN CASE: this.problem.getActions() == null");
+			this.actionInstances = PddlImporter.createActionInstances(domain,problem);// createActionInstances(domain, problem);
+			this.problem.setActionInstances(this.actionInstances);
+		}
+		else
+		{
+			this.actionInstances = problem.getActions();
+		}
 
 		logger.info("All action instances in problem:");
 		for (ActionInstance ai : actionInstances) {
@@ -86,7 +92,7 @@ public class DefaultSolver implements Solver {
 		return metricDimension;
 	}
 
-	private void setMaxRunTime(long defaultMaxRuntime) {
+	public void setMaxRunTime(long defaultMaxRuntime) {
 		this.maxRunTime = defaultMaxRuntime;
 	}
 

@@ -12,6 +12,7 @@ public interface Solver {
 	public Search getSearch();
 	public List<ActionInstance> run();
 	public void setMaxHeapUsage(long bytes);
+	public void setMaxRunTime(long defaultMaxRuntime);
 	public int getMetricDimension();
 	public SolverOptions getSolverOptions();
 	public void setRelevantActions(Set<ActionInstance> mRelevantActions);
