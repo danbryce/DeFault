@@ -89,21 +89,50 @@ public class ConjunctionGoalDesc implements GoalDesc
 		}
 	}
 
+//	public String toString() 
+//	{
+//		String sep = "";
+//		StringBuffer result = new StringBuffer();
+//		result.append("(and ");
+//		for (GoalDesc goal : subGoals) {
+//			result.append(sep).append(goal);
+//			sep = " ";
+//		}
+//		result.append(")");
+//		return result.toString();
+//	}
+	
 	public String toString() 
 	{
 		String sep = "";
 		StringBuffer result = new StringBuffer();
-		result.append("(and ");
-		for (GoalDesc goal : subGoals) {
-			result.append(sep).append(goal);
-			sep = " ";
+		
+		if(subGoals.size() == 1)
+		{
+			result.append("(and ");
+			for (GoalDesc goal : subGoals) {
+				result.append(sep).append(goal);
+				sep = " ";
+			}
+			result.append(")");
+			return result.toString();
 		}
-		result.append(")");
-		return result.toString();
+		
+		else
+		{
+			for (GoalDesc goal : subGoals) 
+			{
+				result.append(sep);
+				result.append("(" + goal + ")");
+				sep = " and ";
+			}
+
+			return result.toString();
+		}
 	}
 
 
-	public void getMethods(List<MethodDef> preconditionMethods) {
+	public void getMethods(Set<MethodDef> preconditionMethods) {
 		// TODO Auto-generated method stub
 		for(GoalDesc g : subGoals)
 			g.getMethods(preconditionMethods);

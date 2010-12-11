@@ -86,9 +86,10 @@ public class BridgesDomainCreator {
 			// Create the predicates
 			output.append("(:predicates\n");
 			for(int x = 0; x < gridSize; x++) {
-				for(int y = 0; y < gridSize; y++) {
-					output.append(" (at_" + x + "_" + y + ")");
-				}
+				//for(int y = 0; y < gridSize; y++) {
+					output.append(" (at_x" + x + ")");
+					output.append(" (at_y" + x + ")");
+				//}
 				output.append("\n");
 			}
 			
@@ -113,12 +114,12 @@ public class BridgesDomainCreator {
 			for(int x = 0; x < gridSize; x++) {
 				for(int y = 0; y < gridSize; y++) {
 					// Create up to 4 actions
-					StringBuilder prec = new StringBuilder("(at_" + x + "_" + y + ")");
+					StringBuilder prec = new StringBuilder("(at_x" + x + ")"+"(at_y" + y + ")");
 					StringBuilder add = null;
 					
 					// Create a move up action
 					if(x > 0) {
-						add = new StringBuilder("(at_" + (x - 1) + "_" + y + ")");
+						add = new StringBuilder("(at_x" + (x - 1) + ")");
 						output.append("(:action move_" + x + "_" + y + "_" + (x - 1) + "_" + y + "\n");
 						
 						// Add parameters and preconditions
@@ -131,7 +132,7 @@ public class BridgesDomainCreator {
 						}
 						
 						// Add effect
-						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						output.append(" :effect (and (not (at_x" + x + ")) " + add + ")\n");
 						
 						// Poss effect - determine if one exists
 						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
@@ -143,7 +144,7 @@ public class BridgesDomainCreator {
 					
 					// Create a move down action
 					if(x < gridSize - 1) {
-						add = new StringBuilder("(at_" + (x + 1) + "_" + y + ")");
+						add = new StringBuilder("(at_x" + (x + 1) + ")");
 						output.append("(:action move_" + x + "_" + y + "_" + (x + 1) + "_" + y + "\n");
 						
 						// Add parameters and preconditions
@@ -156,7 +157,7 @@ public class BridgesDomainCreator {
 						}
 						
 						// Add effect
-						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						output.append(" :effect (and (not (at_x" + x + ")) " + add + ")\n");
 						
 						// Poss effect - determine if one exists
 						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
@@ -168,7 +169,7 @@ public class BridgesDomainCreator {
 					
 					// Create a move left action
 					if(y > 0) {
-						add = new StringBuilder("(at_" + x + "_" + (y - 1) + ")");
+						add = new StringBuilder("(at_y" + (y - 1) + ")");
 						output.append("(:action move_" + x + "_" + y + "_" + x + "_" + (y - 1) + "\n");
 						
 						// Add parameters and preconditions
@@ -181,7 +182,7 @@ public class BridgesDomainCreator {
 						}
 
 						// Add effect
-						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						output.append(" :effect (and (not (at_y" + y + ")) " + add + ")\n");
 						
 						// Poss effect - determine if one exists
 						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
@@ -193,7 +194,7 @@ public class BridgesDomainCreator {
 					
 					// Create a move right action
 					if(y < gridSize - 1) {
-						add = new StringBuilder("(at_" + x + "_" + (y + 1) + ")");
+						add = new StringBuilder("(at_y" + (y + 1) + ")");
 						output.append("(:action move_" + x + "_" + y + "_" + x + "_" + (y + 1) + "\n");
 						
 						// Add parameters and preconditions
@@ -206,7 +207,7 @@ public class BridgesDomainCreator {
 						}
 
 						// Add effect
-						output.append(" :effect (and (not " + prec + ") " + add + ")\n");
+						output.append(" :effect (and (not (at_y" + y + ")) " + add + ")\n");
 						
 						// Poss effect - determine if one exists
 						if(bridgePredicates.contains(bridge) && random.nextDouble() < loserBridgeDensity) {
@@ -224,7 +225,7 @@ public class BridgesDomainCreator {
 			
 			// pick-up action for treasure 1
 			output.append("(:action pickup_treasure1\n :parameters ()\n");
-			output.append(" :precondition (and (at_" + (gridSize - 1) + "_0))\n");
+			output.append(" :precondition (and (at_x" + (gridSize - 1) + ") (at_y0))\n");
 			output.append(" :effect (and (holding_treasure_1))\n");
 			possAddTreasure2 = (random.nextDouble() < treasureInOtherLocationsDensity);
 			possAddTreasure3 = (random.nextDouble() < treasureInOtherLocationsDensity);
@@ -242,7 +243,7 @@ public class BridgesDomainCreator {
 			
 			// pick-up action for treasure 2
 			output.append("(:action pickup_treasure2\n :parameters ()\n");
-			output.append(" :precondition (and (at_" + (gridSize - 1) + "_" + (gridSize - 1) + "))\n");
+			output.append(" :precondition (and (at_x" + (gridSize - 1) + ") (at_y" + (gridSize - 1) + "))\n");
 			output.append(" :effect (and (holding_treasure_2))\n");
 			possAddTreasure1 = (random.nextDouble() < treasureInOtherLocationsDensity);
 			possAddTreasure3 = (random.nextDouble() < treasureInOtherLocationsDensity);
@@ -260,7 +261,7 @@ public class BridgesDomainCreator {
 			
 			// pick-up action for treasure 3
 			output.append("(:action pickup_treasure3\n :parameters ()\n");
-			output.append(" :precondition (and (at_0_" + (gridSize - 1) + "))\n");
+			output.append(" :precondition (and (at_x0) (at_y" + (gridSize - 1) + "))\n");
 			output.append(" :effect (and (holding_treasure_3))\n");
 			possAddTreasure1 = (random.nextDouble() < treasureInOtherLocationsDensity);
 			possAddTreasure2 = (random.nextDouble() < treasureInOtherLocationsDensity);
@@ -305,8 +306,8 @@ public class BridgesDomainCreator {
 	private static void createProblem() {
 		StringBuilder output = new StringBuilder("(define (problem bridges)\n");
 		output.append("    (:domain Bridges)\n\n");
-		output.append("    (:init (at_0_0))\n\n");
-		output.append("    (:goal\n     (and\n      (at_0_0)\n      (holding_treasure_1)\n      (holding_treasure_2)\n      (holding_treasure_3)\n     )\n    )\n");
+		output.append("    (:init (at_x0) (at_y0))\n\n");
+		output.append("    (:goal\n     (and\n      (at_x0) (at_y0)\n      (holding_treasure_1)\n      (holding_treasure_2)\n      (holding_treasure_3)\n     )\n    )\n");
 		output.append(")");
 		
 //		logger.debug(output);

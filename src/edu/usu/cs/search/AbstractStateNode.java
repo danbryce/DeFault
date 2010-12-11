@@ -63,9 +63,6 @@ public class AbstractStateNode implements StateNode {
 //		return relevantActions;
 //	}
 
-	//	protected double[] H_WEIGHT = null;
-
-
 	public AbstractStateNode() {
 		// TODO Auto-generated constructor stub
 	}
@@ -155,11 +152,11 @@ public class AbstractStateNode implements StateNode {
 
 	@Override
 	public int hashCode() {
-		if (hashInitialized) {
-			return hash;
-		}
-
-		hash = Proposition.getNodeHash(this.getState());
+//		if (hashInitialized) {
+//			return hash;
+//		}
+//
+//		hash = Proposition.getNodeHash(this.getState());
 
 		hashInitialized = true;
 		return hash;
@@ -169,12 +166,7 @@ public class AbstractStateNode implements StateNode {
 	public boolean equals(StateNode o) {
 		return true;
 	}
-	@Override
-	public boolean equals(Object o) {
-		return equals((StateNode)o);
-	}
 
-	
 	@Override
 	public Set<Proposition> getState() {
 		// TODO Auto-generated method stub

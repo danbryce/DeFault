@@ -1,0 +1,48 @@
+Check with Dr. Bryce:
+*The RiskCounter method getFailureExplanationSentence_BDDRef() - for G vs. L
+*The Agent method removeFailFromKBForNewPlan() - needed for O vs. P
+*The Agent method isActionApplicable(). - G vs. L, R vs. C
+*The Agent method insertSandorFSentenceIntoKB_withFailVarAndOP() - O vs. P
+*Note that Fault and RiskCounter have additional methods to that of Bryce's version.
+*Should Agent method updateActions() remove the risks learned?
+
+*How will sending the KB into the planner reduce the variables described?
+*Should have a variable for re-planning after each incomplete action taken?
+*Where to check if KB entails failVar? Likely in isActionApplicable().
+*Where to remove failVar? - on preparing for getting a new plan.
+
+Notes:
+The Assumptive Agent might be ok if we wanted to break out of "same plan" loops.
+We might just want to check for repeating plan loops and break out -fail- right there...
+
+1:RISKY vs. CONSERVATIVE
+*Will there become a case where the plans refuse to change if being conservative?
+*Likely. Thus, the ASSUMPTIVE agent might employed to break out of loops..
+
+3:GREEDY VS LOOKAHEAD
+Will the LOOKAHEAD agent will run into a repeating plan loop where its first action is
+going to cause the plan to fail and thus is never taken?
+*OK to set the solver to null?
+
+4: OPTIMISTIC vs. PESSIMISTIC - clarify that this case still exists now that FAIL is used
+*How does this case impact isActionFailure() 
+	- the test for this is currently simply whether some effect didn't occur...
+
+TO DO:
+2: EXACT VS ASSUMPTIVE
+*finish the method learnUnsatPossPreconditionsAndUpdateAction():
+	-smaller version of learnAboutActionTaken() stating that all possPres are pre's.
+	-smaller version of insertSandorFSentenceIntoKB().
+	-calls updateActions();
+*It may well be that Dr. Bryce's new v. of planners uses the enhanced KB to dissuade the repeated use of a same action whose possPre's are now listed as a known risk in the BDD.
+
+TEST:
+*FREGO first, see if same results.
+*The FAIL var and its removal.
+*Entailment of the PlanFailureExplanation and the KB.
+
+DONE (needs testing, however):
+1. RISKY  		vs. CONSERVATIVE
+3. GREEDY 		vs. LOOKAHEAD
+4. OPTIMISTIC 	vs. PESSIMISTIC
+5. STRICT 		vs. FORGIVING

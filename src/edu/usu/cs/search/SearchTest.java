@@ -119,12 +119,14 @@ public class SearchTest {
 				solverOptions.setUseMultipleSupportersInPlanningGraph(false);
 				solver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
 			} else if (args[3].length() > 4 && args[3].subSequence(0,4).toString().equalsIgnoreCase("pode")) {
-				solverOptions.setUsePreferredOperators(true);
-				solverOptions.setUseDeferredEvaluation(true);
-				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solverOptions.setRiskArity(Integer.valueOf(args[3].substring(4)));
 				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
 				solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
+				solverOptions.setRiskArity(Integer.valueOf(args[3].substring(4)));
+				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
+				solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
+//STOP HERE - the length and the pod solver are the ones to focus on for now //////////////////////////
+				
 				
 			} else if (args[3].equalsIgnoreCase("jdd")) {
 				solverOptions.setUsePreferredOperators(true);
@@ -154,14 +156,11 @@ public class SearchTest {
 		// getPlan(search);
 
 		if (plan == null) {
-//			logger.debug("\nNo plan found");
 			logger.debug("\nNo plan found");
 			return;
 		}
-//		logger.debug("\nPlan found");
 		logger.debug("\nPlan found");
 		for (ActionInstance action : plan) {
-//			logger.debug(action.getName());
 			logger.debug(action.getName());
 		}
 

@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -22,9 +21,6 @@ import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.AbstractSearch;
-import edu.usu.cs.search.AbstractStateNode;
-import edu.usu.cs.search.FaultStateNode;
-import edu.usu.cs.search.IncompletePINode;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
@@ -113,7 +109,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 
 			// Check to see if the solution is found in the node
-			if(solutionEvaluator.isSolution(problem,node)) {
+			if(solutionEvaluator.isSolution(problem, node)) {
 				//				logger.debug("Found Solution: " + node);
 				searchStatistics.setSolutionNode(node);
 				//				GeneralizedRiskSet crisks = node.getCriticalRisks();
@@ -167,7 +163,6 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 				closed.add( node);
 				continue;
 			}
-
 			// Add the notPreferredOperator children to open
 			List<StateNode> notPreferredNodes = node.createSubsequentNodes(
 					solver.getRelevantActions(), node.getPreferredOperators());
@@ -176,26 +171,20 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 
 
-
 			// Add the preferredOperator children to openPreferred
 			List<StateNode> preferredNodes =  node.createSubsequentNodes(node.getPreferredOperators(), null);
-
 			openPreferred.addAll(preferredNodes);
 			closed.add(   node);
-
-
-			searchStatistics.processNode( node);
-			expanded++;
 
 			// If the new h value is better than the current h value, add 1000 to 
 			// the preferred operator priority counter
 			if(bestNode == null ||
-					((StateNode) node).compareTo(bestNode) < 0 ) {
+					node.compareTo(bestNode) < 0 ) {
 				bestNode = node;
 				if(pulledPreferred){
-					//										for(StateNode cnode : preferredNodes)
-					//											cnode.getHeuristicValue();
-
+//										for(StateNode cnode : preferredNodes)
+//											cnode.getHeuristicValue();
+					
 
 					preferredPriority += 5*preferredNodes.size();
 				}
@@ -210,10 +199,12 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 
 
-
 			//logger.debug(searchStatistics.toString());
 
 		}
 	}
+
+
+
 
 }

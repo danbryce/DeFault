@@ -38,9 +38,7 @@ public class DefaultProblem implements Problem
 	
 	
 	
-	public DefaultProblem(){
-		
-	}
+	public DefaultProblem(){}
 	
 	public DefaultProblem(final String name, 
 			final Domain domain, 
@@ -149,14 +147,9 @@ public class DefaultProblem implements Problem
 	}
 
 	private boolean isAnEffect(PredicateInstance p) {
-		
-		
 		return false;
 	}
 	
-	
-
-    
     public String toString(){
     	StringWriter sw = new StringWriter();
     	
@@ -213,9 +206,12 @@ public class DefaultProblem implements Problem
 	}
 
 	@Override
-	public void setActionInstances(
-			List<ActionInstance> actionInstances) {
+	public void setActionInstances(List<ActionInstance> actionInstances) {
 		this.actionInstances = actionInstances;
+	}
+	
+	public void setInitialState(Set<Proposition> initialState){
+		this.initialState = initialState;
 	}
     
 }

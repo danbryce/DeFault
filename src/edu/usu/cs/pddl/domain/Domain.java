@@ -92,6 +92,7 @@ public class Domain
 //        		resultSet.addAll(ad.getPreconditionMethods());
         		ad.getEffect().getMethodDefs(resultSet);
         		ad.getPossEffect().getMethodDefs(resultSet);
+        		ad.getPossPreCondition().getMethods(resultSet);
 //        		ad.getEffect().getLiteralsUsed(resultSet);
         		if(resultSet.contains(pd)){
         			dynamic = true;
@@ -126,6 +127,11 @@ public class Domain
 
     public List<PredicateDef> getPredicates() {
         return predicates;
+    }
+    
+    //Added in order to check what changes in a domain... cw 7/1/10
+    public Set <PredicateDef> getDynamicPredicates() {
+        return dynamicPredicates;
     }
 
     public PredicateDef getPredicateByName(String name) {

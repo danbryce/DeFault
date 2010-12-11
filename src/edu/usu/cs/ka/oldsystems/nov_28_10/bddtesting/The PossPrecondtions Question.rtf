@@ -1,0 +1,87 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+\margl1440\margr1440\vieww14060\viewh21520\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 How to encode and query possPreCombinations?\
+Let's setup a situation where we can learn about 2 possPre's:\
+\
+Let's make this action, keeping it simple:\
+\pard\pardeftab720
+\cf0 Action: 3 move_0_0_0_1\
+	  PRE: [at_0_0]\
+	  ADD: [at_0_1]\
+	  DEL: [at_0_0]\
+	P'PRE: [1, 2]\
+	P'ADD: []\
+	P'DEL: []\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 P'PRE possible combinations are:\
+\{NULL, 1, 2, 1 ^ 2\}\
+\pard\pardeftab720
+\cf0 \
+For state = \{at_0_0\}:\
+	null 		-> action succeeds\
+				We learn: (~1) ^ (~2)\
+	1    		-> action fails if: [1] is a PRE, if [1 & 2] are PRE's\
+				We learn: (1 ^ 2) v (1 v 2)\
+	2		-> action fails if: [2] is a PRE, if [1 & 2] are PRE's\
+				We learn: (1 ^ 2) v (1 v 2)\
+	1 ^ 2		-> action fails if: [1] is a PRE, if [2] is a PRE, if [1 & 2] are PRE's\
+				We learn: (1 ^ 2) v (1 v 2)\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 For state = \{at_0_0, 1\}:\
+	null 		-> action succeeds\
+				We learn: (~2)\
+	1    		-> action succeeds\
+				We learn: (~2)\
+	2		-> action fails if: [2] is a PRE, if [1 & 2] are PRE's\
+				We learn: (1 ^ 2) v (2)\
+	1 ^ 2		-> action fails if: [2] is a PRE, if [1 & 2] are PRE's\
+				We learn: (1 ^ 2) v (2)\
+	\
+For state = \{at_0_0, 2\}:\
+	null 		-> action succeeds\
+				We learn: (~1)\
+	1    		-> action fails if: [1] is a PRE, if [1 & 2] are PRE's\
+				We learn: (1 ^ 2) v (1)\
+	2		-> action succeeds\
+				We learn: (~1)\
+	1 ^ 2		-> action fails if: [2] is a PRE, if [1 & 2] are PRE's\
+				We learn: (1 ^ 2) v (1)\
+\
+For state = \{at_0_0, 1, 2\}:\
+	null 		-> action succeeds\
+				We learn: nothing - (1) v (2) v (1 ^ 2) v (~1) v (~2) v (~1 ^ ~2)\
+	1    		-> action succeeds\
+				We learn: nothing - (1) v (2) v (1 ^ 2) v (~1) v (~2) v (~1 ^ ~2)\
+	2		-> action succeeds\
+				We learn: nothing - (1) v (2) v (1 ^ 2) v (~1) v (~2) v (~1 ^ ~2)\
+	1 ^ 2		-> action succeeds\
+				We learn: nothing - (1) v (2) v (1 ^ 2) v (~1) v (~2) v (~1 ^ ~2)\
+\
+Suppose (1 ^ 2) are actually PRE's. Follow this learning sequence:\
+State = \{at_0_0\}, action is tried, we learn: (1 ^ 2) v (1 v 2)\
+State = \{at_0_0, 1\}, action is tried, we learn: (1 ^ 2) v (2)\
+State = \{at_0_0, 2\}, action is tried, we learn: (1 ^ 2) v (1)\
+\
+\
+Does this give us what we need? \
+((1 ^ 2) v (1 v 2)) ^ ((1 ^ 2) v (2)) ^ ((1 ^ 2) v (1))  No.\
+If we queried the KB for (~1) or (~2), it would have given us FALSE.\
+How do we do this?\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

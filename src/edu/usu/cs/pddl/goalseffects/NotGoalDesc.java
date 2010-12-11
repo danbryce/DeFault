@@ -75,7 +75,7 @@ public class NotGoalDesc implements GoalDesc {
 	}
 
 
-	public void getMethods(List<MethodDef> preconditionMethods) {
+	public void getMethods(Set<MethodDef> preconditionMethods) {
 		negatedGoal.getMethods(preconditionMethods);
 	}
 

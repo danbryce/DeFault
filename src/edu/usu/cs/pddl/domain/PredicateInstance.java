@@ -50,7 +50,7 @@ public class PredicateInstance extends LiteralInstance implements GoalDesc
 	}
 
 
-	public void getMethods(List<MethodDef> preconditionMethods) {
+	public void getMethods(Set<MethodDef> preconditionMethods) {
 		preconditionMethods.add(this.getDefinition());
 	}
 

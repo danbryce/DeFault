@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface GoalDesc {
 
-	void getMethods(List<MethodDef> preconditionMethods);
+	void getMethods(Set<MethodDef> resultSet);
 
 	boolean notSatisfiedBy(Map<FormalArgument, PDDLObject> partialArgMap,
 			ConsistentLiteralSet startState, Set<PDDLObject> allObjects);
