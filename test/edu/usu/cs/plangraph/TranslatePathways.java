@@ -13,19 +13,18 @@ public class TranslatePathways {
 		String extension = ".pddl";
 		int numPfiles = 1;
 		
-		String[] problems = {
-				"02",
-				"05",
-				"09",
-		};
+//		String[] problems = {
+//				"02",
+//				"05",
+//				"09",
+//		};
 		
 		String[] densities = {
-				//"0.0",
 				"0.01",
-				"0.25"
-				//"0.5",
-				//"0.75",
-				//"1.0"
+				"0.25",
+				"0.5",
+				"0.75",
+				"1.0"
 		};
 		
 		//for(String problem : problems) {

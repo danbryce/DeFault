@@ -54,7 +54,7 @@ public class HoboNavTest {
 						args[5] = Double.toString(gambleDensities[density]);
 						args[6] = Double.toString(easyMarkDensities[density]);
 						
-						edu.usu.cs.incomplete.hobonav.HoboNavDomainCreator.main(args);
+						//edu.usu.cs.incomplete.hobonav.HoboNavDomainCreator.main(args);
 					}
 				}
 			}
@@ -104,4 +104,5 @@ public class HoboNavTest {
 		}
 		
 	}
+
 }
