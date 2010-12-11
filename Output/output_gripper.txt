@@ -1,1 +1,0 @@
-gripper.pddl	gripperprob1.pddl	friskylength	5	1000	5	0

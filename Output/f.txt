@@ -1,0 +1,19 @@
+hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	length	14	521	14	0
+hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	length	14	481	14	0
+hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	length	14	524	14	0
+domain_p05_1.0_1.pddl	p05.pddl	length	22	396	22	0
+domain_p02_1.0_1.pddl	p02.pddl	length	7	113	7	0
+domain_p02_1.0_1.pddl	p02.pddl	pode20	13	724	162domain_p02_1.0_1.pddl	p02.pddl	jdd	12	697	145domain_p02_1.0_1.pddl	p02.pddl	pode1	13	684	170domain_p02_1.0_1.pddl	p02.pddl	pode10	13	744	162hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode1	15	1547	18hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	length	14	497	14	0
+hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode1	15	1430	18hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode3	18	2502	26hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode4	16	3464	24hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode1	15	1514	18hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode5	16	6831	24hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode5	16	6978	24domain_p02_1.0_1.pddl	p02.pddl	jdd	12	660	145domain_p02_1.0_1.pddl	p02.pddl	jdd	12	679	145domain_p02_1.0_1.pddl	p02.pddl	jdd	12	724	145hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode5	16	8206	24domain_p03_0.25_1.pddl	p03.pddl	pode1	23	1649	242domain_p03_0.25_1.pddl	p03.pddl	length	18	1411	203	0
+domain_p05_0.25_1.pddl	p05.pddl	pode1	40	3597	586domain_p05_0.25_1.pddl	p05.pddl	length	30	603	32	0
+hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode5	16	2788	17hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	jdd	16	2193	16hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	length	14	531	14	0
+hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode1	18	1477	20hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	length	14	504	14	0
+hobonav_8_0.5_2_1.pddl	hobonav_problem_8.pddl	pode3	16	2541	17hobonav_16_0.5_2_1.pddl	hobonav_problem_16.pddl	pode3	34	14059	41hobonav_16_0.5_2_1.pddl	hobonav_problem_16.pddl	length	30	5673	30	0
+hobonav_16_0.5_2_1.pddl	hobonav_problem_16.pddl	pode1	48	43907	195domain_p07_0.5_1.pddl	p07.pddl	pode1	64	13500	1414domain_p10_0.01_1.pddl	p10.pddl	length	84	2603	201	0
+hobonav_16_0.5_2_1.pddl	hobonav_problem_16.pddl	pode1	48	42585	195hobonav_16_0.5_2_1.pddl	hobonav_problem_16.pddl	length	30	4762	30	0
+manyfault.pddl	manyfault_p1.pddl	jdd	4	10712	4domain_p10_0.01_1.pddl	p10.pddl	length	84	2523	207	0
+domain_p15.pddl	p15.pddl	length	110	6150	300	0
+domain_p04_1.0_1.pddl	p04.pddl	jdd	20	1511	224domain_p01_1.0_1.pddl	p01.pddl	pode1	6	121	6domain_p02_1.0_1.pddl	p02.pddl	pode1	13	195	15domain_p03_1.0_1.pddl	p03.pddl	pode1	20	1058	139domain_p04_1.0_1.pddl	p04.pddl	pode1	21	1839	225domain_p05_1.0_1.pddl	p05.pddl	pode1	34	1234	54domain_p05_1.0_1.pddl	p05.pddl	pode1	34	1317	54domain_p10_0.01_1.pddl	p10.pddl	length	84	2467	207	0
+domain_p10_0.01_1.pddl	p10.pddl	jdd	86	11836	1161domain_p10_0.01_1.pddl	p10.pddl	pode1	86	9142	1018domain_p10_0.01_1.pddl	p10.pddl	length	84	2588	207	0
+domain_p10_0.5_1.pddl	p10.pddl	length	50	2459	64	0
+domain_p10_0.5_1.pddl	p10.pddl	pode1	59	33650	2309domain_p10_0.5_1.pddl	p10.pddl	jdd	61	9901	1027domain_p06_0.5_1.pddl	p06.pddl	pode1	59	7075	650domain_p06_0.5_1.pddl	p06.pddl	pode1	59	6905	650domain_p05_1.0_1.pddl	p05.pddl	pode1	26	1953	152domain_p07_1.0_1.pddl	p07.pddl	pode3	45	23884	968
