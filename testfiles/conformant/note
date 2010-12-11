@@ -1,0 +1,7 @@
+Emptied conformant folder of:
+/blindnav
+/bridges
+/pathways
+
+because this is not relevant to incomplete domains work.
+It causes the loading of this branch to take too long.
