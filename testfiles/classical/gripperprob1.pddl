@@ -1,1 +1,0 @@
-(define (problem gripper1)   (:domain gripper-typed)   (:objects	  room1 - room	  room2 - room	  redball - ball	  blueball - ball   )   (:init (atloc redball room1) (atloc blueball room1)          (at-robby room1)          (free left) (free right)		  (hasPower))   (:goal (and (atloc redball room2) (atloc blueball room2))))
