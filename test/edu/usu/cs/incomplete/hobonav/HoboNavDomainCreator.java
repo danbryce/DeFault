@@ -53,13 +53,15 @@ public class HoboNavDomainCreator {
 		output.append("(:predicates\n");
 		List<String> atPredicates = new ArrayList<String>();
 		List<String> havePredicates = new ArrayList<String>();
-		for (int x = 0; x < gridSize; x++) {
+		//for (int x = 0; x < gridSize; x++) {
 			for (int y = 0; y < gridSize; y++) {
-				atPredicates.add("(at_" + x + "_" + y + ")");
+				atPredicates.add("(at_x" + y + ")");
+				output.append(" " + atPredicates.get(atPredicates.size() - 1));
+				atPredicates.add("(at_y" + y + ")");
 				output.append(" " + atPredicates.get(atPredicates.size() - 1));
 			}
 			output.append("\n");
-		}
+		//}
 		
 		for (int i = 0; i < itemCount; i++) {
 			havePredicates.add("(have_" + items[i] + ")");
@@ -158,7 +160,7 @@ public class HoboNavDomainCreator {
 		StringBuilder output = new StringBuilder();
 		output.append("\n(:action move_" + fromX + "_" + fromY + "_" + toX + "_" + toY + "\n");
 		output.append(" :parameters ()\n");
-		output.append(" :precondition (and (at_" + fromX + "_" + fromY + "))\n");
+		output.append(" :precondition (and (at_x" + fromX + ") (at_y" + fromY + "))\n");
 		if (possPrecs.size() > 0) {
 			output.append(" :poss-precondition (and");
 			for (String possPrec : possPrecs) {
@@ -166,7 +168,13 @@ public class HoboNavDomainCreator {
 			}
 			output.append(")\n");
 		}
-		output.append(" :effect (and (not (at_" + fromX + "_" + fromY + ")) (at_" + toX + "_" + toY + "))\n");
+		if(fromX != toX){
+			output.append(" :effect (and (not (at_x" + fromX + ")) (at_x" + toX + "))\n");
+		}
+		else{
+			output.append(" :effect (and (not (at_y" + fromY + ")) (at_y" + toY + "))\n");
+			
+		}
 		if (possPrecs.size() > 0) {
 			output.append(" :poss-effect (and");
 			for (String possPrec : possPrecs) {
@@ -183,7 +191,7 @@ public class HoboNavDomainCreator {
 		
 		output.append("\n(:action gamble_" + item + "_" + x + "_" + y + "\n");
 		output.append(" :parameters ()\n");
-		output.append(" :precondition (and (at_" + x + "_" + y + "))\n");
+		output.append(" :precondition (and (at_x" + x + ") (at_y" + y + "))\n");
 		output.append(" :effect (and )\n");
 		output.append(" :poss-effect (and (have_" + item + "))\n");
 		output.append(")\n");
@@ -196,7 +204,7 @@ public class HoboNavDomainCreator {
 		
 		output.append("\n(:action easymark_" + item + "_" + x + "_" + y + "\n");
 		output.append(" :parameters ()\n");
-		output.append(" :precondition (and (at_" + x + "_" + y + "))\n");
+		output.append(" :precondition (and (at_x" + x + ") (at_y" + y + "))\n");
 		output.append(" :effect (and (have_" + item + "))\n");
 		output.append(")\n");
 		
@@ -210,9 +218,9 @@ public class HoboNavDomainCreator {
 		output.append("(define (problem hobonav" + gridSize + ")\n");
 		output.append("    (:domain HoboNav)\n");
 		output.append("\n");
-		output.append("    (:init (at_0_0))\n");
+		output.append("    (:init (at_x0) (at_y0))\n");
 		output.append("\n");
-		output.append("    (:goal (and (at_" + (gridSize - 1) + "_" + (gridSize - 1) + ")))\n");
+		output.append("    (:goal (and (at_x" + (gridSize - 1) + ") (at_y" + (gridSize - 1) + ")))\n");
 		output.append(")");
 		
 		// Write out to the file
