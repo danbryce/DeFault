@@ -54,7 +54,7 @@ public class HoboNavDomainCreator {
 		List<String> atPredicates = new ArrayList<String>();
 		List<String> havePredicates = new ArrayList<String>();
 		//for (int x = 0; x < gridSize; x++) {
-			for (int y = 0; y < gridSize; y++) {
+			for (int y = 0; y < gridSize; y++) { 
 				atPredicates.add("(at_x" + y + ")");
 				output.append(" " + atPredicates.get(atPredicates.size() - 1));
 				atPredicates.add("(at_y" + y + ")");
