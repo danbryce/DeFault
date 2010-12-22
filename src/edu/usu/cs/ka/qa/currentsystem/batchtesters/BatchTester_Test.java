@@ -1,6 +1,6 @@
-package edu.usu.cs.ka.currentsystem.batchtesters;
+package edu.usu.cs.ka.qa.currentsystem.batchtesters;
 
-import edu.usu.cs.ka.currentsystem.simulator.*;
+import edu.usu.cs.ka.qa.currentsystem.simulator.*;
 
 public class BatchTester_Test 
 {

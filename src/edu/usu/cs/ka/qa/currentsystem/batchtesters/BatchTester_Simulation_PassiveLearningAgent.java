@@ -1,8 +1,8 @@
-package edu.usu.cs.ka.currentsystem.batchtesters;
+package edu.usu.cs.ka.qa.currentsystem.batchtesters;
 
-import edu.usu.cs.ka.currentsystem.simulator.*;
+import edu.usu.cs.ka.qa.currentsystem.simulator.Simulation;
 
-public class BatchTester_Test 
+public class BatchTester_Simulation_PassiveLearningAgent 
 {
 	private static final int numFiles = 10;
 
@@ -26,16 +26,17 @@ public class BatchTester_Test
 						args[0] = pathToDomains + "bridges_v" + version + "_" + gridSize + "_" + bridgeDensity + "_" + numFile + extension;
 						args[1] = pathToProblems + "bridges_problem" + extension;
 						
+						
 						if(gridSize ==2) args[2] = String.valueOf(2);
 						else if(gridSize ==4) args[2] = String.valueOf(4);
 						else args[2] = String.valueOf(10);
 						
-						try{ Test_PlannersRawPerformance.main(args); }
+						try{ Simulation.main(args); }
 						catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 						
-						System.out.println();
+						//System.out.println();
 					}//end for num file
-					System.out.println();
+					//System.out.println();
 				}//end for bridge density
 			}//end for version
 		}//end for size

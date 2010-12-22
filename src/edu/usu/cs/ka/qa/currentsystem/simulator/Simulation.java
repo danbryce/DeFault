@@ -1,10 +1,10 @@
-package edu.usu.cs.ka.currentsystem.simulator;
+package edu.usu.cs.ka.qa.currentsystem.simulator;
 
 import java.util.*;
 import java.math.BigInteger;
 
-import edu.usu.cs.ka.currentsystem.agentsystem.*;
-import edu.usu.cs.ka.currentsystem.utilities.*;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.*;
+import edu.usu.cs.ka.qa.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;

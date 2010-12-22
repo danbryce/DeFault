@@ -9,15 +9,16 @@ import edu.usu.cs.pddl.domain.incomplete.*;
 import java.io.*;
 import java.util.*;
 
-/* This class has been built to check if the changes made to an ActionInstance 
- * show up in both the HT and the List containers of the problem's ActionInstances.
+/**
+ * This class concerns planner performance on complete vs. incomplete action descriptions.
+ *  See runPlannerThread notes.
  */
-public class Test_PlannerRawPerformance 
+public class Test_PlannersRawPerformance 
 {	
 	Planner planners;
 	static int timeLimit;
 	
-	Test_PlannerRawPerformance(String [] args)
+	Test_PlannersRawPerformance(String [] args)
 	{		
 		if (args.length != 3) { usage(args); System.exit(1); }
 		
@@ -28,7 +29,7 @@ public class Test_PlannerRawPerformance
 	
 	public static void main(String [] args)
 	{	
-		Test_PlannerRawPerformance test = new Test_PlannerRawPerformance(args);
+		Test_PlannersRawPerformance test = new Test_PlannersRawPerformance(args);
 		test.runTest(args);
 	}
 	
@@ -58,11 +59,12 @@ public class Test_PlannerRawPerformance
 			isSolvableTest = true;
 			DomainExpert expert = new DomainExpert(args[0], args[1], simSeed);
 			planners.setProblem(expert.getProblem()); //Sets planner's actions to complete version
-			//Recall that parcprinter and pathways change actions during planning.
-			//Note that problem's actions are restored by Planner.
-			//Because Expert is not called on, his action list doesn't need restoration.
+			//Recall that planners change action descriptions for parcprinter and pathways domains
+			// (removes add effects that are never preconditions) to speed planning.
+			//Note that problem's actions are restored by Planner in the method getPlan();
+			//Because Expert is not called on, his action list doesn't need restoration (see Simulation).
 			
-			//AMIR plan
+			//AMIR
 			plan = runPlannerThread("amir");	
 			if(plan == null && !timeout) 
 				resultString += " COMPLETE amir ? ?";
@@ -143,7 +145,6 @@ public class Test_PlannerRawPerformance
 				if(incSuccess)
 				{
 					System.out.println(resultString);
-					
 					//try{ out.write(resultString + "\n"); } catch(Exception e){e.printStackTrace();}
 						  
 					numSuccesses++;
@@ -154,6 +155,18 @@ public class Test_PlannerRawPerformance
 		//try{ out.close(); } catch(Exception e){e.printStackTrace();}
 	}
 	
+	
+	
+	/**
+	 * Thread are employed because in rare cases a planner will not return a result.
+	 * Allow the planner enough time to solve the problem's classical version.
+	 * Give the planner a much greater time to solve the incomplete version.
+	 * These results can be analyzed to find a thread limit that allows planner to solve
+	 *  the vast majority of incomplete problem versions, while not hanging on
+	 *  problems that do not return a result using a given planner.
+	 * @param plannerType
+	 * @return
+	 */
 	boolean timeout;
 	private List<ActionInstance> runPlannerThread(String plannerType)
 	{
@@ -164,8 +177,8 @@ public class Test_PlannerRawPerformance
 		execThread.start();
 		
 		int maxTime = 0;
-		if(isSolvableTest)	maxTime = timeLimit/4;
-		else				maxTime = timeLimit;
+		if(isSolvableTest)	maxTime = timeLimit;      //timeLimit/4;
+		else				maxTime = timeLimit * 20; //timeLimit*2;
 				
 		while ((now - start) < maxTime)
 		{
