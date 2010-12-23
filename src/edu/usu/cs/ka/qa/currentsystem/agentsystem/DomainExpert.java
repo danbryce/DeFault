@@ -3,9 +3,11 @@ package edu.usu.cs.ka.qa.currentsystem.agentsystem;
 import java.util.*;
 
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
+import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.*;
+import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 
 public class DomainExpert 
 {
@@ -22,6 +24,9 @@ public class DomainExpert
 	
 	List<ActionInstance> actionsCV;//complete version
 	public Hashtable<Integer, IncompleteActionInstance> actionsCV_HT;//hashtable
+	List<Fault> wereRisksAreNowKnownFeatures;
+	
+	int numQsAsked;
 		
 	public DomainExpert(String dFileString, String pFileString, int simSeed)
 	{	
@@ -31,11 +36,18 @@ public class DomainExpert
 		
 		setDomainAndProblem();
 		
+		//To get a list of the actual Risks in the problem's actions
+		RiskCounter.resetIsInitialized();//The Fault.StaticHashMaps are also reset in this method
+		RiskCounter.initialize(domain, problem);
+		wereRisksAreNowKnownFeatures = RiskCounter.getAllRisks();//this risksList is transformed into known features in createActions_CompleteVersion()
+		
 		random = new Random(seed);
 		probability = .5;
 		
 		createActions_CompleteVersion();//makes CV of problem's actions, set problem's actionList to this CV.	
 		loadActionsHT();
+		
+		numQsAsked = 0;
 	}
 	
 	public void setDomainAndProblem()
@@ -69,9 +81,11 @@ public class DomainExpert
 		}
 	}
 	
-	public Problem getProblem() { return problem;}
-	public IncompleteActionInstance getActionCVByID(Integer id){ return actionsCV_HT.get(id); }
-	public List<ActionInstance> getActions(){ return actionsCV; }
+	public Problem getProblem() 								{ return problem; }
+	public IncompleteActionInstance getActionCVByID(Integer id)	{ return actionsCV_HT.get(id); }
+	public List<ActionInstance> getActions()					{ return actionsCV; }
+	public int getNumRisks()									{ return wereRisksAreNowKnownFeatures.size(); }
+	public int getNumQsAsked()									{return numQsAsked;}
 	
 	public int getCountOfFeaturesInActionsCV()
 	{
@@ -110,42 +124,34 @@ public class DomainExpert
 		return newState;
 	}
 	
-	/*
-	 *If Agent is performing QA Learning, then the DE here gives feedback about the Q asked of it - 
-	 * is the chosen possible feature of a chosen action for its chosen list a real feature or not?
-	 * The agent has told the DE which possibles list the prop came from.
-	 * The DE looks up the prop in its appropriate knowns list (# of possibles list - 3)
-	 *  
-	 *  QA_ActionAndPropChoice class data members:
-	 * 	 IncompleteActionInstance action;
-	 *   Integer listOriginOfProp;
-	 *   Proposition propToLearnAbout;
-	*/
-//	public boolean giveFeedbackForQuestion (QA_Learning.QA_ActionAndPropChoice actionWithQ)
-//	{
-//		IncompleteActionInstance actCV = actionsCV_HT.get(actionWithQ.action.getIndex());
-//			
-//		//An incomplete action has 6 lists. See Actions_Utility class...  
-//		int listToCheck = actionWithQ.listOriginOfProp - 3; 
-//		
-//		boolean isFound = false;
-//		switch(listToCheck)
-//		{
-//			case (Actions_Utility.KNOWNPRECONDITIONSLIST): //1
-//				if(actCV.getPreconditions().contains(actionWithQ.propToLearnAbout)) isFound = true;
-//				break;
-//			case (Actions_Utility.KNOWNADDEFFECTSLIST): //2
-//				if(actCV.getAddEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
-//				break;
-//			case (Actions_Utility.KNOWNDELETEEFFECTSLIST): //3
-//				if(actCV.getDeleteEffects().contains(actionWithQ.propToLearnAbout)) isFound = true;
-//				break;
-//			default:
-//				System.out.println("ERROR: Sim did not find right list. THIS SHOULD NEVER HAPPEN!");
-//		}
-//		
-//		return isFound;
-//	}
+	/**
+	 *If an agent performs QA Learning, then the DE here gives feedback about the Q asked of it. 
+	 * Is the chosen possible feature - a Risk/Fault - a real feature or not?
+	 * The DE looks up the Risk/Fault in its risks list and return whether or not it exists.
+	 * If it exists in its list, then it is an actual pre/effect. 
+	 * @param Fault isRisk - the possible feature of an action whose existence the agent wishes to resolve.
+	 * @return bool - T if the risk is an actual feature
+	 */
+	public boolean isRiskAFeatureQuery (Fault isRisk)
+	{	
+		numQsAsked++;
+		return wereRisksAreNowKnownFeatures.contains(isRisk);
+	}
+	
+	/**
+	 *This version of the above method uses the Fault.getRiskFromIndex method, as does the
+	 * createActions_CompleteVersion() method. Note that when this method is called,
+	 * the Fault class's lists now contain the Agent's lists of Faults, not the DE's.
+	 * @param name
+	 * @param action
+	 * @param proposition
+	 * @return bool - T if the risk is an actual feature
+	 */
+	public boolean isRiskAFeatureQuery (String name, String action, String proposition)
+	{	
+		Fault f = Fault.getRiskFromIndex(name, action, proposition);
+		return isRiskAFeatureQuery(f);
+	}
 	
 	/**
 	 * Uses the probability and simSeed found in the DE constructor to create a complete version (CV)
@@ -176,6 +182,7 @@ public class DomainExpert
 			{			
 				Double nextDouble = random.nextDouble();
 				if(nextDouble > probability) { newPresSet.add(p); }
+				else wereRisksAreNowKnownFeatures.remove(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
 			}
 			
 			//Adds
@@ -183,6 +190,7 @@ public class DomainExpert
 			{
 				Double nextDouble = random.nextDouble();
 				if(nextDouble > probability) newAddsSet.add(p);
+				else wereRisksAreNowKnownFeatures.remove(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, a.getName(), p.getName()));
 			}
 			
 			//Deletes
@@ -190,6 +198,7 @@ public class DomainExpert
 			{			
 				Double nextDouble = random.nextDouble();
 				if(nextDouble > probability) newDelsSet.add(p);
+				else wereRisksAreNowKnownFeatures.remove(Fault.getRiskFromIndex(Fault.POSSCLOB, a.getName(), p.getName()));
 			}
 			
 			//Create a new actionInstance with above changes and stick it into sim's actionsCV list

@@ -14,10 +14,15 @@ import jdd.bdd.*;
  * It contains methods to:
  *  Take actions even if they might fail - risky(R)
  *  Take actions even if the plan has a guaranteed future failure - greedy(G)
+ *  Take actions only if they will not immediately fail - conservative(C)
+ *  Take actions only if they will not fail down the road - lookahead(L)
+ * These methods are used by the derived classes Agent_CL and Agent_RG  
+ *  
+ * Have made changes to Fault and RiskCounter classes to enable this class. 
  */
 public abstract class Agent 
-{
-	//Have made changes to Fault and RiskCounter classes
+{	
+	public static enum LearningTypes {PL, QA};
 	
 	//Domain and Problem stuff
 	protected String domainFile;
@@ -44,6 +49,10 @@ public abstract class Agent
 	
 	protected int actionsCount;
 	protected int failedActionsCount;
+	
+	protected int numQsAsked;
+	protected int numRisksLearnedQA;
+	protected int numRisksLearnedPL;
 	
 	public Agent(String dFile, String pFile)
 	{
@@ -74,6 +83,9 @@ public abstract class Agent
 		
 		actionsCount = 0;
 		failedActionsCount = 0;
+		numQsAsked = 0;
+		numRisksLearnedQA = 0;
+		numRisksLearnedPL = 0;
 	}
 	
 	public void setDomainAndProblem()
@@ -85,7 +97,9 @@ public abstract class Agent
 	
 	public Problem getProblem() 				{ return problem; }
 	public List<ActionInstance> getActions() 	{ return actions; }
-
+	public List<Fault> getRisks()				{ return risks; }
+	public int getNumRisks()					{ return risks.size();}
+	
 	/**
 	 * This method's simple assignment statement means that any changes to the Agent's actionList
 	 *  are also made to the Agent's problem's actionList.
@@ -94,6 +108,10 @@ public abstract class Agent
 	
 	public int getNumActionsTaken() 			{ return actionsCount; }
 	public int getNumFailedActions()			{ return failedActionsCount; }
+	public int getNumQsAsked()					{ return numQsAsked; }
+	public int getNumRisksLearnedQA()			{ return numRisksLearnedQA; }
+	public int getNumRisksLearnedPL()			{ return numRisksLearnedPL; }
+	
 	public void incrementFailedActionsCount() 	{ failedActionsCount++; }
 	
 	public static BDD getBDD() {return bdd;}
@@ -192,10 +210,9 @@ public abstract class Agent
 //		bdd.printSet(failureSentence);
 //		bdd.printSet(successSentence);
 //		
-		//insertSandorFSentenceIntoKB(successSentence, failureSentence, a, prevState, currState);
 		insertSandorFSentenceIntoKB_withFailVar(successSentence, failureSentence, a, prevState, currState);
 		
-		updateActions();
+		updateActions(LearningTypes.PL);
 		//Because the LookAhead Agent requires the KB to be current up to the current action,
 		//The transformation of the problem's action list by using the KB now occurs instantly.
 	}
@@ -232,43 +249,7 @@ public abstract class Agent
 		bdd.deref(bddRefSF);
 		return temp;	
 	}
-	
-	/**
-	 * This old private helper method inserts either the successSentence or failureSentence built by the method
-	 * 	learnAboutActionTaken(...) into the KB.
-	 * This method is now replaced by addPropToSentence_withFailVar
-	 * @param successSentence
-	 * @param failureSentence
-	 * @param act
-	 * @param prevState
-	 * @param currState
-	 */
-	/*
-	private void insertSandorFSentenceIntoKB( int successSentence, int failureSentence, 
-											  IncompleteActionInstance incompleteAction, 
-			                                  Set<Proposition> prevState, Set<Proposition> currState)
-	{
-		int tempRefToNewKB;
-		if(!prevState.equals(currState)) //Action succeeded
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
-		else if(isActionFailure(incompleteAction, prevState, currState)) //Action failed
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
-		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
-		//action failure not known, combine two Trees of cases above	
-		{
-			System.out.print(" *");
-			int tempRefSF = bdd.ref(bdd.or(successSentence, failureSentence));
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
-			bdd.deref(tempRefSF);
-		}
 		
-		bdd.deref(successSentence);
-		bdd.deref(failureSentence);
-		bdd.deref(bddRef_KB);
-		bddRef_KB = tempRefToNewKB;
-	}
-	*/
-	
 	/**
 	 * This private helper method inserts either the successSentence or failureSentence built by the method
 	 * 	learnAboutActionTaken(...) into the KB. 
@@ -439,9 +420,9 @@ public abstract class Agent
 	 *  2. and it to the KB
 	 *  3. If the result is 0, then update the action for that risk that has been learned...
 	 */
-	public void updateActions()
+	public void updateActions(LearningTypes type)
 	{
-		ArrayList<Fault> risksLearned = new ArrayList<Fault>();
+		List<Fault> risksLearned = new ArrayList<Fault>(); //Prevents concurrent modification exception
 		for(Fault r : risks)
 		{			
 			int resultT = bdd.and(riskToBDD.get(r), bddRef_KB); 		  	//Query returns 0 if -prop - don't add to known list
@@ -488,27 +469,46 @@ public abstract class Agent
 				{					
 					possSet.remove(propLearned);
 					risksLearned.add(r);
+					
+					if(type.equals(LearningTypes.PL))	numRisksLearnedPL++;
+					if(type.equals(LearningTypes.QA)) 	numRisksLearnedQA++;
 				}
 			}
 		}
-		
-		//Should I do this?
 		risks.removeAll(risksLearned); //The risks learned are removed from the risks list
 	}
 	
-	/**
-	 * This method is used by an ASSUMPTIVE agent and is called in the execution sim.
-	 * @param currAction
-	 */
-	public void learnUnsatPossPreconditionsAndUpdateAction(IncompleteActionInstance currAction)
+	public void queryDomainExpertAboutAllRisks_QA(DomainExpert expert)
 	{
-		//TO DO:
+		List<Fault> currentRisks = new ArrayList<Fault>(this.getRisks()); //Prevents concurrent mod exception
+		for(Fault f : currentRisks)
+		{
+			boolean result = expert.isRiskAFeatureQuery(f);
+			this.numQsAsked++;
+			
+			if(result)
+				addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, true);
+			else
+				addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, false);
+		}	
+		updateActions(LearningTypes.QA);
+	}
+	
+	public void addDomainExpertQueryResultToBDDAndUpdateActions_QA(Fault f, boolean isFeature)
+	{
+		int tempRefToNewKB;
+		
+		if(isFeature)
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, riskToBDD.get(f)));
+		else
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, bdd.not(riskToBDD.get(f))));
+		
+		bdd.deref(bddRef_KB);
+		bddRef_KB = tempRefToNewKB;
 	}
 	
 	public void startStopwatch(){ startTime = System.currentTimeMillis(); }
-	
 	public void stopStopwatch(){ finishTime = System.currentTimeMillis(); }
-	
 	public Double getTimeToSolve()
 	{
 		if(startTime == null || finishTime == null) return -1.0;
