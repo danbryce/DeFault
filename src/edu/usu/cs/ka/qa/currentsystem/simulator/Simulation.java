@@ -51,16 +51,12 @@ public class Simulation
 		int randomInt = randomGenerator.nextInt(3);
 		switch(randomInt)
 		{
-			case 0: if(runPlannerThread("amir") == null) 	return false;
-					break;
-			case 1: if(runPlannerThread("pode1") == null) 	return false;
-					break;
-			case 2: if(runPlannerThread("jdd") == null) 	return false;
-					break;
+			case 0: if(runPlannerThread("amir") == null) 	return false; break;
+			case 1: if(runPlannerThread("pode1") == null) 	return false; break;
+			case 2: if(runPlannerThread("jdd") == null) 	return false; break;
 		}
 
 		expert.restoreActionsToStateBeforePlannerCall();
-		
 		isSolvableTest = false;
 		
 		return true;
