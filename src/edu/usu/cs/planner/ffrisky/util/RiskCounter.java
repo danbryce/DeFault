@@ -42,7 +42,8 @@ public class RiskCounter {
 	private static int unusedRisks = 0;//currently unused
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
 		
-	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
+	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) 
+	{
 		if (isInitialized) return;
 		
 		allRisks = getAllRisks(problem);
@@ -54,8 +55,8 @@ public class RiskCounter {
 		
 		int i = 1;
 		unusedRisks = 0;
-		for (Fault risk : allRisks) {
-
+		for (Fault risk : allRisks) 
+		{
 //			boolean riskActionInPlan = false;
 //			if (plan != null) {
 //				for(ActionInstance a : plan){
@@ -76,11 +77,8 @@ public class RiskCounter {
 //				unusedRisks++;
 //			}
 		}
-
-
 		isInitialized = true;
 	}
-	
 	
 	/**
 	 * This method is a slightly altered version of the original version above.
@@ -108,6 +106,9 @@ public class RiskCounter {
 		for (Fault risk : allRisks) 
 		{
 			int temp = bdd.createVar();
+
+			System.out.println(temp + ":" + risk);
+			
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
 		}
@@ -154,7 +155,6 @@ public class RiskCounter {
 //			bdd.printSet(nodes.get(nodes.size()-1).getCriticalRisks());
 //			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
 		}
-
 
 //		//add critical risks for goals
 		int crs = nodes.get(nodes.size() - 1).getActRisks();
@@ -255,6 +255,7 @@ public class RiskCounter {
 			//then the failure explanation is trivially true - the plan will definitely fail.
 			else 
 			{
+				System.out.println("PFE TRUE");
 				bdd.deref(crs);
 				crs = bdd.getOne();
 				int tmp = bdd.ref(crs);
@@ -262,7 +263,41 @@ public class RiskCounter {
 				break;
 			}
 		}
+		return crs;
+	}
+	
+	/**
+	 * This method is altered from the above method to return the risks that may/will cause the plan to fail
+	 */
+	public static int getFailureExplanationSentence_BDDRef2(Problem problem, List<ActionInstance> plan, Solver solver) 
+	{	
+		if(plan == null) return bdd.getOne();
 		
+		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1); // Figure out which risks are true right now
+
+		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state - note: solver is null				
+		for(ActionInstance action : plan)
+		{
+			try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance) action));}
+			catch(Exception e){e.printStackTrace(); break;}
+		}
+		
+		//Requires this line - might have added a null node, causing the next line to break.
+		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
+		
+		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
+		bdd.ref(crs);
+		for(Proposition p : problem.getGoalAction().getPreconditions())
+		{
+			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);//propositions here gets the bddRef to Prop p
+			if(risk != null)
+			{				
+				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
+				bdd.deref(crs);
+				bdd.ref(tmp);
+				crs = tmp;
+			}
+		}
 		return crs;
 	}
 	

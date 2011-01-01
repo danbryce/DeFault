@@ -1,7 +1,8 @@
 package edu.usu.cs.ka.qa.currentsystem.simulator;
 
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.*;
-import edu.usu.cs.ka.qa.currentsystem.simulator.Simulation.ExecThread;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.Planner.PlannerTypes;
+import edu.usu.cs.ka.qa.currentsystem.simulator.Simulation_PL_QA.ExecThread;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
@@ -65,7 +66,7 @@ public class Test_PlannersRawPerformance
 			//Because Expert is not called on, his action list doesn't need restoration (see Simulation).
 			
 			//AMIR
-			plan = runPlannerThread("amir");	
+			plan = runPlannerThread(PlannerTypes.AMIR);	
 			if(plan == null && !timeout) 
 				resultString += " COMPLETE amir ? ?";
 			else if(plan == null && timeout) 
@@ -77,7 +78,7 @@ public class Test_PlannersRawPerformance
 			}
 			
 			//PODE1
-			plan = runPlannerThread("pode1");			
+			plan = runPlannerThread(PlannerTypes.PODE1);			
 			if(plan == null && !timeout) 
 				resultString += " pode1 ? ?";
 			else if(plan == null && timeout) 
@@ -89,7 +90,7 @@ public class Test_PlannersRawPerformance
 			}
 			
 			//JDD
-			plan = runPlannerThread("jdd");			
+			plan = runPlannerThread(PlannerTypes.JDD);			
 			if(plan == null && !timeout) 
 				resultString += " jdd ? ?";
 			else if(plan == null && timeout) 
@@ -107,7 +108,7 @@ public class Test_PlannersRawPerformance
 				planners = new Planner(args[0], args[1]); //Reset problem and actions.
 				
 				//AMIR
-				plan = runPlannerThread("amir");
+				plan = runPlannerThread(PlannerTypes.AMIR);
 				if(plan == null && !timeout) 
 					resultString += " INCOMPLETE amir ? ?";
 				else if(plan == null && timeout) 
@@ -119,7 +120,7 @@ public class Test_PlannersRawPerformance
 				}
 				
 				//BRYCE
-				plan = runPlannerThread("pode1");
+				plan = runPlannerThread(PlannerTypes.PODE1);
 				if(plan == null && !timeout) 
 					resultString += " pode1 ? ?";
 				else if(plan == null && timeout) 
@@ -131,7 +132,7 @@ public class Test_PlannersRawPerformance
 				}
 				
 				//JDD
-				plan = runPlannerThread("jdd");			
+				plan = runPlannerThread(PlannerTypes.JDD);			
 				if(plan == null && !timeout) 
 					resultString += " jdd ? ?";
 				else if(plan == null && timeout) 
@@ -168,7 +169,7 @@ public class Test_PlannersRawPerformance
 	 * @return
 	 */
 	boolean timeout;
-	private List<ActionInstance> runPlannerThread(String plannerType)
+	private List<ActionInstance> runPlannerThread(PlannerTypes plannerType)
 	{
 		ExecThread execThread = new ExecThread(Thread.currentThread(), planners, plannerType);
 		
@@ -201,10 +202,10 @@ public class Test_PlannersRawPerformance
 		public boolean done = false;
 		
 		Planner planner;
-		String plannerType;
+		PlannerTypes plannerType;
 		List<ActionInstance> plan = null;
 		
-		ExecThread(Thread CallingThread, Planner p, String pType)
+		ExecThread(Thread CallingThread, Planner p, PlannerTypes pType)
 		{
 			planner = p;
 			plannerType = pType;

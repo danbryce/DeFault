@@ -7,6 +7,7 @@ import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent_CL;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent_RG;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.DomainExpert;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.AgentTypes;
 import edu.usu.cs.ka.qa.currentsystem.utilities.Actions_Utility;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
@@ -43,8 +44,8 @@ public class Test_QA_DE_Agent_Setup
 		Test_QA_DE_Agent_Setup testSetup = new Test_QA_DE_Agent_Setup(args);
 		try
 		{
-			try{ testSetup.runTest(args, "RG"); } catch(Exception e){e.printStackTrace();}
-			//try{ testSetup.runTest(args, "CL"); } catch(Exception e){e.printStackTrace();}
+			try{ testSetup.runTest(args, AgentTypes.RG); } catch(Exception e){e.printStackTrace();}
+			//try{ testSetup.runTest(args, AgentTypes.CL); } catch(Exception e){e.printStackTrace();}
 		}catch(Exception e){System.out.println("\nUnhandled Exception"); e.printStackTrace();}
 		
 		System.out.print("DE RtoKFs: " + testSetup.expert.getNumRisks() + " ");
@@ -52,13 +53,13 @@ public class Test_QA_DE_Agent_Setup
 		System.out.println("QsAsked: " + testSetup.expert.getNumQsAsked() + " ");
 	}
 	
-	private void runTest(String [] args, String agentType)
+	private void runTest(String [] args, AgentTypes agentType)
 	{	
 		System.out.print(agentType + " ");
 		
-		if(agentType.equals("RG")) 		
+		if(agentType.equals(AgentTypes.RG)) 		
 			agent = new Agent_RG(args[0], args[1]);
-		else if(agentType.equals("CL"))	
+		else if(agentType.equals(AgentTypes.CL))	
 			agent = new Agent_CL(args[0], args[1]);
 		
 		System.out.print("Risks: " + agent.getNumRisks() + " ");
@@ -68,7 +69,7 @@ public class Test_QA_DE_Agent_Setup
 		System.out.print("RisksLearned_QA: " + agent.getNumRisksLearnedQA() + " ");
 		
 		
-		agent.queryDomainExpertAboutAllRisks_QA(expert);
+		agent.askAllRisks_QA(expert);
 		
 		System.out.print("PostQ ");
 		System.out.print("Risks: " + agent.getNumRisks() + " ");

@@ -23,6 +23,8 @@ import jdd.bdd.*;
 public abstract class Agent 
 {	
 	public static enum LearningTypes {PL, QA};
+	public static enum AgentTypes{RG, CL};
+	public static enum QA_Types{NONE, ALL, ALL_IN_PLAN, ALL_IN_PFE}; //Risks
 	
 	//Domain and Problem stuff
 	protected String domainFile;
@@ -478,30 +480,109 @@ public abstract class Agent
 		risks.removeAll(risksLearned); //The risks learned are removed from the risks list
 	}
 	
-	public void queryDomainExpertAboutAllRisks_QA(DomainExpert expert)
+	/**
+	 * Ask the Domain Expert about ALL risks that exist the problem's actionsList (all possible features)
+	 * @param expert
+	 */
+	public void askAllRisks_QA(DomainExpert expert)
 	{
 		List<Fault> currentRisks = new ArrayList<Fault>(this.getRisks()); //Prevents concurrent mod exception
+		askRisksInGivenList(expert, currentRisks);
+	}
+		
+	/**
+	 * Ask the Domain Expert about ALL risks that exist IN the PLAN's actions (all possible features)
+	 * @param expert
+	 */
+	public void askAllRisksInPlan_QA(DomainExpert expert, List<ActionInstance> plan)
+	{
+		HashSet<Fault> risksInPlan = new HashSet<Fault>();
+		for(ActionInstance act : plan)
+		{
+			IncompleteActionInstance a = (IncompleteActionInstance) act;
+			for(Proposition p : a.getPossiblePreconditions()) 	risksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
+			for(Proposition p : a.getPossibleAddEffects()) 		risksInPlan.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, a.getName(), p.getName()));
+			for(Proposition p : a.getPossibleDeleteEffects()) 	risksInPlan.add(Fault.getRiskFromIndex(Fault.POSSCLOB, a.getName(), p.getName()));
+		}	
+		askRisksInGivenList(expert, new ArrayList<Fault>(risksInPlan));
+	}
+	
+	/**
+	 * Ask the Domain Expert about ALL risks that exist IN the PLAN's actions (all possible features)
+	 * @param expert
+	 */
+	public boolean askAllRisksInPFE_QA(DomainExpert expert, List<ActionInstance> plan)
+	{
+		boolean hasRisks = false;
+		
+		HashSet<Fault> risksInPFE = new HashSet<Fault>();
+		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(problem, plan, Planner.solver);
+		
+		//System.out.println("NOW");
+		//for(Fault risk : risks)
+		//	System.out.println(riskToBDD.get(risk) + ": " + risk);
+		
+		//bdd.printSet(failureExplanationSentence_bddRef);
+		
+		//System.out.println("NEXT");
+		for(Fault risk : risks)
+		{	
+			boolean[] v = new boolean[bdd.numberOfVariables()];
+			
+			int numOfRisk = riskToBDD.get(risk);
+			numOfRisk = numOfRisk/2 - 1;
+			v[numOfRisk] = true;
+			
+			int cube = bdd.cube(v);
+			int temp = bdd.exists(failureExplanationSentence_bddRef, cube);
+			
+			if(temp == 1)
+			{
+				System.out.println(risk);
+				risksInPFE.add(risk);
+				hasRisks = true;
+			}
+		}
+		
+		System.out.println("COUNT OF RISKS IN PFE: " + risksInPFE.size());
+		
+		askRisksInGivenList(expert, new ArrayList<Fault>(risksInPFE));
+		
+		return hasRisks;
+	}
+	
+	/**
+	 * Ask the Domain Expert about ALL risks that exist in list of current Risks.
+	 * @param expert
+	 */
+	private void askRisksInGivenList(DomainExpert expert, List<Fault> currentRisks)
+	{
 		for(Fault f : currentRisks)
 		{
 			boolean result = expert.isRiskAFeatureQuery(f);
 			this.numQsAsked++;
 			
-			if(result)
-				addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, true);
-			else
-				addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, false);
-		}	
+			if(result) 	addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, true);
+			else 		addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, false);
+		}
+		
 		updateActions(LearningTypes.QA);
 	}
+		
 	
+	/**
+	 * A much abbreviated form of the learnAboutActionTaken() method. 
+	 * Here we do not build up a sentence of props/risks learned, because each Q concerns one and only one Risk
+	 * (though answering that question might indirectly help the agent entail other risks existing in the BDD as well).
+	 * @param f
+	 * @param isFeature
+	 */
 	public void addDomainExpertQueryResultToBDDAndUpdateActions_QA(Fault f, boolean isFeature)
 	{
 		int tempRefToNewKB;
 		
-		if(isFeature)
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, riskToBDD.get(f)));
-		else
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, bdd.not(riskToBDD.get(f))));
+		if(isFeature) 	tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, riskToBDD.get(f)));
+		else 			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, bdd.not(riskToBDD.get(f))));
 		
 		bdd.deref(bddRef_KB);
 		bddRef_KB = tempRefToNewKB;

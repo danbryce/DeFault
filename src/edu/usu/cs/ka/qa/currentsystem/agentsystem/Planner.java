@@ -18,9 +18,12 @@ public class Planner
 	String domainFile;
 	String problemFile;
 	
+	public static enum PlannerTypes {AMIR, PODE1, JDD};
+	
     Domain domain;
     Problem problem;
     BigInteger initialModelCount;
+    int initialNumRisks;
     
     static public Solver solver;
 
@@ -43,6 +46,7 @@ public class Planner
 		RiskCounter.initialize(domain, problem);
 		
 		initialModelCount = RiskCounter.getModelCount(1);
+		initialNumRisks = RiskCounter.getNumRisks();
 		
 		numTimesPlannerCalled = 0;
 	}
@@ -54,9 +58,10 @@ public class Planner
 		problem = domainMaker.getProblem();
 	}
 
-	public BigInteger getInitialModelCount(){return initialModelCount;}	
-	public int getNumTimesPlannerCalled(){return numTimesPlannerCalled;}
-	public void resetNumTimesPlannerCalledCount() { numTimesPlannerCalled = 0;}
+	public BigInteger getInitialModelCount()		{ return initialModelCount; }
+	public int getInitialNumRisks() 				{ return initialNumRisks; }
+	public int getNumTimesPlannerCalled()			{ return numTimesPlannerCalled; }
+	public void resetNumTimesPlannerCalledCount()	{ numTimesPlannerCalled = 0; }
 	
 	/**
 	 * This allows for the actionInstances of problem to be set to Agent's (current) problem instance.
@@ -82,14 +87,14 @@ public class Planner
 	 * @param plannerType
 	 * @return List<ActionInstance> plan - with the actions that have no removed props
 	 */
-	public List<ActionInstance> getPlan(String plannerType)
+	public List<ActionInstance> getPlan(PlannerTypes plannerType)
 	{
 		List<ActionInstance> preservedActionsList = Actions_Utility.makeActionsListDeepCopy(problem.getActions());
 		
 		List<ActionInstance> plan = null;
-		if(plannerType.equals("jdd")) 	plan = runJDDplanner();
-		if(plannerType.equals("pode1")) plan = runPODE1planner();
-		if(plannerType.equals("amir"))  plan = runAMIRplanner();
+		if(plannerType.equals(PlannerTypes.JDD)) 	plan = runJDDplanner();
+		if(plannerType.equals(PlannerTypes.PODE1)) plan = runPODE1planner();
+		if(plannerType.equals(PlannerTypes.AMIR))  plan = runAMIRplanner();
 		
 		problem.setActionInstances(preservedActionsList);
 		
@@ -242,6 +247,8 @@ public class Planner
 		
 		return RiskCounter.getModelCount(1);
 	}
+	
+	public int getFinalNumRisks() { return RiskCounter.getNumRisks(); }
 	
 	private void startStopwatch(){startTime = System.currentTimeMillis();}
 	

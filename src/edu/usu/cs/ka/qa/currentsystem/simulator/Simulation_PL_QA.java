@@ -1,16 +1,16 @@
 package edu.usu.cs.ka.qa.currentsystem.simulator;
 
 import java.util.*;
-import java.math.BigInteger;
 
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.*;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.AgentTypes;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.QA_Types;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.Planner.PlannerTypes;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 
-
-public class Simulation
+public class Simulation_PL_QA
 {		
 	Planner planners;
 	DomainExpert expert;
@@ -23,7 +23,7 @@ public class Simulation
 	static Long startTime;
 	static Long finishTime;
 		
-	Simulation(String[] args, int simSeed)
+	Simulation_PL_QA(String[] args, int simSeed)
 	{	
 		if (args.length != 3) { System.out.println(" " + args.length); usage(args); System.exit(1); }
 		
@@ -51,9 +51,12 @@ public class Simulation
 		int randomInt = randomGenerator.nextInt(3);
 		switch(randomInt)
 		{
-			case 0: if(runPlannerThread("amir") == null) 	return false; break;
-			case 1: if(runPlannerThread("pode1") == null) 	return false; break;
-			case 2: if(runPlannerThread("jdd") == null) 	return false; break;
+			case 0: if(runPlannerThread(PlannerTypes.AMIR) == null) 	return false; 
+					break;
+			case 1: if(runPlannerThread(PlannerTypes.PODE1) == null) 	return false; 
+					break;
+			case 2: if(runPlannerThread(PlannerTypes.JDD) == null) 	return false; 
+					break;
 		}
 
 		expert.restoreActionsToStateBeforePlannerCall();
@@ -73,30 +76,26 @@ public class Simulation
 		System.out.println("thread timeLimit: " + args[2]);
 		System.out.println("tests startTime: " + startStopwatch());
 		System.out.println();
-
-		for(int simSeed = 0; (simSeed < 1000) && (numSuccesses < 10); simSeed++)
+		
+		for(int simSeed = 694; (simSeed < 1000) && (numSuccesses < 1); simSeed++)
 		{
 			try
 			{
-				Simulation sim = new Simulation(args, simSeed);
+				Simulation_PL_QA sim = new Simulation_PL_QA(args, simSeed);
 				if(sim.isSolvableDomain())
 				{
 					gotAResult = false;
-					
-					sim.resultString += args[0] + "_" + simSeed + " " + sim.planners.getInitialModelCount() + " RG";
 			
-					try{ sim.runSimulation("amir",  args, "RG"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " amir E E E E E";}
-					try{ sim.runSimulation("pode1", args, "RG"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
-					try{ sim.runSimulation("jdd", args, "RG");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
-					
-					sim.resultString += " CL";
-					
-					try{ sim.runSimulation("amir",  args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " amir E E E E E";}
-					try{ sim.runSimulation("pode1", args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
-					try{ sim.runSimulation("jdd", args, "CL");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
+					String domain = args[0].replace("testfiles/incomplete/", "");
+					sim.resultString += domain + "_" + simSeed + " 2^" + sim.planners.getInitialNumRisks();
+			
+					sim.runSimulationForGivenQAType(args, QA_Types.NONE);
 					
 					if(gotAResult)
 					{
+						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
+						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
+						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
 						System.out.println(sim.resultString);
 						numSuccesses++;
 					}
@@ -110,18 +109,30 @@ public class Simulation
 		System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
 	}
 	
+	private void runSimulationForGivenQAType(String[] args, QA_Types qaType)
+	{
+		resultString += " *" + qaType + "* " + Agent.AgentTypes.RG;
+		
+		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } catch(Exception e){ e.printStackTrace(); resultString += " amir E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.PODE1, args, AgentTypes.RG, qaType); } catch(Exception e){ e.printStackTrace(); resultString += " pode1 E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ e.printStackTrace(); resultString += " jdd E E E E E E E E"; }
+		
+		resultString += " CL";
+		
+		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType); } 		 catch(Exception e)	{ e.printStackTrace(); resultString += " amir E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.PODE1, args, Agent.AgentTypes.CL, qaType); } catch(Exception e)	{ e.printStackTrace(); resultString += " pode1 E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType);   } catch(Exception e)	{ e.printStackTrace(); resultString += " jdd E E E E E E E E"; }
+	}
+	
 	boolean timeout;
-	private void runSimulation(String plannerType, String [] args, String agentType)
+	private void runSimulation(PlannerTypes plannerType, String [] args, AgentTypes agentType, QA_Types qaType)
 	{	
-		//System.out.println("\n" + plannerType + " " + agentType);
+		System.out.println("\n" + plannerType + " " + agentType + " " + qaType);
 		
-		boolean endlessLoop = false;
-		        timeout 	= false;
+		boolean endlessLoop = timeout = false;
 		
-		if(agentType.equals("RG")) 		
-			agent = new Agent_RG(args[0], args[1]);
-		else if(agentType.equals("CL"))	
-			agent = new Agent_CL(args[0], args[1]);
+		if(agentType.equals(Agent.AgentTypes.RG)) 		agent = new Agent_RG(args[0], args[1]);
+		else if(agentType.equals(Agent.AgentTypes.CL))	agent = new Agent_CL(args[0], args[1]);
 		
 		planners.setProblem(agent.getProblem()); //Sets planner's problem to agent's incomplete version.
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
@@ -136,53 +147,65 @@ public class Simulation
 		
 		currState = nextState = agent.getProblem().getInitialState();
 		
-		plan = runPlannerThread(plannerType); //plan = planners.getPlan(plannerType); //Should never be null or 0 to start
-		agent.restoreActionsToStateBeforePlannerCall();	
-		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100) && (plan != null) && (plan.size() != 0))
+		//QA TYPE - ALL RISKS
+		if(qaType.equals(QA_Types.ALL))
+			agent.askAllRisks_QA(expert);
+		
+		plan = runPlannerThread(plannerType);
+		
+		//QA TYPE - ALL RISKS IN PLAN
+		if(qaType.equals(QA_Types.ALL_IN_PLAN)) 
+		{
+			while(Actions_Utility.getCountOfActionsThatAreIncomplete(plan) > 0)
+			{
+				agent.askAllRisksInPlan_QA(expert, plan);
+				plan = runPlannerThread(plannerType);
+			}
+		}
+		
+		//QA TYPE - ALL RISKS IN PLAN FAILURE EXPLANATION SENTENCE
+		if(qaType.equals(QA_Types.ALL_IN_PFE)) 
+		{
+			while(plan != null && agent.askAllRisksInPFE_QA(expert, plan))
+			{
+				plan = runPlannerThread(plannerType);
+				if(plan == null)
+					System.out.println("NULL");
+			}
+		}
+		
+		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100) && 
+			  (plan != null) && (plan.size() != 0))
 		{	
 			boolean actionTaken = false;
-			
 			currAction = (IncompleteActionInstance) plan.remove(0);	
 			if(agent.isActionApplicable(currAction, currState, plan))
 			{	
 				actionTaken = true;
-				
 				nextState = expert.applyAction(currState, currAction);
 				agent.learnAboutActionTaken(currAction, currState, nextState);
 				if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 					break;
 			}
 			
-			if(agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || !agent.isActionApplicable(currAction, currState, plan))
+			if( agent.isActionFailure(currAction, currState, nextState) || plan.size() == 0 || 
+			   !agent.isActionApplicable(currAction, currState, plan))
 			{	
 				if((agent.isActionFailure(currAction, currState, nextState) && actionTaken) || 
 				   (agent.existsActionFailureInPastEntailFailVar() && !actionTaken))
 						agent.incrementFailedActionsCount();
 				
-				if((agentType.equals("CL")) && (agent.getNumFailedActions() > 0))
-					break;
+				if((agentType.equals(AgentTypes.CL)) && (agent.getNumFailedActions() > 0)) break;
 				
 				agent.getProblem().setInitialState(nextState);
 				agent.removeFailFromKBForNewPlan();
 				
 				plan = runPlannerThread(plannerType); //plan = planners.getPlan(plannerType);//Note that the problem has been updated within agent
 				
-				if(timeout) 
-					break;
-
-				if(plan == null || plan.size() == 0)
-					break;
-				
-				if(plan.get(0).equals(currAction))
-				{
-					endlessLoop = true;
-					//System.out.print(" @");
-					break;
-				}
-				
-				agent.restoreActionsToStateBeforePlannerCall();
-			}
-			
+				if(timeout) break;
+				if(plan == null || plan.size() == 0) break;	
+				if(plan.get(0).equals(currAction)) { endlessLoop = true; break; }
+			}	
 			currState = nextState;	
 		}
 				
@@ -191,21 +214,18 @@ public class Simulation
 		if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{	
 			gotAResult = true;
-			
 			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled();
 			resultString += " " + agent.getNumActionsTaken() + " " + agent.getNumFailedActions();
-			resultString += " " + agent.getTimeToSolve() + " " + planners.getFinalModelCount();
+			resultString += " " + agent.getTimeToSolve() + " 2^" + planners.getFinalNumRisks();
+			resultString += " " + agent.getNumQsAsked() + " " + agent.getNumRisksLearnedQA() + " " + agent.getNumRisksLearnedPL();
 		}
 		else
 		{			
 			if((agent.getNumActionsTaken() == 1000) || (planners.getNumTimesPlannerCalled() == 500))
-				resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + agent.getNumActionsTaken() + " X X X";
-			else if(endlessLoop)
-				resultString += " " + plannerType + " L L L L L";
-			else if(timeout)
-				resultString += " " + plannerType + " T T T T T";
-			else
-				resultString += " " + plannerType + " ? ? ? ? ?";
+				resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + agent.getNumActionsTaken() + " X X X X X X";
+			else if(endlessLoop) 	resultString += " " + plannerType + " L L L L L L L L";
+			else if(timeout)		resultString += " " + plannerType + " T T T T T T T T";
+			else					resultString += " " + plannerType + " ? ? ? ? ? ? ? ?";
 		}
 	}
 	
@@ -213,11 +233,15 @@ public class Simulation
 	/**
 	 * To speed up batch testing, planner is allowed 8x the time used to find the classical version of the problem.
 	 * This is a sweet spot determined by ka/simulator/Test_PlannerRawPerformance.
+	 * To determine if simSeed can be solved, runPlannerThread is first called using the Domain Experts's
+	 *  version of the actions. In that case, the agent is not yet created.
+	 * Else, runPlannerThread is called by Agent. Planners can change the action descriptions,
+	 *  hence the call to Agent.restoreActionsToStateBeforePlannerCall().
 	 * 
 	 * @param plannerType
 	 * @return
 	 */
-	private List<ActionInstance> runPlannerThread(String plannerType)
+	private List<ActionInstance> runPlannerThread(Planner.PlannerTypes plannerType)
 	{
 		ExecThread execThread = new ExecThread(Thread.currentThread(), planners, plannerType);
 		
@@ -239,8 +263,9 @@ public class Simulation
 		}
 		
 		execThread.stop();	
-		if((now - start) >= maxTime)
-			timeout = true;
+		if((now - start) >= maxTime) timeout = true;
+		
+		if(agent != null) agent.restoreActionsToStateBeforePlannerCall();	
 
 		return execThread.plan;
 	}
@@ -251,10 +276,10 @@ public class Simulation
 		public boolean done = false;
 		
 		Planner planner;
-		String plannerType;
+		PlannerTypes plannerType;
 		List<ActionInstance> plan = null;
 		
-		ExecThread(Thread CallingThread, Planner p, String pType)
+		ExecThread(Thread CallingThread, Planner p, Planner.PlannerTypes pType)
 		{
 			planner = p;
 			plannerType = pType;
