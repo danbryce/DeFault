@@ -41,6 +41,8 @@ public class RiskCounter {
 	private static boolean isInitialized = false;
 	private static int unusedRisks = 0;//currently unused
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
+	
+	private static Map<Fault, Integer> riskToNumVarIndexForCube;
 		
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) 
 	{
@@ -102,15 +104,15 @@ public class RiskCounter {
 
 		riskToBDD = new HashMap<Fault, Integer>();
 		bddToRisk = new HashMap<Integer, Fault>();
-
+		riskToNumVarIndexForCube = new HashMap<Fault, Integer>();
+		
+		int countOfVars = 0;
 		for (Fault risk : allRisks) 
 		{
-			int temp = bdd.createVar();
-
-			System.out.println(temp + ":" + risk);
-			
+			int temp = bdd.createVar();			
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
+			riskToNumVarIndexForCube.put(risk, countOfVars++);
 		}
 
 		isInitialized = true;
@@ -124,6 +126,7 @@ public class RiskCounter {
 		bddToRisk = null;
 		allRisks = null;
 		isInitialized = false;
+		riskToNumVarIndexForCube = null;
 	}
 	
 	//A different form of the deref method above - used by ka.Agent
@@ -147,7 +150,6 @@ public class RiskCounter {
 
 		// Add the initial state
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver));
-
 
 		for (ActionInstance action : plan) 
 		{
@@ -211,18 +213,10 @@ public class RiskCounter {
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 2); // Figure out which risks are true right now
 
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state - note: solver is null
-				
-		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)currAction));//Add currAction
-		//currAction was popped off in the execution sim alg, but needs to be applied here for continuity 
+		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance) currAction));//Add currAction
 
-		//Original version of Add the others
-		// Note that the null isn't caught for getSuccessorNode() call.
-		// That method returns a null is the action is found to be not applicable.
-//		for (ActionInstance action : plan) // Add the others
-//			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
-		
-		//Current version - removes the Exception.
-		//Added some unnecessary protection around it.
+		//Original version of "Add the others" doesn't catch the null that might be returned in getSuccessorNode() call.		
+		//Current version removes the Exception thrown by this null.
 		//The null node just means that the goal can't be reached according to the way
 		//RiskCounterNode builds up the propositions - which seems a bit tight actually.
 		if ((plan != null) && (plan.size() > 0))
@@ -252,7 +246,7 @@ public class RiskCounter {
 				crs = tmp;
 			}
 			//Here, if one Precondition prop in the GoalAction isn't found in the last node,
-			//then the failure explanation is trivially true - the plan will definitely fail.
+			//then the failure explanation is trivially true - the plan will definitely fail. Should never happen?
 			else 
 			{
 				System.out.println("PFE TRUE");
@@ -267,11 +261,13 @@ public class RiskCounter {
 	}
 	
 	/**
-	 * This method is altered from the above method to return the risks that may/will cause the plan to fail
+	 * This method is altered from the above method to return the risks that may/will cause the plan to fail,
+	 * not just a TRUE in the else case.
 	 */
 	public static int getFailureExplanationSentence_BDDRef2(Problem problem, List<ActionInstance> plan, Solver solver) 
 	{	
-		if(plan == null) return bdd.getOne();
+		//Comment this out to get debugging info
+		//if(plan == null) return bdd.ref(bdd.getOne());
 		
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1); // Figure out which risks are true right now
 
@@ -283,13 +279,21 @@ public class RiskCounter {
 		}
 		
 		//Requires this line - might have added a null node, causing the next line to break.
-		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
+		//Commented this out to get debuggin info
+		//if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
 		
 		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
 		bdd.ref(crs);
+		
+		//System.out.println("BEFORE"); bdd.printSet(crs);
+		
 		for(Proposition p : problem.getGoalAction().getPreconditions())
 		{
 			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);//propositions here gets the bddRef to Prop p
+			
+			//if(risk == null) System.out.println("NULL RISK?");
+			//else System.out.println("# of risk: " + risk);
+			
 			if(risk != null)
 			{				
 				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
@@ -297,7 +301,9 @@ public class RiskCounter {
 				bdd.ref(tmp);
 				crs = tmp;
 			}
+			//else - original version would just return a trivial true, not what we would want
 		}
+		//System.out.println("AFTER"); bdd.printSet(crs);
 		return crs;
 	}
 	
@@ -361,6 +367,7 @@ public class RiskCounter {
 	public static void 					setRiskToBDD(Map<Fault, Integer> riskToBDD) { RiskCounter.riskToBDD = riskToBDD; }
 	public static Map<Integer, Fault> 	getBddToRisk() 								{ return bddToRisk; }
 	public static void 					setBddToRisk(Map<Integer, Fault> bddToRisk) { RiskCounter.bddToRisk = bddToRisk; }
+	public static Map<Fault, Integer>	getRiskToNumVarIndexForCube()				{ return riskToNumVarIndexForCube; }
 
 	private static List<Fault> getAllRisks(Problem problem) {
 		List<Fault> risks = new ArrayList<Fault>();

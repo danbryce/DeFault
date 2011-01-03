@@ -44,6 +44,7 @@ public abstract class Agent
 	protected List<Fault> risks;
 	protected  Map<Fault, Integer> riskToBDD;
 	protected  Map<Integer, Fault> bddToRisk;
+	protected  Map<Fault, Integer> riskToNumVarIndexForCube;
 	
 	//Results stuff
 	protected Long startTime;
@@ -77,6 +78,7 @@ public abstract class Agent
 		risks = RiskCounter.getAllRisks();
 		riskToBDD = RiskCounter.getRiskToBDD();
 		bddToRisk = RiskCounter.getBddToRisk();
+		riskToNumVarIndexForCube = RiskCounter.getRiskToNumVarIndexForCube();
 		
 		failVar = bdd.createVar();
 		
@@ -480,22 +482,40 @@ public abstract class Agent
 		risks.removeAll(risksLearned); //The risks learned are removed from the risks list
 	}
 	
+	public boolean QA_Switch(QA_Types qaType, DomainExpert expert, List<ActionInstance> plan)
+	{
+		switch(qaType)
+		{
+			case NONE: 			return false;
+			case ALL: 			return askAllRisks_QA(expert); 
+			case ALL_IN_PLAN: 	return askAllRisksInPlan_QA(expert, plan);
+			case ALL_IN_PFE: 	return askAllRisksInPFE_QA(expert, plan);
+			default: 			return false;
+		}
+	}
+	
 	/**
 	 * Ask the Domain Expert about ALL risks that exist the problem's actionsList (all possible features)
 	 * @param expert
 	 */
-	public void askAllRisks_QA(DomainExpert expert)
+	public boolean askAllRisks_QA(DomainExpert expert)
 	{
-		List<Fault> currentRisks = new ArrayList<Fault>(this.getRisks()); //Prevents concurrent mod exception
-		askRisksInGivenList(expert, currentRisks);
+		if(this.getRisks().size() > 0)
+		{
+			List<Fault> currentRisks = new ArrayList<Fault>(this.getRisks()); //Prevents concurrent mod exception
+			askRisksInGivenList(expert, currentRisks);
+		}
+		return false;
 	}
 		
 	/**
 	 * Ask the Domain Expert about ALL risks that exist IN the PLAN's actions (all possible features)
 	 * @param expert
 	 */
-	public void askAllRisksInPlan_QA(DomainExpert expert, List<ActionInstance> plan)
+	public boolean askAllRisksInPlan_QA(DomainExpert expert, List<ActionInstance> plan)
 	{
+		if(plan == null) return false;
+		
 		HashSet<Fault> risksInPlan = new HashSet<Fault>();
 		for(ActionInstance act : plan)
 		{
@@ -503,8 +523,15 @@ public abstract class Agent
 			for(Proposition p : a.getPossiblePreconditions()) 	risksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
 			for(Proposition p : a.getPossibleAddEffects()) 		risksInPlan.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, a.getName(), p.getName()));
 			for(Proposition p : a.getPossibleDeleteEffects()) 	risksInPlan.add(Fault.getRiskFromIndex(Fault.POSSCLOB, a.getName(), p.getName()));
-		}	
-		askRisksInGivenList(expert, new ArrayList<Fault>(risksInPlan));
+		}
+		
+		if(!risksInPlan.isEmpty())
+		{
+			askRisksInGivenList(expert, new ArrayList<Fault>(risksInPlan));
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -512,43 +539,37 @@ public abstract class Agent
 	 * @param expert
 	 */
 	public boolean askAllRisksInPFE_QA(DomainExpert expert, List<ActionInstance> plan)
-	{
-		boolean hasRisks = false;
+	{	
+		//System.out.println("\nIN askAllRisksInPFE_QA()");
+		//Planner.printPlanShort(plan); Planner.printPlanLong(plan);
+		
+		if(plan == null) return false;
 		
 		HashSet<Fault> risksInPFE = new HashSet<Fault>();
 		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(problem, plan, Planner.solver);
 		
-		//System.out.println("NOW");
-		//for(Fault risk : risks)
-		//	System.out.println(riskToBDD.get(risk) + ": " + risk);
-		
-		//bdd.printSet(failureExplanationSentence_bddRef);
-		
-		//System.out.println("NEXT");
 		for(Fault risk : risks)
 		{	
 			boolean[] v = new boolean[bdd.numberOfVariables()];
-			
-			int numOfRisk = riskToBDD.get(risk);
-			numOfRisk = numOfRisk/2 - 1;
-			v[numOfRisk] = true;
+			v[this.riskToNumVarIndexForCube.get(risk)] = true;
 			
 			int cube = bdd.cube(v);
 			int temp = bdd.exists(failureExplanationSentence_bddRef, cube);
 			
 			if(temp == 1)
 			{
-				System.out.println(risk);
+				//System.out.println(riskToNumVarIndexForCube.get(risk) + ":" + riskToBDD.get(risk) + ": " + risk);
 				risksInPFE.add(risk);
-				hasRisks = true;
 			}
 		}
 		
-		System.out.println("COUNT OF RISKS IN PFE: " + risksInPFE.size());
+		if(!risksInPFE.isEmpty())
+		{
+			askRisksInGivenList(expert, new ArrayList<Fault>(risksInPFE));
+			return true;
+		}
 		
-		askRisksInGivenList(expert, new ArrayList<Fault>(risksInPFE));
-		
-		return hasRisks;
+		return false;
 	}
 	
 	/**
@@ -569,7 +590,6 @@ public abstract class Agent
 		updateActions(LearningTypes.QA);
 	}
 		
-	
 	/**
 	 * A much abbreviated form of the learnAboutActionTaken() method. 
 	 * Here we do not build up a sentence of props/risks learned, because each Q concerns one and only one Risk
