@@ -24,7 +24,7 @@ public abstract class Agent
 {	
 	public static enum LearningTypes {PL, QA};
 	public static enum AgentTypes{RG, CL};
-	public static enum QA_Types{NONE, ALL, ALL_IN_PLAN, ALL_IN_PFE}; //Risks
+	public static enum QA_Types{NONE, ALL, ALL_IN_PLAN, ALL_IN_PFE, ALLPossPres, ALLPossPres_IN_PLAN, ALLPossPres_IN_PFE}; //Risks
 	
 	//Domain and Problem stuff
 	protected String domainFile;
@@ -45,6 +45,8 @@ public abstract class Agent
 	protected  Map<Fault, Integer> riskToBDD;
 	protected  Map<Integer, Fault> bddToRisk;
 	protected  Map<Fault, Integer> riskToNumVarIndexForCube;
+	
+	QA qa;
 	
 	//Results stuff
 	protected Long startTime;
@@ -90,6 +92,8 @@ public abstract class Agent
 		numQsAsked = 0;
 		numRisksLearnedQA = 0;
 		numRisksLearnedPL = 0;
+		
+		qa = new QA(this);
 	}
 	
 	public void setDomainAndProblem()

@@ -51,12 +51,9 @@ public class Simulation_PL_QA
 		int randomInt = randomGenerator.nextInt(3);
 		switch(randomInt)
 		{
-			case 0: if(runPlannerThread(PlannerTypes.AMIR) == null) 	return false; 
-					break;
-			case 1: if(runPlannerThread(PlannerTypes.PODE1) == null) 	return false; 
-					break;
-			case 2: if(runPlannerThread(PlannerTypes.JDD) == null) 		return false; 
-					break;
+			case 0: if(runPlannerThread(PlannerTypes.AMIR) == null) 	return false; break;
+			case 1: if(runPlannerThread(PlannerTypes.PODE1) == null) 	return false; break;
+			case 2: if(runPlannerThread(PlannerTypes.JDD) == null) 		return false; break;
 		}
 
 		expert.restoreActionsToStateBeforePlannerCall();
@@ -155,9 +152,8 @@ public class Simulation_PL_QA
 		agent.QA_Switch(qaType, expert, null); //works for QA TYPE - ALL RISKS only
 		
 		//FIRST POSSIBLE PLAN OBTAINED
-		plan = runPlannerThread(plannerType);
-		
 		//QA TYPE - ALL RISKS IN PLAN && ALL RISKS IN PLAN FAILURE EXPLANATION SENTENCE
+		plan = runPlannerThread(plannerType);
 		while(agent.QA_Switch(qaType, expert, plan))
 			plan = runPlannerThread(plannerType);
 		
@@ -194,7 +190,11 @@ public class Simulation_PL_QA
 				agent.removeFailFromKBForNewPlan();
 				plan = runPlannerThread(plannerType); //plan = planners.getPlan(plannerType);
 				countReplanningEpisodesDuringExecution++;
-				if(timeout) break;
+				while(agent.QA_Switch(qaType, expert, plan))
+				{
+					plan = runPlannerThread(plannerType);
+					countReplanningEpisodesDuringExecution++;
+				}
 				if(plan == null || plan.size() == 0) break;	
 				if(plan.get(0).equals(currAction)) { endlessLoop = true; break; }
 			}	
@@ -252,13 +252,11 @@ public class Simulation_PL_QA
 		{
 			try { Thread.sleep(500); } catch (Exception e){}
 			now = System.currentTimeMillis();
-			if(execThread.done) 
-				break;
+			if(execThread.done) break;
 		}
 		
 		execThread.stop();	
-		if((now - start) >= maxTime) timeout = true;
-		
+		if((now - start) >= maxTime) { timeout = true; execThread.plan = null; }
 		if(agent != null) agent.restoreActionsToStateBeforePlannerCall();	
 
 		return execThread.plan;
