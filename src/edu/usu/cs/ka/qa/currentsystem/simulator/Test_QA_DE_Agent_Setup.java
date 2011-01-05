@@ -69,7 +69,7 @@ public class Test_QA_DE_Agent_Setup
 		System.out.print("RisksLearned_QA: " + agent.getNumRisksLearnedQA() + " ");
 		
 		
-		agent.askAllRisks_QA(expert);
+		agent.qa.askAllRisks_QA(expert);
 		
 		System.out.print("PostQ ");
 		System.out.print("Risks: " + agent.getNumRisks() + " ");

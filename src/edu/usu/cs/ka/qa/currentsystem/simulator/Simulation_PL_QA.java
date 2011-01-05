@@ -4,7 +4,7 @@ import java.util.*;
 
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.*;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.AgentTypes;
-import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.QA_Types;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.QA.QA_Types;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Planner.PlannerTypes;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
@@ -74,7 +74,7 @@ public class Simulation_PL_QA
 		System.out.println("tests startTime: " + startStopwatch());
 		System.out.println();
 		
-		for(int simSeed = 0; (simSeed < 1000) && (numSuccesses < 10); simSeed++)
+		for(int simSeed = 0; (simSeed < 1000) && (numSuccesses < 1); simSeed++)
 		{
 			try
 			{
@@ -93,10 +93,17 @@ public class Simulation_PL_QA
 						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
 						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
+						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
 						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
+						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
 						System.out.println(sim.resultString);
+
 						numSuccesses++;
 					}
 				}
@@ -149,12 +156,12 @@ public class Simulation_PL_QA
 		
 		currState = nextState = agent.getProblem().getInitialState();
 		
-		agent.QA_Switch(qaType, expert, null); //works for QA TYPE - ALL RISKS only
+		agent.qa.QA_Switch(qaType, expert, null); //works for QA TYPE - ALL RISKS only
 		
 		//FIRST POSSIBLE PLAN OBTAINED
 		//QA TYPE - ALL RISKS IN PLAN && ALL RISKS IN PLAN FAILURE EXPLANATION SENTENCE
 		plan = runPlannerThread(plannerType);
-		while(agent.QA_Switch(qaType, expert, plan))
+		while(agent.qa.QA_Switch(qaType, expert, plan))
 			plan = runPlannerThread(plannerType);
 		
 		//EXECUTION/PLANNING LOOP
@@ -190,7 +197,7 @@ public class Simulation_PL_QA
 				agent.removeFailFromKBForNewPlan();
 				plan = runPlannerThread(plannerType); //plan = planners.getPlan(plannerType);
 				countReplanningEpisodesDuringExecution++;
-				while(agent.QA_Switch(qaType, expert, plan))
+				while(agent.qa.QA_Switch(qaType, expert, plan))
 				{
 					plan = runPlannerThread(plannerType);
 					countReplanningEpisodesDuringExecution++;
@@ -256,7 +263,7 @@ public class Simulation_PL_QA
 		}
 		
 		execThread.stop();	
-		if((now - start) >= maxTime) { timeout = true; execThread.plan = null; }
+		if((now - start) >= maxTime) timeout = true; //plan will be null
 		if(agent != null) agent.restoreActionsToStateBeforePlannerCall();	
 
 		return execThread.plan;
