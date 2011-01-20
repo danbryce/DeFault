@@ -91,17 +91,19 @@ public class Simulation_PL_QA
 					if(gotAResult)
 					{
 						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALL);
+						//sim.resultString += "\n";
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
+						//sim.resultString += "\n";
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
+						//sim.resultString += "\n";
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
+						//sim.resultString += "\n";
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
+						//sim.resultString += "\n";
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
+						//sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLMinTerms_IN_PFE);
 						System.out.println(sim.resultString);
 
 						numSuccesses++;
@@ -121,8 +123,8 @@ public class Simulation_PL_QA
 		resultString += " *" + qaType + "* " + Agent.AgentTypes.RG;
 		
 		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } catch(Exception e){ /*e.printStackTrace();*/ resultString += " amir E E E E E E E E E"; }
-		try{ runSimulation(PlannerTypes.PODE1, args, AgentTypes.RG, qaType); } catch(Exception e){ /*e.printStackTrace();*/ resultString += " pode1 E E E E E E E E E"; }
-		try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ /*e.printStackTrace();*/ resultString += " jdd E E E E E E E E E"; }
+		//try{ runSimulation(PlannerTypes.PODE1, args, AgentTypes.RG, qaType); } catch(Exception e){ /*e.printStackTrace();*/ resultString += " pode1 E E E E E E E E E"; }
+		//try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ /*e.printStackTrace();*/ resultString += " jdd E E E E E E E E E"; }
 		
 		//resultString += " CL";
 		
@@ -134,7 +136,7 @@ public class Simulation_PL_QA
 	boolean timeout;
 	private void runSimulation(PlannerTypes plannerType, String [] args, AgentTypes agentType, QA_Types qaType)
 	{	
-		//System.out.println("\n" + plannerType + " " + agentType + " " + qaType);
+		System.out.println("\n//" + plannerType + " " + agentType + " " + qaType + "///////////////////");
 		
 		//AGENT SETUP
 		if(agentType.equals(Agent.AgentTypes.RG)) 		agent = new Agent_RG(args[0], args[1]);
@@ -215,7 +217,7 @@ public class Simulation_PL_QA
 		if(nextState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{	
 			gotAResult = true;
-			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + " (" + countReplanningEpisodesDuringExecution + ")";
+			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + "(" + countReplanningEpisodesDuringExecution + ")";
 			resultString += " " + agent.getNumActionsTaken() + " " + agent.getNumFailedActions();
 			resultString += " " + agent.getTimeToSolve() + " 2^" + planners.getFinalNumRisks();
 			resultString += " " + agent.getNumQsAsked() + " " + agent.getNumRisksLearnedQA() + " " + agent.getNumRisksLearnedPL();

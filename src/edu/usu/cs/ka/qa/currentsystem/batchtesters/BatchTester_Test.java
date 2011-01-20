@@ -21,7 +21,7 @@ public class BatchTester_Test
 			{	
 				for(int version = 3; version <= 3; version++)//1-3
 				{
-					for(int numFile = 1; numFile <= 1; numFile++) //numFiles 1-10
+					for(int numFile = 1; numFile <= 10; numFile++) //numFiles 1-10
 					{
 						args[0] = pathToDomains + "bridges_v" + version + "_" + gridSize + "_" + bridgeDensity + "_" + numFile + extension;
 						args[1] = pathToProblems + "bridges_problem" + extension;

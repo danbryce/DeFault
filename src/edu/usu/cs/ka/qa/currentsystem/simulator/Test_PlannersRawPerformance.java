@@ -47,7 +47,7 @@ public class Test_PlannersRawPerformance
 	    //BufferedWriter out = new BufferedWriter(fstream);
 		
 		int numSuccesses = 0;
-		for(int simSeed = 0; simSeed < 1000 && numSuccesses < 10; simSeed ++)
+		for(int simSeed = 0; simSeed < 1000 && numSuccesses < 1; simSeed ++)
 		{
 			boolean cSuccess = false;
 			boolean incSuccess = false;
@@ -126,7 +126,7 @@ public class Test_PlannersRawPerformance
 				else if(plan == null && timeout) 
 					resultString += " pode1 T T";
 				else
-				{
+				{						
 					incSuccess = true;
 					resultString += " pode1 " + plan.size() + " " + planners.getTimeToSolve();
 				}
@@ -138,7 +138,7 @@ public class Test_PlannersRawPerformance
 				else if(plan == null && timeout) 
 					resultString += " jdd T T";
 				else
-				{
+				{				
 					incSuccess = true;
 					resultString += " jdd " + plan.size() + " " + planners.getTimeToSolve();
 				}

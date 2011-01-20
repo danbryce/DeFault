@@ -266,6 +266,7 @@ public class RiskCounter {
 	 */
 	public static int getFailureExplanationSentence_BDDRef2(Problem problem, List<ActionInstance> plan, Solver solver) 
 	{	
+		System.out.println("IN getFailureExplanationSentence_BDDRef2");
 		//Comment this out to get debugging info
 		//if(plan == null) return bdd.ref(bdd.getOne());
 		
@@ -274,6 +275,7 @@ public class RiskCounter {
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state - note: solver is null				
 		for(ActionInstance action : plan)
 		{
+			System.out.println(action);
 			try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance) action));}
 			catch(Exception e){e.printStackTrace(); break;}
 		}
