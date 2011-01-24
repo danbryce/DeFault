@@ -1,8 +1,6 @@
 package edu.usu.cs.ka.qa.currentsystem.agentsystem;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.LearningTypes;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -14,8 +12,11 @@ import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 public class QA 
 {
 	public static enum QA_Types{NONE, 
-								ALL, ALL_IN_PLAN, ALL_IN_PFE, 
-								ALLPossPres, ALLPossPres_IN_PLAN, ALLPossPres_IN_PFE, ALLMinTerms_IN_PFE}; //Risks
+								ALL, ALLPossPres,
+								ALL_IN_PLAN, ALLPossPres_IN_PLAN,
+								ALL_IN_PFE, ALLPossPres_IN_PFE, 
+								ALLCritical_IN_PFE, ALLCriticalPossPres_IN_PFE,
+								ALLMinTerms_IN_PFE}; //Risks
 	
 	Agent agent;
 	
@@ -32,15 +33,17 @@ public class QA
 	{
 		switch(qaType)
 		{
-			case NONE: 					return false;
-			case ALL: 					return askAllRisks_QA(expert); 
-			case ALL_IN_PLAN: 			return askAllRisksInPlan_QA(expert, plan);
-			case ALL_IN_PFE:	 		return askAllRisksInPFE_QA(expert, plan);
-			case ALLPossPres: 			return askAllPossPreRisks_QA(expert); 
-			case ALLPossPres_IN_PLAN: 	return askAllPossPreRisksInPlan_QA(expert, plan);
-			case ALLPossPres_IN_PFE: 	return askAllPossPreRisksInPFE_QA(expert, plan);
-			case ALLMinTerms_IN_PFE: 	return askAllMinTermsInPFE_QA(expert, plan);
-			default: 			return false;
+			case NONE: 							return false;
+			case ALL: 							return askAllRisks_QA(expert);
+			case ALLPossPres: 					return askAllPossPreRisks_QA(expert); 
+			case ALL_IN_PLAN: 					return askAllRisksInPlan_QA(expert, plan);
+			case ALLPossPres_IN_PLAN: 			return askAllPossPreRisksInPlan_QA(expert, plan);
+			case ALL_IN_PFE:	 				return askAllRisksInPFE_QA(expert, plan);
+			case ALLPossPres_IN_PFE: 			return askAllPossPreRisksInPFE_QA(expert, plan);
+			case ALLCritical_IN_PFE:			return askAllCriticalRisksInPFE_QA(expert, plan);
+			case ALLCriticalPossPres_IN_PFE: 	return this.askAllCriticalPossPreRisksInPFE_QA(expert, plan);
+			case ALLMinTerms_IN_PFE: 			return askAllMinTermsInPFE_QA(expert, plan);
+			default: 							return false;
 		}
 	}
 	
@@ -89,9 +92,12 @@ public class QA
 		for(ActionInstance act : plan)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			for(Proposition p : a.getPossiblePreconditions()) 	risksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
-			for(Proposition p : a.getPossibleAddEffects()) 		risksInPlan.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, a.getName(), p.getName()));
-			for(Proposition p : a.getPossibleDeleteEffects()) 	risksInPlan.add(Fault.getRiskFromIndex(Fault.POSSCLOB, a.getName(), p.getName()));
+			for(Proposition p : a.getPossiblePreconditions()) 	
+				risksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
+			for(Proposition p : a.getPossibleAddEffects()) 		
+				risksInPlan.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, a.getName(), p.getName()));
+			for(Proposition p : a.getPossibleDeleteEffects()) 	
+				risksInPlan.add(Fault.getRiskFromIndex(Fault.POSSCLOB, a.getName(), p.getName()));
 		}
 		
 		if(!risksInPlan.isEmpty())
@@ -115,7 +121,8 @@ public class QA
 		for(ActionInstance act : plan)
 		{
 			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			for(Proposition p : a.getPossiblePreconditions()) 	possPreRisksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
+			for(Proposition p : a.getPossiblePreconditions()) 	
+				possPreRisksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
 		}
 		
 		if(!possPreRisksInPlan.isEmpty())
@@ -136,7 +143,72 @@ public class QA
 	{			
 		if(plan == null) return false;
 		
-		//System.out.println("\nIN askAllRisksInPFE_QA()");
+		HashSet<Fault> risksInPFE = new HashSet<Fault>();
+		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int supports_bdd = agent.getBDD().support(failureExplanationSentence_bddRef);
+		
+		String supports = agent.getBDD().toString(supports_bdd);		
+		if(!supports.contains("TRUE") && !supports.contains("FALSE"))
+		{
+			for(int i = 0; i < agent.getBDD().numberOfVariables() - 1; i++)//numRisks minus the fail var
+				if(supports.charAt(i) != '-')
+					risksInPFE.add(agent.numVarIndexToRiskForCube.get(i));
+		}
+		
+		if(!risksInPFE.isEmpty())
+		{
+			askRisksInGivenList(expert, new ArrayList<Fault>(risksInPFE));
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Ask the Domain Expert about ALL possPre risks that exist IN the Plan's Failure Explanation
+	 * @param expert
+	 */
+	public boolean askAllPossPreRisksInPFE_QA(DomainExpert expert, List<ActionInstance> plan)
+	{			
+		if(plan == null) return false;
+		
+		HashSet<Fault> possPreRisksInPFE = new HashSet<Fault>();
+		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int supports_bdd = agent.getBDD().support(failureExplanationSentence_bddRef);
+		
+		String supports = agent.getBDD().toString(supports_bdd);		
+		if(!supports.contains("TRUE") && !supports.contains("FALSE"))
+		{
+			for(int i = 0; i < agent.getBDD().numberOfVariables() - 1; i++)//numRisks minus the fail var
+				if(supports.charAt(i) != '-')
+				{
+					Fault risk = agent.numVarIndexToRiskForCube.get(i);
+					if(risk.getRiskName().equals(Fault.PRECOPEN))
+						possPreRisksInPFE.add(risk);
+				}
+		}
+		
+		if(!possPreRisksInPFE.isEmpty())
+		{
+			askRisksInGivenList(expert, new ArrayList<Fault>(possPreRisksInPFE));
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Ask the Domain Expert about ALL CRITICAL risks that exist IN the Plan's Failure Explanation
+     * "Critical" means that if the risk is removed from the PFE via bdd.exists method, then the 
+     *  resulting PFE goes to TRUE. This indicates that the risk is implicated in every minterm of the bdd - 
+     *  every interpretation of the actions where the plan will succeed in finding the goal has been voided. 
+	 * @param expert
+	 */
+	public boolean askAllCriticalRisksInPFE_QA(DomainExpert expert, List<ActionInstance> plan)
+	{			
+		if(plan == null) return false;
+		
+		//System.out.println("\nIN askAllCriticalRisksInPFE_QA()");
 		//Planner.printPlanShort(plan); Planner.printPlanLong(plan);
 		
 		HashSet<Fault> risksInPFE = new HashSet<Fault>();
@@ -167,14 +239,17 @@ public class QA
 	}
 	
 	/**
-	 * Ask the Domain Expert about ALL possPre risks that exist IN the Plan's Failure Explanation
+	 * Ask the Domain Expert about ALL CRITICAL possPre risks that exist IN the Plan's Failure Explanation
+     * "Critical" means that if the risk is removed from the PFE via bdd.exists method, then the 
+     *  resulting PFE goes to TRUE. This indicates that the risk is implicated in every minterm of the bdd - 
+     *  every interpretation of the actions where the plan will succeed in finding the goal has been voided. 
 	 * @param expert
 	 */
-	public boolean askAllPossPreRisksInPFE_QA(DomainExpert expert, List<ActionInstance> plan)
+	public boolean askAllCriticalPossPreRisksInPFE_QA(DomainExpert expert, List<ActionInstance> plan)
 	{			
 		if(plan == null) return false;
 		
-		//System.out.println("\nIN askAllRisksInPFE_QA()");
+		//System.out.println("\nIN askAllCriticalPossPreRisksInPFE_QA()");
 		//Planner.printPlanShort(plan); Planner.printPlanLong(plan);
 		
 		HashSet<Fault> possPreRisksInPFE = new HashSet<Fault>();
@@ -209,75 +284,90 @@ public class QA
 	
 	/**
 	 * Ask the Domain Expert about ALL risks that exist IN the Plan's Failure Explanation in order of minterms
+	 * Rather than ask about all existing risks in a plan's failure explanation, we ask about most critical risk,
+	 * then redraw the PFE to see if the plan is still valid. If it is no longer valid
+	 * 
 	 * @param expert
 	 */
 	public boolean askAllMinTermsInPFE_QA(DomainExpert expert, List<ActionInstance> plan)
 	{	
-		System.out.println("\n*****************************************************************");
-		System.out.println("IN askAllMinTermsInPFE_QA():");
+		if(plan == null) return false;
 		
-		if(plan == null) 
+		System.out.println("\nIN askAllMinTermsInPFE_QA()");
+		Planner.printPlanShort(plan); 
+		//Planner.printPlanLong(plan);
+		
+		LinkedList<LinkedList<Integer>> cubes = getCubes(expert, plan);
+		for(LinkedList<Integer> cube : cubes)
+			System.out.println(cube.toString());
+		
+//		HashSet<Fault> risksInPFE = new HashSet<Fault>();
+//		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+//
+//		String[] minTerms = agent.getBDD().toString(failureExplanationSentence_bddRef).split("\n");
+//		for(String mt : minTerms)
+//		{
+//			if(!mt.equals("TRUE") && !mt.equals("FALSE"))
+//			{
+//				for(int i = 0; i < agent.getBDD().numberOfVariables() - 1; i++)//numRisks minus the fail var
+//					if(mt.charAt(i) != '-')
+//						risksInPFE.add(agent.numVarIndexToRiskForCube.get(i));
+//			}
+//		}
+//		
+//		if(!risksInPFE.isEmpty())
+//		{
+//			askRisksInGivenList(expert, new ArrayList<Fault>(risksInPFE));
+//			return true;
+//		}
+		
+		return false;
+	}
+	
+	private LinkedList<LinkedList<Integer>> getCubes(DomainExpert expert, List<ActionInstance> plan)
+	{
+		
+		LinkedList<LinkedList<Integer>> cubes = new LinkedList<LinkedList<Integer>>();
+		
+		ActionInstance firstAction = plan.get(0);
+		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
+		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+		String[] minTerms = agent.getBDD().toString(failureExplanationSentence_bddRef).split("\n");
+		
+		System.out.println("IN getCubes...");
+		System.out.println(agent.getBDD().toString(failureExplanationSentence_bddRef));
+		agent.getBDD().printCubes(failureExplanationSentence_bddRef);
+		
+		for(String mt : minTerms)
+			System.out.println("\t" + mt);
+		
+		for(int index = 0; index < minTerms.length; index++)
 		{
-			System.out.println("NULL plan.");
-			return false;
-		}
-		
-		System.out.println("\n PLAN-short:");
-		Planner.printPlanShort(plan);
-		
-		HashSet<Fault> risksInPFE = new HashSet<Fault>();
-		ActionInstance firstAct = plan.get(0); System.out.println(firstAct);
-		List<ActionInstance> restOfPlan = plan.subList(1, plan.size()); System.out.println(restOfPlan);
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAct, Planner.solver);
-		
-		System.out.println("\n*PFE BDD:");
-		System.out.println("SET: "); agent.getBDD().printSet(failureExplanationSentence_bddRef);
-		System.out.println("SET count: " + agent.getBDD().getSetCount(failureExplanationSentence_bddRef));
-		System.out.println("SET countb: " + agent.getBDD().getBigSetCount(failureExplanationSentence_bddRef));
-		System.out.println("HIGH: " + agent.getBDD().getHigh(failureExplanationSentence_bddRef));
-		System.out.println("LOW: " + agent.getBDD().getLow(failureExplanationSentence_bddRef));
-		System.out.println("print: "); agent.getBDD().print(failureExplanationSentence_bddRef);
-		System.out.println("printCubes: "); agent.getBDD().printCubes(failureExplanationSentence_bddRef);
-		//agent.getBDD().member(bdd, minterm)
-		//agent.getBDD().minterm(v)
-		System.out.println("string:\n" + agent.getBDD().toString(failureExplanationSentence_bddRef));
-		//agent.getBDD().oneSat(bdd, buffer)
-		//agent.getBDD().
-		
-		
-		System.out.println("ASK Q's:");
-		for(Fault risk : agent.risks)
-		{	
-			boolean[] v = new boolean[agent.bdd.numberOfVariables()];
-			v[agent.riskToNumVarIndexForCube.get(risk)] = true;
-			
-			int cube = agent.bdd.cube(v);
-			int temp = agent.bdd.exists(failureExplanationSentence_bddRef, cube);
-			
-			System.out.println(agent.riskToNumVarIndexForCube.get(risk) + ":" + agent.riskToBDD.get(risk) + ": " + risk + " -> " + temp);;
-			
-			if(temp == 1)
+			LinkedList<Integer> cube = new LinkedList<Integer>();
+			if(!minTerms[index].equals("TRUE") && !minTerms[index].equals("FALSE"))
 			{
-				//System.out.println(agent.riskToNumVarIndexForCube.get(risk) + ":" + agent.riskToBDD.get(risk) + ": " + risk);
-				risksInPFE.add(risk);
+				for(int i = 0; i < agent.getBDD().numberOfVariables() - 1; i++)//numRisks minus the fail var
+					if(minTerms[index].charAt(i) == '1')
+						cube.addLast(i);
+				cubes.add(cube);
+			}
+			else if(minTerms[index].equals("TRUE"))
+			{
+				cube.addLast(-1);
+				cubes.clear();
+				cubes.add(cube);
+				break;
+			}
+			else if(minTerms[index].equals("FALSE"))
+			{
+				cube.addLast(-2);
+				cubes.clear();
+				cubes.add(cube);
+				break;
 			}
 		}
 		
-		if(!risksInPFE.isEmpty())
-		{
-			askRisksInGivenList(expert, new ArrayList<Fault>(risksInPFE));
-			//agent.getBDD().deref(failureExplanationSentence_bddRef);
-			//askAllMinTermsInPFE_QA(expert, plan);
-			
-			System.out.println("\n*NEW PFE BDD:");
-			agent.getBDD().deref(failureExplanationSentence_bddRef);
-			failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAct, Planner.solver);
-			System.out.println("SET: "); agent.getBDD().printSet(failureExplanationSentence_bddRef);
-			
-			return true;
-		}
-		
-		return false;
+		return cubes;
 	}
 	
 	//Utility methods used by above

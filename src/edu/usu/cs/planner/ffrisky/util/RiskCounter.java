@@ -43,6 +43,7 @@ public class RiskCounter {
 	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
 	
 	private static Map<Fault, Integer> riskToNumVarIndexForCube;
+	private static Map<Integer, Fault> numVarIndexToRiskForCube;
 		
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) 
 	{
@@ -105,6 +106,7 @@ public class RiskCounter {
 		riskToBDD = new HashMap<Fault, Integer>();
 		bddToRisk = new HashMap<Integer, Fault>();
 		riskToNumVarIndexForCube = new HashMap<Fault, Integer>();
+		numVarIndexToRiskForCube = new HashMap<Integer, Fault>(); 
 		
 		int countOfVars = 0;
 		for (Fault risk : allRisks) 
@@ -112,7 +114,8 @@ public class RiskCounter {
 			int temp = bdd.createVar();			
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
-			riskToNumVarIndexForCube.put(risk, countOfVars++);
+			riskToNumVarIndexForCube.put(risk, countOfVars);
+			numVarIndexToRiskForCube.put(countOfVars++, risk);
 		}
 
 		isInitialized = true;
@@ -266,7 +269,8 @@ public class RiskCounter {
 	 */
 	public static int getFailureExplanationSentence_BDDRef2(Problem problem, List<ActionInstance> plan, Solver solver) 
 	{	
-		System.out.println("IN getFailureExplanationSentence_BDDRef2");
+		//System.out.println("IN getFailureExplanationSentence_BDDRef2");
+		
 		//Comment this out to get debugging info
 		//if(plan == null) return bdd.ref(bdd.getOne());
 		
@@ -275,7 +279,7 @@ public class RiskCounter {
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state - note: solver is null				
 		for(ActionInstance action : plan)
 		{
-			System.out.println(action);
+			//System.out.println(action);
 			try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance) action));}
 			catch(Exception e){e.printStackTrace(); break;}
 		}
@@ -370,6 +374,7 @@ public class RiskCounter {
 	public static Map<Integer, Fault> 	getBddToRisk() 								{ return bddToRisk; }
 	public static void 					setBddToRisk(Map<Integer, Fault> bddToRisk) { RiskCounter.bddToRisk = bddToRisk; }
 	public static Map<Fault, Integer>	getRiskToNumVarIndexForCube()				{ return riskToNumVarIndexForCube; }
+	public static Map<Integer, Fault>	getNumVarIndexToRiskForCube()				{ return numVarIndexToRiskForCube; }
 
 	private static List<Fault> getAllRisks(Problem problem) {
 		List<Fault> risks = new ArrayList<Fault>();

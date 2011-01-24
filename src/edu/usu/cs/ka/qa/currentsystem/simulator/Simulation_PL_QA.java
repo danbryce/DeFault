@@ -90,7 +90,7 @@ public class Simulation_PL_QA
 					sim.runSimulationForGivenQAType(args, QA_Types.NONE);
 					if(gotAResult)
 					{
-						sim.resultString += "\n";
+						//sim.resultString += "\n";
 						//sim.runSimulationForGivenQAType(args, QA_Types.ALL);
 						//sim.resultString += "\n";
 						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
@@ -103,6 +103,10 @@ public class Simulation_PL_QA
 						//sim.resultString += "\n";
 						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
 						//sim.resultString += "\n";
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALLCritical_IN_PFE);
+						//sim.resultString += "\n";
+						//sim.runSimulationForGivenQAType(args, QA_Types.ALLCriticalPossPres_IN_PFE);
+						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALLMinTerms_IN_PFE);
 						System.out.println(sim.resultString);
 
@@ -122,7 +126,7 @@ public class Simulation_PL_QA
 	{
 		resultString += " *" + qaType + "* " + Agent.AgentTypes.RG;
 		
-		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } catch(Exception e){ /*e.printStackTrace();*/ resultString += " amir E E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } catch(Exception e){ e.printStackTrace(); resultString += " amir E E E E E E E E E"; }
 		//try{ runSimulation(PlannerTypes.PODE1, args, AgentTypes.RG, qaType); } catch(Exception e){ /*e.printStackTrace();*/ resultString += " pode1 E E E E E E E E E"; }
 		//try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ /*e.printStackTrace();*/ resultString += " jdd E E E E E E E E E"; }
 		
