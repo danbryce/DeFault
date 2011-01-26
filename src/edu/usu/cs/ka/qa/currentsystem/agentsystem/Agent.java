@@ -45,6 +45,7 @@ public abstract class Agent
 	protected Map<Integer, Fault> bddToRisk;
 	protected Map<Fault, Integer> riskToNumVarIndexForCube;
 	protected Map<Integer, Fault> numVarIndexToRiskForCube;
+	protected int numBDDVars;
 	
 	//QA SIDE
 	public QA qa;
@@ -85,6 +86,7 @@ public abstract class Agent
 		numVarIndexToRiskForCube = RiskCounter.getNumVarIndexToRiskForCube();
 		
 		failVar = bdd.createVar();
+		numBDDVars = bdd.numberOfVariables();
 		
 		//Create a var for FAIL. and make sure it exists in the BDD
 		//Print out the size of the risks List and printSet of the BDD to see the vars are the same size.
@@ -109,6 +111,8 @@ public abstract class Agent
 	public List<ActionInstance> getActions() 	{ return actions; }
 	public List<Fault> getRisks()				{ return risks; }
 	public int getNumRisks()					{ return risks.size();}
+	public int getNumBDDVars()					{ return numBDDVars;}
+	
 		
 	/**
 	 * This method's simple assignment statement means that any changes to the Agent's actionList

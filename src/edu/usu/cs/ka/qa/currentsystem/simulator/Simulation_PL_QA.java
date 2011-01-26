@@ -90,20 +90,20 @@ public class Simulation_PL_QA
 					sim.runSimulationForGivenQAType(args, QA_Types.NONE);
 					if(gotAResult)
 					{
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALL);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
 						//sim.resultString += "\n";
 						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
 						//sim.resultString += "\n";
 						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
 						//sim.resultString += "\n";
 						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALLCritical_IN_PFE);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLCritical_IN_PFE);
 						//sim.resultString += "\n";
 						//sim.runSimulationForGivenQAType(args, QA_Types.ALLCriticalPossPres_IN_PFE);
 						sim.resultString += "\n";
@@ -140,7 +140,7 @@ public class Simulation_PL_QA
 	boolean timeout;
 	private void runSimulation(PlannerTypes plannerType, String [] args, AgentTypes agentType, QA_Types qaType)
 	{	
-		System.out.println("\n//" + plannerType + " " + agentType + " " + qaType + "///////////////////");
+		//System.out.println("\n//" + plannerType + " " + agentType + " " + qaType + "///////////////////");
 		
 		//AGENT SETUP
 		if(agentType.equals(Agent.AgentTypes.RG)) 		agent = new Agent_RG(args[0], args[1]);

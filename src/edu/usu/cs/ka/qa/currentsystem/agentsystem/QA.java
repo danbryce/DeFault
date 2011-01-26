@@ -293,33 +293,45 @@ public class QA
 	{	
 		if(plan == null) return false;
 		
-		System.out.println("\nIN askAllMinTermsInPFE_QA()");
-		Planner.printPlanShort(plan); 
-		//Planner.printPlanLong(plan);
+		//System.out.println("\nIN askAllMinTermsInPFE_QA()");
 		
-		LinkedList<LinkedList<Integer>> cubes = getCubes(expert, plan);
-		for(LinkedList<Integer> cube : cubes)
-			System.out.println(cube.toString());
+		ActionInstance firstAction = plan.get(0);
+		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
+		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+		String minTerms = agent.getBDD().toString(failureExplanationSentence_bddRef);
+		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
+		{
+			LinkedList<LinkedList<Integer>> cubes = getCubes(expert, plan);
 		
-//		HashSet<Fault> risksInPFE = new HashSet<Fault>();
-//		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
-//
-//		String[] minTerms = agent.getBDD().toString(failureExplanationSentence_bddRef).split("\n");
-//		for(String mt : minTerms)
-//		{
-//			if(!mt.equals("TRUE") && !mt.equals("FALSE"))
-//			{
-//				for(int i = 0; i < agent.getBDD().numberOfVariables() - 1; i++)//numRisks minus the fail var
-//					if(mt.charAt(i) != '-')
-//						risksInPFE.add(agent.numVarIndexToRiskForCube.get(i));
-//			}
-//		}
-//		
-//		if(!risksInPFE.isEmpty())
-//		{
-//			askRisksInGivenList(expert, new ArrayList<Fault>(risksInPFE));
-//			return true;
-//		}
+			//Now sum over the appearance of variables in each cube (excepting fail var)
+			Double[] bddVarsSummedValues = new Double[agent.getNumBDDVars()-1];
+			for (int i = 0; i < agent.getNumBDDVars()-1; i++)
+				bddVarsSummedValues[i] = 0.0;
+
+			for (int i = 0; i < agent.getNumBDDVars()-1; i++)
+				for(LinkedList<Integer> cube : cubes)
+					if(cube.contains(i))
+						bddVarsSummedValues[i] += 1.0/cube.size();
+		
+			Double max = 0.0;
+			int indexOfMax = 0;
+			for(int i = 0; i < bddVarsSummedValues.length; i++)
+				if (bddVarsSummedValues[i] > max)
+				{
+					indexOfMax = i;
+					max = bddVarsSummedValues[i];
+				}
+			
+			ArrayList<Fault> chosenRiskForQA = new ArrayList<Fault>();
+			Fault chosenRisk = agent.numVarIndexToRiskForCube.get(indexOfMax);
+			chosenRiskForQA.add(chosenRisk);
+			askRisksInGivenList(expert, chosenRiskForQA);
+			
+			failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+			minTerms = agent.getBDD().toString(failureExplanationSentence_bddRef);
+		}
+		
+		if(minTerms.contains("TRUE")) return true;
 		
 		return false;
 	}
@@ -334,12 +346,12 @@ public class QA
 		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
 		String[] minTerms = agent.getBDD().toString(failureExplanationSentence_bddRef).split("\n");
 		
-		System.out.println("IN getCubes...");
-		System.out.println(agent.getBDD().toString(failureExplanationSentence_bddRef));
-		agent.getBDD().printCubes(failureExplanationSentence_bddRef);
+		//System.out.println("IN getCubes...");
+		//System.out.println(agent.getBDD().toString(failureExplanationSentence_bddRef));
+		//agent.getBDD().printCubes(failureExplanationSentence_bddRef);
 		
-		for(String mt : minTerms)
-			System.out.println("\t" + mt);
+		//for(String mt : minTerms)
+		//	System.out.println("\t" + mt);
 		
 		for(int index = 0; index < minTerms.length; index++)
 		{

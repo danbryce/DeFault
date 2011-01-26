@@ -252,7 +252,7 @@ public class RiskCounter {
 			//then the failure explanation is trivially true - the plan will definitely fail. Should never happen?
 			else 
 			{
-				System.out.println("PFE TRUE");
+				//System.out.println("PFE TRUE");
 				bdd.deref(crs);
 				crs = bdd.getOne();
 				int tmp = bdd.ref(crs);
