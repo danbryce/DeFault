@@ -19,9 +19,9 @@ public class BatchTester_Simulation_Agent_PL_QA
 		System.out.println("<#QsAsked> <#risksLearnedQA> <#risksLearnedPL> ");
 			
 		//Just mess around with the for loop values...
-		for(int gridSize = 4; gridSize <= 4; gridSize *= 2) //2-32
+		for(int gridSize = 8; gridSize <= 8; gridSize *= 2) //2-32
 		{
-			for(double bridgeDensity = .75; bridgeDensity <= .75; bridgeDensity += 0.25) //0.0 - 1.0
+			for(double bridgeDensity = .5; bridgeDensity <= .5; bridgeDensity += 0.25) //0.0 - 1.0
 			{	
 				for(int version = 3; version <= 3; version++)//1-3
 				{

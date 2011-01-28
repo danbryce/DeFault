@@ -27,6 +27,8 @@ public class DomainExpert
 	List<Fault> wereRisksAreNowKnownFeatures;
 	
 	int numQsAsked;
+	
+	static DomainExpert instance;
 		
 	public DomainExpert(String dFileString, String pFileString, int simSeed)
 	{	
@@ -48,7 +50,11 @@ public class DomainExpert
 		loadActionsHT();
 		
 		numQsAsked = 0;
+		
+		instance = this;
 	}
+	
+	static DomainExpert getInstance() {return instance;}//Incomplete v. of singleton pattern assumes instance always previously exists.
 	
 	public void setDomainAndProblem()
 	{

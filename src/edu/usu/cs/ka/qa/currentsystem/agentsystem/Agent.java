@@ -44,7 +44,7 @@ public abstract class Agent
 	protected Map<Fault, Integer> riskToBDD;
 	protected Map<Integer, Fault> bddToRisk;
 	protected Map<Fault, Integer> riskToNumVarIndexForCube;
-	protected Map<Integer, Fault> numVarIndexToRiskForCube;
+	protected Map<Integer, Fault> numVarIndexToRiskForCubeOrMinterm;
 	protected int numBDDVars;
 	
 	//QA SIDE
@@ -83,7 +83,7 @@ public abstract class Agent
 		riskToBDD = RiskCounter.getRiskToBDD();
 		bddToRisk = RiskCounter.getBddToRisk();
 		riskToNumVarIndexForCube = RiskCounter.getRiskToNumVarIndexForCube();
-		numVarIndexToRiskForCube = RiskCounter.getNumVarIndexToRiskForCube();
+		numVarIndexToRiskForCubeOrMinterm = RiskCounter.getNumVarIndexToRiskForCube();
 		
 		failVar = bdd.createVar();
 		numBDDVars = bdd.numberOfVariables();

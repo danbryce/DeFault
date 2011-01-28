@@ -12,9 +12,12 @@ import edu.usu.cs.pddl.domain.incomplete.*;
 
 public class Simulation_PL_QA
 {		
-	Planner planners;
+	static Planner planners;
 	DomainExpert expert;
 	Agent agent;
+	
+	PlannerTypes pType;
+	static Simulation_PL_QA instance;
 	
 	static int timeLimit;
 	String resultString;
@@ -32,9 +35,14 @@ public class Simulation_PL_QA
 		expert = new DomainExpert(args[0], args[1], simSeed);		
 		planners = new Planner(args[0], args[1]);
 
-		resultString = "";	
+		resultString = "";
+		
+		instance = this;
 	}
 	
+	public static Simulation_PL_QA getInstance() {return instance;}//Incomplete v. of singleton pattern assumes instance always previously exists.
+	public PlannerTypes getPlannerType(){return pType;}
+	public Planner getPlanner(){return planners;}
 
 	/**
 	 * Choose any planner, as all perform comparably on the classical version of the problem.
@@ -68,11 +76,11 @@ public class Simulation_PL_QA
 		int numSuccesses = 0;
 		
 		System.out.println();
-		System.out.println("domainFile: " + args[0]);
-		System.out.println("problemFile: " + args[1]);
-		System.out.println("thread timeLimit: " + args[2]);
-		System.out.println("tests startTime: " + startStopwatch());
-		System.out.println();
+//		System.out.println("domainFile: " + args[0]);
+//		System.out.println("problemFile: " + args[1]);
+//		System.out.println("thread timeLimit: " + args[2]);
+//		System.out.println("tests startTime: " + startStopwatch());
+//		System.out.println();
 		
 		for(int simSeed = 0; (simSeed < 1000) && (numSuccesses < 1); simSeed++)
 		{
@@ -91,23 +99,37 @@ public class Simulation_PL_QA
 					if(gotAResult)
 					{
 						sim.resultString += "\n";
+						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
 						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
 						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
 						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.ALLCritical_IN_PFE);
-						//sim.resultString += "\n";
-						//sim.runSimulationForGivenQAType(args, QA_Types.ALLCriticalPossPres_IN_PFE);
 						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLMinTerms_IN_PFE);
+						sim.runSimulationForGivenQAType(args, QA_Types.BESTCubeVar_IN_PFE);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.BESTMintermVar_IN_PFE);
+						
+						sim.resultString += "\n";
+						
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.ALLCriticalPossPres_IN_PFE);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.BESTPossPreCubeVar_IN_PFE);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.BESTPossPreMintermVar_IN_PFE);
+						
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTree);
+						
 						System.out.println(sim.resultString);
 
 						numSuccesses++;
@@ -116,10 +138,10 @@ public class Simulation_PL_QA
 			}catch(Exception e){System.out.println("\nUnhandled Exception"); e.printStackTrace();}
 		}
 		
-		System.out.println();
-		System.out.println("numSuccesses    : " + numSuccesses);
-		System.out.println("tests finishTime: " + stopStopwatch());
-		System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
+//		System.out.println();
+//		System.out.println("numSuccesses    : " + numSuccesses);
+//		System.out.println("tests finishTime: " + stopStopwatch());
+//		System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
 	}
 	
 	private void runSimulationForGivenQAType(String[] args, QA_Types qaType)
@@ -150,6 +172,7 @@ public class Simulation_PL_QA
 		planners.setProblem(agent.getProblem()); //Sets planner's problem to agent's incomplete version (was expert's/outdated)
 		//The planner's problem's actionList auto-updates from Agent to Planner by this reference.
 		planners.resetNumTimesPlannerCalledCount();
+		pType = plannerType;
 		
 		//EXECUTION SETUP
 		Set<Proposition> currState, nextState;
@@ -162,12 +185,12 @@ public class Simulation_PL_QA
 		
 		currState = nextState = agent.getProblem().getInitialState();
 		
-		agent.qa.QA_Switch(qaType, expert, null); //works for QA TYPE - ALL RISKS only
+		agent.qa.askQuestionsByType(qaType, null); //works for QA TYPE - ALL RISKS only
 		
 		//FIRST POSSIBLE PLAN OBTAINED
 		//QA TYPE - ALL RISKS IN PLAN && ALL RISKS IN PLAN FAILURE EXPLANATION SENTENCE
 		plan = runPlannerThread(plannerType);
-		while(agent.qa.QA_Switch(qaType, expert, plan))
+		while(agent.qa.askQuestionsByType(qaType, plan))
 			plan = runPlannerThread(plannerType);
 		
 		//EXECUTION/PLANNING LOOP
@@ -203,7 +226,7 @@ public class Simulation_PL_QA
 				agent.removeFailFromKBForNewPlan();
 				plan = runPlannerThread(plannerType); //plan = planners.getPlan(plannerType);
 				countReplanningEpisodesDuringExecution++;
-				while(agent.qa.QA_Switch(qaType, expert, plan))
+				while(agent.qa.askQuestionsByType(qaType, plan))
 				{
 					plan = runPlannerThread(plannerType);
 					countReplanningEpisodesDuringExecution++;
@@ -248,7 +271,7 @@ public class Simulation_PL_QA
 	 * @param plannerType
 	 * @return
 	 */
-	private List<ActionInstance> runPlannerThread(Planner.PlannerTypes plannerType)
+	public List<ActionInstance> runPlannerThread(Planner.PlannerTypes plannerType)
 	{
 		ExecThread execThread = new ExecThread(Thread.currentThread(), planners, plannerType);
 		
