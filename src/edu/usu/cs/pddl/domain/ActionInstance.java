@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.search.ConditionalAction;
 
-public interface ActionInstance {
+public interface ActionInstance extends ConditionalAction{
 
 	double getCost();
 

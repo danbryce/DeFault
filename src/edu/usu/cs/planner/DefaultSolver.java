@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import jdd.bdd.BDD;
+
 import org.apache.log4j.Logger;
 
 import edu.usu.cs.heuristic.Heuristic;
@@ -20,6 +22,7 @@ import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
+import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
@@ -46,6 +49,9 @@ public class DefaultSolver implements Solver {
 	protected Set<ActionInstance> relevantActions = null;
 	protected Set<Integer> relevantFacts = null;
 	
+	BDD bdd;
+
+	
 	public Set<Integer> getRelevantFacts() {
 		return relevantFacts;
 	}
@@ -70,6 +76,8 @@ public class DefaultSolver implements Solver {
 		this.problem = problem;
 		this.solverOptions = solverOptions;
 		this.searchStatistics = searchStatistics;
+		bdd = RiskCounter.getBDD();
+
 		if(this.problem.getActions() == null)//This is a change created by CW during 8.10
 		{
 			System.out.println("IN CASE: this.problem.getActions() == null");
@@ -212,6 +220,12 @@ public class DefaultSolver implements Solver {
 	public Set<ActionInstance> getActionInstances() {
 		// TODO Auto-generated method stub
 		return new HashSet<ActionInstance>(actionInstances);
+	}
+
+	@Override
+	public BDD getBDD() {
+		// TODO Auto-generated method stub
+		return bdd;
 	}
 
 	

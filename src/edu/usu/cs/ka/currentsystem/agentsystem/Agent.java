@@ -327,7 +327,12 @@ public abstract class Agent
 		boolean[] v = new boolean[bdd.numberOfVariables()];
 		v[v.length-1] = true;
 		
+		bdd.ref(bddRef_KB);
+//		System.out.println("");
+//		bdd.printSet(bddRef_KB);
+//		
 		int cube = bdd.cube(v);
+
 		int temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
 		
 		bdd.deref(bddRef_KB);

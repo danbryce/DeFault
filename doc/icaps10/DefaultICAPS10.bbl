@@ -1,0 +1,97 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Bryant}{1986}]{bryant-ieeetc86}
+R.~Bryant.
+\newblock Graph-based algorithms for {B}oolean function manipulation.
+\newblock {\em IEEE Transactions on Computers}, C-35(8):677--691, August 1986.
+
+\bibitem[\protect\citeauthoryear{Bryce \bgroup \em et al.\egroup
+  }{2006}]{bryce-jair}
+D.~Bryce, S.~Kambhampati, and D.E. Smith.
+\newblock Planning graph heuristics for belief space search.
+\newblock {\em Journal of AI Research}, 26:35--99, 2006.
+
+\bibitem[\protect\citeauthoryear{Bryce \bgroup \em et al.\egroup
+  }{2008}]{aij-mclug}
+D.~Bryce, S.~Kambhampati, and D.E. Smith.
+\newblock Sequential monte carlo in probabilistic planning reachability
+  heuristics.
+\newblock {\em AIJ}, 172(6-7):685--715, 2008.
+
+\bibitem[\protect\citeauthoryear{Chang and
+  Amir}{2006}]{DBLP:conf/aips/ChangA06}
+Allen Chang and Eyal Amir.
+\newblock Goal achievement in partially known, partially observable domains.
+\newblock In {\em ICAPS'06}, 2006.
+
+\bibitem[\protect\citeauthoryear{Darwiche and Marquis}{2002}]{darwiche}
+Adnan Darwiche and Pierre Marquis.
+\newblock A knowledge compilation map.
+\newblock {\em Journal of Artificial Intelligence Research}, 17:229--264, 2002.
+
+\bibitem[\protect\citeauthoryear{de Kleer and Williams}{1987}]{dekleer}
+Johan de~Kleer and Brian~C. Williams.
+\newblock Diagnosing multiple faults.
+\newblock {\em Artificial Intelligence}, 32(1):97--130, 1987.
+
+\bibitem[\protect\citeauthoryear{Domshlak and Hoffmann}{2006}]{pff}
+C.~Domshlak and J.~Hoffmann.
+\newblock Fast probabilistic planning through weighted model counting.
+\newblock In {\em Proceedings of ICAPS'06}, pages 243--251, 2006.
+
+\bibitem[\protect\citeauthoryear{Fikes and Nilsson}{1971}]{strips}
+R.~Fikes and N.J. Nilsson.
+\newblock {STRIPS}: A new approach to the application of theorem proving to
+  problem solving.
+\newblock In {\em Proceedings of AAAI'71}, pages 608--620, 1971.
+
+\bibitem[\protect\citeauthoryear{Garland and Lesh}{2002}]{Garland02}
+Andrew Garland and Neal Lesh.
+\newblock Plan evaluation with incomplete action descriptions.
+\newblock In {\em Proceedings of AAAI'02}, 2002.
+
+\bibitem[\protect\citeauthoryear{Helmert}{2006}]{DBLP:journals/jair/Helmert06}
+Malte Helmert.
+\newblock The fast downward planning system.
+\newblock {\em JAIR}, 26:191--246, 2006.
+
+\bibitem[\protect\citeauthoryear{Hoffmann and
+  Nebel}{2001}]{hoffmann:nebel:jair-01}
+J.~Hoffmann and B.~Nebel.
+\newblock The {FF} planning system: Fast plan generation through heuristic
+  search.
+\newblock {\em JAIR}, 14:253--302, 2001.
+
+\bibitem[\protect\citeauthoryear{Kambhampati}{2007}]{modellite}
+S.~Kambhampati.
+\newblock Model-lite planning for the web age masses.
+\newblock In {\em Proceedings of AAAI'07}, 2007.
+
+\bibitem[\protect\citeauthoryear{Long and Fox}{2003}]{ipc}
+Derek Long and Maria Fox.
+\newblock The 3rd international planning competition: Results and analysis.
+\newblock {\em Journal of Artificial Intelligence Research}, 20:1--59, 2003.
+
+\bibitem[\protect\citeauthoryear{Mailler \bgroup \em et al.\egroup
+  }{2009}]{mable}
+R.~Mailler, D.~Bryce, J.~Shen, and C.~Orielly.
+\newblock Mable: A framework for natural instruction.
+\newblock In {\em { AAMAS'09}}, 2009.
+
+\bibitem[\protect\citeauthoryear{Reiter}{1987}]{reiter}
+Raymond Reiter.
+\newblock A theory of diagnosis from first principles.
+\newblock {\em Artificial Intelligence}, 32(1):57--95, 1987.
+
+\bibitem[\protect\citeauthoryear{Roth}{1996}]{Roth96}
+D.~Roth.
+\newblock On the hardness of approximate reasoning.
+\newblock {\em Artificial Intelligence}, 82(1-2):273--302, Apr 1996.
+
+\bibitem[\protect\citeauthoryear{Wu \bgroup \em et al.\egroup }{2007}]{arms}
+Kangheng Wu, Quiag Yang, and Yunfei Jiang.
+\newblock Arms: an automatic knowledge engineering tool for learning action
+  models for ai planning.
+\newblock {\em K. Eng. Rev.}, 22(2):135--152, 2007.
+
+\end{thebibliography}

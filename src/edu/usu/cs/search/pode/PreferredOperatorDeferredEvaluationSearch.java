@@ -162,6 +162,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 			// Compute node's H value
 			node.getHeuristicValue();
+			searchStatistics.processNode(node);
 //			logger.debug(((FaultStateNode) node).getPropositions().keySet());
 			if(node.deadEnd()){
 				closed.add( node);

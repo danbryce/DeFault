@@ -7,7 +7,7 @@ import edu.usu.cs.search.SearchTest;
 public class HoboNavTest {
 
 	@Test
-	public void CreateHoboNavDomains() {
+	public void CreateHoboNavDomainsTest() {
 		// testfiles/incomplete/hobonav/hobodo.pddl [Domain Output File]
 		// testfiles/incomplete/hobonav/hobopro.pddl [Problem Output File]
 		// 2 [Grid Size]
@@ -19,8 +19,10 @@ public class HoboNavTest {
 		String domainDir = "testfiles/incomplete/hobonav/";
 		String problemDir = "testfiles/incomplete/hobonav/";
 		String extension = ".pddl";
-		int[] gridSizes = { 2, 4, 6, 8, 16 };
-		int[] itemCounts = { 1, 2, 4 };
+		//int[] gridSizes = { 2, 4, 6, 8, 16 };
+		int[] gridSizes = {8};
+		//int[] itemCounts = { 1, 2, 4 };
+		int[] itemCounts = { 4 };
 		double[] tollDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
 		double[] gambleDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
 		double[] easyMarkDensities = { 0.0, 0.1, 0.1, 0.1, 0.1 }; // The densities are all incremented together
@@ -48,7 +50,7 @@ public class HoboNavTest {
 						args[5] = Double.toString(gambleDensities[density]);
 						args[6] = Double.toString(easyMarkDensities[density]);
 						
-						//edu.usu.cs.incomplete.hobonav.HoboNavDomainCreator.main(args);
+						edu.usu.cs.incomplete.hobonav.HoboNavDomainCreator.main(args);
 					}
 				}
 			}

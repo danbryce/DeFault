@@ -13,6 +13,7 @@ public class SearchStatistics {
 	private PlanMetric[] lastFValue = null;
 	private int lastBranchingFactor = 0;
 	private StateNode solutionNode = null;
+	private int nodesGenerated = 0;
 	
 	public StateNode getSolutionNode() {
 		return solutionNode;
@@ -83,6 +84,20 @@ public class SearchStatistics {
 		
 		
 		return sb.toString();
+	}
+
+
+
+	public int getNodesGenerated() {
+		// TODO Auto-generated method stub
+		return nodesGenerated ;
+	}
+
+
+
+	public void setNodesGenerated(int id) {
+		// TODO Auto-generated method stub
+		nodesGenerated = id;
 	}
 	
 }

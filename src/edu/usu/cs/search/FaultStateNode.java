@@ -27,7 +27,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 	protected Map<Proposition, FaultSet> state;
 	protected Set<ActionInstance> preferredOperators = null;
 	protected FaultSet criticalRisks = null;
-		private static Logger logger = Logger.getLogger(FaultStateNode.class.getName());
+		protected static Logger logger = Logger.getLogger(FaultStateNode.class.getName());
 
 
 	public FaultStateNode(ActionInstance action, StateNode parent, Solver solver) {
@@ -204,7 +204,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				riskSet.setFaults(1);
 			}
 
-			riskSet.and(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), effect.getName()));
+			riskSet.or(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), effect.getName()));
 			state.put(effect, riskSet);
 		}
 	}
@@ -304,7 +304,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			}
 			
 			// Also add the UnlistedEffect risk
-			crossProduct.and(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(),
+			crossProduct.or(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(),
 					effect.getName()));
 
 			// Intersect these with risks in the proposition to get the new risk

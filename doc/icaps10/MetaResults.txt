@@ -1,0 +1,2604 @@
+HoboNav///////////////////////////////////////////
+hobonav_2_0.0_1_1.txt 10
+hobonav_2_0.0_2_1.txt 10
+hobonav_2_0.0_4_1.txt 10
+hobonav_2_0.25_1_1.txt 10
+hobonav_2_0.25_2_1.txt 10
+hobonav_2_0.25_4_1.txt 10
+hobonav_2_0.5_1_1.txt 10
+hobonav_2_0.5_2_1.txt 10
+hobonav_2_0.5_4_1.txt 10
+hobonav_2_0.75_1_1.txt 10
+hobonav_2_0.75_2_1.txt 10
+hobonav_2_0.75_4_1.txt 10
+hobonav_2_1.0_1_1.txt 10
+hobonav_2_1.0_2_1.txt 10
+hobonav_2_1.0_4_1.txt 10
+hobonav_2_0.0_1_2.txt DNE 0
+hobonav_2_0.0_2_2.txt DNE 0
+hobonav_2_0.0_4_2.txt DNE 0
+hobonav_2_0.25_1_2.txt 10
+hobonav_2_0.25_2_2.txt 10
+hobonav_2_0.25_4_2.txt 10
+hobonav_2_0.5_1_2.txt 10
+hobonav_2_0.5_2_2.txt 10
+hobonav_2_0.5_4_2.txt 10
+hobonav_2_0.75_1_2.txt 10
+hobonav_2_0.75_2_2.txt 10
+hobonav_2_0.75_4_2.txt 10
+hobonav_2_1.0_1_2.txt DNE 0
+hobonav_2_1.0_2_2.txt DNE 0
+hobonav_2_1.0_4_2.txt DNE 0
+hobonav_2_0.0_1_3.txt DNE 0
+hobonav_2_0.0_2_3.txt DNE 0
+hobonav_2_0.0_4_3.txt DNE 0
+hobonav_2_0.25_1_3.txt 10
+hobonav_2_0.25_2_3.txt 10
+hobonav_2_0.25_4_3.txt 10
+hobonav_2_0.5_1_3.txt 10
+hobonav_2_0.5_2_3.txt 10
+hobonav_2_0.5_4_3.txt 10
+hobonav_2_0.75_1_3.txt 10
+hobonav_2_0.75_2_3.txt 10
+hobonav_2_0.75_4_3.txt 10
+hobonav_2_1.0_1_3.txt DNE 0
+hobonav_2_1.0_2_3.txt DNE 0
+hobonav_2_1.0_4_3.txt DNE 0
+hobonav_2_0.0_1_4.txt DNE 0
+hobonav_2_0.0_2_4.txt DNE 0
+hobonav_2_0.0_4_4.txt DNE 0
+hobonav_2_0.25_1_4.txt 10
+hobonav_2_0.25_2_4.txt 10
+hobonav_2_0.25_4_4.txt 10
+hobonav_2_0.5_1_4.txt 10
+hobonav_2_0.5_2_4.txt 10
+hobonav_2_0.5_4_4.txt 10
+hobonav_2_0.75_1_4.txt 10
+hobonav_2_0.75_2_4.txt 10
+hobonav_2_0.75_4_4.txt 10
+hobonav_2_1.0_1_4.txt DNE 0
+hobonav_2_1.0_2_4.txt DNE 0
+hobonav_2_1.0_4_4.txt DNE 0
+hobonav_2_0.0_1_5.txt DNE 0
+hobonav_2_0.0_2_5.txt DNE 0
+hobonav_2_0.0_4_5.txt DNE 0
+hobonav_2_0.25_1_5.txt 10
+hobonav_2_0.25_2_5.txt 10
+hobonav_2_0.25_4_5.txt 10
+hobonav_2_0.5_1_5.txt 10
+hobonav_2_0.5_2_5.txt 10
+hobonav_2_0.5_4_5.txt 10
+hobonav_2_0.75_1_5.txt 10
+hobonav_2_0.75_2_5.txt 10
+hobonav_2_0.75_4_5.txt 10
+hobonav_2_1.0_1_5.txt DNE 0
+hobonav_2_1.0_2_5.txt DNE 0
+hobonav_2_1.0_4_5.txt DNE 0
+hobonav_2_0.0_1_6.txt DNE 0
+hobonav_2_0.0_2_6.txt DNE 0
+hobonav_2_0.0_4_6.txt DNE 0
+hobonav_2_0.25_1_6.txt 10
+hobonav_2_0.25_2_6.txt 10
+hobonav_2_0.25_4_6.txt 10
+hobonav_2_0.5_1_6.txt 10
+hobonav_2_0.5_2_6.txt 10
+hobonav_2_0.5_4_6.txt 10
+hobonav_2_0.75_1_6.txt 10
+hobonav_2_0.75_2_6.txt 10
+hobonav_2_0.75_4_6.txt 10
+hobonav_2_1.0_1_6.txt DNE 0
+hobonav_2_1.0_2_6.txt DNE 0
+hobonav_2_1.0_4_6.txt DNE 0
+hobonav_2_0.0_1_7.txt DNE 0
+hobonav_2_0.0_2_7.txt DNE 0
+hobonav_2_0.0_4_7.txt DNE 0
+hobonav_2_0.25_1_7.txt 10
+hobonav_2_0.25_2_7.txt 10
+hobonav_2_0.25_4_7.txt 10
+hobonav_2_0.5_1_7.txt 10
+hobonav_2_0.5_2_7.txt 10
+hobonav_2_0.5_4_7.txt 10
+hobonav_2_0.75_1_7.txt 10
+hobonav_2_0.75_2_7.txt 10
+hobonav_2_0.75_4_7.txt 10
+hobonav_2_1.0_1_7.txt DNE 0
+hobonav_2_1.0_2_7.txt DNE 0
+hobonav_2_1.0_4_7.txt DNE 0
+hobonav_2_0.0_1_8.txt DNE 0
+hobonav_2_0.0_2_8.txt DNE 0
+hobonav_2_0.0_4_8.txt DNE 0
+hobonav_2_0.25_1_8.txt 10
+hobonav_2_0.25_2_8.txt 10
+hobonav_2_0.25_4_8.txt 10
+hobonav_2_0.5_1_8.txt 10
+hobonav_2_0.5_2_8.txt 10
+hobonav_2_0.5_4_8.txt 10
+hobonav_2_0.75_1_8.txt 10
+hobonav_2_0.75_2_8.txt 10
+hobonav_2_0.75_4_8.txt 10
+hobonav_2_1.0_1_8.txt DNE 0
+hobonav_2_1.0_2_8.txt DNE 0
+hobonav_2_1.0_4_8.txt DNE 0
+hobonav_2_0.0_1_9.txt DNE 0
+hobonav_2_0.0_2_9.txt DNE 0
+hobonav_2_0.0_4_9.txt DNE 0
+hobonav_2_0.25_1_9.txt 10
+hobonav_2_0.25_2_9.txt 10
+hobonav_2_0.25_4_9.txt 10
+hobonav_2_0.5_1_9.txt 10
+hobonav_2_0.5_2_9.txt 10
+hobonav_2_0.5_4_9.txt 10
+hobonav_2_0.75_1_9.txt 10
+hobonav_2_0.75_2_9.txt 10
+hobonav_2_0.75_4_9.txt 10
+hobonav_2_1.0_1_9.txt DNE 0
+hobonav_2_1.0_2_9.txt DNE 0
+hobonav_2_1.0_4_9.txt DNE 0
+hobonav_2_0.0_1_10.txt DNE 0
+hobonav_2_0.0_2_10.txt DNE 0
+hobonav_2_0.0_4_10.txt DNE 0
+hobonav_2_0.25_1_10.txt 10
+hobonav_2_0.25_2_10.txt 10
+hobonav_2_0.25_4_10.txt 10
+hobonav_2_0.5_1_10.txt 10
+hobonav_2_0.5_2_10.txt 10
+hobonav_2_0.5_4_10.txt 10
+hobonav_2_0.75_1_10.txt 10
+hobonav_2_0.75_2_10.txt 10
+hobonav_2_0.75_4_10.txt 10
+hobonav_2_1.0_1_10.txt DNE 0
+hobonav_2_1.0_2_10.txt DNE 0
+hobonav_2_1.0_4_10.txt DNE 0
+hobonav_4_0.0_1_1.txt 10
+hobonav_4_0.0_2_1.txt 10
+hobonav_4_0.0_4_1.txt 10
+hobonav_4_0.25_1_1.txt 10
+hobonav_4_0.25_2_1.txt 10
+hobonav_4_0.25_4_1.txt 10
+hobonav_4_0.5_1_1.txt 10
+hobonav_4_0.5_2_1.txt 10
+hobonav_4_0.5_4_1.txt 10
+hobonav_4_0.75_1_1.txt 10
+hobonav_4_0.75_2_1.txt 10
+hobonav_4_0.75_4_1.txt 10
+hobonav_4_1.0_1_1.txt 10
+hobonav_4_1.0_2_1.txt 10
+hobonav_4_1.0_4_1.txt 10
+hobonav_4_0.0_1_2.txt DNE 0
+hobonav_4_0.0_2_2.txt DNE 0
+hobonav_4_0.0_4_2.txt DNE 0
+hobonav_4_0.25_1_2.txt 10
+hobonav_4_0.25_2_2.txt 10
+hobonav_4_0.25_4_2.txt 10
+hobonav_4_0.5_1_2.txt 10
+hobonav_4_0.5_2_2.txt 10
+hobonav_4_0.5_4_2.txt 10
+hobonav_4_0.75_1_2.txt 10
+hobonav_4_0.75_2_2.txt 10
+hobonav_4_0.75_4_2.txt 10
+hobonav_4_1.0_1_2.txt DNE 0
+hobonav_4_1.0_2_2.txt DNE 0
+hobonav_4_1.0_4_2.txt DNE 0
+hobonav_4_0.0_1_3.txt DNE 0
+hobonav_4_0.0_2_3.txt DNE 0
+hobonav_4_0.0_4_3.txt DNE 0
+hobonav_4_0.25_1_3.txt 10
+hobonav_4_0.25_2_3.txt 10
+hobonav_4_0.25_4_3.txt 10
+hobonav_4_0.5_1_3.txt 10
+hobonav_4_0.5_2_3.txt 10
+hobonav_4_0.5_4_3.txt 10
+hobonav_4_0.75_1_3.txt 10
+hobonav_4_0.75_2_3.txt 10
+hobonav_4_0.75_4_3.txt 10
+hobonav_4_1.0_1_3.txt DNE 0
+hobonav_4_1.0_2_3.txt DNE 0
+hobonav_4_1.0_4_3.txt DNE 0
+hobonav_4_0.0_1_4.txt DNE 0
+hobonav_4_0.0_2_4.txt DNE 0
+hobonav_4_0.0_4_4.txt DNE 0
+hobonav_4_0.25_1_4.txt 10
+hobonav_4_0.25_2_4.txt 10
+hobonav_4_0.25_4_4.txt 10
+hobonav_4_0.5_1_4.txt 10
+hobonav_4_0.5_2_4.txt 10
+hobonav_4_0.5_4_4.txt 10
+hobonav_4_0.75_1_4.txt 10
+hobonav_4_0.75_2_4.txt 10
+hobonav_4_0.75_4_4.txt 10
+hobonav_4_1.0_1_4.txt DNE 0
+hobonav_4_1.0_2_4.txt DNE 0
+hobonav_4_1.0_4_4.txt DNE 0
+hobonav_4_0.0_1_5.txt DNE 0
+hobonav_4_0.0_2_5.txt DNE 0
+hobonav_4_0.0_4_5.txt DNE 0
+hobonav_4_0.25_1_5.txt 10
+hobonav_4_0.25_2_5.txt 10
+hobonav_4_0.25_4_5.txt 10
+hobonav_4_0.5_1_5.txt 10
+hobonav_4_0.5_2_5.txt 10
+hobonav_4_0.5_4_5.txt 10
+hobonav_4_0.75_1_5.txt 10
+hobonav_4_0.75_2_5.txt 10
+hobonav_4_0.75_4_5.txt 10
+hobonav_4_1.0_1_5.txt DNE 0
+hobonav_4_1.0_2_5.txt DNE 0
+hobonav_4_1.0_4_5.txt DNE 0
+hobonav_4_0.0_1_6.txt DNE 0
+hobonav_4_0.0_2_6.txt DNE 0
+hobonav_4_0.0_4_6.txt DNE 0
+hobonav_4_0.25_1_6.txt 10
+hobonav_4_0.25_2_6.txt 10
+hobonav_4_0.25_4_6.txt 10
+hobonav_4_0.5_1_6.txt 10
+hobonav_4_0.5_2_6.txt 10
+hobonav_4_0.5_4_6.txt 10
+hobonav_4_0.75_1_6.txt 10
+hobonav_4_0.75_2_6.txt 10
+hobonav_4_0.75_4_6.txt 10
+hobonav_4_1.0_1_6.txt DNE 0
+hobonav_4_1.0_2_6.txt DNE 0
+hobonav_4_1.0_4_6.txt DNE 0
+hobonav_4_0.0_1_7.txt DNE 0
+hobonav_4_0.0_2_7.txt DNE 0
+hobonav_4_0.0_4_7.txt DNE 0
+hobonav_4_0.25_1_7.txt 10
+hobonav_4_0.25_2_7.txt 10
+hobonav_4_0.25_4_7.txt 10
+hobonav_4_0.5_1_7.txt 10
+hobonav_4_0.5_2_7.txt 10
+hobonav_4_0.5_4_7.txt 10
+hobonav_4_0.75_1_7.txt 10
+hobonav_4_0.75_2_7.txt 10
+hobonav_4_0.75_4_7.txt 10
+hobonav_4_1.0_1_7.txt DNE 0
+hobonav_4_1.0_2_7.txt DNE 0
+hobonav_4_1.0_4_7.txt DNE 0
+hobonav_4_0.0_1_8.txt DNE 0
+hobonav_4_0.0_2_8.txt DNE 0
+hobonav_4_0.0_4_8.txt DNE 0
+hobonav_4_0.25_1_8.txt 10
+hobonav_4_0.25_2_8.txt 10
+hobonav_4_0.25_4_8.txt 10
+hobonav_4_0.5_1_8.txt 10
+hobonav_4_0.5_2_8.txt 10
+hobonav_4_0.5_4_8.txt 10
+hobonav_4_0.75_1_8.txt 10
+hobonav_4_0.75_2_8.txt 10
+hobonav_4_0.75_4_8.txt 10
+hobonav_4_1.0_1_8.txt DNE 0
+hobonav_4_1.0_2_8.txt DNE 0
+hobonav_4_1.0_4_8.txt DNE 0
+hobonav_4_0.0_1_9.txt DNE 0
+hobonav_4_0.0_2_9.txt DNE 0
+hobonav_4_0.0_4_9.txt DNE 0
+hobonav_4_0.25_1_9.txt 10
+hobonav_4_0.25_2_9.txt 10
+hobonav_4_0.25_4_9.txt 10
+hobonav_4_0.5_1_9.txt 10
+hobonav_4_0.5_2_9.txt 10
+hobonav_4_0.5_4_9.txt 10
+hobonav_4_0.75_1_9.txt 10
+hobonav_4_0.75_2_9.txt 10
+hobonav_4_0.75_4_9.txt 10
+hobonav_4_1.0_1_9.txt DNE 0
+hobonav_4_1.0_2_9.txt DNE 0
+hobonav_4_1.0_4_9.txt DNE 0
+hobonav_4_0.0_1_10.txt DNE 0
+hobonav_4_0.0_2_10.txt DNE 0
+hobonav_4_0.0_4_10.txt DNE 0
+hobonav_4_0.25_1_10.txt 10
+hobonav_4_0.25_2_10.txt 10
+hobonav_4_0.25_4_10.txt 10
+hobonav_4_0.5_1_10.txt 10
+hobonav_4_0.5_2_10.txt 10
+hobonav_4_0.5_4_10.txt 10
+hobonav_4_0.75_1_10.txt 10
+hobonav_4_0.75_2_10.txt 10
+hobonav_4_0.75_4_10.txt 10
+hobonav_4_1.0_1_10.txt DNE 0
+hobonav_4_1.0_2_10.txt DNE 0
+hobonav_4_1.0_4_10.txt DNE 0
+hobonav_8_0.0_1_1.txt 10
+hobonav_8_0.0_2_1.txt 10
+hobonav_8_0.0_4_1.txt 10
+hobonav_8_0.25_1_1.txt 10
+hobonav_8_0.25_2_1.txt 10
+hobonav_8_0.25_4_1.txt 10
+hobonav_8_0.5_1_1.txt 10
+hobonav_8_0.5_2_1.txt 10
+hobonav_8_0.5_4_1.txt * 5
+hobonav_8_0.75_1_1.txt 10
+hobonav_8_0.75_2_1.txt 10
+hobonav_8_0.75_4_1.txt 1
+hobonav_8_1.0_1_1.txt 10
+hobonav_8_1.0_2_1.txt 10
+hobonav_8_1.0_4_1.txt 0
+hobonav_8_0.0_1_2.txt DNE 0
+hobonav_8_0.0_2_2.txt DNE 0
+hobonav_8_0.0_4_2.txt DNE 0
+hobonav_8_0.25_1_2.txt 10
+hobonav_8_0.25_2_2.txt 10
+hobonav_8_0.25_4_2.txt 10
+hobonav_8_0.5_1_2.txt 10
+hobonav_8_0.5_2_2.txt 10
+hobonav_8_0.5_4_2.txt 10
+hobonav_8_0.75_1_2.txt 10
+hobonav_8_0.75_2_2.txt 10
+hobonav_8_0.75_4_2.txt 1
+hobonav_8_1.0_1_2.txt DNE 0
+hobonav_8_1.0_2_2.txt DNE 0
+hobonav_8_1.0_4_2.txt DNE 0
+hobonav_8_0.0_1_3.txt DNE 0
+hobonav_8_0.0_2_3.txt DNE 0
+hobonav_8_0.0_4_3.txt DNE 0
+hobonav_8_0.25_1_3.txt 10
+hobonav_8_0.25_2_3.txt 10
+hobonav_8_0.25_4_3.txt 10
+hobonav_8_0.5_1_3.txt 10
+hobonav_8_0.5_2_3.txt 0
+hobonav_8_0.5_4_3.txt 10
+hobonav_8_0.75_1_3.txt 10
+hobonav_8_0.75_2_3.txt 10
+hobonav_8_0.75_4_3.txt 3
+hobonav_8_1.0_1_3.txt DNE 0
+hobonav_8_1.0_2_3.txt DNE 0
+hobonav_8_1.0_4_3.txt DNE 0
+hobonav_8_0.0_1_4.txt DNE 0
+hobonav_8_0.0_2_4.txt DNE 0
+hobonav_8_0.0_4_4.txt DNE 0
+hobonav_8_0.25_1_4.txt 10
+hobonav_8_0.25_2_4.txt 10
+hobonav_8_0.25_4_4.txt 10
+hobonav_8_0.5_1_4.txt 10
+hobonav_8_0.5_2_4.txt 10
+hobonav_8_0.5_4_4.txt 10
+hobonav_8_0.75_1_4.txt 10
+hobonav_8_0.75_2_4.txt 10
+hobonav_8_0.75_4_4.txt 10
+hobonav_8_1.0_1_4.txt DNE 0
+hobonav_8_1.0_2_4.txt DNE 0
+hobonav_8_1.0_4_4.txt DNE 0
+hobonav_8_0.0_1_5.txt DNE 0
+hobonav_8_0.0_2_5.txt DNE 0
+hobonav_8_0.0_4_5.txt DNE 0
+hobonav_8_0.25_1_5.txt 10
+hobonav_8_0.25_2_5.txt 10
+hobonav_8_0.25_4_5.txt 10
+hobonav_8_0.5_1_5.txt 10
+hobonav_8_0.5_2_5.txt 10
+hobonav_8_0.5_4_5.txt 10
+hobonav_8_0.75_1_5.txt 10
+hobonav_8_0.75_2_5.txt 10
+hobonav_8_0.75_4_5.txt 10
+hobonav_8_1.0_1_5.txt DNE 0
+hobonav_8_1.0_2_5.txt DNE 0
+hobonav_8_1.0_4_5.txt DNE 0
+hobonav_8_0.0_1_6.txt DNE 0
+hobonav_8_0.0_2_6.txt DNE 0
+hobonav_8_0.0_4_6.txt DNE 0
+hobonav_8_0.25_1_6.txt 10
+hobonav_8_0.25_2_6.txt 10
+hobonav_8_0.25_4_6.txt 10
+hobonav_8_0.5_1_6.txt 10
+hobonav_8_0.5_2_6.txt 10
+hobonav_8_0.5_4_6.txt 10
+hobonav_8_0.75_1_6.txt 10
+hobonav_8_0.75_2_6.txt 10
+hobonav_8_0.75_4_6.txt * 6
+hobonav_8_1.0_1_6.txt DNE 0
+hobonav_8_1.0_2_6.txt DNE 0
+hobonav_8_1.0_4_6.txt DNE 0
+hobonav_8_0.0_1_7.txt DNE 0
+hobonav_8_0.0_2_7.txt DNE 0
+hobonav_8_0.0_4_7.txt DNE 0
+hobonav_8_0.25_1_7.txt 10
+hobonav_8_0.25_2_7.txt 10
+hobonav_8_0.25_4_7.txt 10
+hobonav_8_0.5_1_7.txt 10
+hobonav_8_0.5_2_7.txt 10
+hobonav_8_0.5_4_7.txt 10
+hobonav_8_0.75_1_7.txt 10
+hobonav_8_0.75_2_7.txt 10
+hobonav_8_0.75_4_7.txt * 10
+hobonav_8_1.0_1_7.txt DNE 0
+hobonav_8_1.0_2_7.txt DNE 0
+hobonav_8_1.0_4_7.txt DNE 0
+hobonav_8_0.0_1_8.txt DNE 0
+hobonav_8_0.0_2_8.txt DNE 0
+hobonav_8_0.0_4_8.txt DNE 0
+hobonav_8_0.25_1_8.txt 10
+hobonav_8_0.25_2_8.txt 10
+hobonav_8_0.25_4_8.txt 7
+hobonav_8_0.5_1_8.txt 10
+hobonav_8_0.5_2_8.txt 10
+hobonav_8_0.5_4_8.txt 10
+hobonav_8_0.75_1_8.txt 10
+hobonav_8_0.75_2_8.txt 10
+hobonav_8_0.75_4_8.txt 0
+hobonav_8_1.0_1_8.txt DNE 0
+hobonav_8_1.0_2_8.txt DNE 0
+hobonav_8_1.0_4_8.txt DNE 0
+hobonav_8_0.0_1_9.txt DNE 0
+hobonav_8_0.0_2_9.txt DNE 0
+hobonav_8_0.0_4_9.txt DNE 0
+hobonav_8_0.25_1_9.txt 10
+hobonav_8_0.25_2_9.txt 10
+hobonav_8_0.25_4_9.txt 10
+hobonav_8_0.5_1_9.txt 10
+hobonav_8_0.5_2_9.txt 10
+hobonav_8_0.5_4_9.txt 10
+hobonav_8_0.75_1_9.txt 10
+hobonav_8_0.75_2_9.txt * 6
+hobonav_8_0.75_4_9.txt 10
+hobonav_8_1.0_1_9.txt DNE 0
+hobonav_8_1.0_2_9.txt DNE 0
+hobonav_8_1.0_4_9.txt DNE 0
+hobonav_8_0.0_1_10.txt DNE 0
+hobonav_8_0.0_2_10.txt DNE 0
+hobonav_8_0.0_4_10.txt DNE 0
+hobonav_8_0.25_1_10.txt 10
+hobonav_8_0.25_2_10.txt 10
+hobonav_8_0.25_4_10.txt 10
+hobonav_8_0.5_1_10.txt 10
+hobonav_8_0.5_2_10.txt 10
+hobonav_8_0.5_4_10.txt 10
+hobonav_8_0.75_1_10.txt 10
+hobonav_8_0.75_2_10.txt 10
+hobonav_8_0.75_4_10.txt 10
+hobonav_8_1.0_1_10.txt DNE 0
+hobonav_8_1.0_2_10.txt DNE 0
+hobonav_8_1.0_4_10.txt DNE 0
+hobonav_16_0.0_1_1.txt DNE 0
+hobonav_16_0.0_2_1.txt DNE 0
+hobonav_16_0.0_4_1.txt DNE 0
+hobonav_16_0.25_1_1.txt DNE 0
+hobonav_16_0.25_2_1.txt DNE 0
+hobonav_16_0.25_4_1.txt DNE 0
+hobonav_16_0.5_1_1.txt DNE 0
+hobonav_16_0.5_2_1.txt DNE 0
+hobonav_16_0.5_4_1.txt DNE 0
+hobonav_16_0.75_1_1.txt DNE 0
+hobonav_16_0.75_2_1.txt DNE 0
+hobonav_16_0.75_4_1.txt DNE 0
+hobonav_16_1.0_1_1.txt DNE 0
+hobonav_16_1.0_2_1.txt DNE 0
+hobonav_16_1.0_4_1.txt DNE 0
+hobonav_16_0.0_1_2.txt DNE 0
+hobonav_16_0.0_2_2.txt DNE 0
+hobonav_16_0.0_4_2.txt DNE 0
+hobonav_16_0.25_1_2.txt DNE 0
+hobonav_16_0.25_2_2.txt DNE 0
+hobonav_16_0.25_4_2.txt DNE 0
+hobonav_16_0.5_1_2.txt DNE 0
+hobonav_16_0.5_2_2.txt DNE 0
+hobonav_16_0.5_4_2.txt DNE 0
+hobonav_16_0.75_1_2.txt DNE 0
+hobonav_16_0.75_2_2.txt DNE 0
+hobonav_16_0.75_4_2.txt DNE 0
+hobonav_16_1.0_1_2.txt DNE 0
+hobonav_16_1.0_2_2.txt DNE 0
+hobonav_16_1.0_4_2.txt DNE 0
+hobonav_16_0.0_1_3.txt DNE 0
+hobonav_16_0.0_2_3.txt DNE 0
+hobonav_16_0.0_4_3.txt DNE 0
+hobonav_16_0.25_1_3.txt DNE 0
+hobonav_16_0.25_2_3.txt DNE 0
+hobonav_16_0.25_4_3.txt DNE 0
+hobonav_16_0.5_1_3.txt DNE 0
+hobonav_16_0.5_2_3.txt DNE 0
+hobonav_16_0.5_4_3.txt DNE 0
+hobonav_16_0.75_1_3.txt DNE 0
+hobonav_16_0.75_2_3.txt DNE 0
+hobonav_16_0.75_4_3.txt DNE 0
+hobonav_16_1.0_1_3.txt DNE 0
+hobonav_16_1.0_2_3.txt DNE 0
+hobonav_16_1.0_4_3.txt DNE 0
+hobonav_16_0.0_1_4.txt DNE 0
+hobonav_16_0.0_2_4.txt DNE 0
+hobonav_16_0.0_4_4.txt DNE 0
+hobonav_16_0.25_1_4.txt DNE 0
+hobonav_16_0.25_2_4.txt DNE 0
+hobonav_16_0.25_4_4.txt DNE 0
+hobonav_16_0.5_1_4.txt DNE 0
+hobonav_16_0.5_2_4.txt DNE 0
+hobonav_16_0.5_4_4.txt DNE 0
+hobonav_16_0.75_1_4.txt DNE 0
+hobonav_16_0.75_2_4.txt DNE 0
+hobonav_16_0.75_4_4.txt DNE 0
+hobonav_16_1.0_1_4.txt DNE 0
+hobonav_16_1.0_2_4.txt DNE 0
+hobonav_16_1.0_4_4.txt DNE 0
+hobonav_16_0.0_1_5.txt DNE 0
+hobonav_16_0.0_2_5.txt DNE 0
+hobonav_16_0.0_4_5.txt DNE 0
+hobonav_16_0.25_1_5.txt DNE 0
+hobonav_16_0.25_2_5.txt DNE 0
+hobonav_16_0.25_4_5.txt DNE 0
+hobonav_16_0.5_1_5.txt DNE 0
+hobonav_16_0.5_2_5.txt DNE 0
+hobonav_16_0.5_4_5.txt DNE 0
+hobonav_16_0.75_1_5.txt DNE 0
+hobonav_16_0.75_2_5.txt DNE 0
+hobonav_16_0.75_4_5.txt DNE 0
+hobonav_16_1.0_1_5.txt DNE 0
+hobonav_16_1.0_2_5.txt DNE 0
+hobonav_16_1.0_4_5.txt DNE 0
+hobonav_16_0.0_1_6.txt DNE 0
+hobonav_16_0.0_2_6.txt DNE 0
+hobonav_16_0.0_4_6.txt DNE 0
+hobonav_16_0.25_1_6.txt DNE 0
+hobonav_16_0.25_2_6.txt DNE 0
+hobonav_16_0.25_4_6.txt DNE 0
+hobonav_16_0.5_1_6.txt DNE 0
+hobonav_16_0.5_2_6.txt DNE 0
+hobonav_16_0.5_4_6.txt DNE 0
+hobonav_16_0.75_1_6.txt DNE 0
+hobonav_16_0.75_2_6.txt DNE 0
+hobonav_16_0.75_4_6.txt DNE 0
+hobonav_16_1.0_1_6.txt DNE 0
+hobonav_16_1.0_2_6.txt DNE 0
+hobonav_16_1.0_4_6.txt DNE 0
+hobonav_16_0.0_1_7.txt DNE 0
+hobonav_16_0.0_2_7.txt DNE 0
+hobonav_16_0.0_4_7.txt DNE 0
+hobonav_16_0.25_1_7.txt DNE 0
+hobonav_16_0.25_2_7.txt DNE 0
+hobonav_16_0.25_4_7.txt DNE 0
+hobonav_16_0.5_1_7.txt DNE 0
+hobonav_16_0.5_2_7.txt DNE 0
+hobonav_16_0.5_4_7.txt DNE 0
+hobonav_16_0.75_1_7.txt DNE 0
+hobonav_16_0.75_2_7.txt DNE 0
+hobonav_16_0.75_4_7.txt DNE 0
+hobonav_16_1.0_1_7.txt DNE 0
+hobonav_16_1.0_2_7.txt DNE 0
+hobonav_16_1.0_4_7.txt DNE 0
+hobonav_16_0.0_1_8.txt DNE 0
+hobonav_16_0.0_2_8.txt DNE 0
+hobonav_16_0.0_4_8.txt DNE 0
+hobonav_16_0.25_1_8.txt DNE 0
+hobonav_16_0.25_2_8.txt DNE 0
+hobonav_16_0.25_4_8.txt DNE 0
+hobonav_16_0.5_1_8.txt DNE 0
+hobonav_16_0.5_2_8.txt DNE 0
+hobonav_16_0.5_4_8.txt DNE 0
+hobonav_16_0.75_1_8.txt DNE 0
+hobonav_16_0.75_2_8.txt DNE 0
+hobonav_16_0.75_4_8.txt DNE 0
+hobonav_16_1.0_1_8.txt DNE 0
+hobonav_16_1.0_2_8.txt DNE 0
+hobonav_16_1.0_4_8.txt DNE 0
+hobonav_16_0.0_1_9.txt DNE 0
+hobonav_16_0.0_2_9.txt DNE 0
+hobonav_16_0.0_4_9.txt DNE 0
+hobonav_16_0.25_1_9.txt DNE 0
+hobonav_16_0.25_2_9.txt DNE 0
+hobonav_16_0.25_4_9.txt DNE 0
+hobonav_16_0.5_1_9.txt DNE 0
+hobonav_16_0.5_2_9.txt DNE 0
+hobonav_16_0.5_4_9.txt DNE 0
+hobonav_16_0.75_1_9.txt DNE 0
+hobonav_16_0.75_2_9.txt DNE 0
+hobonav_16_0.75_4_9.txt DNE 0
+hobonav_16_1.0_1_9.txt DNE 0
+hobonav_16_1.0_2_9.txt DNE 0
+hobonav_16_1.0_4_9.txt DNE 0
+hobonav_16_0.0_1_10.txt DNE 0
+hobonav_16_0.0_2_10.txt DNE 0
+hobonav_16_0.0_4_10.txt DNE 0
+hobonav_16_0.25_1_10.txt DNE 0
+hobonav_16_0.25_2_10.txt DNE 0
+hobonav_16_0.25_4_10.txt DNE 0
+hobonav_16_0.5_1_10.txt DNE 0
+hobonav_16_0.5_2_10.txt DNE 0
+hobonav_16_0.5_4_10.txt DNE 0
+hobonav_16_0.75_1_10.txt DNE 0
+hobonav_16_0.75_2_10.txt DNE 0
+hobonav_16_0.75_4_10.txt DNE 0
+hobonav_16_1.0_1_10.txt DNE 0
+hobonav_16_1.0_2_10.txt DNE 0
+hobonav_16_1.0_4_10.txt DNE 0
+END HoboNav///////////////////////////////////////
+
+ParcPrinter///////////////////////////////////////////
+ -problems 6, 10, 14, 17, 20, 25-30 have no
+  possible plan in Bryce results and are omitted.
+parcprinter_01_1.txt * 10
+parcprinter_01_2.txt * 10
+parcprinter_01_3.txt * 10
+parcprinter_01_4.txt * 10
+parcprinter_01_5.txt * 10
+parcprinter_01_6.txt * 10
+parcprinter_01_7.txt * 10
+parcprinter_01_8.txt * 10
+parcprinter_01_9.txt * 10
+parcprinter_01_10.txt * 10
+parcprinter_02_1.txt * 3
+parcprinter_02_2.txt * 5
+parcprinter_02_3.txt * 6
+parcprinter_02_4.txt * 10
+parcprinter_02_5.txt * 0
+parcprinter_02_6.txt * 1
+parcprinter_02_7.txt * 10
+parcprinter_02_8.txt * 10
+parcprinter_02_9.txt * 0
+parcprinter_02_10.txt * 10
+parcprinter_03_1.txt * 0
+parcprinter_03_2.txt * 0
+parcprinter_03_3.txt * 0
+parcprinter_03_4.txt * 0
+parcprinter_03_5.txt * 0
+parcprinter_03_6.txt * 1
+parcprinter_03_7.txt * 0
+parcprinter_03_8.txt * 0
+parcprinter_03_9.txt * 0
+parcprinter_03_10.txt * 0
+parcprinter_04_1.txt * 0
+parcprinter_04_2.txt * 0
+parcprinter_04_3.txt * 0
+parcprinter_04_4.txt * 0
+parcprinter_04_5.txt * 0
+parcprinter_04_6.txt * 0
+parcprinter_04_7.txt * 0
+parcprinter_04_8.txt * 0
+parcprinter_04_9.txt * 0
+parcprinter_04_10.txt * 0
+parcprinter_05_1.txt 0
+parcprinter_05_2.txt 0
+parcprinter_05_3.txt 0
+parcprinter_05_4.txt 0
+parcprinter_05_5.txt 0
+parcprinter_05_6.txt 0
+parcprinter_05_7.txt 0
+parcprinter_05_8.txt 0
+parcprinter_05_9.txt 0
+parcprinter_05_10.txt 0
+parcprinter_07_1.txt 0
+parcprinter_07_2.txt 0
+parcprinter_07_3.txt 0
+parcprinter_07_4.txt 0
+parcprinter_07_5.txt 0
+parcprinter_07_6.txt 0
+parcprinter_07_7.txt 0
+parcprinter_07_8.txt 0
+parcprinter_07_9.txt 0
+parcprinter_07_10.txt 0
+parcprinter_08_1.txt 0
+parcprinter_08_2.txt 0
+parcprinter_08_3.txt 0
+parcprinter_08_4.txt 0
+parcprinter_08_5.txt 0
+parcprinter_08_6.txt 0
+parcprinter_08_7.txt 0
+parcprinter_08_8.txt 0
+parcprinter_08_9.txt 0
+parcprinter_08_10.txt 0
+parcprinter_09_1.txt DNE 0
+parcprinter_09_2.txt DNE 0
+parcprinter_09_3.txt DNE 0
+parcprinter_09_4.txt DNE 0
+parcprinter_09_5.txt DNE 0
+parcprinter_09_6.txt DNE 0
+parcprinter_09_7.txt DNE 0
+parcprinter_09_8.txt DNE 0
+parcprinter_09_9.txt DNE 0
+parcprinter_09_10.txt DNE 0
+parcprinter_11_1.txt * 10
+parcprinter_11_2.txt * 10
+parcprinter_11_3.txt * 10
+parcprinter_11_4.txt * 10
+parcprinter_11_5.txt * 10
+parcprinter_11_6.txt * 10
+parcprinter_11_7.txt * 10
+parcprinter_11_8.txt * 10
+parcprinter_11_9.txt * 10
+parcprinter_11_10.txt * 10
+parcprinter_12_1.txt * 0
+parcprinter_12_2.txt * 0
+parcprinter_12_3.txt * 0
+parcprinter_12_4.txt * 3
+parcprinter_12_5.txt * 0
+parcprinter_12_6.txt * 0
+parcprinter_12_7.txt * 0
+parcprinter_12_8.txt * 0
+parcprinter_12_9.txt * 0
+parcprinter_12_10.txt * 0
+parcprinter_13_1.txt * 0
+parcprinter_13_2.txt * 0
+parcprinter_13_3.txt 0
+parcprinter_13_4.txt 0
+parcprinter_13_5.txt 0
+parcprinter_13_6.txt * 0
+parcprinter_13_7.txt * 0
+parcprinter_13_8.txt * 0
+parcprinter_13_9.txt * 0
+parcprinter_13_10.txt * 0
+parcprinter_15_1.txt 0
+parcprinter_15_2.txt 0
+parcprinter_15_3.txt 0
+parcprinter_15_4.txt 0
+parcprinter_15_5.txt 0
+parcprinter_15_6.txt 0
+parcprinter_15_7.txt 0
+parcprinter_15_8.txt 0
+parcprinter_15_9.txt 0
+parcprinter_15_10.txt 0
+parcprinter_16_1.txt DNE 0
+parcprinter_16_2.txt DNE 0
+parcprinter_16_3.txt DNE 0
+parcprinter_16_4.txt DNE 0
+parcprinter_16_5.txt DNE 0
+parcprinter_16_6.txt DNE 0
+parcprinter_16_7.txt DNE 0
+parcprinter_16_8.txt DNE 0
+parcprinter_16_9.txt DNE 0
+parcprinter_16_10.txt DNE 0
+parcprinter_18_1.txt DNE 0
+parcprinter_18_2.txt DNE 0
+parcprinter_18_3.txt DNE 0
+parcprinter_18_4.txt DNE 0
+parcprinter_18_5.txt DNE 0
+parcprinter_18_6.txt DNE 0
+parcprinter_18_7.txt DNE 0
+parcprinter_18_8.txt DNE 0
+parcprinter_18_9.txt DNE 0
+parcprinter_18_10.txt DNE 0
+parcprinter_19_1.txt DNE 0
+parcprinter_19_2.txt DNE 0
+parcprinter_19_3.txt DNE 0
+parcprinter_19_4.txt DNE 0
+parcprinter_19_5.txt DNE 0
+parcprinter_19_6.txt DNE 0
+parcprinter_19_7.txt DNE 0
+parcprinter_19_8.txt DNE 0
+parcprinter_19_9.txt DNE 0
+parcprinter_19_10.txt DNE 0
+parcprinter_21_1.txt * 10
+parcprinter_21_2.txt * 10
+parcprinter_21_3.txt * 10
+parcprinter_21_4.txt * 10
+parcprinter_21_5.txt * 10
+parcprinter_21_6.txt * 10
+parcprinter_21_7.txt * 10
+parcprinter_21_8.txt * 10
+parcprinter_21_9.txt * 10
+parcprinter_21_10.txt * 10
+parcprinter_22_1.txt * 1
+parcprinter_22_2.txt * 9
+parcprinter_22_3.txt * 3
+parcprinter_22_4.txt * 0
+parcprinter_22_5.txt * 0
+parcprinter_22_6.txt * 10
+parcprinter_22_7.txt * 10
+parcprinter_22_8.txt * 6
+parcprinter_22_9.txt * 10
+parcprinter_22_10.txt * 0
+parcprinter_23_1.txt 0
+parcprinter_23_2.txt 0
+parcprinter_23_3.txt 0
+parcprinter_23_4.txt 0
+parcprinter_23_5.txt 0
+parcprinter_23_6.txt 0
+parcprinter_23_7.txt 0
+parcprinter_23_8.txt 0
+parcprinter_23_9.txt 0
+parcprinter_23_10.txt 0
+parcprinter_24_1.txt 0
+parcprinter_24_2.txt 0
+parcprinter_24_3.txt 0
+parcprinter_24_4.txt 0
+parcprinter_24_5.txt 0
+parcprinter_24_6.txt 0
+parcprinter_24_7.txt 0
+parcprinter_24_8.txt 0
+parcprinter_24_9.txt 0
+parcprinter_24_10.txt 0
+END ParcPrinter///////////////////////////////////////
+
+Pathways///////////////////////////////////////////
+pathways_p01_0.0_1.txt 10
+pathways_p01_0.0_2.txt 10
+pathways_p01_0.0_3.txt 10
+pathways_p01_0.0_4.txt 10
+pathways_p01_0.0_5.txt 10
+pathways_p01_0.0_6.txt 10
+pathways_p01_0.0_7.txt 10
+pathways_p01_0.0_8.txt 10
+pathways_p01_0.0_9.txt 10
+pathways_p01_0.0_10.txt 10
+pathways_p01_0.01_1.txt 10
+pathways_p01_0.01_2.txt 10
+pathways_p01_0.01_3.txt 10
+pathways_p01_0.01_4.txt 10
+pathways_p01_0.01_5.txt 10
+pathways_p01_0.01_6.txt 10
+pathways_p01_0.01_7.txt 10
+pathways_p01_0.01_8.txt 10
+pathways_p01_0.01_9.txt 10
+pathways_p01_0.01_10.txt 10
+pathways_p01_0.25_1.txt 10
+pathways_p01_0.25_2.txt 10
+pathways_p01_0.25_3.txt 10
+pathways_p01_0.25_4.txt 10
+pathways_p01_0.25_5.txt 10
+pathways_p01_0.25_6.txt 10
+pathways_p01_0.25_7.txt 10
+pathways_p01_0.25_8.txt 10
+pathways_p01_0.25_9.txt 10
+pathways_p01_0.25_10.txt 10
+pathways_p01_0.5_1.txt 10
+pathways_p01_0.5_2.txt 10
+pathways_p01_0.5_3.txt 10
+pathways_p01_0.5_4.txt 10
+pathways_p01_0.5_5.txt 10
+pathways_p01_0.5_6.txt 10
+pathways_p01_0.5_7.txt 10
+pathways_p01_0.5_8.txt 10
+pathways_p01_0.5_9.txt 10
+pathways_p01_0.5_10.txt 10
+pathways_p01_0.75_1.txt * 10
+pathways_p01_0.75_2.txt * 10
+pathways_p01_0.75_3.txt * 10
+pathways_p01_0.75_4.txt * 10
+pathways_p01_0.75_5.txt * 10
+pathways_p01_0.75_6.txt * 10
+pathways_p01_0.75_7.txt * 10
+pathways_p01_0.75_8.txt * 10
+pathways_p01_0.75_9.txt * 10
+pathways_p01_0.75_10.txt * 10
+pathways_p01_1.0_1.txt * 10
+pathways_p01_1.0_2.txt * 10
+pathways_p01_1.0_3.txt * 10
+pathways_p01_1.0_4.txt * 10
+pathways_p01_1.0_5.txt * 10
+pathways_p01_1.0_6.txt * 10
+pathways_p01_1.0_7.txt * 10
+pathways_p01_1.0_8.txt * 10
+pathways_p01_1.0_9.txt * 10
+pathways_p01_1.0_10.txt * 10
+pathways_p02_0.0_1.txt 10
+pathways_p02_0.0_2.txt 10
+pathways_p02_0.0_3.txt 10
+pathways_p02_0.0_4.txt 10
+pathways_p02_0.0_5.txt 10
+pathways_p02_0.0_6.txt 10
+pathways_p02_0.0_7.txt 10
+pathways_p02_0.0_8.txt 10
+pathways_p02_0.0_9.txt 10
+pathways_p02_0.0_10.txt 10
+pathways_p02_0.01_1.txt 10
+pathways_p02_0.01_2.txt 10
+pathways_p02_0.01_3.txt 10
+pathways_p02_0.01_4.txt 10
+pathways_p02_0.01_5.txt 10
+pathways_p02_0.01_6.txt 10
+pathways_p02_0.01_7.txt 10
+pathways_p02_0.01_8.txt 10
+pathways_p02_0.01_9.txt 10
+pathways_p02_0.01_10.txt 10
+pathways_p02_0.25_1.txt * 10
+pathways_p02_0.25_2.txt * 10
+pathways_p02_0.25_3.txt * 10
+pathways_p02_0.25_4.txt * 10
+pathways_p02_0.25_5.txt * 10
+pathways_p02_0.25_6.txt * 10
+pathways_p02_0.25_7.txt * 10
+pathways_p02_0.25_8.txt * 10
+pathways_p02_0.25_9.txt * 10
+pathways_p02_0.25_10.txt * 10
+pathways_p02_0.5_1.txt * 10
+pathways_p02_0.5_2.txt * 10
+pathways_p02_0.5_3.txt * 10
+pathways_p02_0.5_4.txt * 10
+pathways_p02_0.5_5.txt * 10
+pathways_p02_0.5_6.txt * 10
+pathways_p02_0.5_7.txt * 10
+pathways_p02_0.5_8.txt * 10
+pathways_p02_0.5_9.txt * 10
+pathways_p02_0.5_10.txt * 10
+pathways_p02_0.75_1.txt * 10
+pathways_p02_0.75_2.txt * 10
+pathways_p02_0.75_3.txt * 10
+pathways_p02_0.75_4.txt * 10
+pathways_p02_0.75_5.txt * 10
+pathways_p02_0.75_6.txt * 10
+pathways_p02_0.75_7.txt * 10
+pathways_p02_0.75_8.txt * 10
+pathways_p02_0.75_9.txt * 10
+pathways_p02_0.75_10.txt * 10
+pathways_p02_1.0_1.txt 10
+pathways_p02_1.0_2.txt 10
+pathways_p02_1.0_3.txt 10
+pathways_p02_1.0_4.txt 10
+pathways_p02_1.0_5.txt 10
+pathways_p02_1.0_6.txt 10
+pathways_p02_1.0_7.txt 10
+pathways_p02_1.0_8.txt 10
+pathways_p02_1.0_9.txt 10
+pathways_p02_1.0_10.txt 10
+pathways_p03_0.0_1.txt 0
+pathways_p03_0.0_2.txt 0
+pathways_p03_0.0_3.txt 0
+pathways_p03_0.0_4.txt 0
+pathways_p03_0.0_5.txt 0
+pathways_p03_0.0_6.txt 0
+pathways_p03_0.0_7.txt 0
+pathways_p03_0.0_8.txt 0
+pathways_p03_0.0_9.txt 0
+pathways_p03_0.0_10.txt 0
+pathways_p03_0.01_1.txt 0
+pathways_p03_0.01_2.txt 0
+pathways_p03_0.01_3.txt 0
+pathways_p03_0.01_4.txt 0
+pathways_p03_0.01_5.txt 0
+pathways_p03_0.01_6.txt 0
+pathways_p03_0.01_7.txt 0
+pathways_p03_0.01_8.txt 0
+pathways_p03_0.01_9.txt 0
+pathways_p03_0.01_10.txt 0
+pathways_p03_0.25_1.txt 0
+pathways_p03_0.25_2.txt 0
+pathways_p03_0.25_3.txt 0
+pathways_p03_0.25_4.txt 0
+pathways_p03_0.25_5.txt 0
+pathways_p03_0.25_6.txt 0
+pathways_p03_0.25_7.txt 0
+pathways_p03_0.25_8.txt 0
+pathways_p03_0.25_9.txt 0
+pathways_p03_0.25_10.txt 0
+pathways_p03_0.5_1.txt 10
+pathways_p03_0.5_2.txt 10
+pathways_p03_0.5_3.txt 10
+pathways_p03_0.5_4.txt 10
+pathways_p03_0.5_5.txt 10
+pathways_p03_0.5_6.txt 10
+pathways_p03_0.5_7.txt 10
+pathways_p03_0.5_8.txt 10
+pathways_p03_0.5_9.txt 10
+pathways_p03_0.5_10.txt 10
+pathways_p03_0.75_1.txt 10
+pathways_p03_0.75_2.txt 10
+pathways_p03_0.75_3.txt 10
+pathways_p03_0.75_4.txt 10
+pathways_p03_0.75_5.txt 10
+pathways_p03_0.75_6.txt 10
+pathways_p03_0.75_7.txt 10
+pathways_p03_0.75_8.txt 10
+pathways_p03_0.75_9.txt 10
+pathways_p03_0.75_10.txt 10
+pathways_p03_1.0_1.txt 10
+pathways_p03_1.0_2.txt 10
+pathways_p03_1.0_3.txt 10
+pathways_p03_1.0_4.txt 10
+pathways_p03_1.0_5.txt 10
+pathways_p03_1.0_6.txt 10
+pathways_p03_1.0_7.txt 10
+pathways_p03_1.0_8.txt 10
+pathways_p03_1.0_9.txt 10
+pathways_p03_1.0_10.txt 10
+pathways_p04_0.0_1.txt 10
+pathways_p04_0.0_2.txt 10
+pathways_p04_0.0_3.txt 10
+pathways_p04_0.0_4.txt 10
+pathways_p04_0.0_5.txt 10
+pathways_p04_0.0_6.txt 10
+pathways_p04_0.0_7.txt 10
+pathways_p04_0.0_8.txt 10
+pathways_p04_0.0_9.txt 10
+pathways_p04_0.0_10.txt 10
+pathways_p04_0.01_1.txt 10
+pathways_p04_0.01_2.txt 10
+pathways_p04_0.01_3.txt 10
+pathways_p04_0.01_4.txt 10
+pathways_p04_0.01_5.txt 10
+pathways_p04_0.01_6.txt 10
+pathways_p04_0.01_7.txt 10
+pathways_p04_0.01_8.txt 10
+pathways_p04_0.01_9.txt 10
+pathways_p04_0.01_10.txt 10
+pathways_p04_0.25_1.txt 10
+pathways_p04_0.25_2.txt 10
+pathways_p04_0.25_3.txt 10
+pathways_p04_0.25_4.txt 10
+pathways_p04_0.25_5.txt 10
+pathways_p04_0.25_6.txt 10
+pathways_p04_0.25_7.txt 10
+pathways_p04_0.25_8.txt 10
+pathways_p04_0.25_9.txt 10
+pathways_p04_0.25_10.txt 10
+pathways_p04_0.5_1.txt 10
+pathways_p04_0.5_2.txt 10
+pathways_p04_0.5_3.txt 10
+pathways_p04_0.5_4.txt 10
+pathways_p04_0.5_5.txt 10
+pathways_p04_0.5_6.txt 10
+pathways_p04_0.5_7.txt 10
+pathways_p04_0.5_8.txt 10
+pathways_p04_0.5_9.txt 10
+pathways_p04_0.5_10.txt 10
+pathways_p04_0.75_1.txt 10
+pathways_p04_0.75_2.txt 10
+pathways_p04_0.75_3.txt 10
+pathways_p04_0.75_4.txt 10
+pathways_p04_0.75_5.txt 10
+pathways_p04_0.75_6.txt 10
+pathways_p04_0.75_7.txt 10
+pathways_p04_0.75_8.txt 10
+pathways_p04_0.75_9.txt 10
+pathways_p04_0.75_10.txt 10
+pathways_p04_1.0_1.txt * 10
+pathways_p04_1.0_2.txt * 10
+pathways_p04_1.0_3.txt * 10
+pathways_p04_1.0_4.txt * 10
+pathways_p04_1.0_5.txt * 10
+pathways_p04_1.0_6.txt * 10
+pathways_p04_1.0_7.txt * 10
+pathways_p04_1.0_8.txt * 10
+pathways_p04_1.0_9.txt * 10
+pathways_p04_1.0_10.txt * 10
+pathways_p05_0.0_1.txt 10
+pathways_p05_0.0_2.txt 10
+pathways_p05_0.0_3.txt 10
+pathways_p05_0.0_4.txt 10
+pathways_p05_0.0_5.txt 10
+pathways_p05_0.0_6.txt 10
+pathways_p05_0.0_7.txt 10
+pathways_p05_0.0_8.txt 10
+pathways_p05_0.0_9.txt 10
+pathways_p05_0.0_10.txt 10
+pathways_p05_0.01_1.txt 10
+pathways_p05_0.01_2.txt 10
+pathways_p05_0.01_3.txt 10
+pathways_p05_0.01_4.txt 10
+pathways_p05_0.01_5.txt 10
+pathways_p05_0.01_6.txt 10
+pathways_p05_0.01_7.txt 10
+pathways_p05_0.01_8.txt 10
+pathways_p05_0.01_9.txt 10
+pathways_p05_0.01_10.txt 10
+pathways_p05_0.25_1.txt * 10
+pathways_p05_0.25_2.txt * 10
+pathways_p05_0.25_3.txt * 10
+pathways_p05_0.25_4.txt * 10
+pathways_p05_0.25_5.txt * 10
+pathways_p05_0.25_6.txt * 10
+pathways_p05_0.25_7.txt * 10
+pathways_p05_0.25_8.txt * 10
+pathways_p05_0.25_9.txt * 10
+pathways_p05_0.25_10.txt * 10
+pathways_p05_0.5_1.txt 0
+pathways_p05_0.5_2.txt 0
+pathways_p05_0.5_3.txt 0
+pathways_p05_0.5_4.txt 0
+pathways_p05_0.5_5.txt 0
+pathways_p05_0.5_6.txt 0
+pathways_p05_0.5_7.txt 0
+pathways_p05_0.5_8.txt 0
+pathways_p05_0.5_9.txt 0
+pathways_p05_0.5_10.txt 0
+pathways_p05_0.75_1.txt 10
+pathways_p05_0.75_2.txt 10
+pathways_p05_0.75_3.txt 10
+pathways_p05_0.75_4.txt 10
+pathways_p05_0.75_5.txt 10
+pathways_p05_0.75_6.txt 10
+pathways_p05_0.75_7.txt 10
+pathways_p05_0.75_8.txt 10
+pathways_p05_0.75_9.txt 10
+pathways_p05_0.75_10.txt 10
+pathways_p05_1.0_1.txt 0
+pathways_p05_1.0_2.txt 0
+pathways_p05_1.0_3.txt 0
+pathways_p05_1.0_4.txt 0
+pathways_p05_1.0_5.txt 0
+pathways_p05_1.0_6.txt 0
+pathways_p05_1.0_7.txt 0
+pathways_p05_1.0_8.txt 0
+pathways_p05_1.0_9.txt 0
+pathways_p05_1.0_10.txt 0
+pathways_p06_0.0_1.txt 0
+pathways_p06_0.0_2.txt 0
+pathways_p06_0.0_3.txt 0
+pathways_p06_0.0_4.txt 0
+pathways_p06_0.0_5.txt 0
+pathways_p06_0.0_6.txt 0
+pathways_p06_0.0_7.txt 0
+pathways_p06_0.0_8.txt 0
+pathways_p06_0.0_9.txt 0
+pathways_p06_0.0_10.txt 0
+pathways_p06_0.01_1.txt 0
+pathways_p06_0.01_2.txt 0
+pathways_p06_0.01_3.txt 0
+pathways_p06_0.01_4.txt 0
+pathways_p06_0.01_5.txt 0
+pathways_p06_0.01_6.txt 0
+pathways_p06_0.01_7.txt 0
+pathways_p06_0.01_8.txt 0
+pathways_p06_0.01_9.txt 0
+pathways_p06_0.01_10.txt 0
+pathways_p06_0.25_1.txt 0
+pathways_p06_0.25_2.txt 0
+pathways_p06_0.25_3.txt 0
+pathways_p06_0.25_4.txt 0
+pathways_p06_0.25_5.txt 0
+pathways_p06_0.25_6.txt 0
+pathways_p06_0.25_7.txt 0
+pathways_p06_0.25_8.txt 0
+pathways_p06_0.25_9.txt 0
+pathways_p06_0.25_10.txt 0
+pathways_p06_0.5_1.txt 0
+pathways_p06_0.5_2.txt 0
+pathways_p06_0.5_3.txt 0
+pathways_p06_0.5_4.txt 0
+pathways_p06_0.5_5.txt 0
+pathways_p06_0.5_6.txt 0
+pathways_p06_0.5_7.txt 0
+pathways_p06_0.5_8.txt 0
+pathways_p06_0.5_9.txt 0
+pathways_p06_0.5_10.txt 0
+pathways_p06_0.75_1.txt 0
+pathways_p06_0.75_2.txt 0
+pathways_p06_0.75_3.txt 0
+pathways_p06_0.75_4.txt 0
+pathways_p06_0.75_5.txt 0
+pathways_p06_0.75_6.txt 0
+pathways_p06_0.75_7.txt 0
+pathways_p06_0.75_8.txt 0
+pathways_p06_0.75_9.txt 0
+pathways_p06_0.75_10.txt 0
+pathways_p06_1.0_1.txt 0
+pathways_p06_1.0_2.txt 0
+pathways_p06_1.0_3.txt 0
+pathways_p06_1.0_4.txt 0
+pathways_p06_1.0_5.txt 0
+pathways_p06_1.0_6.txt 0
+pathways_p06_1.0_7.txt 0
+pathways_p06_1.0_8.txt 0
+pathways_p06_1.0_9.txt 0
+pathways_p06_1.0_10.txt 0
+pathways_p07_0.0_1.txt 0
+pathways_p07_0.0_2.txt 0
+pathways_p07_0.0_3.txt 0
+pathways_p07_0.0_4.txt 0
+pathways_p07_0.0_5.txt 0
+pathways_p07_0.0_6.txt 0
+pathways_p07_0.0_7.txt 0
+pathways_p07_0.0_8.txt 0
+pathways_p07_0.0_9.txt 0
+pathways_p07_0.0_10.txt 0
+pathways_p07_0.01_1.txt 0
+pathways_p07_0.01_2.txt 0
+pathways_p07_0.01_3.txt 0
+pathways_p07_0.01_4.txt 0
+pathways_p07_0.01_5.txt 0
+pathways_p07_0.01_6.txt 0
+pathways_p07_0.01_7.txt 0
+pathways_p07_0.01_8.txt 0
+pathways_p07_0.01_9.txt 0
+pathways_p07_0.01_10.txt 0
+pathways_p07_0.25_1.txt 0
+pathways_p07_0.25_2.txt 0
+pathways_p07_0.25_3.txt 0
+pathways_p07_0.25_4.txt 0
+pathways_p07_0.25_5.txt 0
+pathways_p07_0.25_6.txt 0
+pathways_p07_0.25_7.txt 0
+pathways_p07_0.25_8.txt 0
+pathways_p07_0.25_9.txt 0
+pathways_p07_0.25_10.txt 0
+pathways_p07_0.5_1.txt 0
+pathways_p07_0.5_2.txt 0
+pathways_p07_0.5_3.txt 0
+pathways_p07_0.5_4.txt 0
+pathways_p07_0.5_5.txt 0
+pathways_p07_0.5_6.txt 0
+pathways_p07_0.5_7.txt 0
+pathways_p07_0.5_8.txt 0
+pathways_p07_0.5_9.txt 0
+pathways_p07_0.5_10.txt 0
+pathways_p07_0.75_1.txt * 0
+pathways_p07_0.75_2.txt * 0
+pathways_p07_0.75_3.txt 0
+pathways_p07_0.75_4.txt * 0
+pathways_p07_0.75_5.txt * 0
+pathways_p07_0.75_6.txt 0
+pathways_p07_0.75_7.txt * 0
+pathways_p07_0.75_8.txt * 0
+pathways_p07_0.75_9.txt 0
+pathways_p07_0.75_10.txt 0
+pathways_p07_1.0_1.txt 0
+pathways_p07_1.0_2.txt 0
+pathways_p07_1.0_3.txt 0
+pathways_p07_1.0_4.txt 0
+pathways_p07_1.0_5.txt 0
+pathways_p07_1.0_6.txt 0
+pathways_p07_1.0_7.txt 0
+pathways_p07_1.0_8.txt 0
+pathways_p07_1.0_9.txt 0
+pathways_p07_1.0_10.txt 0
+pathways_p08_0.0_1.txt 0
+pathways_p08_0.0_2.txt 0
+pathways_p08_0.0_3.txt 0
+pathways_p08_0.0_4.txt 0
+pathways_p08_0.0_5.txt 0
+pathways_p08_0.0_6.txt 0
+pathways_p08_0.0_7.txt 0
+pathways_p08_0.0_8.txt 0
+pathways_p08_0.0_9.txt 0
+pathways_p08_0.0_10.txt 0
+pathways_p08_0.01_1.txt 0
+pathways_p08_0.01_2.txt 0
+pathways_p08_0.01_3.txt 0
+pathways_p08_0.01_4.txt 0
+pathways_p08_0.01_5.txt 0
+pathways_p08_0.01_6.txt 0
+pathways_p08_0.01_7.txt 0
+pathways_p08_0.01_8.txt 0
+pathways_p08_0.01_9.txt 0
+pathways_p08_0.01_10.txt 0
+pathways_p08_0.25_1.txt 0
+pathways_p08_0.25_2.txt 0
+pathways_p08_0.25_3.txt 0
+pathways_p08_0.25_4.txt 0
+pathways_p08_0.25_5.txt 0
+pathways_p08_0.25_6.txt 0
+pathways_p08_0.25_7.txt 0
+pathways_p08_0.25_8.txt 0
+pathways_p08_0.25_9.txt 0
+pathways_p08_0.25_10.txt 0
+pathways_p08_0.5_1.txt 0
+pathways_p08_0.5_2.txt 0
+pathways_p08_0.5_3.txt 0
+pathways_p08_0.5_4.txt 0
+pathways_p08_0.5_5.txt 0
+pathways_p08_0.5_6.txt 0
+pathways_p08_0.5_7.txt 0
+pathways_p08_0.5_8.txt 0
+pathways_p08_0.5_9.txt 0
+pathways_p08_0.5_10.txt 0
+pathways_p08_0.75_1.txt 1
+pathways_p08_0.75_2.txt 1
+pathways_p08_0.75_3.txt 1
+pathways_p08_0.75_4.txt 1
+pathways_p08_0.75_5.txt 1
+pathways_p08_0.75_6.txt 1
+pathways_p08_0.75_7.txt 1
+pathways_p08_0.75_8.txt 1
+pathways_p08_0.75_9.txt 1
+pathways_p08_0.75_10.txt 1
+pathways_p08_1.0_1.txt 0
+pathways_p08_1.0_2.txt 0
+pathways_p08_1.0_3.txt 0
+pathways_p08_1.0_4.txt 0
+pathways_p08_1.0_5.txt 0
+pathways_p08_1.0_6.txt 0
+pathways_p08_1.0_7.txt 0
+pathways_p08_1.0_8.txt 0
+pathways_p08_1.0_9.txt 0
+pathways_p08_1.0_10.txt 0
+pathways_p09_0.0_1.txt 0
+pathways_p09_0.0_2.txt 0
+pathways_p09_0.0_3.txt 0
+pathways_p09_0.0_4.txt 0
+pathways_p09_0.0_5.txt 0
+pathways_p09_0.0_6.txt 0
+pathways_p09_0.0_7.txt 0
+pathways_p09_0.0_8.txt 0
+pathways_p09_0.0_9.txt 0
+pathways_p09_0.0_10.txt 0
+pathways_p09_0.01_1.txt 0
+pathways_p09_0.01_2.txt 0
+pathways_p09_0.01_3.txt 0
+pathways_p09_0.01_4.txt 0
+pathways_p09_0.01_5.txt 0
+pathways_p09_0.01_6.txt 0
+pathways_p09_0.01_7.txt 0
+pathways_p09_0.01_8.txt 0
+pathways_p09_0.01_9.txt 0
+pathways_p09_0.01_10.txt 0
+pathways_p09_0.25_1.txt 0
+pathways_p09_0.25_2.txt 0
+pathways_p09_0.25_3.txt 0
+pathways_p09_0.25_4.txt 0
+pathways_p09_0.25_5.txt 0
+pathways_p09_0.25_6.txt 0
+pathways_p09_0.25_7.txt 0
+pathways_p09_0.25_8.txt 0
+pathways_p09_0.25_9.txt 0
+pathways_p09_0.25_10.txt 0
+pathways_p09_0.5_1.txt 0
+pathways_p09_0.5_2.txt 0
+pathways_p09_0.5_3.txt 0
+pathways_p09_0.5_4.txt 0
+pathways_p09_0.5_5.txt 0
+pathways_p09_0.5_6.txt 0
+pathways_p09_0.5_7.txt 0
+pathways_p09_0.5_8.txt 0
+pathways_p09_0.5_9.txt 0
+pathways_p09_0.5_10.txt 0
+pathways_p09_0.75_1.txt 0
+pathways_p09_0.75_2.txt 0
+pathways_p09_0.75_3.txt 0
+pathways_p09_0.75_4.txt 0
+pathways_p09_0.75_5.txt 0
+pathways_p09_0.75_6.txt 0
+pathways_p09_0.75_7.txt 0
+pathways_p09_0.75_8.txt 0
+pathways_p09_0.75_9.txt 0
+pathways_p09_0.75_10.txt 0
+pathways_p09_1.0_1.txt 0
+pathways_p09_1.0_2.txt 0
+pathways_p09_1.0_3.txt 0
+pathways_p09_1.0_4.txt 0
+pathways_p09_1.0_5.txt 0
+pathways_p09_1.0_6.txt 0
+pathways_p09_1.0_7.txt 0
+pathways_p09_1.0_8.txt 0
+pathways_p09_1.0_9.txt 0
+pathways_p09_1.0_10.txt 0
+pathways_p10_0.0_1.txt 0
+pathways_p10_0.0_2.txt 0
+pathways_p10_0.0_3.txt 0
+pathways_p10_0.0_4.txt 0
+pathways_p10_0.0_5.txt 0
+pathways_p10_0.0_6.txt 0
+pathways_p10_0.0_7.txt 0
+pathways_p10_0.0_8.txt 0
+pathways_p10_0.0_9.txt 0
+pathways_p10_0.0_10.txt 0
+pathways_p10_0.01_1.txt 0
+pathways_p10_0.01_2.txt 0
+pathways_p10_0.01_3.txt 0
+pathways_p10_0.01_4.txt 0
+pathways_p10_0.01_5.txt 0
+pathways_p10_0.01_6.txt 0
+pathways_p10_0.01_7.txt 0
+pathways_p10_0.01_8.txt 0
+pathways_p10_0.01_9.txt 0
+pathways_p10_0.01_10.txt 0
+pathways_p10_0.25_1.txt 0
+pathways_p10_0.25_2.txt 0
+pathways_p10_0.25_3.txt 0
+pathways_p10_0.25_4.txt 0
+pathways_p10_0.25_5.txt 0
+pathways_p10_0.25_6.txt 0
+pathways_p10_0.25_7.txt 0
+pathways_p10_0.25_8.txt 0
+pathways_p10_0.25_9.txt 0
+pathways_p10_0.25_10.txt 0
+pathways_p10_0.5_1.txt * 0
+pathways_p10_0.5_2.txt * 0
+pathways_p10_0.5_3.txt * 0
+pathways_p10_0.5_4.txt * 0
+pathways_p10_0.5_5.txt 0
+pathways_p10_0.5_6.txt 0
+pathways_p10_0.5_7.txt 0
+pathways_p10_0.5_8.txt 0
+pathways_p10_0.5_9.txt 0
+pathways_p10_0.5_10.txt 0
+pathways_p10_0.75_1.txt * 0
+pathways_p10_0.75_2.txt 0
+pathways_p10_0.75_3.txt 0
+pathways_p10_0.75_4.txt 0
+pathways_p10_0.75_5.txt 0
+pathways_p10_0.75_6.txt 0
+pathways_p10_0.75_7.txt 0
+pathways_p10_0.75_8.txt 0
+pathways_p10_0.75_9.txt 0
+pathways_p10_0.75_10.txt 0
+pathways_p10_1.0_1.txt * 0
+pathways_p10_1.0_2.txt * 0
+pathways_p10_1.0_3.txt * 0
+pathways_p10_1.0_4.txt 0
+pathways_p10_1.0_5.txt 0
+pathways_p10_1.0_6.txt 0
+pathways_p10_1.0_7.txt 0
+pathways_p10_1.0_8.txt 0
+pathways_p10_1.0_9.txt 0
+pathways_p10_1.0_10.txt 0
+pathways_p11_0.0_1.txt 0
+pathways_p11_0.0_2.txt 0
+pathways_p11_0.0_3.txt DNE 0
+pathways_p11_0.0_4.txt DNE 0
+pathways_p11_0.0_5.txt DNE 0
+pathways_p11_0.0_6.txt DNE 0
+pathways_p11_0.0_7.txt DNE 0
+pathways_p11_0.0_8.txt DNE 0
+pathways_p11_0.0_9.txt DNE 0
+pathways_p11_0.0_10.txt DNE 0
+pathways_p11_0.01_1.txt 0
+pathways_p11_0.01_2.txt 0
+pathways_p11_0.01_3.txt DNE 0
+pathways_p11_0.01_4.txt DNE 0
+pathways_p11_0.01_5.txt DNE 0
+pathways_p11_0.01_6.txt DNE 0
+pathways_p11_0.01_7.txt DNE 0
+pathways_p11_0.01_8.txt DNE 0
+pathways_p11_0.01_9.txt DNE 0
+pathways_p11_0.01_10.txt DNE 0
+pathways_p11_0.25_1.txt 0
+pathways_p11_0.25_2.txt 0
+pathways_p11_0.25_3.txt DNE 0
+pathways_p11_0.25_4.txt DNE 0
+pathways_p11_0.25_5.txt DNE 0
+pathways_p11_0.25_6.txt DNE 0
+pathways_p11_0.25_7.txt DNE 0
+pathways_p11_0.25_8.txt DNE 0
+pathways_p11_0.25_9.txt DNE 0
+pathways_p11_0.25_10.txt DNE 0
+pathways_p11_0.5_1.txt 0
+pathways_p11_0.5_2.txt 0
+pathways_p11_0.5_3.txt DNE 0
+pathways_p11_0.5_4.txt DNE 0
+pathways_p11_0.5_5.txt DNE 0
+pathways_p11_0.5_6.txt DNE 0
+pathways_p11_0.5_7.txt DNE 0
+pathways_p11_0.5_8.txt DNE 0
+pathways_p11_0.5_9.txt DNE 0
+pathways_p11_0.5_10.txt 0
+pathways_p11_0.75_1.txt 0
+pathways_p11_0.75_2.txt DNE 0
+pathways_p11_0.75_3.txt DNE 0
+pathways_p11_0.75_4.txt DNE 0
+pathways_p11_0.75_5.txt DNE 0
+pathways_p11_0.75_6.txt DNE 0
+pathways_p11_0.75_7.txt DNE 0
+pathways_p11_0.75_8.txt DNE 0
+pathways_p11_0.75_9.txt DNE 0
+pathways_p11_0.75_10.txt 0
+pathways_p11_1.0_1.txt 0
+pathways_p11_1.0_2.txt 0
+pathways_p11_1.0_3.txt 0
+pathways_p11_1.0_4.txt 0
+pathways_p11_1.0_5.txt 0
+pathways_p11_1.0_6.txt 0
+pathways_p11_1.0_7.txt 0
+pathways_p11_1.0_8.txt 0
+pathways_p11_1.0_9.txt 0
+pathways_p11_1.0_10.txt 0
+pathways_p12_0.0_1.txt 0
+pathways_p12_0.0_2.txt DNE 0
+pathways_p12_0.0_3.txt DNE 0
+pathways_p12_0.0_4.txt DNE 0
+pathways_p12_0.0_5.txt DNE 0
+pathways_p12_0.0_6.txt DNE 0
+pathways_p12_0.0_7.txt DNE 0
+pathways_p12_0.0_8.txt DNE 0
+pathways_p12_0.0_9.txt DNE 0
+pathways_p12_0.0_10.txt DNE 0
+pathways_p12_0.01_1.txt DNE 0
+pathways_p12_0.01_2.txt DNE 0
+pathways_p12_0.01_3.txt DNE 0
+pathways_p12_0.01_4.txt DNE 0
+pathways_p12_0.01_5.txt DNE 0
+pathways_p12_0.01_6.txt DNE 0
+pathways_p12_0.01_7.txt DNE 0
+pathways_p12_0.01_8.txt DNE 0
+pathways_p12_0.01_9.txt DNE 0
+pathways_p12_0.01_10.txt DNE 0
+pathways_p12_0.25_1.txt DNE 0
+pathways_p12_0.25_2.txt DNE 0
+pathways_p12_0.25_3.txt DNE 0
+pathways_p12_0.25_4.txt DNE 0
+pathways_p12_0.25_5.txt DNE 0
+pathways_p12_0.25_6.txt DNE 0
+pathways_p12_0.25_7.txt DNE 0
+pathways_p12_0.25_8.txt DNE 0
+pathways_p12_0.25_9.txt DNE 0
+pathways_p12_0.25_10.txt DNE 0
+pathways_p12_0.5_1.txt DNE 0
+pathways_p12_0.5_2.txt DNE 0
+pathways_p12_0.5_3.txt DNE 0
+pathways_p12_0.5_4.txt DNE 0
+pathways_p12_0.5_5.txt DNE 0
+pathways_p12_0.5_6.txt DNE 0
+pathways_p12_0.5_7.txt DNE 0
+pathways_p12_0.5_8.txt DNE 0
+pathways_p12_0.5_9.txt DNE 0
+pathways_p12_0.5_10.txt DNE 0
+pathways_p12_0.75_1.txt DNE 0
+pathways_p12_0.75_2.txt DNE 0
+pathways_p12_0.75_3.txt DNE 0
+pathways_p12_0.75_4.txt DNE 0
+pathways_p12_0.75_5.txt DNE 0
+pathways_p12_0.75_6.txt DNE 0
+pathways_p12_0.75_7.txt DNE 0
+pathways_p12_0.75_8.txt DNE 0
+pathways_p12_0.75_9.txt DNE 0
+pathways_p12_0.75_10.txt DNE 0
+pathways_p12_1.0_1.txt DNE 0
+pathways_p12_1.0_2.txt DNE 0
+pathways_p12_1.0_3.txt DNE 0
+pathways_p12_1.0_4.txt DNE 0
+pathways_p12_1.0_5.txt DNE 0
+pathways_p12_1.0_6.txt DNE 0
+pathways_p12_1.0_7.txt DNE 0
+pathways_p12_1.0_8.txt DNE 0
+pathways_p12_1.0_9.txt DNE 0
+pathways_p12_1.0_10.txt DNE 0
+pathways_p13_0.0_1.txt DNE 0
+pathways_p13_0.0_2.txt DNE 0
+pathways_p13_0.0_3.txt DNE 0
+pathways_p13_0.0_4.txt DNE 0
+pathways_p13_0.0_5.txt DNE 0
+pathways_p13_0.0_6.txt DNE 0
+pathways_p13_0.0_7.txt DNE 0
+pathways_p13_0.0_8.txt DNE 0
+pathways_p13_0.0_9.txt DNE 0
+pathways_p13_0.0_10.txt DNE 0
+pathways_p13_0.01_1.txt DNE 0
+pathways_p13_0.01_2.txt DNE 0
+pathways_p13_0.01_3.txt DNE 0
+pathways_p13_0.01_4.txt DNE 0
+pathways_p13_0.01_5.txt DNE 0
+pathways_p13_0.01_6.txt DNE 0
+pathways_p13_0.01_7.txt DNE 0
+pathways_p13_0.01_8.txt DNE 0
+pathways_p13_0.01_9.txt DNE 0
+pathways_p13_0.01_10.txt DNE 0
+pathways_p13_0.25_1.txt DNE 0
+pathways_p13_0.25_2.txt DNE 0
+pathways_p13_0.25_3.txt DNE 0
+pathways_p13_0.25_4.txt DNE 0
+pathways_p13_0.25_5.txt DNE 0
+pathways_p13_0.25_6.txt DNE 0
+pathways_p13_0.25_7.txt DNE 0
+pathways_p13_0.25_8.txt DNE 0
+pathways_p13_0.25_9.txt DNE 0
+pathways_p13_0.25_10.txt DNE 0
+pathways_p13_0.5_1.txt DNE 0
+pathways_p13_0.5_2.txt DNE 0
+pathways_p13_0.5_3.txt DNE 0
+pathways_p13_0.5_4.txt DNE 0
+pathways_p13_0.5_5.txt DNE 0
+pathways_p13_0.5_6.txt DNE 0
+pathways_p13_0.5_7.txt DNE 0
+pathways_p13_0.5_8.txt DNE 0
+pathways_p13_0.5_9.txt DNE 0
+pathways_p13_0.5_10.txt DNE 0
+pathways_p13_0.75_1.txt DNE 0
+pathways_p13_0.75_2.txt DNE 0
+pathways_p13_0.75_3.txt DNE 0
+pathways_p13_0.75_4.txt DNE 0
+pathways_p13_0.75_5.txt DNE 0
+pathways_p13_0.75_6.txt DNE 0
+pathways_p13_0.75_7.txt DNE 0
+pathways_p13_0.75_8.txt DNE 0
+pathways_p13_0.75_9.txt DNE 0
+pathways_p13_0.75_10.txt DNE 0
+pathways_p13_1.0_1.txt DNE 0
+pathways_p13_1.0_2.txt DNE 0
+pathways_p13_1.0_3.txt DNE 0
+pathways_p13_1.0_4.txt DNE 0
+pathways_p13_1.0_5.txt DNE 0
+pathways_p13_1.0_6.txt DNE 0
+pathways_p13_1.0_7.txt DNE 0
+pathways_p13_1.0_8.txt DNE 0
+pathways_p13_1.0_9.txt DNE 0
+pathways_p13_1.0_10.txt DNE 0
+pathways_p14_0.0_1.txt DNE 0
+pathways_p14_0.0_2.txt DNE 0
+pathways_p14_0.0_3.txt DNE 0
+pathways_p14_0.0_4.txt DNE 0
+pathways_p14_0.0_5.txt DNE 0
+pathways_p14_0.0_6.txt DNE 0
+pathways_p14_0.0_7.txt DNE 0
+pathways_p14_0.0_8.txt DNE 0
+pathways_p14_0.0_9.txt DNE 0
+pathways_p14_0.0_10.txt DNE 0
+pathways_p14_0.01_1.txt DNE 0
+pathways_p14_0.01_2.txt DNE 0
+pathways_p14_0.01_3.txt DNE 0
+pathways_p14_0.01_4.txt DNE 0
+pathways_p14_0.01_5.txt DNE 0
+pathways_p14_0.01_6.txt DNE 0
+pathways_p14_0.01_7.txt DNE 0
+pathways_p14_0.01_8.txt DNE 0
+pathways_p14_0.01_9.txt DNE 0
+pathways_p14_0.01_10.txt DNE 0
+pathways_p14_0.25_1.txt DNE 0
+pathways_p14_0.25_2.txt DNE 0
+pathways_p14_0.25_3.txt DNE 0
+pathways_p14_0.25_4.txt DNE 0
+pathways_p14_0.25_5.txt DNE 0
+pathways_p14_0.25_6.txt DNE 0
+pathways_p14_0.25_7.txt DNE 0
+pathways_p14_0.25_8.txt DNE 0
+pathways_p14_0.25_9.txt DNE 0
+pathways_p14_0.25_10.txt DNE 0
+pathways_p14_0.5_1.txt DNE 0
+pathways_p14_0.5_2.txt DNE 0
+pathways_p14_0.5_3.txt DNE 0
+pathways_p14_0.5_4.txt DNE 0
+pathways_p14_0.5_5.txt DNE 0
+pathways_p14_0.5_6.txt DNE 0
+pathways_p14_0.5_7.txt DNE 0
+pathways_p14_0.5_8.txt DNE 0
+pathways_p14_0.5_9.txt DNE 0
+pathways_p14_0.5_10.txt DNE 0
+pathways_p14_0.75_1.txt DNE 0
+pathways_p14_0.75_2.txt DNE 0
+pathways_p14_0.75_3.txt DNE 0
+pathways_p14_0.75_4.txt DNE 0
+pathways_p14_0.75_5.txt DNE 0
+pathways_p14_0.75_6.txt DNE 0
+pathways_p14_0.75_7.txt DNE 0
+pathways_p14_0.75_8.txt DNE 0
+pathways_p14_0.75_9.txt DNE 0
+pathways_p14_0.75_10.txt DNE 0
+pathways_p14_1.0_1.txt DNE 0
+pathways_p14_1.0_2.txt DNE 0
+pathways_p14_1.0_3.txt DNE 0
+pathways_p14_1.0_4.txt DNE 0
+pathways_p14_1.0_5.txt DNE 0
+pathways_p14_1.0_6.txt DNE 0
+pathways_p14_1.0_7.txt DNE 0
+pathways_p14_1.0_8.txt DNE 0
+pathways_p14_1.0_9.txt DNE 0
+pathways_p14_1.0_10.txt DNE 0
+pathways_p15_0.0_1.txt DNE 0
+pathways_p15_0.0_2.txt DNE 0
+pathways_p15_0.0_3.txt DNE 0
+pathways_p15_0.0_4.txt DNE 0
+pathways_p15_0.0_5.txt DNE 0
+pathways_p15_0.0_6.txt DNE 0
+pathways_p15_0.0_7.txt DNE 0
+pathways_p15_0.0_8.txt DNE 0
+pathways_p15_0.0_9.txt DNE 0
+pathways_p15_0.0_10.txt DNE 0
+pathways_p15_0.01_1.txt DNE 0
+pathways_p15_0.01_2.txt DNE 0
+pathways_p15_0.01_3.txt DNE 0
+pathways_p15_0.01_4.txt DNE 0
+pathways_p15_0.01_5.txt DNE 0
+pathways_p15_0.01_6.txt DNE 0
+pathways_p15_0.01_7.txt DNE 0
+pathways_p15_0.01_8.txt DNE 0
+pathways_p15_0.01_9.txt DNE 0
+pathways_p15_0.01_10.txt DNE 0
+pathways_p15_0.25_1.txt DNE 0
+pathways_p15_0.25_2.txt DNE 0
+pathways_p15_0.25_3.txt DNE 0
+pathways_p15_0.25_4.txt DNE 0
+pathways_p15_0.25_5.txt DNE 0
+pathways_p15_0.25_6.txt DNE 0
+pathways_p15_0.25_7.txt DNE 0
+pathways_p15_0.25_8.txt DNE 0
+pathways_p15_0.25_9.txt DNE 0
+pathways_p15_0.25_10.txt DNE 0
+pathways_p15_0.5_1.txt DNE 0
+pathways_p15_0.5_2.txt DNE 0
+pathways_p15_0.5_3.txt DNE 0
+pathways_p15_0.5_4.txt DNE 0
+pathways_p15_0.5_5.txt DNE 0
+pathways_p15_0.5_6.txt DNE 0
+pathways_p15_0.5_7.txt DNE 0
+pathways_p15_0.5_8.txt DNE 0
+pathways_p15_0.5_9.txt DNE 0
+pathways_p15_0.5_10.txt DNE 0
+pathways_p15_0.75_1.txt DNE 0
+pathways_p15_0.75_2.txt DNE 0
+pathways_p15_0.75_3.txt DNE 0
+pathways_p15_0.75_4.txt DNE 0
+pathways_p15_0.75_5.txt DNE 0
+pathways_p15_0.75_6.txt DNE 0
+pathways_p15_0.75_7.txt DNE 0
+pathways_p15_0.75_8.txt DNE 0
+pathways_p15_0.75_9.txt DNE 0
+pathways_p15_0.75_10.txt DNE 0
+pathways_p15_1.0_1.txt DNE 0
+pathways_p15_1.0_2.txt DNE 0
+pathways_p15_1.0_3.txt DNE 0
+pathways_p15_1.0_4.txt DNE 0
+pathways_p15_1.0_5.txt DNE 0
+pathways_p15_1.0_6.txt DNE 0
+pathways_p15_1.0_7.txt DNE 0
+pathways_p15_1.0_8.txt DNE 0
+pathways_p15_1.0_9.txt DNE 0
+pathways_p15_1.0_10.txt DNE 0
+pathways_p16_0.0_1.txt DNE 0
+pathways_p16_0.0_2.txt DNE 0
+pathways_p16_0.0_3.txt DNE 0
+pathways_p16_0.0_4.txt DNE 0
+pathways_p16_0.0_5.txt DNE 0
+pathways_p16_0.0_6.txt DNE 0
+pathways_p16_0.0_7.txt DNE 0
+pathways_p16_0.0_8.txt DNE 0
+pathways_p16_0.0_9.txt DNE 0
+pathways_p16_0.0_10.txt DNE 0
+pathways_p16_0.01_1.txt DNE 0
+pathways_p16_0.01_2.txt DNE 0
+pathways_p16_0.01_3.txt DNE 0
+pathways_p16_0.01_4.txt DNE 0
+pathways_p16_0.01_5.txt DNE 0
+pathways_p16_0.01_6.txt DNE 0
+pathways_p16_0.01_7.txt DNE 0
+pathways_p16_0.01_8.txt DNE 0
+pathways_p16_0.01_9.txt DNE 0
+pathways_p16_0.01_10.txt DNE 0
+pathways_p16_0.25_1.txt DNE 0
+pathways_p16_0.25_2.txt DNE 0
+pathways_p16_0.25_3.txt DNE 0
+pathways_p16_0.25_4.txt DNE 0
+pathways_p16_0.25_5.txt DNE 0
+pathways_p16_0.25_6.txt DNE 0
+pathways_p16_0.25_7.txt DNE 0
+pathways_p16_0.25_8.txt DNE 0
+pathways_p16_0.25_9.txt DNE 0
+pathways_p16_0.25_10.txt DNE 0
+pathways_p16_0.5_1.txt DNE 0
+pathways_p16_0.5_2.txt DNE 0
+pathways_p16_0.5_3.txt DNE 0
+pathways_p16_0.5_4.txt DNE 0
+pathways_p16_0.5_5.txt DNE 0
+pathways_p16_0.5_6.txt DNE 0
+pathways_p16_0.5_7.txt DNE 0
+pathways_p16_0.5_8.txt DNE 0
+pathways_p16_0.5_9.txt DNE 0
+pathways_p16_0.5_10.txt DNE 0
+pathways_p16_0.75_1.txt DNE 0
+pathways_p16_0.75_2.txt DNE 0
+pathways_p16_0.75_3.txt DNE 0
+pathways_p16_0.75_4.txt DNE 0
+pathways_p16_0.75_5.txt DNE 0
+pathways_p16_0.75_6.txt DNE 0
+pathways_p16_0.75_7.txt DNE 0
+pathways_p16_0.75_8.txt DNE 0
+pathways_p16_0.75_9.txt DNE 0
+pathways_p16_0.75_10.txt DNE 0
+pathways_p16_1.0_1.txt DNE 0
+pathways_p16_1.0_2.txt DNE 0
+pathways_p16_1.0_3.txt DNE 0
+pathways_p16_1.0_4.txt DNE 0
+pathways_p16_1.0_5.txt DNE 0
+pathways_p16_1.0_6.txt DNE 0
+pathways_p16_1.0_7.txt DNE 0
+pathways_p16_1.0_8.txt DNE 0
+pathways_p16_1.0_9.txt DNE 0
+pathways_p16_1.0_10.txt DNE 0
+pathways_p17_0.0_1.txt DNE 0
+pathways_p17_0.0_2.txt DNE 0
+pathways_p17_0.0_3.txt DNE 0
+pathways_p17_0.0_4.txt DNE 0
+pathways_p17_0.0_5.txt DNE 0
+pathways_p17_0.0_6.txt DNE 0
+pathways_p17_0.0_7.txt DNE 0
+pathways_p17_0.0_8.txt DNE 0
+pathways_p17_0.0_9.txt DNE 0
+pathways_p17_0.0_10.txt DNE 0
+pathways_p17_0.01_1.txt DNE 0
+pathways_p17_0.01_2.txt DNE 0
+pathways_p17_0.01_3.txt DNE 0
+pathways_p17_0.01_4.txt DNE 0
+pathways_p17_0.01_5.txt DNE 0
+pathways_p17_0.01_6.txt DNE 0
+pathways_p17_0.01_7.txt DNE 0
+pathways_p17_0.01_8.txt DNE 0
+pathways_p17_0.01_9.txt DNE 0
+pathways_p17_0.01_10.txt DNE 0
+pathways_p17_0.25_1.txt DNE 0
+pathways_p17_0.25_2.txt DNE 0
+pathways_p17_0.25_3.txt DNE 0
+pathways_p17_0.25_4.txt DNE 0
+pathways_p17_0.25_5.txt DNE 0
+pathways_p17_0.25_6.txt DNE 0
+pathways_p17_0.25_7.txt DNE 0
+pathways_p17_0.25_8.txt DNE 0
+pathways_p17_0.25_9.txt DNE 0
+pathways_p17_0.25_10.txt DNE 0
+pathways_p17_0.5_1.txt DNE 0
+pathways_p17_0.5_2.txt DNE 0
+pathways_p17_0.5_3.txt DNE 0
+pathways_p17_0.5_4.txt DNE 0
+pathways_p17_0.5_5.txt DNE 0
+pathways_p17_0.5_6.txt DNE 0
+pathways_p17_0.5_7.txt DNE 0
+pathways_p17_0.5_8.txt DNE 0
+pathways_p17_0.5_9.txt DNE 0
+pathways_p17_0.5_10.txt DNE 0
+pathways_p17_0.75_1.txt DNE 0
+pathways_p17_0.75_2.txt DNE 0
+pathways_p17_0.75_3.txt DNE 0
+pathways_p17_0.75_4.txt DNE 0
+pathways_p17_0.75_5.txt DNE 0
+pathways_p17_0.75_6.txt DNE 0
+pathways_p17_0.75_7.txt DNE 0
+pathways_p17_0.75_8.txt DNE 0
+pathways_p17_0.75_9.txt DNE 0
+pathways_p17_0.75_10.txt DNE 0
+pathways_p17_1.0_1.txt DNE 0
+pathways_p17_1.0_2.txt DNE 0
+pathways_p17_1.0_3.txt DNE 0
+pathways_p17_1.0_4.txt DNE 0
+pathways_p17_1.0_5.txt DNE 0
+pathways_p17_1.0_6.txt DNE 0
+pathways_p17_1.0_7.txt DNE 0
+pathways_p17_1.0_8.txt DNE 0
+pathways_p17_1.0_9.txt DNE 0
+pathways_p17_1.0_10.txt DNE 0
+pathways_p18_0.0_1.txt DNE 0
+pathways_p18_0.0_2.txt DNE 0
+pathways_p18_0.0_3.txt DNE 0
+pathways_p18_0.0_4.txt DNE 0
+pathways_p18_0.0_5.txt DNE 0
+pathways_p18_0.0_6.txt DNE 0
+pathways_p18_0.0_7.txt DNE 0
+pathways_p18_0.0_8.txt DNE 0
+pathways_p18_0.0_9.txt DNE 0
+pathways_p18_0.0_10.txt DNE 0
+pathways_p18_0.01_1.txt DNE 0
+pathways_p18_0.01_2.txt DNE 0
+pathways_p18_0.01_3.txt DNE 0
+pathways_p18_0.01_4.txt DNE 0
+pathways_p18_0.01_5.txt DNE 0
+pathways_p18_0.01_6.txt DNE 0
+pathways_p18_0.01_7.txt DNE 0
+pathways_p18_0.01_8.txt DNE 0
+pathways_p18_0.01_9.txt DNE 0
+pathways_p18_0.01_10.txt DNE 0
+pathways_p18_0.25_1.txt DNE 0
+pathways_p18_0.25_2.txt DNE 0
+pathways_p18_0.25_3.txt DNE 0
+pathways_p18_0.25_4.txt DNE 0
+pathways_p18_0.25_5.txt DNE 0
+pathways_p18_0.25_6.txt DNE 0
+pathways_p18_0.25_7.txt DNE 0
+pathways_p18_0.25_8.txt DNE 0
+pathways_p18_0.25_9.txt DNE 0
+pathways_p18_0.25_10.txt DNE 0
+pathways_p18_0.5_1.txt DNE 0
+pathways_p18_0.5_2.txt DNE 0
+pathways_p18_0.5_3.txt DNE 0
+pathways_p18_0.5_4.txt DNE 0
+pathways_p18_0.5_5.txt DNE 0
+pathways_p18_0.5_6.txt DNE 0
+pathways_p18_0.5_7.txt DNE 0
+pathways_p18_0.5_8.txt DNE 0
+pathways_p18_0.5_9.txt DNE 0
+pathways_p18_0.5_10.txt DNE 0
+pathways_p18_0.75_1.txt DNE 0
+pathways_p18_0.75_2.txt DNE 0
+pathways_p18_0.75_3.txt DNE 0
+pathways_p18_0.75_4.txt DNE 0
+pathways_p18_0.75_5.txt DNE 0
+pathways_p18_0.75_6.txt DNE 0
+pathways_p18_0.75_7.txt DNE 0
+pathways_p18_0.75_8.txt DNE 0
+pathways_p18_0.75_9.txt DNE 0
+pathways_p18_0.75_10.txt DNE 0
+pathways_p18_1.0_1.txt DNE 0
+pathways_p18_1.0_2.txt DNE 0
+pathways_p18_1.0_3.txt DNE 0
+pathways_p18_1.0_4.txt DNE 0
+pathways_p18_1.0_5.txt DNE 0
+pathways_p18_1.0_6.txt DNE 0
+pathways_p18_1.0_7.txt DNE 0
+pathways_p18_1.0_8.txt DNE 0
+pathways_p18_1.0_9.txt DNE 0
+pathways_p18_1.0_10.txt DNE 0
+pathways_p19_0.0_1.txt DNE 0
+pathways_p19_0.0_2.txt DNE 0
+pathways_p19_0.0_3.txt DNE 0
+pathways_p19_0.0_4.txt DNE 0
+pathways_p19_0.0_5.txt DNE 0
+pathways_p19_0.0_6.txt DNE 0
+pathways_p19_0.0_7.txt DNE 0
+pathways_p19_0.0_8.txt DNE 0
+pathways_p19_0.0_9.txt DNE 0
+pathways_p19_0.0_10.txt DNE 0
+pathways_p19_0.01_1.txt DNE 0
+pathways_p19_0.01_2.txt DNE 0
+pathways_p19_0.01_3.txt DNE 0
+pathways_p19_0.01_4.txt DNE 0
+pathways_p19_0.01_5.txt DNE 0
+pathways_p19_0.01_6.txt DNE 0
+pathways_p19_0.01_7.txt DNE 0
+pathways_p19_0.01_8.txt DNE 0
+pathways_p19_0.01_9.txt DNE 0
+pathways_p19_0.01_10.txt DNE 0
+pathways_p19_0.25_1.txt DNE 0
+pathways_p19_0.25_2.txt DNE 0
+pathways_p19_0.25_3.txt DNE 0
+pathways_p19_0.25_4.txt DNE 0
+pathways_p19_0.25_5.txt DNE 0
+pathways_p19_0.25_6.txt DNE 0
+pathways_p19_0.25_7.txt DNE 0
+pathways_p19_0.25_8.txt DNE 0
+pathways_p19_0.25_9.txt DNE 0
+pathways_p19_0.25_10.txt DNE 0
+pathways_p19_0.5_1.txt DNE 0
+pathways_p19_0.5_2.txt DNE 0
+pathways_p19_0.5_3.txt DNE 0
+pathways_p19_0.5_4.txt DNE 0
+pathways_p19_0.5_5.txt DNE 0
+pathways_p19_0.5_6.txt DNE 0
+pathways_p19_0.5_7.txt DNE 0
+pathways_p19_0.5_8.txt DNE 0
+pathways_p19_0.5_9.txt DNE 0
+pathways_p19_0.5_10.txt DNE 0
+pathways_p19_0.75_1.txt DNE 0
+pathways_p19_0.75_2.txt DNE 0
+pathways_p19_0.75_3.txt DNE 0
+pathways_p19_0.75_4.txt DNE 0
+pathways_p19_0.75_5.txt DNE 0
+pathways_p19_0.75_6.txt DNE 0
+pathways_p19_0.75_7.txt DNE 0
+pathways_p19_0.75_8.txt DNE 0
+pathways_p19_0.75_9.txt DNE 0
+pathways_p19_0.75_10.txt DNE 0
+pathways_p19_1.0_1.txt DNE 0
+pathways_p19_1.0_2.txt DNE 0
+pathways_p19_1.0_3.txt DNE 0
+pathways_p19_1.0_4.txt DNE 0
+pathways_p19_1.0_5.txt DNE 0
+pathways_p19_1.0_6.txt DNE 0
+pathways_p19_1.0_7.txt DNE 0
+pathways_p19_1.0_8.txt DNE 0
+pathways_p19_1.0_9.txt DNE 0
+pathways_p19_1.0_10.txt DNE 0
+pathways_p20_0.0_1.txt DNE 0
+pathways_p20_0.0_2.txt DNE 0
+pathways_p20_0.0_3.txt DNE 0
+pathways_p20_0.0_4.txt DNE 0
+pathways_p20_0.0_5.txt DNE 0
+pathways_p20_0.0_6.txt DNE 0
+pathways_p20_0.0_7.txt DNE 0
+pathways_p20_0.0_8.txt DNE 0
+pathways_p20_0.0_9.txt DNE 0
+pathways_p20_0.0_10.txt DNE 0
+pathways_p20_0.01_1.txt DNE 0
+pathways_p20_0.01_2.txt DNE 0
+pathways_p20_0.01_3.txt DNE 0
+pathways_p20_0.01_4.txt DNE 0
+pathways_p20_0.01_5.txt DNE 0
+pathways_p20_0.01_6.txt DNE 0
+pathways_p20_0.01_7.txt DNE 0
+pathways_p20_0.01_8.txt DNE 0
+pathways_p20_0.01_9.txt DNE 0
+pathways_p20_0.01_10.txt DNE 0
+pathways_p20_0.25_1.txt DNE 0
+pathways_p20_0.25_2.txt DNE 0
+pathways_p20_0.25_3.txt DNE 0
+pathways_p20_0.25_4.txt DNE 0
+pathways_p20_0.25_5.txt DNE 0
+pathways_p20_0.25_6.txt DNE 0
+pathways_p20_0.25_7.txt DNE 0
+pathways_p20_0.25_8.txt DNE 0
+pathways_p20_0.25_9.txt DNE 0
+pathways_p20_0.25_10.txt DNE 0
+pathways_p20_0.5_1.txt DNE 0
+pathways_p20_0.5_2.txt DNE 0
+pathways_p20_0.5_3.txt DNE 0
+pathways_p20_0.5_4.txt DNE 0
+pathways_p20_0.5_5.txt DNE 0
+pathways_p20_0.5_6.txt DNE 0
+pathways_p20_0.5_7.txt DNE 0
+pathways_p20_0.5_8.txt DNE 0
+pathways_p20_0.5_9.txt DNE 0
+pathways_p20_0.5_10.txt DNE 0
+pathways_p20_0.75_1.txt DNE 0
+pathways_p20_0.75_2.txt DNE 0
+pathways_p20_0.75_3.txt DNE 0
+pathways_p20_0.75_4.txt DNE 0
+pathways_p20_0.75_5.txt DNE 0
+pathways_p20_0.75_6.txt DNE 0
+pathways_p20_0.75_7.txt DNE 0
+pathways_p20_0.75_8.txt DNE 0
+pathways_p20_0.75_9.txt DNE 0
+pathways_p20_0.75_10.txt DNE 0
+pathways_p20_1.0_1.txt DNE 0
+pathways_p20_1.0_2.txt DNE 0
+pathways_p20_1.0_3.txt DNE 0
+pathways_p20_1.0_4.txt DNE 0
+pathways_p20_1.0_5.txt DNE 0
+pathways_p20_1.0_6.txt DNE 0
+pathways_p20_1.0_7.txt DNE 0
+pathways_p20_1.0_8.txt DNE 0
+pathways_p20_1.0_9.txt DNE 0
+pathways_p20_1.0_10.txt DNE 0
+END Pathways///////////////////////////////////////
+
+Bridges///////////////////////////////////////////
+bridges_v1_2_0.0_1.txt 10
+bridges_v1_2_0.25_1.txt 10
+bridges_v1_2_0.5_1.txt 10
+bridges_v1_2_0.75_1.txt 10
+bridges_v1_2_1.0_1.txt 10
+bridges_v2_2_0.0_1.txt 10
+bridges_v2_2_0.25_1.txt 10
+bridges_v2_2_0.5_1.txt 10
+bridges_v2_2_0.75_1.txt 10
+bridges_v2_2_1.0_1.txt 10
+bridges_v3_2_0.0_1.txt 10
+bridges_v3_2_0.25_1.txt 10
+bridges_v3_2_0.5_1.txt 10
+bridges_v3_2_0.75_1.txt 10
+bridges_v3_2_1.0_1.txt 10
+bridges_v1_2_0.0_2.txt 10
+bridges_v1_2_0.25_2.txt 10
+bridges_v1_2_0.5_2.txt 10
+bridges_v1_2_0.75_2.txt 10
+bridges_v1_2_1.0_2.txt 10
+bridges_v2_2_0.0_2.txt 10
+bridges_v2_2_0.25_2.txt 10
+bridges_v2_2_0.5_2.txt 10
+bridges_v2_2_0.75_2.txt 10
+bridges_v2_2_1.0_2.txt 10
+bridges_v3_2_0.0_2.txt 10
+bridges_v3_2_0.25_2.txt 10
+bridges_v3_2_0.5_2.txt 10
+bridges_v3_2_0.75_2.txt 10
+bridges_v3_2_1.0_2.txt 10
+bridges_v1_2_0.0_3.txt 10
+bridges_v1_2_0.25_3.txt 10
+bridges_v1_2_0.5_3.txt 10
+bridges_v1_2_0.75_3.txt 10
+bridges_v1_2_1.0_3.txt 10
+bridges_v2_2_0.0_3.txt 10
+bridges_v2_2_0.25_3.txt 10
+bridges_v2_2_0.5_3.txt 10
+bridges_v2_2_0.75_3.txt 10
+bridges_v2_2_1.0_3.txt 10
+bridges_v3_2_0.0_3.txt 10
+bridges_v3_2_0.25_3.txt 10
+bridges_v3_2_0.5_3.txt 10
+bridges_v3_2_0.75_3.txt 10
+bridges_v3_2_1.0_3.txt 10
+bridges_v1_2_0.0_4.txt 10
+bridges_v1_2_0.25_4.txt 10
+bridges_v1_2_0.5_4.txt 10
+bridges_v1_2_0.75_4.txt 10
+bridges_v1_2_1.0_4.txt 10
+bridges_v2_2_0.0_4.txt 10
+bridges_v2_2_0.25_4.txt 10
+bridges_v2_2_0.5_4.txt 10
+bridges_v2_2_0.75_4.txt 10
+bridges_v2_2_1.0_4.txt 10
+bridges_v3_2_0.0_4.txt 10
+bridges_v3_2_0.25_4.txt 10
+bridges_v3_2_0.5_4.txt 10
+bridges_v3_2_0.75_4.txt 10
+bridges_v3_2_1.0_4.txt 10
+bridges_v1_2_0.0_5.txt 10
+bridges_v1_2_0.25_5.txt 10
+bridges_v1_2_0.5_5.txt 10
+bridges_v1_2_0.75_5.txt 10
+bridges_v1_2_1.0_5.txt 10
+bridges_v2_2_0.0_5.txt 10
+bridges_v2_2_0.25_5.txt 10
+bridges_v2_2_0.5_5.txt 10
+bridges_v2_2_0.75_5.txt 10
+bridges_v2_2_1.0_5.txt 10
+bridges_v3_2_0.0_5.txt 10
+bridges_v3_2_0.25_5.txt 10
+bridges_v3_2_0.5_5.txt 10
+bridges_v3_2_0.75_5.txt 10
+bridges_v3_2_1.0_5.txt 10
+bridges_v1_2_0.0_6.txt 10
+bridges_v1_2_0.25_6.txt 10
+bridges_v1_2_0.5_6.txt 10
+bridges_v1_2_0.75_6.txt 10
+bridges_v1_2_1.0_6.txt 10
+bridges_v2_2_0.0_6.txt 10
+bridges_v2_2_0.25_6.txt 10
+bridges_v2_2_0.5_6.txt 10
+bridges_v2_2_0.75_6.txt 10
+bridges_v2_2_1.0_6.txt 10
+bridges_v3_2_0.0_6.txt 10
+bridges_v3_2_0.25_6.txt 10
+bridges_v3_2_0.5_6.txt 10
+bridges_v3_2_0.75_6.txt 10
+bridges_v3_2_1.0_6.txt 10
+bridges_v1_2_0.0_7.txt 10
+bridges_v1_2_0.25_7.txt 10
+bridges_v1_2_0.5_7.txt 10
+bridges_v1_2_0.75_7.txt 10
+bridges_v1_2_1.0_7.txt 10
+bridges_v2_2_0.0_7.txt 10
+bridges_v2_2_0.25_7.txt 10
+bridges_v2_2_0.5_7.txt 10
+bridges_v2_2_0.75_7.txt 10
+bridges_v2_2_1.0_7.txt 10
+bridges_v3_2_0.0_7.txt 10
+bridges_v3_2_0.25_7.txt 10
+bridges_v3_2_0.5_7.txt 10
+bridges_v3_2_0.75_7.txt 10
+bridges_v3_2_1.0_7.txt 10
+bridges_v1_2_0.0_8.txt 10
+bridges_v1_2_0.25_8.txt 10
+bridges_v1_2_0.5_8.txt 10
+bridges_v1_2_0.75_8.txt 10
+bridges_v1_2_1.0_8.txt 10
+bridges_v2_2_0.0_8.txt 10
+bridges_v2_2_0.25_8.txt 10
+bridges_v2_2_0.5_8.txt 10
+bridges_v2_2_0.75_8.txt 10
+bridges_v2_2_1.0_8.txt 10
+bridges_v3_2_0.0_8.txt 10
+bridges_v3_2_0.25_8.txt 10
+bridges_v3_2_0.5_8.txt 10
+bridges_v3_2_0.75_8.txt 10
+bridges_v3_2_1.0_8.txt 10
+bridges_v1_2_0.0_9.txt 10
+bridges_v1_2_0.25_9.txt 10
+bridges_v1_2_0.5_9.txt 10
+bridges_v1_2_0.75_9.txt 10
+bridges_v1_2_1.0_9.txt 10
+bridges_v2_2_0.0_9.txt 10
+bridges_v2_2_0.25_9.txt 10
+bridges_v2_2_0.5_9.txt 10
+bridges_v2_2_0.75_9.txt 10
+bridges_v2_2_1.0_9.txt 10
+bridges_v3_2_0.0_9.txt 10
+bridges_v3_2_0.25_9.txt 10
+bridges_v3_2_0.5_9.txt 10
+bridges_v3_2_0.75_9.txt 10
+bridges_v3_2_1.0_9.txt 10
+bridges_v1_2_0.0_10.txt 10
+bridges_v1_2_0.25_10.txt 10
+bridges_v1_2_0.5_10.txt 10
+bridges_v1_2_0.75_10.txt 10
+bridges_v1_2_1.0_10.txt 10
+bridges_v2_2_0.0_10.txt 10
+bridges_v2_2_0.25_10.txt 10
+bridges_v2_2_0.5_10.txt 10
+bridges_v2_2_0.75_10.txt 10
+bridges_v2_2_1.0_10.txt 10
+bridges_v3_2_0.0_10.txt 10
+bridges_v3_2_0.25_10.txt 10
+bridges_v3_2_0.5_10.txt 10
+bridges_v3_2_0.75_10.txt 10
+bridges_v3_2_1.0_10.txt 10
+bridges_v1_4_0.0_1.txt 10
+bridges_v1_4_0.25_1.txt 10
+bridges_v1_4_0.5_1.txt 10
+bridges_v1_4_0.75_1.txt 10
+bridges_v1_4_1.0_1.txt 10
+bridges_v2_4_0.0_1.txt 10
+bridges_v2_4_0.25_1.txt 10
+bridges_v2_4_0.5_1.txt 10
+bridges_v2_4_0.75_1.txt 10
+bridges_v2_4_1.0_1.txt 10
+bridges_v3_4_0.0_1.txt 10
+bridges_v3_4_0.25_1.txt 10
+bridges_v3_4_0.5_1.txt 10
+bridges_v3_4_0.75_1.txt 10
+bridges_v3_4_1.0_1.txt 10
+bridges_v1_4_0.0_2.txt 10
+bridges_v1_4_0.25_2.txt 10
+bridges_v1_4_0.5_2.txt 10
+bridges_v1_4_0.75_2.txt 10
+bridges_v1_4_1.0_2.txt 10
+bridges_v2_4_0.0_2.txt 10
+bridges_v2_4_0.25_2.txt 10
+bridges_v2_4_0.5_2.txt 10
+bridges_v2_4_0.75_2.txt 10
+bridges_v2_4_1.0_2.txt 10
+bridges_v3_4_0.0_2.txt 10
+bridges_v3_4_0.25_2.txt 10
+bridges_v3_4_0.5_2.txt 10
+bridges_v3_4_0.75_2.txt 10
+bridges_v3_4_1.0_2.txt 10
+bridges_v1_4_0.0_3.txt 10
+bridges_v1_4_0.25_3.txt 10
+bridges_v1_4_0.5_3.txt 10
+bridges_v1_4_0.75_3.txt 10
+bridges_v1_4_1.0_3.txt 10
+bridges_v2_4_0.0_3.txt 10
+bridges_v2_4_0.25_3.txt 10
+bridges_v2_4_0.5_3.txt 10
+bridges_v2_4_0.75_3.txt 10
+bridges_v2_4_1.0_3.txt 10
+bridges_v3_4_0.0_3.txt 10
+bridges_v3_4_0.25_3.txt 10
+bridges_v3_4_0.5_3.txt 10
+bridges_v3_4_0.75_3.txt 10
+bridges_v3_4_1.0_3.txt 10
+bridges_v1_4_0.0_4.txt 10
+bridges_v1_4_0.25_4.txt 10
+bridges_v1_4_0.5_4.txt 10
+bridges_v1_4_0.75_4.txt 10
+bridges_v1_4_1.0_4.txt 10
+bridges_v2_4_0.0_4.txt 10
+bridges_v2_4_0.25_4.txt 10
+bridges_v2_4_0.5_4.txt 10
+bridges_v2_4_0.75_4.txt 10
+bridges_v2_4_1.0_4.txt 10
+bridges_v3_4_0.0_4.txt 10
+bridges_v3_4_0.25_4.txt 10
+bridges_v3_4_0.5_4.txt 10
+bridges_v3_4_0.75_4.txt 10
+bridges_v3_4_1.0_4.txt 10
+bridges_v1_4_0.0_5.txt 10
+bridges_v1_4_0.25_5.txt 10
+bridges_v1_4_0.5_5.txt 10
+bridges_v1_4_0.75_5.txt 10
+bridges_v1_4_1.0_5.txt 10
+bridges_v2_4_0.0_5.txt 10
+bridges_v2_4_0.25_5.txt 10
+bridges_v2_4_0.5_5.txt 10
+bridges_v2_4_0.75_5.txt 10
+bridges_v2_4_1.0_5.txt 10
+bridges_v3_4_0.0_5.txt 10
+bridges_v3_4_0.25_5.txt 10
+bridges_v3_4_0.5_5.txt 10
+bridges_v3_4_0.75_5.txt 10
+bridges_v3_4_1.0_5.txt 10
+bridges_v1_4_0.0_6.txt 10
+bridges_v1_4_0.25_6.txt 10
+bridges_v1_4_0.5_6.txt 10
+bridges_v1_4_0.75_6.txt 10
+bridges_v1_4_1.0_6.txt 10
+bridges_v2_4_0.0_6.txt 10
+bridges_v2_4_0.25_6.txt 10
+bridges_v2_4_0.5_6.txt 10
+bridges_v2_4_0.75_6.txt 10
+bridges_v2_4_1.0_6.txt 10
+bridges_v3_4_0.0_6.txt 10
+bridges_v3_4_0.25_6.txt 10
+bridges_v3_4_0.5_6.txt 10
+bridges_v3_4_0.75_6.txt 10
+bridges_v3_4_1.0_6.txt 10
+bridges_v1_4_0.0_7.txt 10
+bridges_v1_4_0.25_7.txt 10
+bridges_v1_4_0.5_7.txt 10
+bridges_v1_4_0.75_7.txt 10
+bridges_v1_4_1.0_7.txt 10
+bridges_v2_4_0.0_7.txt 10
+bridges_v2_4_0.25_7.txt 10
+bridges_v2_4_0.5_7.txt 10
+bridges_v2_4_0.75_7.txt 10
+bridges_v2_4_1.0_7.txt 10
+bridges_v3_4_0.0_7.txt 10
+bridges_v3_4_0.25_7.txt 10
+bridges_v3_4_0.5_7.txt 10
+bridges_v3_4_0.75_7.txt 10
+bridges_v3_4_1.0_7.txt 10
+bridges_v1_4_0.0_8.txt 10
+bridges_v1_4_0.25_8.txt 10
+bridges_v1_4_0.5_8.txt 10
+bridges_v1_4_0.75_8.txt 10
+bridges_v1_4_1.0_8.txt 10
+bridges_v2_4_0.0_8.txt 10
+bridges_v2_4_0.25_8.txt 10
+bridges_v2_4_0.5_8.txt 10
+bridges_v2_4_0.75_8.txt 10
+bridges_v2_4_1.0_8.txt 10
+bridges_v3_4_0.0_8.txt 10
+bridges_v3_4_0.25_8.txt 10
+bridges_v3_4_0.5_8.txt 10
+bridges_v3_4_0.75_8.txt 10
+bridges_v3_4_1.0_8.txt 10
+bridges_v1_4_0.0_9.txt 10
+bridges_v1_4_0.25_9.txt 10
+bridges_v1_4_0.5_9.txt 10
+bridges_v1_4_0.75_9.txt 10
+bridges_v1_4_1.0_9.txt 10
+bridges_v2_4_0.0_9.txt 10
+bridges_v2_4_0.25_9.txt 10
+bridges_v2_4_0.5_9.txt 10
+bridges_v2_4_0.75_9.txt 10
+bridges_v2_4_1.0_9.txt 10
+bridges_v3_4_0.0_9.txt 10
+bridges_v3_4_0.25_9.txt 10
+bridges_v3_4_0.5_9.txt 10
+bridges_v3_4_0.75_9.txt 10
+bridges_v3_4_1.0_9.txt 10
+bridges_v1_4_0.0_10.txt 10
+bridges_v1_4_0.25_10.txt 10
+bridges_v1_4_0.5_10.txt 10
+bridges_v1_4_0.75_10.txt 10
+bridges_v1_4_1.0_10.txt 10
+bridges_v2_4_0.0_10.txt 10
+bridges_v2_4_0.25_10.txt 10
+bridges_v2_4_0.5_10.txt 10
+bridges_v2_4_0.75_10.txt 10
+bridges_v2_4_1.0_10.txt 10
+bridges_v3_4_0.0_10.txt 10
+bridges_v3_4_0.25_10.txt 10
+bridges_v3_4_0.5_10.txt 10
+bridges_v3_4_0.75_10.txt 10
+bridges_v3_4_1.0_10.txt 10
+bridges_v1_8_0.0_1.txt 10
+bridges_v1_8_0.25_1.txt 10
+bridges_v1_8_0.5_1.txt 10
+bridges_v1_8_0.75_1.txt 5
+bridges_v1_8_1.0_1.txt 0
+bridges_v2_8_0.0_1.txt 10
+bridges_v2_8_0.25_1.txt 10
+bridges_v2_8_0.5_1.txt 10
+bridges_v2_8_0.75_1.txt 3
+bridges_v2_8_1.0_1.txt 0
+bridges_v3_8_0.0_1.txt 10
+bridges_v3_8_0.25_1.txt 10
+bridges_v3_8_0.5_1.txt 10
+bridges_v3_8_0.75_1.txt 10
+bridges_v3_8_1.0_1.txt 10
+bridges_v1_8_0.0_2.txt 10
+bridges_v1_8_0.25_2.txt 10
+bridges_v1_8_0.5_2.txt 10
+bridges_v1_8_0.75_2.txt 0
+bridges_v1_8_1.0_2.txt 0
+bridges_v2_8_0.0_2.txt 10
+bridges_v2_8_0.25_2.txt 10
+bridges_v2_8_0.5_2.txt 10
+bridges_v2_8_0.75_2.txt 0
+bridges_v2_8_1.0_2.txt 0
+bridges_v3_8_0.0_2.txt 10
+bridges_v3_8_0.25_2.txt 10
+bridges_v3_8_0.5_2.txt 10
+bridges_v3_8_0.75_2.txt 7
+bridges_v3_8_1.0_2.txt 0
+bridges_v1_8_0.0_3.txt 10
+bridges_v1_8_0.25_3.txt 10
+bridges_v1_8_0.5_3.txt 10
+bridges_v1_8_0.75_3.txt 10
+bridges_v1_8_1.0_3.txt 0
+bridges_v2_8_0.0_3.txt 10
+bridges_v2_8_0.25_3.txt 10
+bridges_v2_8_0.5_3.txt 10
+bridges_v2_8_0.75_3.txt 10
+bridges_v2_8_1.0_3.txt 0
+bridges_v3_8_0.0_3.txt 10
+bridges_v3_8_0.25_3.txt 10
+bridges_v3_8_0.5_3.txt 10
+bridges_v3_8_0.75_3.txt 4
+bridges_v3_8_1.0_3.txt 0
+bridges_v1_8_0.0_4.txt 10
+bridges_v1_8_0.25_4.txt 10
+bridges_v1_8_0.5_4.txt 10
+bridges_v1_8_0.75_4.txt 0
+bridges_v1_8_1.0_4.txt 0
+bridges_v2_8_0.0_4.txt 10
+bridges_v2_8_0.25_4.txt 10
+bridges_v2_8_0.5_4.txt 10
+bridges_v2_8_0.75_4.txt 1
+bridges_v2_8_1.0_4.txt 0
+bridges_v3_8_0.0_4.txt 10
+bridges_v3_8_0.25_4.txt 10
+bridges_v3_8_0.5_4.txt 10
+bridges_v3_8_0.75_4.txt 10
+bridges_v3_8_1.0_4.txt 10
+bridges_v1_8_0.0_5.txt 10
+bridges_v1_8_0.25_5.txt 10
+bridges_v1_8_0.5_5.txt 10
+bridges_v1_8_0.75_5.txt 10
+bridges_v1_8_1.0_5.txt 0
+bridges_v2_8_0.0_5.txt 10
+bridges_v2_8_0.25_5.txt 10
+bridges_v2_8_0.5_5.txt 10
+bridges_v2_8_0.75_5.txt 6
+bridges_v2_8_1.0_5.txt 0
+bridges_v3_8_0.0_5.txt 10
+bridges_v3_8_0.25_5.txt 10
+bridges_v3_8_0.5_5.txt 10
+bridges_v3_8_0.75_5.txt 10
+bridges_v3_8_1.0_5.txt 10
+bridges_v1_8_0.0_6.txt 10
+bridges_v1_8_0.25_6.txt 10
+bridges_v1_8_0.5_6.txt 10
+bridges_v1_8_0.75_6.txt 10
+bridges_v1_8_1.0_6.txt 0
+bridges_v2_8_0.0_6.txt 10
+bridges_v2_8_0.25_6.txt 10
+bridges_v2_8_0.5_6.txt 10
+bridges_v2_8_0.75_6.txt 6
+bridges_v2_8_1.0_6.txt 0
+bridges_v3_8_0.0_6.txt 10
+bridges_v3_8_0.25_6.txt 10
+bridges_v3_8_0.5_6.txt 10
+bridges_v3_8_0.75_6.txt 10
+bridges_v3_8_1.0_6.txt 0
+bridges_v1_8_0.0_7.txt 10
+bridges_v1_8_0.25_7.txt 10
+bridges_v1_8_0.5_7.txt 10
+bridges_v1_8_0.75_7.txt 5
+bridges_v1_8_1.0_7.txt 0
+bridges_v2_8_0.0_7.txt 10
+bridges_v2_8_0.25_7.txt 10
+bridges_v2_8_0.5_7.txt 10
+bridges_v2_8_0.75_7.txt 3
+bridges_v2_8_1.0_7.txt 0
+bridges_v3_8_0.0_7.txt 10
+bridges_v3_8_0.25_7.txt 10
+bridges_v3_8_0.5_7.txt 10
+bridges_v3_8_0.75_7.txt 10
+bridges_v3_8_1.0_7.txt 10
+bridges_v1_8_0.0_8.txt 10
+bridges_v1_8_0.25_8.txt 10
+bridges_v1_8_0.5_8.txt 10
+bridges_v1_8_0.75_8.txt 10
+bridges_v1_8_1.0_8.txt 0
+bridges_v2_8_0.0_8.txt 10
+bridges_v2_8_0.25_8.txt 10
+bridges_v2_8_0.5_8.txt 10
+bridges_v2_8_0.75_8.txt 4
+bridges_v2_8_1.0_8.txt 0
+bridges_v3_8_0.0_8.txt 10
+bridges_v3_8_0.25_8.txt 10
+bridges_v3_8_0.5_8.txt 10
+bridges_v3_8_0.75_8.txt 7
+bridges_v3_8_1.0_8.txt 10
+bridges_v1_8_0.0_9.txt 10
+bridges_v1_8_0.25_9.txt 10
+bridges_v1_8_0.5_9.txt 10
+bridges_v1_8_0.75_9.txt 9
+bridges_v1_8_1.0_9.txt 0
+bridges_v2_8_0.0_9.txt 10
+bridges_v2_8_0.25_9.txt 10
+bridges_v2_8_0.5_9.txt 10
+bridges_v2_8_0.75_9.txt 8
+bridges_v2_8_1.0_9.txt 0
+bridges_v3_8_0.0_9.txt 10
+bridges_v3_8_0.25_9.txt 10
+bridges_v3_8_0.5_9.txt 10
+bridges_v3_8_0.75_9.txt 10
+bridges_v3_8_1.0_9.txt 10
+bridges_v1_8_0.0_10.txt 10
+bridges_v1_8_0.25_10.txt 10
+bridges_v1_8_0.5_10.txt 10
+bridges_v1_8_0.75_10.txt 7
+bridges_v1_8_1.0_10.txt 0
+bridges_v2_8_0.0_10.txt 10
+bridges_v2_8_0.25_10.txt 10
+bridges_v2_8_0.5_10.txt 10
+bridges_v2_8_0.75_10.txt 6
+bridges_v2_8_1.0_10.txt 0
+bridges_v3_8_0.0_10.txt 10
+bridges_v3_8_0.25_10.txt 10
+bridges_v3_8_0.5_10.txt 10
+bridges_v3_8_0.75_10.txt 10
+bridges_v3_8_1.0_10.txt 10
+bridges_v1_16_0.0_1.txt DNE 0
+bridges_v1_16_0.25_1.txt DNE 0
+bridges_v1_16_0.5_1.txt DNE 0
+bridges_v1_16_0.75_1.txt DNE 0
+bridges_v1_16_1.0_1.txt DNE 0
+bridges_v2_16_0.0_1.txt DNE 0
+bridges_v2_16_0.25_1.txt DNE 0
+bridges_v2_16_0.5_1.txt DNE 0
+bridges_v2_16_0.75_1.txt DNE 0
+bridges_v2_16_1.0_1.txt DNE 0
+bridges_v3_16_0.0_1.txt DNE 0
+bridges_v3_16_0.25_1.txt DNE 0
+bridges_v3_16_0.5_1.txt DNE 0
+bridges_v3_16_0.75_1.txt DNE 0
+bridges_v3_16_1.0_1.txt DNE 0
+bridges_v1_16_0.0_2.txt DNE 0
+bridges_v1_16_0.25_2.txt DNE 0
+bridges_v1_16_0.5_2.txt DNE 0
+bridges_v1_16_0.75_2.txt DNE 0
+bridges_v1_16_1.0_2.txt DNE 0
+bridges_v2_16_0.0_2.txt DNE 0
+bridges_v2_16_0.25_2.txt DNE 0
+bridges_v2_16_0.5_2.txt DNE 0
+bridges_v2_16_0.75_2.txt DNE 0
+bridges_v2_16_1.0_2.txt DNE 0
+bridges_v3_16_0.0_2.txt DNE 0
+bridges_v3_16_0.25_2.txt DNE 0
+bridges_v3_16_0.5_2.txt DNE 0
+bridges_v3_16_0.75_2.txt DNE 0
+bridges_v3_16_1.0_2.txt DNE 0
+bridges_v1_16_0.0_3.txt DNE 0
+bridges_v1_16_0.25_3.txt DNE 0
+bridges_v1_16_0.5_3.txt DNE 0
+bridges_v1_16_0.75_3.txt DNE 0
+bridges_v1_16_1.0_3.txt DNE 0
+bridges_v2_16_0.0_3.txt DNE 0
+bridges_v2_16_0.25_3.txt DNE 0
+bridges_v2_16_0.5_3.txt DNE 0
+bridges_v2_16_0.75_3.txt DNE 0
+bridges_v2_16_1.0_3.txt DNE 0
+bridges_v3_16_0.0_3.txt DNE 0
+bridges_v3_16_0.25_3.txt DNE 0
+bridges_v3_16_0.5_3.txt DNE 0
+bridges_v3_16_0.75_3.txt DNE 0
+bridges_v3_16_1.0_3.txt DNE 0
+bridges_v1_16_0.0_4.txt DNE 0
+bridges_v1_16_0.25_4.txt DNE 0
+bridges_v1_16_0.5_4.txt DNE 0
+bridges_v1_16_0.75_4.txt DNE 0
+bridges_v1_16_1.0_4.txt DNE 0
+bridges_v2_16_0.0_4.txt DNE 0
+bridges_v2_16_0.25_4.txt DNE 0
+bridges_v2_16_0.5_4.txt DNE 0
+bridges_v2_16_0.75_4.txt DNE 0
+bridges_v2_16_1.0_4.txt DNE 0
+bridges_v3_16_0.0_4.txt DNE 0
+bridges_v3_16_0.25_4.txt DNE 0
+bridges_v3_16_0.5_4.txt DNE 0
+bridges_v3_16_0.75_4.txt DNE 0
+bridges_v3_16_1.0_4.txt DNE 0
+bridges_v1_16_0.0_5.txt DNE 0
+bridges_v1_16_0.25_5.txt DNE 0
+bridges_v1_16_0.5_5.txt DNE 0
+bridges_v1_16_0.75_5.txt DNE 0
+bridges_v1_16_1.0_5.txt DNE 0
+bridges_v2_16_0.0_5.txt DNE 0
+bridges_v2_16_0.25_5.txt DNE 0
+bridges_v2_16_0.5_5.txt DNE 0
+bridges_v2_16_0.75_5.txt DNE 0
+bridges_v2_16_1.0_5.txt DNE 0
+bridges_v3_16_0.0_5.txt DNE 0
+bridges_v3_16_0.25_5.txt DNE 0
+bridges_v3_16_0.5_5.txt DNE 0
+bridges_v3_16_0.75_5.txt DNE 0
+bridges_v3_16_1.0_5.txt DNE 0
+bridges_v1_16_0.0_6.txt DNE 0
+bridges_v1_16_0.25_6.txt DNE 0
+bridges_v1_16_0.5_6.txt DNE 0
+bridges_v1_16_0.75_6.txt DNE 0
+bridges_v1_16_1.0_6.txt DNE 0
+bridges_v2_16_0.0_6.txt DNE 0
+bridges_v2_16_0.25_6.txt DNE 0
+bridges_v2_16_0.5_6.txt DNE 0
+bridges_v2_16_0.75_6.txt DNE 0
+bridges_v2_16_1.0_6.txt DNE 0
+bridges_v3_16_0.0_6.txt DNE 0
+bridges_v3_16_0.25_6.txt DNE 0
+bridges_v3_16_0.5_6.txt DNE 0
+bridges_v3_16_0.75_6.txt DNE 0
+bridges_v3_16_1.0_6.txt DNE 0
+bridges_v1_16_0.0_7.txt DNE 0
+bridges_v1_16_0.25_7.txt DNE 0
+bridges_v1_16_0.5_7.txt DNE 0
+bridges_v1_16_0.75_7.txt DNE 0
+bridges_v1_16_1.0_7.txt DNE 0
+bridges_v2_16_0.0_7.txt DNE 0
+bridges_v2_16_0.25_7.txt DNE 0
+bridges_v2_16_0.5_7.txt DNE 0
+bridges_v2_16_0.75_7.txt DNE 0
+bridges_v2_16_1.0_7.txt DNE 0
+bridges_v3_16_0.0_7.txt DNE 0
+bridges_v3_16_0.25_7.txt DNE 0
+bridges_v3_16_0.5_7.txt DNE 0
+bridges_v3_16_0.75_7.txt DNE 0
+bridges_v3_16_1.0_7.txt DNE 0
+bridges_v1_16_0.0_8.txt DNE 0
+bridges_v1_16_0.25_8.txt DNE 0
+bridges_v1_16_0.5_8.txt DNE 0
+bridges_v1_16_0.75_8.txt DNE 0
+bridges_v1_16_1.0_8.txt DNE 0
+bridges_v2_16_0.0_8.txt DNE 0
+bridges_v2_16_0.25_8.txt DNE 0
+bridges_v2_16_0.5_8.txt DNE 0
+bridges_v2_16_0.75_8.txt DNE 0
+bridges_v2_16_1.0_8.txt DNE 0
+bridges_v3_16_0.0_8.txt DNE 0
+bridges_v3_16_0.25_8.txt DNE 0
+bridges_v3_16_0.5_8.txt DNE 0
+bridges_v3_16_0.75_8.txt DNE 0
+bridges_v3_16_1.0_8.txt DNE 0
+bridges_v1_16_0.0_9.txt DNE 0
+bridges_v1_16_0.25_9.txt DNE 0
+bridges_v1_16_0.5_9.txt DNE 0
+bridges_v1_16_0.75_9.txt DNE 0
+bridges_v1_16_1.0_9.txt DNE 0
+bridges_v2_16_0.0_9.txt DNE 0
+bridges_v2_16_0.25_9.txt DNE 0
+bridges_v2_16_0.5_9.txt DNE 0
+bridges_v2_16_0.75_9.txt DNE 0
+bridges_v2_16_1.0_9.txt DNE 0
+bridges_v3_16_0.0_9.txt DNE 0
+bridges_v3_16_0.25_9.txt DNE 0
+bridges_v3_16_0.5_9.txt DNE 0
+bridges_v3_16_0.75_9.txt DNE 0
+bridges_v3_16_1.0_9.txt DNE 0
+bridges_v1_16_0.0_10.txt DNE 0
+bridges_v1_16_0.25_10.txt DNE 0
+bridges_v1_16_0.5_10.txt DNE 0
+bridges_v1_16_0.75_10.txt DNE 0
+bridges_v1_16_1.0_10.txt DNE 0
+bridges_v2_16_0.0_10.txt DNE 0
+bridges_v2_16_0.25_10.txt DNE 0
+bridges_v2_16_0.5_10.txt DNE 0
+bridges_v2_16_0.75_10.txt DNE 0
+bridges_v2_16_1.0_10.txt DNE 0
+bridges_v3_16_0.0_10.txt DNE 0
+bridges_v3_16_0.25_10.txt DNE 0
+bridges_v3_16_0.5_10.txt DNE 0
+bridges_v3_16_0.75_10.txt DNE 0
+bridges_v3_16_1.0_10.txt DNE 0
+END Bridges///////////////////////////////////////
+

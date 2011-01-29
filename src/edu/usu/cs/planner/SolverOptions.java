@@ -37,6 +37,7 @@ public class SolverOptions {
 	private boolean useJDDHeuristic = false;
 	private boolean ucs = false;
 	private int riskArity = 2;
+	private boolean conditional = false;
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}
@@ -79,5 +80,12 @@ public class SolverOptions {
 	}
 	public int getRiskArity() {
 		return riskArity;
+	}
+	public void setConditional(boolean b) {
+		conditional  = b;
+		
+	}
+	public boolean getConditional(){
+		return conditional;
 	}
 }

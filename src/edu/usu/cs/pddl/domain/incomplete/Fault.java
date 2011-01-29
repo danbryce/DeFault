@@ -2,13 +2,16 @@ package edu.usu.cs.pddl.domain.incomplete;
 
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import edu.usu.cs.search.ConditionalAction;
 
 /*
  * A risk is a potential source of execution failure due to incompleteness of the action model.
  */
-public class Fault implements Comparable {
+public class Fault implements Comparable, ConditionalAction {
 	// Risks in an action are the same risk in every instance of an action so we
 	// remove their uniqueness
 	// // This is a risk-specific id
@@ -27,6 +30,7 @@ public class Fault implements Comparable {
 	private static Map<String, Fault> possibleClobberRisks = new HashMap<String, Fault>();
 	private static Map<String, Fault> unlistedEffectRisks = new HashMap<String, Fault>();
 	private static Map<Integer, String> riskIndexMap = new HashMap<Integer, String>();
+	private static Set<Fault> faults = new HashSet<Fault>();
 	//private static Map<Risk, Integer> riskBddMap = new HashMap<Risk, Integer>();
 	
 	private final String riskName;
@@ -41,6 +45,7 @@ public class Fault implements Comparable {
 		possibleClobberRisks = new HashMap<String, Fault>();
 		unlistedEffectRisks = new HashMap<String, Fault>();
 		riskIndexMap = new HashMap<Integer, String>();
+		faults = new HashSet<Fault>();
 	}
 	
 	// private int id;
@@ -49,7 +54,11 @@ public class Fault implements Comparable {
 		this.riskName = riskName;
 		this.action = action;
 		this.proposition = proposition;
+		faults.add(this);
 		// this.id = getNextID();
+	}
+	public static Set<Fault> getFaults(){
+		return faults;
 	}
 
 	public static Fault getRiskFromIndex(String name, String action, String proposition){
@@ -71,6 +80,7 @@ public class Fault implements Comparable {
 			risk = new Fault(name, action, proposition);
 			index.put(s, risk);
 			riskIndexMap.put(riskIndexMap.size(), risk.getRiskName());
+			faults.add(risk);
 		}
 		return risk;
 	}
