@@ -3,6 +3,8 @@ package edu.usu.cs.planner;
 import java.util.List;
 import java.util.Set;
 
+import jdd.bdd.BDD;
+
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
@@ -21,4 +23,5 @@ public interface Solver {
 	public void setRelevantFacts(Set<Integer> list);
 	public Set<Integer> getRelevantFacts();
 	public Set<ActionInstance> getActionInstances();
+	public BDD getBDD();
 }

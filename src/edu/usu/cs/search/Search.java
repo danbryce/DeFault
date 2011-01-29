@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.planner.SolverOptions;
 
 public interface Search {
@@ -22,6 +23,8 @@ public interface Search {
 	public long getHeuristicTimeTaken();
 	public PriorityQueue<StateNode> getOpen();
 	public void setRelevantActions(List<ActionInstance> actions);
+	public Problem getProblem();
+	public SearchStatistics getSearchStatistics();
 	
 	
 }

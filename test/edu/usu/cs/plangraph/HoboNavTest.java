@@ -7,7 +7,7 @@ import edu.usu.cs.search.SearchTest;
 public class HoboNavTest {
 
 	@Test
-	public void CreateHoboNavDomains() {
+	public void CreateHoboNavDomainsTest() {
 		// testfiles/incomplete/hobonav/hobodo.pddl [Domain Output File]
 		// testfiles/incomplete/hobonav/hobopro.pddl [Problem Output File]
 		// 2 [Grid Size]
@@ -25,10 +25,10 @@ public class HoboNavTest {
 //		double[] gambleDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
 //		double[] easyMarkDensities = { 0.0, 0.1, 0.1, 0.1, 0.1 }; // The densities are all incremented together
 //		int instanceCount = 10;
-		int[] gridSizes = {  16 };
-		int[] itemCounts = { 2 };
-		double[] tollDensities = { 0.5 }; // The densities are all incremented together
-		double[] gambleDensities = {  0.5 }; // The densities are all incremented together
+		int[] gridSizes = {  4 };
+		int[] itemCounts = { 4 };
+		double[] tollDensities = { 0.25 }; // The densities are all incremented together
+		double[] gambleDensities = {  0.25 }; // The densities are all incremented together
 		double[] easyMarkDensities = { 0.1 }; // The densities are all incremented together
 		int instanceCount = 1;
 		

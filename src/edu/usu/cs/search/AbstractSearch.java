@@ -135,4 +135,18 @@ public class AbstractSearch implements Search {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public Problem getProblem() {
+		// TODO Auto-generated method stub
+		return problem;
+	}
+
+
+	@Override
+	public SearchStatistics getSearchStatistics() {
+		// TODO Auto-generated method stub
+		return searchStatistics;
+	}
 }

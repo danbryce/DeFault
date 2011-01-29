@@ -20,6 +20,7 @@ import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
+import edu.usu.cs.planner.PODEBDDConditionalSolver;
 import edu.usu.cs.planner.PODEBDDSolver;
 import edu.usu.cs.planner.PODEFFSolver;
 import edu.usu.cs.planner.PODEPISolver;
@@ -135,7 +136,18 @@ public class SearchTest {
 				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
 				RiskCounter.initialize(domain, problem, null);
 				solver = new PODEBDDSolver(domain, problem, searchStatistics, solverOptions);
-			} else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
+			 
+		} else if (args[3].equalsIgnoreCase("ao")) {
+			solverOptions.setUsePreferredOperators(true);
+			solverOptions.setUseDeferredEvaluation(true);
+			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+			solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+			solverOptions.setConditional(true);
+			RiskCounter.initialize(domain, problem, null);
+			solver = new PODEBDDConditionalSolver(domain, problem, searchStatistics, solverOptions);
+		}
+			
+			else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
 				// Convert domain and problem files to ppddl.
 				if ("pond".equals(args[4])) {
 					TranslationToCPP.ConvertToCPP(domain, problem, args[2],

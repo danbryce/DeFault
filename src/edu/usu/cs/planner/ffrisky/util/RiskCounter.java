@@ -125,6 +125,10 @@ public class RiskCounter {
 		isInitialized = false;
 	}
 	
+	public static int getBddFromFault(Fault f){
+		return riskToBDD.get(f);
+	}
+	
 	//A different form of the deref method above - used by ka.Agent
 	public static void resetIsInitialized()
 	{
@@ -151,7 +155,11 @@ public class RiskCounter {
 		for (ActionInstance action : plan) 
 		{
 			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
-//			bdd.printSet(nodes.get(nodes.size()-1).getCriticalRisks());
+			//bdd.printSet(nodes.get(nodes.size()-1).getActRisks());
+			//bdd.printCubes(nodes.get(nodes.size()-1).getActRisks());
+			//bdd.print(nodes.get(nodes.size()-1).getActRisks());
+			//bdd.support(bdd)
+			
 //			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
 		}
 
