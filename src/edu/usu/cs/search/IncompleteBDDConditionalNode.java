@@ -176,7 +176,7 @@ StateNode {
 			if (!node.state.containsKey(p)){
 				continue;
 			}
-			Fault f = Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), p.getName());
+			Fault f = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName());
 
 			if( dels.contains(f) ) { //an observed delete 
 				state.remove(p);
@@ -194,7 +194,7 @@ StateNode {
 					riskSet.setFaults(1);
 				}
 
-				riskSet.or(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), p.getName()));
+				riskSet.or(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName()));
 				state.put(p, riskSet);
 			}
 		}
@@ -211,12 +211,12 @@ StateNode {
 		//	actRisks.or(getPrecRisks(initialNode, action));
 
 		for (Proposition effect : action.getPossibleAddEffects()) {
-			Fault f = Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(), effect.getName());
+			Fault f = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
 
 			if(adds.contains(f)){
 				state.put(effect, actRisks);
 			}
-			else if(!adds.contains(effect) && unknown(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(), effect.getName()))){
+			else if(!adds.contains(effect) && unknown(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName()))){
 
 			}
 			else{
@@ -230,7 +230,7 @@ StateNode {
 						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 								new PIRiskSet(actRisks) :
 									new BDDRiskSet(actRisks));
-					riskSet.or(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(),
+					riskSet.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
 							effect.getName()));
 
 					state.put(effect, riskSet);
@@ -252,7 +252,7 @@ StateNode {
 
 
 					// Also add the UnlistedEffect risk
-					crossProduct.or(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(),
+					crossProduct.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
 							effect.getName()));
 
 					// Intersect these with risks in the proposition to get the new risk
@@ -272,7 +272,7 @@ StateNode {
 
 		for(Proposition p : action1.getPossibleDeleteEffects()){
 			if(state.containsKey(p)){
-				Fault pf = Fault.getRiskFromIndex(Fault.POSSCLOB, action1.getName(), p.getName());
+				Fault pf = Fault.getRiskFromIndex(Fault.POSSDEL, action1.getName(), p.getName());
 				if(unknown(pf)){
 					dels.add(pf);
 				}
@@ -289,7 +289,7 @@ StateNode {
 
 		for(Proposition p : action1.getPossibleAddEffects()){
 			if(!state.containsKey(p)){
-				Fault pf = Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action1.getName(), p.getName());
+				Fault pf = Fault.getRiskFromIndex(Fault.POSSADD, action1.getName(), p.getName());
 				if(unknown(pf)){
 					adds.add(pf);
 				}
@@ -305,7 +305,7 @@ StateNode {
 
 		for(Proposition p : action1.getPossiblePreconditions()){
 			if(!state.containsKey(p)){
-				Fault pf = Fault.getRiskFromIndex(Fault.PRECOPEN, action1.getName(), p.getName());
+				Fault pf = Fault.getRiskFromIndex(Fault.POSSPRE, action1.getName(), p.getName());
 				if(unknown(pf)){
 					pres.add(pf);
 				}

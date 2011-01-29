@@ -166,27 +166,27 @@ public abstract class Agent
 		{
 			if(!prevState.contains(p)) 
 			{	
-				successSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), successSentence, false, true); //AND: -possPre, -pre	
-				failureSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), failureSentence, true, false); //OR: might be pre 
+				successSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p.getName(), successSentence, false, true); //AND: -possPre, -pre	
+				failureSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p.getName(), failureSentence, true, false); //OR: might be pre 
 			}
 		}
 		
 		for(Proposition p : a.getPossibleAddEffects())
 		{			
 			if(!prevState.contains(p) && currState.contains(p)) //-possAdd, add
-				successSentence = addPropToSentence(Fault.UNLISTEDEFFECT, a.getName(), p.getName(), successSentence, true, true);
+				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p.getName(), successSentence, true, true);
 			
 			if(!prevState.contains(p) && !currState.contains(p)) //-possAdd, -add
-				successSentence = addPropToSentence(Fault.UNLISTEDEFFECT, a.getName(), p.getName(), successSentence, false, true);
+				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p.getName(), successSentence, false, true);
 		}
 		
 		for(Proposition p : a.getPossibleDeleteEffects())
 		{
 			if(prevState.contains(p) && !currState.contains(p)) //-possDel, del
-				successSentence = addPropToSentence(Fault.POSSCLOB, a.getName(), p.getName(), successSentence, true, true);
+				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p.getName(), successSentence, true, true);
 			
 			if(prevState.contains(p) && currState.contains(p)) //-possDel, -del
-				successSentence = addPropToSentence(Fault.POSSCLOB, a.getName(), p.getName(), successSentence, false, true);
+				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p.getName(), successSentence, false, true);
 		}
 //		System.out.println("");
 //		bdd.printSet(failureSentence);
@@ -387,7 +387,7 @@ public abstract class Agent
 		{
 			if(!currState.contains(p))
 			{
-				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
+				Fault risk = Fault.getRiskFromIndex(Fault.POSSPRE, currAction.getName(), p.getName());
 				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
 				bdd.deref(posspres);
 				posspres = tmp;
@@ -453,17 +453,17 @@ public abstract class Agent
 			Set<Proposition> possSet  = null;
 			Set<Proposition> knownSet = null;
 			
-			if(r.getRiskName().equals(Fault.PRECOPEN))
+			if(r.getRiskName().equals(Fault.POSSPRE))
 			{
 				possSet 	= a.getPossiblePreconditions();
 				knownSet 	= a.getPreconditions();
 			}
-			if(r.getRiskName().equals(Fault.UNLISTEDEFFECT))
+			if(r.getRiskName().equals(Fault.POSSADD))
 			{
 				possSet 	= a.getPossibleAddEffects();
 				knownSet 	= a.getAddEffects();
 			}
-			if(r.getRiskName().equals(Fault.POSSCLOB))
+			if(r.getRiskName().equals(Fault.POSSDEL))
 			{
 				possSet 	= a.getPossibleDeleteEffects();
 				knownSet 	= a.getDeleteEffects();

@@ -185,7 +185,7 @@ public class RiskCounterNode extends AbstractStateNode {
 				precRiskSet = bdd.getOne();
 			}
 			bdd.ref(precRiskSet);
-			int tmp = bdd.ref(bdd.and(precRiskSet, riskToBDD.get(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possPrec.getName()))));
+			int tmp = bdd.ref(bdd.and(precRiskSet, riskToBDD.get(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName()))));
 			bdd.deref(precRiskSet);
 			precRiskSet = tmp;
 			bdd.ref(precRiskSet);
@@ -217,7 +217,7 @@ public class RiskCounterNode extends AbstractStateNode {
 						bdd.or(
 								parent.getPropositions().get(proposition), 
 								//bdd.ref(bdd.and(bdd.not(this.criticalRisks),
-										riskToBDD.get(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), proposition.getName()))
+										riskToBDD.get(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), proposition.getName()))
 										//))
 						));
 				this.getPropositions().put(proposition, newRisks);
@@ -260,7 +260,7 @@ public class RiskCounterNode extends AbstractStateNode {
 			// Figure out the risks
 			int tmp = bdd.ref(bdd.or(
 					this.actRisks, 
-					riskToBDD.get(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(), proposition.getName()))));
+					bdd.not(riskToBDD.get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), proposition.getName())))));
 			int newRisks = 	 bdd.ref(bdd.and( tmp, this.getPropositions().get(proposition)));
 			bdd.deref(tmp);		
 			bdd.deref(this.getPropositions().get(proposition));

@@ -22,14 +22,14 @@ public class Fault implements Comparable, ConditionalAction {
 	// return nextid;
 	// }
 	
-	public static final String PRECOPEN = "PrecOpen";
-	public static final String POSSCLOB = "PossClob";
-	public static final String UNLISTEDEFFECT = "UnlistedEffect";
+	public static final String POSSPRE = "PossPre";
+	public static final String POSSDEL = "PossDel";
+	public static final String POSSADD = "PossAdd";
 
-	private static Map<String, Fault> preconditionOpenRisks = new HashMap<String, Fault>();
-	private static Map<String, Fault> possibleClobberRisks = new HashMap<String, Fault>();
-	private static Map<String, Fault> unlistedEffectRisks = new HashMap<String, Fault>();
-	private static Map<Integer, String> riskIndexMap = new HashMap<Integer, String>();
+	private static Map<String, Fault> possiblePreconditions = new HashMap<String, Fault>();
+	private static Map<String, Fault> possibleDeletes = new HashMap<String, Fault>();
+	private static Map<String, Fault> possibleAdds = new HashMap<String, Fault>();
+	private static Map<Integer, String> faultIndexMap = new HashMap<Integer, String>();
 	private static Set<Fault> faults = new HashSet<Fault>();
 	//private static Map<Risk, Integer> riskBddMap = new HashMap<Risk, Integer>();
 	
@@ -41,10 +41,10 @@ public class Fault implements Comparable, ConditionalAction {
 	
 	public static void resetStaticHashMaps()
 	{
-		preconditionOpenRisks = new HashMap<String, Fault>();
-		possibleClobberRisks = new HashMap<String, Fault>();
-		unlistedEffectRisks = new HashMap<String, Fault>();
-		riskIndexMap = new HashMap<Integer, String>();
+		possiblePreconditions = new HashMap<String, Fault>();
+		possibleDeletes = new HashMap<String, Fault>();
+		possibleAdds = new HashMap<String, Fault>();
+		faultIndexMap = new HashMap<Integer, String>();
 		faults = new HashSet<Fault>();
 	}
 	
@@ -63,14 +63,14 @@ public class Fault implements Comparable, ConditionalAction {
 
 	public static Fault getRiskFromIndex(String name, String action, String proposition){
 		Map<String, Fault> index = null;
-		if(name.equals(PRECOPEN)){
-			index = preconditionOpenRisks;
+		if(name.equals(POSSPRE)){
+			index = possiblePreconditions;
 		}
-		else if(name.equals(POSSCLOB)){
-			index = possibleClobberRisks;
+		else if(name.equals(POSSDEL)){
+			index = possibleDeletes;
 		}
-		else if(name.equals(UNLISTEDEFFECT)){
-			index = unlistedEffectRisks;
+		else if(name.equals(POSSADD)){
+			index = possibleAdds;
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append(action).append(" ").append(proposition);
@@ -79,7 +79,7 @@ public class Fault implements Comparable, ConditionalAction {
 		if(risk == null){
 			risk = new Fault(name, action, proposition);
 			index.put(s, risk);
-			riskIndexMap.put(riskIndexMap.size(), risk.getRiskName());
+			faultIndexMap.put(faultIndexMap.size(), risk.getRiskName());
 			faults.add(risk);
 		}
 		return risk;
@@ -143,10 +143,10 @@ public class Fault implements Comparable, ConditionalAction {
 	public static int getRiskHash(Set<Fault> risks) {
 		BitSet bitSet = new BitSet(32);
 		
-		int size = Math.min(riskIndexMap.size(), 32);
+		int size = Math.min(faultIndexMap.size(), 32);
 		
 		for(int i = 0; i < size; i++) {
-			if(risks.contains(riskIndexMap.get(i))) {
+			if(risks.contains(faultIndexMap.get(i))) {
 				bitSet.set(i);
 			}
 		}

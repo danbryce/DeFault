@@ -343,17 +343,17 @@ public class RiskCounter {
 
 			// Poss-prec
 			for (Proposition possprec : action.getPossiblePreconditions()) {
-				risks.add(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possprec.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possprec.getName()));
 			}
 
 			// Poss-del
 			for (Proposition possdel : action.getPossibleDeleteEffects()) {
-				risks.add(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), possdel.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), possdel.getName()));
 			}
 
 			// Poss-add
 			for (Proposition possadd : action.getPossibleAddEffects()) {
-				risks.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(), possadd.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd.getName()));
 			}
 		}
 

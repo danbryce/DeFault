@@ -121,7 +121,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 					}
 					if(factHeader == null){
 						//If precondition is not present, then incur a fault
-						Fault r = Fault.getRiskFromIndex(Fault.PRECOPEN, actionHeader.getName(), possPre.getName());
+						Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre.getName());
 						actionFaults.or(r);
 					}
 					else { 
@@ -129,7 +129,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 						//if no possible faults for precondition, then add no faults
 						//else if precondition is at fault, there is a higher order interaction
 						if(!fli.getFaults().empty()){
-							Fault r = Fault.getRiskFromIndex(Fault.PRECOPEN, actionHeader.getName(), possPre.getName());
+							Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre.getName());
 							FaultSet factFaults = fli.getFaults().copy();							
 							factFaults.and(r);							
 							actionFaults.or(factFaults);
@@ -192,7 +192,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 
 				if(fli.getPossibleSupporters().contains(actionHeader)){
-					Fault r = Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, actionHeader.getName(), fact.getName());
+					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, actionHeader.getName(), fact.getName());
 					FaultSet faults = ali.getFaults().copy();
 					faults.or(r);
 					actFaults.put(actionHeader, faults);

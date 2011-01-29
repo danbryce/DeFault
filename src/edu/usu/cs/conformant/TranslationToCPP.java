@@ -29,7 +29,7 @@ public class TranslationToCPP {
 		pff,
 	}
 	
-	private enum RiskType{OpenPrec, PossClob, UnlistedEffect};
+	private enum RiskType{PossPre, PossDel, PossAdd};
 	
 	// Converts a domain and problem ffrisky pddl file to conformant 
 	// probabilistic planning files.
@@ -62,13 +62,13 @@ public class TranslationToCPP {
 			if(actionInstance instanceof IncompleteActionInstance) {
 				IncompleteActionInstance action = (IncompleteActionInstance)actionInstance;
 				for(Proposition pre : action.getPossiblePreconditions()) {
-					output.append(" " + getRiskName(RiskType.OpenPrec, action, pre));
+					output.append(" " + getRiskName(RiskType.PossPre, action, pre));
 				}
 				for(Proposition add : action.getPossibleAddEffects()) {
-					output.append(" " + getRiskName(RiskType.UnlistedEffect, action, add));
+					output.append(" " + getRiskName(RiskType.PossAdd, action, add));
 				}
 				for(Proposition del : action.getPossibleDeleteEffects()) {
-					output.append(" " + getRiskName(RiskType.PossClob, action, del));
+					output.append(" " + getRiskName(RiskType.PossDel, action, del));
 				}
 			}
 		}
@@ -112,7 +112,7 @@ public class TranslationToCPP {
 			for(Proposition possadd : action.getPossibleAddEffects()) {
 				output.append("    (when (and");
 				output.append(getOP(action));
-				output.append(" " + getRiskName(RiskType.UnlistedEffect, action, possadd));
+				output.append(" " + getRiskName(RiskType.PossAdd, action, possadd));
 				output.append(") (" + possadd.getName() + ")");
 				output.append(")\n");
 			}
@@ -120,7 +120,7 @@ public class TranslationToCPP {
 			for(Proposition possdel : action.getPossibleDeleteEffects()) {
 				output.append("    (when (and");
 				output.append(getOP(action));
-				output.append(" " + getRiskName(RiskType.PossClob, action, possdel));
+				output.append(" " + getRiskName(RiskType.PossDel, action, possdel));
 				output.append(") (not (" + possdel.getName() + "))");
 				output.append(")\n");
 			}
@@ -155,13 +155,13 @@ public class TranslationToCPP {
 	
 	private static StringBuilder getRiskName(RiskType riskType, IncompleteActionInstance action, Proposition prop) {
 		StringBuilder risk = new StringBuilder("(");
-		if(riskType == RiskType.OpenPrec) {
+		if(riskType == RiskType.PossPre) {
 			risk.append("openprec_");
 		}
-		else if(riskType == RiskType.PossClob) {
+		else if(riskType == RiskType.PossDel) {
 			risk.append("possclob_");
 		}
-		else if(riskType == RiskType.UnlistedEffect) {
+		else if(riskType == RiskType.PossAdd) {
 			risk.append("unlistedeffect_");
 		} else {
 			return null;
@@ -179,7 +179,7 @@ public class TranslationToCPP {
 			output.append(" (" + prec.getName() + ")");
 		}
 		for(Proposition possprec : action.getPossiblePreconditions()) {
-			output.append(" (or (" + possprec.getName() + ") (not " + getRiskName(RiskType.OpenPrec, action, possprec) + "))");
+			output.append(" (or (" + possprec.getName() + ") (not " + getRiskName(RiskType.PossPre, action, possprec) + "))");
 		}
 		output.append(getValid());
 		return output;
@@ -225,36 +225,36 @@ public class TranslationToCPP {
 				for(Proposition pre : action.getPossiblePreconditions()) {
 					if(type == TranslationType.pond) {
 						output.append("  (probabilistic 0.5 " + 
-								getRiskName(RiskType.OpenPrec, action, pre) + 
+								getRiskName(RiskType.PossPre, action, pre) + 
 								")\n");
 					}
 					else if(type == TranslationType.pff) {
 						output.append("  (cpt " + 
-								getRiskName(RiskType.OpenPrec, action, pre) + 
+								getRiskName(RiskType.PossPre, action, pre) + 
 								" 0.5)\n");
 					}
 				}
 				for(Proposition add : action.getPossibleAddEffects()) {
 					if(type == TranslationType.pond) {
 						output.append("  (probabilistic 0.5 " + 
-								getRiskName(RiskType.UnlistedEffect, action, add) + 
+								getRiskName(RiskType.PossAdd, action, add) + 
 								")\n");
 					}
 					else if(type == TranslationType.pff) {
 						output.append("  (cpt " +
-								getRiskName(RiskType.UnlistedEffect, action, add) +
+								getRiskName(RiskType.PossAdd, action, add) +
 								" 0.5)\n");
 					}
 				}
 				for(Proposition del : action.getPossibleDeleteEffects()) {
 					if(type == TranslationType.pond) {
 						output.append("  (probabilistic 0.5 " + 
-								getRiskName(RiskType.PossClob, action, del) + 
+								getRiskName(RiskType.PossDel, action, del) + 
 								")\n");
 					}
 					else if(type == TranslationType.pff) {
 						output.append("  (cpt " +
-								getRiskName(RiskType.PossClob, action, del) +
+								getRiskName(RiskType.PossDel, action, del) +
 								" 0.5)\n");
 					}
 				}

@@ -204,7 +204,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				riskSet.setFaults(1);
 			}
 
-			riskSet.or(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), effect.getName()));
+			riskSet.or(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName()));
 			state.put(effect, riskSet);
 		}
 	}
@@ -281,7 +281,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 							new PIRiskSet(actRisks) :
 								new BDDRiskSet(actRisks));
-				riskSet.or(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(),
+				riskSet.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
 						effect.getName()));
 
 				state.put(effect, riskSet);
@@ -304,7 +304,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			}
 			
 			// Also add the UnlistedEffect risk
-			crossProduct.or(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(),
+			crossProduct.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
 					effect.getName()));
 
 			// Intersect these with risks in the proposition to get the new risk
@@ -332,7 +332,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
 			if (!node.state.containsKey(possPrec)) {
-				precOpen.or(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possPrec
+				precOpen.or(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec
 						.getName()));
 			}
 			else if(node.state.get(possPrec) != null){
@@ -346,7 +346,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 					s1.setFaults(1);
 				}
 
-				s1.and(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possPrec
+				s1.and(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec
 						.getName()));
 				s1.and(node.state.get(possPrec));
 				precOpen.or(s1);

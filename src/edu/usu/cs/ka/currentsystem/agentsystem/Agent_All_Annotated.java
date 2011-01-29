@@ -147,8 +147,8 @@ public class Agent_All_Annotated
 			if(!prevState.contains(p)) 
 			{	
 				System.out.println("       +-pre: " + p + " (depends on action failure/success)");	
-				successSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), successSentence, false, true); //AND: -possPre, -pre	
-				failureSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), failureSentence, true, false); //OR: might be pre 
+				successSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p.getName(), successSentence, false, true); //AND: -possPre, -pre	
+				failureSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p.getName(), failureSentence, true, false); //OR: might be pre 
 			}
 		}
 		
@@ -157,13 +157,13 @@ public class Agent_All_Annotated
 			if(!prevState.contains(p) && currState.contains(p)) //-possAdd, add
 			{
 				System.out.println("\t+add: " + p);
-				successSentence = addPropToSentence(Fault.UNLISTEDEFFECT, a.getName(), p.getName(), successSentence, true, true);
+				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p.getName(), successSentence, true, true);
 			}
 			
 			if(!prevState.contains(p) && !currState.contains(p)) //-possAdd, -add
 			{
 				System.out.println("\t-add: " + p);
-				successSentence = addPropToSentence(Fault.UNLISTEDEFFECT, a.getName(), p.getName(), successSentence, false, true);
+				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p.getName(), successSentence, false, true);
 			}
 		}
 		
@@ -172,13 +172,13 @@ public class Agent_All_Annotated
 			if(prevState.contains(p) && !currState.contains(p)) //-possDel, del
 			{
 				System.out.println("\t+del: " + p);
-				successSentence = addPropToSentence(Fault.POSSCLOB, a.getName(), p.getName(), successSentence, true, true);
+				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p.getName(), successSentence, true, true);
 			}
 			
 			if(prevState.contains(p) && currState.contains(p)) //-possDel, -del
 			{
 				System.out.println("\t-del: " + p);
-				successSentence = addPropToSentence(Fault.POSSCLOB, a.getName(), p.getName(), successSentence, false, true);
+				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p.getName(), successSentence, false, true);
 			}
 		}
 
@@ -437,17 +437,17 @@ public class Agent_All_Annotated
 			Set<Proposition> possSet  = null;
 			Set<Proposition> knownSet = null;
 			
-			if(r.getRiskName().equals(Fault.PRECOPEN))
+			if(r.getRiskName().equals(Fault.POSSPRE))
 			{
 				possSet 	= a.getPossiblePreconditions();
 				knownSet 	= a.getPreconditions();
 			}
-			if(r.getRiskName().equals(Fault.UNLISTEDEFFECT))
+			if(r.getRiskName().equals(Fault.POSSADD))
 			{
 				possSet 	= a.getPossibleAddEffects();
 				knownSet 	= a.getAddEffects();
 			}
-			if(r.getRiskName().equals(Fault.POSSCLOB))
+			if(r.getRiskName().equals(Fault.POSSDEL))
 			{
 				possSet 	= a.getPossibleDeleteEffects();
 				knownSet 	= a.getDeleteEffects();

@@ -48,7 +48,7 @@ public class BDD_Utility
 		//We have learned that "have_bindle" IS an add effect.
 		//We must encode this new knowledge in the BDD.
 		//The risk associated with this knowledge piece is:
-		Fault risk = Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, currAct.getName(), "have_bindle");
+		Fault risk = Fault.getRiskFromIndex(Fault.POSSADD, currAct.getName(), "have_bindle");
 		//Prove we got the risk:
 		System.out.println(risk.toString());
 		//We insert this knowledge into the BDD
@@ -67,7 +67,7 @@ public class BDD_Utility
 		//We have learned that "have_bindle" IS NOT a delete effect.
 		//We must encode this new knowledge in the BDD.
 		//The risk associated with this knowledge piece is:
-		Fault risk2 = Fault.getRiskFromIndex(Fault.POSSCLOB, currAct.getName(), "have_bindle");
+		Fault risk2 = Fault.getRiskFromIndex(Fault.POSSDEL, currAct.getName(), "have_bindle");
 		//Prove we got the risk:
 		System.out.println(risk2.toString());
 		//We insert this knowledge into the BDD
@@ -81,7 +81,7 @@ public class BDD_Utility
 		currAct 	= util.getActionWithName(problem, "move_0_0_0_1");
 		util.printIncompleteActionInstance(currAct);
 		//Let's setup up a query about a risk that is not in the BDD
-		Fault risk3 = Fault.getRiskFromIndex(Fault.POSSCLOB, currAct.getName(), "have_bindle");
+		Fault risk3 = Fault.getRiskFromIndex(Fault.POSSDEL, currAct.getName(), "have_bindle");
 		//Let's query the BDD to see what it says about this risk.
 		System.out.println("* " + util.bdd.and(util.riskToBDD.get(risk3), util.bddRef));//164
 		System.out.println("* " + util.bdd.and(util.bdd.not(util.riskToBDD.get(risk3)), util.bddRef));//166
@@ -180,15 +180,15 @@ public class BDD_Utility
 
 			// Poss-prec
 			for (Proposition possprec : action.getPossiblePreconditions())
-				risks.add(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possprec.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possprec.getName()));
 
 			// Poss-del
 			for (Proposition possdel : action.getPossibleDeleteEffects())
-				risks.add(Fault.getRiskFromIndex(Fault.POSSCLOB, action.getName(), possdel.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), possdel.getName()));
 
 			// Poss-add
 			for (Proposition possadd : action.getPossibleAddEffects())
-				risks.add(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(), possadd.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd.getName()));
 		}
 
 		return risks;
