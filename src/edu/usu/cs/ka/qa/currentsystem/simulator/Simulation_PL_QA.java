@@ -190,7 +190,7 @@ public class Simulation_PL_QA
 		//FIRST POSSIBLE PLAN OBTAINED
 		//QA TYPE - ALL RISKS IN PLAN && ALL RISKS IN PLAN FAILURE EXPLANATION SENTENCE
 		plan = runPlannerThread(plannerType);
-		while(agent.qa.askQuestionsByType(qaType, plan))
+		while(agent.qa.askQuestionsByType(qaType, plan)) //updates agent's actionList
 			plan = runPlannerThread(plannerType);
 		
 		//EXECUTION/PLANNING LOOP

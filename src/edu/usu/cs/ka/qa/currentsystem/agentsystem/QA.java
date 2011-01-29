@@ -444,7 +444,7 @@ public class QA
 		
 		//System.out.println("\nIN askBestQTree_QA()");
 		
-		QTree qTree = new QTree(agent);
+		QTree qTree = new QTree(agent, plan);
 		
 		ActionInstance firstAction = plan.get(0);
 		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
