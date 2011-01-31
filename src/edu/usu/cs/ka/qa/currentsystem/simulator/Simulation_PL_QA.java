@@ -98,34 +98,34 @@ public class Simulation_PL_QA
 					sim.runSimulationForGivenQAType(args, QA_Types.NONE);
 					if(gotAResult)
 					{
-						sim.resultString += "\n";
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLCritical_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BESTCubeVar_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BESTMintermVar_IN_PFE);
-						
-						sim.resultString += "\n";
-						
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.ALLCriticalPossPres_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BESTPossPreCubeVar_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BESTPossPreMintermVar_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALLCritical_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BESTCubeVar_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BESTMintermVar_IN_PFE);
+//						
+//						sim.resultString += "\n";
+//						
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PLAN);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALLPossPres_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.ALLCriticalPossPres_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BESTPossPreCubeVar_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BESTPossPreMintermVar_IN_PFE);
 						
 						sim.resultString += "\n";
 						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTree);
@@ -162,7 +162,7 @@ public class Simulation_PL_QA
 	boolean timeout;
 	private void runSimulation(PlannerTypes plannerType, String [] args, AgentTypes agentType, QA_Types qaType)
 	{	
-		//System.out.println("\n//" + plannerType + " " + agentType + " " + qaType + "///////////////////");
+		System.out.println("\n//" + plannerType + " " + agentType + " " + qaType + "///////////////////");
 		
 		//AGENT SETUP
 		if(agentType.equals(Agent.AgentTypes.RG)) 		agent = new Agent_RG(args[0], args[1]);
@@ -195,9 +195,9 @@ public class Simulation_PL_QA
 		
 		//EXECUTION/PLANNING LOOP
 		int countReplanningEpisodesDuringExecution = 0;
-		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 100) && 
+		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < 1000) && 
 			  (plan != null) && (plan.size() != 0))
-		{	
+		{			
 			//PREPARE TO ACT
 			boolean actionTaken = false;
 			currAction = (IncompleteActionInstance) plan.remove(0);

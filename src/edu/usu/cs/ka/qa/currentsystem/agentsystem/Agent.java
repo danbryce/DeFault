@@ -437,6 +437,7 @@ public abstract class Agent
 	 */
 	public void updateActions(LearningTypes type)
 	{
+		//loadActionsHT();
 		List<Fault> risksLearned = new ArrayList<Fault>(); //Prevents concurrent modification exception
 		for(Fault r : risks)
 		{			

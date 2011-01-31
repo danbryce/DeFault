@@ -32,7 +32,10 @@ public class FaultyHeuristic implements Heuristic {
 		this.solver = solver;
 		heuristicSolver = new FaultyRelaxedPlanningGraph(problem, domain, solver);
 	}
-
+	public FaultSet getExplanation(StateNode node) {
+		heuristicSolver.reachFixedPoint(node);
+		return heuristicSolver.getGoalRiskSet();
+	}
 
 	public PlanMetric[] getValue(StateNode node) {
 		PlanMetric[] values = new PlanMetric[2];

@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.AbstractStateNode;
+import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
 import edu.usu.cs.search.StateNode;
@@ -75,6 +76,11 @@ public class IncompleteBDDNode extends FaultStateNode implements
 //		gvalue[0] = new PIMetric((PIRiskSet)this.criticalRisks);
 //		gvalue[1] = new NumericMetric(((NumericMetric)incompleteBDDNode.getGValue()[1]).getValue());
 		//subsequentNodes = new ArrayList<StateNode>();
+	}
+
+	public FaultSet getExplanation() {
+		return solver.getHeuristic().getExplanation(this);
+		
 	}
 
 }

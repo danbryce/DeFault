@@ -85,6 +85,18 @@ public class IncompleteProblem implements Problem
 		this.startState = startState;
 		this.goals = goals;
 	}
+	
+	public IncompleteProblem(Problem incP)
+	{
+		IncompleteProblem ip = (IncompleteProblem) incP;
+		
+		this.name = ip.name;
+		this.domain = ip.domain;
+		this.objects = ip.objects;
+		this.startState = ip.startState;
+		this.goals = ip.goals;
+		this.initialState = ip.initialState;
+	}
 
 	public Domain getDomain() {
 		return domain;

@@ -13,6 +13,7 @@ import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.StateNode;
 
 public class StanHeuristic implements Heuristic {
@@ -90,6 +91,12 @@ public class StanHeuristic implements Heuristic {
 	@Override
 	public void removeIrrelevant(Set[] relevant) {
 	heuristicSolver.removeIrrelevant(relevant);	
+	}
+
+	@Override
+	public FaultSet getExplanation(StateNode node) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

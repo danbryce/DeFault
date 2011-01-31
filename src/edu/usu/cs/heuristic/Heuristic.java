@@ -5,6 +5,7 @@ import java.util.Set;
 
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.planner.PlanMetric;
+import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.StateNode;
 
 public interface Heuristic {
@@ -18,6 +19,7 @@ public interface Heuristic {
 	public Set[] getRelevant();
 
 	public void removeIrrelevant(Set[] relevant);
+	public FaultSet getExplanation(StateNode node);
 
 	
 }

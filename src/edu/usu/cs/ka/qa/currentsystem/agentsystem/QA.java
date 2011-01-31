@@ -3,6 +3,7 @@ package edu.usu.cs.ka.qa.currentsystem.agentsystem;
 import java.util.*;
 
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.LearningTypes;
+import edu.usu.cs.ka.qa.currentsystem.utilities.Actions_Utility;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -442,7 +443,7 @@ public class QA
 	{
 		if(plan == null) return false;
 		
-		//System.out.println("\nIN askBestQTree_QA()");
+		System.out.println("\nIN askBestQTree_QA()");
 		
 		QTree qTree = new QTree(agent, plan);
 		
@@ -451,9 +452,10 @@ public class QA
 		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
 		String minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
-		{
+		{			
 			qTree.buildTree();
 			Fault bestQFault = qTree.getBestQ();
+			System.out.println("BESTQ: " + bestQFault);
 			if(bestQFault == null)
 				break;
 			
