@@ -19,14 +19,17 @@ public class QTree
 	List<QNode> openList;
 	IncompleteProblem problem;
 	int numNodes;
+	boolean is1StepLookahead;
 	
-	public QTree(Agent a, List<ActionInstance> p)
+	boolean debug = false;
+	
+	public QTree(Agent a, List<ActionInstance> p, boolean is1StepLA)
 	{	
 		openList = new LinkedList<QNode>();
 		agent = a;
 		plan = p;
 		planner = Simulation_PL_QA.getInstance().getPlanner();		
-		
+		is1StepLookahead = is1StepLA;
 		
 	}
 
@@ -40,70 +43,121 @@ public class QTree
 		planner.setProblem(problem);
 		numNodes = 0;
 		
-		while(openList.size() > 0)
-		{
-			QNode currQNode = whichNodeToExpand();
-			List<QNodePair> children = currQNode.expandNode();
-			if(children != null)
-				for(QNodePair child : children)
-				{
-					openList.add(child.posQNode);
-					openList.add(child.negQNode);
-				}
-		}
-
-		planner.setProblem(agent.getProblem());
-		System.out.println("NUMNODES: " + numNodes);
+		if(debug)System.out.println("BUILDTREE...");
+//		
+//		while(openList.size() > 0)
+//		{
+//			QNode currQNode = whichNodeToExpand();
+//			List<QNodePair> children = currQNode.expandNode();
+//			if(children != null)
+//				for(QNodePair child : children)
+//				{
+//					openList.add(child.posQNode);
+//					openList.add(child.negQNode);
+//				}
+//		}
+//
+//		planner.setProblem(agent.getProblem());
+//		System.out.println("NUMNODES: " + numNodes);
 		
 	}
 	
 	Fault getBestQ()
 	{
-		if(root.isLeafNode)
-			return null;
-		
-		int minDepth = Integer.MAX_VALUE;
-		QNodePair bestChild = null;
-		for(QNodePair child : root.children)
+		if(is1StepLookahead)
 		{
-			int maxDepth = Math.max(getMinMaxDepth(child.posQNode), getMinMaxDepth(child.negQNode));
-			if(maxDepth < minDepth)
+			BigInteger possModels = new BigInteger(new String("2")).pow(agent.bdd.numberOfVariables() - 1);
+			BigDecimal totalPossModels = new BigDecimal(possModels);
+			
+			Fault bestQ = null;
+			double minEntropy = 1;
+			root.expandNode();
+			for(QNodePair child : root.children)
 			{
-				minDepth = maxDepth;
-				bestChild = child;
-			}
-		}
-		
-//		LinkedList<QNodePair> qToAsk = new LinkedList<QNodePair>();
-//		for(int i = 0; i < root.children.size(); i+=2)
-//		{
-//			QNodePair qp = new QNodePair();
-//			qp.posQNode = root.children.get(i);
-//			qp.negQNode = root.children.get(i+1);
-//			qToAsk.add(qp);
-//		}
-//		
-//		for(QNodePair qp : qToAsk)
-//		{
-//			int maxDepthTrueSide = getDepth(qp.posQNode);
-//			int maxDepthFalseSide = getDepth(qp.negQNode);
-//			
-//			qp.maxDepth = Math.max(maxDepthTrueSide, maxDepthFalseSide);
-//		}
+				child.posQNode.expandNode();
+				child.negQNode.expandNode();
+				
+				Fault f = agent.numVarIndexToRiskForCubeOrMinterm.get(child.posQNode.qFaultIndex);
+				int bddRef_QFault = agent.riskToBDD.get(f);
+				
+				int bddRef_MasterKB = agent.get_bddRef_KB();
+				
+				int bbdRef_posChildPFE = child.posQNode.bddRefPFE;
+				int bbdRef_negChildPFE = child.negQNode.bddRefPFE;
+				
+				int bddRef_SuccessPosSide = agent.bdd.and(bddRef_QFault, bddRef_MasterKB, agent.bdd.not(bbdRef_posChildPFE));
+				int bddRef_SuccessNegSide = agent.bdd.and(agent.bdd.not(bddRef_QFault), bddRef_MasterKB, agent.bdd.not(bbdRef_negChildPFE));
+				
+				BigDecimal posModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessPosSide));
+				BigDecimal negModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessNegSide));
 
-		return agent.numVarIndexToRiskForCubeOrMinterm.get(bestChild.posQNode.qFaultIndex);
+				double posProb = posModels.divide(totalPossModels).doubleValue();
+				double negProb = negModels.divide(totalPossModels).doubleValue();
+				
+				double entropy = -posProb * Math.log(posProb) - negProb * Math.log(negProb);
+				if(entropy < minEntropy)
+				{
+					minEntropy = entropy;
+					bestQ = f;
+				}
+				
+			}
+			planner.setProblem(agent.getProblem());
+			if(debug)System.out.println("NUMNODES: " + numNodes);
+			return bestQ;
+		}
+		else
+		{
+			root.expandNode();
+			if(root.isLeafNode)
+				return null;
+			
+			int minDepth = Integer.MAX_VALUE;
+			QNodePair bestChild = null;
+			for(QNodePair child : root.children)
+			{
+				int maxDepth = getMaxDepth(child, Integer.MIN_VALUE, minDepth);
+				if(maxDepth <= minDepth)
+				{
+					minDepth = maxDepth;
+					bestChild = child;
+				}
+			}
+			planner.setProblem(agent.getProblem());
+			if(debug)System.out.println("NUMNODES: " + numNodes);
+			if(debug)System.out.println("BESTCHILD: " + bestChild);
+			return agent.numVarIndexToRiskForCubeOrMinterm.get(bestChild.posQNode.qFaultIndex);
+		}
 	}
-	
-	int getMinMaxDepth(QNode n)
+
+	int getMinDepth(QNode n, int alpha, int beta)
 	{
+		int best = Integer.MAX_VALUE;
+		n.expandNode();
 		if(n.isLeafNode) return 0;
-		int minDepth = Integer.MAX_VALUE; 
 		for(QNodePair child : n.children) 
 		{
-			int maxDepth = Math.max(getMinMaxDepth(child.posQNode), getMinMaxDepth(child.negQNode));
-			minDepth = Math.min(minDepth, maxDepth);
+			best = Math.min(best, getMaxDepth(child, alpha, beta));
+			if(alpha >= beta)
+				break;
 		}
-		return minDepth + 1;
+		return best;
+	}
+	
+	int getMaxDepth(QNodePair n, int alpha, int beta)
+	{
+		int best = Integer.MIN_VALUE;
+		best = Math.max(alpha, getMinDepth(n.posQNode, alpha, beta));
+		if(alpha >= beta)
+			return alpha;
+		return Math.max(best, getMinDepth(n.negQNode, alpha, beta));
+	}
+	
+	int getAvgDepth(QNodePair n, int alpha, int beta)
+	{
+		int value = getMinDepth(n.posQNode, alpha, beta);
+		value += getMinDepth(n.negQNode, alpha, beta);
+		return value / 2;
 	}
 	
 	int getMaxDepth(QNode n)
@@ -145,7 +199,7 @@ public class QTree
 			
 			numNodes++;
 			
-			System.out.println(agent.bdd.toString(bddRefPFE));
+			if(debug)System.out.println(agent.bdd.toString(bddRefPFE));
 		}
 		
 		public QNode(QNode p, Integer index, Boolean value)
@@ -201,13 +255,14 @@ public class QTree
 		 * 
 		 */
 		List<QNodePair> expandNode()
-		{		
+		{					
+				
 			//if(KB AND PFE == FALSE) // termination condition - success - is leafnode
 			if(agent.bdd.and(bddRefKB, bddRefPFE) == agent.bdd.getZero())
 			{
 				//Plan will succeed given the knowledge in the KB
 				isLeafNode = true;
-				System.out.println(this + " : " + this.parent);
+				if(debug)System.out.println(this + " : " + this.parent);
 				return null;
 			}
 			else if(agent.bdd.and(bddRefKB, agent.bdd.not(bddRefPFE)) == agent.bdd.getZero())
@@ -216,12 +271,12 @@ public class QTree
 				List<ActionInstance> fakeActions = updateActionsForNewPlan(this);
 				problem.setActionInstances(fakeActions);
 				List<ActionInstance> relaxedPlan = Simulation_PL_QA.getInstance().runPlannerThread(Simulation_PL_QA.getInstance().getPlannerType());
-				System.out.print("* ");	
+				if(debug)System.out.print("* ");	
 				if(relaxedPlan == null)
 				{
 					isLeafNode = true;
 					isNewPlanNode = true;
-					System.out.println(this + " : " + this.parent);
+					if(debug)System.out.println(this + " : " + this.parent);
 					return null;
 				}
 				else
@@ -233,8 +288,8 @@ public class QTree
 				}
 			}
 			
-			System.out.println(this + " : " + this.parent);
-			System.out.println(agent.bdd.toString(bddRefPFE));
+			if(debug)System.out.println(this + " : " + this.parent);
+			if(debug)System.out.println(agent.bdd.toString(bddRefPFE));
 			
 			int bddRefSupportsPFE = agent.bdd.support(bddRefPFE);
 			String supportsPFE = agent.bdd.toString(bddRefSupportsPFE);

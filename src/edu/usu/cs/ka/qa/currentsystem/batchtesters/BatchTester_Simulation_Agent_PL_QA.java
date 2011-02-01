@@ -25,7 +25,7 @@ public class BatchTester_Simulation_Agent_PL_QA
 			{	
 				for(int version = 2; version <= 2; version++)//1-3
 				{
-					for(int numFile = 1; numFile <= 1; numFile++) //numFiles 1-10
+					for(int numFile = 1; numFile <= 10; numFile++) //numFiles 1-10
 					{
 						args[0] = path + "bridges_v" + version + "_" + gridSize + "_" + bridgeDensity + "_" + numFile + extension;
 						args[1] = path + "bridges_problem" + extension;

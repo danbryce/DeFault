@@ -89,6 +89,8 @@ public class Planner
 	 */
 	public List<ActionInstance> getPlan(PlannerTypes plannerType)
 	{
+		if(numTimesPlannerCalled >= 100000) return null;
+		
 		List<ActionInstance> preservedActionsList = Actions_Utility.makeActionsListDeepCopy(problem.getActions());
 		
 		List<ActionInstance> plan = null;
