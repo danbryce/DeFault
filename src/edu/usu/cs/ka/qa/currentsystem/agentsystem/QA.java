@@ -22,7 +22,12 @@ public class QA
 								NextPossPres_IN_PLAN, NextPossPres_IN_PFE,
 								NextCriticalPossPres_IN_PFE, NextBESTPossPreCubeVar_IN_PFE, NextBESTPossPreMintermVar_IN_PFE,
 								
-								BEST_QTreeFull, BEST_QTree1Step}; //Risks
+								BEST_QTreeOneStepReg, BEST_QTreeOneStepRPS,
+								BEST_QTreeFullMaxReg, BEST_QTreeFullMaxRPS,
+								BEST_QTreeFullAvgReg, BEST_QTreeFullAvgRPS,
+								BEST_QTreeABMaxReg,   BEST_QTreeABMaxRPS,	
+								BEST_QTreeABAvgReg,   BEST_QTreeABAvgRPS
+								}; //Risks
 								
 	public static enum PFE_Type{CUBE, MINTERM};
 	
@@ -52,25 +57,43 @@ public class QA
 			case ALL: 								return askAllRisks_QA();
 			case ALL_IN_PLAN: 						return askAllRisksInPlan_QA(plan);
 			case ALL_IN_PFE:	 					return askAllRisksInPFE_QA(plan);
-			case ALLCritical_IN_PFE:				return askAllCriticalRisksInPFE_QA(plan);
+			//case ALLCritical_IN_PFE:				return askAllCriticalRisksInPFE_QA(plan);
 			case BESTCubeVar_IN_PFE: 				return askBestCubeVarInPFE_QA(plan);
-			case BESTMintermVar_IN_PFE: 			return askBestMintermVarInPFE_QA(plan);
+			//case BESTMintermVar_IN_PFE: 			return askBestMintermVarInPFE_QA(plan);
 			
-			case ALLPossPres: 						return askAllPossPreRisks_QA();
-			case ALLPossPres_IN_PLAN: 				return askAllPossPreRisksInPlan_QA(plan);
-			case ALLPossPres_IN_PFE: 				return askAllPossPreRisksInPFE_QA(plan);
-			case ALLCriticalPossPres_IN_PFE: 		return askAllCriticalPossPreRisksInPFE_QA(plan);
-			case BESTPossPreCubeVar_IN_PFE: 		return askBestPossPreCubeVarInPFE_QA(plan);
-			case BESTPossPreMintermVar_IN_PFE: 		return askBestPossPreMintermVarInPFE_QA(plan);
+			//case ALLPossPres: 						return askAllPossPreRisks_QA();
+			//case ALLPossPres_IN_PLAN: 				return askAllPossPreRisksInPlan_QA(plan);
+			//case ALLPossPres_IN_PFE: 				return askAllPossPreRisksInPFE_QA(plan);
+			//case ALLCriticalPossPres_IN_PFE: 		return askAllCriticalPossPreRisksInPFE_QA(plan);
+			//case BESTPossPreCubeVar_IN_PFE: 		return askBestPossPreCubeVarInPFE_QA(plan);
+			//case BESTPossPreMintermVar_IN_PFE: 		return askBestPossPreMintermVarInPFE_QA(plan);
 			
-			case NextPossPres_IN_PLAN: 				return askNextPossPreRisksInPlan_QA(plan);
-			case NextPossPres_IN_PFE: 				return askNextPossPreRisksInPFE_QA(plan);
-			case NextCriticalPossPres_IN_PFE: 		return askNextCriticalPossPreRisksInPFE_QA(plan);
+			//case NextPossPres_IN_PLAN: 				return askNextPossPreRisksInPlan_QA(plan);
+			//case NextPossPres_IN_PFE: 				return askNextPossPreRisksInPFE_QA(plan);
+			//case NextCriticalPossPres_IN_PFE: 		return askNextCriticalPossPreRisksInPFE_QA(plan);
 			case NextBESTPossPreCubeVar_IN_PFE: 	return askBestNextPossPreCubeVarInPFE_QA(plan);
-			case NextBESTPossPreMintermVar_IN_PFE: 	return askBestNextPossPreMintermVarInPFE_QA(plan);
+			//case NextBESTPossPreMintermVar_IN_PFE: 	return askBestNextPossPreMintermVarInPFE_QA(plan);
 			
-			case BEST_QTreeFull:					return askBestQTreeFull_QA(plan);
-			case BEST_QTree1Step:					return askBestQTreeOneStep_QA(plan);
+			case BEST_QTreeOneStepReg:				return askBestQTreeOneStepRegPlanner_QA(plan);
+			//ALLposspres
+			//nextPossPre
+			
+			case BEST_QTreeOneStepRPS:				return askBestQTreeOneStepRPS_QA(plan);
+			//ALLposspres
+			//nextPossPre
+			
+			//case BEST_QTreeFullMaxReg:				return askBestQTreeFullMaxRegPlanner_QA(plan);
+			//case BEST_QTreeFullMaxRPS:				return askBestQTreeFullMaxRPS_QA(plan);
+			
+			case BEST_QTreeABMaxReg:				return askBestQTreeABMaxRegPlanner_QA(plan);//
+			case BEST_QTreeABMaxRPS:				return askBestQTreeABMaxRPS_QA(plan);//
+			
+			//case BEST_QTreeFullAvgReg:				return askBestQTreeFullAvgRegPlanner_QA(plan); //confirm it's working
+			//case BEST_QTreeABAvgRPS:				return askBestQTreeABAvgRPS_QA(plan); //confirm it's working
+			
+			//case BEST_QTreeABAvgReg:				return askBestQTreeABAvgRegPlanner_QA(plan); //confirm it's working
+			//case BEST_QTreeFullAvgRPS:				return askBestQTreeFullAvgRPS_QA(plan); //confirm it's working
+			
 
 			default: 								return false;
 		}
@@ -470,7 +493,7 @@ public class QA
 	
 	//QA based on PLAN/NEXT POSSPRE
 	/**
-	 * Ask the Domain Expert about NEXT posspres risks that exist IN the PLAN's actions
+	 * Ask the Domain Expert about NEXT posspres risks - exist IN the PLAN's first action
 	 * @param expert
 	 */
 	public boolean askNextPossPreRisksInPlan_QA(List<ActionInstance> plan)
@@ -478,12 +501,9 @@ public class QA
 		if(plan == null) return false;
 		
 		HashSet<Fault> possPreRisksInPlan = new HashSet<Fault>();
-		for(ActionInstance act : plan)
-		{
-			IncompleteActionInstance a = (IncompleteActionInstance) act;
-			for(Proposition p : a.getPossiblePreconditions()) 	
-				possPreRisksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
-		}
+		IncompleteActionInstance a = (IncompleteActionInstance) plan.get(0);
+		for(Proposition p : a.getPossiblePreconditions()) 	
+			possPreRisksInPlan.add(Fault.getRiskFromIndex(Fault.PRECOPEN, a.getName(), p.getName()));
 		
 		if(!possPreRisksInPlan.isEmpty())
 		{
@@ -496,7 +516,7 @@ public class QA
 	
 	//QA based on PFE/NEXT POSSPRE
 	/**
-	 * Ask the Domain Expert about ALL possPre risks that exist IN the Plan's Failure Explanation
+	 * Ask the Domain Expert about NEXT possPre risks that exist IN the Plan's Failure Explanation - exist IN the PLAN's first action
 	 * @param expert
 	 */
 	public boolean askNextPossPreRisksInPFE_QA(List<ActionInstance> plan)
@@ -514,7 +534,7 @@ public class QA
 				if(supports.charAt(i) != '-')
 				{
 					Fault risk = agent.numVarIndexToRiskForCubeOrMinterm.get(i);
-					if(risk.getRiskName().equals(Fault.PRECOPEN))
+					if(risk.getRiskName().equals(Fault.PRECOPEN) && risk.getActionName().equals(plan.get(0).getName()))
 						possPreRisksInPFE.add(risk);
 				}
 		}
@@ -530,7 +550,8 @@ public class QA
 	
 	//QA based on PFE/NEXT CRITICAL POSSPRE
 	/**
-	 * Ask the Domain Expert about ALL CRITICAL possPre risks that exist IN the Plan's Failure Explanation
+	 * Ask the Domain Expert about NEXT CRITICAL possPre risks that exist IN the Plan's Failure Explanation
+	 *  - exist IN the PLAN's first action.
      * "Critical" means that if the risk is removed from the PFE via bdd.exists method, then the 
      *  resulting PFE goes to TRUE. This indicates that the risk is implicated in every minterm of the bdd - 
      *  every interpretation of the actions where the plan will succeed in finding the goal has been voided. 
@@ -548,7 +569,7 @@ public class QA
 		
 		for(Fault risk : agent.risks)
 		{	
-			if(risk.getRiskName().equals(Fault.PRECOPEN))
+			if(risk.getRiskName().equals(Fault.PRECOPEN) && risk.getActionName().equals(plan.get(0).getName()))
 			{
 				boolean[] v = new boolean[agent.bdd.numberOfVariables()];
 				v[agent.riskToNumVarIndexForCube.get(risk)] = true;
@@ -587,9 +608,8 @@ public class QA
 	
 	//main for above two
 	/**
-	 * Ask the Domain Expert about ALL risks that exist IN the Plan's Failure Explanation in order of minterms
-	 * Rather than ask about all existing risks in a plan's failure explanation, we ask about most critical risk,
-	 * then redraw the PFE to see if the plan is still valid. If it is no longer valid
+	 * Ask the Domain Expert about NEXT risks that exist IN the Plan's Failure Explanation in order of minterms
+	 * or cubes - exist IN the PLAN's first action.
 	 * 
 	 * @param expert
 	 */
@@ -618,9 +638,12 @@ public class QA
 
 			for (int i = 0; i < agent.getNumBDDVars()-1; i++)
 				for(LinkedList<Integer> clause : clauses_vars)
-					if(agent.numVarIndexToRiskForCubeOrMinterm.get(i).getRiskName().equals(Fault.PRECOPEN))
+				{
+					Fault riskToExamine = agent.numVarIndexToRiskForCubeOrMinterm.get(i);
+					if(riskToExamine.getRiskName().equals(Fault.PRECOPEN) && riskToExamine.getActionName().equals(plan.get(0).getName()))
 						if(clause.contains(i))
 							bddVarsSummedValues[i] += 1.0/clause.size();
+				}
 		
 			Double max = 0.0;
 			int indexOfMax = 0;
@@ -648,32 +671,78 @@ public class QA
 		return false;
 	}
 
-
-	boolean askBestQTreeOneStep_QA(List<ActionInstance> plan)
+	//QTREE////////////////////////////////////////////////////////////////////////////////////////
+	
+	//ENTROPY
+	boolean askBestQTreeOneStepRegPlanner_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, true);
+		return askBestQTree_QA(plan, true, false, false, false);
 	}
 	
-	boolean askBestQTreeFull_QA(List<ActionInstance> plan)
+	boolean askBestQTreeOneStepRPS_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false);
+		return askBestQTree_QA(plan, true, false, false, true);
 	}
 	
-	boolean askBestQTree_QA(List<ActionInstance> plan, boolean is1Step)
+	//REGULAR PLANNER
+	boolean askBestQTreeFullMaxRegPlanner_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, false, false, false);
+	}
+	
+	boolean askBestQTreeABMaxRegPlanner_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, true, false, false);
+	}
+	
+	boolean askBestQTreeFullAvgRegPlanner_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, false, true, false);
+	}
+	
+	boolean askBestQTreeABAvgRegPlanner_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, true, true, false);
+	}
+	
+	//RELAXED PLAN SOLVER
+	boolean askBestQTreeFullMaxRPS_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, false, false, true);
+	}
+	
+	boolean askBestQTreeABMaxRPS_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, true, false, true);
+	}
+	
+	boolean askBestQTreeFullAvgRPS_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, false, true, true);
+	}
+	
+	boolean askBestQTreeABAvgRPS_QA(List<ActionInstance> plan)
+	{
+		return askBestQTree_QA(plan, false, true, true, true);
+	}
+	
+	//main for all QTree Variations
+	boolean askBestQTree_QA(List<ActionInstance> plan, boolean is1Step, boolean isAB, boolean isAvg, boolean isRPS)
 	{
 		if(plan == null) return false;
 		
 		if(debug)System.out.println("\nIN askBestQTree_QA()");
 		
-		QTree qTree = new QTree(agent, plan, is1Step);
+		//Agent a, List<ActionInstance> p, boolean is1StepLA, boolean isAB, boolean isAvg, boolean isRPS
+		//QTree qTree = new QTree(agent, plan, is1Step, isAB, isAvg, isRPS);
 		
 		ActionInstance firstAction = plan.get(0);
 		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
 		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
 		String minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
-		{			
-			qTree.buildTree();
+		{	
+			QTree qTree = new QTree(agent, plan, is1Step, isAB, isAvg, isRPS);
 			Fault bestQFault = qTree.getBestQ();
 			if(debug)System.out.println("BESTQ: " + bestQFault);
 			if(bestQFault == null)

@@ -39,8 +39,8 @@ public class Agent_CL extends Agent {
 			return false;
 		
 		//CONSERVATIVE - Check the possPre's.
-		if(!areActionPossPreConditionsSat(currAction, currState)) 
-			return false;
+		//if(!areActionPossPreConditionsSat(currAction, currState)) 
+		//	return false;
 		
 		//RISKY
 		//Check whether the unsat possPre combination has already produced failure.

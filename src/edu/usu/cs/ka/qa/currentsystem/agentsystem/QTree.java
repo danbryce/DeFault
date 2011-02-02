@@ -6,9 +6,14 @@ import java.math.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.LearningTypes;
 import edu.usu.cs.ka.qa.currentsystem.simulator.*;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
+import edu.usu.cs.planner.*;
+import edu.usu.cs.search.FaultSet;
+import edu.usu.cs.search.SearchStatistics;
+import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class QTree 
 {
@@ -20,47 +25,33 @@ public class QTree
 	IncompleteProblem problem;
 	int numNodes;
 	boolean is1StepLookahead;
+	boolean usePruning;
+	boolean useMinAvg;
+	boolean useRelaxedPlanSolver;
 	
 	boolean debug = false;
 	
-	public QTree(Agent a, List<ActionInstance> p, boolean is1StepLA)
+	public QTree(Agent a, List<ActionInstance> p, boolean is1StepLA, boolean isAB, boolean isAvg, boolean isRPS)
 	{	
 		openList = new LinkedList<QNode>();
 		agent = a;
 		plan = p;
 		planner = Simulation_PL_QA.getInstance().getPlanner();		
 		is1StepLookahead = is1StepLA;
+		usePruning = isAB;
+		useMinAvg = isAvg;
+		useRelaxedPlanSolver = isRPS;
 		
-	}
-
-	QNode whichNodeToExpand(){return openList.remove(0);}		//some switch for an expansion strategy
-
-	void buildTree()
-	{
 		root = new QNode();
 		openList.add(root);
 		problem = new IncompleteProblem(agent.getProblem());
 		planner.setProblem(problem);
 		numNodes = 0;
 		
-		if(debug)System.out.println("BUILDTREE...");
-//		
-//		while(openList.size() > 0)
-//		{
-//			QNode currQNode = whichNodeToExpand();
-//			List<QNodePair> children = currQNode.expandNode();
-//			if(children != null)
-//				for(QNodePair child : children)
-//				{
-//					openList.add(child.posQNode);
-//					openList.add(child.negQNode);
-//				}
-//		}
-//
-//		planner.setProblem(agent.getProblem());
-//		System.out.println("NUMNODES: " + numNodes);
-		
+		if(debug)System.out.println("BUILDTREE...");	
 	}
+
+	QNode whichNodeToExpand(){return openList.remove(0);}		//some switch for an expansion strategy
 	
 	Fault getBestQ()
 	{
@@ -116,10 +107,14 @@ public class QTree
 			QNodePair bestChild = null;
 			for(QNodePair child : root.children)
 			{
-				int maxDepth = getMaxDepth(child, Integer.MIN_VALUE, minDepth);
-				if(maxDepth <= minDepth)
+				int depth;
+				if(useMinAvg)
+					depth = getAvgDepth(child, Integer.MIN_VALUE, minDepth);
+				else
+					depth = getMaxDepth(child, Integer.MIN_VALUE, minDepth);
+				if(depth <= minDepth)
 				{
-					minDepth = maxDepth;
+					minDepth = depth;
 					bestChild = child;
 				}
 			}
@@ -132,30 +127,53 @@ public class QTree
 
 	int getMinDepth(QNode n, int alpha, int beta)
 	{
-		int best = Integer.MAX_VALUE;
+		int best;
+		if(usePruning)
+			best = beta;
+		else
+			best = Integer.MAX_VALUE;
+		
 		n.expandNode();
 		if(n.isLeafNode) return 0;
 		for(QNodePair child : n.children) 
 		{
-			best = Math.min(best, getMaxDepth(child, alpha, beta));
-			if(alpha >= beta)
-				break;
+			if(usePruning)
+			{
+				beta = best;
+				if(alpha >= beta)
+					break;
+			}
+			if(useMinAvg)
+				best = Math.min(best, getAvgDepth(child, alpha, beta));
+			else
+				best = Math.min(best, getMaxDepth(child, alpha, beta));
 		}
 		return best;
 	}
 	
 	int getMaxDepth(QNodePair n, int alpha, int beta)
 	{
-		int best = Integer.MIN_VALUE;
+		int best;
+		if(usePruning)
+			best = alpha;
+		else
+			best = Integer.MIN_VALUE;
+		
 		best = Math.max(alpha, getMinDepth(n.posQNode, alpha, beta));
-		if(alpha >= beta)
-			return alpha;
+		if(usePruning) 
+		{
+			alpha = best;
+			if(alpha >= beta)
+				return alpha;
+		}
 		return Math.max(best, getMinDepth(n.negQNode, alpha, beta));
 	}
 	
 	int getAvgDepth(QNodePair n, int alpha, int beta)
 	{
 		int value = getMinDepth(n.posQNode, alpha, beta);
+		if(usePruning && value/2 > beta)
+			return value / 2;
 		value += getMinDepth(n.negQNode, alpha, beta);
 		return value / 2;
 	}
@@ -270,21 +288,42 @@ public class QTree
 				//The plan will fail given the knowledge in the KB
 				List<ActionInstance> fakeActions = updateActionsForNewPlan(this);
 				problem.setActionInstances(fakeActions);
-				List<ActionInstance> relaxedPlan = Simulation_PL_QA.getInstance().runPlannerThread(Simulation_PL_QA.getInstance().getPlannerType());
-				if(debug)System.out.print("* ");	
-				if(relaxedPlan == null)
+				
+				if(useRelaxedPlanSolver)
 				{
-					isLeafNode = true;
-					isNewPlanNode = true;
-					if(debug)System.out.println(this + " : " + this.parent);
-					return null;
+					int bddREF_RPS_PFE = getPFE_RPSolver();
+					if(debug)System.out.print("* ");	
+					if(bddREF_RPS_PFE == 0)
+					{
+						isLeafNode = true;
+						isNewPlanNode = true;
+						if(debug)System.out.println(this + " : " + this.parent);
+						return null;
+					}
+					else
+					{
+						bddRefPFE = bddREF_RPS_PFE;
+						isNewPlanNode = true;
+					}
 				}
-				else
+				else//uses regular solver
 				{
-					ActionInstance firstAction = relaxedPlan.get(0);
-					List<ActionInstance> restOfPlan = relaxedPlan.subList(1, relaxedPlan.size());
-					bddRefPFE = RiskCounter.getFailureExplanationSentence_BDDRef(problem, restOfPlan, firstAction, Planner.solver);
-					isNewPlanNode = true;
+					List<ActionInstance> hypotheticalPlan = Simulation_PL_QA.getInstance().runPlannerThread(Simulation_PL_QA.getInstance().getPlannerType());
+					if(debug)System.out.print("* ");	
+					if(hypotheticalPlan == null)
+					{
+						isLeafNode = true;
+						isNewPlanNode = true;
+						if(debug)System.out.println(this + " : " + this.parent);
+						return null;
+					}
+					else
+					{
+						ActionInstance firstAction = hypotheticalPlan.get(0);
+						List<ActionInstance> restOfPlan = hypotheticalPlan.subList(1, hypotheticalPlan.size());
+						bddRefPFE = RiskCounter.getFailureExplanationSentence_BDDRef(problem, restOfPlan, firstAction, Planner.solver);
+						isNewPlanNode = true;
+					}
 				}
 			}
 			
@@ -325,7 +364,6 @@ public class QTree
 		
 		Integer depth(){return 0;}	
 	}
-	
 	
 	public List<ActionInstance> updateActionsForNewPlan(QNode replanNode)
 	{
@@ -379,4 +417,35 @@ public class QTree
 	}
 	
 	public String removeNULLT(String st) {return st.replace('\n', ' ');}
+	
+	private int getPFE_RPSolver()
+	{
+		RelaxedPlanSolver RPSolver;
+		SearchStatistics searchStatistics = new SearchStatistics();
+		SolverOptions solverOptions = new SolverOptions();
+		
+//		if(planner.getClass().equals(PODEBDDSolver.class))//JDD
+//		{
+			solverOptions.setUsePreferredOperators(true);
+			solverOptions.setUseDeferredEvaluation(true);
+			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+			solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+			solverOptions.setBiasRelaxedPlanWithFaults(true);
+//		}
+//		else if (planner.getClass().equals(PODEFFSolver.class))//FF
+//		{
+//			solverOptions.setUsePreferredOperators(true);
+//			solverOptions.setUseDeferredEvaluation(true);
+//			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+//			solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+//			solverOptions.setBiasRelaxedPlanWithFaults(false);
+//		}
+		try {
+			RPSolver = new RelaxedPlanSolver(agent.domain, problem, searchStatistics, solverOptions);
+			BDDRiskSet fs = (BDDRiskSet) RPSolver.getExplanation();
+			return fs.getFaults();
+		} catch (IllDefinedProblemException e) { e.printStackTrace(); }
+		
+		return 0;
+	}
 }

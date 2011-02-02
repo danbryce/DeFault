@@ -63,7 +63,7 @@ public class Simulation_PL_QA
 		//{
 		//	case 0: if(runPlannerThread(PlannerTypes.AMIR) == null) 	return false; break;
 		//	case 1: if(runPlannerThread(PlannerTypes.PODE1) == null) 	return false; break;
-//			case 2: if(runPlannerThread(PlannerTypes.JDD) == null) 		return false; break;
+//			/*case 2: */if(runPlannerThread(PlannerTypes.JDD) == null) 		return false; break;
 		//}
 
 		expert.restoreActionsToStateBeforePlannerCall();
@@ -109,10 +109,10 @@ public class Simulation_PL_QA
 //						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
 //						sim.resultString += "\n";
 //						sim.runSimulationForGivenQAType(args, QA_Types.ALLCritical_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BESTCubeVar_IN_PFE);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BESTMintermVar_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BESTCubeVar_IN_PFE);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BESTMintermVar_IN_PFE);
 //						
 //						sim.resultString += "\n";
 //						
@@ -130,9 +130,25 @@ public class Simulation_PL_QA
 //						sim.runSimulationForGivenQAType(args, QA_Types.BESTPossPreMintermVar_IN_PFE);
 						
 						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeFull);
+						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeOneStepReg);
 						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTree1Step);
+						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeOneStepRPS);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeFullMaxReg);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeFullMaxRPS);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxReg);
+						sim.resultString += "\n";
+						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxRPS);
+						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeFullAvgReg);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeFullAvgRPS);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABAvgReg);
+//						sim.resultString += "\n";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABAvgRPS);
 						
 						System.out.println(sim.resultString);
 
@@ -154,11 +170,11 @@ public class Simulation_PL_QA
 		
 		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } catch(Exception e){ e.printStackTrace(); resultString += " amir E E E E E E E E E"; }
 		//try{ runSimulation(PlannerTypes.PODE1, args, AgentTypes.RG, qaType); } catch(Exception e){ /*e.printStackTrace();*/ resultString += " pode1 E E E E E E E E E"; }
-		try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ /*e.printStackTrace();*/ resultString += " jdd E E E E E E E E E"; }
+		//try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ /*e.printStackTrace();*/ resultString += " jdd E E E E E E E E E"; }
 		
-		//resultString += " CL";
+		resultString += " CL";
 		
-		//try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType); } 	   catch(Exception e)	{ e.printStackTrace(); resultString += " amir E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType); } 	   catch(Exception e)	{ e.printStackTrace(); resultString += " amir E E E E E E E E"; }
 		//try{ runSimulation(PlannerTypes.PODE1, args, Agent.AgentTypes.CL, qaType); } catch(Exception e)	{ e.printStackTrace(); resultString += " pode1 E E E E E E E E"; }
 		//try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType);   } catch(Exception e)	{ e.printStackTrace(); resultString += " jdd E E E E E E E E"; }
 	}

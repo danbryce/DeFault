@@ -208,107 +208,85 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 			//if(noop == null){
 
-				while (actFaults.size() > 0) {
-					FaultSet bestFaultSet = null;
-					ActionHeader bestAct = null;
-					int 	bestCost = Integer.MAX_VALUE;
+			while (actFaults.size() > 0) {
+				FaultSet bestFaultSet = null;
+				ActionHeader bestAct = null;
+				int 	bestCost = Integer.MAX_VALUE;
 
-					for(ActionHeader a : supportingActions){
-						if(chosenSupportingActions.contains(a)){
-							continue;
-						}
+				for(ActionHeader a : supportingActions){
+					if(chosenSupportingActions.contains(a)){
+						continue;
+					}
 
-						FaultSet incumbentFaultSet = null;
-						FaultSet actFaultSet = actFaults.get(a);
-						ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, a.getIndex());
-						int incumbentCost = ali.getCost(); 
+					FaultSet incumbentFaultSet = null;
+					FaultSet actFaultSet = actFaults.get(a);
+					ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, a.getIndex());
+					int incumbentCost = ali.getCost(); 
 
 
-						if(bestFaultSet == null){
-							bestFaultSet = actFaultSet.copy();
-							bestFaultSet.and(faults);
+					if(bestFaultSet == null){
+						bestFaultSet = actFaultSet.copy();
+						bestFaultSet.and(faults);
+						bestAct = a;
+						bestCost = incumbentCost;
+
+					}
+					else {
+						incumbentFaultSet = actFaultSet.copy();
+						incumbentFaultSet.and(faults);
+
+
+						int cmp = incumbentFaultSet.compareTo(bestFaultSet);
+
+						
+
+						if((solver.getSolverOptions().isBiasRelaxedPlanWithFaults() && 
+								(cmp == -1|| incumbentCost < bestCost))
+						||
+						(!solver.getSolverOptions().isBiasRelaxedPlanWithFaults() &&
+								( bestAct == null ||	incumbentCost < bestCost))							 
+						){
+							
+							bestFaultSet = incumbentFaultSet;
 							bestAct = a;
 							bestCost = incumbentCost;
-
+							//								if(a.isNoop()){
+							//									break;
+							//								}
 						}
-						else {
-							incumbentFaultSet = actFaultSet.copy();
-							incumbentFaultSet.and(faults);
-
-							//						if(fact.getName().equals("goal9_")){
-							//							RiskCounter.getBDD().printSet(((BDDRiskSet)bestFaultSet).getFaults());
-							//							BigInteger i = RiskCounter.getBigUnSolvableDomainCount(bestFaultSet);
-							//							RiskCounter.getBDD().printSet(((BDDRiskSet)incumbentFaultSet).getFaults());
-							//							BigInteger j = RiskCounter.getBigUnSolvableDomainCount(incumbentFaultSet);
-							//							BigInteger k = i.subtract(j);
-							//							int z = 0;
-							//							z++;
-							//							}
-
-							int cmp = incumbentFaultSet.compareTo(bestFaultSet);
-//							if( a.isNoop() ||
-//									cmp == -1 ||
-//									(cmp == 0 && a.isNoop()) ||
-//									(cmp == 0 && !bestAct.isNoop() 
-//											&& incumbentCost < bestCost)
-//							){
-							if(//a.isNoop() ||
-									(//!bestAct.isNoop() && 
-											((cmp == -1 //&& incumbentCost <= bestCost
-													)||  
-											 (//cmp == 0 &&
-													 incumbentCost < bestCost)) )
-											 //||
-//									(cmp == 0 && a.isNoop()) ||
-//									(//cmp == 0 && 
-//											!bestAct.isNoop() 
-//											&& incumbentCost < bestCost)
-							){
-//0.0001220703125
-//0.0000152587890625
-							bestFaultSet = incumbentFaultSet;
-								bestAct = a;
-								bestCost = incumbentCost;
-//								if(a.isNoop()){
-//									break;
-//								}
-							}
-						}								
-					}
-
-					//				if(fact.getName().equals("goal9_")){
-					//				RiskCounter.getBDD().printSet(((BDDRiskSet)bestFaultSet).getFaults());
-					//				RiskCounter.getBDD().printSet(((BDDRiskSet)faults).getFaults());
-					//				}
-					if(chosenSupportingActions.size() == 0 ||
-							bestFaultSet.compareTo(faults) < 0){
-
-						faults = bestFaultSet;
-						chosenSupportingActions.add(bestAct);
-						actFaults.remove(bestAct);
-						supportCost += bestCost;
-					}
-					else{
-						actFaults.remove(bestAct);
-						break;
-					}
-
-					if(!solver.getSolverOptions().isUseMultipleSupportersInPlanningGraph()){
-						break;
-					}
-					else if(chosenSupportingActions.size() > 0){
-						break;
-					}
-
+					}								
 				}
-//			}
-//			else{
-//				ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, noop.getIndex());
-//				
-//				faults = ((FaultyActionLevelInfo)ali).getFaults();
-//				chosenSupportingActions.add(noop);
-//				supportCost = ali.getCost();
-//			}
+
+			
+				if(chosenSupportingActions.size() == 0 ||
+						bestFaultSet.compareTo(faults) < 0){
+
+					faults = bestFaultSet;
+					chosenSupportingActions.add(bestAct);
+					actFaults.remove(bestAct);
+					supportCost += bestCost;
+				}
+				else{
+					actFaults.remove(bestAct);
+					break;
+				}
+
+				if(!solver.getSolverOptions().isUseMultipleSupportersInPlanningGraph()){
+					break;
+				}
+				else if(chosenSupportingActions.size() > 0){
+					break;
+				}
+
+			}
+			//			}
+			//			else{
+			//				ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, noop.getIndex());
+			//				
+			//				faults = ((FaultyActionLevelInfo)ali).getFaults();
+			//				chosenSupportingActions.add(noop);
+			//				supportCost = ali.getCost();
+			//			}
 
 			fli.setFaults(faults);
 			fli.setChosenSupporters(chosenSupportingActions);

@@ -14,6 +14,7 @@ public class SolverOptions {
 	private boolean riskHeuristicFirst = false;
 	private boolean useJDDGValue = false;
 	private FAULT_TYPE faultType = FAULT_TYPE.PI_FAULTS;
+	private boolean biasRelaxedPlanWithFaults = true;
 	
 	
 	public FAULT_TYPE getFaultType() {
@@ -87,5 +88,11 @@ public class SolverOptions {
 	}
 	public boolean getConditional(){
 		return conditional;
+	}
+	public void setBiasRelaxedPlanWithFaults(boolean biasRelaxedPlanWithFaults) {
+		this.biasRelaxedPlanWithFaults = biasRelaxedPlanWithFaults;
+	}
+	public boolean isBiasRelaxedPlanWithFaults() {
+		return biasRelaxedPlanWithFaults;
 	}
 }
