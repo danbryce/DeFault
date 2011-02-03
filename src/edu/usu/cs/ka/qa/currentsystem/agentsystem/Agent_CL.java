@@ -41,7 +41,7 @@ public class Agent_CL extends Agent
 		//Check the action's known preconditions.
 		if(!areActionPreConditionsSat(currAction, currState))
 		{
-			System.out.print(" #");
+			if(debug)System.out.print(" #");
 			return false;
 		}
 		
@@ -53,7 +53,7 @@ public class Agent_CL extends Agent
 		//Check whether the unsat possPre combination has already produced failure.
 		if(existsFailureInPastWithThisUnsatPossPreCombination(currAction, currState))
 		{
-			System.out.print(" %");
+			if(debug)System.out.print(" %");
 			return false;
 		}
 
@@ -61,7 +61,7 @@ public class Agent_CL extends Agent
 		//Check for failure in the past
 		if(existsActionFailureInPastEntailFailVar())
 		{
-			System.out.print(" $");
+			if(debug)System.out.print(" $");
 			return false;
 		}
 		
@@ -93,7 +93,7 @@ public class Agent_CL extends Agent
 		
 		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
 		{
-			System.out.println(" &");
+			if(debug)System.out.println(" &");
 			bdd.deref(failureExplanationSentence_bddRef);
 			return false;
 		}
