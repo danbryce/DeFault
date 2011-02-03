@@ -8,8 +8,10 @@ import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
 
 
-public class Agent_CL extends Agent {
-
+public class Agent_CL extends Agent 
+{
+	static boolean debug = false;
+	
 	public Agent_CL(String dFile, String pFile)
 	{
 		super(dFile, pFile);
@@ -24,6 +26,8 @@ public class Agent_CL extends Agent {
 	 * LOOKAHEAD - check for entailment of the plan's failure explanation ^ the KB.
 	 *
 	 * Check abstract base class Agent note for further details.
+	 * Note that old version of this method check AllPossPres for SAT and
+	 *  was aligned with a version of the Simulation that removed the first action of any plan in order to examine it.
 	 * 
 	 * @param currAction 	- IncompleteActionInstance
 	 * @param prevState 	- Set<Proposition>
@@ -35,8 +39,11 @@ public class Agent_CL extends Agent {
 	{
 		//RISKY
 		//Check the action's known preconditions.
-		if(!areActionPreConditionsSat(currAction, currState)) 
+		if(!areActionPreConditionsSat(currAction, currState))
+		{
+			System.out.print(" #");
 			return false;
+		}
 		
 		//CONSERVATIVE - Check the possPre's.
 		//if(!areActionPossPreConditionsSat(currAction, currState)) 
@@ -46,7 +53,7 @@ public class Agent_CL extends Agent {
 		//Check whether the unsat possPre combination has already produced failure.
 		if(existsFailureInPastWithThisUnsatPossPreCombination(currAction, currState))
 		{
-			//System.out.print(" %");
+			System.out.print(" %");
 			return false;
 		}
 
@@ -54,26 +61,44 @@ public class Agent_CL extends Agent {
 		//Check for failure in the past
 		if(existsActionFailureInPastEntailFailVar())
 		{
-			//System.out.print(" $");
+			System.out.print(" $");
 			return false;
 		}
 		
+		//This should never happen
+		if(plan == null || plan.size() == 0) return false;
+		
+		//LO0KAHEAD
+		//bdd.ref(bddRef_KB);
+		//int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef = RiskCounter.tryThisPFEGenerator(problem, plan, Planner.solver);
+		
+		//If the plan has failed, this will know about it. It's time to replan.
+		if(bdd.toString(failureExplanationSentence_bddRef).contains("TRUE")) return false;
+		//If the plan cannot fail, this will know about it. The agent can't help but succeed.
+		if(bdd.toString(failureExplanationSentence_bddRef).contains("FALSE")) return true;
+		
 		//LOOKAHEAD - Check for entailment of the plan's failure explanation ^ the KB.
 		//FailureExplanationSentence is entailed when should be. 
-		if(plan.size() != 0)
+
+		if(debug)
 		{
-			//bdd.ref(bddRef_KB);
-			problem.setInitialState(currState);
-			int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
-			if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
-			{
-				//System.out.print(" &");
-				bdd.deref(failureExplanationSentence_bddRef);
-				return false;
-			}
-			
-			bdd.deref(failureExplanationSentence_bddRef);
+			System.out.println("KB:");
+			System.out.println(bdd.toString(bddRef_KB));
+			System.out.println("PFE: ");
+			System.out.println(bdd.toString(failureExplanationSentence_bddRef));
+			System.out.println("ENTAILMENT RESULT: ");
+			System.out.println(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)));
 		}
+		
+		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
+		{
+			System.out.println(" &");
+			bdd.deref(failureExplanationSentence_bddRef);
+			return false;
+		}
+		
+		bdd.deref(failureExplanationSentence_bddRef);
 		
 		return true;
 	}

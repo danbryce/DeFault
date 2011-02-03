@@ -210,10 +210,7 @@ public class QTree
 			depth = 0;
 			
 			bddRefKB = agent.bdd.ref(agent.bdd.getOne());
-			
-			ActionInstance firstAction = plan.get(0);
-			List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
-			bddRefPFE = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);			
+			bddRefPFE  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			
 			numNodes++;
 			
@@ -319,9 +316,7 @@ public class QTree
 					}
 					else
 					{
-						ActionInstance firstAction = hypotheticalPlan.get(0);
-						List<ActionInstance> restOfPlan = hypotheticalPlan.subList(1, hypotheticalPlan.size());
-						bddRefPFE = RiskCounter.getFailureExplanationSentence_BDDRef(problem, restOfPlan, firstAction, Planner.solver);
+						bddRefPFE  = RiskCounter.tryThisPFEGenerator(agent.problem, hypotheticalPlan, Planner.solver);
 						isNewPlanNode = true;
 					}
 				}
@@ -424,22 +419,18 @@ public class QTree
 		SearchStatistics searchStatistics = new SearchStatistics();
 		SolverOptions solverOptions = new SolverOptions();
 		
-//		if(planner.getClass().equals(PODEBDDSolver.class))//JDD
-//		{
-			solverOptions.setUsePreferredOperators(true);
-			solverOptions.setUseDeferredEvaluation(true);
-			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-			solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+		solverOptions.setUsePreferredOperators(true);
+		solverOptions.setUseDeferredEvaluation(true);
+		solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+		solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+		
+		if(Planner.currPType.equals(Planner.PlannerTypes.JDD))
 			solverOptions.setBiasRelaxedPlanWithFaults(true);
-//		}
-//		else if (planner.getClass().equals(PODEFFSolver.class))//FF
-//		{
-//			solverOptions.setUsePreferredOperators(true);
-//			solverOptions.setUseDeferredEvaluation(true);
-//			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-//			solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
-//			solverOptions.setBiasRelaxedPlanWithFaults(false);
-//		}
+		else if (Planner.currPType.equals(Planner.PlannerTypes.AMIR))
+			solverOptions.setBiasRelaxedPlanWithFaults(false);
+		else
+			System.out.println("NON-RECOGNIZED PLANNER TYPE");
+		
 		try {
 			RPSolver = new RelaxedPlanSolver(agent.domain, problem, searchStatistics, solverOptions);
 			BDDRiskSet fs = (BDDRiskSet) RPSolver.getExplanation();

@@ -19,13 +19,13 @@ public class BatchTester_Simulation_Agent_PL_QA
 		System.out.println("<#QsAsked> <#risksLearnedQA> <#risksLearnedPL> ");
 			
 		//Just mess around with the for loop values...
-		for(int gridSize = 2; gridSize <= 2; gridSize *= 2) //2-32
+		for(int gridSize = 4; gridSize <= 4; gridSize *= 2) //2-32
 		{
-			for(double bridgeDensity = .5; bridgeDensity <= .5; bridgeDensity += 0.25) //0.0 - 1.0
+			for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
 			{	
-				for(int version = 2; version <= 2; version++)//1-3
+				for(int version = 1; version <= 1; version++)//1-3
 				{
-					for(int numFile = 1; numFile <= 10; numFile++) //numFiles 1-10
+					for(int numFile = 1; numFile <= 1; numFile++) //numFiles 1-10
 					{
 						args[0] = path + "bridges_v" + version + "_" + gridSize + "_" + bridgeDensity + "_" + numFile + extension;
 						args[1] = path + "bridges_problem" + extension;

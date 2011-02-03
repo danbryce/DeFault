@@ -203,8 +203,37 @@ public class RiskCounter {
 		
 		return solvableDomains;
 	}
+	
+	public static int tryThisPFEGenerator(Problem problem, List<ActionInstance> plan, Solver solver)
+	{
+		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
+		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state
+		for (ActionInstance action : plan) 
+			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+
+		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
+		bdd.ref(crs);
+		for(Proposition p : problem.getGoalAction().getPreconditions()){
+			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);
+			if(risk != null)
+			{
+				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
+				bdd.deref(crs);
+				crs = tmp;
+				bdd.ref(crs);
+			}
+			else
+			{
+				bdd.deref(crs);
+				crs = bdd.getOne();
+				bdd.ref(crs);
+				break;
+			}
+		}
+		return crs;
+	}
 		
-	/**
+/*	*//**
 	 * This method is altered from the above method getmodelCount for use by the ka.Agent.
 	 * It currently assumes: 
 	 * 	the solver instance parameter is not important in the RiskCounterNode's getSuccessorNode method.
@@ -218,7 +247,7 @@ public class RiskCounter {
 	 *  deref'ed by ka.Agent after use.
 	 *  
 	 *  Note: Make sure the problem's initial state and actions are updated before this method (and the planner) are called, of course.
-	 */
+	 *//*
 	public static int getFailureExplanationSentence_BDDRef(Problem problem, List<ActionInstance> plan, ActionInstance currAction, Solver solver) 
 	{		
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 2); // Figure out which risks are true right now
@@ -235,7 +264,7 @@ public class RiskCounter {
 			for (ActionInstance action : plan) // Add the others
 			{
 				try{nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance) action));}
-				catch(Exception e){break;}
+				catch(Exception e){e.printStackTrace(); break; }
 			}
 		}
 
@@ -271,10 +300,16 @@ public class RiskCounter {
 		return crs;
 	}
 	
-	/**
+	public static int getFailureExplanationSentence_BDDRef(Problem problem, List<ActionInstance> plan, Solver solver) 
+	{		
+		List<ActionInstance> restOfPlan = plan.subList(1, plan.size()-1);
+		return getFailureExplanationSentence_BDDRef(problem, restOfPlan, plan.get(0), solver); 
+	}
+	
+	*//**
 	 * This method is altered from the above method to return the risks that may/will cause the plan to fail,
 	 * not just a TRUE in the else case.
-	 */
+	 *//*
 	public static int getFailureExplanationSentence_BDDRef2(Problem problem, List<ActionInstance> plan, Solver solver) 
 	{	
 		//System.out.println("IN getFailureExplanationSentence_BDDRef2");
@@ -319,7 +354,7 @@ public class RiskCounter {
 		}
 		//System.out.println("AFTER"); bdd.printSet(crs);
 		return crs;
-	}
+	}*/
 	
 //	public static int getSolvableDomains(int bdd) {
 //		return RiskCounter.bdd.getSetCount(bdd);

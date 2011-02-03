@@ -3,6 +3,7 @@ package edu.usu.cs.ka.qa.currentsystem.agentsystem;
 import java.math.BigInteger;
 import java.util.*;
 
+import edu.usu.cs.ka.qa.currentsystem.simulator.Simulation_PL_QA;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
 
 import edu.usu.cs.pddl.domain.*;
@@ -26,6 +27,7 @@ public class Planner
     int initialNumRisks;
     
     static public Solver solver;
+    static public PlannerTypes currPType;
 
 	//Results stuff
 	Long startTime;
@@ -89,14 +91,16 @@ public class Planner
 	 */
 	public List<ActionInstance> getPlan(PlannerTypes plannerType)
 	{
-		if(numTimesPlannerCalled >= 100000) return null;
+		if(numTimesPlannerCalled >= Simulation_PL_QA.maxPlannerCalls) return null;
+		
+		currPType = plannerType;
 		
 		List<ActionInstance> preservedActionsList = Actions_Utility.makeActionsListDeepCopy(problem.getActions());
 		
 		List<ActionInstance> plan = null;
 		if(plannerType.equals(PlannerTypes.JDD)) 	plan = runJDDplanner();
-		if(plannerType.equals(PlannerTypes.PODE1)) plan = runPODE1planner();
-		if(plannerType.equals(PlannerTypes.AMIR))  plan = runAMIRplanner();
+		if(plannerType.equals(PlannerTypes.PODE1)) 	plan = runPODE1planner();
+		if(plannerType.equals(PlannerTypes.AMIR))  	plan = runAMIRplanner();
 		
 		problem.setActionInstances(preservedActionsList);
 		

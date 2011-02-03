@@ -156,7 +156,7 @@ public class QA
 		if(plan == null) return false;
 		
 		HashSet<Fault> risksInPFE = new HashSet<Fault>();
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		int supports_bdd = agent.getBDD().support(failureExplanationSentence_bddRef);
 		
 		String supports = agent.bdd.toString(supports_bdd);		
@@ -192,7 +192,7 @@ public class QA
 		//Planner.printPlanShort(plan); Planner.printPlanLong(plan);
 		
 		HashSet<Fault> risksInPFE = new HashSet<Fault>();
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		
 		for(Fault risk : agent.risks)
 		{	
@@ -244,9 +244,7 @@ public class QA
 		
 		//System.out.println("\nIN askAllMinTermsInPFE_QA()");
 		
-		ActionInstance firstAction = plan.get(0);
-		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		String minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
 		{
@@ -280,7 +278,7 @@ public class QA
 			chosenRiskForQA.add(chosenRisk);
 			askRisksInGivenList(chosenRiskForQA);
 			
-			failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
 		
@@ -345,7 +343,7 @@ public class QA
 		if(plan == null) return false;
 		
 		HashSet<Fault> possPreRisksInPFE = new HashSet<Fault>();
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		int supports_bdd = agent.bdd.support(failureExplanationSentence_bddRef);
 		
 		String supports = agent.bdd.toString(supports_bdd);		
@@ -385,7 +383,7 @@ public class QA
 		//Planner.printPlanShort(plan); Planner.printPlanLong(plan);
 		
 		HashSet<Fault> possPreRisksInPFE = new HashSet<Fault>();
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		
 		for(Fault risk : agent.risks)
 		{	
@@ -440,9 +438,7 @@ public class QA
 		
 		//System.out.println("\nIN askAllMinTermsInPFE_QA()");
 		
-		ActionInstance firstAction = plan.get(0);
-		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		String minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
 		{
@@ -480,7 +476,7 @@ public class QA
 			chosenRiskForQA.add(chosenRisk);
 			askRisksInGivenList(chosenRiskForQA);
 			
-			failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
 		
@@ -524,7 +520,7 @@ public class QA
 		if(plan == null) return false;
 		
 		HashSet<Fault> possPreRisksInPFE = new HashSet<Fault>();
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		int supports_bdd = agent.bdd.support(failureExplanationSentence_bddRef);
 		
 		String supports = agent.bdd.toString(supports_bdd);		
@@ -565,7 +561,7 @@ public class QA
 		//Planner.printPlanShort(plan); Planner.printPlanLong(plan);
 		
 		HashSet<Fault> possPreRisksInPFE = new HashSet<Fault>();
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef2(agent.problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		
 		for(Fault risk : agent.risks)
 		{	
@@ -618,10 +614,8 @@ public class QA
 		if(plan == null) return false;
 		
 		//System.out.println("\nIN askAllMinTermsInPFE_QA()");
-		
-		ActionInstance firstAction = plan.get(0);
-		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		String minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
 		{
@@ -662,7 +656,7 @@ public class QA
 			chosenRiskForQA.add(chosenRisk);
 			askRisksInGivenList(chosenRiskForQA);
 			
-			failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
 		
@@ -733,12 +727,7 @@ public class QA
 		
 		if(debug)System.out.println("\nIN askBestQTree_QA()");
 		
-		//Agent a, List<ActionInstance> p, boolean is1StepLA, boolean isAB, boolean isAvg, boolean isRPS
-		//QTree qTree = new QTree(agent, plan, is1Step, isAB, isAvg, isRPS);
-		
-		ActionInstance firstAction = plan.get(0);
-		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		String minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
 		{	
@@ -752,7 +741,7 @@ public class QA
 			chosenRiskForQA.add(bestQFault);
 			askRisksInGivenList(chosenRiskForQA);
 			
-			failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
 		
@@ -772,10 +761,8 @@ public class QA
 	private LinkedList<LinkedList<Integer>> getCubes(List<ActionInstance> plan)
 	{
 		LinkedList<LinkedList<Integer>> cubes = new LinkedList<LinkedList<Integer>>();
-		
-		ActionInstance firstAction = plan.get(0);
-		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		String[] minTerms = agent.bdd.toString(failureExplanationSentence_bddRef).split("\n");
 		
 		//System.out.println("IN getCubes...");
@@ -800,10 +787,7 @@ public class QA
 	private LinkedList<LinkedList<Integer>> getMinTerms(List<ActionInstance> plan)
 	{
 		LinkedList<LinkedList<Integer>> minTerms = new LinkedList<LinkedList<Integer>>();
-		
-		ActionInstance firstAction = plan.get(0);
-		List<ActionInstance> restOfPlan = plan.subList(1, plan.size());
-		int failureExplanationSentence_bddRef  = RiskCounter.getFailureExplanationSentence_BDDRef(agent.problem, restOfPlan, firstAction, Planner.solver);
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		String[] minTermsString = agent.getBDD().toString(failureExplanationSentence_bddRef).split("\n");
 		
 		for(int index = 0; index < minTermsString.length; index++)

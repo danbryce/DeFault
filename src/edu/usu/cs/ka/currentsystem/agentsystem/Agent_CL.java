@@ -1,4 +1,6 @@
-package edu.usu.cs.ka.currentsystem.agentsystem;
+//This class was not used for the final results of the conference paper.
+
+/*package edu.usu.cs.ka.currentsystem.agentsystem;
 
 import java.util.*;
 
@@ -15,7 +17,7 @@ public class Agent_CL extends Agent {
 		super(dFile, pFile);
 	}
 				
-	/**
+	*//**
 	 * CONSERVATIVE - includes all RISKY checks++:
 	 * 		RISKY - check the action's known preconditions.
 	 * 			  - check whether the unsat possPre combination has already produced failure.
@@ -29,7 +31,7 @@ public class Agent_CL extends Agent {
 	 * @param prevState 	- Set<Proposition>
 	 * @param plan 			- List<ActionInstance>
 	 * @return boolean 		- can action can be applied?
-	 */
+	 *//*
 	@Override
 	public boolean isActionApplicable(IncompleteActionInstance currAction, Set<Proposition> currState, List<ActionInstance> plan)
 	{
@@ -79,3 +81,4 @@ public class Agent_CL extends Agent {
 	}
 				
 }//end class
+*/
