@@ -141,7 +141,7 @@ public class QTree
 			best = Integer.MAX_VALUE;
 		
 		n.expandNode();
-		if(n.isLeafNode) return 0;
+		if(n.isLeafNode) return n.depth;
 		for(QNodePair child : n.children) 
 		{
 			if(usePruning)
