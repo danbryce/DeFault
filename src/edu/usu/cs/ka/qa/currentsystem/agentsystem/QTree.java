@@ -53,7 +53,7 @@ public class QTree
 
 	QNode whichNodeToExpand(){return openList.remove(0);}		//some switch for an expansion strategy
 	
-	Fault getBestQ()
+	Fault getBestQ(boolean isNextPossPreOnly)
 	{
 		if(is1StepLookahead)
 		{
@@ -65,33 +65,36 @@ public class QTree
 			root.expandNode();
 			for(QNodePair child : root.children)
 			{
-				child.posQNode.expandNode();
-				child.negQNode.expandNode();
-				
+				boolean isNextActionPossPreFault = false;
 				Fault f = agent.numVarIndexToRiskForCubeOrMinterm.get(child.posQNode.qFaultIndex);
-				int bddRef_QFault = agent.riskToBDD.get(f);
-				
-				int bddRef_MasterKB = agent.get_bddRef_KB();
-				
-				int bbdRef_posChildPFE = child.posQNode.bddRefPFE;
-				int bbdRef_negChildPFE = child.negQNode.bddRefPFE;
-				
-				int bddRef_SuccessPosSide = agent.bdd.and(bddRef_QFault, bddRef_MasterKB, agent.bdd.not(bbdRef_posChildPFE));
-				int bddRef_SuccessNegSide = agent.bdd.and(agent.bdd.not(bddRef_QFault), bddRef_MasterKB, agent.bdd.not(bbdRef_negChildPFE));
-				
-				BigDecimal posModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessPosSide));
-				BigDecimal negModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessNegSide));
+				if(f.getActionName().equals(plan.get(0).getName()) && f.getRiskName().equals(Fault.PRECOPEN))
+					isNextActionPossPreFault = true;
+				if((isNextPossPreOnly && isNextActionPossPreFault) || !isNextPossPreOnly)
+				{	
+					child.posQNode.expandNode();
+					child.negQNode.expandNode();
 
-				double posProb = posModels.divide(totalPossModels).doubleValue();
-				double negProb = negModels.divide(totalPossModels).doubleValue();
-				
-				double entropy = -posProb * Math.log(posProb) - negProb * Math.log(negProb);
-				if(entropy < minEntropy)
-				{
-					minEntropy = entropy;
-					bestQ = f;
+					int bddRef_QFault = agent.riskToBDD.get(f);					
+					int bddRef_MasterKB = agent.get_bddRef_KB();
+					int bbdRef_posChildPFE = child.posQNode.bddRefPFE;
+					int bbdRef_negChildPFE = child.negQNode.bddRefPFE;
+					
+					int bddRef_SuccessPosSide = agent.bdd.and(bddRef_QFault, bddRef_MasterKB, agent.bdd.not(bbdRef_posChildPFE));
+					int bddRef_SuccessNegSide = agent.bdd.and(agent.bdd.not(bddRef_QFault), bddRef_MasterKB, agent.bdd.not(bbdRef_negChildPFE));
+					
+					BigDecimal posModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessPosSide));
+					BigDecimal negModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessNegSide));
+	
+					double posProb = posModels.divide(totalPossModels).doubleValue();
+					double negProb = negModels.divide(totalPossModels).doubleValue();
+					
+					double entropy = -posProb * Math.log(posProb) - negProb * Math.log(negProb);
+					if(entropy < minEntropy)
+					{
+						minEntropy = entropy;
+						bestQ = f;
+					}
 				}
-				
 			}
 			planner.setProblem(agent.getProblem());
 			if(debug)System.out.println("NUMNODES: " + numNodes);
@@ -129,7 +132,11 @@ public class QTree
 	{
 		int best;
 		if(usePruning)
+		{
+			if( n.depth >= beta)
+				return n.depth;
 			best = beta;
+		}
 		else
 			best = Integer.MAX_VALUE;
 		
@@ -271,16 +278,8 @@ public class QTree
 		 */
 		List<QNodePair> expandNode()
 		{					
-				
-			//if(KB AND PFE == FALSE) // termination condition - success - is leafnode
-			if(agent.bdd.and(bddRefKB, bddRefPFE) == agent.bdd.getZero())
-			{
-				//Plan will succeed given the knowledge in the KB
-				isLeafNode = true;
-				if(debug)System.out.println(this + " : " + this.parent);
-				return null;
-			}
-			else if(agent.bdd.and(bddRefKB, agent.bdd.not(bddRefPFE)) == agent.bdd.getZero())
+			
+			if(agent.bdd.and(bddRefKB, agent.bdd.not(bddRefPFE)) == agent.bdd.getZero())
 			{
 				//The plan will fail given the knowledge in the KB
 				List<ActionInstance> fakeActions = updateActionsForNewPlan(this);
@@ -288,10 +287,12 @@ public class QTree
 				
 				if(useRelaxedPlanSolver)
 				{
+					
 					int bddREF_RPS_PFE = getPFE_RPSolver();
 					if(debug)System.out.print("* ");	
-					if(bddREF_RPS_PFE == 0)
+					if(bddREF_RPS_PFE == 0)//
 					{
+						bddRefPFE = agent.bdd.getZero();//
 						isLeafNode = true;
 						isNewPlanNode = true;
 						if(debug)System.out.println(this + " : " + this.parent);
@@ -309,6 +310,7 @@ public class QTree
 					if(debug)System.out.print("* ");	
 					if(hypotheticalPlan == null)
 					{
+						bddRefPFE = agent.bdd.getZero();//
 						isLeafNode = true;
 						isNewPlanNode = true;
 						if(debug)System.out.println(this + " : " + this.parent);
@@ -320,6 +322,14 @@ public class QTree
 						isNewPlanNode = true;
 					}
 				}
+			}
+			//if(KB AND PFE == FALSE) // termination condition - success - is leafnode
+			if(agent.bdd.and(bddRefKB, bddRefPFE) == agent.bdd.getZero())
+			{
+				//Plan will succeed given the knowledge in the KB
+				isLeafNode = true;
+				if(debug)System.out.println(this + " : " + this.parent);
+				return null;
 			}
 			
 			if(debug)System.out.println(this + " : " + this.parent);
@@ -351,8 +361,6 @@ public class QTree
 
 			return this.children;
 		}
-		
-		
 		
 		//Integer numChildren(QNode currNode) {return 0;}
 		Integer numDescendents(){return 0;}			//Children’s children, etc.

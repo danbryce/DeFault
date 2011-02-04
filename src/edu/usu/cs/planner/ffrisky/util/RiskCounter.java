@@ -208,10 +208,28 @@ public class RiskCounter {
 	{
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state
-		for (ActionInstance action : plan) 
-			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+		for (ActionInstance action : plan)
+		{
+			try{ nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action)); }
+			catch(Exception e) 
+			{
+				//e.printStackTrace(); 
+				int crs = bdd.getOne();
+				bdd.ref(crs);
+				return crs;
+			}
+		}
 
-		int crs = nodes.get(nodes.size() - 1).getActRisks(); //add critical risks for goals
+		int crs;
+		try{ crs = nodes.get(nodes.size() - 1).getActRisks(); }//add critical risks for goals
+		catch(Exception e) 
+		{
+			//e.printStackTrace(); 
+			crs = bdd.getOne();
+			bdd.ref(crs);
+			return crs;
+		}
+		
 		bdd.ref(crs);
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
 			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);

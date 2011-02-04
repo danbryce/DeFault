@@ -19,14 +19,18 @@ public class QA
 								BESTCubeVar_IN_PFE, BESTMintermVar_IN_PFE, 
 								BESTPossPreCubeVar_IN_PFE, BESTPossPreMintermVar_IN_PFE,
 								
-								NextPossPres_IN_PLAN, NextPossPres_IN_PFE,
-								NextCriticalPossPres_IN_PFE, NextBESTPossPreCubeVar_IN_PFE, NextBESTPossPreMintermVar_IN_PFE,
-								
 								BEST_QTreeOneStepReg, BEST_QTreeOneStepRPS,
 								BEST_QTreeFullMaxReg, BEST_QTreeFullMaxRPS,
 								BEST_QTreeFullAvgReg, BEST_QTreeFullAvgRPS,
 								BEST_QTreeABMaxReg,   BEST_QTreeABMaxRPS,	
-								BEST_QTreeABAvgReg,   BEST_QTreeABAvgRPS
+								BEST_QTreeABAvgReg,   BEST_QTreeABAvgRPS,
+								
+								NextPossPres_IN_PLAN, NextPossPres_IN_PFE, NextCriticalPossPres_IN_PFE, 
+								NextBESTPossPreCubeVar_IN_PFE, NextBESTPossPreMintermVar_IN_PFE,
+								
+								NextBESTPossPre_QTreeOneStepReg, NextBESTPossPree_QTreeOneStepRPS
+								
+
 								}; //Risks
 								
 	public static enum PFE_Type{CUBE, MINTERM};
@@ -53,49 +57,42 @@ public class QA
 	{
 		switch(qaType)
 		{
-			case NONE: 								return false;
-			case ALL: 								return askAllRisks_QA();
-			case ALL_IN_PLAN: 						return askAllRisksInPlan_QA(plan);
-			case ALL_IN_PFE:	 					return askAllRisksInPFE_QA(plan);
-			//case ALLCritical_IN_PFE:				return askAllCriticalRisksInPFE_QA(plan);
-			case BESTCubeVar_IN_PFE: 				return askBestCubeVarInPFE_QA(plan);
-			//case BESTMintermVar_IN_PFE: 			return askBestMintermVarInPFE_QA(plan);
+			case NONE: 									return false;
+			case ALL: 									return askAllRisks_QA();
+			case ALL_IN_PLAN: 							return askAllRisksInPlan_QA(plan);
+			case ALL_IN_PFE:	 						return askAllRisksInPFE_QA(plan);
+			//case ALLCritical_IN_PFE:					return askAllCriticalRisksInPFE_QA(plan);
+			case BESTCubeVar_IN_PFE: 					return askBestCubeVarInPFE_QA(plan);
+			//case BESTMintermVar_IN_PFE: 				return askBestMintermVarInPFE_QA(plan);
+			case BEST_QTreeOneStepReg:					return askBestQTreeOneStepRegPlanner_QA(plan);
+			case BEST_QTreeOneStepRPS:					return askBestQTreeOneStepRPS_QA(plan);
 			
 			//case ALLPossPres: 						return askAllPossPreRisks_QA();
 			//case ALLPossPres_IN_PLAN: 				return askAllPossPreRisksInPlan_QA(plan);
-			//case ALLPossPres_IN_PFE: 				return askAllPossPreRisksInPFE_QA(plan);
-			//case ALLCriticalPossPres_IN_PFE: 		return askAllCriticalPossPreRisksInPFE_QA(plan);
-			//case BESTPossPreCubeVar_IN_PFE: 		return askBestPossPreCubeVarInPFE_QA(plan);
+			//case ALLPossPres_IN_PFE: 					return askAllPossPreRisksInPFE_QA(plan);
+			//case ALLCriticalPossPres_IN_PFE: 			return askAllCriticalPossPreRisksInPFE_QA(plan);
+			//case BESTPossPreCubeVar_IN_PFE: 			return askBestPossPreCubeVarInPFE_QA(plan);
 			//case BESTPossPreMintermVar_IN_PFE: 		return askBestPossPreMintermVarInPFE_QA(plan);
+			//BESTPossPre_QTreeOneStepReg
+			//BESTPossPre_QTreeOneStepRPS
+			//case BEST_QTreeFullMaxReg:				return askBestQTreeFullMaxRegPlanner_QA(plan);
+			//case BEST_QTreeFullMaxRPS:				return askBestQTreeFullMaxRPS_QA(plan);
+			case BEST_QTreeABMaxReg:					return askBestQTreeABMaxRegPlanner_QA(plan);//
+			case BEST_QTreeABMaxRPS:					return askBestQTreeABMaxRPS_QA(plan);//
+			//case BEST_QTreeFullAvgReg:				return askBestQTreeFullAvgRegPlanner_QA(plan); //confirm it's working
+			//case BEST_QTreeABAvgRPS:					return askBestQTreeABAvgRPS_QA(plan); //confirm it's working
+			//case BEST_QTreeABAvgReg:					return askBestQTreeABAvgRegPlanner_QA(plan); //confirm it's working
+			//case BEST_QTreeFullAvgRPS:				return askBestQTreeFullAvgRPS_QA(plan); //confirm it's working
 			
 			//case NextPossPres_IN_PLAN: 				return askNextPossPreRisksInPlan_QA(plan);
 			//case NextPossPres_IN_PFE: 				return askNextPossPreRisksInPFE_QA(plan);
 			//case NextCriticalPossPres_IN_PFE: 		return askNextCriticalPossPreRisksInPFE_QA(plan);
-			case NextBESTPossPreCubeVar_IN_PFE: 	return askBestNextPossPreCubeVarInPFE_QA(plan);
+			case NextBESTPossPreCubeVar_IN_PFE: 		return askBestNextPossPreCubeVarInPFE_QA(plan);
 			//case NextBESTPossPreMintermVar_IN_PFE: 	return askBestNextPossPreMintermVarInPFE_QA(plan);
-			
-			case BEST_QTreeOneStepReg:				return askBestQTreeOneStepRegPlanner_QA(plan);
-			//ALLposspres
-			//nextPossPre
-			
-			case BEST_QTreeOneStepRPS:				return askBestQTreeOneStepRPS_QA(plan);
-			//ALLposspres
-			//nextPossPre
-			
-			//case BEST_QTreeFullMaxReg:				return askBestQTreeFullMaxRegPlanner_QA(plan);
-			//case BEST_QTreeFullMaxRPS:				return askBestQTreeFullMaxRPS_QA(plan);
-			
-			case BEST_QTreeABMaxReg:				return askBestQTreeABMaxRegPlanner_QA(plan);//
-			case BEST_QTreeABMaxRPS:				return askBestQTreeABMaxRPS_QA(plan);//
-			
-			//case BEST_QTreeFullAvgReg:				return askBestQTreeFullAvgRegPlanner_QA(plan); //confirm it's working
-			//case BEST_QTreeABAvgRPS:				return askBestQTreeABAvgRPS_QA(plan); //confirm it's working
-			
-			//case BEST_QTreeABAvgReg:				return askBestQTreeABAvgRegPlanner_QA(plan); //confirm it's working
-			//case BEST_QTreeFullAvgRPS:				return askBestQTreeFullAvgRPS_QA(plan); //confirm it's working
-			
+			case NextBESTPossPre_QTreeOneStepReg:		return askBestNextPossPreQTreeOneStepRegPlanner_QA(plan);
+			case NextBESTPossPree_QTreeOneStepRPS:		return askBestNextPossPreQTreeOneStepRPS_QA(plan);
 
-			default: 								return false;
+			default: 									return false;
 		}
 	}
 	
@@ -262,7 +259,7 @@ public class QA
 			for (int i = 0; i < agent.getNumBDDVars()-1; i++)
 				for(LinkedList<Integer> clause : clauses_vars)
 					if(clause.contains(i))
-						bddVarsSummedValues[i] += 1.0/clause.size();
+						bddVarsSummedValues[i] += 1.0/Math.pow(clause.size(), 2);
 		
 			Double max = 0.0;
 			int indexOfMax = 0;
@@ -457,7 +454,7 @@ public class QA
 				for(LinkedList<Integer> clause : clauses_vars)
 					if(agent.numVarIndexToRiskForCubeOrMinterm.get(i).getRiskName().equals(Fault.PRECOPEN))
 						if(clause.contains(i))
-							bddVarsSummedValues[i] += 1.0/clause.size();
+							bddVarsSummedValues[i] += 1.0/Math.pow(clause.size(), 2);
 		
 			Double max = 0.0;
 			int indexOfMax = 0;
@@ -636,7 +633,7 @@ public class QA
 					Fault riskToExamine = agent.numVarIndexToRiskForCubeOrMinterm.get(i);
 					if(riskToExamine.getRiskName().equals(Fault.PRECOPEN) && riskToExamine.getActionName().equals(plan.get(0).getName()))
 						if(clause.contains(i))
-							bddVarsSummedValues[i] += 1.0/clause.size();
+							bddVarsSummedValues[i] += 1.0/Math.pow(clause.size(), 2);
 				}
 		
 			Double max = 0.0;
@@ -670,58 +667,80 @@ public class QA
 	//ENTROPY
 	boolean askBestQTreeOneStepRegPlanner_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, true, false, false, false);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, true, false, false, false, false);
 	}
 	
 	boolean askBestQTreeOneStepRPS_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, true, false, false, true);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, true, false, false, true, false);
+	}
+	
+	boolean askBestNextPossPreQTreeOneStepRegPlanner_QA(List<ActionInstance> plan)
+	{
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, true, false, false, false, true);
+	}
+	
+	boolean askBestNextPossPreQTreeOneStepRPS_QA(List<ActionInstance> plan)
+	{
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, true, false, false, true, true);
 	}
 	
 	//REGULAR PLANNER
 	boolean askBestQTreeFullMaxRegPlanner_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, false, false, false);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, false, false, false, false);
 	}
 	
 	boolean askBestQTreeABMaxRegPlanner_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, true, false, false);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, true, false, false, false);
 	}
 	
 	boolean askBestQTreeFullAvgRegPlanner_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, false, true, false);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, false, true, false, false);
 	}
 	
 	boolean askBestQTreeABAvgRegPlanner_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, true, true, false);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, true, true, false, false);
 	}
 	
 	//RELAXED PLAN SOLVER
 	boolean askBestQTreeFullMaxRPS_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, false, false, true);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, false, false, true, false);
 	}
 	
 	boolean askBestQTreeABMaxRPS_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, true, false, true);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, true, false, true, false);
 	}
 	
 	boolean askBestQTreeFullAvgRPS_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, false, true, true);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, false, true, true, false);
 	}
 	
 	boolean askBestQTreeABAvgRPS_QA(List<ActionInstance> plan)
 	{
-		return askBestQTree_QA(plan, false, true, true, true);
+							//(plan, is1Step, isAB, isAvg, isRPS, isNextPossPre)
+		return askBestQTree_QA(plan, false, true, true, true, false);
 	}
 	
 	//main for all QTree Variations
-	boolean askBestQTree_QA(List<ActionInstance> plan, boolean is1Step, boolean isAB, boolean isAvg, boolean isRPS)
+	boolean askBestQTree_QA(List<ActionInstance> plan, boolean is1Step, boolean isAB, boolean isAvg, boolean isRPS, boolean isNextPossPre)
 	{
 		if(plan == null) return false;
 		
@@ -732,7 +751,7 @@ public class QA
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
 		{	
 			QTree qTree = new QTree(agent, plan, is1Step, isAB, isAvg, isRPS);
-			Fault bestQFault = qTree.getBestQ();
+			Fault bestQFault = qTree.getBestQ(isNextPossPre);
 			if(debug)System.out.println("BESTQ: " + bestQFault);
 			if(bestQFault == null)
 				break;

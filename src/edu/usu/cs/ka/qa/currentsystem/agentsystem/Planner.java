@@ -137,6 +137,7 @@ public class Planner
 		solverOptions.setUsePreferredOperators(true);
 		solverOptions.setUseDeferredEvaluation(true);
 		solverOptions.setUseMultipleSupportersInPlanningGraph(false);
+		solverOptions.setBiasRelaxedPlanWithFaults(false);
 		
 //		System.out.println("!");
 //		Actions_Utility.printActionInListOfActions(problem.getActions(), "initialize");
