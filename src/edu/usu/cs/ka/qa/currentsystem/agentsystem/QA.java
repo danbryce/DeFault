@@ -759,11 +759,14 @@ public class QA
 			ArrayList<Fault> chosenRiskForQA = new ArrayList<Fault>();
 			chosenRiskForQA.add(bestQFault);
 			askRisksInGivenList(chosenRiskForQA);
-			
+						
 			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
 		
+		//recall that the QTree uses the planner with another problem to hypothesize
+		Planner.instance.setProblem(agent.getProblem());
+				
 		if(minTerms.contains("TRUE")) return true;
 		
 		return false;

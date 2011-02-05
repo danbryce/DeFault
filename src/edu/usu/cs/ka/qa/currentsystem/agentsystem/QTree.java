@@ -48,6 +48,8 @@ public class QTree
 		planner.setProblem(problem);
 		numNodes = 0;
 		
+		//currentState = new HashSet(agent.getProblem().getInitialState());
+		
 		if(debug)System.out.println("BUILDTREE...");	
 	}
 
@@ -208,6 +210,17 @@ public class QTree
 			
 	class QNode
 	{
+		Boolean isNewPlanNode = false;	//this node has a new plan bc of previous PFE SAT/TRUEfor its parent or is root node.
+		Boolean isLeafNode = false;		//all support vars/faults in PFE were answered and PFE has gone to FALSE Ð no minTerms left			
+		
+		QNode parent; 				// a reference
+		List <QNodePair> children; 	//references
+		Integer qFaultIndex; 		//the question that was asked to arrive at this node
+		int bddRefKB; 				//additive over the course of all plans/PFEs
+		Integer depth;
+		
+		int bddRefPFE; 				//a bdd reference for this node's inherited and unique "knowledge"
+
 		public QNode()//root node constructor
 		{
 			isNewPlanNode = true;
@@ -243,29 +256,12 @@ public class QTree
 		
 		public String toString(){return "depth: " + depth + ", index: " + qFaultIndex + ", isReplan: " + isNewPlanNode + ", isLeaf: " + isLeafNode + ", " + removeNULLT(agent.bdd.toString(bddRefKB)); }
 			
-		Boolean isNewPlanNode = false;		//this node has a new plan bc of previous PFE SAT/TRUE
-											// for its parent or is root node.
-		Boolean isLeafNode = false;			//all support vars/faults in PFE were answered and
-											//PFE has gone to FALSE Ð no minTerms left			
-
-		QNode parent; 				// a reference
-		List <QNodePair> children; 		//references
-		Integer qFaultIndex; 		//the question that was asked to arrive at this node
-		int bddRefKB; 				//additive over the course of all plans/PFEs
-		Integer depth;
-		
-		int bddRefPFE; 					//a bdd reference
-		//List<ActionInstance> actions;	// a ref
-		//List<ActionInstance> plan;		//a ref
-
-		Boolean isPFESAT(){return false;}		//determines whether this node is a NewPlanNode
-		Boolean areQsRemaining(){return false;}		//determines if the Node is a leaf Ð plan is good
-		List<String> currentPFE(){return null;}		//reduced PFE using varsOfPFEanswered
-		Boolean cutoffStrategy(){return false;}		//some switch for when to stop expanding nodes Ð 
+		Boolean isPFESAT()			{return false;}		//determines whether this node is a NewPlanNode
+		Boolean areQsRemaining()	{return false;}		//determines if the Node is a leaf Ð plan is good
+		List<String> currentPFE()	{return null;}		//reduced PFE using varsOfPFEanswered
+		Boolean cutoffStrategy()	{return false;}		//some switch for when to stop expanding nodes Ð 
 		// then default to our sum over vars heuristic?
-		List<Integer>  nextQs(){return null;}		//used to expand a node
-		
-		
+		List<Integer> nextQs()		{return null;}		//used to expand a node
 		
 		/**
 		 * Q: for replanning nodes, there was a q answered, and the resulting KB entailed the PFE of both itself and its parent
@@ -278,7 +274,6 @@ public class QTree
 		 */
 		List<QNodePair> expandNode()
 		{					
-			
 			if(agent.bdd.and(bddRefKB, agent.bdd.not(bddRefPFE)) == agent.bdd.getZero())
 			{
 				//The plan will fail given the knowledge in the KB
@@ -287,7 +282,6 @@ public class QTree
 				
 				if(useRelaxedPlanSolver)
 				{
-					
 					int bddREF_RPS_PFE = getPFE_RPSolver();
 					if(debug)System.out.print("* ");	
 					if(bddREF_RPS_PFE == 0)//
@@ -341,10 +335,9 @@ public class QTree
 			String supportsKB = agent.bdd.toString(bddRefSupportsKB);
 			children = new LinkedList<QNodePair>();
 			
-			//System.out.println(supportsKB);
+			if(debug)System.out.println(supportsKB);
 
-			//else continue examining supports as below
-			
+			//continue examining supports as below
 			for(int i = 0; i < agent.getNumBDDVars() - 1; i++)// or more than -1 ?
 			{
 				if(!supportsPFE.contains("TRUE") && !supportsPFE.contains("FALSE") && supportsPFE.charAt(i) != '-') 
@@ -362,9 +355,8 @@ public class QTree
 			return this.children;
 		}
 		
-		//Integer numChildren(QNode currNode) {return 0;}
-		Integer numDescendents(){return 0;}			//ChildrenÕs children, etc.
-		
+		Integer numChildren() {return 0;}
+		Integer numDescendents(){return 0;}	//ChildrenÕs children, etc.
 		Integer depth(){return 0;}	
 	}
 	
@@ -437,8 +429,8 @@ public class QTree
 		else if (Planner.currPType.equals(Planner.PlannerTypes.AMIR))
 			solverOptions.setBiasRelaxedPlanWithFaults(false);
 		else
-			System.out.println("NON-RECOGNIZED PLANNER TYPE");
-		
+			if(debug) System.out.println("NON-RECOGNIZED PLANNER TYPE");
+				
 		try {
 			RPSolver = new RelaxedPlanSolver(agent.domain, problem, searchStatistics, solverOptions);
 			BDDRiskSet fs = (BDDRiskSet) RPSolver.getExplanation();

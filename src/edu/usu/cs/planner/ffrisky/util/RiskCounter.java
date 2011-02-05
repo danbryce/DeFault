@@ -206,6 +206,9 @@ public class RiskCounter {
 	
 	public static int tryThisPFEGenerator(Problem problem, List<ActionInstance> plan, Solver solver)
 	{
+		if(plan == null || plan.size() == 0)
+			return bdd.getZero();
+		
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state
 		for (ActionInstance action : plan)

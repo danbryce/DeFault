@@ -22,6 +22,8 @@ import jdd.bdd.*;
  */
 public abstract class Agent 
 {	
+	public static Agent instance;
+	
 	public static enum LearningTypes {PL, QA};
 	public static enum AgentTypes{RG, CL};
 	
@@ -98,6 +100,8 @@ public abstract class Agent
 		numRisksLearnedPL = 0;
 		
 		qa = new QA(this);
+		
+		instance = this;
 	}
 	
 	public void setDomainAndProblem()

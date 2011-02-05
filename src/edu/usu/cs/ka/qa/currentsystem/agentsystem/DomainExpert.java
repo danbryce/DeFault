@@ -29,6 +29,8 @@ public class DomainExpert
 	int numQsAsked;
 	
 	static DomainExpert instance;
+	
+	boolean debug = false;
 		
 	public DomainExpert(String dFileString, String pFileString, int simSeed)
 	{	
@@ -141,7 +143,9 @@ public class DomainExpert
 	public boolean isRiskAFeatureQuery (Fault isRisk)
 	{	
 		numQsAsked++;
-		return wereRisksAreNowKnownFeatures.contains(isRisk);
+		boolean answer = wereRisksAreNowKnownFeatures.contains(isRisk);
+		if (debug)System.out.println("ANSWER: " + answer);
+		return answer;
 	}
 	
 	/**

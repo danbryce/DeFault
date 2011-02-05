@@ -47,7 +47,7 @@ public class Test_PlannersRawPerformance
 	    //BufferedWriter out = new BufferedWriter(fstream);
 		
 		int numSuccesses = 0;
-		for(int simSeed = 0; simSeed < 1000 && numSuccesses < 1; simSeed ++)
+		for(int simSeed = 0; simSeed < 1000 && numSuccesses < 10; simSeed ++)
 		{
 			boolean cSuccess = false;
 			boolean incSuccess = false;
@@ -77,17 +77,17 @@ public class Test_PlannersRawPerformance
 				resultString += " COMPLETE amir " + plan.size() + " " + planners.getTimeToSolve();
 			}
 			
-			//PODE1
-			plan = runPlannerThread(PlannerTypes.PODE1);			
-			if(plan == null && !timeout) 
-				resultString += " pode1 ? ?";
-			else if(plan == null && timeout) 
-				resultString += " pode1 T T";
-			else
-			{
-				cSuccess = true;
-				resultString += " pode1 " + plan.size() + " " + planners.getTimeToSolve();
-			}
+//			//PODE1
+//			plan = runPlannerThread(PlannerTypes.PODE1);			
+//			if(plan == null && !timeout) 
+//				resultString += " pode1 ? ?";
+//			else if(plan == null && timeout) 
+//				resultString += " pode1 T T";
+//			else
+//			{
+//				cSuccess = true;
+//				resultString += " pode1 " + plan.size() + " " + planners.getTimeToSolve();
+//			}
 			
 			//JDD
 			plan = runPlannerThread(PlannerTypes.JDD);			

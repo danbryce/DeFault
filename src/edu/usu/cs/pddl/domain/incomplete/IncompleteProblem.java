@@ -86,6 +86,7 @@ public class IncompleteProblem implements Problem
 		this.goals = goals;
 	}
 	
+	//Should all be deep copies, but...
 	public IncompleteProblem(Problem incP)
 	{
 		IncompleteProblem ip = (IncompleteProblem) incP;
@@ -95,7 +96,7 @@ public class IncompleteProblem implements Problem
 		this.objects = ip.objects;
 		this.startState = ip.startState;
 		this.goals = ip.goals;
-		this.initialState = ip.initialState;
+		this.initialState = new HashSet<Proposition>(ip.initialState);
 	}
 
 	public Domain getDomain() {

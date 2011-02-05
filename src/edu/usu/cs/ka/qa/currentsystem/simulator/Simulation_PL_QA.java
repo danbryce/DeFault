@@ -27,10 +27,10 @@ public class Simulation_PL_QA
 	static Long finishTime;
 	
 	//Settings
-	boolean debug = false;
-	public static final int maxPlannerCalls = 100000;
+	static boolean debug = false;
+	public static final int maxPlannerCalls = 1000000;
 	public static final int maxSeeds = 1000;
-	public static final int maxSuccesses = 1;
+	public static final int maxSuccesses = 10;
 		
 	Simulation_PL_QA(String[] args, int simSeed)
 	{	
@@ -80,14 +80,14 @@ public class Simulation_PL_QA
 	{	
 		int numSuccesses = 0;
 		
-		System.out.println();
+//		System.out.println();
 //		System.out.println("domainFile: " + args[0]);
 //		System.out.println("problemFile: " + args[1]);
 //		System.out.println("thread timeLimit: " + args[2]);
 //		System.out.println("tests startTime: " + startStopwatch());
 //		System.out.println();
 		
-		for(int simSeed = 0; (simSeed < maxSeeds) && (numSuccesses < maxSuccesses); simSeed++)
+		for(int simSeed = 39; (simSeed < maxSeeds) && (numSuccesses < maxSuccesses); simSeed++)
 		{
 			try
 			{
@@ -98,40 +98,41 @@ public class Simulation_PL_QA
 			
 					String domain = args[0].replace("testfiles/incomplete/", "");
 					sim.resultString += domain + "_" + simSeed + " 2^" + sim.planners.getInitialNumRisks();
-					sim.resultString += "\n";
 					
-					sim.runSimulationForGivenQAType(args, QA_Types.NONE);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.NONE);	
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.ALL);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.BESTCubeVar_IN_PFE);				
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeOneStepReg);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeOneStepRPS);
+					//sim.resultString += "\n";
+					sim.resultString += " BEST_QTreeABMaxReg AMIR - - - - - - - - - JDD - - - - - - - - -";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxReg);
+					//sim.resultString += "\n";
+					sim.resultString += " BEST_QTreeABMaxRPS AMIR - - - - - - - - - JDD - - - - - - - - -";
+//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxRPS);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.NextBESTPossPreCubeVar_IN_PFE);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.NextBESTPossPre_QTreeOneStepReg);
+					//sim.resultString += "\n";
+					sim.runSimulationForGivenQAType(args, QA_Types.NextBESTPossPree_QTreeOneStepRPS);
+
 					if(gotAResult)
 					{
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.ALL);
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PLAN);
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.ALL_IN_PFE);
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.BESTCubeVar_IN_PFE);				
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeOneStepReg);
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeOneStepRPS);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxReg);
-						sim.resultString += "\n";
-						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxRPS);
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.NextBESTPossPreCubeVar_IN_PFE);
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.NextBESTPossPre_QTreeOneStepReg);
-//						sim.resultString += "\n";
-//						sim.runSimulationForGivenQAType(args, QA_Types.NextBESTPossPree_QTreeOneStepRPS);
-
-						System.out.println(sim.resultString);
-
 						numSuccesses++;
+						System.out.println(sim.resultString);
 					}
 				}
-			}catch(Exception e){System.out.println("\nUnhandled Exception"); e.printStackTrace();}
+			}catch(Exception e){if(debug) { System.out.println("\nUnhandled Exception"); e.printStackTrace();} }
 		}
 		
 //		System.out.println();
@@ -145,17 +146,17 @@ public class Simulation_PL_QA
 		if(qaType.equals(QA.QA_Types.NONE))
 		{
 			resultString += " " + qaType + " " + Agent.AgentTypes.RG;
-			try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } catch(Exception e){ e.printStackTrace(); resultString += " amir E E E E E E E E E"; }
-			//try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ /*e.printStackTrace();*/ resultString += " jdd E E E E E E E E E"; }
+			try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } catch(Exception e){ if(debug) e.printStackTrace(); resultString += " amir E E E E E E E E E"; }
+			try{ runSimulation(PlannerTypes.JDD, args, AgentTypes.RG, qaType);   } catch(Exception e){ if(debug) e.printStackTrace(); resultString += " jdd E E E E E E E E E"; }
 		}
 		
 		if(!qaType.equals(QA.QA_Types.NONE))
-			resultString += " " + qaType + " ";
+			resultString += " " + qaType;
 		else
 			resultString += " " + Agent.AgentTypes.CL;
 		
-		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType); } 	   catch(Exception e)	{ e.printStackTrace(); resultString += " amir E E E E E E E E"; }
-		//try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType);   } catch(Exception e)	{ e.printStackTrace(); resultString += " jdd E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType); } 	   catch(Exception e)	{ if(debug) e.printStackTrace(); resultString += " amir E E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType);   } catch(Exception e)	{ if(debug) e.printStackTrace(); resultString += " jdd E E E E E E E E E"; }
 	}
 	
 	boolean timeout;
@@ -188,10 +189,12 @@ public class Simulation_PL_QA
 		
 		//FIRST POSSIBLE PLAN OBTAINED
 		//QA TYPE - ALL RISKS IN PLAN && ALL RISKS IN PLAN FAILURE EXPLANATION SENTENCE
-		plan = runPlannerThread(plannerType);
+		plan = runPlannerThread(plannerType);	
 		while(agent.qa.askQuestionsByType(qaType, plan)) //updates agent's actionList
 			plan = runPlannerThread(plannerType);
 		if(debug) System.out.println("FIRST PLAN: " + plan);
+		if(debug && plan != null && Planner.duplicateActionCheck(plan))
+			System.out.println("\n2 IN A ROW.");		
 		
 		//EXECUTION/PLANNING LOOP
 		int countReplanningEpisodesDuringExecution = 0;
@@ -232,7 +235,7 @@ public class Simulation_PL_QA
 			{
 				isActionFailure = agent.isActionFailure(currAction, currState, nextState);
 				if(debug && isActionFailure)System.out.println("FAIL");
-				if(isActionFailure && !qaType.equals(QA.QA_Types.NONE)) resultString += " !*F*!";
+				if(debug && isActionFailure && !qaType.equals(QA.QA_Types.NONE)) resultString += " !*F*!";
 			}
 			//RE-PLAN
 			if(isActionFailure || plan.size() == 0 || !isActionApplicable)
@@ -243,7 +246,7 @@ public class Simulation_PL_QA
 				
 				List<ActionInstance> oldPlan = plan;
 				
-				agent.removeFailFromKBForNewPlan();
+				try { agent.removeFailFromKBForNewPlan();} catch(Exception e) {}
 				plan = runPlannerThread(plannerType); //plan = planners.getPlan(plannerType);
 				countReplanningEpisodesDuringExecution++;
 				while(agent.qa.askQuestionsByType(qaType, plan))
@@ -263,6 +266,9 @@ public class Simulation_PL_QA
 					endlessLoop = true; 
 					break; 
 				}
+				
+				if(debug && plan != null && Planner.duplicateActionCheck(plan))
+					System.out.println("\n2 IN A ROW.");
 			}
 			currState = nextState;
 		}
@@ -273,16 +279,25 @@ public class Simulation_PL_QA
 		//RESULTS
 		if(currState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{	
-			gotAResult = true;
-			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + "(" + countReplanningEpisodesDuringExecution + ")";
+			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + countReplanningEpisodesDuringExecution;
 			resultString += " " + agent.getNumActionsTaken() + " " + agent.getNumFailedActions();
 			resultString += " " + agent.getTimeToSolve() + " 2^" + planners.getFinalNumRisks();
 			resultString += " " + agent.getNumQsAsked() + " " + agent.getNumRisksLearnedQA() + " " + agent.getNumRisksLearnedPL();
+			
+			if( qaType.equals(QA_Types.ALL_IN_PLAN) || qaType.equals(QA_Types.ALL_IN_PFE) ||
+				qaType.equals(QA_Types.BESTCubeVar_IN_PFE) ||		
+				qaType.equals(QA_Types.BEST_QTreeOneStepReg) || qaType.equals(QA_Types.BEST_QTreeOneStepRPS) ||
+				qaType.equals(QA_Types.BEST_QTreeABMaxReg) || qaType.equals(QA_Types.BEST_QTreeABMaxRPS) ||
+				qaType.equals(QA_Types.NextBESTPossPreCubeVar_IN_PFE) ||
+				qaType.equals(QA_Types.NextBESTPossPre_QTreeOneStepReg) || qaType.equals(QA_Types.NextBESTPossPree_QTreeOneStepRPS))
+			{
+				gotAResult = true;
+			}
 		}
 		else
 		{			
 			if((agent.getNumActionsTaken() >= 1000) || (planners.getNumTimesPlannerCalled() >= maxPlannerCalls))
-				resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + " X " + agent.getNumActionsTaken() + " X X X X X X";
+				resultString += " " + plannerType + " X X X X X X X X X";
 			else if(endlessLoop) 		resultString += " " + plannerType + " L L L L L L L L L";
 			else if(timeout)			resultString += " " + plannerType + " T T T T T T T T T";
 			else if(plan == null) 		resultString += " " + plannerType + " N N N N N N N N N";

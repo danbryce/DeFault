@@ -35,6 +35,10 @@ public class Planner
 	
 	int numTimesPlannerCalled;
 	
+	static Planner instance;
+	
+	DomainAndProblemMaker_Utility domainMaker;
+	
 	public Planner(String dFile, String pFile)
 	{
 		domainFile = dFile;
@@ -51,15 +55,19 @@ public class Planner
 		initialNumRisks = RiskCounter.getNumRisks();
 		
 		numTimesPlannerCalled = 0;
-	}
 		
+		instance = this;
+	}
+	
+	public static Planner getInstance() {return instance;}
+
 	private void setDomainAndProblem()
 	{
-		DomainAndProblemMaker_Utility domainMaker = new DomainAndProblemMaker_Utility(domainFile, problemFile);	
+		domainMaker = new DomainAndProblemMaker_Utility(domainFile, problemFile);	
 		domain = domainMaker.getOriginalIncompleteDomain();
 		problem = domainMaker.getProblem();
 	}
-
+	
 	public BigInteger getInitialModelCount()		{ return initialModelCount; }
 	public int getInitialNumRisks() 				{ return initialNumRisks; }
 	public int getNumTimesPlannerCalled()			{ return numTimesPlannerCalled; }
@@ -114,6 +122,18 @@ public class Planner
 		return planWithPreservedActions;
 	}
 	
+	public static List<ActionInstance> makePlansDeepActionsSameAsAgents(List<ActionInstance> plan)
+	{
+		ArrayList<ActionInstance> planWithUpdatedActions = new ArrayList<ActionInstance>();
+		for(ActionInstance a : plan)
+		{	
+			IncompleteActionInstance updatedAct = Agent.instance.actionsHT.get(a.getName());
+			planWithUpdatedActions.add(updatedAct);
+		}
+		
+		return planWithUpdatedActions;
+	}
+	
 	/**
 	 * Setting up and running the Amir/Length solver.
 	 * 
@@ -133,16 +153,14 @@ public class Planner
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
 		SolverOptions solverOptions = new SolverOptions();
-		
+	
 		solverOptions.setUsePreferredOperators(true);
 		solverOptions.setUseDeferredEvaluation(true);
 		solverOptions.setUseMultipleSupportersInPlanningGraph(false);
 		solverOptions.setBiasRelaxedPlanWithFaults(false);
 		
-//		System.out.println("!");
-//		Actions_Utility.printActionInListOfActions(problem.getActions(), "initialize");
-//		System.out.println();
-		
+		Set<Proposition> currState = new HashSet<Proposition>(problem.getInitialState());
+			
 		try{
 			solver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
@@ -153,10 +171,8 @@ public class Planner
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
 		
-//		System.out.println("!!");
-//		Actions_Utility.printActionInListOfActions(problem.getActions(), "initialize");
-//		System.out.println();
-		
+		problem.setInitialState(currState); // it disappears sometimes!
+			
 		return plan;
 	}
 	
@@ -186,6 +202,8 @@ public class Planner
 		solverOptions.setRiskArity(Integer.valueOf(1));//arity 1 only
 		solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
 
+		Set<Proposition> currState = new HashSet<Proposition>(problem.getInitialState());
+		
 		try{
 			solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
@@ -195,6 +213,8 @@ public class Planner
 		try{ plan = solver.run(); }
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
+		
+		problem.setInitialState(currState); // it disappears sometimes!
 		
 		return plan;	
 	}
@@ -280,5 +300,15 @@ public class Planner
 	{
 		for(ActionInstance a : plan)
 			System.out.println("   " + a.getName());
+	}
+
+	public static boolean duplicateActionCheck(List<ActionInstance> plan)
+	{
+		for(int i = 0; i < plan.size() - 1; i++)
+		{
+			if(plan.get(i).getName().equals(plan.get(i+1).getName()))
+				return true;
+		}
+		return false;
 	}
 }
