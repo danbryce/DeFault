@@ -30,12 +30,10 @@ public class Simulation_PL_QA
 	static boolean debug = false;
 	public static final int maxPlannerCalls = 1000000;
 	public static final int maxSeeds = 1000;
-	public static final int maxSuccesses = 10;
+	public static final int maxSuccesses = 3;
 		
 	Simulation_PL_QA(String[] args, int simSeed)
-	{	
-		if (args.length != 3) { System.out.println(" " + args.length); usage(args); System.exit(1); }
-		
+	{			
 		timeLimit = Integer.valueOf(args[2]) * 1000;
 		
 		expert = new DomainExpert(args[0], args[1], simSeed);		
@@ -78,14 +76,16 @@ public class Simulation_PL_QA
 	static boolean gotAResult;
 	public static void main(String[] args)
 	{	
+		if (args.length != 3) { System.out.println(" " + args.length); usage(args); System.exit(1); }
+		
 		int numSuccesses = 0;
 		
-//		System.out.println();
-//		System.out.println("domainFile: " + args[0]);
-//		System.out.println("problemFile: " + args[1]);
-//		System.out.println("thread timeLimit: " + args[2]);
-//		System.out.println("tests startTime: " + startStopwatch());
-//		System.out.println();
+		System.out.println();
+		System.out.println("domainFile: " + args[0]);
+		System.out.println("problemFile: " + args[1]);
+		System.out.println("thread timeLimit: " + args[2]);
+		System.out.println("tests startTime: " + startStopwatch());
+		System.out.println();
 		
 		for(int simSeed = 39; (simSeed < maxSeeds) && (numSuccesses < maxSuccesses); simSeed++)
 		{
@@ -135,10 +135,10 @@ public class Simulation_PL_QA
 			}catch(Exception e){if(debug) { System.out.println("\nUnhandled Exception"); e.printStackTrace();} }
 		}
 		
-//		System.out.println();
-//		System.out.println("numSuccesses    : " + numSuccesses);
-//		System.out.println("tests finishTime: " + stopStopwatch());
-//		System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
+		System.out.println();
+		System.out.println("numSuccesses    : " + numSuccesses);
+		System.out.println("tests finishTime: " + stopStopwatch());
+		System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
 	}
 	
 	private void runSimulationForGivenQAType(String[] args, QA_Types qaType)
@@ -375,9 +375,8 @@ public class Simulation_PL_QA
 	private static Long startStopwatch(){ startTime = System.currentTimeMillis(); return startTime; }
 	private static Long stopStopwatch() { finishTime = System.currentTimeMillis();return finishTime;}
 	
-	private void usage(String[] args) 
+	private static void usage(String[] args) 
 	{
-		System.err.println("args: " + args[0] + " " + args[1] + " " + args[2]);
 		System.err.println("Simulation_PassiveLearningAgent args:");
 		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<threadLimit>");
 	}
