@@ -68,10 +68,11 @@ public class Planner
 		problem = domainMaker.getProblem();
 	}
 	
-	public BigInteger getInitialModelCount()		{ return initialModelCount; }
-	public int getInitialNumRisks() 				{ return initialNumRisks; }
-	public int getNumTimesPlannerCalled()			{ return numTimesPlannerCalled; }
-	public void resetNumTimesPlannerCalledCount()	{ numTimesPlannerCalled = 0; }
+	public BigInteger getInitialModelCount()				{ return initialModelCount; }
+	public int getInitialNumRisks() 						{ return initialNumRisks; }
+	public int getNumTimesPlannerCalled()					{ return numTimesPlannerCalled; }
+	public void setNumTimesPlannerCalled(int setNumCalls)	{ numTimesPlannerCalled = setNumCalls; }
+	public void resetNumTimesPlannerCalledCount()			{ numTimesPlannerCalled = 0; }
 	
 	/**
 	 * This allows for the actionInstances of problem to be set to Agent's (current) problem instance.

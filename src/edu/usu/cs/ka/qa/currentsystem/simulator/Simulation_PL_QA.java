@@ -38,6 +38,7 @@ public class Simulation_PL_QA
 		
 		expert = new DomainExpert(args[0], args[1], simSeed);		
 		planners = new Planner(args[0], args[1]);
+		QTree.counterRPSCalls = 0;
 
 		resultString = "";
 		
@@ -87,7 +88,7 @@ public class Simulation_PL_QA
 		System.out.println("tests startTime: " + startStopwatch());
 		System.out.println();
 		
-		for(int simSeed = 39; (simSeed < maxSeeds) && (numSuccesses < maxSuccesses); simSeed++)
+		for(int simSeed = 39; (simSeed < maxSeeds+39) && (numSuccesses < maxSuccesses); simSeed++)
 		{
 			try
 			{
@@ -114,11 +115,11 @@ public class Simulation_PL_QA
 					//sim.resultString += "\n";
 					sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeOneStepRPS);
 					//sim.resultString += "\n";
-					sim.resultString += " BEST_QTreeABMaxReg AMIR - - - - - - - - - JDD - - - - - - - - -";
-//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxReg);
+//					sim.resultString += " BEST_QTreeABMaxReg AMIR - - - - - - - - - JDD - - - - - - - - -";
+					sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxReg);
 					//sim.resultString += "\n";
-					sim.resultString += " BEST_QTreeABMaxRPS AMIR - - - - - - - - - JDD - - - - - - - - -";
-//						sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxRPS);
+//					sim.resultString += " BEST_QTreeABMaxRPS AMIR - - - - - - - - - JDD - - - - - - - - -";
+					sim.runSimulationForGivenQAType(args, QA_Types.BEST_QTreeABMaxRPS);
 					//sim.resultString += "\n";
 					sim.runSimulationForGivenQAType(args, QA_Types.NextBESTPossPreCubeVar_IN_PFE);
 					//sim.resultString += "\n";

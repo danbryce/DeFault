@@ -29,6 +29,8 @@ public class QTree
 	boolean useMinAvg;
 	boolean useRelaxedPlanSolver;
 	
+	public static int counterRPSCalls = 0;
+	
 	boolean debug = false;
 	
 	public QTree(Agent a, List<ActionInstance> p, boolean is1StepLA, boolean isAB, boolean isAvg, boolean isRPS)
@@ -415,6 +417,10 @@ public class QTree
 	
 	private int getPFE_RPSolver()
 	{
+		counterRPSCalls++;
+		if(counterRPSCalls > Simulation_PL_QA.getInstance().maxPlannerCalls)
+			planner.setNumTimesPlannerCalled(Simulation_PL_QA.getInstance().maxPlannerCalls+1);
+		
 		RelaxedPlanSolver RPSolver;
 		SearchStatistics searchStatistics = new SearchStatistics();
 		SolverOptions solverOptions = new SolverOptions();
