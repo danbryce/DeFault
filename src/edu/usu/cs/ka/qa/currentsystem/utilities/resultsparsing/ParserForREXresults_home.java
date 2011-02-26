@@ -5,29 +5,17 @@ import java.io.*;
 public class ParserForREXresults_home 
 {	
 	static String directory = "C:\\Documents and Settings\\Christopher\\Desktop\\";
-	static String bigResultsFolder;
-	static String outputFolderDateTimeAppend;
+	static String bigResultsFolder = "out\\";;
+	static String outputFolderDateTimeAppend = "_2.8.11.2PM";
 	
-	static boolean isFullQTree = true;
 	static boolean scrubIt = true;
 	
 	public static void main(String[] args) 
-	{
-		if(isFullQTree)
-		{
-			bigResultsFolder = "out_FullQTree\\";
-			outputFolderDateTimeAppend = "_Y_2.7.11.10PM";
-		}
-		else
-		{
-			bigResultsFolder = "out_NotFullQTree\\";
-			outputFolderDateTimeAppend = "_N_2.7.11.10PM";
-		}
-		
+	{		
 		ParcPrinterResults();
-		//PathwaysResults();
-		//HoboNavResults();
-		//BridgesResults();
+		PathwaysResults();
+		HoboNavResults();
+		BridgesResults();
 	}
 		
 	//hobonav_2_7_0.25_1_pode2.txt
@@ -120,7 +108,7 @@ public class ParserForREXresults_home
 		metaResults.add("END HoboNav///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Hobonav Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("Hobonav_Results" + outputFolderDateTimeAppend, results);
 	}
 	
 	//parcprinter_pode3_22_6.txt
@@ -212,10 +200,10 @@ public class ParserForREXresults_home
 		metaResults.add("END ParcPrinter///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("ParcPrinter Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("ParcPrinter_Results" + outputFolderDateTimeAppend, results);
 	}
 	
-	//pathways_p01_0.0_jdd_1.txt
+	//pathways_p01_0.0_jdd_1_1.0.txt
 	static void PathwaysResults()
 	{
 		LinkedList<String> results = new LinkedList<String>();
@@ -302,7 +290,7 @@ public class ParserForREXresults_home
 		metaResults.add("END Pathways///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Pathways Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("Pathways_Results" + outputFolderDateTimeAppend, results);
 	}
 	
 	//bridges_v2_length_16_0.0_10.txt
@@ -393,7 +381,7 @@ public class ParserForREXresults_home
 		metaResults.add("END Bridges///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Bridges Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("Bridges_Results" + outputFolderDateTimeAppend, results);
 	}
 	
 	static void writeResultsToFile(String filename, LinkedList<String> results)
@@ -421,35 +409,7 @@ public class ParserForREXresults_home
 	    	    out.close();
 	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
 	}
-	
-	//First run  of batchtesting didn't add 9 E's for an exception for the CL Agent, but 8.
-	static String bugCheck(String line)
-	{	
-		String[] lineTokens = line.split(" ");
 		
-		LinkedList<String> tokens = new LinkedList<String>();
-		for(int i = 0; i < lineTokens.length; i++)
-		{
-			if(!lineTokens[i].contains("*F*"))
-				tokens.add(lineTokens[i]);
-			if(lineTokens[i].equals("jdd") || lineTokens[i].equals("amir"))
-			{				
-				if(!lineTokens[i+9].equals("E"))
-				{
-					for(int count = 0; count < 9; count++)
-						tokens.add("E");
-					i += 8;
-				}
-			}
-		}
-
-		line = "";
-		for (int i = 0; i < tokens.size(); i++)
-			line += tokens.get(i) + " ";
-		
-		return line;
-	}
-	
 	//Remove failure tokens
 	static String lineCleaner(String line)
 	{	
@@ -470,13 +430,6 @@ public class ParserForREXresults_home
 				tokens.add("?");
 			else if(lineTokens[i].equals("S"))
 				tokens.add("?");
-			else if(lineTokens[i].equals("-"))
-				tokens.add("?");
-			else if(lineTokens[i].equals("amir"))
-				tokens.add("AMIR");
-			else if(lineTokens[i].equals("jdd"))
-				tokens.add("JDD");
-
 			else
 				tokens.add(lineTokens[i]);
 		}
