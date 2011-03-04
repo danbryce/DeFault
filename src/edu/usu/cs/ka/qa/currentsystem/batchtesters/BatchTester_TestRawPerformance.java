@@ -2,7 +2,7 @@ package edu.usu.cs.ka.qa.currentsystem.batchtesters;
 
 import edu.usu.cs.ka.qa.currentsystem.simulator.*;
 
-public class BatchTester_Test 
+public class BatchTester_TestRawPerformance 
 {
 	private static final int numFiles = 10;
 
@@ -34,9 +34,9 @@ public class BatchTester_Test
 						try{ Test_PlannersRawPerformance.main(args); }
 						catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 						
-						System.out.println();
+						//System.out.println();
 					}//end for num file
-					System.out.println();
+					//System.out.println();
 				}//end for bridge density
 			}//end for version
 		}//end for size

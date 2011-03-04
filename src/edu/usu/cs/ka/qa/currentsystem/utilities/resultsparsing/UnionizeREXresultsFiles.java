@@ -3,7 +3,7 @@ package edu.usu.cs.ka.qa.currentsystem.utilities.resultsparsing;
 import java.util.*;
 import java.io.*;
 
-public class CombineREXresultsFiles 
+public class UnionizeREXresultsFiles 
 {
 	static String 	directory 			= "C:\\Documents and Settings\\Christopher\\Desktop\\";
 	static String 	bigResultsFolder 	= "QA - Results Files - 2.7.11.10PM\\";

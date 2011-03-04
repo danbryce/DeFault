@@ -28,10 +28,10 @@ public class Actions_Utility
 		System.out.println("  Poss Adds: " + a.getPossibleAddEffects());	//Set<Proposition>
 		System.out.println("  Deletes  : " + a.getDeleteEffects());			//Set<Proposition>
 		System.out.println("  Poss Dels: " + a.getPossibleDeleteEffects());	//Set<Proposition>
-		//System.out.println("   ActionRisks: " + a.getActionRisks());				//int
-		//System.out.println("   ArgMapping : " + a.getArgMapping());				//Map<FormalArgument, PDDLObject>
-		//System.out.println("   Cost       : " + a.getCost());				    //double
-		//System.out.println("   Definition : " + a.getDefinition());				//ActionDef
+		System.out.println("   ActionRisks: " + a.getActionRisks());		//int
+		System.out.println("   ArgMapping : " + a.getArgMapping());			//Map<FormalArgument, PDDLObject>
+		System.out.println("   Cost       : " + a.getCost());				//double
+		System.out.println("   Definition : " + a.getDefinition());			//ActionDef
 		System.out.println();
 	}
 	

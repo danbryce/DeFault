@@ -2,32 +2,26 @@ package edu.usu.cs.ka.qa.currentsystem.utilities.resultsparsing;
 import java.util.*;
 import java.io.*;
 
-public class fParserForREXresults_home_sim2 
+public class Parser_REXresults 
 {	
-	static String directory = "C:\\Documents and Settings\\Christopher\\Desktop\\";
-	static String bigResultsFolder;
-	static String outputFolderDateTimeAppend;
-	
+	//static String directory = "C:\\Documents and Settings\\Christopher\\Desktop\\";
+	static String directory = "/Users/CHW/Desktop/";
+	static String bigResultsFolder = "out/";
+	static String outputFolderDateTimeAppend = "_2_8_11_2PM";
+
 	static boolean isFullQTree = true;
 	static boolean scrubIt = true;
+	static boolean isBugCheck = false;
 	
 	public static void main(String[] args) 
 	{
-		if(isFullQTree)
-		{
-			bigResultsFolder = "out_FullQTree\\";
-			outputFolderDateTimeAppend = "_Y_2.7.11.10PM";
-		}
-		else
-		{
-			bigResultsFolder = "out_NotFullQTree\\";
-			outputFolderDateTimeAppend = "_N_2.7.11.10PM";
-		}
-		
-		ParcPrinterResults();
+		//ParcPrinterResults();
 		//PathwaysResults();
 		//HoboNavResults();
-		//BridgesResults();
+		BridgesResults();
+		
+		//bugFixer();
+		//bugCheck(null);
 	}
 		
 	//hobonav_2_7_0.25_1_pode2.txt
@@ -76,8 +70,8 @@ public class fParserForREXresults_home_sim2
 								if(line.contains("cweber") && !line.contains("File"))
 								{
 									line = line.replace("/home/cweber/graphplanner/hobonav/", "");
-									if(scrubIt) line = lineCleaner(line);
-									//line = bugCheck(line);
+									if(scrubIt) 	line = lineCleaner(line);
+									if(isBugCheck)	line = bugCheck(line);
 									results.add(line);
 									
 									countSuccesses++;
@@ -120,7 +114,7 @@ public class fParserForREXresults_home_sim2
 		metaResults.add("END HoboNav///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Hobonav Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("Hobonav_Results_" + outputFolderDateTimeAppend, results);
 	}
 	
 	//parcprinter_pode3_22_6.txt
@@ -169,8 +163,8 @@ public class fParserForREXresults_home_sim2
 							if(line.contains("cweber") && !line.contains("File"))
 							{
 								line = line.replace("/home/cweber/graphplanner/parcprinter/", "");
-								//line = bugCheck(line);
 								if(scrubIt) line = lineCleaner(line);
+								if(isBugCheck)	line = bugCheck(line);
 								results.add(line);
 								
 								countSuccesses++;
@@ -212,7 +206,7 @@ public class fParserForREXresults_home_sim2
 		metaResults.add("END ParcPrinter///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("ParcPrinter Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("ParcPrinter_Results_" + outputFolderDateTimeAppend, results);
 	}
 	
 	//pathways_p01_0.0_jdd_1.txt
@@ -223,7 +217,7 @@ public class fParserForREXresults_home_sim2
 		
 		metaResults.add("Pathways///////////////////////////////////////////");
 		int problemCount = 20;
-		Double [] density = { .25, .5, .75, 1.0};
+		Double [] density = { .25, .5, .75, 1.0}; //no .0, .01
 		int instanceCount = 10;
 			
 		for (int pCounter = 1; pCounter <= problemCount; pCounter++) 
@@ -258,8 +252,8 @@ public class fParserForREXresults_home_sim2
 							if(line.contains("cweber") && !line.contains("File"))
 							{
 								line = line.replace("/home/cweber/graphplanner/pathways/", "");
-								//line = bugCheck(line);
 								if(scrubIt) line = lineCleaner(line);
+								if(isBugCheck)	line = bugCheck(line);
 								results.add(line);
 								
 								countSuccesses++;
@@ -302,7 +296,7 @@ public class fParserForREXresults_home_sim2
 		metaResults.add("END Pathways///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Pathways Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("Pathways_Results_" + outputFolderDateTimeAppend, results);
 	}
 	
 	//bridges_v2_length_16_0.0_10.txt
@@ -349,8 +343,8 @@ public class fParserForREXresults_home_sim2
 								if(line.contains("cweber") && !line.contains("File"))
 								{
 									line = line.replace("/home/cweber/graphplanner/bridges/", "");
-									//line = bugCheck(line);
 									if(scrubIt) line = lineCleaner(line);
+									if(isBugCheck)	line = bugCheck(line);
 									results.add(line);
 									
 									countSuccesses++;
@@ -393,7 +387,7 @@ public class fParserForREXresults_home_sim2
 		metaResults.add("END Bridges///////////////////////////////////////\n");
 		
 		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Bridges Results - " + outputFolderDateTimeAppend, results);
+		writeResultsToFile("Bridges_Results_" + outputFolderDateTimeAppend, results);
 	}
 	
 	static void writeResultsToFile(String filename, LinkedList<String> results)

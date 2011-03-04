@@ -1,20 +1,21 @@
 package edu.usu.cs.ka.qa.currentsystem.batchtesters;
 
-import edu.usu.cs.ka.currentsystem.simulator.Simulation;
-import edu.usu.cs.ka.qa.currentsystem.simulator.Simulation_PL_QA;
+import edu.usu.cs.ka.qa.currentsystem.simulator.SimulationPLQA;
 
-public class BatchTester_Simulation_Agent_PL_QA 
+public class BatchTester_SimulationPLQA 
 {
 	private static final int numFiles = 10;
 
 	public static void main (String[] args)
 	{	
-		System.out.println("<domain_simSeed> <2^#initialPossFeatures>");
-		System.out.print("<TYPE_QA> <TYPE_AGENT> <PLANNER> <#plannerCalls> <#plannerCallsDuringExecution> ");
-		System.out.print("<#actions> <#failedActions> <totalTime> <2^#remainingPossFeatures> ");
-		System.out.println("<#QsAsked> <#risksLearnedQA> <#risksLearnedPL> ");
+//		System.out.println("<domain_simSeed> <2^#initialPossFeatures>");
+//		System.out.print("<TYPE_QA> <TYPE_AGENT> <PLANNER> <#plannerCalls> <#plannerCallsDuringExecution> ");
+//		System.out.print("<#actions> <#failedActions> <totalTime> <2^#remainingPossFeatures> ");
+//		System.out.println("<#QsAsked> <#risksLearnedQA> <#risksLearnedPL> ");
 		
-		testBridges();
+		//testBridges();
+		//testParcPrinter();
+		testPathways();
 	}			
 
 	//bridges_v2_4_0.75_2.pddl_34
@@ -26,11 +27,11 @@ public class BatchTester_Simulation_Agent_PL_QA
 		String extension = ".pddl";
 			
 		//Just mess around with the for loop values...
-		for(int gridSize = 2; gridSize <= 2; gridSize *= 2) //2-32
+		for(int gridSize = 4; gridSize <= 4; gridSize *= 2) //2-32
 		{
-			for(double bridgeDensity = .5; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
+			for(double bridgeDensity = .25; bridgeDensity <= 1.0; bridgeDensity += 0.25) //0.0 - 1.0
 			{	
-				for(int version = 2; version <= 3; version++)//1-3
+				for(int version = 1; version <= 3; version++)//1-3
 				{
 					for(int numFile = 1; numFile <= 10; numFile++) //numFiles 1-10
 					{
@@ -41,7 +42,7 @@ public class BatchTester_Simulation_Agent_PL_QA
 						else if(gridSize ==4) args[2] = String.valueOf(3);
 						else args[2] = String.valueOf(10);
 						
-						try{ Simulation_PL_QA.main(args); }
+						try{ SimulationPLQA.main(args); }
 						catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 						
 						//System.out.println();
@@ -80,7 +81,7 @@ public class BatchTester_Simulation_Agent_PL_QA
 				args[1] = pathToProblems + fileName +"-problem-incomplete" + extension;
 				args[2] = String.valueOf(timeLimits[i]);
 
-				try{ Simulation_PL_QA.main(args); }
+				try{ SimulationPLQA.main(args); }
 				catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 
 				//System.out.println();
@@ -90,4 +91,46 @@ public class BatchTester_Simulation_Agent_PL_QA
 		
 		System.out.println("DONE");
 	}
+
+	public static void testPathways()
+	{
+		int problemCount = 20;
+		int instanceCount = 10;
+		
+		String path = "testfiles/incomplete/pathways/";
+		
+		String[] args = new String[3];
+		
+		for (int pCounter = 5; pCounter <= 5; pCounter++) 
+		{
+			for(double density = .75; density <= .75; density += 0.25)
+			{
+				for(int instance = 1; instance <= 1; instance++)
+				{
+					String dFilename = path;
+					dFilename += "domain_p";
+					
+					if(pCounter < 10) dFilename += "0";
+					dFilename += pCounter + "_";
+					dFilename += density + "_";							
+					dFilename += instance;
+					dFilename += ".pddl";
+					
+					String pFilename = path + "p";
+					if(pCounter < 10)
+						pFilename += "0";
+					pFilename += pCounter + ".pddl";
+					
+					args[0] = dFilename;
+					args[1] = pFilename;
+					args[2] = String.valueOf(4);
+					
+					try{ SimulationPLQA.main(args); }
+					catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+				}
+			}
+		}
+	}
+
+
 }

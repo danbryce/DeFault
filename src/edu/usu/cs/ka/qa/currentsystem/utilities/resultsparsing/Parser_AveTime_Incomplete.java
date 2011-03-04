@@ -10,7 +10,7 @@ import java.io.*;
  * ~/.../out_112110/
  * ~/.../out_112210_newBridges/
  */
-public class PlannersTimeTakenIncomplete 
+public class Parser_AveTime_Incomplete 
 {	
 	static String directory = "/Users/CHW/Desktop/DB out/";
 	static String subDirectory = "out/";

@@ -2,13 +2,18 @@ package edu.usu.cs.ka.qa.currentsystem.agentsystem;
 
 import java.util.*;
 
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.LearningTypes;
 import edu.usu.cs.ka.qa.currentsystem.utilities.Actions_Utility;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.RelaxedPlanSolver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.search.SearchStatistics;
+import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class QA 
 {
@@ -164,6 +169,8 @@ public class QA
 					risksInPFE.add(agent.numVarIndexToRiskForCubeOrMinterm.get(i));
 		}
 		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
 		if(!risksInPFE.isEmpty())
 		{
 			askRisksInGivenList(new ArrayList<Fault>(risksInPFE));
@@ -206,6 +213,8 @@ public class QA
 			}
 		}
 		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
 		if(!risksInPFE.isEmpty())
 		{
 			askRisksInGivenList(new ArrayList<Fault>(risksInPFE));
@@ -247,7 +256,7 @@ public class QA
 		{
 			LinkedList<LinkedList<Integer>> clauses_vars;
 			if(type.equals(PFE_Type.CUBE))
-				clauses_vars = getCubes(plan);
+				clauses_vars = getCubesFromPlan(plan);
 			else//if (type.equals(PFE_Type.MINTERM))
 				clauses_vars = getMinTerms(plan);
 				
@@ -275,9 +284,13 @@ public class QA
 			chosenRiskForQA.add(chosenRisk);
 			askRisksInGivenList(chosenRiskForQA);
 			
+			agent.bdd.deref(failureExplanationSentence_bddRef);
+			
 			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
+		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
 		
 		if(minTerms.contains("TRUE")) return true;
 		
@@ -355,6 +368,8 @@ public class QA
 				}
 		}
 		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
 		if(!possPreRisksInPFE.isEmpty())
 		{
 			askRisksInGivenList(new ArrayList<Fault>(possPreRisksInPFE));
@@ -400,6 +415,8 @@ public class QA
 			}
 		}
 		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
 		if(!possPreRisksInPFE.isEmpty())
 		{
 			askRisksInGivenList(new ArrayList<Fault>(possPreRisksInPFE));
@@ -441,7 +458,7 @@ public class QA
 		{
 			LinkedList<LinkedList<Integer>> clauses_vars;
 			if(type.equals(PFE_Type.CUBE))
-				clauses_vars = getCubes(plan);
+				clauses_vars = getCubesFromPlan(plan);
 			else//if (type.equals(PFE_Type.MINTERM))
 				clauses_vars = getMinTerms(plan);
 				
@@ -473,9 +490,13 @@ public class QA
 			chosenRiskForQA.add(chosenRisk);
 			askRisksInGivenList(chosenRiskForQA);
 			
+			agent.bdd.deref(failureExplanationSentence_bddRef);
+			
 			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
+		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
 		
 		if(minTerms.contains("TRUE")) return true;
 		
@@ -532,6 +553,8 @@ public class QA
 				}
 		}
 		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
 		if(!possPreRisksInPFE.isEmpty())
 		{
 			askRisksInGivenList(new ArrayList<Fault>(possPreRisksInPFE));
@@ -578,6 +601,8 @@ public class QA
 			}
 		}
 		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
 		if(!possPreRisksInPFE.isEmpty())
 		{
 			askRisksInGivenList(new ArrayList<Fault>(possPreRisksInPFE));
@@ -618,7 +643,7 @@ public class QA
 		{
 			LinkedList<LinkedList<Integer>> clauses_vars;
 			if(type.equals(PFE_Type.CUBE))
-				clauses_vars = getCubes(plan);
+				clauses_vars = getCubesFromPlan(plan);
 			else//if (type.equals(PFE_Type.MINTERM))
 				clauses_vars = getMinTerms(plan);
 				
@@ -653,9 +678,12 @@ public class QA
 			chosenRiskForQA.add(chosenRisk);
 			askRisksInGivenList(chosenRiskForQA);
 			
+			agent.bdd.deref(failureExplanationSentence_bddRef);
 			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
+		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
 		
 		if(minTerms.contains("TRUE")) return true;
 		
@@ -746,11 +774,12 @@ public class QA
 		
 		if(debug)System.out.println("\nIN askBestQTree_QA()");
 		
+		QTree qTree = null;
 		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 		String minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE"))
 		{	
-			QTree qTree = new QTree(agent, plan, is1Step, isAB, isAvg, isRPS);
+			qTree = new QTree(agent, plan, is1Step, isAB, isAvg, isRPS);
 			Fault bestQFault = qTree.getBestQ(isNextPossPre);
 			if(debug)System.out.println("BESTQ: " + bestQFault);
 			if(bestQFault == null)
@@ -759,13 +788,19 @@ public class QA
 			ArrayList<Fault> chosenRiskForQA = new ArrayList<Fault>();
 			chosenRiskForQA.add(bestQFault);
 			askRisksInGivenList(chosenRiskForQA);
-						
+			
+			agent.bdd.deref(failureExplanationSentence_bddRef);
+			
+			qTree.derefAllQTreeBddRefs();
+			Planner.instance.setProblem(agent.getProblem()); //recall that the QTree uses the planner with another problem to hypothesize
+															 //this is doubly called in case QTree malfunctions (see end of QTree.getBestQ()).
 			failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			minTerms = agent.bdd.toString(failureExplanationSentence_bddRef);
 		}
 		
-		//recall that the QTree uses the planner with another problem to hypothesize
+		if(qTree != null) qTree.derefAllQTreeBddRefs();
 		Planner.instance.setProblem(agent.getProblem());
+		agent.bdd.deref(failureExplanationSentence_bddRef);
 				
 		if(minTerms.contains("TRUE")) return true;
 		
@@ -780,12 +815,23 @@ public class QA
 	 * @param plan
 	 * @return
 	 */
-	private LinkedList<LinkedList<Integer>> getCubes(List<ActionInstance> plan)
+	private LinkedList<LinkedList<Integer>> getCubesFromPlan(List<ActionInstance> plan)
+	{
+		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);	
+		
+		LinkedList<LinkedList<Integer>> cube_VarIndexes = getCubesFromPFE(failureExplanationSentence_bddRef);
+		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
+		return cube_VarIndexes;
+	}
+	
+	//
+	private LinkedList<LinkedList<Integer>> getCubesFromPFE(int PFE_bddRef)
 	{
 		LinkedList<LinkedList<Integer>> cubes = new LinkedList<LinkedList<Integer>>();
 
-		int failureExplanationSentence_bddRef  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
-		String[] minTerms = agent.bdd.toString(failureExplanationSentence_bddRef).split("\n");
+		String[] minTerms = agent.bdd.toString(PFE_bddRef).split("\n");
 		
 		//System.out.println("IN getCubes...");
 		//System.out.println(agent.getBDD().toString(failureExplanationSentence_bddRef));
@@ -821,6 +867,8 @@ public class QA
 			minTerms.add(minterm);
 		}
 		
+		agent.bdd.deref(failureExplanationSentence_bddRef);
+		
 		return minTerms;
 	}
 	
@@ -841,5 +889,127 @@ public class QA
 		}
 		
 		agent.updateActions(LearningTypes.QA);
+	}
+	
+	//The flaw here might be is that we assume the RPG will ALWAYS obtain a relaxed plan.
+	//A counter is employed to stop a spinning loop. 
+	//Greater than 10,000, no domain has more than 10,000 incomplete features
+	//This calls getPFE_RPSolver(). 
+	//PFE_RPSolver() is dependent on the Planner already having a PlannerType {AMIR, JDD}.
+	public void askQsFromRelaxedPlanGraph()
+	{	
+		int counterProtection = 0;
+		boolean stillWorkingAtIt = true;
+		int PFE_RPS_bddRef = getPFE_RPSolver();
+		int supports_bdd = agent.getBDD().support(PFE_RPS_bddRef);
+		String supports = agent.bdd.toString(supports_bdd);
+		while(!supports.contains("FALSE") && !supports.contains("TRUE") && counterProtection < 10000 && stillWorkingAtIt)
+		{	
+			boolean notFound = true;
+			ArrayList<Fault> chosenRiskForQA = new ArrayList<Fault>();
+			for(int i = 0; i < agent.getNumBDDVars()-1 && notFound; i++)//numRisks minus the fail var
+				if(supports.charAt(i) != '-')
+				{
+						chosenRiskForQA.add(agent.numVarIndexToRiskForCubeOrMinterm.get(i));
+						notFound = false;
+				}
+			
+			if(chosenRiskForQA.size() != 0)
+			{	
+				askRisksInGivenList(chosenRiskForQA);
+		
+				agent.bdd.deref(PFE_RPS_bddRef);
+				PFE_RPS_bddRef = getPFE_RPSolver();
+				supports_bdd = agent.getBDD().support(PFE_RPS_bddRef);
+				supports = agent.bdd.toString(supports_bdd);
+			}
+			else
+				stillWorkingAtIt = false;
+			
+			counterProtection++;
+		}
+		agent.bdd.deref(PFE_RPS_bddRef);
+	}
+	
+	public void askQsFromRelaxedPlanGraph2()
+	{		
+		int counterProtection = 0;
+		boolean stillWorkingAtIt = true;
+		int PFE_RPS_bddRef = getPFE_RPSolver();
+		String minTerms = agent.bdd.toString(PFE_RPS_bddRef);
+		while(!minTerms.contains("FALSE") && !minTerms.contains("TRUE") && counterProtection < 10000 && stillWorkingAtIt)
+		{				
+			LinkedList<LinkedList<Integer>> clauses_vars = this.getCubesFromPFE(PFE_RPS_bddRef);
+			int bestPFEVarIndex = getIndexOfBestPFEVariable(clauses_vars);
+			
+			
+			if(bestPFEVarIndex != -1)
+			{
+				ArrayList<Fault> chosenRiskForQA = new ArrayList<Fault>();
+				Fault chosenRisk = agent.numVarIndexToRiskForCubeOrMinterm.get(bestPFEVarIndex);
+				
+				chosenRiskForQA.add(chosenRisk);
+				askRisksInGivenList(chosenRiskForQA);
+		
+				agent.bdd.deref(PFE_RPS_bddRef);
+				PFE_RPS_bddRef = getPFE_RPSolver();
+				minTerms = agent.bdd.toString(PFE_RPS_bddRef);
+			}
+			else
+				stillWorkingAtIt = false;
+			
+			counterProtection++;
+		}
+		agent.bdd.deref(PFE_RPS_bddRef);
+	}
+	
+	private int getIndexOfBestPFEVariable(LinkedList<LinkedList<Integer>> clauses_vars)
+	{
+		//Now sum over the appearance of variables in each cube (excepting fail var)
+		Double[] bddVarsSummedValues = new Double[agent.getNumBDDVars()-1];
+		for (int i = 0; i < agent.getNumBDDVars()-1; i++)
+			bddVarsSummedValues[i] = 0.0;
+
+		for (int i = 0; i < agent.getNumBDDVars()-1; i++)
+			for(LinkedList<Integer> clause : clauses_vars)
+				if(clause.contains(i))
+					bddVarsSummedValues[i] += 1.0/Math.pow(clause.size(), 2);
+	
+		Double max = -1.0;
+		int indexOfMax = -1;
+		for(int i = 0; i < bddVarsSummedValues.length; i++)
+			if (bddVarsSummedValues[i] > max)
+			{
+				indexOfMax = i;
+				max = bddVarsSummedValues[i];
+			}
+		return indexOfMax;
+	}
+	
+	private int getPFE_RPSolver()
+	{
+		RelaxedPlanSolver RPSolver;
+		SearchStatistics searchStatistics = new SearchStatistics();
+		SolverOptions solverOptions = new SolverOptions();
+		
+		solverOptions.setUsePreferredOperators(true);
+		solverOptions.setUseDeferredEvaluation(true);
+		solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+		solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+		
+		if(Planner.currPType.equals(Planner.PlannerTypes.JDD))
+			solverOptions.setBiasRelaxedPlanWithFaults(true);
+		else if (Planner.currPType.equals(Planner.PlannerTypes.AMIR))
+			solverOptions.setBiasRelaxedPlanWithFaults(false);
+		else
+			if(debug) System.out.println("NON-RECOGNIZED PLANNER TYPE");
+				
+		try {
+			RPSolver = new RelaxedPlanSolver(agent.domain, agent.problem, searchStatistics, solverOptions);
+			BDDRiskSet fs = (BDDRiskSet) RPSolver.getExplanation();
+			return fs.getFaults();
+		} catch (IllDefinedProblemException e) { e.printStackTrace(); }
+		
+		return 0;
 	}
 }

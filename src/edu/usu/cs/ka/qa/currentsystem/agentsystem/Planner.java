@@ -3,7 +3,7 @@ package edu.usu.cs.ka.qa.currentsystem.agentsystem;
 import java.math.BigInteger;
 import java.util.*;
 
-import edu.usu.cs.ka.qa.currentsystem.simulator.Simulation_PL_QA;
+import edu.usu.cs.ka.qa.currentsystem.simulator.SimulationPLQA;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
 
 import edu.usu.cs.pddl.domain.*;
@@ -48,7 +48,7 @@ public class Planner
 				
 		setDomainAndProblem();
 
-		RiskCounter.resetIsInitialized();
+		RiskCounter.resetIsInitialized();//assumes one bdd for all tests
 		RiskCounter.initialize(domain, problem);
 		
 		initialModelCount = RiskCounter.getModelCount(1);
@@ -93,17 +93,19 @@ public class Planner
 	 *  appropriate method restoreActionsToStateBeforePlannerCall().
 	 * Note here that both the agent and expert set the planner's problem to their problem
 	 *  before they call the planner getPlan method.
-	 * The plan's actions are also restored to their original state.  
+	 * The plan's actions are also restored to their original state.
+	 * Because when the QTree is used, the problem's initial state disappears, it is reloaded here.  
 	 * 
 	 * @param plannerType
 	 * @return List<ActionInstance> plan - with the actions that have no removed props
 	 */
 	public List<ActionInstance> getPlan(PlannerTypes plannerType)
 	{
-		if(numTimesPlannerCalled >= Simulation_PL_QA.maxPlannerCalls) return null;
+		if(numTimesPlannerCalled >= SimulationPLQA.maxPlannerCalls) return null;
 		
 		currPType = plannerType;
 		
+		Set<Proposition> currState = new HashSet<Proposition>(problem.getInitialState());
 		List<ActionInstance> preservedActionsList = Actions_Utility.makeActionsListDeepCopy(problem.getActions());
 		
 		List<ActionInstance> plan = null;
@@ -111,6 +113,7 @@ public class Planner
 		if(plannerType.equals(PlannerTypes.PODE1)) 	plan = runPODE1planner();
 		if(plannerType.equals(PlannerTypes.AMIR))  	plan = runAMIRplanner();
 		
+		problem.setInitialState(currState);
 		problem.setActionInstances(preservedActionsList);
 		
 		ArrayList<ActionInstance> planWithPreservedActions = new ArrayList<ActionInstance>();
@@ -159,9 +162,7 @@ public class Planner
 		solverOptions.setUseDeferredEvaluation(true);
 		solverOptions.setUseMultipleSupportersInPlanningGraph(false);
 		solverOptions.setBiasRelaxedPlanWithFaults(false);
-		
-		Set<Proposition> currState = new HashSet<Proposition>(problem.getInitialState());
-			
+					
 		try{
 			solver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
@@ -171,8 +172,6 @@ public class Planner
 		try{ plan = solver.run(); }
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
-		
-		problem.setInitialState(currState); // it disappears sometimes!
 			
 		return plan;
 	}
@@ -202,9 +201,7 @@ public class Planner
 		solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 		solverOptions.setRiskArity(Integer.valueOf(1));//arity 1 only
 		solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
-
-		Set<Proposition> currState = new HashSet<Proposition>(problem.getInitialState());
-		
+	
 		try{
 			solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
@@ -214,9 +211,7 @@ public class Planner
 		try{ plan = solver.run(); }
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
-		
-		problem.setInitialState(currState); // it disappears sometimes!
-		
+	
 		return plan;	
 	}
 	

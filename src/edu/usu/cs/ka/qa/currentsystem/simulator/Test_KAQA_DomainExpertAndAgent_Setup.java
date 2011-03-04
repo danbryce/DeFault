@@ -20,12 +20,12 @@ import edu.usu.cs.pddl.domain.incomplete.Fault;
  *  Agent - Risks: the possible features existing in the RiskCounter BDD - as Fault objects
  *  Both  - PFs: Possible Features outstanding - i.e., risks remaining - the props in possLists for actions
  */
-public class Test_QA_DE_Agent_Setup 
+public class Test_KAQA_DomainExpertAndAgent_Setup 
 {
 	DomainExpert expert;
 	Agent agent;
 	
-	Test_QA_DE_Agent_Setup(String[] args)
+	Test_KAQA_DomainExpertAndAgent_Setup(String[] args)
 	{	
 		if (args.length != 3) { System.out.println(" " + args.length); usage(args); System.exit(1); }
 		
@@ -41,7 +41,7 @@ public class Test_QA_DE_Agent_Setup
 		String domain = args[0].replace("testfiles/incomplete/", "");
 		System.out.print(domain + "_" + args[2] + " ");
 		
-		Test_QA_DE_Agent_Setup testSetup = new Test_QA_DE_Agent_Setup(args);
+		Test_KAQA_DomainExpertAndAgent_Setup testSetup = new Test_KAQA_DomainExpertAndAgent_Setup(args);
 		try
 		{
 			try{ testSetup.runTest(args, AgentTypes.RG); } catch(Exception e){e.printStackTrace();}

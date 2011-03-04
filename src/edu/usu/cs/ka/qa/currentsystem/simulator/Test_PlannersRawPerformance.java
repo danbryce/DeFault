@@ -2,7 +2,7 @@ package edu.usu.cs.ka.qa.currentsystem.simulator;
 
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.*;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Planner.PlannerTypes;
-import edu.usu.cs.ka.qa.currentsystem.simulator.Simulation_PL_QA.ExecThread;
+import edu.usu.cs.ka.qa.currentsystem.simulator.SimulationPLQA.ExecThread;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
@@ -47,7 +47,7 @@ public class Test_PlannersRawPerformance
 	    //BufferedWriter out = new BufferedWriter(fstream);
 		
 		int numSuccesses = 0;
-		for(int simSeed = 0; simSeed < 1000 && numSuccesses < 10; simSeed ++)
+		for(int simSeed = 0; simSeed < 1000 && numSuccesses < 1; simSeed ++)
 		{
 			boolean cSuccess = false;
 			boolean incSuccess = false;

@@ -31,8 +31,8 @@ public abstract class Agent
 	protected String domainFile;
 	protected String problemFile;
 	
-	protected Domain domain;
-	protected Problem problem;
+	public Domain domain;
+	public Problem problem;
     
 	protected List<ActionInstance> actions;
 	public Hashtable<String, IncompleteActionInstance> actionsHT;

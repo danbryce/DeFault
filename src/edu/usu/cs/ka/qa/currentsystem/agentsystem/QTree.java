@@ -29,6 +29,8 @@ public class QTree
 	boolean useMinAvg;
 	boolean useRelaxedPlanSolver;
 	
+	static LinkedList<Integer> bddRefs;
+	
 	public static int counterRPSCalls = 0;
 	
 	boolean debug = false;
@@ -38,17 +40,26 @@ public class QTree
 		openList = new LinkedList<QNode>();
 		agent = a;
 		plan = p;
-		planner = Simulation_PL_QA.getInstance().getPlanner();		
+		
+		bddRefs = new LinkedList<Integer>();
+		
+		numNodes = 0;
+				
+		//planner = Simulation_PL_QA.getInstance().getPlanner();
+		planner = SimulationPLQA.getInstance().getPlanner();
+		problem = new IncompleteProblem(agent.getProblem());
+		planner.setProblem(problem);
 		is1StepLookahead = is1StepLA;
 		usePruning = isAB;
 		useMinAvg = isAvg;
 		useRelaxedPlanSolver = isRPS;
 		
+		
 		root = new QNode();
 		openList.add(root);
-		problem = new IncompleteProblem(agent.getProblem());
-		planner.setProblem(problem);
-		numNodes = 0;
+
+		
+
 		
 		//currentState = new HashSet(agent.getProblem().getInitialState());
 		
@@ -56,6 +67,12 @@ public class QTree
 	}
 
 	QNode whichNodeToExpand(){return openList.remove(0);}		//some switch for an expansion strategy
+	
+	public void derefAllQTreeBddRefs()
+	{
+		for(Integer bddRef : bddRefs)
+			agent.bdd.deref(bddRef);
+	}
 	
 	Fault getBestQ(boolean isNextPossPreOnly)
 	{
@@ -100,6 +117,8 @@ public class QTree
 					}
 				}
 			}
+			
+			derefAllQTreeBddRefs();
 			planner.setProblem(agent.getProblem());
 			if(debug)System.out.println("NUMNODES: " + numNodes);
 			return bestQ;
@@ -125,6 +144,8 @@ public class QTree
 					bestChild = child;
 				}
 			}
+			
+			derefAllQTreeBddRefs();
 			planner.setProblem(agent.getProblem());
 			if(debug)System.out.println("NUMNODES: " + numNodes);
 			if(debug)System.out.println("BESTCHILD: " + bestChild);
@@ -234,6 +255,9 @@ public class QTree
 			bddRefKB = agent.bdd.ref(agent.bdd.getOne());
 			bddRefPFE  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			
+			bddRefs.add(bddRefKB);
+			bddRefs.add(bddRefPFE);
+			
 			numNodes++;
 			
 			if(debug)System.out.println(agent.bdd.toString(bddRefPFE));
@@ -246,10 +270,13 @@ public class QTree
 			Fault currQFault = agent.numVarIndexToRiskForCubeOrMinterm.get(index);
 	
 			int bddIndexForcurrQFault = agent.riskToBDD.get(currQFault);
+			
 			if(value == false)
 				bddRefKB = agent.bdd.ref(agent.bdd.and(parent.bddRefKB, agent.bdd.not(bddIndexForcurrQFault)));
 			else
 				bddRefKB = agent.bdd.ref(agent.bdd.and(parent.bddRefKB, bddIndexForcurrQFault));
+			
+			bddRefs.add(bddRefKB);
 			
 			bddRefPFE = parent.bddRefPFE;
 			depth = parent.depth + 1;
@@ -285,6 +312,9 @@ public class QTree
 				if(useRelaxedPlanSolver)
 				{
 					int bddREF_RPS_PFE = getPFE_RPSolver();
+					
+					bddRefs.add(bddREF_RPS_PFE);
+					
 					if(debug)System.out.print("* ");	
 					if(bddREF_RPS_PFE == 0)//
 					{
@@ -302,7 +332,8 @@ public class QTree
 				}
 				else//uses regular solver
 				{
-					List<ActionInstance> hypotheticalPlan = Simulation_PL_QA.getInstance().runPlannerThread(Simulation_PL_QA.getInstance().getPlannerType());
+					List<ActionInstance> hypotheticalPlan = SimulationPLQA.getInstance().runPlannerThread(SimulationPLQA.getInstance().getPlannerType());
+					//List<ActionInstance> hypotheticalPlan = Simulation_PL_QA.getInstance().runPlannerThread(Simulation_PL_QA.getInstance().getPlannerType());
 					if(debug)System.out.print("* ");	
 					if(hypotheticalPlan == null)
 					{
@@ -315,6 +346,8 @@ public class QTree
 					else
 					{
 						bddRefPFE  = RiskCounter.tryThisPFEGenerator(agent.problem, hypotheticalPlan, Planner.solver);
+						bddRefs.add(bddRefPFE);
+						
 						isNewPlanNode = true;
 					}
 				}
@@ -418,8 +451,8 @@ public class QTree
 	private int getPFE_RPSolver()
 	{
 		counterRPSCalls++;
-		if(counterRPSCalls > Simulation_PL_QA.getInstance().maxPlannerCalls)
-			planner.setNumTimesPlannerCalled(Simulation_PL_QA.getInstance().maxPlannerCalls+1);
+		if(counterRPSCalls > SimulationPLQA.getInstance().maxPlannerCalls)
+			planner.setNumTimesPlannerCalled(SimulationPLQA.getInstance().maxPlannerCalls+1);
 		
 		RelaxedPlanSolver RPSolver;
 		SearchStatistics searchStatistics = new SearchStatistics();

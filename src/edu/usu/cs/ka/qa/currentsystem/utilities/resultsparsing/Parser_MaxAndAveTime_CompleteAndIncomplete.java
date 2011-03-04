@@ -10,7 +10,7 @@ import java.text.*;
  * Uses files in this directory location:
  * /Users/CHW/Desktop/PRP_Results/
  */
-public class PlannersTimeTakenCompleteVsIncomplete 
+public class Parser_MaxAndAveTime_CompleteAndIncomplete 
 {	
 	static String directory = "/Users/CHW/Desktop/KA_Bryce_&_REX-Work_&_Results/Results_Planner_Raw_Performance/";
 	

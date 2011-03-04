@@ -11,7 +11,7 @@ import java.io.*;
  * /Users/CHW/Desktop/out_112110/
  * /Users/CHW/Desktop/out - bridges wout at_0_0 - 11.22.10/
  */
-public class ParserForMaxTime 
+public class Parser_MaxTime_Incomplete 
 {
 	static String directory = "/Users/CHW/Desktop/DB out/";
 	static String subDirectory = "out/";

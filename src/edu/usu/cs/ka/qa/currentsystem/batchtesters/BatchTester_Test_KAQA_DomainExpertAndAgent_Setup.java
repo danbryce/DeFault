@@ -2,17 +2,17 @@ package edu.usu.cs.ka.qa.currentsystem.batchtesters;
 
 import edu.usu.cs.ka.qa.currentsystem.simulator.*;
 
-public class BatchTester_Test_QA_DE_Agent_Setup 
+public class BatchTester_Test_KAQA_DomainExpertAndAgent_Setup 
 {
 	private static final int numFiles = 10;
 
 	public static void main (String[] args)
 	{
-		System.out.println("BEGIN - QA DE SETUP TESTS");
+		System.out.println("BEGIN - KAQA_DomainExpertAndAgent_Setup TESTS");
 		
 		Bridges(args);
 		
-		System.out.println("DONE - QA DE SETUP TESTS");
+		System.out.println("DONE - KAQA_DomainExpertAndAgent_Setup TESTS");
 	}
 	
 	public static void Bridges(String[] args)
@@ -38,7 +38,7 @@ public class BatchTester_Test_QA_DE_Agent_Setup
 						{
 							args[2] = String.valueOf(simSeed);
 							
-							try{ Test_QA_DE_Agent_Setup.main(args); }
+							try{ Test_KAQA_DomainExpertAndAgent_Setup.main(args); }
 							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
 						}
 						System.out.println();
