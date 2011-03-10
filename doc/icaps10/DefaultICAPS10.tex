@@ -1167,7 +1167,7 @@ Using $\phi$, it is possible to determine if the next action in a plan, or any s
 %In addition to our two agent types, we investigate two types of environments, differing in their semantics for failed action application.  The first, which is consistent with the assumptions of \FFRISKY{}, assumes that applying an action when its preconditions are not satisfied will lead to an undefined state where no further actions can be applied.  The second assumes that applying an action with unsatisfied preconditions will result in no change to the state and further actions are allowed.  In both cases, a failed action application will result in no change of state reported by the environment, but the former will report no change for all actions, and the latter will report changes for subsequent actions whose preconditions are satisfied.  The purpose of using two types of environments is to illustrate the relative benefits of the pessimistic and optimistic agents.
 
 \begin{algorithm}[t]
-\SetLine
+%\SetLine
 \KwIn{state $s$, goal $G$, actions $\tilde{A}$}
 
 %\begin{algorithm}

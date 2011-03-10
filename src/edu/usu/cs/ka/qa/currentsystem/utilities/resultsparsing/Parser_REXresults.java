@@ -5,25 +5,210 @@ import java.io.*;
 public class Parser_REXresults 
 {	
 	//static String directory = "C:\\Documents and Settings\\Christopher\\Desktop\\";
+	//static String bigResultsFolder = "out\\";;
 	static String directory = "/Users/CHW/Desktop/";
 	static String bigResultsFolder = "out/";
-	static String outputFolderDateTimeAppend = "_2_8_11_2PM";
+	static String outputFolderDateTimeAppend = "_3_6_11_9PM";
 
-	static boolean isFullQTree = true;
-	static boolean scrubIt = true;
+	static boolean isFullQTree = false;
+	static boolean scrubIt = false;
 	static boolean isBugCheck = false;
 	
 	public static void main(String[] args) 
 	{
-		//ParcPrinterResults();
+		ParcPrinterResults();
 		//PathwaysResults();
 		//HoboNavResults();
-		BridgesResults();
+		//BridgesResults();
 		
 		//bugFixer();
 		//bugCheck(null);
 	}
 		
+	
+	
+	//parcprinter_pode3_22_6.txt
+	static void ParcPrinterResults()
+	{	
+		LinkedList<String> results = new LinkedList<String>();
+		LinkedList<String> metaResults = new LinkedList<String>();
+		
+		metaResults.add("ParcPrinter///////////////////////////////////////////");
+		metaResults.add(" -problems 6, 10, 14, 17, 19, 20, 24-30 have no");
+		metaResults.add("  possible plan in Bryce results and are omitted.");
+		
+		int[] files = {1,2,3,4,5,7,8,9,11,12,13,15,16,18,21,22,23};
+		int instances = 10;
+		
+		for(int fileCounter = 0; fileCounter < files.length; fileCounter++)
+		{
+			for(int instance = 1; instance <= instances; instance++)
+			{
+				for(double density = .25; density <= 1.0; density +=.25)
+				{
+					String filename = "";
+					filename += "parcprinter_";
+					
+					if(files[fileCounter] < 10) filename +="0";	
+					filename += files[fileCounter] + "_";
+					
+					filename += instance + "_";
+					filename += density;
+					filename += ".txt";
+					
+					File file = new File(directory + bigResultsFolder + filename);
+					
+					String metaResult = filename + " ";
+					
+					int countSuccesses = 0;
+					boolean completed = false;
+					String totalTime = "";
+					
+					try 
+					{
+						Scanner scanner = new Scanner(file);
+						while (scanner.hasNextLine()) 
+						{
+							String line = scanner.nextLine();							
+							if(line.contains("cweber") && !line.contains("File"))
+							{
+								line = line.replace("/home/cweber/graphplanner/", "");
+								if(scrubIt) line = lineCleaner(line);
+								if(isBugCheck)	line = bugCheck(line);
+								results.add(line);
+								
+								countSuccesses++;
+							}
+							
+							if(line.contains("Exception") && !metaResult.contains("*"))
+								metaResult += "* ";
+							
+							if(line.contains("totalTime"))
+							{
+								int colonLocation = line.indexOf(":");
+								totalTime = line.substring(colonLocation);
+								completed = true;
+							}
+						}
+					} catch (FileNotFoundException e) {metaResult += "DNE ";}	
+					
+					if(!metaResult.contains("DNE"))
+						metaResult += countSuccesses;
+					
+					if(completed) 
+						metaResult += " " + totalTime;
+					else if(!completed && !metaResult.contains("DNE"))
+						metaResult += " DNF";
+					
+					metaResults.add(metaResult);
+				}
+			}
+		}
+		
+		for(String r : metaResults)
+			System.out.println(r);
+		
+		System.out.println();
+		for(String r : results)
+			System.out.println(r);
+		
+		System.out.println("END ParcPrinter///////////////////////////////////////\n");
+		metaResults.add("END ParcPrinter///////////////////////////////////////\n");
+		
+		writeMetaResultsToFile(metaResults);
+		writeResultsToFile("ParcPrinter_Results_" + outputFolderDateTimeAppend, results);
+	}
+	
+	//pathways_p01_0.0_jdd_1.txt
+	static void PathwaysResults()
+	{
+		LinkedList<String> results = new LinkedList<String>();
+		LinkedList<String> metaResults = new LinkedList<String>();
+		
+		metaResults.add("Pathways///////////////////////////////////////////");
+		int problemCount = 20;
+		Double [] density = { .25, .5, .75, 1.0}; //no .0, .01
+		int instanceCount = 10;
+			
+		for (int pCounter = 1; pCounter <= problemCount; pCounter++) 
+		{
+			for(Double d : density)
+			{
+				for(int instance = 1; instance <= instanceCount; instance++)
+				{
+					String filename = "";
+					filename += "pathways_p";
+					
+					if(pCounter < 10) filename += "0";
+					filename += pCounter + "_";
+					filename += d + "_";							
+					filename += instance;
+					filename += ".txt";
+					
+					File file = new File(directory + bigResultsFolder + filename);
+					
+					String metaResult = filename + " ";
+					
+					int countSuccesses = 0;
+					boolean completed = false;
+					String totalTime = "";
+					
+					try 
+					{
+						Scanner scanner = new Scanner(file);
+						while (scanner.hasNextLine()) 
+						{
+							String line = scanner.nextLine();							
+							if(line.contains("cweber") && !line.contains("File"))
+							{
+								line = line.replace("/home/cweber/graphplanner/", "");
+								if(scrubIt) line = lineCleaner(line);
+								if(isBugCheck)	line = bugCheck(line);
+								results.add(line);
+								
+								countSuccesses++;
+							}
+							
+							if(line.contains("Exception") && !metaResult.contains("*"))
+								metaResult += "* ";
+							
+							if(line.contains("totalTime"))
+							{
+								int colonLocation = line.indexOf(":");
+								totalTime = line.substring(colonLocation);
+								completed = true;
+							}
+						}
+					} catch (FileNotFoundException e) {metaResult += "DNE ";}	
+					
+					if(!metaResult.contains("DNE"))
+						metaResult += countSuccesses;
+					
+					if(completed) 
+						metaResult += " " + totalTime;
+					else if(!completed && !metaResult.contains("DNE"))
+						metaResult += " DNF";
+					
+					metaResults.add(metaResult);
+				}
+			}
+
+		}
+		
+		for(String r : metaResults)
+			System.out.println(r);
+
+		System.out.println();
+		for(String r : results)
+			System.out.println(r);
+		
+		System.out.println("END Pathways///////////////////////////////////////\n");
+		metaResults.add("END Pathways///////////////////////////////////////\n");
+		
+		writeMetaResultsToFile(metaResults);
+		writeResultsToFile("Pathways_Results_" + outputFolderDateTimeAppend, results);
+	}
+	
 	//hobonav_2_7_0.25_1_pode2.txt
 	static void HoboNavResults()
 	{
@@ -115,188 +300,6 @@ public class Parser_REXresults
 		
 		writeMetaResultsToFile(metaResults);
 		writeResultsToFile("Hobonav_Results_" + outputFolderDateTimeAppend, results);
-	}
-	
-	//parcprinter_pode3_22_6.txt
-	static void ParcPrinterResults()
-	{	
-		LinkedList<String> results = new LinkedList<String>();
-		LinkedList<String> metaResults = new LinkedList<String>();
-		
-		metaResults.add("ParcPrinter///////////////////////////////////////////");
-		metaResults.add(" -problems 6, 10, 14, 17, 20, 25-30 have no");
-		metaResults.add("  possible plan in Bryce results and are omitted.");
-		
-		int[] files = {1,2,3,4,5,7,8,9,11,12,13,15,16,18,19,21,22,23,24};
-		int instances = 10;
-		
-		for(int fileCounter = 0; fileCounter < files.length; fileCounter++)
-		{
-			for(int instance = 1; instance <= instances; instance++)
-			{
-				for(double density = .25; density <= 1.0; density +=.25)
-				{
-					String filename = "";
-					filename += "parcprinter_";
-					
-					if(files[fileCounter] < 10) filename +="0";	
-					filename += files[fileCounter] + "_";
-					
-					filename += instance + "_";
-					filename += density;
-					filename += ".txt";
-					
-					File file = new File(directory + bigResultsFolder + filename);
-					
-					String metaResult = filename + " ";
-					
-					int countSuccesses = 0;
-					boolean completed = false;
-					String totalTime = "";
-					
-					try 
-					{
-						Scanner scanner = new Scanner(file);
-						while (scanner.hasNextLine()) 
-						{
-							String line = scanner.nextLine();							
-							if(line.contains("cweber") && !line.contains("File"))
-							{
-								line = line.replace("/home/cweber/graphplanner/parcprinter/", "");
-								if(scrubIt) line = lineCleaner(line);
-								if(isBugCheck)	line = bugCheck(line);
-								results.add(line);
-								
-								countSuccesses++;
-							}
-							
-							if(line.contains("Exception") && !metaResult.contains("*"))
-								metaResult += "* ";
-							
-							if(line.contains("totalTime"))
-							{
-								int colonLocation = line.indexOf(":");
-								totalTime = line.substring(colonLocation);
-								completed = true;
-							}
-						}
-					} catch (FileNotFoundException e) {metaResult += "DNE ";}	
-					
-					if(!metaResult.contains("DNE"))
-						metaResult += countSuccesses;
-					
-					if(completed) 
-						metaResult += " " + totalTime;
-					else if(!completed && !metaResult.contains("DNE"))
-						metaResult += " DNF";
-					
-					metaResults.add(metaResult);
-				}
-			}
-		}
-		
-		for(String r : metaResults)
-			System.out.println(r);
-		
-		System.out.println();
-		for(String r : results)
-			System.out.println(r);
-		
-		System.out.println("END ParcPrinter///////////////////////////////////////\n");
-		metaResults.add("END ParcPrinter///////////////////////////////////////\n");
-		
-		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("ParcPrinter_Results_" + outputFolderDateTimeAppend, results);
-	}
-	
-	//pathways_p01_0.0_jdd_1.txt
-	static void PathwaysResults()
-	{
-		LinkedList<String> results = new LinkedList<String>();
-		LinkedList<String> metaResults = new LinkedList<String>();
-		
-		metaResults.add("Pathways///////////////////////////////////////////");
-		int problemCount = 20;
-		Double [] density = { .25, .5, .75, 1.0}; //no .0, .01
-		int instanceCount = 10;
-			
-		for (int pCounter = 1; pCounter <= problemCount; pCounter++) 
-		{
-			for(Double d : density)
-			{
-				for(int instance = 1; instance <= instanceCount; instance++)
-				{
-					String filename = "";
-					filename += "pathways_p";
-					
-					if(pCounter < 10) filename += "0";
-					filename += pCounter + "_";
-					filename += d + "_";							
-					filename += instance;
-					filename += ".txt";
-					
-					File file = new File(directory + bigResultsFolder + filename);
-					
-					String metaResult = filename + " ";
-					
-					int countSuccesses = 0;
-					boolean completed = false;
-					String totalTime = "";
-					
-					try 
-					{
-						Scanner scanner = new Scanner(file);
-						while (scanner.hasNextLine()) 
-						{
-							String line = scanner.nextLine();							
-							if(line.contains("cweber") && !line.contains("File"))
-							{
-								line = line.replace("/home/cweber/graphplanner/pathways/", "");
-								if(scrubIt) line = lineCleaner(line);
-								if(isBugCheck)	line = bugCheck(line);
-								results.add(line);
-								
-								countSuccesses++;
-							}
-							
-							if(line.contains("Exception") && !metaResult.contains("*"))
-								metaResult += "* ";
-							
-							if(line.contains("totalTime"))
-							{
-								int colonLocation = line.indexOf(":");
-								totalTime = line.substring(colonLocation);
-								completed = true;
-							}
-						}
-					} catch (FileNotFoundException e) {metaResult += "DNE ";}	
-					
-					if(!metaResult.contains("DNE"))
-						metaResult += countSuccesses;
-					
-					if(completed) 
-						metaResult += " " + totalTime;
-					else if(!completed && !metaResult.contains("DNE"))
-						metaResult += " DNF";
-					
-					metaResults.add(metaResult);
-				}
-			}
-
-		}
-		
-		for(String r : metaResults)
-			System.out.println(r);
-
-		System.out.println();
-		for(String r : results)
-			System.out.println(r);
-		
-		System.out.println("END Pathways///////////////////////////////////////\n");
-		metaResults.add("END Pathways///////////////////////////////////////\n");
-		
-		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Pathways_Results_" + outputFolderDateTimeAppend, results);
 	}
 	
 	//bridges_v2_length_16_0.0_10.txt
@@ -452,19 +455,21 @@ public class Parser_REXresults
 		LinkedList<String> tokens = new LinkedList<String>();
 		for(int i = 0; i < lineTokens.length; i++)
 		{
-			if(lineTokens[i].equals("T"))
+			if(lineTokens[i].equals("T"))//simulation timeout
 				tokens.add("?");
-			else if(lineTokens[i].equals("E"))
+			if(lineTokens[i].equals("t"))//planner timeout
 				tokens.add("?");
-			else if(lineTokens[i].equals("X"))
+			else if(lineTokens[i].equals("E"))//Exception
 				tokens.add("?");
-			else if(lineTokens[i].equals("L"))
+			else if(lineTokens[i].equals("X"))//Exceeded max plannerCalls or maxActions
 				tokens.add("?");
-			else if(lineTokens[i].equals("N"))
+			else if(lineTokens[i].equals("L"))//Loop
 				tokens.add("?");
-			else if(lineTokens[i].equals("S"))
+			else if(lineTokens[i].equals("N"))//no plan found
 				tokens.add("?");
-			else if(lineTokens[i].equals("-"))
+			else if(lineTokens[i].equals("S"))//no result and plan size is 0
+				tokens.add("?");
+			else if(lineTokens[i].equals("-"))//did not run test
 				tokens.add("?");
 			else if(lineTokens[i].equals("amir"))
 				tokens.add("AMIR");

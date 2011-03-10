@@ -71,12 +71,12 @@ public class Simulation
 	{	
 		int numSuccesses = 0;
 		
-		//System.out.println();
-		//System.out.println("domainFile: " + args[0]);
-		//System.out.println("problemFile: " + args[1]);
-		//System.out.println("thread timeLimit: " + args[2]);
-		//System.out.println("tests startTime: " + startStopwatch());
-		//System.out.println();
+		System.out.println();
+		System.out.println("domainFile: " + args[0]);
+		System.out.println("problemFile: " + args[1]);
+		System.out.println("thread timeLimit: " + args[2]);
+		System.out.println("tests startTime: " + startStopwatch());
+		System.out.println();
 
 		for(int simSeed = 0; (simSeed < 1000) && (numSuccesses < 10); simSeed++)
 		{
@@ -90,14 +90,14 @@ public class Simulation
 					sim.resultString += args[0] + "_" + simSeed + " " + sim.planners.getInitialModelCount() + " RG";
 			
 					try{ sim.runSimulation("amir",  args, "RG"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " amir E E E E E";}
-					//try{ sim.runSimulation("pode1", args, "RG"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
-					//try{ sim.runSimulation("jdd", args, "RG");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
+					try{ sim.runSimulation("pode1", args, "RG"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
+					try{ sim.runSimulation("jdd", args, "RG");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
 					
-					//sim.resultString += " CL";
+					sim.resultString += " CL";
 					
-					//try{ sim.runSimulation("amir",  args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " amir E E E E E";}
-					//try{ sim.runSimulation("pode1", args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
-					//try{ sim.runSimulation("jdd", args, "CL");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
+					try{ sim.runSimulation("amir",  args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " amir E E E E E";}
+					try{ sim.runSimulation("pode1", args, "CL"); } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " pode1 E E E E E";}
+					try{ sim.runSimulation("jdd", args, "CL");   } catch(Exception e){/*e.printStackTrace();*/ sim.resultString += " jdd E E E E E";}
 					
 					if(gotAResult)
 					{
@@ -109,9 +109,9 @@ public class Simulation
 		}
 		
 		System.out.println();
-		//System.out.println("numSuccesses    : " + numSuccesses);
-		//System.out.println("tests finishTime: " + stopStopwatch());
-		//System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
+		System.out.println("numSuccesses    : " + numSuccesses);
+		System.out.println("tests finishTime: " + stopStopwatch());
+		System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
 	}
 	
 	boolean timeout;

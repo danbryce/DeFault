@@ -5,6 +5,7 @@ import java.util.*;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.*;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.AgentTypes;
+import edu.usu.cs.ka.qa.currentsystem.agentsystem.Agent.LearningTypes;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.QA.QA_Types;
 import edu.usu.cs.ka.qa.currentsystem.agentsystem.Planner.PlannerTypes;
 import edu.usu.cs.ka.qa.currentsystem.utilities.*;
@@ -24,7 +25,6 @@ public class SimulationPL
 	PlannerTypes pType;
 	static SimulationPL instance;
 	
-	static int timeLimit;
 	String resultString;
 	
 	//Results stuff
@@ -32,15 +32,16 @@ public class SimulationPL
 	static Long finishTime;
 	
 	//Settings
-	static boolean debug = true;
+	static boolean debug = false;
 	public static final int maxPlannerCalls = 1000;
-	public static final int maxSeeds = 1000;
+	public static final int maxActionsTaken = 1000;
+	public static final int maxSeeds = 10000;
 	public static final int maxSuccesses = 10;
+	public static final int maxTimeSimulation = 3600;//one hour = 3600
+	public static final int plannerTimeLimit = 1200; //20 minutes = 1200
 		
 	SimulationPL(String[] args, int simSeed)
-	{			
-		timeLimit = Integer.valueOf(args[2]) * 1000;
-		
+	{					
 		expert = new DomainExpert(args[0], args[1], simSeed);		
 		planners = new Planner(args[0], args[1]);
 		QTree.counterRPSCalls = 0;
@@ -55,7 +56,7 @@ public class SimulationPL
 	public static Planner getPlanner(){return planners;}
 
 	/**
-	 * Choose any planner, as all perform comparably on the classical version of the problem.
+	 * Choose any planner to avoid bias - all perform comparably on the classical version of the problem.
 	 * @return boolean is Solvable
 	 */
 	static boolean isSolvableTest;
@@ -86,7 +87,7 @@ public class SimulationPL
 	static boolean gotAResult;
 	public static void main(String[] args)
 	{	
-		if (args.length != 3) { System.out.println(" " + args.length); usage(args); System.exit(1); }
+		if (args.length != 2) { System.out.println(" " + args.length); usage(args); System.exit(1); }
 		
 		boolean isForEyeballs = false; 
 		
@@ -95,8 +96,9 @@ public class SimulationPL
 		System.out.println();
 		System.out.println("domainFile: " + args[0]);
 		System.out.println("problemFile: " + args[1]);
-		System.out.println("thread timeLimit: " + args[2]);
-		System.out.println("tests startTime: " + startStopwatch());
+		System.out.println("thread timeLimit: " + plannerTimeLimit + " secs");
+		System.out.println("simulation timeLimit: " + maxTimeSimulation + " secs");
+		System.out.println("tests startTime: " + startStopwatch() + " millisecs");
 		System.out.println();
 		
 		for(int simSeed = 0; (simSeed < maxSeeds) && (numSuccesses < maxSuccesses); simSeed++)
@@ -109,7 +111,8 @@ public class SimulationPL
 					gotAResult = false;
 			
 					String domain = args[0].replace("testfiles/incomplete/", "");
-					sim.resultString += domain + "_" + simSeed + " 2^" + sim.planners.getInitialNumRisks();
+					//sim.resultString += domain + "_" + simSeed + " 2^" + sim.planners.getInitialNumRisks();
+					sim.resultString += domain + "_" + simSeed + " " + sim.planners.getInitialModelCount();
 					
 					if(isForEyeballs) sim.resultString += "\n";
 					sim.runSimulationForGivenQAType(args, QA_Types.NONE, false);	
@@ -125,26 +128,32 @@ public class SimulationPL
 		
 		System.out.println();
 		System.out.println("numSuccesses    : " + numSuccesses);
-		System.out.println("tests finishTime: " + stopStopwatch());
-		System.out.println("tests totalTime : " + (finishTime - startTime)/1000.0);
+		System.out.println("tests finishTime: " + stopStopwatch() + " millisecs");
+		System.out.println("tests totalTime : " + ((finishTime - startTime)/1000.0) + " secs");
 	}
 	
 	private void runSimulationForGivenQAType(String[] args, QA_Types qaType, boolean isRPSQAStarter)
-	{
-		resultString += " " + qaType;
-		
+	{		
 		resultString += " " + AgentTypes.RG;
 
-		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType, isRPSQAStarter); } catch(Exception e)		{  /*e.printStackTrace();*/ resultString += " AMIR E E E E E E E E E"; }
-		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.RG, qaType, isRPSQAStarter);   } catch(Exception e)	{  /*e.printStackTrace();*/ resultString += " JDD E E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType, isRPSQAStarter); } 
+		catch(Exception e) {  if(debug) e.printStackTrace(); resultString += " AMIR E E E E E"; }
+		try{ runSimulation(PlannerTypes.PODE1,  args, AgentTypes.RG, qaType, isRPSQAStarter); } 
+		catch(Exception e) {  if(debug) e.printStackTrace();  resultString += " PODE1 E E E E E"; }
+		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.RG, qaType, isRPSQAStarter);   } 
+		catch(Exception e) {  if(debug) e.printStackTrace();  resultString += " JDD E E E E E"; }
 		
-		resultString += " " + AgentTypes.CL + " ";
+		resultString += " " + AgentTypes.CL;
 
-		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType, isRPSQAStarter); } catch(Exception e)		{  /*e.printStackTrace();*/ resultString += " AMIR E E E E E E E E E"; }
-		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType, isRPSQAStarter);   } catch(Exception e)	{  /*e.printStackTrace();*/ resultString += " JDD E E E E E E E E E"; }
+		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType, isRPSQAStarter); } 
+		catch(Exception e) {  if(debug) e.printStackTrace();  resultString += " AMIR E E E E E"; }
+		try{ runSimulation(PlannerTypes.PODE1,  args, AgentTypes.CL, qaType, isRPSQAStarter); } 
+		catch(Exception e) {  if(debug) e.printStackTrace();  resultString += " PODE1 E E E E E"; }
+		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType, isRPSQAStarter);   } 
+		catch(Exception e) {  if(debug) e.printStackTrace();  resultString += " JDD E E E E E"; }
 	}
 	
-	boolean timeout;
+	boolean timeoutPlanner, timeoutSimulation;
 	private void runSimulation(PlannerTypes plannerType, String [] args, AgentTypes agentType, QA_Types qaType, boolean isRPSQAStarter)
 	{	
 		if(debug)System.out.println("\n//" + plannerType + " " + agentType + " " + qaType + "///////////////////");
@@ -163,7 +172,7 @@ public class SimulationPL
 		Set<Proposition> currState, nextState;
 		IncompleteActionInstance currAction;
 		List<ActionInstance> plan;
-		boolean endlessLoop = timeout = false;
+		boolean endlessLoop = timeoutPlanner = timeoutSimulation = false;
 
 		//BEGIN SIMULATION//////////////////////////////////////////////////////////
 		agent.startStopwatch();
@@ -178,11 +187,13 @@ public class SimulationPL
 		if(debug && plan != null && Planner.duplicateActionCheck(plan))
 			System.out.println("\n2 IN A ROW.");
 		
-		List<ActionInstance> originalPlan = Actions_Utility.makeActionsListDeepCopy(plan);
+		List<ActionInstance> originalPlan = null;
+		if(plan != null)
+			originalPlan = Actions_Utility.makeActionsListDeepCopy(plan);
 		
 		//EXECUTION/PLANNING LOOP
 		int countReplanningEpisodesDuringExecution = 0;
-		while((agent.getNumActionsTaken() < 1000) && (planners.getNumTimesPlannerCalled() < maxPlannerCalls) && 
+		while((agent.getNumActionsTaken() < maxActionsTaken) && (planners.getNumTimesPlannerCalled() < maxPlannerCalls) && 
 				(plan != null) && (plan.size() != 0))
 		{				
 			//PREPARE TO ACT
@@ -266,20 +277,21 @@ public class SimulationPL
 		//RESULTS
 		if(currState.containsAll(agent.getProblem().getGoalAction().getPreconditions()))
 		{	
-			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled() + " " + countReplanningEpisodesDuringExecution;
+			resultString += " " + plannerType + " " + planners.getNumTimesPlannerCalled();
 			resultString += " " + agent.getNumActionsTaken() + " " + agent.getNumFailedActions();
-			resultString += " " + agent.getTimeToSolve() + " 2^" + planners.getFinalNumRisks();
-			resultString += " " + agent.getNumQsAsked() + " " + agent.getNumRisksLearnedQA() + " " + agent.getNumRisksLearnedPL();
+			//resultString += " " + agent.getTimeToSolve() + " 2^" + planners.getFinalNumRisks();
+			resultString += " " + agent.getTimeToSolve() + " " + planners.getFinalModelCount();
 			
 			gotAResult = true;
 		}
-		else if((agent.getNumActionsTaken() >= 1000) || (planners.getNumTimesPlannerCalled() >= maxPlannerCalls))
-				resultString += " " + plannerType + " X X X X X X X X X";
-		else if(endlessLoop) 		resultString += " " + plannerType + " L L L L L L L L L";
-		else if(timeout)			resultString += " " + plannerType + " T T T T T T T T T";
-		else if(plan == null) 		resultString += " " + plannerType + " N N N N N N N N N";
-		else if(plan.size() == 0) 	resultString += " " + plannerType + " S S S S S S S S S";
-		else						resultString += " " + plannerType + " ? ? ? ? ? ? ? ? ?";
+		else if((agent.getNumActionsTaken() >= maxActionsTaken) || (planners.getNumTimesPlannerCalled() >= maxPlannerCalls))
+				resultString += " " + plannerType + " X X X X X";
+		else if(endlessLoop) 		resultString += " " + plannerType + " L L L L L";
+		else if(timeoutSimulation)			resultString += " " + plannerType + " T T T T T";
+		else if(timeoutPlanner)			resultString += " " + plannerType + " t t t t t";
+		else if(plan == null) 		resultString += " " + plannerType + " N N N N N";
+		else if(plan.size() == 0) 	resultString += " " + plannerType + " S S S S S";
+		else						resultString += " " + plannerType + " ? ? ? ? ?";
 	}
 	
 	/**
@@ -301,20 +313,20 @@ public class SimulationPL
 		long now = System.currentTimeMillis();
 		execThread.start();
 		
-		int	maxTime = 0;
-		
-		if(isSolvableTest) 	maxTime = timeLimit / 4;
-		else				maxTime = timeLimit * 2;
+		int	maxTime = plannerTimeLimit * 1000;
 
 		while ((now - start) < maxTime)
 		{
 			try { Thread.sleep(500); } catch (Exception e){}
 			now = System.currentTimeMillis();
 			if(execThread.done) break;
+			
+			if(!isSolvableTest && agent.getCurrentExecutionTime() > maxTimeSimulation) break;
 		}
 		
 		execThread.stop();	
-		if((now - start) >= maxTime) timeout = true; //plan will be null
+		if((now - start) >= maxTime) timeoutPlanner = true; //plan will be null
+		if(!isSolvableTest && agent.getCurrentExecutionTime() > maxTimeSimulation) timeoutSimulation = true; //plan will be null
 		if(agent != null) agent.restoreActionsToStateBeforePlannerCall();	
 
 		return execThread.plan;
@@ -348,13 +360,13 @@ public class SimulationPL
 		}
 	}
 	
-	private static Long startStopwatch(){ startTime = System.currentTimeMillis(); return startTime; }
-	private static Long stopStopwatch() { finishTime = System.currentTimeMillis();return finishTime;}
-	
+	public static Long startStopwatch(){ startTime = System.currentTimeMillis(); return startTime;}
+	public static Long stopStopwatch() { finishTime = System.currentTimeMillis(); return finishTime;}
+		
 	private static void usage(String[] args) 
 	{
 		System.err.println("Simulation_PassiveLearningAgent args:");
-		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<threadLimit>");
+		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file>");
 	}
 	
 	/**

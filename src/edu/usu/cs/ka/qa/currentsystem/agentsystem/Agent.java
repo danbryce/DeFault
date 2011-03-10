@@ -525,4 +525,10 @@ public abstract class Agent
 		else return (finishTime - startTime)/1000.0;
 	}
 	
+	public Double getCurrentExecutionTime()
+	{
+		if(startTime == null) return -1.0;
+		else return (System.currentTimeMillis() - startTime)/1000.0;
+	}
+	
 }//end class
