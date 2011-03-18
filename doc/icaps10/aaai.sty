@@ -1,6 +1,6 @@
 %Filename: aaai.sty
 %
-\typeout{Conference Style for AAAI for LaTeX 2e -- version of 2 February 2009}
+\typeout{Conference Style for AAAI for LaTeX 2e -- version of 7 January 2011}
 % NOTICE: DO NOT MODIFY THIS FILE WITHOUT CHANGING ITS NAME. This style
 % file is called aaai.sty. Modifications to this file are permitted,
 % provided that your modified version does not include the acronym "aaai"
@@ -9,7 +9,10 @@
 % file was originally prepared by Peter F. Patel-Schneider, liberally
 % using the ideas of other style hackers, including Barbara Beeton. It was
 % modified in April 1999 by J. Scott Penberthy and George Ferguson. It was
-%  modified in 2007 and 2009 by AAAI. The preparation of this file was supported by 
+% modified in 2007 by AAAI. It was modified in February 2009  
+% and in November 2009 by Hans W. Guesgen and Giuseppe De Giacomo. It
+% was further modified in March 2010 by AAAI.
+% The original preparation of this file was supported by 
 % Schlumberger Palo Alto Research, AT\&T Bell Laboratories, AAAI, and 
 % Morgan Kaufmann Publishers.
 % 
@@ -39,7 +42,7 @@
 % \usepackage{times}
 % \usepackage{helvet}
 % \usepackage{courier}
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PDFMARK for TeX and GhostScript
 % Uncomment and complete the following for metadata if
 % your paper is typeset using TeX and GhostScript (e.g
@@ -47,25 +50,25 @@
 % \special{! /pdfmark where
 % {pop} {userdict /pdfmark /cleartomark load put} ifelse
 % [ /Author (John Doe, Jane Doe)
-% /Title (Paper Title)
+% /Title (Input Your Paper Title Here)
+% /Subject (Input the Proceedings Title Here)
 % /Keywords (AAAI, artificial intelligence)
 % /DOCINFO pdfmark}
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PDFINFO for PDFTeX
 % Uncomment and complete the following for metadata if
 % your paper is typeset using PDFTeX
 % \pdfinfo{
-% /Title (Input Your Title Here)
-% /Subject (Input The Proceedings Title Here)
-% /Author (First Name, Last Name;
-% First Name, Last Name;
-% First Name, Last Name;)
+% /Title (Input Your Paper Title Here)
+% /Subject (Input the Proceedings Title Here)
+% /Author (John Doe, Jane Doe)
 % }
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Uncomment only if you need to use section numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section Numbers
+% Uncomment if you want to use section numbers
 % and change the 0 to a 1 or 2
 % \setcounter{secnumdepth}{0}
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \title{Title}
 % \author{Author 1 \and Author 2 \\ Address line \\ Address line \And
 % Author 3 \\ Address line \\ Address line}
@@ -96,8 +99,9 @@
 % Author 2 \\ Address line \\ ... \\ Address line \And
 % Author 3 \\ Address line \\ ... \\ Address line}
 % If the title and author information does not fit in the area allocated,
-% place \setlength\titlebox{<new height>} after the \documentstyle line
-% where <new height> is something like 2.5in
+% place \setlength\titlebox{height}
+% after the \documentstyle line
+% where {height} is something like 2.5in
 % PHYSICAL PAGE LAYOUT
 \setlength\topmargin{-0.25in} \setlength\oddsidemargin{-0.25in}
 \setlength\textheight{9.0in} \setlength\textwidth{7.0in}
@@ -134,14 +138,18 @@ All rights reserved.}
 \let\maketitle\relax \let\@maketitle\relax
 \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax}
 \def\@maketitle{\vbox to \titlebox{\hsize\textwidth
+%%% AAAI changed: 03/05/2010
+%%\linewidth\hsize \vskip 0.625in minus 0.125in \centering
 \linewidth\hsize \vskip 0.625in minus 0.125in \centering
+%%% END changed
 {\LARGE\bf \@title \par} \vskip 0.2in plus 1fil minus 0.1in
 {\def\and{\unskip\enspace{\rm and}\enspace}%
 \def\And{\end{tabular}\hss \egroup \hskip 1in plus 2fil 
  \hbox to 0pt\bgroup\hss \begin{tabular}[t]{c}\Large\bf}%
 \def\AND{\end{tabular}\hss\egroup \hfil\hfil\egroup
 \vskip 0.25in plus 1fil minus 0.125in
- \hbox to \linewidth\bgroup\Large \hfil\hfil
+% hg: Changed Large to normalsize on next line
+ \hbox to \linewidth\bgroup\normalsize \hfil\hfil
 \hbox to 0pt\bgroup\hss \begin{tabular}[t]{c}\Large\bf}
 \hbox to \linewidth\bgroup\normalsize \hfil\hfil
 \hbox to 0pt\bgroup\hss \begin{tabular}[t]{c}\Large\bf\@author 
@@ -163,13 +171,16 @@ Abstract}\vspace{0.5ex}\begin{quote}\small}{\par\end{quote}\vskip 1ex}
 \def\subsection{\@startsection{subsection}{2}{\z@}{-2.0ex plus
 -0.5ex minus -.2ex}{3pt plus 2pt minus 1pt}{\large\bf\raggedright}}
 \def\subsubsection{\@startsection{subparagraph}{3}{\z@}{-6pt plus
-2pt minus 1pt}{-1em}{\normalsize\bf}}
+%%% DIEGO changed: 29/11/2009
+%% 2pt minus 1pt}{-1em}{\normalsize\bf}}
+-2pt minus -1pt}{-1em}{\normalsize\bf}}
+%%% END changed
 \setcounter{secnumdepth}{0}
 % add period to section (but not subsection) numbers, reduce space after
-\renewcommand{\thesection}
-   {\arabic{section}.\hskip-0.6em}
-\renewcommand{\thesubsection}
-   {\arabic{section}.\arabic{subsection}\hskip-0.6em}
+%\renewcommand{\thesection}
+%   {\arabic{section}.\hskip-0.6em}
+%\renewcommand{\thesubsection}
+%   {\arabic{section}.\arabic{subsection}\hskip-0.6em}
 % FOOTNOTES
 \footnotesep 6.65pt %
 \skip\footins 9pt plus 4pt minus 2pt
@@ -270,7 +281,14 @@ Abstract}\vspace{0.5ex}\begin{quote}\small}{\par\end{quote}\vskip 1ex}
 \def\thebibliography#1{\section*{References\@mkboth
 {REFERENCES}{REFERENCES}}\list
 {}{\labelwidth 0in\leftmargin\labelwidth
-\advance\leftmargin\labelsep \itemsep .01in}
+%%% DIEGO removed
+%%\advance\leftmargin\labelsep
+%%% END removed
+%%% DIEGO changed
+\itemsep .01in % original
+%%\itemsep -.0125in % reduced space between bib entries
+%%% END changed
+}
 \def\newblock{\hskip .11em plus .33em minus .07em}
 \sloppy\clubpenalty4000\widowpenalty4000
 \sfcode`\.=1000\relax}

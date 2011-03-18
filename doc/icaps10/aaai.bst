@@ -931,7 +931,7 @@ numnames #1 =
 s #2 "{vv }{ll}, and " format.name$ *
 s #3 "{vv }{ll}" format.name$ *
 }
-{ s #1 "{vv }{ll }\bgroup et al.\egroup " format.name$
+{ s #1 "{vv }{ll }\bgroup et al\mbox{.}\egroup " format.name$
 }
 if$
 }
