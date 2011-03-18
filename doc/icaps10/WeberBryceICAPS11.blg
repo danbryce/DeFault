@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.7)
+The top-level auxiliary file: WeberBryceICAPS11.aux
+The style file: aaai.bst
+Database file #1: jared.bib
+A bad cross reference---entry "graphplan"
+refers to entry "DBLP:conf/ijcai/1995", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/ijcai/1995"
+Warning--empty booktitle in graphplan
+You've used 18 entries,
+            2568 wiz_defined-function locations,
+            696 strings with 6965 characters,
+and the built_in function-call counts, 6972 in all, are:
+= -- 754
+> -- 224
+< -- 4
++ -- 73
+- -- 70
+* -- 531
+:= -- 1124
+add.period$ -- 91
+call.type$ -- 18
+change.case$ -- 106
+chr.to.int$ -- 18
+cite$ -- 19
+duplicate$ -- 292
+empty$ -- 535
+format.name$ -- 102
+if$ -- 1461
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 18
+newline$ -- 112
+num.names$ -- 54
+pop$ -- 91
+preamble$ -- 1
+purify$ -- 125
+quote$ -- 0
+skip$ -- 220
+stack$ -- 0
+substring$ -- 391
+swap$ -- 64
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 140
+warning$ -- 1
+while$ -- 56
+width$ -- 22
+write$ -- 250
+(There was 1 error message)
