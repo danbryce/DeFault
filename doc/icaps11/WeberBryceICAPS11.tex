@@ -38,9 +38,7 @@
 }{\end{itemize}}
 
 
-%\def\citet#1{\citeA{#1}} 
 \def\und#1{\noindent{\bf #1}:}
-%\def\baselinestretch{.99}
 \def\default{{\tt DeFault}} 
 \def\goalie{{\tt Goalie}}
 \def\citep#1{\cite{#1}} 
@@ -65,9 +63,9 @@ Utah State University
 Engineering complete planning domain descriptions is often very costly because
 of human error or lack of domain knowledge. Learning complete domain
 descriptions is also very challenging because many features are irrelevant to
-achieving the goals and data may be scarce.  We present an agent that plans and
-acts in incomplete domains by i) synthesizing plans to avoid execution failure
-due to ignorance of the domain model, and ii) passively learning about the
+achieving the goals and data may be scarce.  We present a planner and agent
+that respectively plan and act in incomplete domains by i) synthesizing plans
+to avoid execution failure due to ignorance of the domain model, and ii) passively learning about the
 domain model during execution to improve later re-planning attempts.
 
 Our planner \default{} is the first to reason about a domain's incompleteness to
@@ -78,8 +76,9 @@ best by counting  prime implicants (failure diagnoses) rather than propositional
 models. Our agent \goalie{} learns about the preconditions and effects of
 incompletely-specified actions while monitoring its state and, in conjunction
 with \default{} plan failure explanations, can diagnose past and future action
-failures.   We show that by reasoning about incompleteness in planning (as
-opposed to ignoring it) \goalie{} re-plans less and executes fewer actions.
+failures.   We show that by reasoning about incompleteness (as
+opposed to ignoring it) \goalie{} fails and re-plans less and executes fewer
+actions.
 
 \end{abstract}
 
@@ -93,9 +92,9 @@ the algorithms \citep{modellite}.   In particular, we are motivated by
 applications in instructable computing \citep{mable} where a domain expert
 teaches an intelligent system about a domain, but can often leave out whole
 procedures (plans) and aspects of action descriptions.   In such cases, the
-alternative to making domains complete, is to plan around the incompleteness. 
+alternative to making domains complete is to plan around the incompleteness. 
 That is, given knowledge of the possible action descriptions, we seek out plans
-that will succeed despite any (or most) incompleteness in the domain
+that will succeed despite any (or most of the) incompleteness in the domain
 formulation.
 
 While prior work \citep{Garland02} (henceforth abbreviated, GL) has categorized
@@ -103,21 +102,21 @@ risks to a plan and described plan quality metrics in terms of the risks
 (essentially single-fault diagnoses of plan failure \citep{dekleer}), no prior
 work has sought to deliberately synthesize low-risk plans based on incomplete
 STRIPS-style domains (notable work in Markov decision processes
-\citep{NE:05}  and model-based reinforcement learning \citep{citeulike:112017}
-has explored similar issues).  Our planner \default{} labels partial plans with
+\citep{NE:05,Choudhary15012006}  and model-based reinforcement learning
+\citep{citeulike:112017} has explored similar issues).  Our planner \default{} labels partial plans with
 propositional explanations of failure due to incompleteness (derived from the
-semantics of assumption based truth maintenance systems \cite{USU-CS-TR-11-001})
+semantics of assumption-based truth maintenance systems \cite{USU-CS-TR-11-001})
 and either counts failure models or prime implicants (diagnoses) to bias search.
-Our agent \goalie{} passively learns about the incomplete domain at it executes
+Our agent \goalie{} passively learns about the incomplete domain as it executes
 actions, like \citet{DBLP:conf/aips/ChangA06} (henceforth abbreviated, CA).
 Unlike CA, \goalie{} executes plans that are robust to domain
 incompleteness.  Within \goalie{}, we compare the use of robust plans generated
 by our planner \default{}, and plans that are generated in the spirit of CA
-which are not intentionally robust (i.e., optimistically successful).  We
-demonstrate that the additional effort to synthesize robust plans is justified
-because \default{} executes fewer overall actions and re-plans less.
+which are not intentionally robust (i.e., they are optimistically successful). 
+We demonstrate that the  effort to synthesize robust plans is justified
+because \default{} executes fewer overall actions and fails and re-plans less.
 
-This paper is organized as follows.  The next section details Incomplete STRIPS,
+This paper is organized as follows.  The next section details incomplete STRIPS,
 the language we use to describe incomplete domains.  We follow with our approach
 to plan synthesis and search heuristics.  We discuss alternatives to reasoning
 about failure explanations, including model counting and prime implicant
@@ -135,12 +134,12 @@ model and present incomplete STRIPS.
 tuple ($P$, $A$, $I$, $G$), where: $P$ is a set of propositions; $A$ is a set of
 action descriptions; $I \subseteq P$ defines a set of initially true
 propositions; and  $G \subseteq P$ defines the goal propositions.  Each action
-$a \in A$ defines $\text{pre}(a) \subseteq P$, a set of preconditions,
-$\text{add}(a) \subseteq P$, a set of add effects, and $\text{del}(a) \subseteq
+$a \in A$ defines: $\text{pre}(a) \subseteq P$, a set of preconditions;
+$\text{add}(a) \subseteq P$, a set of add effects; and $\text{del}(a) \subseteq
 P$, a set of delete effects. A plan $\pi = (a_0, ..., a_{n-1})$ in $D$ is a
 sequence of actions, which corresponds to a sequence of states $(s_0, ...,
-s_n)$, where $s_0 = I$, $\text{pre}(a_t) \subseteq s_t$ for $t = 0,..., n-1$, $G
-\subseteq s_n$, and $s_{t+1} = s_t \backslash \text{del}(a_t) \cup
+s_n)$, where: $s_0 = I$; $\text{pre}(a_t) \subseteq s_t$ for $t = 0,..., n-1$;
+$G \subseteq s_n$; and $s_{t+1} = s_t \backslash \text{del}(a_t) \cup
 \text{add}(a_t)$ for $t = 0,..., n-1$.
 
 
@@ -167,13 +166,13 @@ An incomplete STRIPS domain $\tilde{D}$  defines the tuple ($P$, $\tilde{A}$,
 $I$, $G$), where: $P$ is a  set of propositions; $\tilde{A}$ is a set of
 incomplete action descriptions; $I \subseteq P$ defines a set of initially true
 propositions; and $G \subseteq P$ defines the goal propositions. Each action
-$\tilde{a} \in \tilde{A}$ defines $\text{pre}(\tilde{a}) \subseteq P$, a set of
-known preconditions, $\widetilde{\text{pre}}(\tilde{a}) \subseteq P$, a set of
-possible preconditions, $\text{add}(\tilde{a}) \subseteq P$, a set of known add
-effects,  $\widetilde{\text{add}}(\tilde{a}) \subseteq P$, a set of possible add
-effects, $\text{del}(\tilde{a}) \subseteq P$, a set of known delete effects, and
+$\tilde{a} \in \tilde{A}$ defines: $\text{pre}(\tilde{a}) \subseteq P$, a set of
+known preconditions; $\widetilde{\text{pre}}(\tilde{a}) \subseteq P$, a set of
+possible preconditions; $\text{add}(\tilde{a}) \subseteq P$, a set of known add
+effects;  $\widetilde{\text{add}}(\tilde{a}) \subseteq P$, a set of possible add
+effects; $\text{del}(\tilde{a}) \subseteq P$, a set of known delete effects; and
 $\widetilde{\text{del}}(\tilde{a}) \subseteq P$, a set of possible delete
-effects
+effects.
 
 Consider the following incomplete domain: $P = \{p, q, r, g\}$, $\tilde{A} =
 \{\tilde{a}, \tilde{b}, \tilde{c}\}$, $I = \{p, q\}$, and $G= \{g\}$.  The
@@ -182,9 +181,9 @@ actions are defined: $\text{pre}(\tilde{a}) = \{p, q\},
 \{r\},  \widetilde{\text{del}}(\tilde{a}) = \{p\}$, $
   \text{pre}(\tilde{b}) = \{p\},
  \text{add}(\tilde{b}) = \{r\},
-  \text{del}(\tilde{b}) = \{p\}, \widetilde{\text{del}}(\tilde{a}) = \{q\}$, and
- $ \text{pre}(\tilde{c}) = \{r\}, \widetilde{\text{pre}}(\tilde{c})  = \{q\},
-\text{add}(\tilde{c}) = \{g\}$.
+  \text{del}(\tilde{b}) = \{p\}, \widetilde{\text{del}}(\tilde{a}) = \{q\}$, 
+ $ \text{pre}(\tilde{c}) = \{r\}, \widetilde{\text{pre}}(\tilde{c})  = \{q\}$,
+ and  $\text{add}(\tilde{c}) = \{g\}$.
 
 The set of incomplete domain features ${\sf F}$ is comprised of the
 following propositions for each $\tilde{a} \in \tilde{A}$:
@@ -258,7 +257,7 @@ the interpretations (a failure explanation) where it will be impossible to
 achieve the proposition. As such, the number of interpretations labeling the
 goals reached by a plan indicates the number of failed interpretations.  By
 counting interpretations (i.e., propositional model counting), we can determine
-the quality (robustness) of a plan.
+the quality of a plan.
 
 \default{} labels propositions and actions with domain interpretations that will
 respectively fail to achieve the proposition or fail to achieve the
@@ -308,7 +307,7 @@ discuss acting in incomplete domains.  The reason that we define action failures
 in this manner is that we can determine all failed interpretations affecting a
 plan $d(\pi)$, defined  by  $d(\tilde{a}_{n-1}) \vee \bigvee_{g \in G} d(g_n)$.
 It is possible to determine the interpretations that fail to successfully
-execute the plan up to and including time $t$ by computing $d(\tilde{a}_t)$.
+execute the plan up to and including time $t$ by  $d(\tilde{a}_t)$.
 
 For example, consider the plan depicted in Figure \ref{fig:example}.  The
 propositions in each state and each action at each time are labeled by the
@@ -331,7 +330,7 @@ $d(\pi)$ will fail to execute the plan and achieve the goal.
 
 
 
-\section{Heuristics In Incomplete Domains}
+\section{Heuristics in Incomplete Domains}
 
 Similar to propagating failed interpretation labels in a plan, we can propagate
 labels in the relaxed planning problem to compute a search heuristic.  The
@@ -379,7 +378,7 @@ $\hat{\cal A}_{t+k} = \{ \hat{a}_{t+k} | \forall_{p \in \text{pre}(\tilde{a})}
 $\hat{\cal P}_{t+k+1} = \{\hat{p}_{t+k+1} | \hat{a}_{t+k} \in \hat{\cal
 A}_{t+k}, p \in \text{add}(\tilde{a}) \cup \widetilde{\text{add}}(\tilde{a})\}$, for $k = 0,
 ..., m$.  Much like the successor function used to compute next states, the
-relaxed planning graph assumes an optimistic semantics for action effects by
+relaxed planning graph assumes an optimistic semantics for effects by
 adding possible add effects to proposition layers, but, as we will explain
 below, it associates failed interpretations with the possible adds.
 
@@ -390,7 +389,7 @@ that $\hat{d}(\hat{p}_t) = d(p_t)$, and for $k \geq 0$,
 \widehat{d}(\tilde{a}_{t+k}) &= \hspace*{-.2cm} 
 \bigvee\limits_{p \in \text{pre}(\tilde{a}) } \hspace*{-.2cm}   \hat{d}(\hat{p}_{t+k}) \vee \hspace*{-.25cm} 
 \bigvee\limits_{p \in \widetilde{\text{pre}}(\tilde{a})} \hspace*{-.25cm}  (\hat{d}(\hat{p}_{t+k})  \wedge  \widetilde{\text{pre}}(\tilde{a}, p) )\label{eqn:hact}\\
- \hspace*{-.6cm} \hat{d}(p_{t+k+1}) &= 
+ \hspace*{-.6cm} \hat{d}(\hat{p}_{t+k+1}) &= 
 \left\{\begin{array}{l@{\;}l@{\;}r}
 \widehat{d}(\hat{a}_{t+k}(p)) & : p \in \text{add}(\hat{a}_{t+k}(p))\\
 \widehat{d}(\hat{a}_{t+k}(p)) \vee \\
@@ -408,8 +407,7 @@ action failure labels include interpretations where any prior action fails.  In
 the relaxed planning problem, the action failure labels include only
 interpretations affecting the action's preconditions, and not prior actions; it
 is not clear which actions will be executed prior to achieving a proposition
-because many actions may be used to achieve other propositions at the same time
-step.
+because many actions may be used to achieve other propositions at the same time.
 
 \und{Heuristic Computation}   We terminate the relaxed planning graph expansion
 at the level $t+k+1$ where one of the following conditions is met: i) the
@@ -421,19 +419,19 @@ $\hat{a}_{t+k}(p)$ for each proposition that requires support in the relaxed
 plan, and, hence, measures the number of actions used while attempting to
 minimize failed interpretations (the supporting actions are chosen by comparing
 failure explanations). The other heuristic $h^{\sim M}$ measures the number of
-interpretations that fail to reach the goals in the last level (i.e., such that 
+interpretations that fail to reach the goals in the last level (i.e., such that
 $h^{\sim M} = |M(\vee_{p \in G} \hat{d}(\hat{p}_{t+m+1}))|$, where $m+1$ is the
-last level of the planning graph. \default{} uses both heuristics, treating 
-$h^{\sim FF}$ as the primary heuristic and using $h^{\sim M}$ to break ties. 
-While it is likely that swapping the role of the heuristics may lead to better
-quality plans (fewer failed interpretations), our informal experiments
-determined that the scalability of \default{} is greatly limited in such cases;
-measuring failed interpretations is not correlated with solution depth in the
-search graph unlike relaxed plan length.  The relaxed plans are informed by the
-propagated explanations because we use the failure explanation to bias action
-selection.
+last level of the planning graph, $M(\cdot)$ is the set of models of a formula.
+\default{} uses both heuristics, treating $h^{\sim FF}$ as the primary heuristic
+and using $h^{\sim M}$ to break ties. While it is likely that swapping the role
+of the heuristics may lead to better quality plans (fewer failed
+interpretations), our informal experiments determined that the scalability of
+\default{} is greatly limited in such cases; measuring failed interpretations is
+not correlated with solution depth in the search graph unlike relaxed plan
+length.  The relaxed plans are informed by the propagated explanations because
+we use the failure explanation to bias action selection.
 
-\section{Counting Models and Prime Implicants }
+\section{Counting Models \& Prime Implicants }
 
 Failure explanations $d(\cdot)$ and $\hat{d}(\cdot)$ are propositional sentences
 that help bias decisions in search and heuristics.  Namely, we assume that we
@@ -445,16 +443,16 @@ size of the OBDD \citep{darwiche} (which can be exponential sized in the worst
 case).
 
 In addition to OBDDs and model counting, we also explore counting prime
-implicants (PIs) -- also called diagnoses.  A set of PIs is a set of conjunctive
-clauses (similar to a DNF) where no clause is subsumed by another, and are used
-in model-based diagnosis to represent diagnoses (sets of incomplete features
+implicants (PIs) -- also called diagnoses -- which allows us to computer a
+heuristic $h^{\sim PI}$, which is similar to $h^{\sim M}$. A set of PIs is a set
+of conjunctive clauses (similar to a DNF) where no clause is subsumed by another, and are used in model-based diagnosis to represent diagnoses (sets of incomplete features
 that must interact to cause system failure) \citep{dekleer}.  We find it useful
 to bound the cardinality (the number of conjuncts) of the PIs, effectively
 over-approximating the models of a propositional sentence.
 
 Instead of counting the models of two labels $d(\cdot)$ and $d'(\cdot)$, we can
-compare the number of PIs.  Our intuition is that having fewer diagnoses of
-failure is preferred, just as is having fewer models of failure (even though
+compare the number of PIs (as in $h^{\sim PI}$).  Our intuition is that having
+fewer diagnoses of failure is preferred, just as is having fewer models of failure (even though
 having fewer PIs does not always imply fewer models).  The advantage is that
 counting PIs is much less expensive than counting models, especially if we bound
 the cardinality of the PIs.  Finally, we use a heuristic when counting PIs
@@ -467,8 +465,8 @@ cardinality-two PI.
 
 \section{Acting in Incomplete Domains} Acting in incomplete domains provides an
 opportunity to learn about the domain by observing the states resulting from
-action application.  In the following, we describe what our agent \goalie{} can
-learn from acting in incomplete domains and how it might achieve its goals.
+execution.  In the following, we describe what our agent \goalie{} can
+learn from acting in incomplete domains and how it  achieves its goals.
 \goalie{} will continue to execute a plan until it is faced with an action that
 is guaranteed to fail or it has determined that the plan failed in hindsight.
 
@@ -479,8 +477,8 @@ that its current plan failed -- it is not always possible to determine if an
 action applied in the past did not have its preconditions satisfied.  Initially,
 \goalie{} believes $\phi = \top$, denoting its complete lack of knowledge of the
 incomplete domain and whether its current plan will fail.    If \goalie{}
-executes an action $a$ in state $s$ and transitions to state $s'$, then it can
-update its knowledge as $\phi \wedge o(s, \tilde{a}, s')$, where
+executes  $\tilde{a}$ in state $s$ and transitions to state $s'$, then it 
+updates its knowledge as $\phi \wedge o(s, \tilde{a}, s')$, where
 \noindent \begin{eqnarray}
 o(s, \tilde{a}, s') &=& \left\{ \begin{array}{ll}
 (fail \wedge o^-) \vee  o^+  &: s = s'\\
@@ -521,13 +519,10 @@ possible feature as a known or impossible feature; all other features remain as
 possible features.
 
 
-%In addition to our two agent types, we investigate two types of environments, differing in their semantics for failed action application.  The first, which is consistent with the assumptions of \default{}, assumes that applying an action when its preconditions are not satisfied will lead to an undefined state where no further actions can be applied.  The second assumes that applying an action with unsatisfied preconditions will result in no change to the state and further actions are allowed.  In both cases, a failed action application will result in no change of state reported by the environment, but the former will report no change for all actions, and the latter will report changes for subsequent actions whose preconditions are satisfied.  The purpose of using two types of environments is to illustrate the relative benefits of the pessimistic and optimistic agents.
 
 \begin{algorithm}[t]
 \SetLine
 \KwIn{state $s$, goal $G$, actions $\tilde{A}$}
-
-%\begin{algorithm}
  $\phi \leftarrow \top$; $\pi \leftarrow Plan(s, G, \tilde{A}, \phi)$\;
 \While{$\pi \not= ()$ and $G\not\subseteq s$}{
  $\tilde{a} \leftarrow \pi.first()$;
@@ -566,7 +561,7 @@ $d(\pi) = \perp$).
 \goalie{} is not hesitant to apply actions that may fail because trying actions
 is its only way to learn about them.  However, \goalie{} is able to determine
 when actions will fail and re-plans.  More conservative strategies are possible
-if we assume that \goalie{} can query a knowledge engineer about action features
+if we assume that \goalie{} can query a domain expert about action features
 to avoid potential plan failure, but we leave such goal-directed knowledge
 acquisition for future work.
 
@@ -582,8 +577,8 @@ include:
 \item Q2: Does counting prime implicants perform better than counting models?
 \item Q3: As the number of incomplete features grows, does stronger reasoning
 about incompleteness help?
-\item Q4: Does reasoning about incompleteness reduce re-planning during
-execution?
+\item Q4: Does reasoning about incompleteness reduce the number of
+execution failures during execution?
 \end{packed_itemize}
 
 
@@ -631,22 +626,6 @@ certain items (possible preconditions) and may result in the loss of an item
 
 
 
-\begin{table}[t]
-\centering 
-\begin{tabular}{|l|rrrrr|}      \hline &  FF  & PI1 & PI2  &  PI3  &  BDD  \\\hline
-FF	&		0		&		155		&		161		&		161		&		123		\\
-PI1	&	{\bf	629}	&		0		&	{\bf	79}	&	{\bf	78}	&	{\bf	208}	\\
-PI2	&	{\bf	619}	&		77		&		0		&		46		&	{\bf	208}	\\
-PI3	&	{\bf	594}	&		62		&	{\bf	51}	&		0		&	{\bf	199}	\\
-BDD & {\bf 512} &  189  &  189  &  187  &  0  \\\hline
-\end{tabular}																						
-\caption{\label{tab:qualcomp} Num Instances with Better Quality.}
-\end{table}
-
-\begin{figure}\centering
-\includegraphics[width=\linewidth]{WeberBryceICAPS11Fig2.eps}
-\caption{\label{fig:alltotaltime}Cumulative Time  in  All Domains.}
-\end{figure} 
    
 
 \und{Test Setup} The tests were run on a Linux machine with a 3 Ghz Xeon
@@ -657,6 +636,8 @@ execution invocation.  All code was written in Java and run on the 1.6 JVM.
 and a dual-queue for preferred and non-preferred operators
 \citep{DBLP:journals/jair/Helmert06}.  
 
+
+   
 We use five configurations of the planner: \default{}-$FF$, \default{}-$PIk$ (k
 = 1, 2, 3), and \default{}-$BDD$, that differ in how they reason about domain
 incompleteness.  \default{}-$FF$ does not compute failure explanations and uses
@@ -666,13 +647,33 @@ interpretation.  \default{}-$PIk$, where $k$ is the bound on the cardinality of
 the prime implicants, counts prime implicants to compare failure
 explanations.  \default{}-$BDD$ uses OBDDs to represent and count failure
 explanations.  The number of failed interpretations for a plan $\pi$ found by
-any of the planners is reported herein by counting models of an OBDD
+any of the planners is found by counting models of an OBDD
 representing $d(\pi)$. The versions of the planner are compared by the
 proportion of interpretations of the incomplete domain that achieve the goal and
 total planning time in seconds. The plot in the following section depict these
 results using the cumulative
 planning time to identify the performance over all problems and domains.  We
-also report detailed results on the number of solved problems per domain.
+also report detailed results on the number of solved problems per domain and the
+relative quality of solutions (successful domain interpretations).
+
+
+\begin{table}[t]
+\centering 
+\begin{tabular}{|l|rrrrr|}      \hline &  FF  & PI1 & PI2  &  PI3  &  BDD  \\\hline
+FF	&		0		&		155		&		161		&		161		&		123		\\
+PI1	&	{\bf	629}	&		0		&	{\bf	79}	&	{\bf	78}	&	{\bf	208}	\\
+PI2	&	{\bf	619}	&		77		&		0		&		46		&	{\bf	208}	\\
+PI3	&	{\bf	594}	&		62		&	{\bf	51}	&		0		&	{\bf	199}	\\
+BDD & {\bf 512} &  189  &  189  &  187  &  0  \\\hline
+\end{tabular}																						
+\caption{\label{tab:qualcomp} Number of plans having a greater
+number of successful domain interpretations (i.e., better quality).} 
+\end{table}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\linewidth]{WeberBryceICAPS11Fig2.eps}
+\caption{\label{fig:alltotaltime}Cumulative Time  in  All Domains.}
+\end{figure} 
 
 We also compare the off-line planning results to a conformant probabilistic
 planner POND (with N=10 particles in its heuristic) \citep{aij-mclug} that solves
@@ -725,12 +726,12 @@ Total	&		1751		&		1075		&	{\bf	1081}	&		1056		&		1005		&	232	\\
 
 
 \und{Off-line Planning Results} Figure \ref{fig:alltotaltime} plots the
-cumulative cumulative total planning time.  To enhance readability, every one
+ cumulative total planning time.  To enhance readability, every one
 hundredth data point is plotted in the figures (while still representative of
 the true cumulative number).  Table \ref{tab:qualcomp} lists the number of times
-that the configuration in the row finds a better solution than the configuration
-in the column when both solve a problem, with the best of each pair bolded.
-Table \ref{tab:solved} lists the number of solved problems for each planner and
+that the configuration in the row finds a better solution (number of successful
+interpretations) than the configuration in the column when both solve a problem,
+with the best of each pair bolded. Table \ref{tab:solved} lists the number of solved problems for each planner and
 highlights the most solved for each domain in bold.
 
 We see that Q1 is answered positively by the results.  Plan quality is
@@ -738,11 +739,11 @@ improved by reasoning about incompleteness (through \default{}-$PIk$ or -$BDD$),
 but scalability suffers.  However, we note that minimizing the number of failed
 interpretations  can be phrased as a conformant probabilistic
 planning problem, which is notoriously difficult \citep{pff,aij-mclug}, and
-expecting the scalability of a classical planner is  unreasonable.
+expecting the scalability of a classical planner is perhaps  unreasonable.
 
-Q2 is answered overall positively by our experiments because the $PIk$
+Q2 is answered overall positively by our experiments because the $PIk$ counting
 approaches solve more problems with better quality and in less time than the
-$BDD$ approach.  
+$BDD$ model counting approach.  
 
 Q3 is answered negatively because as the probability of injecting incomplete
 features grows from 0.25 to 1.0 the $PI3$ approach initially solves the most
@@ -750,9 +751,9 @@ problems, but then $PI2$, and then $PI1$ solve the most problems in each domain.
 A possible explanation for this result is that it becomes too costly to reason
 about incompleteness as it increases and that a more coarse approach is needed;
 however, the $BDD$ approach while not the best, seems to degrade less as the
-incompleteness increases.  It is likely that the OBDD package \citep{jdd}
-implementation is to credit for the $BDD$ approach's performance because model
-counting can become prohibitively expensive in larger problems.
+incompleteness increases.  It is likely that the OBDD package 
+implementation \citep{jdd} is to credit for the $BDD$ approach's performance
+because model counting can become prohibitively expensive in larger problems.
 
 Table \ref{tab:solved} indicates that POND is not competitive and suggests that
 existing approaches are not directly applicable to planning in incomplete
@@ -767,18 +768,16 @@ approximate reasoning about incompleteness by using bounded prime implicants
 \includegraphics[width=.42\linewidth]{./WeberBryceICAPS11Fig3a.eps}\hspace*{-1.5cm}
 \includegraphics[width=.42\linewidth]{./WeberBryceICAPS11Fig3b.eps}\hspace*{-1.5cm}
 \includegraphics[width=.42\linewidth]{./WeberBryceICAPS11Fig3c.eps} 
-%\hspace*{-2.25cm}       
-%\includegraphics[width=.4\linewidth]{./hobonavLearning.eps}
 \caption{\label{fig:exec} Comparison of Goalie with \default-$FF$ and
 \default-$PI1$.}
 \end{figure*}		   
 
  
 
-\und{On-line Planning and Execution Results} Figure \ref{fig:exec} depicts a
+\und{On-line Planning \& Execution Results} Figure \ref{fig:exec} depicts a
 comparison between Goalie using \default{}-$FF$ and \default{}-$BDD$ to
 synthesize plans, so that we can judge whether planning and execution strategies
-such as that of CA will benefit from planners reason about incompleteness.  The
+such as that of CA will benefit when planners reason about incompleteness.  The
 scatter plots in the figure show the respective number of actions applied to
 achieve the goal, the number of plans generated, and the total planning and
 execution time.
@@ -804,7 +803,7 @@ Incomplete domains can be translated to conformant probabilistic planning
 domains, and planners such as POND \citep{aij-mclug} and PFF \citep{pff} are
 applicable.  However, while the translation is theoretically feasible, current
 CPP planners are not reasonable approaches to the problem.  
-
+ 
 
 Our investigation is an instantiation of model-lite planning \citep{modellite}.
 Constraint-based hierarchical task networks are an alternative, pointed out by
@@ -816,7 +815,7 @@ model for evaluating plans in incomplete domains.  Our methods for computing
 plan failure explanations are slightly different in that we compute them in the
 forward direction and allow for multiple, interacting faults instead of the
 single faults.  In addition to calculating the failure explanations of partial
-plans, we have also presented a relaxed planning heuristic informed by failure
+plans, we use a relaxed planning heuristic informed by failure
 explanations.
 
 Prior work of \citet{DBLP:conf/aips/ChangA06} addresses planning with incomplete
@@ -836,8 +835,9 @@ have shown that, compared to a configuration that essentially ignores aspects of
 the incomplete domain, \default{} is able to scale reasonably well but find much
 better quality plans.  We have also shown that representing plan failure
 explanations with prime implicants leads to better scalability than counting
-OBDDs models.  Our agent \goalie{} is  effective when using \default{}, can
-learn  incomplete actions, and can diagnose future and past failures.
+OBDDs models.  Our agent \goalie{} uses \default{} to generate robust plans that
+fail less often and require less re-planning than more optimistic planning
+approaches that ignore  incompleteness.
 
 
 \und{Acknowledgements} This work was supported by DARPA contract HR001-07-C-0060.
