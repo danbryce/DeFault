@@ -16,8 +16,8 @@
 #    	Send comments and requests for help to <info-gnuplot@dartmouth.edu>
 #    	Send bugs, suggestions and mods to <bug-gnuplot@dartmouth.edu>
 #    
-#set terminal postscript eps color 28#30
-set terminal postscript eps monochrome 28#30
+#set terminal postscript eps color 28 enhanced#30
+set terminal postscript eps monochrome 28 enhanced#30
 set noclip points
 set clip one
 set noclip two
@@ -44,7 +44,7 @@ set noarrow
 #set nolinestyle
 set nologscale
 set offsets 0, 0, 0, 0
-set pointsize 5
+set pointsize .5
 set encoding default
 set nopolar
 set noparametric
@@ -110,10 +110,9 @@ seed = rand(seed)
 #set key bmargin horizontal samplen 0
 set key top left
 
-set output "hobonavTime.eps"
 #set terminal x11
-set xlabel "FF"
-set ylabel "BDD"
+set xlabel "DeFault-FF"
+set ylabel "DeFault-PI1"
 #set logscale y
 
 
@@ -127,37 +126,75 @@ set size square
 set logscale x
 set logscale y
 
-set title "Total Time (s)"
-plot [0.01:5000] [.01:5000] \
-"all.dat.sed" using 8:20 pt 0 title "Time-Opt", \
+set format '10^{%L}'
+
+set output "hobonavLearning.eps"
+set title "# Interpretations After/Before "
+#
+#plot [] [] \
+#plot [1e-20:1] [1e-20:1] \
+plot [] [] \
+"learning.txt" every :::1::1  using 1:2  notitle, \
+"learning.txt" every :::2::2  using 1:2   notitle, \
+"learning.txt" every :::3::3  using 1:2   notitle, \
+"learning.txt" every :::4::4  using 1:2   notitle, \
 x with line  notitle
-#"all.dat.sed" using 27:39  pt 0 title "Time-Pess", \
+
+#"learning.txt" using ($28/$2):($34/$2) pt 0  title "LearningOpt", \
+#x with line  notitle
+#"all.dat.final" using ($9/$2):($21/$2) pt 0  title "LearningOpt", \
+#x with line  notitle
+#"all.dat.final" using ($28/$2):($40/$2) pt 0 title "Learning-Pess", \
+
+set output "hobonavTime.eps"
+
+set title "Total Time (s)"
+#plot [0.01:5000] [.01:5000] \
+
+plot [] [] \
+"all.dat.final" using 8:20 pt 1 title "Time-Opt", x with line  notitle
+#"all.dat.final" every :::1::1  using 8:20  notitle, \
+#"all.dat.final" every :::2::2  using 8:20   notitle, \
+#"all.dat.final" every :::3::3  using 8:20   notitle, \
+#"all.dat.final" every :::4::4  using 8:20   notitle, \
+#x with line  notitle
+
+#"all.dat.final" using 8:20 pt 1 title "Time-Opt", x with line  notitle
+#"all.dat.final" using 27:33 pt 0 title "Time-Opt", x with line  notitle
+#"all.dat.final" using 27:39 pt 0 title "Time-Opt", x with line  notitle
+#"all.dat.final" using 8:14 pt 0 title "Time-Opt", x with line  notitle
+
+#"all.dat.final" using 27:39  pt 0 title "Time-Pess", \
 
 
 
 set output "hobonavSteps.eps"
 set title "Actions Applied"
 plot [] [] \
-"all.dat.sed" using 6:18  pt 0 title "Actions-Opt", \
-x with line  notitle
-#"all.dat.sed" using 25:37 pt 0 title "Actions-Pess", \
+"all.dat.final" using 6:18  pt 1 title "Actions-Opt", x with line  notitle
+#"all.dat.final" every :::1::1  using 6:18  notitle, \
+#"all.dat.final" every :::2::2  using 6:18   notitle, \
+#"all.dat.final" every :::3::3  using 6:18   notitle, \
+#"all.dat.final" every :::4::4  using 6:18   notitle, \
+# x with line  notitle
+
+#"all.dat.final" using 6:18  pt 1 title "Actions-Opt", x with line  notitle
+
+#"all.dat.final" using 25:31  pt 0 title "Actions-Opt", \
+#x with line  notitle
+
+#"all.dat.final" using 25:37 pt 0 title "Actions-Pess", \
 
 
 set output "hobonavPlans.eps"
 set title "Plans Generated"
 plot [] [] \
-"all.dat.sed" using 5:17 pt 0  title "Plans-Opt",\
-x with line  notitle
-#"all.dat.sed" using 24:36 pt 0 title "Plans-Pess",\
+"all.dat.final" using 5:17 pt 1  title "Plans-Opt", x with line  notitle
+#"all.dat.final" using 24:30 pt 0  title "Plans-Opt",x with line  notitle
+#"all.dat.final" using 24:36 pt 0 title "Plans-Pess",\
 
 
 
-set output "hobonavLearning.eps"
-set title "# Interpretations After/Before "
-plot [1e-20:1] [1e-20:1] \
-"all.dat.sed" using ($9/$2):($21/$2) pt 0  title "LearningOpt", \
-x with line  notitle
-#"all.dat.sed" using ($28/$2):($40/$2) pt 0 title "Learning-Pess", \
 
 
 
