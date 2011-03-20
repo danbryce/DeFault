@@ -17,15 +17,15 @@ import java.util.*;
 public class Test_PlannersRawPerformance 
 {	
 	Planner planners;
-	static int timeLimit;
+	static int timeLimit = 1200;//20 minutes - the default time limit for all ka planning
+	static int maxSeeds = 1000;
+	static int maxSuccesses = 10;
 	
 	Test_PlannersRawPerformance(String [] args)
 	{		
-		if (args.length != 3) { usage(args); System.exit(1); }
+		if (args.length != 2) { usage(args); System.exit(1); }
 		
 		planners = new Planner(args[0], args[1]);
-		
-		timeLimit = Integer.valueOf(args[2]) * 1000;
 	}
 	
 	public static void main(String [] args)
@@ -47,90 +47,53 @@ public class Test_PlannersRawPerformance
 	    //BufferedWriter out = new BufferedWriter(fstream);
 		
 		int numSuccesses = 0;
-		for(int simSeed = 0; simSeed < 1000 && numSuccesses < 1; simSeed ++)
+		for(int simSeed = 0; simSeed < maxSeeds && numSuccesses < maxSuccesses; simSeed ++)
 		{
 			boolean cSuccess = false;
 			boolean incSuccess = false;
+			
 			List<ActionInstance> plan;
 			
 			String resultString = "";
 			String domain = args[0].replace("testfiles/incomplete/", "");
-			resultString += domain;
-				
-//			//COMPLETE VERSION OF ACTIONS//////////////////////////////////////////////////////////////////////////
-//			isSolvableTest = true;
-//			DomainExpert expert = new DomainExpert(args[0], args[1], simSeed);
-//			planners.setProblem(expert.getProblem()); //Sets planner's actions to complete version
-//			//Recall that planners change action descriptions for parcprinter and pathways domains
-//			// (removes add effects that are never preconditions) to speed planning.
-//			//Note that problem's actions are restored by Planner in the method getPlan();
-//			//Because Expert is not called on, his action list doesn't need restoration (see Simulation).
-//			
-//			//AMIR
-//			plan = runPlannerThread(PlannerTypes.AMIR);	
-//			if(plan == null && !timeout) 
-//				resultString += " COMPLETE amir ? ?";
-//			else if(plan == null && timeout) 
-//				resultString += " COMPLETE amir T T";
-//			else
-//			{
-//				cSuccess = true;
-//				resultString += " COMPLETE amir " + plan.size() + " " + planners.getTimeToSolve();
-//			}
-//			
-////			//PODE1
-////			plan = runPlannerThread(PlannerTypes.PODE1);			
-////			if(plan == null && !timeout) 
-////				resultString += " pode1 ? ?";
-////			else if(plan == null && timeout) 
-////				resultString += " pode1 T T";
-////			else
-////			{
-////				cSuccess = true;
-////				resultString += " pode1 " + plan.size() + " " + planners.getTimeToSolve();
-////			}
-//			
-//			//JDD
-//			plan = runPlannerThread(PlannerTypes.JDD);			
-//			if(plan == null && !timeout) 
-//				resultString += " jdd ? ?";
-//			else if(plan == null && timeout) 
-//				resultString += " jdd T T";
-//			else
-//			{
-//				cSuccess = true;
-//				resultString += " jdd " + plan.size() + " " + planners.getTimeToSolve();
-//			}
-//			
-//			if(cSuccess)
-//			{
-				//INCOMPLETE VERSION OF ACTIONS//////////////////////////////////////////////////////////////////////////
-				isSolvableTest = false;
-				planners = new Planner(args[0], args[1]); //Reset problem and actions.
+			resultString += domain + "_" + simSeed;
+			
+			try{
+				//COMPLETE VERSION OF ACTIONS//////////////////////////////////////////////////////////////////////////
+				DomainExpert expert = new DomainExpert(args[0], args[1], simSeed);
+				planners.setProblem(expert.getProblem()); //Sets planner's actions to complete version
+				//Recall that planners change action descriptions for parcprinter and pathways domains
+				// (removes add effects that are never preconditions) to speed planning.
+				//Note that problem's actions are restored by Planner in the method getPlan();
+				//Because Expert is not called on, his action list doesn't need restoration (see Simulation).
 				
 				//AMIR
-				plan = runPlannerThread(PlannerTypes.AMIR);
+				plan = runPlannerThread(PlannerTypes.AMIR);	
 				if(plan == null && !timeout) 
-					resultString += " INCOMPLETE amir ? ?";
+					resultString += " COMPLETE amir ? ?";
 				else if(plan == null && timeout) 
-					resultString += " INCOMPLETE amir T T";
-				else 
+					resultString += " COMPLETE amir T T";
+				else
 				{
-					incSuccess = true;
-					resultString += " INCOMPLETE amir " + plan.size() + " " + planners.getTimeToSolve();
+					cSuccess = true;
+					resultString += " COMPLETE amir " + plan.size() + " " + planners.getTimeToSolve();
 				}
 				
-				//BRYCE
-				plan = runPlannerThread(PlannerTypes.PODE1);
+				expert.restoreActionsToStateBeforePlannerCall();
+				
+				//PODE1
+				plan = runPlannerThread(PlannerTypes.PODE1);			
 				if(plan == null && !timeout) 
 					resultString += " pode1 ? ?";
 				else if(plan == null && timeout) 
 					resultString += " pode1 T T";
 				else
-				{						
-					incSuccess = true;
+				{
+					cSuccess = true;
 					resultString += " pode1 " + plan.size() + " " + planners.getTimeToSolve();
 				}
+				
+				expert.restoreActionsToStateBeforePlannerCall();
 				
 				//JDD
 				plan = runPlannerThread(PlannerTypes.JDD);			
@@ -139,23 +102,71 @@ public class Test_PlannersRawPerformance
 				else if(plan == null && timeout) 
 					resultString += " jdd T T";
 				else
-				{				
-					incSuccess = true;
+				{
+					cSuccess = true;
 					resultString += " jdd " + plan.size() + " " + planners.getTimeToSolve();
 				}
 				
-				if(incSuccess)
+				if(cSuccess)
 				{
-					System.out.println(resultString);
-					//try{ out.write(resultString + "\n"); } catch(Exception e){e.printStackTrace();}
-						  
-					numSuccesses++;
+					//INCOMPLETE VERSION OF ACTIONS//////////////////////////////////////////////////////////////////////////
+					isSolvableTest = false;
+					planners = new Planner(args[0], args[1]); //Reset problem and actions.
+					
+					//AMIR
+					plan = runPlannerThread(PlannerTypes.AMIR);
+					if(plan == null && !timeout) 
+						resultString += " INCOMPLETE amir ? ?";
+					else if(plan == null && timeout) 
+						resultString += " INCOMPLETE amir T T";
+					else 
+					{
+						incSuccess = true;
+						resultString += " INCOMPLETE amir " + plan.size() + " " + planners.getTimeToSolve();
+					}
+					
+					planners = new Planner(args[0], args[1]); //Reset problem and actions.
+					
+					//BRYCE
+					plan = runPlannerThread(PlannerTypes.PODE1);
+					if(plan == null && !timeout) 
+						resultString += " pode1 ? ?";
+					else if(plan == null && timeout) 
+						resultString += " pode1 T T";
+					else
+					{						
+						incSuccess = true;
+						resultString += " pode1 " + plan.size() + " " + planners.getTimeToSolve();
+					}
+					
+					planners = new Planner(args[0], args[1]); //Reset problem and actions.
+					
+					//JDD
+					plan = runPlannerThread(PlannerTypes.JDD);			
+					if(plan == null && !timeout) 
+						resultString += " jdd ? ?";
+					else if(plan == null && timeout) 
+						resultString += " jdd T T";
+					else
+					{				
+						incSuccess = true;
+						resultString += " jdd " + plan.size() + " " + planners.getTimeToSolve();
+					}
+					
+					if(incSuccess)
+					{
+						System.out.println(resultString);
+							  
+						numSuccesses++;
+					}
 				}
-			}		
+					
+				}catch(Exception e) {e.printStackTrace();}
+			}
+			//try{ out.close(); } catch(Exception e){e.printStackTrace();}
 		}
 		
-		//try{ out.close(); } catch(Exception e){e.printStackTrace();}
-//	}
+		
 	
 	
 	
@@ -178,9 +189,8 @@ public class Test_PlannersRawPerformance
 		long now = System.currentTimeMillis();
 		execThread.start();
 		
-		int maxTime = 0;
-		if(isSolvableTest)	maxTime = timeLimit;      //timeLimit/4;
-		else				maxTime = timeLimit * 20; //timeLimit*2;
+		int maxTime = timeLimit * 1000;//converts secs to millisecs
+
 				
 		while ((now - start) < maxTime)
 		{
@@ -228,7 +238,7 @@ public class Test_PlannersRawPerformance
 	private void usage(String[] args) 
 	{
 		System.err.println("args: " + args.toString());
-		System.err.println("Simulation_TestAgentAndDomainExpertStub args:");
-		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file> [2]<thread time limit>");
+		System.err.println("Test_PlannersRawPerformance args:");
+		System.err.println("\t[0]<domain-pddl-file> [1]<problem-pddl-file>");
 	}
 }

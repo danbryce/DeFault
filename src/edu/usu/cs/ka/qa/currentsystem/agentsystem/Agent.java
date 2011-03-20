@@ -63,6 +63,8 @@ public abstract class Agent
 	protected int numRisksLearnedQA;
 	protected int numRisksLearnedPL;
 	
+	static boolean debug = false;
+	
 	public Agent(String dFile, String pFile)
 	{
 		domainFile = dFile;
@@ -80,6 +82,7 @@ public abstract class Agent
 		bdd = RiskCounter.getBDD();
 		//bddRef_KB = RiskCounter.get_bddRef();
 		bddRef_KB = bdd.ref(bdd.getOne());
+		bdd.ref(bddRef_KB);
 		
 		risks = RiskCounter.getAllRisks();
 		riskToBDD = RiskCounter.getRiskToBDD();
@@ -87,7 +90,8 @@ public abstract class Agent
 		riskToNumVarIndexForCube = RiskCounter.getRiskToNumVarIndexForCube();
 		numVarIndexToRiskForCubeOrMinterm = RiskCounter.getNumVarIndexToRiskForCube();
 		
-		failVar = bdd.createVar();
+		failVar = bdd.ref(bdd.createVar());
+		
 		numBDDVars = bdd.numberOfVariables();
 		
 		//Create a var for FAIL. and make sure it exists in the BDD
@@ -116,15 +120,13 @@ public abstract class Agent
 	public List<Fault> getRisks()				{ return risks; }
 	public int getNumRisks()					{ return risks.size();}
 	public int getNumBDDVars()					{ return numBDDVars;}
-	
 		
 	/**
 	 * This method's simple assignment statement means that any changes to the Agent's actionList
 	 *  are also made to the Agent's problem's actionList.
 	 */
-	public void setActions() { actions = problem.getActions(); }
-	
-	public int getNumActionsTaken() 			{ return actionsCount; }
+	public void setActions() 					{ actions = problem.getActions(); }
+	public int getNumActionsTaken()				{ return actionsCount; }
 	public int getNumFailedActions()			{ return failedActionsCount; }
 	public int getNumQsAsked()					{ return numQsAsked; }
 	public int getNumRisksLearnedQA()			{ return numRisksLearnedQA; }
@@ -179,6 +181,7 @@ public abstract class Agent
 	 * @param prevState - the state before the action was applied
 	 * @param currState - the state after the action was applied
 	 */
+	
 	public void learnAboutActionTaken(ActionInstance act, Set<Proposition> prevState, Set<Proposition> currState)
 	{
 		IncompleteActionInstance a = (IncompleteActionInstance) act;
@@ -194,15 +197,17 @@ public abstract class Agent
 		actionsCount++;
 		
 		if(Actions_Utility.isIncompleteActionComplete(a)) //No incomplete features exist
-			return; 
-			
+			return;
+		
 		int successSentence = bdd.ref(bdd.getOne());  //Temp sentence for actionSucceeded case
+		bdd.ref(successSentence);
 		int failureSentence = bdd.ref(bdd.getZero()); //Temp sentence for actionFailed case
+		bdd.ref(failureSentence);
 		
 		for (Proposition p : a.getPossiblePreconditions())
 		{
 			if(!prevState.contains(p)) 
-			{	
+			{						
 				successSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), successSentence, false, true); //AND: -possPre, -pre	
 				failureSentence = addPropToSentence(Fault.PRECOPEN, a.getName(), p.getName(), failureSentence, true, false); //OR: might be pre 
 			}
@@ -259,11 +264,22 @@ public abstract class Agent
 		
 		if(isAND)
 		{
-			if(isTrue) 	temp = bdd.ref(bdd.and(bddRefSF, ref));
-			else		temp = bdd.ref(bdd.and(bddRefSF, bdd.not(ref)));
+			if(isTrue) 	
+			{
+				temp = bdd.ref(bdd.and(bddRefSF, ref));				
+				bdd.ref(temp);
+			}
+			else
+			{
+				temp = bdd.ref(bdd.and(bddRefSF, bdd.not(ref)));
+				bdd.ref(temp);
+			}
 		}
 		else
+		{
 			temp = bdd.ref(bdd.or(bddRefSF, ref));
+			bdd.ref(temp);
+		}
 		
 		bdd.deref(bddRefSF);
 		return temp;	
@@ -273,9 +289,11 @@ public abstract class Agent
 	 * This private helper method inserts either the successSentence or failureSentence built by the method
 	 * 	learnAboutActionTaken(...) into the KB. 
 	 *   
-	 *	Current "unknown" case sentence: (F ^ fail) v S - and it to PHI (bddRef_KB)
-	 *
+	 * Current "unknown" case sentence: (F ^ fail) v S - and it to PHI (bddRef_KB)
 	 * This FAIL must be removed from the KB before the next planner call.
+	 * 
+	 * This is worth testing some more before the final versions for QA
+	 * 
 	 * @param successSentence
 	 * @param failureSentence
 	 * @param act
@@ -285,27 +303,57 @@ public abstract class Agent
 	private void insertSandorFSentenceIntoKB_withFailVar( int successSentence, int failureSentence, 
 											  				IncompleteActionInstance incompleteAction, 
 											  				Set<Proposition> prevState, Set<Proposition> currState)
-	{
+	{				
 		int tempRefToNewKB;
 		if(!prevState.equals(currState)) //Action succeeded
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
-		else if(isActionFailure(incompleteAction, prevState, currState)) //Action failed
-			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
-		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
-		//action failure not known, combine two Trees of cases above
 		{
-			//System.out.print(" *");
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
+			bdd.ref(tempRefToNewKB);
+		}
+		else if(isActionFailure(incompleteAction, prevState, currState)) //Action failed
+		{
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
+			bdd.ref(tempRefToNewKB);
+		}
+		//the rest concern the case where (prevState.equals(currState) && !isActionFail(a, prevState, currState))
+		else if(bdd.toString(failureSentence).contains("FALSE") && bdd.toString(successSentence).contains("TRUE"))
+		{
+			tempRefToNewKB = bdd.ref(bddRef_KB); 							//nothing could possibly be learned
+			bdd.ref(tempRefToNewKB);
+		}
+		else if(bdd.toString(failureSentence).contains("FALSE") && !bdd.toString(successSentence).contains("TRUE"))
+		{
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));	//no failure possibility, but success is non-empty
+			bdd.ref(tempRefToNewKB);
+		}
+		else if(!bdd.toString(failureSentence).contains("FALSE") && bdd.toString(successSentence).contains("TRUE"))
+		{
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));	//no success possibility, but failure is non-empty
+			bdd.ref(tempRefToNewKB);	
+		}//both success and failure are possible
+		else if(!bdd.toString(failureSentence).contains("FALSE") && !bdd.toString(successSentence).contains("TRUE"))
+		{
 			int tempRefFailureSentenceAndFailVar = bdd.ref(bdd.and(failureSentence, failVar));
+			bdd.ref(tempRefFailureSentenceAndFailVar);
 			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, successSentence));
-			bdd.deref(tempRefFailureSentenceAndFailVar);	
+			bdd.ref(tempRefSF);
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
+			bdd.ref(tempRefToNewKB);
+			
+			bdd.deref(tempRefFailureSentenceAndFailVar);
 			bdd.deref(tempRefSF);
+		}
+		else
+		{	//catch any unaccounted for case
+			tempRefToNewKB = bdd.ref(bddRef_KB);
+			bdd.ref(tempRefToNewKB);
 		}
 		
 		bdd.deref(successSentence);
 		bdd.deref(failureSentence);
 		bdd.deref(bddRef_KB);
 		bddRef_KB = tempRefToNewKB;
+		bdd.ref(bddRef_KB);
 	}
 	
 	/**
@@ -322,16 +370,23 @@ public abstract class Agent
 	 */
 	public void removeFailFromKBForNewPlan()
 	{
-		bdd.ref(bddRef_KB);
+//		System.out.println("\n IN removeFailFromKBForNewPlan()");
+//		String[] clauses = bdd.toString(bddRef_KB).split("\n");
+//		for(String clause : clauses)
+//		{
+//			System.out.println(clause);
+//		}
 		
 		boolean[] v = new boolean[bdd.numberOfVariables()];
 		v[v.length-1] = true;
 		
-		int cube = bdd.cube(v);
-		int temp = bdd.exists(bddRef_KB, cube);//Should be the current KB's clauses minus all FAIL vars
+		int cube = bdd.ref(bdd.cube(v));
+		int temp = bdd.ref(bdd.exists(bddRef_KB, cube));//Should be the current KB's clauses minus all FAIL vars
+		bdd.ref(temp);
 		
 		bdd.deref(bddRef_KB);
 		bddRef_KB = temp;
+		bdd.ref(bddRef_KB);
 	}
 	
 	/**
@@ -383,14 +438,17 @@ public abstract class Agent
 	public boolean existsFailureInPastWithThisUnsatPossPreCombination(IncompleteActionInstance currAction, Set<Proposition> currState)
 	{
 		int posspres = bdd.ref(bdd.getZero());
+		bdd.ref(posspres);
 		for(Proposition p : currAction.getPossiblePreconditions())
 		{
 			if(!currState.contains(p))
 			{
 				Fault risk = Fault.getRiskFromIndex(Fault.PRECOPEN, currAction.getName(), p.getName());
 				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
+				bdd.ref(tmp);
 				bdd.deref(posspres);
 				posspres = tmp;
+				bdd.ref(posspres);
 			}
 		}
 
@@ -407,7 +465,7 @@ public abstract class Agent
 	//Check for failure in the past using failVar.
 	public boolean existsActionFailureInPastEntailFailVar()
 	{
-		if(bdd.and(bddRef_KB, bdd.not(failVar)) == 0) return true;	
+		if(bdd.and(bddRef_KB, bdd.not(failVar)) == bdd.getZero()) return true;	
 		return false;
 	}
 	
@@ -444,10 +502,30 @@ public abstract class Agent
 		//loadActionsHT();
 		List<Fault> risksLearned = new ArrayList<Fault>(); //Prevents concurrent modification exception
 		for(Fault r : risks)
-		{			
-			int resultT = bdd.and(riskToBDD.get(r), bddRef_KB); 		  	//Query returns 0 if -prop - don't add to known list
-			int resultF = bdd.and(bdd.not(riskToBDD.get(r)), bddRef_KB); 	//Query returns 0 if prop  - add to known list
-						
+		{					
+			//An error from this line is irregularly thrown where an array index is out of bounds
+			int resultT = -1, resultF = -1;
+			try
+			{
+				resultT = bdd.ref(bdd.and(riskToBDD.get(r), bddRef_KB)); 		  	//Query returns 0 if -prop - don't add to known list
+				bdd.ref(resultT);
+				resultF = bdd.ref(bdd.and(bdd.not(riskToBDD.get(r)), bddRef_KB)); 	//Query returns 0 if prop  - add to known list
+				bdd.ref(resultF);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				int riskIndexToUse = riskToBDD.get(r);
+				System.out.println("RISK#:" + riskIndexToUse);
+				System.out.println("bddRef_KB#:" + bddRef_KB);
+				System.out.println("bddRef_KB:" + bdd.toString(bddRef_KB));
+				System.out.println("resultT:" + resultT);
+				System.out.println("resultT:" + bdd.toString(resultT));
+				System.out.println("resultF:" + resultF);
+				System.out.println("resultF:" + bdd.toString(resultF));
+				System.out.println("bdd#Vs:" + bdd.numberOfVariables());
+			}
+			
 			IncompleteActionInstance a = actionsHT.get(r.getActionName());
 			
 			Proposition propLearned   = null;
@@ -494,6 +572,9 @@ public abstract class Agent
 					if(type.equals(LearningTypes.QA)) 	numRisksLearnedQA++;
 				}
 			}
+			
+			bdd.deref(resultT);
+			bdd.deref(resultF);
 		}
 		risks.removeAll(risksLearned); //The risks learned are removed from the risks list
 	}
@@ -508,13 +589,26 @@ public abstract class Agent
 	 */
 	public void addDomainExpertQueryResultToBDDAndUpdateActions_QA(Fault f, boolean isFeature)
 	{
+		if(f == null)
+			return;
+		
 		int tempRefToNewKB;
 		
-		if(isFeature) 	tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, riskToBDD.get(f)));
-		else 			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, bdd.not(riskToBDD.get(f))));
+		if(isFeature) 	
+		{
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, riskToBDD.get(f)));
+			bdd.ref(tempRefToNewKB);
+		}
+		
+		else 			
+		{
+			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, bdd.not(riskToBDD.get(f))));
+			bdd.ref(tempRefToNewKB);
+		}
 		
 		bdd.deref(bddRef_KB);
 		bddRef_KB = tempRefToNewKB;
+		bdd.ref(bddRef_KB);
 	}
 	
 	public void startStopwatch(){ startTime = System.currentTimeMillis(); }

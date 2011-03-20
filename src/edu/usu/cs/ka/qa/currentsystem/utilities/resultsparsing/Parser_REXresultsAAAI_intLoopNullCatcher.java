@@ -2,18 +2,18 @@ package edu.usu.cs.ka.qa.currentsystem.utilities.resultsparsing;
 import java.util.*;
 import java.io.*;
 
-public class Parser_REXresults 
+public class Parser_REXresultsAAAI_intLoopNullCatcher 
 {	
 	//static String directory = "C:\\Documents and Settings\\Christopher\\Desktop\\";
 	//static String bigResultsFolder = "out\\";;
 	static String directory = "/Users/CHW/Desktop/";
 	static String bigResultsFolder = "out/";
-	static String outputFolderDateTimeAppend = "AAAI11PL_3.16.11";
+	static String outputFolderDateTimeAppend = "AAAI11PL_3.16.11_Ror";
 
-	static boolean isFullQTree = false;
+	static boolean isFullQTree 	 = false;
 	static boolean isLineCleaner = true;
-	static boolean isBugCheck = false;
-	static boolean isIntersection = true;
+	static boolean isBugCheck 	 = false;
+	static boolean isOred 		 = true; //if false, then isAnd'd
 	
 	public static void main(String[] args) 
 	{
@@ -75,9 +75,9 @@ public class Parser_REXresults
 								if(isLineCleaner) line = lineCleaner(line);
 								if(isBugCheck)	line = bugCheck(line);
 								
-								if(isIntersection && !line.contains("?"))
-									results.add(line);
-								else if(!isIntersection)
+								line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+								
+								if(!line.isEmpty() && !line.contains("?"))
 									results.add(line);
 								
 								countSuccesses++;
@@ -169,9 +169,9 @@ public class Parser_REXresults
 								if(isLineCleaner) line = lineCleaner(line);
 								if(isBugCheck)	line = bugCheck(line);
 								
-								if(isIntersection && !line.contains("?"))
-									results.add(line);
-								else if(!isIntersection)
+								line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+								
+								if(!line.isEmpty() && !line.contains("?"))
 									results.add(line);
 								
 								countSuccesses++;
@@ -266,9 +266,9 @@ public class Parser_REXresults
 									if(isLineCleaner) 	line = lineCleaner(line);
 									if(isBugCheck)	line = bugCheck(line);
 									
-									if(isIntersection && !line.contains("?"))
-										results.add(line);
-									else if(!isIntersection)
+									line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+									
+									if(!line.isEmpty() && !line.contains("?"))
 										results.add(line);
 									
 									countSuccesses++;
@@ -363,9 +363,9 @@ public class Parser_REXresults
 									if(isBugCheck)	
 										line = bugCheck(line);
 									
-									if(isIntersection && !line.contains("?"))
-										results.add(line);
-									else if(!isIntersection)
+									line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+									
+									if(!line.isEmpty() && !line.contains("?"))
 										results.add(line);
 									
 									countSuccesses++;
@@ -471,9 +471,11 @@ public class Parser_REXresults
 		String[] lineTokens = line.split(" ");
 		
 		LinkedList<String> tokens = new LinkedList<String>();
+				
 		for(int i = 0; i < lineTokens.length; i++)
 		{
-			if(isIntersection && lineTokens[i].contains("2^"))//simulation timeout
+
+			if(lineTokens[i].contains("2^"))//simulation timeout
 				tokens.add(lineTokens[i].replace("2^", ""));
 			else if(lineTokens[i].equals("T"))//simulation timeout
 				tokens.add("?");
@@ -497,11 +499,47 @@ public class Parser_REXresults
 				tokens.add("AMIR");
 			else if(lineTokens[i].equals("jdd"))
 				tokens.add("JDD");
-
 			else
 				tokens.add(lineTokens[i]);
 		}
 
+		line = "";
+		for (int i = 0; i < tokens.size(); i++)
+			line += tokens.get(i) + " ";
+		
+		return line;
+	}
+	
+	static String intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(String line)
+	{
+		String[] lineTokens = line.split(" ");
+		
+		LinkedList<String> tokens = new LinkedList<String>();
+		
+		if(isOred)
+		{
+			if(lineTokens[6].equals("?") || lineTokens[16].equals("?") || lineTokens[27].equals("?") || lineTokens[37].equals("?"))
+			{			
+				for(int i = 0; i < lineTokens.length; i++)
+				{
+					if(i < 3 || i > 45)
+						tokens.add(lineTokens[i]);
+				}
+			}
+		}
+		else
+		{
+			if(lineTokens[6].equals("?") && lineTokens[16].equals("?") && lineTokens[27].equals("?") && lineTokens[37].equals("?"))
+			{			
+				for(int i = 0; i < lineTokens.length; i++)
+				{
+					if(i < 3 || i > 45)
+						tokens.add(lineTokens[i]);
+				}
+			}
+		}
+			
+		
 		line = "";
 		for (int i = 0; i < tokens.size(); i++)
 			line += tokens.get(i) + " ";

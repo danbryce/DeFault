@@ -92,6 +92,7 @@ public class DomainExpert
 	public Problem getProblem() 								{ return problem; }
 	public IncompleteActionInstance getActionCVByID(Integer id)	{ return actionsCV_HT.get(id); }
 	public List<ActionInstance> getActions()					{ return actionsCV; }
+	public int getNumActionsInDomain()							{ return actionsCV.size(); }
 	public int getNumRisks()									{ return wereRisksAreNowKnownFeatures.size(); }
 	public int getNumQsAsked()									{return numQsAsked;}
 	

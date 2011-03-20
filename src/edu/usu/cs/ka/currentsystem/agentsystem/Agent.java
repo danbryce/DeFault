@@ -62,12 +62,14 @@ public abstract class Agent
 		bdd = RiskCounter.getBDD();
 		//bddRef_KB = RiskCounter.get_bddRef();
 		bddRef_KB = bdd.ref(bdd.getOne());
+		bdd.ref(bddRef_KB);
 		
 		risks = RiskCounter.getAllRisks();
 		riskToBDD = RiskCounter.getRiskToBDD();
 		bddToRisk = RiskCounter.getBddToRisk();
 		
 		failVar = bdd.createVar();
+		bdd.ref(failVar);
 		
 		//Create a var for FAIL. and make sure it exists in the BDD
 		//Print out the size of the risks List and printSet of the BDD to see the vars are the same size.
@@ -288,9 +290,15 @@ public abstract class Agent
 	{
 		int tempRefToNewKB;
 		if(!prevState.equals(currState)) //Action succeeded
+		{
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, successSentence));
+			bdd.ref(tempRefToNewKB);
+		}
 		else if(isActionFailure(incompleteAction, prevState, currState)) //Action failed
+		{
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, failureSentence));
+			bdd.ref(tempRefToNewKB);
+		}
 		else //if (prevState.equals(currState) && !isActionFail(a, prevState, currState))
 		//action failure not known, combine two Trees of cases above
 		{
@@ -299,6 +307,7 @@ public abstract class Agent
 			int tempRefSF = bdd.ref(bdd.or(tempRefFailureSentenceAndFailVar, successSentence));
 			bdd.deref(tempRefFailureSentenceAndFailVar);	
 			tempRefToNewKB = bdd.ref(bdd.and(bddRef_KB, tempRefSF));
+			bdd.ref(tempRefToNewKB);
 			bdd.deref(tempRefSF);
 		}
 		
@@ -306,6 +315,7 @@ public abstract class Agent
 		bdd.deref(failureSentence);
 		bdd.deref(bddRef_KB);
 		bddRef_KB = tempRefToNewKB;
+		bdd.ref(bddRef_KB);
 	}
 	
 	/**
@@ -337,6 +347,7 @@ public abstract class Agent
 		
 		bdd.deref(bddRef_KB);
 		bddRef_KB = temp;
+		bdd.ref(bddRef_KB);
 	}
 	
 	/**
@@ -396,6 +407,7 @@ public abstract class Agent
 				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
 				bdd.deref(posspres);
 				posspres = tmp;
+				bdd.ref(posspres);
 			}
 		}
 

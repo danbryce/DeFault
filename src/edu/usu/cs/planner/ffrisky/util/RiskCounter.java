@@ -102,6 +102,7 @@ public class RiskCounter {
 
 		bdd = new BDD(10000, 10000);
 		bddRef = bdd.ref(bdd.getOne());
+		bdd.ref(bddRef);
 
 		riskToBDD = new HashMap<Fault, Integer>();
 		bddToRisk = new HashMap<Integer, Fault>();
@@ -111,7 +112,8 @@ public class RiskCounter {
 		int countOfVars = 0;
 		for (Fault risk : allRisks) 
 		{
-			int temp = bdd.createVar();			
+			int temp = bdd.createVar();
+			bdd.ref(temp);
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
 			riskToNumVarIndexForCube.put(risk, countOfVars);
@@ -207,7 +209,11 @@ public class RiskCounter {
 	public static int tryThisPFEGenerator(Problem problem, List<ActionInstance> plan, Solver solver)
 	{
 		if(plan == null || plan.size() == 0)
-			return bdd.getZero();
+		{
+			int PFEIsFalseBecauseItDoesNotExist_ref = bdd.ref(bdd.getZero());
+			bdd.ref(PFEIsFalseBecauseItDoesNotExist_ref);
+			return PFEIsFalseBecauseItDoesNotExist_ref;
+		}
 		
 		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
 		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver)); // Add the initial state
@@ -217,7 +223,7 @@ public class RiskCounter {
 			catch(Exception e) 
 			{
 				//e.printStackTrace(); 
-				int crs = bdd.getOne();
+				int crs = bdd.ref(bdd.getOne());
 				bdd.ref(crs);
 				return crs;
 			}
@@ -228,7 +234,7 @@ public class RiskCounter {
 		catch(Exception e) 
 		{
 			//e.printStackTrace(); 
-			crs = bdd.getOne();
+			crs = bdd.ref(bdd.getOne());
 			bdd.ref(crs);
 			return crs;
 		}
@@ -239,6 +245,7 @@ public class RiskCounter {
 			if(risk != null)
 			{
 				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
+				bdd.ref(tmp);
 				bdd.deref(crs);
 				crs = tmp;
 				bdd.ref(crs);
@@ -246,7 +253,7 @@ public class RiskCounter {
 			else
 			{
 				bdd.deref(crs);
-				crs = bdd.getOne();
+				crs = bdd.ref(bdd.getOne());
 				bdd.ref(crs);
 				break;
 			}

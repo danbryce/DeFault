@@ -74,9 +74,17 @@ public class Agent_CL extends Agent
 		int failureExplanationSentence_bddRef = RiskCounter.tryThisPFEGenerator(problem, plan, Planner.solver);
 		
 		//If the plan has failed, this will know about it. It's time to replan.
-		if(bdd.toString(failureExplanationSentence_bddRef).contains("TRUE")) return false;
+		if(bdd.toString(failureExplanationSentence_bddRef).contains("TRUE")) 
+		{	
+			bdd.deref(failureExplanationSentence_bddRef);
+			return false;
+		}
 		//If the plan cannot fail, this will know about it. The agent can't help but succeed.
-		if(bdd.toString(failureExplanationSentence_bddRef).contains("FALSE")) return true;
+		if(bdd.toString(failureExplanationSentence_bddRef).contains("FALSE")) 
+		{
+			bdd.deref(failureExplanationSentence_bddRef);
+			return true;
+		}
 		
 		//LOOKAHEAD - Check for entailment of the plan's failure explanation ^ the KB.
 		//FailureExplanationSentence is entailed when should be. 
@@ -91,7 +99,7 @@ public class Agent_CL extends Agent
 			System.out.println(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)));
 		}
 		
-		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
+		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == bdd.getZero())
 		{
 			if(debug)System.out.println(" &");
 			bdd.deref(failureExplanationSentence_bddRef);

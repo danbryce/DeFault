@@ -192,6 +192,9 @@ public class Actions_Utility
 	//Be selective about the data members
 	public static List<ActionInstance> makeActionsListDeepCopy(List<ActionInstance> list)
 	{
+		if(list == null)
+			return null;
+	
 		ArrayList<ActionInstance> newList = new ArrayList<ActionInstance>();
 		
 		for(ActionInstance action : list)
@@ -227,5 +230,18 @@ public class Actions_Utility
 		
 		return null;
 	}
+	
+	public static boolean comparePlansShallowEquality(List<ActionInstance> oldPlan, List<ActionInstance> newPlan)
+	{
+		if(oldPlan.size() != newPlan.size())
+			return false;
 		
+		for(int i = 0; i < oldPlan.size(); i++)
+		{
+			if(!oldPlan.get(i).getName().equals(newPlan.get(i).getName()))
+				return false;
+		}
+		
+		return true;
+	}
 }
