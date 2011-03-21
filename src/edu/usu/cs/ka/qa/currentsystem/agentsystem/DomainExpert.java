@@ -41,7 +41,7 @@ public class DomainExpert
 		setDomainAndProblem();
 		
 		//To get a list of the actual Risks in the problem's actions
-		RiskCounter.resetIsInitialized();//The Fault.StaticHashMaps are also reset in this method
+		RiskCounter.resetIsInitialized();
 		RiskCounter.initialize(domain, problem);
 		wereRisksAreNowKnownFeatures = RiskCounter.getAllRisks();//this risksList is transformed into known features in createActions_CompleteVersion()
 		
@@ -90,6 +90,7 @@ public class DomainExpert
 	}
 	
 	public Problem getProblem() 								{ return problem; }
+	public Domain  getDomain() 									{ return domain; }
 	public IncompleteActionInstance getActionCVByID(Integer id)	{ return actionsCV_HT.get(id); }
 	public List<ActionInstance> getActions()					{ return actionsCV; }
 	public int getNumActionsInDomain()							{ return actionsCV.size(); }

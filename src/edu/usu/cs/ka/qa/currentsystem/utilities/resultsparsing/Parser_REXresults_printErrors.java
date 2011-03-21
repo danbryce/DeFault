@@ -2,18 +2,18 @@ package edu.usu.cs.ka.qa.currentsystem.utilities.resultsparsing;
 import java.util.*;
 import java.io.*;
 
-public class Parser_REXresults 
+public class Parser_REXresults_printErrors 
 {	
 	//static String directory = "C:\\Documents and Settings\\Christopher\\Desktop\\";
 	//static String bigResultsFolder = "out\\";;
 	static String directory = "/Users/CHW/Desktop/";
 	static String bigResultsFolder = "out/";
-	static String outputFolderDateTimeAppend = "AAAI11PL_3.20.11";
+	static String outputFolderDateTimeAppend = "errors";
 
 	static boolean isFullQTree = false;
-	static boolean isLineCleaner = false;
+	static boolean isLineCleaner = true;
 	static boolean isBugCheck = false;
-	static boolean isIntersection = false;
+	static boolean isIntersection = true;
 	
 	public static void main(String[] args) 
 	{
@@ -124,11 +124,7 @@ public class Parser_REXresults
 	
 	//pathways_p01_0.0_jdd_1.txt
 	static void PathwaysResults()
-	{
-		LinkedList<String> results = new LinkedList<String>();
-		LinkedList<String> metaResults = new LinkedList<String>();
-		
-		metaResults.add("Pathways///////////////////////////////////////////");
+	{		
 		int problemCount = 20;
 		Double [] density = { .25, .5, .75, 1.0}; //no .0, .01
 		int instanceCount = 10;
@@ -140,81 +136,72 @@ public class Parser_REXresults
 			{
 				for(int instance = 1; instance <= instanceCount; instance++)
 				{
-					String filename = "";
-					filename += "pathways_p";
-					
-					if(files[fileCounter] < 10) filename += "0";
-					filename += files[fileCounter] + "_";
-					filename += d + "_";							
-					filename += instance;
-					filename += ".txt";
-					
-					File file = new File(directory + bigResultsFolder + filename);
-					
-					String metaResult = filename + " ";
-					
-					int countSuccesses = 0;
-					boolean completed = false;
-					String totalTime = "";
-					
-					try 
+					if(d == 1.0 && instance != 1)
+					{continue;}
+					else
 					{
-						Scanner scanner = new Scanner(file);
-						while (scanner.hasNextLine()) 
+						
+						String filename = "";
+						filename += "pathways_p";
+						
+						if(files[fileCounter] < 10) filename += "0";
+						filename += files[fileCounter] + "_";
+						filename += d + "_";							
+						filename += instance;
+						filename += ".txt";
+						
+						File file = new File(directory + bigResultsFolder + filename);
+						
+						try 
 						{
-							String line = scanner.nextLine();							
-							if(line.contains("cweber") && !line.contains("File"))
+							Scanner scanner = new Scanner(file);
+							int countRC = 0;
+							int countDE = 0;
+							int countUA = 0;
+							int countFV = 0;
+							while (scanner.hasNextLine()) 
 							{
-								line = line.replace("/home/cweber/graphplanner/", "");
-								if(isLineCleaner) line = lineCleaner(line);
-								if(isBugCheck)	line = bugCheck(line);
-								
-								if(isIntersection && !line.contains("?"))
-									results.add(line);
-								else if(!isIntersection)
-									results.add(line);
-								
-								countSuccesses++;
+								String line = scanner.nextLine();							
+								if( !line.contains("cweber") 		&&
+									!line.contains("log4j")  		&&
+									!line.contains("timeLimit") 	&&
+									!line.contains("problemFile")  	&&
+									!line.contains("numSuccesses") 	&&
+									!line.contains("Time") &&
+									!line.isEmpty()
+								   )
+								{
+									if(line.contains("RiskCounter.initialize"))
+										countRC++;
+									if(line.contains("DomainExpert"))
+										countDE++;
+									if(line.contains("updateActions"))
+										countUA++;
+									if(line.contains("tail"))
+										countFV++;
+								}
 							}
 							
-							if(line.contains("Exception") && !metaResult.contains("*"))
-								metaResult += "* ";
 							
-							if(line.contains("totalTime"))
-							{
-								int colonLocation = line.indexOf(":");
-								totalTime = line.substring(colonLocation);
-								completed = true;
-							}
-						}
-					} catch (FileNotFoundException e) {metaResult += "DNE ";}	
-					
-					if(!metaResult.contains("DNE"))
-						metaResult += countSuccesses;
-					
-					if(completed) 
-						metaResult += " " + totalTime;
-					else if(!completed && !metaResult.contains("DNE"))
-						metaResult += " DNF";
-					
-					metaResults.add(metaResult);
+							if((countRC + countUA  + countFV) == 0)
+								continue;
+							else
+							System.out.println
+							(
+									filename + ": " + 
+									(countRC + countUA  + countFV) + " -- " + 
+									"RC:" + countRC + 
+									":" + countDE + 
+									" -- " + 
+									"UA:" + countUA  + 
+									" -- " + 
+									"FV:" + countFV
+							);
+						} catch (FileNotFoundException e) {}	
+					}
 				}
 			}
-
 		}
-		
-		for(String r : metaResults)
-			System.out.println(r);
-
-		System.out.println();
-		for(String r : results)
-			System.out.println(r);
-		
-		System.out.println("END Pathways///////////////////////////////////////\n");
-		metaResults.add("END Pathways///////////////////////////////////////\n");
-		
-		writeMetaResultsToFile(metaResults);
-		writeResultsToFile("Pathways_Results_" + outputFolderDateTimeAppend, results);
 	}
 	
 	//hobonav_2_7_0.25_1_pode2.txt

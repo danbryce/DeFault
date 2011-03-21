@@ -33,19 +33,26 @@ public class SimulationPLQAF
 	//Settings
 	static boolean debug = false;
 	static boolean isForEyeballs = false;
-	static boolean isForFile = true;
+	static boolean isForFile = false;
+	static boolean isNonLoopDomain = false;;
 	public static final int maxPlannerCalls 		= 10000;//Don't forget - the QTree and Planner classes use this variable!!!!
 	public static final int maxActions 				= 1000;
 	public static final int maxSeeds 				= 10000;
 	public static final int maxSuccesses 			= 10;
 	public static final int maxTimeSimulation 		= 3600;//one hour = 3600
-	public static final double plannerTimeLimit 	= 600; //5 minutes = 300, 10 minutes = 600
+	public static final double plannerTimeLimit 	= 300;// 600; //5 minutes = 300, 10 minutes = 600
 		
 	SimulationPLQAF(String[] args, int simSeed)
-	{					
+	{	
+		Proposition.clearAll();
 		expert = new DomainExpert(args[0], args[1], simSeed);		
 		planners = new Planner(args[0], args[1]);
 		QTree.counterRPSCalls = 0;
+		
+		if(args[0].contains("bridges") || args[0].contains("parcprinter"))
+			isNonLoopDomain = true;
+		else
+			isNonLoopDomain = false;
 
 		resultString = "";
 		
@@ -122,7 +129,7 @@ public class SimulationPLQAF
 					if(isForEyeballs) sim.resultString += "\n";
 					sim.runSimulationForGivenQAType(args, QA_Types.NONE);
 					if(isForEyeballs) sim.resultString += "\n";
-					sim.runSimulationForGivenQAType(args, QA_Types.BCVInKBonceTil);
+					sim.runSimulationForGivenQAType(args, QA_Types.BCVInKBonceTil);			
 					if(isForEyeballs) sim.resultString += "\n";
 					sim.runSimulationForGivenQAType(args, QA_Types.BCVInKBallTil);	
 //					if(isForEyeballs) sim.resultString += "\n";
@@ -163,16 +170,47 @@ public class SimulationPLQAF
 	private void runSimulationForGivenQAType(String[] args, QA_Types qaType)
 	{
 		resultString += " " + qaType;
-		
 		resultString += " " + AgentTypes.RG;
-
-		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); } 	   catch(Exception e) { e.printStackTrace(); resultString += " AMIR E E E E E E E E E"; }
-		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.RG, qaType); } catch(Exception e) { e.printStackTrace(); resultString += " JDD E E E E E E E E E"; }
+		
+		boolean skipThisStrategy = false;
+		if(	qaType == QA_Types.BCVInKBonceTil || qaType == QA_Types.BCVInKBallTil ||
+			qaType == QA_Types.BCVInKBintPFEonceTil || qaType == QA_Types.BCVInKBintPFEallTil)
+				skipThisStrategy = true;
+		
+		try
+		{ 
+			if(isNonLoopDomain && skipThisStrategy)
+				resultString += " AMIR - - - - - - - - -";
+			else
+				runSimulation(PlannerTypes.AMIR,  args, AgentTypes.RG, qaType); 
+		}catch(Exception e) { e.printStackTrace(); resultString += " AMIR E E E E E E E E E"; }
+		
+		try
+		{ 
+			if(isNonLoopDomain && skipThisStrategy)
+				resultString += " JDD - - - - - - - - -";
+			else
+			runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.RG, qaType); 
+		}catch(Exception e) { e.printStackTrace(); resultString += " JDD E E E E E E E E E"; }
 		
 		resultString += " " + AgentTypes.CL;
 
-		try{ runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType); } 	   catch(Exception e) { e.printStackTrace(); resultString += " AMIR E E E E E E E E E"; }
-		try{ runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType); } catch(Exception e) { e.printStackTrace(); resultString += " JDD E E E E E E E E E"; }
+		try
+		{ 
+			if(isNonLoopDomain && skipThisStrategy)
+				resultString += " AMIR - - - - - - - - -";
+			else
+				runSimulation(PlannerTypes.AMIR,  args, AgentTypes.CL, qaType); 
+		}catch(Exception e) { e.printStackTrace(); resultString += " AMIR E E E E E E E E E"; }
+		
+		try
+		{ 
+			if(isNonLoopDomain && skipThisStrategy)
+				resultString += " JDD - - - - - - - - -";
+			else
+			runSimulation(PlannerTypes.JDD, args, Agent.AgentTypes.CL, qaType); 
+		} 
+		catch(Exception e) { e.printStackTrace(); resultString += " JDD E E E E E E E E E"; }
 	}
 	
 	boolean timeoutPlanner, timeoutSimulation;
@@ -397,14 +435,14 @@ public class SimulationPLQAF
 
 		while ((now - start) < maxTime)
 		{
-			try { Thread.sleep(1000); } catch (Exception e){}
+			try { Thread.sleep(100); } catch (Exception e){}
 			
 			now = System.currentTimeMillis();
 			
 			//System.out.print(((now - start)/1000) + " ");
 			
 			if(!isSolvableTest && (agent.getCurrentExecutionTime() >= maxTimeSimulation)) 
-				break;
+				execThread.done = true;
 			
 			if(execThread.done) 
 				break;
@@ -414,7 +452,7 @@ public class SimulationPLQAF
 		
 		if((now - start) >= maxTime) 
 			timeoutPlanner = true; //plan will be null
-		if(!isSolvableTest && (agent.getCurrentExecutionTime() > maxTimeSimulation)) 
+		if(!isSolvableTest && (agent.getCurrentExecutionTime() >= maxTimeSimulation)) 
 			timeoutSimulation = true; //plan will be null
 		if(agent != null) 
 			agent.restoreActionsToStateBeforePlannerCall();	

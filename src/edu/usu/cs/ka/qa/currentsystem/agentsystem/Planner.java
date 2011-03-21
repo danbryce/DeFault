@@ -44,12 +44,19 @@ public class Planner
 		domainFile = dFile;
 		problemFile = pFile;
 		
-		Proposition.clearAll();//Or below setDomainAndProblem?
-				
-		setDomainAndProblem();
-
-		RiskCounter.resetIsInitialized();//assumes one bdd for all tests
-		RiskCounter.initialize(domain, problem);
+		//This is predicated on the notion that only one DomainExpert and one Planner
+		// are created for a Simulation instance, and that the expert is usually created first
+		if(DomainExpert.getInstance() == null)
+		{
+			setDomainAndProblem();
+			RiskCounter.resetIsInitialized();//assumes one bdd for all tests
+			RiskCounter.initialize(domain, problem);
+		}
+		else
+		{
+			problem = DomainExpert.getInstance().getProblem();
+			domain = DomainExpert.getInstance().getDomain();
+		}
 		
 		initialModelCount = RiskCounter.getModelCount(1);
 		initialNumRisks = RiskCounter.getNumRisks();
@@ -61,7 +68,7 @@ public class Planner
 	
 	public static Planner getInstance() {return instance;}
 
-	private void setDomainAndProblem()
+	public void setDomainAndProblem()
 	{
 		domainMaker = new DomainAndProblemMaker_Utility(domainFile, problemFile);	
 		domain = domainMaker.getOriginalIncompleteDomain();

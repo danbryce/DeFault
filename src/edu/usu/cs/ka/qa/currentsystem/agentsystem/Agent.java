@@ -70,17 +70,17 @@ public abstract class Agent
 		domainFile = dFile;
 		problemFile = pFile;
 		
-		Proposition.clearAll();	
+		//Do this every time the domain file changes - best time is in the Simulation class constructor
+		//Proposition.clearAll();	
 		
 		setDomainAndProblem();
 		setActions();
 		loadActionsHT();
 		
-		RiskCounter.resetIsInitialized();//The Fault.StaticHashMaps are also reset in this method
+		RiskCounter.resetIsInitialized();
 		RiskCounter.initialize(domain, problem);
 		
 		bdd = RiskCounter.getBDD();
-		//bddRef_KB = RiskCounter.get_bddRef();
 		bddRef_KB = bdd.ref(bdd.getOne());
 		bdd.ref(bddRef_KB);
 		
