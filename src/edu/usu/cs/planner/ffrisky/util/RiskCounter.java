@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import jdd.bdd.BDD;
+import  jdd.util.*;
 
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
-import edu.usu.cs.ka.currentsystem.agentsystem.Planner;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -34,7 +34,7 @@ import edu.usu.cs.search.FaultSet;
 public class RiskCounter {
 
 	private static BDD bdd;
-	private static int bddRef;
+	//private static int bddRef;
 	private static Map<Fault, Integer> riskToBDD;
 	private static Map<Integer, Fault> bddToRisk;
 	private static List<Fault> allRisks;
@@ -44,7 +44,7 @@ public class RiskCounter {
 	
 	private static Map<Fault, Integer> riskToNumVarIndexForCube;
 	private static Map<Integer, Fault> numVarIndexToRiskForCube;
-		
+			
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) 
 	{
 		if (isInitialized) return;
@@ -96,31 +96,42 @@ public class RiskCounter {
 	{
 		if (isInitialized) return;
 		
-		Fault.resetStaticHashMaps();
-		
-		allRisks = getAllRisks(problem);
-
-		bdd = new BDD(10000, 10000);
-		bddRef = bdd.ref(bdd.getOne());
-		bdd.ref(bddRef);
-
-		riskToBDD = new HashMap<Fault, Integer>();
-		bddToRisk = new HashMap<Integer, Fault>();
-		riskToNumVarIndexForCube = new HashMap<Fault, Integer>();
-		numVarIndexToRiskForCube = new HashMap<Integer, Fault>(); 
-		
 		int countOfVars = 0;
-		for (Fault risk : allRisks) 
+		
+		try
 		{
-			int temp = bdd.createVar();
-			bdd.ref(temp);
-			riskToBDD.put(risk, temp);
-			bddToRisk.put(temp, risk);
-			riskToNumVarIndexForCube.put(risk, countOfVars);
-			numVarIndexToRiskForCube.put(countOfVars++, risk);
-		}
+			allRisks = getAllRisks(problem);
 
-		isInitialized = true;
+			bdd = new BDD(50000, 50000);
+			//bddRef = bdd.ref(bdd.getOne());
+			//bdd.ref(bddRef);
+	
+			riskToBDD = new HashMap<Fault, Integer>();
+			bddToRisk = new HashMap<Integer, Fault>();
+			riskToNumVarIndexForCube = new HashMap<Fault, Integer>();
+			numVarIndexToRiskForCube = new HashMap<Integer, Fault>(); 
+
+			for (Fault risk : allRisks) 
+			{
+				int temp = bdd.createVar();
+				bdd.ref(temp);
+				riskToBDD.put(risk, temp);
+				bddToRisk.put(temp, risk);
+				riskToNumVarIndexForCube.put(risk, countOfVars);
+				numVarIndexToRiskForCube.put(countOfVars++, risk);
+			}
+	
+			isInitialized = true;
+		
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("Risk Counter init failed.How far along did it get?");
+			System.out.println("bdd:" + bdd);
+			System.out.println("allRisks.size():" + allRisks.size());
+			System.out.println("bdd.numberOfVariables():" + bdd.numberOfVariables());
+			System.out.println("countOfVars:" + countOfVars);
+		}
 	}
 	
 	// Hopefully this will deref everything
@@ -142,8 +153,7 @@ public class RiskCounter {
 	public static void resetIsInitialized()
 	{
 		isInitialized = false;
-		logger = Logger.getLogger(RiskCounter.class.getName());
-		
+		deref();
 		Fault.resetStaticHashMaps();
 	}
 	
@@ -439,7 +449,7 @@ public class RiskCounter {
 	
 	public static BDD 					getBDD() 									{ return bdd; }
 	public static void 					setBdd(BDD bdd) 							{ RiskCounter.bdd = bdd; }
-	public static int 					get_bddRef()								{ return bddRef; }
+	//public static int 					get_bddRef()								{ return bddRef; }
 	public static Map<Fault, Integer> 	getRiskToBDD() 								{ return riskToBDD; }
 	public static void 					setRiskToBDD(Map<Fault, Integer> riskToBDD) { RiskCounter.riskToBDD = riskToBDD; }
 	public static Map<Integer, Fault> 	getBddToRisk() 								{ return bddToRisk; }
