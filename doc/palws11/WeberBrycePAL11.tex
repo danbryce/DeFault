@@ -23,7 +23,6 @@
 \setcounter{totalnumber}{50} \setcounter{topnumber}{50}
 \setcounter{bottomnumber}{50} \setcounter{dbltopnumber}{50}
 
-
 \newenvironment{packed_enum}{
 \begin{enumerate}
   \setlength{\itemsep}{1pt}
@@ -76,8 +75,8 @@ fails, diagnosing the failure, and re-planning; iv) diagnosing a plan failure
 only if it can impact future plans; and v) while diagnosing failures,
 proactively querying about a subset of the future action features that are likely to cause failures. 
 We find that passive learning alone can lead to dead-ends, perfecting a plan
-prior to execution requires many questions, and balancing passive learning with
-reactive learning strikes a good balance between avoiding dead-ends and
+prior to execution requires many questions, and that balancing passive learning
+with reactive learning strikes a good balance between avoiding dead-ends and
 minizing the number of questions.
 
 
@@ -128,9 +127,9 @@ incompleteness when planning \citep{DBLP:conf/aips/ChangA06}.  While
 we demonstrated that planning in incomplete domains can
 help agents passively learn about domains, we ignore cases where domain
 experts are available to help engineer the agent's knowledge.  We extend our
-prior work \citep{bryce-icaps11} to
-consider agents that can query a domain expert, as in instructable computing
-\citep{mable}, but must carefully select their questions.
+prior work \citep{bryce-icaps11} to consider agents that can query a domain
+expert, as in instructable computing \citep{mable}, but carefully
+select their questions.
 
 Selecting questions is a problem that has been studied in problems such as
 preference elicitation \citep{DBLP:conf/aaai/Boutilier02}, machine learning
@@ -162,19 +161,18 @@ with incomplete actions that:
 \item Ask no questions, but learn passively. 
 \item Proactively ask questions and re-plan until a plan is guaranteed to
 succeed.
-\item Reactively ask questions only when learning passively insufficiently
-learns about an action.
-\item Reactively ask questions that are both relevant to future actions and
-arise from insufficient passive learning.
-\item  Proactively ask about
-highly likely future failures and 4. (as above).
+\item Reactively ask questions only when learning passively is insufficient to
+learn about an action.
+\item Reactively ask questions that are both relevant to future actions and have
+arisen from insufficient passive learning.
+\item  Proactively ask about highly likely future failures and 4. (as above).
 \end{packed_enum}
 We find that the first approach can lead to dead-ends where the agent fails or
-because of its passive learning it is incapable of formulating an effective
-plan.  The second technique is highly successful, but asks many questions.  The
-third, asks fewer questions and overcomes the problems of passive learning.  The
-fourth, asks even fewer questions, and the fifth asks more questions but reaches
-dead-ends less often.
+is incapable of formulating an effective new plan because of the limits of its
+passive learning. The second technique is highly successful, but is
+most intensive in its question asking. The third asks fewer questions and
+overcomes the problems of passive learning. The fourth asks even fewer
+questions, and the fifth asks more questions but reaches dead-ends less often.
 
 Our presentation includes a discussion of Incomplete STRIPS, belief maintenance
 and planning in incomplete domains, strategies for KA
@@ -538,11 +536,11 @@ $}{
 Proactive learning relies on planning under uncertainty and asking about action
 features that are relevant to the plan.  The extent to which an agent is
 proactive is determined by how many of the relevant questions they ask before
-starting to execute actions.  We explore three levels of proactivity: complete,
-asking all questions prior to execution; partial, interleaving execution (to
-learn passively) and question asking; and none, asking no questions prior to
+starting to execute actions.  We explore three levels of proactivity: complete -
+asking all questions prior to execution; partial - interleaving execution (to
+learn passively) and question asking; and none - asking no questions prior to
 executing the relevant actions.  In the following, we discuss how to identify
-relevant questions, given a plan, and how to rank the questions so that the
+relevant questions over a plan given, and how to rank the questions so that the
 agent can prove a plan will fail as quickly as possible.
 
 % There are a number of strategies for
@@ -568,7 +566,7 @@ agent can prove a plan will fail as quickly as possible.
 % answers it has received thus far.  The agent can only re-plan afterward and
 % determine if the plan contains actions with incomplete features.
 % 
-The example plan would lead to $Q_{\pi} = F$ because incomplete feature in
+Our plan example leads to $Q_{\pi} = F$ because an incomplete feature in
 $F$ relates to an action in the plan.  However, as we saw in $d(\pi)$, $add(a,
 r)$ is irrelevant because the plan will succeed no matter its value.
 
@@ -603,19 +601,20 @@ f}}}
 \notag 
 \end{align}
 The denominator of the expression above is squared to penalize the contribution
-of larger diagnoses.  This measure determines the incomplete feature most
-likely to cause the plan to fail.
+of larger diagnoses.  Our recent work shows this measure determines the
+incomplete feature most likely to cause the plan to fail.
 
-Using this measure for the example plan questions will select $pre(a, r)$ and
-$del(a, p)$ as equally preferred questions because both appear in a size one diagnosis.
+Using this measure over the example plan set of possible relevant questions, it
+selects $pre(a, r)$ and $del(a, p)$ as equally preferred questions because both
+appear in a size one diagnosis.
 
 
-\und{Partial Proactivity} Asking about every relevant feature will lead to a
+\und{Partial Proactivity} Asking about every relevant feature leads to a
 potentially large set of questions.  Agents may be able to passively learn
 about many of the features, so asking questions only about the most impactful
-features can reduce the number of questions.  There are a number of methods for
-defining the partial set of questions, such as defining a threshold on the
-diagnosis impact measure or selecting the features that appear in unit
+features can reduce the number of questions.  There are a number of
+methods for defining the partial set of questions, such as defining a
+threshold on the diagnosis impact measure or selecting the features that appear in unit
 cardinality diagnoses (single faults).
 
 \section{Reactive Learning}
@@ -636,16 +635,17 @@ failed and why.  By asking about $pre(a_1, q))$ and
 $\neg add(a_1, p)$, the agent can learn about the action and potentially
 generate a different plan.  For example, if it learns that $pre(a_1, q))$ holds,
 then it will not plan the action because $q$ is not satisfied in the current
-state.  If it learns that $\neg add(a_1, p)$ holds, then the action is useless
-and will not be planned.
+state.  If it learns that $\neg add(a_1, p)$ holds, then the action has been
+determined useless to the current state and goal, and so will not appear in the
+new plan.
 
 The agent can rank the questions that create ambiguity (multiple diagnoses) in
 $\phi$ in the same manner as proactive questions.  Reactive agents will continue
 to ask questions until $\phi$ has a single implicant $\delta$ where $\delta
 \models \phi$; having a single implicant means that the agent knows if it failed
-or not, and if it did fail why it failed.  For example, after asking about
-$add(a_1, p))$, the agent may know $fail \wedge pre(a_1, q) \wedge
-add(a_1, p)$ or $\neg add(a_1, p)$.  In the first, case the agent can infer
+or not, and if it failed, the reason(s) for the failure.  For example, after
+asking about $add(a_1, p))$, the agent may know $fail \wedge pre(a_1, q) \wedge
+add(a_1, p)$ or $\neg add(a_1, p)$.  In the first case, the agent can infer
 $\phi \models pre(a_1, q)$ and that $a_1$ will not be applicable.  In the second
 case, the agent can infer $\phi \models \neg add(a_1, p)$ and that $a_1$ is
 irrelevant.
