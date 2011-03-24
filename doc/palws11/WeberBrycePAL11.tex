@@ -16,6 +16,12 @@
 \def\goalie{{\tt Goalie}}
 %\renewcommand{\baselinestretch}{.98}
 
+\renewcommand\floatpagefraction{1} \renewcommand\topfraction{1}
+\renewcommand\bottomfraction{1} \renewcommand\textfraction{0}
+\renewcommand{\dbltopfraction}{1}
+\renewcommand{\dblfloatpagefraction}{1}
+\setcounter{totalnumber}{50} \setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50} \setcounter{dbltopnumber}{50}
 
 
 \newenvironment{packed_enum}{
@@ -370,87 +376,87 @@ failure to achieve the goal). For example, our plan example from the previous
 section has the failure explanation label $d(\pi) = 
 pre(a, r) \vee  del(a, p) \vee (del(b, q) \wedge pre(c, q))$.
 
-% \und{Incomplete Domain Relaxed Plans} The \default{} planner
-% \citep{bryce-icaps11} guides its expansion of plans that are labeled with
-% failure explanations by computing relaxed plans with failure explanations.  We
-% also use such relaxed plan failure expalantions to select questions.  Finding a
-% relaxed plan that attempts to minimize failure explanations involves propagating
-% failed interpretation labels in a planning graph.  Propagating labels relies on
-% selecting an action to support each proposition, and we select the supporter
-% $a_{t+k}(p)$ at step $k$ of the planning graph for state $s_t$ with the
-% fewest failed interpretations, denoted by its label $\hat{d}(a_{t+k}(p))$. 
-% 
-% A relaxed planning graph with propagated labels is a layered graph of sets of
-% vertices of the form $({\cal P}_t, {\cal A}_t, ..., {\cal A}_{t+m},
-% {\cal P}_{t+m+1})$. The relaxed planning graph built for a state
-% ${s}_t$ defines ${\cal P}_0 = \{{p}_t | p \in {s}_t\}$,
-% ${\cal A}_{t+k} = \{ {a}_{t+k} | \forall_{p \in {pre}({a})}
-% {p}_{t+k} \in {\cal P}_{t+k}, {a} \in {A} \cup A(P)\}$, and
-% ${\cal P}_{t+k+1} = \{p_{t+k+1} | {a}_{t+k} \in {\cal A}_{t+k}, p
-% \in {add}({a}) \cup \{p | \phi\not\models\neg add({a}, p)\}$, for $k
-% = 0, ..., m$.  Much like the successor function used to compute next states, the
-% relaxed planning graph assumes an optimistic semantics for action effects by
-% adding possible add effects to proposition layers, but, as we will explain
-% below, it associates failed interpretations with the possible adds.
-% 
-%  Each planning graph vertex has a label, denoted $\hat{d}(\cdot)$.  The failed
-%  interpretations $\hat{d}(p_t) $ affecting a proposition are defined such that
-%  $\hat{d}(p_t) = d(p_t)$, and for $k \geq 0$,
-% \begin{align}
-% \hat{d}({a}_{t+k}) &= \hspace*{-.2cm} 
-% \bigvee\limits_{\substack{p \in pre({a}) \;\text{or}\;\\ \phi\models
-% pre(a, p) }} \hspace*{-.2cm}
-% \hat{d}(p_{t+k}) \vee \hspace*{-.25cm} \bigvee\limits_{\phi?pre(a, p)}
-% \hspace*{-.25cm} (\hat{d}(p_{t+k})  \wedge pre({a}, p) )\notag\\ \notag
-% \hspace*{-.6cm} \hat{d}(p_{t+k+1}) &= \left\{\begin{array}{l@{\;}l@{\;}r} \hat{d}(\hat{a}_{t+k}(p)) & : p \in add(\hat{a}_{t+k}(p))\\
-%  & \;\text{or}\; \phi\models
-% add(\hat{a}_{t+k}(p), p)\\ 
-% \hat{d}(\hat{a}_{t+k}(p)) \vee& : \phi?add(\hat{a}_{t+k}(p), p)\\
-% \neg add(\hat{a}_{t+k}(p), p)
-% \end{array}\right. \hspace*{-.1cm}\label{eqn:hprop}
-% \end{align}
-% % Propositions in the planning graph initially have the same faults associated
-% % with them as in state $\tilde{s}_t$ and are defined by $d(\cdot)$.
-% Every action in every level $k$ of the planning graph will fail in any
-% interpretation where their preconditions are not supported.  A proposition will
-% fail  to be achieved in any interpretation where the chosen supporting action
-% fails to add the proposition.
-% 
-% % We note that the rules for propagating labels in the planning graph differ from
-% % the rules for propagating labels in the state space.  In the state space, the
-% % action failure labels include interpretations where any prior action fails.  In
-% % the relaxed planning problem, the action failure labels include only
-% % interpretations affecting the action's preconditions, and not prior actions; it
-% % is not clear which actions will be executed prior to achieving a proposition
-% % because many actions may be used to achieve other propositions at the same time
-% % step.
-% 
-% %\und{Choosing Supporters} While only a single action or noop may be required to support a proposition, using multiple supporters can increase the number of incomplete domain interpretations that support it (by ensuring that not all sources of support are subject to the same faults).  We wish to select a set $\hat{\cal S}_{t+k}(p) \subseteq \{\tilde{a} \in \hat{\cal A}_{t+k} | p \in \text{add}(\tilde{a}) \cup \widetilde{\text{add}}(\tilde{a})\}$ to define a most preferred $\hat{d}_{t+k+1}(p)$ (i.e., have fewer explanations of failure).  We use a greedy algorithm to incrementally add actions to $\hat{\cal S}_{t+k}(p)$, and check if $\hat{d}_{t+k+1}(p)$ is improved.  
-% %
-% %The greedy algorithm proceeds as follows.  We consider all singleton sets of actions, and select the most preferred (having the fewest failure explanation models or prime implicants, and breaking ties by selecting noop actions).  To the most preferred action set, we add each action and determine the most preferred, two element action set.  If none of the two element action sets are more preferred than the best single action set, we define $\hat{\cal S}_{t+k}(p)$ as the best single action set.  Otherwise, the algorithm continues to extend the best action set with one action at a time until it cannot find a more preferred action set (by counting models or prime implicants).
-% %
-% % alternative definitions (one for each possible supporter) of the set $\hat{\cal S}_{t+k}(p)$, and select the supporter that has the most preferred definition of  $\hat{d}_{t+k+1}(p)$ (breaking ties by first preferring noop actions and second preferring actions whose first appearance in the planning graph is earliest).  With a single element in $\hat{\cal S}_{t+k}(p)$, we evaluate all single element extensions of the set (making it a two element set), choosing the extension that most improves the measure of $\hat{d}_{t+k+1}(p)$ (depending on the chosen measure, either reducing the number of models, or prime implicants); if no extension improves the measure, then the algorithm terminates and returns $\hat{\cal S}_{t+k}(p)$ with a single element.  In our implementation, we allow at most two supporters per proposition, but it is possible to allow an arbitrary number of supporters in this fashion by extending the set of supporters greedily until no new extension improves its measure.
-% %
-% 
-% 
-% 
-% %\und{Heuristic Computation}  
-%  The relaxed planning graph expansion terminates
-% at the level $t+k+1$ where the goals have
-% been reached at $t+k+1$. The $h^{\sim FF}$ heuristic makes use of the chosen
-% supporting action $\hat{a}_{t+k}(p)$ for each proposition that requires support in the relaxed
-% plan, and, hence, measures the number of actions used while attempting to
-% minimize failed interpretations.  The failure explanation of the relaxed plan is
-% defined by $d(\hat{\pi}) = \bigvee\limits_{p \in G} \hat{d}(p_{t+m+1})$.
+\und{Incomplete Domain Relaxed Plans} The \default{} planner
+\citep{bryce-icaps11} guides its expansion of plans that are labeled with
+failure explanations by computing relaxed plans with failure explanations.  We
+also use such relaxed plan failure expalantions to select questions.  Finding a
+relaxed plan that attempts to minimize failure explanations involves propagating
+failed interpretation labels in a planning graph.  Propagating labels relies on
+selecting an action to support each proposition, and we select the supporter
+$a_{t+k}(p)$ at step $k$ of the planning graph for state $s_t$ with the
+fewest failed interpretations, denoted by its label $\hat{d}(a_{t+k}(p))$.
+
+A relaxed planning graph with propagated labels is a layered graph of sets of
+vertices of the form $({\cal P}_t, {\cal A}_t, ..., {\cal A}_{t+m},
+{\cal P}_{t+m+1})$. The relaxed planning graph built for a state
+${s}_t$ defines ${\cal P}_0 = \{{p}_t | p \in {s}_t\}$,
+${\cal A}_{t+k} = \{ {a}_{t+k} | \forall_{p \in {pre}({a})}
+{p}_{t+k} \in {\cal P}_{t+k}, {a} \in {A} \cup A(P)\}$, and
+${\cal P}_{t+k+1} = \{p_{t+k+1} | {a}_{t+k} \in {\cal A}_{t+k}, p
+\in {add}({a}) \cup \{p | \phi\not\models\neg add({a}, p)\}$, for $k
+= 0, ..., m$.  Much like the successor function used to compute next states, the
+relaxed planning graph assumes an optimistic semantics for action effects by
+adding possible add effects to proposition layers, but, as we will explain
+below, it associates failed interpretations with the possible adds.
+
+ Each planning graph vertex has a label, denoted $\hat{d}(\cdot)$.  The failed
+ interpretations $\hat{d}(p_t) $ affecting a proposition are defined such that
+ $\hat{d}(p_t) = d(p_t)$, and for $k \geq 0$,
+\begin{align}
+\hat{d}({a}_{t+k}) &= \hspace*{-.2cm}
+\bigvee\limits_{\substack{p \in pre({a}) \;\text{or}\;\\ \phi\models
+pre(a, p) }} \hspace*{-.2cm}
+\hat{d}(p_{t+k}) \vee \hspace*{-.25cm} \bigvee\limits_{\phi?pre(a, p)}
+\hspace*{-.25cm} (\hat{d}(p_{t+k})  \wedge pre({a}, p) )\notag\\ \notag
+\hspace*{-.6cm} \hat{d}(p_{t+k+1}) &= \left\{\begin{array}{l@{\;}l@{\;}r} \hat{d}(\hat{a}_{t+k}(p)) & : p \in add(\hat{a}_{t+k}(p))\\
+ & \;\text{or}\; \phi\models
+add(\hat{a}_{t+k}(p), p)\\
+\hat{d}(\hat{a}_{t+k}(p)) \vee& : \phi?add(\hat{a}_{t+k}(p), p)\\
+\neg add(\hat{a}_{t+k}(p), p)
+\end{array}\right. \hspace*{-.1cm}\label{eqn:hprop}
+\end{align}
+% Propositions in the planning graph initially have the same faults associated
+% with them as in state $\tilde{s}_t$ and are defined by $d(\cdot)$.
+Every action in every level $k$ of the planning graph will fail in any
+interpretation where their preconditions are not supported.  A proposition will
+fail  to be achieved in any interpretation where the chosen supporting action
+fails to add the proposition.
+
+% We note that the rules for propagating labels in the planning graph differ from
+% the rules for propagating labels in the state space.  In the state space, the
+% action failure labels include interpretations where any prior action fails.  In
+% the relaxed planning problem, the action failure labels include only
+% interpretations affecting the action's preconditions, and not prior actions; it
+% is not clear which actions will be executed prior to achieving a proposition
+% because many actions may be used to achieve other propositions at the same time
+% step.
+
+%\und{Choosing Supporters} While only a single action or noop may be required to support a proposition, using multiple supporters can increase the number of incomplete domain interpretations that support it (by ensuring that not all sources of support are subject to the same faults).  We wish to select a set $\hat{\cal S}_{t+k}(p) \subseteq \{\tilde{a} \in \hat{\cal A}_{t+k} | p \in \text{add}(\tilde{a}) \cup \widetilde{\text{add}}(\tilde{a})\}$ to define a most preferred $\hat{d}_{t+k+1}(p)$ (i.e., have fewer explanations of failure).  We use a greedy algorithm to incrementally add actions to $\hat{\cal S}_{t+k}(p)$, and check if $\hat{d}_{t+k+1}(p)$ is improved.
+%
+%The greedy algorithm proceeds as follows.  We consider all singleton sets of actions, and select the most preferred (having the fewest failure explanation models or prime implicants, and breaking ties by selecting noop actions).  To the most preferred action set, we add each action and determine the most preferred, two element action set.  If none of the two element action sets are more preferred than the best single action set, we define $\hat{\cal S}_{t+k}(p)$ as the best single action set.  Otherwise, the algorithm continues to extend the best action set with one action at a time until it cannot find a more preferred action set (by counting models or prime implicants).
+%
+% alternative definitions (one for each possible supporter) of the set $\hat{\cal S}_{t+k}(p)$, and select the supporter that has the most preferred definition of  $\hat{d}_{t+k+1}(p)$ (breaking ties by first preferring noop actions and second preferring actions whose first appearance in the planning graph is earliest).  With a single element in $\hat{\cal S}_{t+k}(p)$, we evaluate all single element extensions of the set (making it a two element set), choosing the extension that most improves the measure of $\hat{d}_{t+k+1}(p)$ (depending on the chosen measure, either reducing the number of models, or prime implicants); if no extension improves the measure, then the algorithm terminates and returns $\hat{\cal S}_{t+k}(p)$ with a single element.  In our implementation, we allow at most two supporters per proposition, but it is possible to allow an arbitrary number of supporters in this fashion by extending the set of supporters greedily until no new extension improves its measure.
+%
+
+
+
+%\und{Heuristic Computation}
+ The relaxed planning graph expansion terminates
+at the level $t+k+1$ where the goals have
+been reached at $t+k+1$. The $h^{\sim FF}$ heuristic makes use of the chosen
+supporting action $\hat{a}_{t+k}(p)$ for each proposition that requires support in the relaxed
+plan, and, hence, measures the number of actions used while attempting to
+minimize failed interpretations.  The failure explanation of the relaxed plan is
+defined by $d(\hat{\pi}) = \bigvee\limits_{p \in G} \hat{d}(p_{t+m+1})$.
 
 
 \section{Passive Learning}
 
-We describe several approaches to formulating questions for a domain expert in
-incomplete domains, which include asking all possible questions in an uninformed
-manner, asking no questions but learning by trial and error, and using plans to
-select goal directed questions. We discuss the approaches by increasing
-sophistication and follow with an empirical evaluation.
+% We describe several approaches to formulating questions for a domain expert in
+% incomplete domains, which include asking all possible questions in an uninformed
+% manner, asking no questions but learning by trial and error, and using plans to
+% select goal directed questions. We discuss the approaches by increasing
+% sophistication and follow with an empirical evaluation.
 % 
 % \und{Uninformed QA} Uninformed QA (UQA) is the strategy taken by an agent that
 % cannot or will not plan or act under uncertainty and thus must ask the domain expert about each incomplete
@@ -458,13 +464,13 @@ sophistication and follow with an empirical evaluation.
 % such, uninformed QA based agents will ask a set of questions $Q_{F} = F$ about
 % every feature in $F$, formulate a classical plan, and execute the plan.
 
-\und{Non-QA} Non-QA is the strategy taken by an agent that would rather act
-under uncertainty and ask no questions of the domain expert.  Non-QA agents are
-potentially reckless because learning about the domain sometimes requires that
+A passive learner would rather act
+under uncertainty and ask no questions of the domain expert.  Passive learning
+agents are potentially reckless because 
 they apply actions whose preconditions may be unsatisfied.  
 
-Using $\phi$, it is possible to determine if the next action in a plan, or any
-subsequent action, can or will fail.  If  $\phi \wedge d(\pi)$ is
+Using their knowledge $\phi$, it is possible to determine if the next action in
+a plan, or any subsequent action, can or will fail.  If  $\phi \wedge d(\pi)$ is
 satisfiable, then $\pi$ {\em can} fail, and if $\phi \models d(\pi)$,
 then $\pi$ {\em will}  fail.  
 % The agent will execute an action if it may not
@@ -476,8 +482,8 @@ then $\pi$ {\em will}  fail.
 % literal entailed by $\phi$ indicates if the respective action has the possible
 % feature as a known or impossible feature; all other features remain as possible
 % features.
-Algorithm \ref{alg:replan} is the strategy used by the Non-QA agent.  The
-algorithm involves initializing the agent's knowledge and plan (line 1), and then while
+Algorithm \ref{alg:replan} is the strategy used by the passive learning agent. 
+The algorithm involves initializing the agent's knowledge and plan (line 1), and then while
 the plan is non-empty and the goal is not achieved (line 2) the agent proceeds
 as follows.  The agent selects the next action in the plan (line 3) and
 determines if it can apply the action (line 4).  If it applies the action, then
@@ -488,7 +494,7 @@ has failed (line 11), then the agent forgets its knowledge of the plan failure
 by projecting over $fail$ (line 12) and finds a new plan using its new knowledge
 (line 13).
 
-For example, the non-QA agent might observe the state transition $o_1
+For example, the passive agent might observe the state transition $o_1
 = o(\{p,q\}, a, \{p,q\})$ upon executing $a$, and $\phi' = {\tt filter}(\phi,
 o_1) = \neg del(a, r)$.  The agent must re-plan because $\phi' \models d(\pi)$.
 
@@ -499,267 +505,53 @@ o_1) = \neg del(a, r)$.  The agent must re-plan because $\phi' \models d(\pi)$.
 % to avoid potential plan failure, but we leave such goal-directed knowledge
 % acquisition for future work.
 
-
 \begin{algorithm}[t]
 \SetLine
-\KwIn{state $s$, goal $G$, actions ${A}$}
-
-% \begin{algorithm}
- $\phi \leftarrow \top$;  $\pi \leftarrow null $\;
- $\pi \leftarrow {\tt getPlanWithKA}(s, G, {A}, \phi, \pi, isOneQ)$\;
+\KwIn{state $s$, goal $G$, actions $\tilde{A}$}
+ $\phi \leftarrow \top$; $\pi \leftarrow Plan(s, G, \tilde{A}, \phi)$\;
 \While{$\pi \not= ()$ and $G\not\subseteq s$}{
- $a \leftarrow \pi.first()$; $\pi \leftarrow \pi.rest()$\;
-\eIf{${pre}(a) \subseteq s$ and
-$\phi \not\models d(\pi)$
-%  $\phi \not\models
-% \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal
-% F}(\tilde{D}): p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p) $
-}{
-% $\phi \not\models d(a)$\COMMENT{Action may succeed}}
-$s ' \leftarrow Execute(a)$\; $\phi \leftarrow {\tt filter}(\phi, o(s, a,
-s'))$\; $s \leftarrow s'$\; } { $\phi \leftarrow \phi \wedge fail$\; }
+ $\tilde{a} \leftarrow \pi.first()$;
+ $\pi \leftarrow \pi.rest()$\;
+\eIf{$\text{pre}(\tilde{a}) \subseteq s$ and $\phi \not\models \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\sf F}: p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p)
+$}{
+	$s ' \leftarrow Execute(\tilde{a})$\;
+	 $\phi \leftarrow \phi \wedge o(s, \tilde{a}, s')$\;
+	 $s \leftarrow s'$\;
+}
+{
+	 $\phi \leftarrow \phi \wedge fail$\;
+}
 
 \If{$\phi \models fail$ }{
-	 $\pi \leftarrow {\tt getPlanWithKA}(s, G, {A}, \phi, \pi, isOneQ)$\;
 	 $\phi \leftarrow \exists_{fail}  \phi$\;
+	 $\pi \leftarrow Plan(s, G, \tilde{A}, \phi)$\;
 }
 }
-\caption{For PALWS11. Goalie-KA$(s, G, {A})$}\label{alg:replan}
+\caption{Passive$(s, G, \tilde{A})$}\label{alg:replan}
 \end{algorithm}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{algorithm}[t]
-\SetLine
-\KwIn{state $s$, goal $G$, actions ${A}$,\\ 
-\hspace{9.5 mm} agent knowledge $\phi$, plan $\pi$ , bool isOneQ}
-
- $\pi' \leftarrow {\tt getPlan}(s, G, {A}, \phi)$\;
-\While{conditions}
-{
-	$\psi \leftarrow {\tt mergeSources}(\phi, \pi')$\;
-	${\sf f} \leftarrow {\tt getBestQFromPICubes}(\psi)$\;
-	
-	\If{${\sf f} \neq null$}
-	{
-		 $\phi \leftarrow {\tt filter}(\phi, {\tt Ask}({\sf f}))$\;
-	}
-	\If{${\sf f} = null $ or isOneQ$ $}
-	{
-		 $\pi' \leftarrow {\tt getPlan}(s, G, {A}, \phi)$\;
-	}
-}
-\Return $\pi'$\;
-\caption{getPlanWithKA $(s, G, {A}, \phi, \pi,isOneQ)$} 
-\label{alg:getPlanWithKA}
-\end{algorithm}
-
-The $getBestQFromPICubes$ method performs the DI (maxarg) algorithm. 
-\ \\
-\ \\
-\noindent Strategies and their Sources ($\psi$)
-\begin{enumerate}
-  \item No QA
-  \item Past               - $\phi$
-  \item Present            - $\phi \cap d(\pi)$
-  \item Present and Future - $\phi \cap d(\pi)$, $|PI(d(\pi))| = 1$
-  \item Future             - $d(\pi)$
-\end{enumerate}
-\ \\
-The $mergeSources$ algorithm processes these sources using the shown operations.
-\ \\
-\ \\
-\noindent Each strategy (except $No$  $QA$ $(1)$) has two versions:
-\begin{enumerate}
-  \item[(a)] askOneQ
-  \item[(b)] askAllQs
-\end{enumerate}
-\ \\
-\ \\
-\noindent Conditions by Strategy:
-\begin{enumerate}
-\item false
-\item $\pi' = \pi $  and $ |PI(\phi)| > 1$
-\item $\pi' = \pi $ and $ |PI(\phi \cap d(\pi')| \neq 0$
-\item bool $didNotReplan \ldots (see$ $description)$
-\item $|PI(\pi')| > 1$ 
-\end{enumerate}
-\ \\
-\ \\
-\noindent Explanation of $Present$ $and$ $Future$ $Strategy$ $(4)$:\
-\begin{itemize}
-  \item[] Note: For simplicity, $didNotReplan$ is omitted from
-  the $getPlanWithKA$ method.
-\end{itemize}
-\begin{itemize}
-  \item[(a)] isOneQ
-  \begin{itemize}
-    \item execute $Present-askOneQ$ $(3.a)$ to $while$ termination condition
-    \item $didNotReplan \leftarrow true$
-    \item goto $while$ $(line 2)$
-    \item $\psi \leftarrow |PI(d(\pi'))| = 1$
-    \item on re-planning $(line 9)$, $didNotReplan \leftarrow false$
-  \end{itemize}
-  \item[(b)] askAll
-  \begin{itemize}
-    \item execute $Present-askAllQs$ $(3.b)$ 
-    \item on ${\sf f} = null $ $(line 8)$, do not re-plan
-	\item $didNotReplan \leftarrow true$
-    \item goto $while$ $(line 2)$
-    \item $\psi \leftarrow |PI(d(\pi'))| = 1$
-    \item on re-planning $(line 9)$, $didNotReplan \leftarrow false$
-  \end{itemize}
-\end{itemize}
-\ \\
-
-
-% \begin{algorithm}[t]
-% \SetLine
-% \KwIn{state $s$, goal $G$, actions ${A}$}
-% 
-% % \begin{algorithm}
-%  $\phi \leftarrow \top$\;
-%  \While{}{
-%   $\pi \leftarrow {\tt plan}(s, G, {A}, \phi)$\;
-%   $\phi \leftarrow$ GoalDirectedKA$(d(\pi))$; \qquad\CommentSty{//Optional}\\ 
-%   }
-% \While{$\pi \not= ()$ and $G\not\subseteq s$}{
-%  $a \leftarrow \pi.first()$; $\pi \leftarrow \pi.rest()$\;
-% \eIf{${pre}(a) \subseteq s$ and
-% $\phi \not\models d(\pi)$
-% %  $\phi \not\models
-% % \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal
-% % F}(\tilde{D}): p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p) $
-% }{
-% % $\phi \not\models d(a)$\COMMENT{Action may succeed}}
-% $s ' \leftarrow Execute(a)$\; $\phi \leftarrow {\tt filter}(\phi, o(s, a,
-% s'))$\; $s \leftarrow s'$\; } { $\phi \leftarrow \phi \wedge fail$\; }
-% 
-% $\phi \leftarrow$ GoalDirectedKA$(d(\pi))$; \qquad\CommentSty{//Optional}\\ 
-% \If{$\phi \models fail$ }{
-% 	
-% \Repeat{$\pi \not= \pi'$}{
-% 	 $\pi' \leftarrow {\tt plan}(s, G, {A}, \phi)$\;
-% 	 \If{$\pi'==\pi$}{
-% 	 $\phi \leftarrow$ FailureDirectedKA$(\phi, d(\pi))$; \CommentSty{//Optional}\\
-% 	 }
-% 	 }
-% 	  $\phi \leftarrow \exists_{fail}  \phi$\;
-% }
-% }
-% \caption{Agent$(s, G, {A})$}\label{alg:replan}
-% \end{algorithm}
-
-\begin{algorithm}[t]
-\SetLine
-\KwIn{state $s$, goal $G$, actions ${A}$}
-
-% \begin{algorithm}
- $\phi \leftarrow \top$\;
- % $\pi \leftarrow {\tt plan}(s, G, {A}, \phi)$\;
-\While{%$\pi \not= ()$ and
- true}{
- \If{$G\subseteq s$}{
- 	\Return success\;
- }
-% \Repeat{$\phi \not\models d(\pi)$}{
-% 	$\phi \leftarrow$ GoalDirectedKA$(d(\pi))$; \qquad\CommentSty{//Optional}\\ 
-% 	\If{$\phi \models d(\pi)$}{
-% 	$\pi' \leftarrow {\tt plan}(s, G, {A}, \phi)$\;
-% 	}	 
-% }
-\If{$\pi == ()$}
-{
-$\pi \leftarrow {\tt plan}(s, G, {A}, \phi)$\;	
-}
-\While{criterion}{
-	$\phi \leftarrow$ GoalDirectedKA$(d(\pi))$\; %\qquad\CommentSty{//Optional}\\
-	\If{$\phi \models d(\pi)$}{
-		$\pi \leftarrow {\tt plan}(s, G, {A}, \phi)$\;
-	} 
-}
-$a \leftarrow \pi.first()$; $\pi \leftarrow \pi.rest()$\;
-\eIf{${pre}(a) \subseteq s$ %and
-%$\phi \not\models d(\pi)$
-%  $\phi \not\models
-% \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\cal
-% F}(\tilde{D}): p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p) $
-}{
-% $\phi \not\models d(a)$\COMMENT{Action may succeed}}
-$s ' \leftarrow Execute(a)$\; $\phi \leftarrow {\tt filter}(\phi, o(s, a,
-s'))$\; $s \leftarrow s'$\; } %{ $\phi \leftarrow \phi \wedge fail$\; }
-
-%$\phi \leftarrow$ GoalDirectedKA$(d(\pi))$; \qquad\CommentSty{//Optional}\\ 
-\If{$\phi \models fail$ }{
-	\While{$|PI(\phi \wedge fail)| > 1$}{
-		$\phi \leftarrow$ FailureDirectedKA$(\phi, d(\pi))$; \CommentSty{//Optional}\\
-		\If{$\phi \models fail$}{
-		 $\pi' \leftarrow {\tt plan}(s, G, {A}, \phi)$\;
-		 }
-		
-	}
-% \Repeat{$\pi \not= \pi'$}{
-% 	 $\pi' \leftarrow {\tt plan}(s, G, {A}, \phi)$\;
-% 	 \If{$\pi'==\pi$}{
-% 	 $\phi \leftarrow$ FailureDirectedKA$(\phi, d(\pi))$; \CommentSty{//Optional}\\
-% 	 }
-% 	 }
-	  $\phi \leftarrow \exists_{fail}  \phi$\;
-}
-
-}
-\caption{Agent$(s, G, {A})$}\label{alg:replan}
-\end{algorithm}
-
-\begin{algorithm}[t]
-\SetLine
-\KwIn{agent knowledge $\phi$,\\ \qquad\quad plan failure explanation $d(\pi)$}
-
-$Q_{\phi} \leftarrow \{{\sf f} | \delta \models \phi \wedge d(\pi)
-, \delta \models {\sf f} \;\text{or}\; \delta \models \neg{\sf f}\}$\;
-\While{$\phi?fail$ and $|PI(\phi)|>1$}{ %more than one cube
-${\sf f} \leftarrow \underset{{\sf f}  \in Q_{\phi}}{\operatorname{argmax}}
-\sum\limits_{\substack{\delta : \delta \models \phi,\\ \delta\models {\sf
-f}}}
-\frac{1}{|\{{\sf f}| \delta \models {\sf f}\}|^2}$\; 
-$\phi \leftarrow {\tt filter}(\phi, {\tt Ask}({\sf f}))$\;
-$Q_{\phi} \leftarrow Q_{\phi} \backslash {\sf f}$
-}
-\Return \phi\;
-\caption{FailureDirectedKA$(\phi, d(\pi))$}\label{alg:failuredirected}
-\end{algorithm}
-
-
-\begin{algorithm}[t]
-\SetLine
-\KwIn{plan failure explanation $d(\pi)$}
-
-$Q_{d(\pi)} \leftarrow \{{\sf f} | \delta \models d(\pi)
-, \delta \models {\sf f} \;\text{or}\; \delta \models \neg{\sf f}\}$\;
-\While{$|PI(d(\pi))| > 1$}{ %more than one cube
-${\sf f} \leftarrow \underset{{\sf f}  \in Q_{d(\pi)}}{\operatorname{argmax}}
-\sum\limits_{\substack{\delta : \delta \models \phi,\\ \delta\models {\sf
-f}}}
-\frac{1}{|\{{\sf f}| \delta \models {\sf f}\}|^2}$\; 
-$\phi \leftarrow {\tt filter}(\phi, {\tt Ask}({\sf f}))$\;
-$Q_{d(\pi)} \leftarrow Q_{d(\pi)} \backslash {\sf f}$
-}
-\caption{GoalDirectedKA$(d(\pi))$}\label{alg:goaldirected}
-\end{algorithm}
 
 
 \section{Proactive Learning}
 
-\section{Reactive Learning}
 
-\und{Goal Directed QA}Goal Directed QA agents plan under uncertainty, similar to
-the Non-QA agent, but ask about action features that are relevant to the plan.
-There are a number of strategies for using a plan to generate questions, and we assume
-that the goal directed QA agent continues to ask questions and re-plan until it
-finds a plan that is guaranteed to succeed. The strategies include: asking about
-all incomplete features related to actions in a plan, asking about only those
-features that can cause failure, and ranking the questions based on the
-diagnoses of plan failure to ``fail fast''.
+Proactive learning relies on planning under uncertainty and asking about action
+features that are relevant to the plan.  The extent to which an agent is
+proactive is determined by how many of the relevant questions they ask before
+starting to execute actions.  We explore three levels of proactivity: complete,
+asking all questions prior to execution; partial, interleaving execution (to
+learn passively) and question asking; and none, asking no questions prior to
+executing the relevant actions.  In the following, we discuss how to identify
+relevant questions, given a plan, and how to rank the questions so that the
+agent can prove a plan will fail as quickly as possible.
+
+% There are a number of strategies for
+% using a plan to generate questions, and we assume that the goal directed QA
+% agent continues to ask questions and re-plan until it finds a plan that is
+% guaranteed to succeed. The strategies include: asking about all incomplete
+% features related to actions in a plan, asking about only those features that can
+% cause failure, and ranking the questions based on the diagnoses of plan failure
+% to ``fail fast''.
 
 % \und{Plan Relevant Questions} Without computing failure explanations, it is
 % possible to determine relevant questions by inspecting the actions in the plan
@@ -776,16 +568,17 @@ diagnoses of plan failure to ``fail fast''.
 % answers it has received thus far.  The agent can only re-plan afterward and
 % determine if the plan contains actions with incomplete features.
 % 
-% The example plan would lead to $Q_{\pi} = F$ because incomplete feature in
-% $F$ relates to an action in the plan.  However, as we saw in $d(\pi)$, $add(a,
-% r)$ is irrelevant because the plan will succeed no matter its value.
+The example plan would lead to $Q_{\pi} = F$ because incomplete feature in
+$F$ relates to an action in the plan.  However, as we saw in $d(\pi)$, $add(a,
+r)$ is irrelevant because the plan will succeed no matter its value.
 
-\und{Plan Failure Diagnosis Relevant}  A question is relevant to a plan
+\und{Relevant Questions}  A question is relevant to a plan
 ${\pi}$ if the incomplete feature ${\sf f}$ is entailed by a potential
 diagnosis $\delta$ of plan failure.  Each diagnosis $\delta$ of the plan
 failure explanation $d({\pi})$ 
 is a conjunction of incomplete features that must interact to destroy the plan. 
-Thus, if $\delta \models d({\pi})$ and $\delta \models {\sf f}$, then:  
+Thus, if $\delta \models d({\pi})$ and $\delta \models {\sf f}$, then set of
+relevant questions is:
 \begin{align}
 Q_{d(\pi)} =&  \{{\sf f} | \delta \models d(\pi)
 , \delta \models {\sf f} \;\text{or}\; \delta \models \neg{\sf f}\}\notag
@@ -799,7 +592,8 @@ The features in smaller cardinality diagnoses have more impact on the plan
 because a smaller number of unfavorable answers are needed to prove the plan
 will fail; asking about these features will enable an agent to fail fast. 
 Moreover, features appearing in more diagnoses have a high impact on plan
-failure.  Using this {\em diagnosis-impact} (DI) measure, we can prioritize  by selecting the  ${\sf f}$ where 
+failure.  We define a {\em diagnosis-impact}  measure, where we prefer questions
+about the incomplete action feature ${\sf f}$ where
 % feature:
 \begin{align}
 {\sf f} = \underset{{\sf f}  \in Q_{d(\pi)}}{\operatorname{argmax}}
@@ -809,11 +603,52 @@ f}}}
 \notag 
 \end{align}
 The denominator of the expression above is squared to penalize the contribution
-of larger diagnoses.  DI determines the incomplete feature most
+of larger diagnoses.  This measure determines the incomplete feature most
 likely to cause the plan to fail.
 
-Using DI for the example plan questions will select $pre(a, r)$ and $del(a,
-p)$ as equally preferred questions because both appear in a size one diagnosis.
+Using this measure for the example plan questions will select $pre(a, r)$ and
+$del(a, p)$ as equally preferred questions because both appear in a size one diagnosis.
+
+
+\und{Partial Proactivity} Asking about every relevant feature will lead to a
+potentially large set of questions.  Agents may be able to passively learn
+about many of the features, so asking questions only about the most impactful
+features can reduce the number of questions.  There are a number of methods for
+defining the partial set of questions, such as defining a threshold on the
+diagnosis impact measure or selecting the features that appear in unit
+cardinality diagnoses (single faults).
+
+\section{Reactive Learning}
+
+Agents that passively learn may fail to learn about important action features. 
+For example, if the agent executes action $a_1$, which has the possible
+precondition $q$ (which is unsatisfied) and the possible add effect $p$, but the
+resulting state does not change, then $\phi = (fail \wedge pre(a_1, q)) \vee
+\neg add(a_1, p)$.  At this point, the agent is not sure that it failed, and
+because $\phi \not\models  pre(a_1, q)$ and $\phi \not\models add(a_1, p)$ the
+agent cannot modify its actions prior to re-planning. If the agent re-plans
+(deterministically), then it will generate the same plan starting with $a_1$
+because it did not learn definitively about $a_1$.  The agent will continue to
+re-plan and fail indefinitely.
+
+Instead, the agent can realize that it may have failed and diagnose whether it
+failed and why.  By asking about $pre(a_1, q))$ and
+$\neg add(a_1, p)$, the agent can learn about the action and potentially
+generate a different plan.  For example, if it learns that $pre(a_1, q))$ holds,
+then it will not plan the action because $q$ is not satisfied in the current
+state.  If it learns that $\neg add(a_1, p)$ holds, then the action is useless
+and will not be planned.
+
+The agent can rank the questions that create ambiguity (multiple diagnoses) in
+$\phi$ in the same manner as proactive questions.  Reactive agents will continue
+to ask questions until $\phi$ has a single implicant $\delta$ where $\delta
+\models \phi$; having a single implicant means that the agent knows if it failed
+or not, and if it did fail why it failed.  For example, after asking about
+$add(a_1, p))$, the agent may know $fail \wedge pre(a_1, q) \wedge
+add(a_1, p)$ or $\neg add(a_1, p)$.  In the first, case the agent can infer
+$\phi \models pre(a_1, q)$ and that $a_1$ will not be applicable.  In the second
+case, the agent can infer $\phi \models \neg add(a_1, p)$ and that $a_1$ is
+irrelevant.
 
 
 % An alternative, based on  {\em Shannon entropy} (SE),
@@ -899,14 +734,17 @@ the experiments, the test setup used, and results.  The questions that we would 
 include:
 
 
-% 
-% \begin{packed_itemize}
-%   \item Q1: Does reasoning about incompleteness during planning 
-%   effect KA strategy performance?
-%   \item Q2: Which KA strategy has best solution time and
-%   number of questions trade-off?
-%   \item Q3: Do relaxed plans reduce the cost of KA?
-% \end{packed_itemize}
+
+\begin{packed_itemize}
+  \item Q1: Will adding reactive learning to passive
+  learning improve agent success?
+  \item Q2: Will  biasing reactive learning with questions that are also
+  relevant to the future improve agent success?
+  \item Q3: Does proactive question asking improve reactive strategies without
+  asking too many questions?
+  \item Q4: Does the type of planner used by the agent affect success and number
+  of questions across the strategies?
+\end{packed_itemize}
 
 
 
@@ -926,7 +764,7 @@ transduction pathways.  Pathways is a naturally incomplete domain where the lack
 of knowledge of the reactions is quite common because they are an active
 research topic in biology.  
 
-The Bridges (Br) domain consists of a traversable grid and the task is to find a
+The Bridges (Br) domain consists of a traverable grid and the task is to find a
 different treasure at each corner of the grid. In Bridges,
 a bridge might be required  to cross between some grid locations (a possible
 precondition), many of the bridges may have a troll living
@@ -947,7 +785,45 @@ certain items (possible preconditions) and may result in the loss of an item
 in number (1-4).
 
 
-% \begin{table*}
+\begin{table*}\centering\begin{tabular}{|l|cccc|}\hline																	
+Strategy	&	Solved			&	Learn Dead-End			&	Physical Dead-End			&	Timeout			\\\hline\hline
+Passive Only	&	4110	/	4314	&	1053	/	588	&	2510	/	2251	&	0	/	522	\\
+Passive/Reactive	&	4934	/	4766	&	0	/	0	&	2732	/	2385	&	0	/	523	\\
+Passive/Reactive Lookahead	&	4932	/	4765	&	0	/	0	&	2733	/	2390	&	0	/	520	\\
+Passive/Reactive Lookahead/Proactive	&	5439	/	5004	&	0	/	0	&	2213	/	1916	&	0	/
+755	\\ Proactive Only	&	7531	/	6537	&	0	/	0	&	22	/	63	&	54	/	1072	\\\hline
+\end{tabular}	\caption{\label{tab:t1} Summary of results using two planners
+(FF/DeFault) within the agent.  Results include the number of solved problems, number of learning dead-ends reached, number of physical dead-ends reached, and timeouts.}	\end{table*}
+
+\begin{table*}\centering\begin{tabular}{|l|ccccc|}																					\hline
+Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
+Passive Only	&	2.72	/	2.18	&	1.72	/	1.18	&	12.91	/	13.03	&	0.80	/	1.78	&	0	/	0	\\
+Passive/Reactive Lookahead/Proactive	&	3.33	/	2.77	&	1.39	/	1.01	&	11.58	/	12.11	&	0.94	/	2.32	&	2.54	/	2.03	\\
+Proactive Only	&	6.27	/	5.47	&	0	/	0	&	10.07	/	10.50	&	3.14	/	8.73	&	5.27	/	4.47	\\\hline
+\end{tabular}\caption{\label{tab:t2}Domains solved by all techniques (3422
+instances), with an average of 81.8 actions per domain, and an average of 24 incomplete action features.}\end{table*} \begin{table*}\centering\begin{tabular}{|l|ccccc|}\hline																					
+Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
+Passive/Reactive	&	8.23	/	4.14	&	7.23	/	3.14	&	16.20	/	15.05	&	2.11	/	4.39	&	2.05	/	0.76	\\
+Passive/Reactive Lookahead	&	8.23	/	4.14	&	7.23	/	3.14	&	16.20	/	15.02	&	2.06	/
+4.48	&	2.04	/	0.75	\\ 
+Passive/Reactive Lookahead/Proactive	&	6.64	/	4.03	&	4.70
+/	2.10	&	13.11	/	13.18	&	2.26	/	5.77	&	6.44	/	3.81	\\ 
+Proactive Only	&	14.34	/	12.44	&	0	/	0	&	9.82	/	10.32	&	7.86	/	28.28	&	13.34	/	11.42	\\\hline
+\end{tabular}\caption{\label{tab:t3}Barter World instances solved by all
+techniques (662 instances), with an average of 99.11 actions per domain, and an average of 59.59 incomplete action features.}\end{table*} \begin{table*}\centering\begin{tabular}{|l|ccccc|}\hline																					
+Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
+
+Passive/Reactive	&	8.87	/	6.07	&	7.87	/	5.07	&	16.13	/	16.18	&	1.73	/	6.29	&	2.41	/	1.53	\\
+
+Passive/Reactive Lookahead	&	8.86	/	6.05	&	7.86	/	5.05	&	16.13	/	16.09	&	1.72	/
+6.40	&	2.41	/	1.52	\\ 
+
+Passive/Reactive Lookahead/Proactive	&	7.09	/	4.93	&	5.15
+/	2.96	&	12.86	/	13.61	&	1.52	/	8.26	&	6.72	/	4.39	\\ 
+
+Proactive Only	&	15.70	/	14.24	&	0	/	0	&	9.52	/	10.02	&	6.21	/	34.99	&	14.70	/	13.21	\\\hline
+\end{tabular}\caption{\label{tab:t4}Pathways instances solved by all techniques
+(310 instances), with an average of 85.05 actions per domain, and an average of 56.55 incomplete action features.}\end{table*}																					% \begin{table*}
 % \begin{minipage}{5in}
 % \small\begin{tabular}{|@{}l@{}|@{}c@{ }c@{ }c@{ }c@{}|}\hline
 % Domain & $Q_{\pi}$  &$Q_{d(\pi)}$ & DI & SE \\ \hline
@@ -1010,6 +886,68 @@ preferred and non-preferred operators \citep{DBLP:journals/jair/Helmert06}.
 %Both planners also use the same planning
 % graph implementation.
 
+\und{Results} Tables \ref{tab:t1} to \ref{tab:t4} list the performance of the
+various strategies on the instances in each domain.  Within each table, the
+results are listed as \FFRISKY{} using different heuristics
+``$h^{FF}$/$h^{\sim FF}$''.  The rows in the tables correspond to the previously
+mentioned strategies: passive learning only; passive and reactive learning;
+passive and reactive learning with lookahead; passive, reactive with lookahead,
+and proactive learning; and proactive learning only.  The columns in Table
+\ref{tab:t1} are the number of instances solved (the agent achieves the goal),
+the number of instances where a failure to learn prevents the agent from
+achieving the goal (a learning dead-end), the number of instances where the
+agent cannot re-plan (a physical dead-end), and the number of instances where
+the agent runs out of time.  Table \ref{tab:t2} to \ref{tab:t4} list the average
+number of planner invocations, number of planner invocations after executing at
+least one action, number of actions executed, total time, and number of
+questions.  Table \ref{tab:t2} lists results for three strategies and includes
+only those instances where all three strategies were able to solve the same
+instance; we did not include all strategies to maximize the number of instances
+solved in common.  Tables \ref{tab:t3} and \ref{tab:t4} list respective results
+for Barter World and Pathways because in these two domains it is possible to
+have learning dead-ends (where the agent can not successfully learn passively).
+
+
+
+To answer Q1, Table \ref{tab:t1} and \ref{tab:t2} indicate that adding reactive
+learning to passive learning, or using only proactive learning can improve upon
+passive learning.  All other strategies improve upon passive learning by solving
+more problems, encountering no learning dead-ends, re-planning less during
+execution, and executing fewer actions.  However, these improvements come at the
+cost of spending more time and potentially running out of time, generating more
+plans, and asking more questions.  These results match our intuitions about
+reactive learning because we are able to diagnose action failures and avoid the
+same action failure when we re-plan.
+
+In answering Q2, we see that Tables \ref{tab:t1}, \ref{tab:t3}, and \ref{tab:t4}
+indicate that, no, biasing reactive questions with features appearing in the
+rest of the plan does not improve performance by any metric significantly.  This
+result is counter to our intuition that information relevant to both past and
+future failures is more important than information only relevant to past
+failures.  
+
+The tables indicate that, yes, in conjunction with passive and reactive learning
+proactive learning is beneficial, solving more problems, encountering fewer
+dead-ends, generating fewer plans, taking less actions, and using less total
+time than passive and reactive strategies.  Proactive strategies can avoid
+executing actions that will lead to dead-ends by asking about the actions early.
+Purely proactive strategies, while typically more successful tend to ask nearly
+twice as many questions as mixed proactive, passive, and reactive strategies. 
+Limiting the number of proactive questions and attempting to learn passively
+(while addressing learning dead-ends with reactive learning) seems to strike a
+useful balance between avoiding failure and overburdening a domain expert with
+questions.
+
+In terms of Q4, we see that the type of planner used by the agent does have an
+impact, verifying our prior results \citep{bryce-icaps11}.  We see that using a
+classical planning heuristic that ignores action incompleteness can often solve
+more problems, but the problems that it doesn't solve are mostly due to reaching
+dead-ends.  The heuristic that reasons about incompleteness reaches fewer
+dead-ends, asks fewer questions, re-plans less, and tends to fail more often
+because of timeouts; this suggests that improving the heuristic, but still reasoning about incompleteness is a promising
+direction for future work.
+
+
 % \und{Results} To answer Q1, Table \ref{tab:plannerComp} compares two planners
 % and two KA strategies.  The entries in the table are the ratio of
 % the number of problems solved, number of steps taken by the agent, total time,
@@ -1068,23 +1006,23 @@ preferred and non-preferred operators \citep{DBLP:journals/jair/Helmert06}.
 % also report detailed results on the number of solved problems per domain.
 % 
 % 
-% \section{Related Work}
-% 
-% 
-% Our investigation is an instantiation of model-lite planning \citep{modellite},
-% and is motivated by work on instructable computing \citep{mable}. This work is a
-% natural extension of the \citet{Garland02} model for evaluating plans in
-% incomplete domains, but our method for computing plan failure explanations
-% is slightly different, we actually synthesize plans in incomplete domains, and
-% investigate question asking strategies.
-% 
-% Prior work of \citet{DBLP:conf/aips/ChangA06} addresses planning with incomplete
-% models, but does not attempt to synthesize robust plans, which is similar to our
-% planner that uses the FF heuristic.  We have shown that incorporating knowledge
-% about domain incompleteness into the planner can lead to a more effective agent
-% in both execution and question asking. We also differ in that we do not assume
-% direct feedback from the environment about action failures, we can learn
-% action preconditions, and we can query a domain expert.
+\section{Related Work}
+
+
+Our investigation is an instantiation of model-lite planning \citep{modellite},
+and is motivated by work on instructable computing \citep{mable}. This work is a
+natural extension of the \citet{Garland02} model for evaluating plans in
+incomplete domains, but our method for computing plan failure explanations
+is slightly different, we actually synthesize plans in incomplete domains, and
+investigate question asking strategies.
+
+Prior work of \citet{DBLP:conf/aips/ChangA06} addresses planning with incomplete
+models, but does not attempt to synthesize robust plans, which is similar to our
+planner that uses the FF heuristic.  We have shown that incorporating knowledge
+about domain incompleteness into the planner can lead to a more effective agent
+in both execution and question asking. We also differ in that we do not assume
+direct feedback from the environment about action failures, we can learn
+action preconditions, and we can query a domain expert.
 
 
 \section{Conclusion}
@@ -1096,6 +1034,11 @@ preferred and non-preferred operators \citep{DBLP:journals/jair/Helmert06}.
 % questions are able to reduce the number of questions required to synthesize
 % successful plans and that relaxed plans  serve as a reasonable substitute for
 % actual plans.  
+
+\smallskip
+
+\und{Acknowledgements} This work was supported by DARPA contract HR001-07-C-0060.
+
 
 %\footnotesize
 %\renewcommand{\baselinestretch}{.75}
