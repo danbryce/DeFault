@@ -37,7 +37,7 @@ public class BatchTester_TestRawPerformance
 						else
 						{
 							try{ Test_PlannersRawPerformance.main(args); }
-							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+							catch(Error e){ System.out.println("\nError in BatchTester testRawPerformance\n"); e.printStackTrace(); }
 						}
 						
 						//System.out.println();

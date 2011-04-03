@@ -101,6 +101,6 @@ public class UnionizeREXresultsFiles
 	    			out.write(r + "\n");
 
 	    	    out.close();
-	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
+	      }catch (Exception e){System.err.println("Error in writeResultsToFile: " + e.getMessage());}
 	}
 }

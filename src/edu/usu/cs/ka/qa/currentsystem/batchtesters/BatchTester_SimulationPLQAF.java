@@ -15,8 +15,8 @@ public class BatchTester_SimulationPLQAF
 		
 		//testBridges();
 		//testParcPrinter();
-		testPathways();
-		//testHoboNav();
+		//testPathways();
+		testHoboNav();
 	}			
 
 	//bridges_v2_4_0.75_2.pddl_34
@@ -44,7 +44,7 @@ public class BatchTester_SimulationPLQAF
 						else
 						{
 							try{ SimulationPLQAF.main(args); }
-							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+							catch(Error e){ System.out.println("\nError in BatchTester testBridges\n"); e.printStackTrace(); }
 						}
 						
 						//System.out.println();
@@ -70,20 +70,27 @@ public class BatchTester_SimulationPLQAF
 			
 		//Just mess around with the for loop values...
 		//for(int i = 0; i < 1; i++)
-		for(int i = 0; i < problemNumbers.length; i++)
+		//for(int i = 1; i < problemNumbers.length; i++)
+		for(int i = 1; i < 2; i++)
 		{
-			for(int instance = 1; instance <= 10; instance++)
+			for(int instance = 4; instance <= 4; instance++)
+			//for(int instance = 1; instance <= 10; instance++)
 			{
-				String fileName = "p";
-				if(problemNumbers[i] < 10) fileName += "0";
-				fileName += problemNumbers[i];
-				fileName += "_" + instance;
-				
-				args[0] = pathToDomains + fileName +"-domain-incomplete" + extension;
-				args[1] = pathToProblems + fileName +"-problem-incomplete" + extension;
-
-				try{ SimulationPLQAF.main(args); }
-				catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+				for(double density = .25; density <= 1.0; density +=.25)
+				{	
+					String fileName = "p";
+					if(problemNumbers[i] < 10) 
+						fileName += "0";
+					fileName += problemNumbers[i] + "_";
+					fileName += instance + "_";
+					fileName += density;
+					
+					args[0] = pathToDomains + fileName +"-domain-incomplete" + extension;
+					args[1] = pathToProblems + fileName +"-problem-incomplete" + extension;
+	
+					try{ SimulationPLQAF.main(args); }
+					catch(Error e){ System.out.println("\nError in BatchTester testPP\n"); e.printStackTrace(); }
+				}
 
 				//System.out.println();
 			}//end for version
@@ -126,7 +133,7 @@ public class BatchTester_SimulationPLQAF
 					args[1] = pFilename;
 					
 					try{ SimulationPLQAF.main(args); }
-					catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+					catch(Error e){ System.out.println("\nError in BatchTester testPathways\n"); e.printStackTrace(); }
 				}
 			}
 		}
@@ -145,7 +152,7 @@ public class BatchTester_SimulationPLQAF
 		//int[] itemCounts = {2};
 			
 		//Just mess around with the for loop values...
-		for (int gridSize = 2; gridSize <= 2; gridSize *= 2) //from 2 to 32
+		for (int gridSize = 2; gridSize <= 4; gridSize *= 2) //from 2 to 32
 		{
 			for(int instance = 1; instance <= 10; instance++)//from 1 to 10
 			{
@@ -168,7 +175,7 @@ public class BatchTester_SimulationPLQAF
 						else
 						{
 							try{ SimulationPLQAF.main(args); }
-							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+							catch(Error e){ System.out.println("\nError in BatchTester testHobonav\n"); e.printStackTrace(); }
 						}
 						
 						//System.out.println();

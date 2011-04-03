@@ -359,8 +359,8 @@ public class SimulationPL_LoopFinder
 		public void run()
 		{			
 			try { plan = planner.getPlan(plannerType); }
-			catch (java.lang.OutOfMemoryError e){}
-			catch (Exception e){}
+			catch (java.lang.OutOfMemoryError e){e.printStackTrace();}
+			catch (Exception e){e.printStackTrace();}
 			
 			callingThread.interrupt();
 			done = true;

@@ -35,9 +35,11 @@ public class Planner
 	
 	int numTimesPlannerCalled;
 	
-	static Planner instance;
+	static public Planner instance;
 	
 	DomainAndProblemMaker_Utility domainMaker;
+	
+	static boolean debug = false;
 	
 	public Planner(String dFile, String pFile)
 	{
@@ -65,6 +67,15 @@ public class Planner
 		
 		instance = this;
 	}
+	
+//	protected void finalize() throws Throwable {
+//	    try {
+//	        instance = null;
+//	        solver = null;// close open files
+//	    } finally {
+//	        super.finalize();
+//	    }
+//	}
 	
 	public static Planner getInstance() {return instance;}
 
@@ -123,11 +134,15 @@ public class Planner
 		problem.setInitialState(currState);
 		problem.setActionInstances(preservedActionsList);
 		
-		ArrayList<ActionInstance> planWithPreservedActions = new ArrayList<ActionInstance>();
-		for(ActionInstance a: plan)
+		ArrayList<ActionInstance> planWithPreservedActions = null;
+		if(plan != null)
 		{
-			ActionInstance goodVersion = Actions_Utility.getActionInListOfActions(a.getName(), preservedActionsList);
-			planWithPreservedActions.add(goodVersion);
+			planWithPreservedActions = new ArrayList<ActionInstance>();
+			for(ActionInstance a: plan)
+			{
+				ActionInstance goodVersion = Actions_Utility.getActionInListOfActions(a.getName(), preservedActionsList);
+				planWithPreservedActions.add(goodVersion);
+			}
 		}
 		
 		return planWithPreservedActions;
@@ -172,12 +187,28 @@ public class Planner
 					
 		try{
 			solver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
-		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
+		}catch (IllDefinedProblemException e) 
+		{
+			if(debug)
+			{
+				System.out.print("Error in runAmirPlanner - IDPE: "); 
+				e.printStackTrace(); 
+			}
+			return null;
+		}
 				
 		startStopwatch();
 		List<ActionInstance> plan = null;
 		try{ plan = solver.run(); }
-		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
+		catch (Exception e)
+		{
+			if(debug)
+			{
+				System.out.println("At runAmirPlanner...");  
+				e.printStackTrace();
+			}
+		}
+			
 		stopStopwatch();
 			
 		return plan;
@@ -211,12 +242,24 @@ public class Planner
 	
 		try{
 			solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
-		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
+		}catch (IllDefinedProblemException e) 
+		{
+			System.out.print("Error in runPode1Planner - IDPE: "); 
+			e.printStackTrace(); 
+			return null;
+		}
 				
 		startStopwatch();
 		List<ActionInstance> plan = null;
 		try{ plan = solver.run(); }
-		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
+		catch (Exception e)
+		{
+			if(debug)
+			{
+				System.out.println("At Pode1Planner..."); 
+				e.printStackTrace(); 
+			}
+		}
 		stopStopwatch();
 	
 		return plan;	
@@ -251,12 +294,28 @@ public class Planner
 		
 		try{
 			solver = new PODEBDDSolver(domain, problem, searchStatistics, solverOptions);
-		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
+		}catch (IllDefinedProblemException e)
+		{
+			if(debug)
+			{
+				System.out.print("Error in runJddPlanner - IDPE: "); 
+				e.printStackTrace(); 
+			}
+			return null;
+		}
 		
 		startStopwatch();
 		List<ActionInstance> plan = null;
 		try{ plan = solver.run(); }
-		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
+		catch (Exception e)
+		{
+			if(debug)
+			{
+				System.out.println("At jddPlanner..."); 
+				e.printStackTrace(); 
+			}
+		}
+		
 		stopStopwatch();
 
 		return plan;	

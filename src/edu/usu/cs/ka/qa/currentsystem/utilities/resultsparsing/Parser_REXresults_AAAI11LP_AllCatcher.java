@@ -2,28 +2,22 @@ package edu.usu.cs.ka.qa.currentsystem.utilities.resultsparsing;
 import java.util.*;
 import java.io.*;
 
-public class Parser_REXresultsAAAI_intLoopNullCatcher 
+public class Parser_REXresults_AAAI11LP_AllCatcher 
 {	
 	//static String directory = "C:\\Documents and Settings\\Christopher\\Desktop\\";
 	//static String bigResultsFolder = "out\\";;
 	static String directory = "/Users/CHW/Desktop/";
 	static String bigResultsFolder = "out/";
-	static String outputFolderDateTimeAppend = "AAAI11PL_3.16.11_Ror";
+	static String outputFolderDateTimeAppend = "AAAI11LP_3.22.11_ALL";
 
-	static boolean isFullQTree 	 = false;
 	static boolean isLineCleaner = true;
-	static boolean isBugCheck 	 = false;
-	static boolean isOred 		 = true; //if false, then isAnd'd
 	
 	public static void main(String[] args) 
 	{
-		//ParcPrinterResults();
+		ParcPrinterResults();
 		PathwaysResults();
 		HoboNavResults();
-		//BridgesResults();
-		
-		//bugFixer();
-		//bugCheck(null);
+		BridgesResults();
 	}
 	
 	//parcprinter_pode3_22_6.txt
@@ -69,15 +63,14 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 						while (scanner.hasNextLine()) 
 						{
 							String line = scanner.nextLine();							
-							if(line.contains("cweber") && !line.contains("File"))
+							if(line.contains("cweber") && !line.contains("File") && !line.contains("#"))
 							{
 								line = line.replace("/home/cweber/graphplanner/", "");
 								if(isLineCleaner) line = lineCleaner(line);
-								if(isBugCheck)	line = bugCheck(line);
 								
-								line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+								line = getResultsWhereNONESolvesALL(line);
 								
-								if(!line.isEmpty() && !line.contains("?"))
+								if(!line.contains("?") && !line.isEmpty())
 									results.add(line);
 								
 								countSuccesses++;
@@ -163,15 +156,14 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 						while (scanner.hasNextLine()) 
 						{
 							String line = scanner.nextLine();							
-							if(line.contains("cweber") && !line.contains("File"))
+							if(line.contains("cweber") && !line.contains("File") && !line.contains("#"))
 							{
 								line = line.replace("/home/cweber/graphplanner/", "");
 								if(isLineCleaner) line = lineCleaner(line);
-								if(isBugCheck)	line = bugCheck(line);
 								
-								line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+								line = getResultsWhereNONESolvesALL(line);
 								
-								if(!line.isEmpty() && !line.contains("?"))
+								if(!line.contains("?") && !line.isEmpty())
 									results.add(line);
 								
 								countSuccesses++;
@@ -260,15 +252,14 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 							while (scanner.hasNextLine()) 
 							{
 								String line = scanner.nextLine();							
-								if(line.contains("cweber") && !line.contains("File"))
+								if(line.contains("cweber") && !line.contains("File") && !line.contains("#"))
 								{
 									line = line.replace("/home/cweber/graphplanner/hobonav/", "");
 									if(isLineCleaner) 	line = lineCleaner(line);
-									if(isBugCheck)	line = bugCheck(line);
 									
-									line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+									line = getResultsWhereNONESolvesALL(line);
 									
-									if(!line.isEmpty() && !line.contains("?"))
+									if(!line.contains("?") && !line.isEmpty())
 										results.add(line);
 									
 									countSuccesses++;
@@ -355,17 +346,15 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 							while (scanner.hasNextLine()) 
 							{
 								String line = scanner.nextLine();							
-								if(line.contains("cweber") && !line.contains("File"))
+								if(line.contains("cweber") && !line.contains("File") && !line.contains("#"))
 								{
 									line = line.replace("/home/cweber/graphplanner/bridges/", "");
 									if(isLineCleaner) 
 										line = lineCleaner(line);
-									if(isBugCheck)	
-										line = bugCheck(line);
 									
-									line = intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(line);
+									line = getResultsWhereNONESolvesALL(line);
 									
-									if(!line.isEmpty() && !line.contains("?"))
+									if(!line.contains("?") && !line.isEmpty())
 										results.add(line);
 									
 									countSuccesses++;
@@ -421,7 +410,7 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 	    			out.write(r + "\n");
 
 	    	    out.close();
-	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
+	      }catch (Exception e){System.err.println("Error in writeResultsToFile: " + e.getMessage());}
 	}
 	
 	static void writeMetaResultsToFile(LinkedList<String> metaResults)
@@ -434,35 +423,7 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 	    			out.write(r + "\n");
 
 	    	    out.close();
-	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
-	}
-	
-	//First run  of batchtesting didn't add 9 E's for an exception for the CL Agent, but 8.
-	static String bugCheck(String line)
-	{	
-		String[] lineTokens = line.split(" ");
-		
-		LinkedList<String> tokens = new LinkedList<String>();
-		for(int i = 0; i < lineTokens.length; i++)
-		{
-			if(!lineTokens[i].contains("*F*"))
-				tokens.add(lineTokens[i]);
-			if(lineTokens[i].equals("jdd") || lineTokens[i].equals("amir"))
-			{				
-				if(!lineTokens[i+9].equals("E"))
-				{
-					for(int count = 0; count < 9; count++)
-						tokens.add("E");
-					i += 8;
-				}
-			}
-		}
-
-		line = "";
-		for (int i = 0; i < tokens.size(); i++)
-			line += tokens.get(i) + " ";
-		
-		return line;
+	      }catch (Exception e){System.err.println("Error in writeMResultsToFile: " + e.getMessage());}
 	}
 	
 	//Remove failure tokens
@@ -471,10 +432,8 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 		String[] lineTokens = line.split(" ");
 		
 		LinkedList<String> tokens = new LinkedList<String>();
-				
 		for(int i = 0; i < lineTokens.length; i++)
 		{
-
 			if(lineTokens[i].contains("2^"))//simulation timeout
 				tokens.add(lineTokens[i].replace("2^", ""));
 			else if(lineTokens[i].equals("T"))//simulation timeout
@@ -499,6 +458,7 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 				tokens.add("AMIR");
 			else if(lineTokens[i].equals("jdd"))
 				tokens.add("JDD");
+
 			else
 				tokens.add(lineTokens[i]);
 		}
@@ -509,41 +469,37 @@ public class Parser_REXresultsAAAI_intLoopNullCatcher
 		
 		return line;
 	}
-	
-	static String intersectionOfLinesWithNoLoopsInNoneStratAndEliminateNoneStrat(String line)
-	{
+
+	//If its a null, it's a deadend, and the loop strats won't catch that either.
+	//Thus there will be ?s in the parsed line, which will be discarded
+	static String getResultsWhereNONESolvesALL(String line)
+	{		
 		String[] lineTokens = line.split(" ");
 		
-		LinkedList<String> tokens = new LinkedList<String>();
-		
-		if(isOred)
-		{
-			if(lineTokens[6].equals("?") || lineTokens[16].equals("?") || lineTokens[27].equals("?") || lineTokens[37].equals("?"))
-			{			
-				for(int i = 0; i < lineTokens.length; i++)
-				{
-					if(i < 3 || i > 45)
-						tokens.add(lineTokens[i]);
-				}
+		LinkedList<String> tokens = new LinkedList<String>();		
+		if(!lineTokens[6].equals("?") && !lineTokens[16].equals("?") && !lineTokens[27].equals("?") && !lineTokens[37].equals("?"))
+		{			
+			for(int i = 0; i < lineTokens.length; i++)
+			{
+				if(i < 46 || i > 217)
+					tokens.add(lineTokens[i]);
 			}
 		}
-		else
-		{
-			if(lineTokens[6].equals("?") && lineTokens[16].equals("?") && lineTokens[27].equals("?") && lineTokens[37].equals("?"))
-			{			
-				for(int i = 0; i < lineTokens.length; i++)
-				{
-					if(i < 3 || i > 45)
-						tokens.add(lineTokens[i]);
-				}
-			}
-		}
-			
+
 		
 		line = "";
 		for (int i = 0; i < tokens.size(); i++)
 			line += tokens.get(i) + " ";
 		
 		return line;
+	}
+	
+	static void showResultStringTokenIndexes()
+	{
+		String result = "hobonav_16_0.5_2_10.pddl_0 1271 2^1104 NONE RG AMIR ? ? ? ? ? ? ? ? ? JDD ? ? ? ? ? ? ? ? ? CL AMIR ? ? ? ? ? ? ? ? ? JDD ? ? ? ? ? ? ? ? ? BCVInKBonceTil RG AMIR 71 70 100 37 279.529 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? CL AMIR 71 70 100 37 456.823 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? BCVInKBallTil RG AMIR 71 70 100 37 304.745 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? CL AMIR 71 70 100 37 452.534 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? BCVInKBintPFEonceTil RG AMIR 71 70 100 37 320.115 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? CL AMIR 71 70 100 37 460.042 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? BCVInKBintPFEallTil RG AMIR 71 70 100 37 306.056 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? CL AMIR 71 70 100 37 433.995 2^2110 17 23 73 JDD ? ? ? ? ? ? ? ? ? BCVInKBintPFEplusPFEonceTil RG AMIR 53 51 76 18 290.826 2^2104 54 56 46 JDD ? ? ? ? ? ? ? ? ? CL AMIR 53 51 76 18 403.806 2^2104 54 56 46 JDD ? ? ? ? ? ? ? ? ? BCVInKBintPFEplusPFEallOnce RG AMIR 50 48 85 17 279.694 2^2106 43 46 54 JDD ? ? ? ? ? ? ? ? ? CL AMIR 50 48 85 17 373.838 2^2106 43 46 54 JDD ? ? ? ? ? ? ? ? ? BCVInPFEonceTil RG AMIR 143 0 36 0 2062.943 2^2063 142 142 1 JDD ? ? ? ? ? ? ? ? ? CL AMIR 143 0 36 0 1993.719 2^2063 142 142 1 JDD ? ? ? ? ? ? ? ? ? BCVInPFEallTil RG AMIR 73 0 36 0 2783.291 2^2006 199 199 1 JDD ? ? ? ? ? ? ? ? ? CL AMIR 73 0 36 0 2995.714 2^2006 199 199 1 JDD ? ? ? ? ? ? ? ? ?";
+		String[] lineTokens = result.split(" ");
+		
+		for (int i = 0; i < lineTokens.length; i++)
+			System.out.println(i + ": " + lineTokens[i]);
 	}
 }

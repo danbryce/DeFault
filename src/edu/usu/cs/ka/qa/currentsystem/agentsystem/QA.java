@@ -58,7 +58,7 @@ public class QA
 	Agent agent;
 	DomainExpert expert;
 	
-	boolean debug = false;
+	boolean debug = true;
 	
 	public QA(Agent a) 
 	{
@@ -1607,16 +1607,33 @@ public class QA
 	 */
 	private void askRisksInGivenList(List<Fault> currentRisks)
 	{
-		for(Fault f : currentRisks)
+		try
 		{
-			boolean result = expert.isRiskAFeatureQuery(f);
-			agent.numQsAsked++;
+			for(Fault f : currentRisks)
+			{
+				if(f == null)
+				{
+					System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+					System.out.println("Fault IS NULL");
+					System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+				}
+				
+	
+					boolean result = expert.isRiskAFeatureQuery(f);
+					agent.numQsAsked++;
+				
+				
+				if(result) 	agent.addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, true);
+				else 		agent.addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, false);
+			}
 			
-			if(result) 	agent.addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, true);
-			else 		agent.addDomainExpertQueryResultToBDDAndUpdateActions_QA(f, false);
+			agent.updateActions(LearningTypes.QA);	
 		}
-		
-		agent.updateActions(LearningTypes.QA);
+		catch(Exception e)
+		{
+			System.out.println("Expert: " + expert);
+			System.out.println("Agent: " + agent);
+		}
 	}
 	
 	/**

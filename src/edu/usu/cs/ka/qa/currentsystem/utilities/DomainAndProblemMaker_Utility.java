@@ -25,13 +25,13 @@ public class DomainAndProblemMaker_Utility
 		File domainFile = new File(domainFileString);
 		if (!domainFile.exists()) 
 		{
-			System.err.println("Unable to find PDDL domain file " + domainFileString);
+			System.err.println("DomainAndProblemMaker_Utility: Unable to find PDDL domain file " + domainFileString);
 			System.exit(1);
 		}
 		File problemFile = new File(problemFileString);
 		if (!problemFile.exists())
 		{
-			System.err.println("Unable to find PDDL problem file " + problemFileString);
+			System.err.println("DomainAndProblemMaker_Utility: Unable to find PDDL problem file " + problemFileString);
 			System.exit(1);
 		}
 		
@@ -46,15 +46,15 @@ public class DomainAndProblemMaker_Utility
 
 		} catch (IOException e) 
 		{
-			System.err.println("Error reading PDDL file(s): " + e);
+			System.err.println("DomainAndProblemMaker_Utility: Error reading PDDL file(s): " + e);
 			e.printStackTrace();
 		} catch (PDDLSyntaxException e) 
 		{
-			System.err.println("Syntax errors found in the PDDL file(s).");
+			System.err.println("DomainAndProblemMaker_Utility: Syntax errors found in the PDDL file(s).");
 			e.printStackTrace();
 		} catch (InvalidPDDLElementException e) 
 		{
-			System.err.println("Invalid semantics in the PDDL file(s): " + e);
+			System.err.println("DomainAndProblemMaker_Utility: Invalid semantics in the PDDL file(s): " + e);
 			e.printStackTrace();
 		}
 	}

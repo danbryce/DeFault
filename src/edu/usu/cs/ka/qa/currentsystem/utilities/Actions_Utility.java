@@ -109,7 +109,7 @@ public class Actions_Utility
 					count += a.getPossibleDeleteEffects().size();
 					break;
 				default:
-					System.out.println("Error while counting possibles...");
+					System.out.println("Error in getCountOfPropsInXListForAllActionInstances...");
 			}
 		}
 		return count;

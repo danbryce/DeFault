@@ -208,7 +208,7 @@ public class BDD_Utility
 			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain,
 					problemFile);
 			problem = probBuilder.buildProblem();
-		}catch (Exception e) {System.err.println("Error reading PDDL file(s): " + e); e.printStackTrace();}
+		}catch (Exception e) {System.err.println("Error reading PDDL file(s) in buildProblem: "); e.printStackTrace();}
 		
 		return problem;
 	}

@@ -39,7 +39,7 @@ public class BatchTester_Test_KAQA_DomainExpertAndAgent_Setup
 							args[2] = String.valueOf(simSeed);
 							
 							try{ Test_KAQA_DomainExpertAndAgent_Setup.main(args); }
-							catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+							catch(Error e){ System.out.println("\nError in BatchTester testBridges\n"); e.printStackTrace(); }
 						}
 						System.out.println();
 					}//end for num file

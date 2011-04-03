@@ -39,7 +39,7 @@ public class BatchTester_SimulationPL
 						args[1] = path + "bridges_problem" + extension;
 												
 						try{ SimulationPL.main(args); }
-						catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+						catch(Error e){ System.out.println("\nError in BatchTester testBridges\n"); e.printStackTrace(); }
 						
 						//System.out.println();
 					}//end for num file
@@ -77,7 +77,7 @@ public class BatchTester_SimulationPL
 				args[1] = pathToProblems + fileName +"-problem-incomplete" + extension;
 
 				try{ SimulationPL.main(args); }
-				catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+				catch(Error e){ System.out.println("\nError in BatchTester testPP\n"); e.printStackTrace(); }
 
 				//System.out.println();
 			}//end for version
@@ -120,7 +120,7 @@ public class BatchTester_SimulationPL
 					args[1] = pFilename;
 					
 					try{ SimulationPL.main(args); }
-					catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+					catch(Error e){ System.out.println("\nError in BatchTester testPathways\n"); e.printStackTrace(); }
 				}
 			}
 		}

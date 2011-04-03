@@ -408,7 +408,7 @@ public class Parser_REXresults_printErrors
 	    			out.write(r + "\n");
 
 	    	    out.close();
-	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
+	      }catch (Exception e){System.err.println("Error in writeResultsToFile: " + e.getMessage());}
 	}
 	
 	static void writeMetaResultsToFile(LinkedList<String> metaResults)
@@ -421,7 +421,7 @@ public class Parser_REXresults_printErrors
 	    			out.write(r + "\n");
 
 	    	    out.close();
-	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
+	      }catch (Exception e){System.err.println("Error in writeMResultsToFile: " + e.getMessage());}
 	}
 	
 	//First run  of batchtesting didn't add 9 E's for an exception for the CL Agent, but 8.

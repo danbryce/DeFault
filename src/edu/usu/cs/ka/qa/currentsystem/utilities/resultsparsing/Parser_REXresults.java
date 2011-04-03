@@ -8,19 +8,19 @@ public class Parser_REXresults
 	//static String bigResultsFolder = "out\\";;
 	static String directory = "/Users/CHW/Desktop/";
 	static String bigResultsFolder = "out/";
-	static String outputFolderDateTimeAppend = "AAAI11PL_3.20.11";
+	static String outputFolderDateTimeAppend = "AAAI11LP_3.22.11_C_finalv";
 
 	static boolean isFullQTree = false;
-	static boolean isLineCleaner = false;
+	static boolean isLineCleaner = true;
 	static boolean isBugCheck = false;
 	static boolean isIntersection = false;
 	
 	public static void main(String[] args) 
 	{
 		//ParcPrinterResults();
-		PathwaysResults();
+		//PathwaysResults();
 		//HoboNavResults();
-		//BridgesResults();
+		BridgesResults();
 		
 		//bugFixer();
 		//bugCheck(null);
@@ -421,7 +421,7 @@ public class Parser_REXresults
 	    			out.write(r + "\n");
 
 	    	    out.close();
-	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
+	      }catch (Exception e){System.err.println("Error in writeResultsToFile: " + e.getMessage());}
 	}
 	
 	static void writeMetaResultsToFile(LinkedList<String> metaResults)
@@ -434,7 +434,7 @@ public class Parser_REXresults
 	    			out.write(r + "\n");
 
 	    	    out.close();
-	      }catch (Exception e){System.err.println("Error: " + e.getMessage());}
+	      }catch (Exception e){System.err.println("Error in writeMResultsToFile: " + e.getMessage());}
 	}
 	
 	//First run  of batchtesting didn't add 9 E's for an exception for the CL Agent, but 8.

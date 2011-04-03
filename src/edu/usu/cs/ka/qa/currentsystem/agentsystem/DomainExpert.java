@@ -28,7 +28,7 @@ public class DomainExpert
 	
 	int numQsAsked;
 	
-	static DomainExpert instance;
+	static public DomainExpert instance;
 	
 	boolean debug = false;
 		

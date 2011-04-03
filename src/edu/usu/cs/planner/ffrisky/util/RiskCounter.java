@@ -113,12 +113,27 @@ public class RiskCounter {
 
 			for (Fault risk : allRisks) 
 			{
-				int temp = bdd.createVar();
-				bdd.ref(temp);
-				riskToBDD.put(risk, temp);
-				bddToRisk.put(temp, risk);
-				riskToNumVarIndexForCube.put(risk, countOfVars);
-				numVarIndexToRiskForCube.put(countOfVars++, risk);
+				try
+				{
+					int temp = bdd.createVar();
+					bdd.ref(temp);
+					riskToBDD.put(risk, temp);
+					bddToRisk.put(temp, risk);
+					riskToNumVarIndexForCube.put(risk, countOfVars);
+					numVarIndexToRiskForCube.put(countOfVars++, risk);
+				}
+				catch(Exception e)
+				{
+					System.out.println("In RiskCounter.initialize(2 params). trying again");
+					e.printStackTrace();
+					
+					int temp = bdd.createVar();
+					bdd.ref(temp);
+					riskToBDD.put(risk, temp);
+					bddToRisk.put(temp, risk);
+					riskToNumVarIndexForCube.put(risk, countOfVars);
+					numVarIndexToRiskForCube.put(countOfVars++, risk);
+				}
 			}
 	
 			isInitialized = true;

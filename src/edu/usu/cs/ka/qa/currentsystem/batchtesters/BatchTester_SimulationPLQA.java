@@ -43,7 +43,7 @@ public class BatchTester_SimulationPLQA
 						else args[2] = String.valueOf(10);
 						
 						try{ SimulationPLQA.main(args); }
-						catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+						catch(Error e){ System.out.println("\nError in BatchTester testBridges\n"); e.printStackTrace(); }
 						
 						//System.out.println();
 					}//end for num file
@@ -82,7 +82,7 @@ public class BatchTester_SimulationPLQA
 				args[2] = String.valueOf(timeLimits[i]);
 
 				try{ SimulationPLQA.main(args); }
-				catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+				catch(Error e){ System.out.println("\nError in BatchTester testPP\n"); e.printStackTrace(); }
 
 				//System.out.println();
 			}//end for version
@@ -126,7 +126,7 @@ public class BatchTester_SimulationPLQA
 					args[2] = String.valueOf(4);
 					
 					try{ SimulationPLQA.main(args); }
-					catch(Error e){ System.out.println("\nError\n"); e.printStackTrace(); }
+					catch(Error e){ System.out.println("\nError in BatchTester testPathways\n"); e.printStackTrace(); }
 				}
 			}
 		}

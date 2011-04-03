@@ -499,6 +499,8 @@ public abstract class Agent
 	 */
 	public void updateActions(LearningTypes type)
 	{
+		if(debug) System.out.print("IN UA...");
+		
 		//loadActionsHT();
 		List<Fault> risksLearned = new ArrayList<Fault>(); //Prevents concurrent modification exception
 		for(Fault r : risks)
@@ -507,23 +509,38 @@ public abstract class Agent
 			int resultT = -1, resultF = -1;
 			try
 			{
-				resultT = bdd.ref(bdd.and(riskToBDD.get(r), bddRef_KB)); 		  	//Query returns 0 if -prop - don't add to known list
-				bdd.ref(resultT);
-				resultF = bdd.ref(bdd.and(bdd.not(riskToBDD.get(r)), bddRef_KB)); 	//Query returns 0 if prop  - add to known list
-				bdd.ref(resultF);
+				resultT = bdd.and(bdd.ref(riskToBDD.get(r)), bdd.ref(bddRef_KB)); 		  	//Query returns 0 if -prop - don't add to known list
+				resultF = bdd.and(bdd.ref(bdd.not(bdd.ref(riskToBDD.get(r)))), bdd.ref(bddRef_KB)); 	//Query returns 0 if prop  - add to known list
+//				resultT = bdd.and(riskToBDD.get(r), bddRef_KB); 		  	//Query returns 0 if -prop - don't add to known list
+//				resultF = bdd.and(bdd.not(riskToBDD.get(r)), bddRef_KB); 	//Query returns 0 if prop  - add to known list
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
-				int riskIndexToUse = riskToBDD.get(r);
-				System.out.println("RISK#:" + riskIndexToUse);
-				System.out.println("bddRef_KB#:" + bddRef_KB);
-				System.out.println("bddRef_KB:" + bdd.toString(bddRef_KB));
-				System.out.println("resultT:" + resultT);
-				System.out.println("resultT:" + bdd.toString(resultT));
-				System.out.println("resultF:" + resultF);
-				System.out.println("resultF:" + bdd.toString(resultF));
-				System.out.println("bdd#Vs:" + bdd.numberOfVariables());
+//				e.printStackTrace();
+//				int riskIndexToUse = riskToBDD.get(r);
+//				System.out.println("RISK#:" + riskIndexToUse);
+//				System.out.println("bddRef_KB#:" + bddRef_KB);
+//				System.out.println("bddRef_KB:" + bdd.toString(bddRef_KB));
+//				System.out.println("resultT:" + resultT);
+//				System.out.println("resultT:" + bdd.toString(resultT));
+//				System.out.println("resultF:" + resultF);
+//				System.out.println("resultF:" + bdd.toString(resultF));
+//				System.out.println("bdd#Vs:" + bdd.numberOfVariables());
+				
+				System.out.println("in agent.updateActions. Handled. " + e.toString());
+				try{
+				resultT = bdd.and(riskToBDD.get(r), bddRef_KB);
+				resultF = bdd.and(bdd.not(riskToBDD.get(r)), bddRef_KB);
+				}
+				catch(Exception e2)
+				{
+					System.out.println("in agent.updateActions. 2x occurred. Fatal." + e.toString());
+					e2.printStackTrace();
+				}
+				//If this version fails, there should be an uncaught exception thrown...
+				
+//				System.out.println("resultT:" + resultT);
+//				System.out.println("resultF:" + resultF);
 			}
 			
 			IncompleteActionInstance a = actionsHT.get(r.getActionName());
@@ -573,10 +590,12 @@ public abstract class Agent
 				}
 			}
 			
-			bdd.deref(resultT);
-			bdd.deref(resultF);
+			//bdd.deref(resultT);
+			//bdd.deref(resultF);
 		}
 		risks.removeAll(risksLearned); //The risks learned are removed from the risks list
+		
+		if(debug) System.out.println("LEAVING UA");
 	}
 	
 	/**

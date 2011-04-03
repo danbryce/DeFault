@@ -98,12 +98,27 @@ public class Agent_CL extends Agent
 			System.out.println("ENTAILMENT RESULT: ");
 			System.out.println(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)));
 		}
-		
-		if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == bdd.getZero())
+		try
 		{
-			if(debug)System.out.println(" &");
-			bdd.deref(failureExplanationSentence_bddRef);
-			return false;
+			if(bdd.and(bdd.ref(bddRef_KB), bdd.ref(bdd.not(bdd.ref(failureExplanationSentence_bddRef)))) == bdd.getZero())
+			//if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == bdd.getZero())
+			{
+				if(debug)System.out.println(" &");
+				bdd.deref(failureExplanationSentence_bddRef);
+				return false;
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("IN AgentCL.isActionApplicable. Trying again...");
+			e.printStackTrace();
+		
+			if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == bdd.getZero())
+			{
+				if(debug)System.out.println(" &");
+				bdd.deref(failureExplanationSentence_bddRef);
+				return false;
+			}
 		}
 		
 		bdd.deref(failureExplanationSentence_bddRef);
