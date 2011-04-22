@@ -16,6 +16,7 @@ public class BatchTester_SimulationPL
 		testBridges();
 		//testParcPrinter();
 		//testPathways();
+		//testHoboNav();
 	}			
 
 	//bridges_v2_4_0.75_2.pddl_34
@@ -126,5 +127,53 @@ public class BatchTester_SimulationPL
 		}
 	}
 
+	//bridges_v2_4_0.75_2.pddl_34
+	public static void testHoboNav()
+	{
+		String[] args = new String[2];
+		String path = "testfiles/incomplete/hobonav/";
+		String extension = ".pddl";
+		
+		int[] itemCounts = {1,2,4};
+		//int[] itemCounts = {4};
+		//int[] itemCounts = {1};
+		//int[] itemCounts = {2};
+			
+		//Just mess around with the for loop values...
+		for (int gridSize = 2; gridSize <= 4; gridSize *= 2) //from 2 to 32
+		{
+			for(int instance = 1; instance <= 10; instance++)//from 1 to 10
+			{
+				for(double density = .25; density <= 1.0; density +=.25)//from .25 to 1.0
+				{
+					for(int itemCount: itemCounts)
+					{
+						String filename = "";
+						filename += "hobonav_";
+						filename += gridSize + "_";
+						filename += density + "_";
+						filename += itemCount + "_";
+						filename += instance;
+						filename += extension;
+						args[0] = path + filename;
+						args[1] = path + "hobonav_problem_" + gridSize + extension;
+						
+						if(density == 1.0 && instance != 1)
+							continue;
+						else
+						{
+							try{ SimulationPL.main(args); }
+							catch(Error e){ System.out.println("\nError in BatchTester testHobonav\n"); e.printStackTrace(); }
+						}
+						
+						//System.out.println();
+					}//end for num file
+					//System.out.println();
+				}//end for bridge density
+			}//end for version
+		}//end for size
+		
+		System.out.println("DONE");
+	}
 
 }

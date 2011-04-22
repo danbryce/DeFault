@@ -41,7 +41,7 @@ public class BridgesTest
 				args[4] = Double.toString(0.0);
 				}
 			else if(v == 3){
-				args[3] = Double.toString(0.0);
+				args[3] = Double.toString(0.5);
 				args[4] = Double.toString(0.5);
 				}
 			args[5] = Integer.toString(numFiles);
