@@ -7,6 +7,7 @@
 \usepackage{courier}
 \usepackage{amsmath}
 \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{graphicx}
 
 \def\und#1{\noindent{\bf #1}:}
 \def\citep#1{\cite{#1}}
@@ -14,7 +15,7 @@
 \def\FFRISKY{{\tt DeFAULT}}
 \def\default{{\tt DeFAULT}}
 \def\goalie{{\tt Goalie}}
-\renewcommand{\baselinestretch}{1.03}
+\renewcommand{\baselinestretch}{0.99}
 
 \renewcommand\floatpagefraction{1} \renewcommand\topfraction{1}
 \renewcommand\bottomfraction{1} \renewcommand\textfraction{0}
@@ -23,7 +24,7 @@
 \setcounter{totalnumber}{50} \setcounter{topnumber}{50}
 \setcounter{bottomnumber}{50} \setcounter{dbltopnumber}{50}
 
-
+  
 \newenvironment{packed_enum}{
 \begin{enumerate}
   \setlength{\itemsep}{1pt}
@@ -37,6 +38,7 @@
   \setlength{\parskip}{0pt}
   \setlength{\parsep}{0pt}
 }{\end{itemize}}
+\nocopyright
 
 
 
@@ -56,9 +58,9 @@ incompleteness, learn by querying a domain expert, or learn through
 trial and error.  In deciding what to learn, an agent must consider whether an
 incomplete action feature is relevant to achieving its goals.  In deciding how
 to learn an action feature, the agent can i) try to execute the action and
-passively observe the outcome, ii) react by querying a domain expert when it
-fails to learn by passive observation, or iii) proactively query a domain expert
-prior to executing the action.  The challenge is that by learning about
+{\em passively} observe the outcome, ii) {\em react} by querying a domain expert
+when it fails to learn by passive observation, or iii) {\em proactively} query a
+domain expert prior to executing the action.  The challenge is that by learning about
 incomplete action features an agent may determine its plan will fail and
 re-plan, and thus change which action features are relevant to achieving it
 goals.  We desire agents that can ask as few questions as
@@ -72,9 +74,8 @@ diagnosing action failures to reactively learn about actions when passive
 learning fails.  We test the following configurations of our agent: i) learning
 only passively and asking no questions; ii) asking questions and re-planning
 until the plan is guaranteed to succeed; iii) planning, acting until the plan
-fails, diagnosing the failure, and re-planning; iv) diagnosing a plan failure
-only if it can impact future plans; and v) while diagnosing failures,
-proactively querying about a subset of the future action features that are likely to cause failures. 
+fails, diagnosing the failure, and re-planning; and iv) while diagnosing
+failures, proactively querying about a subset of the future action features that are likely to cause failures. 
 We find that passive learning alone can lead to dead-ends, perfecting a plan
 prior to execution requires many questions, and balancing passive learning with
 reactive learning strikes a good balance between avoiding dead-ends and
@@ -151,7 +152,7 @@ preconditions are actual preconditions), it would need to apply the action again
 several different states (some of which may be unreachable) to isolate the
 problem. Instead, the agent could reactively query the domain expert to determine the problem, or prior to
 executing the action proactively query the domain expert.  Reactive agents take
-a risk that either the action will not fail (i.e., the possible preconditions
+a risk that  the action will not fail (i.e., the possible preconditions
 are not required), and proactive agents will not risk failure.  
 
 
@@ -164,7 +165,7 @@ succeed.
 \item Reactively ask questions only when learning passively insufficiently
 learns about an action.
 \item  Proactively ask about
-highly likely future failures and 3.
+highly impactful future failures and 3.
 \end{enumerate}
 We find that the first approach can lead to dead-ends where the agent fails or
 because of its passive learning it is incapable of formulating an effective
@@ -173,9 +174,8 @@ third, asks fewer questions and overcomes the problems of passive learning.  The
 fourth asks more questions but reaches
 dead-ends less often.
 
-Our presentation includes a discussion of Incomplete STRIPS, belief maintenance
-and planning in incomplete domains, strategies for KA
-(goal-directed and otherwise), an empirical evaluation in several domains,
+Our presentation includes a discussion of incomplete STRIPS, belief maintenance
+and planning in incomplete domains, strategies for selecting questions, an empirical evaluation in several domains,
 related work, and a conclusion.
 
 \section{Background \& Representation}\label{sec:background}
@@ -201,11 +201,29 @@ comprised of propositions of the form $pre({a}, p)$, $add({a}, p)$, and
 $del({a}, p)$, each indicating that $p$ is a respective possible precondition, add effect, or
 delete effect of $a$.
 
-Consider the following incomplete domain: $P = \{p, q, r, g\}$, ${A} =
-\{{a}, {b}, {c}\}$, $I = \{p, q\}$,  $G= \{g\}$, and $F = \{pre(a, r), add(a, r),
-del(a, p),del(b, q),pre(c, q) \}$.  The
-known features of the actions are defined:  $pre({a}) = \{p, q\}$, $  pre({b}) =
-\{r\},  add({b}) = \{r\}$, and  $ pre({c}) =
+Consider the following incomplete domain: 
+
+$P = \{p, q, r, g\}$, 
+
+${A} =
+\{{a}, {b}, {c}\}$, 
+
+$I = \{p, q\}$, 
+
+ $G= \{g\}$, and 
+ 
+ $F = \{pre(a, r), add(a, r),
+del(a, p),del(b, q), pre(c, q) \}$.  
+
+The
+known features of the actions are defined: 
+
+ $pre({a}) = \{p, q\}$, 
+ 
+ $  pre({b}) =
+\{p\},  del(b) = \{p\}, add({b}) = \{r\}$, and
+
+  $ pre({c}) =
 \{r\},  add({c}) = \{g\}$. 
 
 An interpretation $F^i \subseteq F$ of the incomplete STRIPS domain
@@ -251,15 +269,20 @@ $F$.
 
 We use $\phi$ to reason about actions and
 plans by making queries of the form $\phi \models
-add({a}, p)$ (Is $p$ a known add effect of
-${a}$?), $\phi \not\models add({a}, p)$ and $\phi
-\not \models \neg add({a}, p)$  (Is $p$ a
-possible/unknown add effect of ${a}$?),  or $\phi \models d(\pi)$ (Is the
+add({a}, p)$ (``Is $p$ a known add effect of
+${a}$?''), $\phi \not\models add({a}, p)$ and $\phi
+\not \models \neg add({a}, p)$  (``Is $p$ a
+possible/unknown add effect of ${a}$?''),  or $\phi \models d(\pi)$ (``Is the
 current knowledge consistent with every interpretation where $\pi$ is guaranteed
-to fail?).  It is often the case that it is unknown if an incomplete feature
-${\sf f} \in F$ exists in the true domain that is consistent with $\phi$ (i.e., $\phi \not\models f$ and $\phi \not\models
+to fail?'').  It is often the case that it is unknown if an incomplete feature
+$f \in F$ exists in the true domain that is consistent with $\phi$ (i.e., $\phi \not\models f$ and $\phi \not\models
 \neg f$), and we denote this by ``$\phi?f$''.
 
+
+\begin{figure*}[t]\centering
+\includegraphics[width=1\linewidth]{WeberBryceICAPS11Fig1.eps}\caption{\label{fig:example}
+Labeled Plan}
+\end{figure*}
 
 
 \und{Filtering Observations} An agent that acts in incomplete STRIPS domains
@@ -269,11 +292,12 @@ a, s')$, and asking questions (i.e., ``Is $f$ true or false?'') provides
 observations of the form $f$ or $\neg f$.  Thus the function ${\tt filter}$
 returns the updated knowledge $\phi'$ after an observation, and is
 defined:
+
 \begin{align*}
 {\tt filter}(\phi, f) & = \phi \wedge f \\
 {\tt filter}(\phi, \neg f) & = \phi \wedge \neg f \\
 {\tt filter}(\phi, o(s, a, s)) & = \phi \wedge ((fail \wedge o^-) \vee  o^+)\\
-{\tt filter}(\phi, o(s, a, s')) & = \phi \wedge  o^+
+{\tt filter}(\phi, o(s, a, s')) & = \phi \wedge  o^+, s \not= s'
 \end{align*}
  where 
 \begin{eqnarray*}
@@ -284,6 +308,9 @@ o^+ &=& o^{pre} \wedge o^{add} \wedge o^{del}\label{eqn:update2}\\
 o^{pre} &=& \bigwedge\limits_{\substack{pre({a},p)
  \in F:\\ p \not\in s} }\neg pre({a},p)
  \label{eqn:update3}  \\
+\end{eqnarray*}
+
+\begin{eqnarray*}
 o^{add} &=& \bigwedge\limits_{\substack{add({a},p) \in 
 F:\\ p\in s'\backslash s} }add({a},p) 
   \wedge \bigwedge\limits_{\substack{add({a},p) \in 
@@ -303,7 +330,7 @@ state is observable, ${\tt filter}(\phi, o(s, a, s))$ references the case where
 the state does not change and ${\tt filter}(\phi, o(s, a, s'))$, the case where
 it changes.  If the state does not change, then either the action failed
 ($o^-$) and one of its unsatisfied possible preconditions is a precondition  or
-the action succeeded ($o^+$).  We use the $fail$ proposition to denote
+the action succeeded ($o^+$).  We use the $fail$ literal to denote
 interpretations under which a plan failed because it is not always observable
 that the plan has failed. If the state changes, then the agent knows that the
 action succeeded. If an action  succeeds, the agent learns that i) each possible
@@ -314,6 +341,7 @@ not ($o^{del}$).
 
 
 
+
 \und{Planning} We label predicted state propositions and actions with domain
 interpretations that will respectively fail to achieve the proposition or fail
 to achieve the preconditions of an action.  That is, labels indicate the cases
@@ -321,11 +349,13 @@ where a proposition will be false (i.e., the plan fails to establish the
 proposition). Labels $d(\cdot)$ are represented as  propositional sentences over
 $F$ whose models correspond to failed domain interpretations.
 
+
 Initially, each proposition $p_0 \in s_0$, in the state from which a plan is
 generated, is labeled $d(p_0) = \perp$ to denote that there are no
 interpretations in the current state where a proposition may be false (the state is fully-observable), and each $p_0 \not\in
 s_0$ is labeled $d(p_0)=\top$ to denote they are known false.
 For all $t \geq 0$, we define:
+
  \begin{align}
 %\label{eqn:actlabel}
 \notag d({a}_t) =&  
@@ -348,6 +378,7 @@ d(p_t) & : {otherwise}
 \end{array}
 \right. 
 \end{align}
+
 \noindent where $d({a}_{-1}) = \perp$. The intuition behind the label
 propagation is that an action will fail  in the
 domain interpretations $d({a}_t)$ where a prior action failed, a known
@@ -369,9 +400,29 @@ incomplete domains.  The pragmatic reason that we define action failures in this
 manner is that we can determine all failed interpretations affecting a plan $d(\pi)$,
 by defining $d(\pi) = d({a}_{n-1}) \vee \bigvee_{p \in G} d(p_n)$ (i.e.,
 failure to execute an action is propagated to a
-failure to achieve the goal). For example, our plan example from the previous
-section has the failure explanation label $d(\pi) = 
-pre(a, r) \vee  del(a, p) \vee (del(b, q) \wedge pre(c, q))$.
+failure to achieve the goal). 
+
+
+For example, consider the plan depicted in Figure \ref{fig:example}.  The
+propositions in each state and each action at each time are labeled by the
+propositional sentence below it. The edges in the figure connecting the
+propositions and actions denote what must be true to successfully execute an
+action or achieve a proposition.  The dashed edges indicate that action
+incompleteness affects the ability of an action or proposition to support a
+proposition.  For example, $a$ possibly deletes $p$, so the edge
+denoting its persistence is dashed.  The propositional sentences  $d(\cdot)$
+below each proposition and action denote the domain interpretations where a
+action will fail or a proposition will not be achieved.  For example,
+$b$ at time one, $b_1$, will fail if either
+$pre(a, r)$ or $del(a,
+p)$ is true in the interpretation.  Thus, $d(\pi) = 
+pre(a, r) \vee  del(a, p) \vee (del(b, q) \wedge pre(c, q))$ and any domain interpretation satisfying
+$d(\pi)$ will fail to execute the plan and achieve the goal.
+
+
+% For example, our plan example from the previous
+% section has the failure explanation label $d(\pi) = 
+% pre(a, r) \vee  del(a, p) \vee (del(b, q) \wedge pre(c, q))$.
 
 \und{Incomplete Domain Relaxed Plans} The \default{} planner
 \citep{bryce-icaps11} guides its expansion of plans that are labeled with
@@ -385,7 +436,7 @@ fewest failed interpretations, denoted by its label $\hat{d}(a_{t+k}(p))$.
 A relaxed planning graph with propagated labels is a layered graph of sets of
 vertices of the form $({\cal P}_t, {\cal A}_t, ..., {\cal A}_{t+m},
 {\cal P}_{t+m+1})$. The relaxed planning graph built for a state
-${s}_t$ defines ${\cal P}_0 = \{{p}_t | p \in {s}_t\}$,
+${s}_t$ defines ${\cal P}_t = \{{p}_t | p \in {s}_t\}$,
 ${\cal A}_{t+k} = \{ {a}_{t+k} | \forall_{p \in {pre}({a})}
 {p}_{t+k} \in {\cal P}_{t+k}, {a} \in {A} \cup A(P)\}$, and
 ${\cal P}_{t+k+1} = \{p_{t+k+1} | {a}_{t+k} \in {\cal A}_{t+k}, p
@@ -443,7 +494,9 @@ been reached at $t+k+1$. The $h^{\sim FF}$ heuristic makes use of the chosen
 supporting action $a_{t+k}(p)$ for each proposition that requires support in the relaxed
 plan, and, hence, measures the number of actions used while attempting to
 minimize failed interpretations.  The failure explanation of the relaxed plan is
-defined by $d(\hat{\pi}) = \bigvee\limits_{p \in G} \hat{d}(p_{t+m+1})$.
+defined by $d(\hat{\pi}) = \bigvee\limits_{p \in G} \hat{d}(p_{t+m+1})$.  We
+also use the $h^{FF}$ heuristic \citep{hoffmann:nebel:jair-01} for comparison,
+which does not select supporting actions based on failure explanations.
 
 
 \section{Passive Learning}
@@ -508,7 +561,7 @@ o_1) = \neg del(a, r)$.  The agent must re-plan because $\phi' \models d(\pi)$.
 \While{$\pi \not= ()$ and $G\not\subseteq s$}{
  $\tilde{a} \leftarrow \pi.first()$;
  $\pi \leftarrow \pi.rest()$\;
-\eIf{$\text{pre}(\tilde{a}) \subseteq s$ and $\phi \not\models \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in {\sf F}: p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p)
+\eIf{$\text{pre}(\tilde{a}) \subseteq s$ and $\phi \not\models \bigvee\limits_{\substack{\widetilde{\text{pre}}(\tilde{a},p) \in F: p \not\in s} } \widetilde{\text{pre}}(\tilde{a},p)
 $}{
 	$s ' \leftarrow Execute(\tilde{a})$\;
 	 $\phi \leftarrow \phi \wedge o(s, \tilde{a}, s')$\;
@@ -569,15 +622,15 @@ agent can prove a plan will fail as quickly as possible.
 % r)$ is irrelevant because the plan will succeed no matter its value.
 
 \und{Relevant Questions}  A question is relevant to a plan
-${\pi}$ if the incomplete feature ${\sf f}$ is entailed by a potential
+${\pi}$ if the incomplete feature $f$ is entailed by a potential
 diagnosis $\delta$ of plan failure.  Each diagnosis $\delta$ of the plan
 failure explanation $d({\pi})$ 
 is a conjunction of incomplete features that must interact to destroy the plan. 
-Thus, if $\delta \models d({\pi})$ and $\delta \models {\sf f}$, then the set of
+Thus, if $\delta \models d({\pi})$ and $\delta \models f$, then the set of
 relevant questions is:
 \begin{align}
-Q_{d(\pi)} =&  \{{\sf f} | \delta \models d(\pi)
-, \delta \models {\sf f} \;\text{or}\; \delta \models \neg{\sf f}\}\notag
+Q_{d(\pi)} =&  \{f | \delta \models d(\pi)
+, \delta \models f \;\text{or}\; \delta \models \neg f\}\notag
 \end{align}
 
 The example plan defines $Q_{d(\pi)} = \{pre(a, r), del(a, p), del(b, q),
@@ -589,13 +642,13 @@ because a smaller number of unfavorable answers are needed to prove the plan
 will fail; asking about these features will enable an agent to fail fast. 
 Moreover, features appearing in more diagnoses have a high impact on plan
 failure.  We define a {\em diagnosis-impact}  measure, where we prefer questions
-about the incomplete action feature ${\sf f}$ where
+about the incomplete action feature $f$ where
 % feature:
 \begin{align}
-{\sf f} = \underset{{\sf f}  \in Q_{d(\pi)}}{\operatorname{argmax}}
+f = \underset{f  \in Q_{d(\pi)}}{\operatorname{argmax}}
 \sum\limits_{\substack{\delta : \delta \models d(\pi),\\ \delta\models {\sf
 f}}}
-\frac{1}{|\{{\sf f}| \delta \models {\sf f}\}|^2}
+\frac{1}{|\{{f}| \delta \models { f}\}|^2}
 \notag 
 \end{align}
 The denominator of the expression above is squared to penalize the contribution
@@ -603,7 +656,8 @@ of larger diagnoses.  This measure determines the incomplete feature most
 likely to cause the plan to fail.
 
 Using this measure for the example plan questions will select $pre(a, r)$ and
-$del(a, p)$ as equally preferred questions because both appear in a size one diagnosis.
+$del(a, p)$ as equally preferred questions because both appear in a size one
+diagnosis.  These features are single points of failure.
 
 
 \und{Partial Proactivity} Asking about every relevant feature will lead to a
@@ -631,8 +685,8 @@ because it did not learn definitively about $a_1$.  The agent will continue to
 re-plan and fail indefinitely (i.e., it reaches a learning dead-end).
 
 Instead, the agent can realize that it may have failed and diagnose whether it
-failed and why.  By asking about $pre(a_1, q))$ and
-$\neg add(a_1, p)$, the agent can learn about the action and potentially
+failed and why.  By asking about $pre(a_1, q)$ and
+$ add(a_1, p)$, the agent can learn about the action and potentially
 generate a different plan.  For example, if it learns that $pre(a_1, q)$ holds,
 then it will not plan the action because $q$ is not satisfied in the current
 state.  If it learns that $\neg add(a_1, p)$ holds, then the action is useless
@@ -641,7 +695,7 @@ and will not be planned.
 The agent can rank the questions that create ambiguity (multiple diagnoses) in
 $\phi$ in the same manner as proactive questions.  Reactive agents will continue
 to ask questions until $\phi$ has a single implicant $\delta$ where $\delta
-\models \phi$; having a single implicant means that the agent knows if it failed
+\models \phi$. Having a single implicant means that the agent knows if it failed
 or not, and if it did fail why it failed.  For example, after asking about
 $add(a_1, p)$, the agent may know $fail \wedge pre(a_1, q) \wedge
 add(a_1, p)$ or $\neg add(a_1, p)$.  In the first, case the agent can infer
@@ -745,6 +799,39 @@ include:
   of questions across the strategies?
 \end{packed_itemize}
 
+\begin{table*}\centering\begin{tabular}{|l|cccc|}\hline																	
+Strategy	&	Solved			&	Learning Dead-End			&	Physical Dead-End			&	Timeout		
+\\\hline\hline Passive Only	&	4110	/	4314	&	1053	/	588	&	2510	/	2251	&	0	/	522	\\
+Passive/Reactive	&	4934	/	4766	&	0	/	0	&	2732	/	2385	&	0	/	523	\\
+%Passive/Reactive Lookahead	&	4932	/	4765	&	0	/	0	&	2733	/	2390	&	0	/	520	\\
+Passive/Reactive/Proactive	&	5439	/	5004	&	0	/	0	&	2213	/	1916	&	0	/
+755	\\ Proactive Only	&	7531	/	6537	&	0	/	0	&	22	/	63	&	54	/	1072	\\\hline
+\end{tabular}	\caption{\label{tab:t1} Summary of results on 7675 instances
+across the domains using two heuristics ($h^{FF}/h^{\sim FF}$) within the agent. 
+Results include the number of solved problems, number of learning dead-ends reached, number of physical dead-ends reached, and timeouts.}	\end{table*}
+
+\begin{table*}\centering\begin{tabular}{|l|ccccc|}																					\hline
+Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
+Passive Only	&	2.72	/	2.18	&	1.72	/	1.18	&	12.91	/	13.03	&	0.80	/	1.78	&	0	/	0	\\
+Passive/Reactive/Proactive	&	3.33	/	2.77	&	1.39	/	1.01	&	11.58	/	12.11	&	0.94	/	2.32	&	2.54	/	2.03	\\
+Proactive Only	&	6.27	/	5.47	&	0	/	0	&	10.07	/	10.50	&	3.14	/	8.73	&	5.27	/	4.47	\\\hline
+\end{tabular}\caption{\label{tab:t2}Domains solved by all techniques (3422
+instances), with an average of 81.8 actions per domain, and an average of 24 incomplete action features.}\end{table*} \begin{table*}\centering\begin{tabular}{|l|ccccc|}\hline																					
+Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
+%Passive/Reactive	&	8.23	/	4.14	&	7.23	/	3.14	&	16.20	/	15.05	&	2.11	/	4.39	&2.05	/	0.76	\\ 
+Passive/Reactive 	&	8.23	/	4.14	&	7.23	/	3.14	&	16.20	/	15.02	&	2.06	/4.48	&	2.04	/	0.75	\\ 
+Passive/Reactive/Proactive	&	6.64	/	4.03	&	4.70/	2.10	&	13.11	/	13.18	&	2.26	/	5.77	&	6.44	/	3.81	\\ 
+Proactive Only	&	14.34	/	12.44	&	0	/	0	&	9.82	/	10.32	&	7.86	/	28.28	&	13.34	/	11.42	\\\hline
+\end{tabular}\caption{\label{tab:t3}Barter World instances solved by all
+techniques (662 instances), with an average of 99.11 actions per domain, and an average of 59.59 incomplete action features.}\end{table*} \begin{table*}\centering\begin{tabular}{|l|ccccc|}\hline																					
+Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
+Passive/Reactive	&	8.87	/	6.07	&	7.87	/	5.07	&	16.13	/	16.18	&	1.73	/	6.29	&	2.41	/	1.53	\\
+%Passive/Reactive Lookahead	&	8.86	/	6.05	&	7.86	/	5.05	&	16.13	/	16.09	&	1.72	/6.40	&	2.41	/	1.52	\\ 
+Passive/Reactive/Proactive	&	7.09	/	4.93	&	5.15
+/	2.96	&	12.86	/	13.61	&	1.52	/	8.26	&	6.72	/	4.39	\\ 
+Proactive Only	&	15.70	/	14.24	&	0	/	0	&	9.52	/	10.02	&	6.21	/	34.99	&	14.70	/	13.21	\\\hline
+\end{tabular}\caption{\label{tab:t4}Pathways instances solved by all techniques
+(310 instances), with an average of 85.05 actions per domain, and an average of 56.55 incomplete action features.}\end{table*}																					% \begin{table*}
 
 
 \und{Domains} We use four domains in the evaluation: a modified Pathways,
@@ -784,39 +871,6 @@ certain items (possible preconditions) and may result in the loss of an item
 in number (1-4).
 
 
-\begin{table*}\centering\begin{tabular}{|l|cccc|}\hline																	
-Strategy	&	Solved			&	Learning Dead-End			&	Physical Dead-End			&	Timeout		
-\\\hline\hline Passive Only	&	4110	/	4314	&	1053	/	588	&	2510	/	2251	&	0	/	522	\\
-Passive/Reactive	&	4934	/	4766	&	0	/	0	&	2732	/	2385	&	0	/	523	\\
-%Passive/Reactive Lookahead	&	4932	/	4765	&	0	/	0	&	2733	/	2390	&	0	/	520	\\
-Passive/Reactive/Proactive	&	5439	/	5004	&	0	/	0	&	2213	/	1916	&	0	/
-755	\\ Proactive Only	&	7531	/	6537	&	0	/	0	&	22	/	63	&	54	/	1072	\\\hline
-\end{tabular}	\caption{\label{tab:t1} Summary of results on 7675 instances
-across the domains using two heuristics ($h^{FF}/h^{\sim FF}$) within the agent. 
-Results include the number of solved problems, number of learning dead-ends reached, number of physical dead-ends reached, and timeouts.}	\end{table*}
-
-\begin{table*}\centering\begin{tabular}{|l|ccccc|}																					\hline
-Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
-Passive Only	&	2.72	/	2.18	&	1.72	/	1.18	&	12.91	/	13.03	&	0.80	/	1.78	&	0	/	0	\\
-Passive/Reactive/Proactive	&	3.33	/	2.77	&	1.39	/	1.01	&	11.58	/	12.11	&	0.94	/	2.32	&	2.54	/	2.03	\\
-Proactive Only	&	6.27	/	5.47	&	0	/	0	&	10.07	/	10.50	&	3.14	/	8.73	&	5.27	/	4.47	\\\hline
-\end{tabular}\caption{\label{tab:t2}Domains solved by all techniques (3422
-instances), with an average of 81.8 actions per domain, and an average of 24 incomplete action features.}\end{table*} \begin{table*}\centering\begin{tabular}{|l|ccccc|}\hline																					
-Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
-%Passive/Reactive	&	8.23	/	4.14	&	7.23	/	3.14	&	16.20	/	15.05	&	2.11	/	4.39	&2.05	/	0.76	\\ 
-Passive/Reactive 	&	8.23	/	4.14	&	7.23	/	3.14	&	16.20	/	15.02	&	2.06	/4.48	&	2.04	/	0.75	\\ 
-Passive/Reactive/Proactive	&	6.64	/	4.03	&	4.70/	2.10	&	13.11	/	13.18	&	2.26	/	5.77	&	6.44	/	3.81	\\ 
-Proactive Only	&	14.34	/	12.44	&	0	/	0	&	9.82	/	10.32	&	7.86	/	28.28	&	13.34	/	11.42	\\\hline
-\end{tabular}\caption{\label{tab:t3}Barter World instances solved by all
-techniques (662 instances), with an average of 99.11 actions per domain, and an average of 59.59 incomplete action features.}\end{table*} \begin{table*}\centering\begin{tabular}{|l|ccccc|}\hline																					
-Strategy	&	Plans			&	Re-Plan			&	Acts			&	TotalTime			&	?'s			\\\hline
-Passive/Reactive	&	8.87	/	6.07	&	7.87	/	5.07	&	16.13	/	16.18	&	1.73	/	6.29	&	2.41	/	1.53	\\
-%Passive/Reactive Lookahead	&	8.86	/	6.05	&	7.86	/	5.05	&	16.13	/	16.09	&	1.72	/6.40	&	2.41	/	1.52	\\ 
-Passive/Reactive/Proactive	&	7.09	/	4.93	&	5.15
-/	2.96	&	12.86	/	13.61	&	1.52	/	8.26	&	6.72	/	4.39	\\ 
-Proactive Only	&	15.70	/	14.24	&	0	/	0	&	9.52	/	10.02	&	6.21	/	34.99	&	14.70	/	13.21	\\\hline
-\end{tabular}\caption{\label{tab:t4}Pathways instances solved by all techniques
-(310 instances), with an average of 85.05 actions per domain, and an average of 56.55 incomplete action features.}\end{table*}																					% \begin{table*}
 
 
 
@@ -949,6 +1003,10 @@ reasoning about incompleteness is a promising direction for future work.
 % 
 \section{Related Work}
 
+%ARMS connection
+%Learning model is weird
+%
+
 
 Our investigation is an instantiation of model-lite planning \citep{modellite},
 and is motivated by work on instructable computing \citep{mable}. This work is a
@@ -964,6 +1022,15 @@ about domain incompleteness into the planner can lead to a more effective agent
 in both execution and question asking. We also differ in that we do not assume
 direct feedback from the environment about action failures, we can learn
 action preconditions, and we can query a domain expert.
+
+While similar in motivation, our work is related to, but significantly different
+from the ARMS \citep{arms} action learning system.  ARMS is an offline system
+for generating action models from partial observations of plans (states and
+actions).  ARMS encodes its observations as a weighted Max-SAT problem and
+derives action models that best match the observations.  Our approach learns
+from partial observations of actions due to fully-observable state transitions
+and can actively learn through executing actions or querying an expert.  ARMS
+also learns PDDL operator schemas, where we learn ground STRIPS actions.
 
 
 \section{Conclusion}
@@ -992,7 +1059,7 @@ prohibitively more questions.
 \und{Acknowledgements} This work was supported by DARPA contract HR001-07-C-0060.
 
 
-%\footnotesize
+\footnotesize
 %\renewcommand{\baselinestretch}{.75}
 \bibliography{aaai11QA,jared}
 \bibliographystyle{aaai}
