@@ -18,6 +18,7 @@ import jdd.bdd.BDD;
 import  jdd.util.*;
 
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
+import edu.usu.cs.ka.currentsystem.agentsystem.Planner;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
@@ -170,6 +171,7 @@ public class RiskCounter {
 		isInitialized = false;
 		deref();
 		Fault.resetStaticHashMaps();
+		logger = Logger.getLogger(RiskCounter.class.getName());
 	}
 	
 	public static int getNumRisks(){ return allRisks.size(); }
