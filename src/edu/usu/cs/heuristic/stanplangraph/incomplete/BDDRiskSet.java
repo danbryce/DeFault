@@ -95,4 +95,8 @@ public class BDDRiskSet implements FaultSet {
 		RiskCounter.getBDD().ref(faults);
 	}
 
+	public String toString(){
+		return RiskCounter.getBDD().printSetToString(this.faults);
+	}
+	
 }

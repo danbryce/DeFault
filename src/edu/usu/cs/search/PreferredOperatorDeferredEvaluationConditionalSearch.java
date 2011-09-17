@@ -56,8 +56,8 @@ public class PreferredOperatorDeferredEvaluationConditionalSearch extends
 	}
 
 
-	private void expandSolution(IncompleteBDDConditionalNode node){
-	 expandSolution(node, 1);
+	private boolean expandSolution(IncompleteBDDConditionalNode node){
+	 return expandSolution(node, 1);
 	}
 	
 	public static String padLeft(String s, int n) {
@@ -66,24 +66,29 @@ public class PreferredOperatorDeferredEvaluationConditionalSearch extends
 	}
 
 	
-	private void expandSolution(IncompleteBDDConditionalNode node, int indent){
-		logger.debug(padLeft(" ", indent) + "Expand " + node.id);
+	private boolean expandSolution(IncompleteBDDConditionalNode node, int indent){
+		//logger.debug(padLeft(" ", indent) + "Expand " + node.id);
+		boolean expanded = false;
 		if(node.successors == null && !node.solved){
 			node.getHeuristicValue();
 			node.expand(solver.getRelevantActions(), null);
-			logger.debug("*");
+			expanded = true;
+			//logger.debug("*");
 		}
-		else{
-			logger.debug(node.bestAction.toString());
+		else if(node.bestAction != null){
+			//logger.debug(node.bestAction.toString());
 			Map<Observation, StateNode> outcomes = node.successors.get(node.bestAction);
+			
 			for(Observation o : outcomes.keySet()){
 				IncompleteBDDConditionalNode snode = (IncompleteBDDConditionalNode) outcomes.get(o);
 				if(!snode.solved){
-					expandSolution(snode, indent +1);
+					expanded = expandSolution(snode, indent +1) || expanded;
 				}
 			}
 		}
-		node.backup();
+		if(expanded)
+			node.backup();
+		return expanded;
 	}
 	
 
@@ -93,14 +98,22 @@ public class PreferredOperatorDeferredEvaluationConditionalSearch extends
 		while(true) {
 			
 			if(start.isSolved()){
+				logger.debug(start.printPlan(0));
 				return null;
 			}
 			else{
-				logger.debug("++++++++++");
-				expandSolution(start);
+				//logger.debug("++++++++++");
+				if(!expandSolution(start) && !start.isSolved())
+					break;
 			}
 			
 		}
+		if(!start.isSolved()){
+			logger.debug("No Solution");
+			return null;
+		}
+		return null;
+		
 //			PreferredOperatorDeferredEvaluationNode node;
 //
 //			// If both queues are empty, there is no solution

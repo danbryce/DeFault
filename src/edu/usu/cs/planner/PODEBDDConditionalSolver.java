@@ -36,7 +36,7 @@ public PODEBDDConditionalSolver(Domain domain, Problem problem,
 				);
 //		IncompletePINode startNode = new IncompletePINode(problem.getInitialState(), null, null, this);
 //		startNode.
-			IncompleteBDDConditionalNode startNode = new IncompleteBDDConditionalNode(problem.getInitialState(), null, null, this);
+			IncompleteBDDConditionalNode startNode = new IncompleteBDDConditionalNode(problem.getInitialState(), null, null, this, getBDD().getOne());
 		search.initialize(startNode);
 		
 	}

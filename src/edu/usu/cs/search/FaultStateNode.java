@@ -91,7 +91,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 		
 		//return node.getState().equals(getState());
 	}
-	@Override
+	
 	public  StateNode getSuccessorNode(ActionInstance action1) {
 		IncompleteActionInstance action = (IncompleteActionInstance)action1;
 
@@ -104,6 +104,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 		// new one
 		FaultStateNode node = this.copy();
 
+		
 		// Add all risks associated with the new node
 		node.addCriticalRisks(action, this);
 
@@ -323,7 +324,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 	 * @param action
 	 * @return
 	 */
-	private  FaultSet getPrecOpen(FaultStateNode node, IncompleteActionInstance action) {
+	protected  FaultSet getPrecOpen(FaultStateNode node, IncompleteActionInstance action) {
 		FaultSet precOpen = 
 			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 					new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
