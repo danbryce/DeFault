@@ -26,7 +26,7 @@ public class RiskCounterNode extends AbstractStateNode {
 
 	protected HashMap<Proposition, Integer> propositions = null;
 	protected int actRisks;
-	protected int possibleRisks;
+	//protected int possibleRisks;
 	protected BDD bdd;
 	protected Map<Fault, Integer> riskToBDD;
 	private BigInteger domainCount;
@@ -51,8 +51,8 @@ public class RiskCounterNode extends AbstractStateNode {
 			this.propositions.put(proposition, dd);
 		}
 
-		this.actRisks = bdd.ref(bdd.getOne());
-		this.possibleRisks = bdd.ref(bdd.getOne());
+		this.actRisks = bdd.ref(bdd.getZero());
+	//	this.possibleRisks = bdd.ref(bdd.getOne());
 
 		this.parent = null;
 		this.state = state;
@@ -77,7 +77,7 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.solver = node.solver;
 
 		this.actRisks = bdd.ref(node.getActRisks());//bdd.getOne();
-		this.possibleRisks = bdd.ref(bdd.getOne());
+		//this.possibleRisks = bdd.ref(bdd.getOne());
 	}
 
 	public List<StateNode> createSubsequentNodes(
@@ -151,8 +151,14 @@ public class RiskCounterNode extends AbstractStateNode {
 	}
 
 	private void setCriticalRisks() {
-		this.actRisks = bdd.ref(bdd.or(getPrecRisks(this.parent, this.action),
-				getPossPrecRisks(this.parent, this.action)));		
+		int tmp = bdd.ref(bdd.or(getPrecRisks(this.parent, this.action),
+								 this.actRisks));
+		int tmp1 = bdd.ref(bdd.or(getPossPrecRisks(this.parent, this.action),
+								  tmp));
+		bdd.deref(this.actRisks);
+		bdd.deref(tmp);
+		this.actRisks = tmp1; 
+				
 	}
 
 	private int getPrecRisks(StateNode parent, ActionInstance action1) {
@@ -161,11 +167,9 @@ public class RiskCounterNode extends AbstractStateNode {
 
 
 		for (Proposition prec : action.getPreconditions()) {
-			int tmp = bdd.or(riskSet, ((RiskCounterNode)parent).getPropositions().get(prec));
-			bdd.ref(tmp);
+			int tmp = bdd.ref(bdd.or(riskSet, ((RiskCounterNode)parent).getPropositions().get(prec)));
+			bdd.deref(riskSet);
 			riskSet = tmp;
-			bdd.ref(riskSet);
-			bdd.deref(tmp);
 		}
 
 		return riskSet;
@@ -188,14 +192,10 @@ public class RiskCounterNode extends AbstractStateNode {
 			int tmp = bdd.ref(bdd.and(precRiskSet, riskToBDD.get(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possPrec.getName()))));
 			bdd.deref(precRiskSet);
 			precRiskSet = tmp;
-			bdd.ref(precRiskSet);
-			bdd.deref(tmp);
-
+			
 			tmp = bdd.ref(bdd.or(riskSet, precRiskSet));
 			bdd.deref(riskSet);
-			riskSet = tmp;
-			bdd.ref(riskSet);
-			bdd.deref(tmp);
+			riskSet = tmp;			
 		}
 
 		return riskSet;
@@ -288,13 +288,13 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.actRisks = risks;
 	}
 
-	public int getPossibleRisks() {
-		return possibleRisks;
-	}
-
-	public void setPossibleRisks(int possibleRisks) {
-		this.possibleRisks = possibleRisks;
-	}
+//	public int getPossibleRisks() {
+//		return possibleRisks;
+//	}
+//
+//	public void setPossibleRisks(int possibleRisks) {
+//		this.possibleRisks = possibleRisks;
+//	}
 
 	public PlanMetric[] getGValue() {
 		if(this.gvalue == null){
