@@ -101,10 +101,7 @@ public class AbstractStateNode implements StateNode {
 		return parent;
 	}
 
-	public int compareTo(StateNode o) {
-		return 0;
-	}
-
+	
 	public  StateNode getSuccessorNode(ActionInstance action1) {
 		return null;
 	}
@@ -186,6 +183,43 @@ public class AbstractStateNode implements StateNode {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public int compareTo(StateNode o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getPlanString() {
+		
+		StringBuilder s = new StringBuilder();
+		if(parent != null){
+			s.append(parent.getPlanString());
+			s.append(action.getName()).append("\n");
+			s.append(getFailureExplanationString()).append("\n");
+			//s.append(getStateString()).append("\n");
+		}
+		else{
+			s.append(getFailureExplanationString()).append("\n");
+			//s.append(getStateString()).append("\n");
+		}
+
+		return s.toString();
+	}
+
+	public String getStateString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getFailureExplanationString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 	
 }

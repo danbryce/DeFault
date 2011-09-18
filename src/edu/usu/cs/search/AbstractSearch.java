@@ -29,6 +29,12 @@ public class AbstractSearch implements Search {
 	protected Heuristic heuristic = null;
 	
 	protected SolutionEvaluator solutionEvaluator = null;
+	public SolutionEvaluator getSolutionEvaluator() {
+		return solutionEvaluator;
+	}
+
+
+
 	protected List<StateNode> solutions = null;
 	protected SearchStatistics searchStatistics = null;
 	protected Solver solver = null;

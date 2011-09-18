@@ -41,8 +41,8 @@ public class RiskCounterNode extends AbstractStateNode {
 			StateNode parent, 
 			Solver solver) {
 		super(action, parent, solver);
-		this.bdd = RiskCounter.getBDD();
-		this.riskToBDD = RiskCounter.getRiskToBDD();
+		this.bdd = FaultCounter.getBDD();
+		this.riskToBDD = FaultCounter.getRiskToBDD();
 		this.solver = solver;
 		this.propositions = new HashMap<Proposition, Integer>();
 		for (Proposition proposition : state) {
@@ -72,8 +72,8 @@ public class RiskCounterNode extends AbstractStateNode {
 		this.parent = node.parent;
 		this.state = node.state;
 		this.action = node.action;		
-		this.bdd = RiskCounter.getBDD();
-		this.riskToBDD = RiskCounter.getRiskToBDD();
+		this.bdd = FaultCounter.getBDD();
+		this.riskToBDD = FaultCounter.getRiskToBDD();
 		this.solver = node.solver;
 
 		this.actRisks = bdd.ref(node.getActRisks());//bdd.getOne();

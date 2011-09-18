@@ -5,7 +5,7 @@ import java.math.*;
 
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
 import edu.usu.cs.ka.agentsystem.Agent.LearningTypes;
 import edu.usu.cs.ka.simulator.*;
@@ -103,8 +103,8 @@ public class QTree
 					int bddRef_SuccessPosSide = agent.bdd.and(bddRef_QFault, bddRef_MasterKB, agent.bdd.not(bbdRef_posChildPFE));
 					int bddRef_SuccessNegSide = agent.bdd.and(agent.bdd.not(bddRef_QFault), bddRef_MasterKB, agent.bdd.not(bbdRef_negChildPFE));
 					
-					BigDecimal posModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessPosSide));
-					BigDecimal negModels = new BigDecimal(RiskCounter.getModelCount(bddRef_SuccessNegSide));
+					BigDecimal posModels = new BigDecimal(FaultCounter.getModelCount(bddRef_SuccessPosSide));
+					BigDecimal negModels = new BigDecimal(FaultCounter.getModelCount(bddRef_SuccessNegSide));
 	
 					double posProb = posModels.divide(totalPossModels).doubleValue();
 					double negProb = negModels.divide(totalPossModels).doubleValue();
@@ -253,7 +253,7 @@ public class QTree
 			depth = 0;
 			
 			bddRefKB = agent.bdd.ref(agent.bdd.getOne());
-			bddRefPFE  = RiskCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
+			bddRefPFE  = FaultCounter.tryThisPFEGenerator(agent.problem, plan, Planner.solver);
 			
 			bddRefs.add(bddRefKB);
 			bddRefs.add(bddRefPFE);
@@ -345,7 +345,7 @@ public class QTree
 					}
 					else
 					{
-						bddRefPFE  = RiskCounter.tryThisPFEGenerator(agent.problem, hypotheticalPlan, Planner.solver);
+						bddRefPFE  = FaultCounter.tryThisPFEGenerator(agent.problem, hypotheticalPlan, Planner.solver);
 						bddRefs.add(bddRefPFE);
 						
 						isNewPlanNode = true;

@@ -15,7 +15,7 @@
 \def\FFRISKY{{\tt DeFAULT}}
 \def\default{{\tt DeFAULT}}
 \def\goalie{{\tt Goalie}}
-\renewcommand{\baselinestretch}{0.99}
+%\renewcommand{\baselinestretch}{0.99}
 
 \renewcommand\floatpagefraction{1} \renewcommand\topfraction{1}
 \renewcommand\bottomfraction{1} \renewcommand\textfraction{0}
@@ -49,7 +49,6 @@ Department of Computer Science\\
 Utah State University}
 
 \begin{document}
-%\nocopyright
 \maketitle
 
 \begin{abstract}
@@ -82,39 +81,10 @@ reactive learning strikes a good balance between avoiding dead-ends and
 minimizing the number of questions.
 
 
-% consider what
-% information is relevant to achieving its goals (goal-directedness) and what
-% information can be gleaned from prior plan failures to avoid future failures
-% (failure-directedness).  Upon determining which information is relevant, the
-% agent can either choose to ignore it (hoping that it will not cause its plans
-% to fail), choose to passively learn it by applying the action, reactively learn
-% about (diagnose) it when it may have caused plan failure, or actively query the
-% domain expert before it causes failure.  
-% We present and evaluate several approaches to learning about incomplete actions
-% in model-lite planning scenarios that seek to reduce the number of actions
-% executed by agents to achieve their goals, the number of failure
-% driven re-planning episodes required, and the number of questions posed to a
-% domain expert.  Our work addresses the familiar reinforcement learning issue of
-% exploitation and exploration by using plans and a domain expert to simplify and
-% focus exploration.  We show that asking plan and failure relevant questions of a
-% domain expert in the event of plan failure and otherwise learning passively outperforms i) purely
-% passive learning (by re-planning less) and ii) purely goal-directed learning (by
-% asking fewer questions). 
 
 \end{abstract}
 
 \section{Introduction}
-
-% Average employees should be able to perform their assigned duties with minimal
-% guidance from their superiors.  Excellent employees can perform new duties
-% involving potentially unfamiliar actions. While it is expected that questions
-% may arise during the new task, a deluge of questions will be met with
-% animosity.  Thus, an employee should learn about the task as they proceed, but
-% only ask the questions necessary to avoid catastrophic failure or unreasonable
-% delay in completing the task.  Building autonomous agents that behave like an
-% excellent employee requires the ability to plan with incomplete knowledge of
-% actions, learn about the actions whenever possible, and identify relevant
-% questions that can be asked of domain experts.  
 
 Knowledge engineering \citep{ickeps09} and machine learning
 \citep{arms,DBLP:conf/aaai/OatesC96} have been applied to constructing
@@ -280,7 +250,7 @@ $f \in F$ exists in the true domain that is consistent with $\phi$ (i.e., $\phi 
 
 
 \begin{figure*}[t]\centering
-\includegraphics[width=1\linewidth]{WeberBryceICAPS11Fig1.eps}\caption{\label{fig:example}
+\includegraphics[width=1\linewidth]{WeberBrycePAL11Fig1.eps}\caption{\label{fig:example}
 Labeled Plan}
 \end{figure*}
 
@@ -420,10 +390,6 @@ pre(a, r) \vee  del(a, p) \vee (del(b, q) \wedge pre(c, q))$ and any domain inte
 $d(\pi)$ will fail to execute the plan and achieve the goal.
 
 
-% For example, our plan example from the previous
-% section has the failure explanation label $d(\pi) = 
-% pre(a, r) \vee  del(a, p) \vee (del(b, q) \wedge pre(c, q))$.
-
 \und{Incomplete Domain Relaxed Plans} The \default{} planner
 \citep{bryce-icaps11} guides its expansion of plans that are labeled with
 failure explanations by computing relaxed plans with failure explanations.   Finding a
@@ -462,32 +428,11 @@ add(a_{t+k}(p), p)\\
 \neg add(a_{t+k}(p), p)
 \end{array}\right. \hspace*{-.1cm}\label{eqn:hprop}
 \end{align}
-% Propositions in the planning graph initially have the same faults associated
-% with them as in state $\tilde{s}_t$ and are defined by $d(\cdot)$.
 Every action in every level $k$ of the planning graph will fail in any
 interpretation where their preconditions are not supported.  A proposition will
 fail  to be achieved in any interpretation where the chosen supporting action
 fails to add the proposition.
 
-% We note that the rules for propagating labels in the planning graph differ from
-% the rules for propagating labels in the state space.  In the state space, the
-% action failure labels include interpretations where any prior action fails.  In
-% the relaxed planning problem, the action failure labels include only
-% interpretations affecting the action's preconditions, and not prior actions; it
-% is not clear which actions will be executed prior to achieving a proposition
-% because many actions may be used to achieve other propositions at the same time
-% step.
-
-%\und{Choosing Supporters} While only a single action or noop may be required to support a proposition, using multiple supporters can increase the number of incomplete domain interpretations that support it (by ensuring that not all sources of support are subject to the same faults).  We wish to select a set $\hat{\cal S}_{t+k}(p) \subseteq \{\tilde{a} \in \hat{\cal A}_{t+k} | p \in \text{add}(\tilde{a}) \cup \widetilde{\text{add}}(\tilde{a})\}$ to define a most preferred $\hat{d}_{t+k+1}(p)$ (i.e., have fewer explanations of failure).  We use a greedy algorithm to incrementally add actions to $\hat{\cal S}_{t+k}(p)$, and check if $\hat{d}_{t+k+1}(p)$ is improved.
-%
-%The greedy algorithm proceeds as follows.  We consider all singleton sets of actions, and select the most preferred (having the fewest failure explanation models or prime implicants, and breaking ties by selecting noop actions).  To the most preferred action set, we add each action and determine the most preferred, two element action set.  If none of the two element action sets are more preferred than the best single action set, we define $\hat{\cal S}_{t+k}(p)$ as the best single action set.  Otherwise, the algorithm continues to extend the best action set with one action at a time until it cannot find a more preferred action set (by counting models or prime implicants).
-%
-% alternative definitions (one for each possible supporter) of the set $\hat{\cal S}_{t+k}(p)$, and select the supporter that has the most preferred definition of  $\hat{d}_{t+k+1}(p)$ (breaking ties by first preferring noop actions and second preferring actions whose first appearance in the planning graph is earliest).  With a single element in $\hat{\cal S}_{t+k}(p)$, we evaluate all single element extensions of the set (making it a two element set), choosing the extension that most improves the measure of $\hat{d}_{t+k+1}(p)$ (depending on the chosen measure, either reducing the number of models, or prime implicants); if no extension improves the measure, then the algorithm terminates and returns $\hat{\cal S}_{t+k}(p)$ with a single element.  In our implementation, we allow at most two supporters per proposition, but it is possible to allow an arbitrary number of supporters in this fashion by extending the set of supporters greedily until no new extension improves its measure.
-%
-
-
-
-%\und{Heuristic Computation}
  The relaxed planning graph expansion terminates
 at the level $t+k+1$ where the goals have
 been reached at $t+k+1$. The $h^{\sim FF}$ heuristic makes use of the chosen
@@ -501,18 +446,6 @@ which does not select supporting actions based on failure explanations.
 
 \section{Passive Learning}
 
-% We describe several approaches to formulating questions for a domain expert in
-% incomplete domains, which include asking all possible questions in an uninformed
-% manner, asking no questions but learning by trial and error, and using plans to
-% select goal directed questions. We discuss the approaches by increasing
-% sophistication and follow with an empirical evaluation.
-% 
-% \und{Uninformed QA} Uninformed QA (UQA) is the strategy taken by an agent that
-% cannot or will not plan or act under uncertainty and thus must ask the domain expert about each incomplete
-% feature of the domain without regard to its relevance to goal achievement.  As
-% such, uninformed QA based agents will ask a set of questions $Q_{F} = F$ about
-% every feature in $F$, formulate a classical plan, and execute the plan.
-
 A passive learner would rather act
 under uncertainty and ask no questions of the domain expert.  Passive learning
 agents are potentially reckless because 
@@ -522,15 +455,6 @@ Using their knowledge $\phi$, it is possible to determine if the next action in
 a plan, or any subsequent action, can or will fail.  If  $\phi \wedge d(\pi)$ is
 satisfiable, then $\pi$ {\em can} fail, and if $\phi \models d(\pi)$,
 then $\pi$ {\em will}  fail.  
-% The agent will execute an action if it may not
-% fail, but will re-plan if any action is guaranteed to fail.  If
-% \goalie{} determines that its next action will fail, or a prior action failed ($\phi \models fail$), then
-% it will re-plan.  \goalie{}  uses $\phi$ to modify the actions during
-% re-planning by checking for each incomplete domain feature $f \in {\sf
-% F}({D})$ if $\phi \models f$ or if $\phi \models \neg f$.  Each such
-% literal entailed by $\phi$ indicates if the respective action has the possible
-% feature as a known or impossible feature; all other features remain as possible
-% features.
 Algorithm \ref{alg:replan} is the strategy used by the passive learning agent. 
 The algorithm involves initializing the agent's knowledge and plan (line 1), and then while
 the plan is non-empty and the goal is not achieved (line 2) the agent proceeds
@@ -547,12 +471,6 @@ For example, the passive agent might observe the state transition $o_1
 = o(\{p,q\}, a, \{p,q\})$ upon executing $a$, and $\phi' = {\tt filter}(\phi,
 o_1) = \neg del(a, r)$.  The agent must re-plan because $\phi' \models d(\pi)$.
 
-% \goalie{} is not hesitant to apply actions that may fail because trying actions
-% is its only way to learn about them.  However, \goalie{} is able to determine
-% when actions will fail and re-plans.  More conservative strategies are possible
-% if we assume that \goalie{} can query a knowledge engineer about action features
-% to avoid potential plan failure, but we leave such goal-directed knowledge
-% acquisition for future work.
 
 \begin{algorithm}[t]
 \SetLine
@@ -594,32 +512,6 @@ executing the relevant actions.  In the following, we discuss how to identify
 relevant questions, given a plan, and how to rank the questions so that the
 agent can prove a plan will fail as quickly as possible.
 
-% There are a number of strategies for
-% using a plan to generate questions, and we assume that the goal directed QA
-% agent continues to ask questions and re-plan until it finds a plan that is
-% guaranteed to succeed. The strategies include: asking about all incomplete
-% features related to actions in a plan, asking about only those features that can
-% cause failure, and ranking the questions based on the diagnoses of plan failure
-% to ``fail fast''.
-
-% \und{Plan Relevant Questions} Without computing failure explanations, it is
-% possible to determine relevant questions by inspecting the actions in the plan
-% and their possible preconditions and effects so that the set of questions is
-% defined:
-% \begin{align}
-% Q_{\pi} =&  \{pre(a_t, p) | \phi?pre(a_t, p), a_t \in \pi\}
-% \cup\notag\\ &\{add(a_t, p)| \phi?add(a_t, p), a_t \in \pi\} \cup\notag\\ 
-% &\{del(a_t,p)|\phi?del(a_t, p), a_t \in \pi\}\notag
-% \end{align}
-% 
-% By using $Q_{\pi}$ and no plan failure explanation, an agent is relegated to
-% asking each question because it cannot determine if the plan will fail given the
-% answers it has received thus far.  The agent can only re-plan afterward and
-% determine if the plan contains actions with incomplete features.
-% 
-% The example plan would lead to $Q_{\pi} = F$ because incomplete feature in
-% $F$ relates to an action in the plan.  However, as we saw in $d(\pi)$, $add(a,
-% r)$ is irrelevant because the plan will succeed no matter its value.
 
 \und{Relevant Questions}  A question is relevant to a plan
 ${\pi}$ if the incomplete feature $f$ is entailed by a potential
@@ -704,81 +596,6 @@ case, the agent can infer $\phi \models \neg add(a_1, p)$ and that $a_1$ is
 irrelevant.
 
 
-% An alternative, based on  {\em Shannon entropy} (SE),
-% selects the question ${\sf f}$ where
-% \begin{align}
-% {\sf f} = &\underset{{\sf f}  \in Q_{d(\pi)}}{\operatorname{argmin}} -
-% \sum\limits_{{\sf f} \in \{{\sf f}, \neg {\sf f}\}} p_{\sf f} \log p_{\sf f} 
-% \notag\\
-%  p_{\sf f} =& |M({\tt filter}(\phi, {\sf f}) \wedge 
-% d(\pi))|/2^{|F|}\notag
-% \end{align}
-% and $M(\cdot)$ denotes set of propositional models of some sentence.
-% The probability $p_{\sf f}$ that the plan fails under the true domain model
-% is the proportion of propositional models where after filtering ${\sf f}$ the
-% plan will fail.  If it is the case that ${\tt filter}(\phi, {\sf f}) \models 
-% d(\pi)$, then $\pi$ will  fail and the agent must re-plan; when computing
-% $p_{\sf f}$ and the plan fails, we compute a new plan $\pi'$ given the knowledge
-% $\phi' = {\tt filter}(\phi, {\sf f})$ and replace $d(\pi)$ with $d(\pi')$.  If
-% no plan $\pi'$ exists, we define $p_{\sf f} = 1$ to denote that the absence of
-% a plan indicates failure. 
-% 
-% For example, both $pre(a, r)$ and $del(a,
-% p)$ as equally preferred questions because their entropy is 0.16, whereas both
-% $del(b, q)$ and $pre(c, q)$ have entropy 0.32.
-
-
-% \begin{table}\small\centering\begin{tabular}{|l|cc|}\hline
-% Domain & Non-QA  & SE \\ \hline
-% Br	0.25	 & 1.0/1.2/6.4/-	 & 1.0/1.0/23.4/3.8 	\\ \hline
-% Br	0.5	 & 0.9/1.2/4.5/-	 & 1.1/1.0/4.4/1.7 	\\ \hline
-% Br	0.75	 & 1.0/1.0/3.9/-	 & 1.2/1.0/1.3/1.2 	\\ \hline
-% Br	1.0	 & 1.1/1.0/1.3/-	 & 1.3/1.0/2.4/1.2 	\\ \hline
-% \hline
-% Pw	0.25	 & 1.0/1.0/1.7/-	 & 1.3/0.9/3.7/1.6 	\\ \hline
-% Pw	0.5	 & 0.5/1.1/1.6/-	 & 1.5/1.1/6.5/1.7 	\\ \hline
-% Pw	0.75	 & 0.7/1.1/1.8/-	 & 1.2/1.0/1.6/1.1 	\\ \hline
-% Pw	1.0	 & 0.8/0.9/0.8/-	 & 1.1/1.0/1.1/1.1 	\\ \hline
-% \hline
-% Pp	0.25	 & 0.8/1.0/2.3/-	 & 1.1/1.0/2.2/1.1 	\\ \hline
-% Pp	0.5	 & 2.3/1.0/3.6/-	 & 1.4/1.0/0.9/0.9 	\\ \hline
-% Pp	0.75	 & -/-/-/- 	 & 2.1/1.0/1.0/1.0 	\\ \hline
-% Pp	1.0	 & -/-/-/- 	 & 1.9/1.1/0.6/0.8 	\\ \hline
-% \hline
-% Bw	0.25	 & 0.8/1.2/9.7/- 	 & 1.0/0.9/18.5/3.3 	\\ \hline
-% Bw	0.5	 & 0.7/1.2/12.2/-	 & 1.0/1.0/18.9/2.3 	\\ \hline
-% Bw	0.75	 & 0.7/1.0/11.5/-	 & 1.2/0.9/8.8/1.4 	\\ \hline
-% Bw	1.0	 & 0.5/0.9/27.3/-	 & 1.5/0.9/14.0/1.3 	\\ \hline
-% \end{tabular}\caption{\label{tab:plannerComp} FF/\default{}
-%  Performance Ratio \\(Num Solved/Num Steps/Time/Questions).}\end{table}
-% 
-% 
-% \begin{table}\small\centering\begin{tabular}{|l|cc|}\hline
-% Domain & Non-QA  &  $Q_F$ \\ \hline
-% Br	0.25	&271/22.1/1.6/- 	&{\bf 274}/{\bf 20.2}/{\bf 0.5}/57.5 	\\ \hline
-% Br	0.5	&199/27.1/3.0/- 	&{\bf 251}/{\bf 17.9}/{\bf 0.4}/114.1 	\\ \hline
-% Br	0.75	&131/18.2/1.9/- 	&{\bf 200}/{\bf 13.5}/{\bf 0.2}/65.7 	\\ \hline
-% Br	1.0	&89/{\bf 12.0}/0.9/- 	&{\bf 190}/12.1/{\bf 0.2}/107.8 	\\ \hline
-% \hline
-% Pw	0.25	&91/{\bf 13.5}/0.4/- 	&{\bf 121}/16.8/{\bf 0.3}/28.9 	\\ \hline
-% Pw	0.5	&80/{\bf 21.4}/4.5/- 	&{\bf 180}/27.2/{\bf 0.5}/75.8 	\\ \hline
-% Pw	0.75	&70/{\bf 12.4}/0.5/- 	&{\bf 130}/15.2/{\bf 0.3}/73.2 	\\ \hline
-% Pw	1.0	&40/{\bf 11.2}/0.5/- 	&{\bf 127}/14.5/{\bf 0.3}/104.3 	\\ \hline
-% \hline
-% Pp	0.25	&37/{\bf 9.5}/{\bf 0.3}/- 	&{\bf 151}/11.0/0.4/36.4 	\\ \hline
-% Pp	0.5	&6/{\bf 9.3}/{\bf 0.4}/- 	&{\bf 151}/11.0/0.4/75.3 	\\ \hline
-% Pp	0.75	&-/-/-/-  	&{\bf 150}/{\bf 11.0}/{\bf 0.4}/109.4 	\\ \hline
-% Pp	1.0	&-/-/-/-  	&{\bf 150}/{\bf 11.0}/{\bf 0.4}/145.2 	\\ \hline
-% \hline
-% Bw	0.25	&276/13.6/4.7/- 	&{\bf 321}/{\bf 11.5}/{\bf 0.8}/232.8 	\\ \hline
-% Bw	0.5	&179/11.0/7.7/- 	&{\bf 239}/{\bf 9.2}/{\bf 0.4}/205.7 	\\ \hline
-% Bw	0.75	&118/12.1/2.6/- 	&{\bf 207}/{\bf 8.1}/{\bf 0.3}/172.8 	\\ \hline
-% Bw	1.0	&11/12.5/3.6/- 	&{\bf 20}/{\bf 8.6}/{\bf 0.3}/189.8 	\\ \hline
-% \end{tabular}\caption{\label{tab:questionComp2} Extreme Strategy Average
-% Performance. Bold indicates best performance.  (Num Solved/Num
-% Steps/Time (s)/Questions).}\end{table}
- 
-
 
 
 \section{Empirical Evaluation}
@@ -791,8 +608,6 @@ include:
 \begin{packed_itemize}
   \item Q1: Will adding reactive learning to passive
   learning improve agent success?
-%   \item Q2: Will  biasing reactive learning with questions that are also
-%   relevant to the future improve agent success?
   \item Q2: Does proactive learning improve reactive strategies without
   asking too many questions?
   \item Q3: Does the type of planner used by the agent affect success and number
@@ -943,69 +758,8 @@ because of timeouts; this suggests that improving the heuristic while still
 reasoning about incompleteness is a promising direction for future work.
 
 
-% \und{Results} To answer Q1, Table \ref{tab:plannerComp} compares two planners
-% and two KA strategies.  The entries in the table are the ratio of
-% the number of problems solved, number of steps taken by the agent, total time,
-% and questions asked when using a planner that ignores incompleteness
-% (\default{} using the FF heuristic \citep{hoffmann:nebel:jair-01}) and a planner
-% that plans with incompleteness (\default{}).  The columns list results for the
-% Non-QA agent and the SE strategy.  We see that total time and number of steps is
-% reduced in the Non-QA agent when planning with incompleteness (as also found by
-% \citet{bryce-icaps11}), and that the total time and number of questions is
-% reduced when using SE.  The
-% results demonstrate that planning with incompleteness is beneficial whether
-% asking questions or not.
-% 
-% To answer Q2, Tables \ref{tab:questionComp2} and \ref{tab:questionComp1} list
-% the average performance of \default{} with various KA strategies.
-% We see that in comparing the two extremes, Non-QA or $Q_F$, $Q_F$ leads to more
-% solved instances and lower total time, but as expected a high number of
-% questions.  In comparing the approaches that use a plan to limit and/or bias
-% KA in Table \ref{tab:questionComp1}, we note the number of solved
-% instances is relatively similar, but the methods that prioritize questions based
-% on the plan failure explanations (DI or SE) ask the fewest questions.  The total
-% time taken is relatively similar among the methods, except for a noticeably higher average
-% time with $SE$ -- which is due to many hypothesized re-planning
-% episodes to compute the entropy.
-% 
-% To answer Q3, and follow up on the high cost of SE, Table \ref{tab:rpComp} lists
-% the performance ratios of using SE with actual plans versus relaxed plans when
-% re-planning is required.  We note that the performance is nearly identical, with
-% the exception of much lower total times -- which makes SE
-% competitive with DI.
-
-% POND was run using ten planning graph samples per search node heuristic
-% evaluation in a weighted (w=5) A* search, and  $\overline{\tau}$ equal to the
-% minimum proportion of incomplete a ction instances that any other method
-% satisfies the goal for the same problem.
-
-%Those planners that solve more problems can be easily identified, and their overall relative plan quality and efficiency are evident by the cumulative plots.
-
-%\und{\FFRISKY{} Implementation}The \FFRISKY{} planner is implemented in Java, and each of configurations of the planner share common source code, with the exception of their respective techniques for fault propagation in the state space and heuristic computation.  
-
-% We use five configurations of the planner: \FFRISKY{}-$FF$, \FFRISKY{}-$PIk$ (k
-% = 1, 2, 3), and \FFRISKY{}-$BDD$, that differ in how they reason about domain
-% incompleteness.  \FFRISKY{}-$FF$ does not compute failure explanations and uses
-% the FF heuristic;  it is inspired by the planner used by CA because it is likely
-% to find a plan that will work for only the most optimistic domain
-% interpretation.  \FFRISKY{}-$PIk$, where $k$ is the bound on the cardinality of
-% the prime implicants, uses only prime implicants to compare failure
-% explanations.  \FFRISKY{}-$BDD$ uses OBDDs to represent and count failure
-% explanations.  The number of failed interpretations for a plan $\pi$ found by
-% any of the planners is reported herein by counting models of an OBDD
-% representing $d(\pi)$. The versions of the planner are compared by the
-% proportion of interpretations of the incomplete domain that achieve the goal and
-% total planning time in seconds. The plots in the following section depict these
-% results using the cumulative percentage of successful domain interpretations and
-% planning time to identify the performance over all problems and domains.  We
-% also report detailed results on the number of solved problems per domain.
-% 
-% 
 \section{Related Work}
 
-%ARMS connection
-%Learning model is weird
-%
 
 
 Our investigation is an instantiation of model-lite planning \citep{modellite},
@@ -1023,6 +777,12 @@ in both execution and question asking. We also differ in that we do not assume
 direct feedback from the environment about action failures, we can learn
 action preconditions, and we can query a domain expert.
 
+\citet{Safra94onplanning} also address the issue of learning about transition
+models during planning, but only focus on the complexity of planning and
+learning under various restrictions on the size of possible plans and transition
+models.  Our framework falls under the most general of those considered by
+\citet{Safra94onplanning} and is thus not tractable.  
+
 While similar in motivation, our work is related to, but significantly different
 from the ARMS \citep{arms} action learning system.  ARMS is an offline system
 for generating action models from partial observations of plans (states and
@@ -1032,7 +792,7 @@ from partial observations of actions due to fully-observable state transitions
 and can actively learn through executing actions or querying an expert.  ARMS
 also learns PDDL operator schemas, where we learn ground STRIPS actions.
 
-
+ 
 \section{Conclusion}
 
 We have presented three techniques for learning about incomplete actions that
@@ -1046,22 +806,16 @@ diagnosing failures while passively learning avoids dead-ends; and iv) combining
 reactive, passive, and proactive learning increases success without asking
 prohibitively more questions.
 
-% We have found that reasoning about incompleteness planning 
-% leads to more effective trial-and-error agents and KA agents.  The plans help maintain a
-% goal-directed focus on knowledge acquisition and lower the overall strain upon a
-% domain expert to answer many questions.  We found that methods for prioritizing
-% questions are able to reduce the number of questions required to synthesize
-% successful plans and that relaxed plans  serve as a reasonable substitute for
-% actual plans.  
+
 
 \smallskip
 
 \und{Acknowledgements} This work was supported by DARPA contract HR001-07-C-0060.
 
 
-\footnotesize
+%\footnotesize
 %\renewcommand{\baselinestretch}{.75}
-\bibliography{aaai11QA,jared}
+\bibliography{WeberBrycePAL11Final}
 \bibliographystyle{aaai}
 
 \end{document}

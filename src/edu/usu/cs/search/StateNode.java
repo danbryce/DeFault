@@ -26,7 +26,8 @@ public interface StateNode extends Comparable<StateNode>{
 	public boolean satisfies(Set<Proposition> goal);
 	public Set<Proposition> getState();
 	public boolean equals(StateNode node);
-	public int compareTo(StateNode node);
+	public String getPlanString();
+	public String getFailureExplanationString();
 
 	
 	

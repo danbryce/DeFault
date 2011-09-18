@@ -7,7 +7,7 @@ import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 
 public class DomainExpert 
 {
@@ -41,9 +41,9 @@ public class DomainExpert
 		setDomainAndProblem();
 		
 		//To get a list of the actual Risks in the problem's actions
-		RiskCounter.resetIsInitialized();
-		RiskCounter.initialize(domain, problem);
-		wereRisksAreNowKnownFeatures = RiskCounter.getAllRisks();//this risksList is transformed into known features in createActions_CompleteVersion()
+		FaultCounter.resetIsInitialized();
+		FaultCounter.initialize(domain, problem);
+		wereRisksAreNowKnownFeatures = FaultCounter.getAllRisks();//this risksList is transformed into known features in createActions_CompleteVersion()
 		
 		random = new Random(seed);
 		probability = .5;

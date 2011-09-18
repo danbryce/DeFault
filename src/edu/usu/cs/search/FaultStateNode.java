@@ -2,6 +2,7 @@ package edu.usu.cs.search;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,11 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 	protected Map<Proposition, FaultSet> state;
 	protected Set<ActionInstance> preferredOperators = null;
 	protected FaultSet criticalRisks = null;
+		public FaultSet getCriticalRisks() {
+		return criticalRisks;
+	}
+
+
 		protected static Logger logger = Logger.getLogger(FaultStateNode.class.getName());
 
 
@@ -85,6 +91,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				}
 			}
 		}
+		criticalRisks = node.getCriticalRisks();
 		//logger.debug("EQ");
 		return true;
 		
@@ -244,7 +251,8 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 						new PIRiskSet(actRisks) :
 							new BDDRiskSet(actRisks));
-			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty()){
+			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty() ||
+					solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS	){
 				crossProduct.setFaults(1);
 			}
 
@@ -266,9 +274,9 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 		FaultSet actRisks = 
 			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDRiskSet());
-		actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
+					new PIRiskSet(criticalRisks) :
+						new BDDRiskSet(criticalRisks));
+	//	actRisks.or();//getPrecOpen(initialNode, action));
 	//	actRisks.or(getPrecRisks(initialNode, action));
 
 		for (Proposition effect : action.getPossibleAddEffects()) {
@@ -303,6 +311,8 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				crossProduct.setFaults(1);
 			}
 			
+			
+			
 			// Also add the UnlistedEffect risk
 			crossProduct.or(Fault.getRiskFromIndex(Fault.UNLISTEDEFFECT, action.getName(),
 					effect.getName()));
@@ -328,6 +338,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 					new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
 						new BDDRiskSet());
+		
 		for (Proposition possPrec : action.getPossiblePreconditions()) {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
@@ -340,15 +351,17 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				//Results in a higher-order interaction risk
 				FaultSet s1 = 
 					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
-								new BDDRiskSet());
-				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
-					s1.setFaults(1);
-				}
+							new PIRiskSet(node.state.get(possPrec)) :
+								new BDDRiskSet(node.state.get(possPrec)));
+//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty() ||
+//						solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS
+//						){
+//					s1.setFaults(1);
+//				}
 
 				s1.and(Fault.getRiskFromIndex(Fault.PRECOPEN, action.getName(), possPrec
 						.getName()));
-				s1.and(node.state.get(possPrec));
+//				s1.and(node.state.get(possPrec));
 				precOpen.or(s1);
 			}
 		}
@@ -356,21 +369,26 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 		return precOpen;
 	}
 
+	
+
+
 
 	public boolean isActionApplicable(ActionInstance action) {
 		return state.keySet().containsAll(((IncompleteActionInstance)action).getPreconditions());
 	}
 	public int compareTo(StateNode o) {
+		
 		FaultStateNode n1 = (FaultStateNode) (this.isHeuristicComputed() ? this : this.getParent());
 		FaultStateNode n2 = (FaultStateNode)(o.isHeuristicComputed() ? o : o.getParent());
 		
+		boolean foundSolution = solver.getSearch().getSolutionEvaluator().getFoundSolution();
 		
 		int diff[] = new int[2];
 
 		for(int i = 0; i < 2; i++){
 			diff[i] = n1.hvalue[i].compareTo(n2.hvalue[i]);
 		}
-		return (diff[1] == 0 ? diff[0] : diff[1]);
+		return (diff[1] == 0 || foundSolution ? diff[0] : diff[1]);
 		//return diff[1];
 	}
 	
@@ -384,6 +402,13 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 		// TODO Auto-generated method stub
 		 return 	((Double)((NumericMetric)getHeuristicValue()[1]).getValue()).equals(Double.MAX_VALUE);
 	}
-
-
+	@Override
+	public String getStateString() {
+		StringBuilder s = new StringBuilder();
+		for(Proposition p : state.keySet()){
+			s.append(p.getName()).append("\n").append(state.get(p).toString()).append("\n");
+		}
+		return s.toString();
+	}
+	
 }

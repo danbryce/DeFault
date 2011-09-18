@@ -23,7 +23,7 @@ import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.StateObservation;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.incomplete.PIRiskSet;
 
 public class IncompleteBDDConditionalNode extends IncompleteBDDNode implements
@@ -317,7 +317,7 @@ StateNode {
 
 	public Map<Observation, StateNode> getSuccessorNodes(Fault action1) {
 		Map<Observation, StateNode> results = new HashMap<Observation, StateNode>();
-		int fbdd = RiskCounter.getBddFromFault(action1);
+		int fbdd = FaultCounter.getBddFromFault(action1);
 
 		//true case
 		IncompleteBDDConditionalNode t = new IncompleteBDDConditionalNode(this.getState(), action1, this, solver);
@@ -398,7 +398,7 @@ StateNode {
 	}
 
 	private boolean knownTrue(Fault f){
-		int index = RiskCounter.getBddFromFault(f);
+		int index = FaultCounter.getBddFromFault(f);
 		int sat = solver.getBDD().ref(solver.getBDD().and(knowledge, solver.getBDD().not(index))); 
 		boolean isTrue = false;
 
@@ -410,7 +410,7 @@ StateNode {
 	}
 
 	private boolean knownFalse(Fault f){
-		int index = RiskCounter.getBddFromFault(f);
+		int index = FaultCounter.getBddFromFault(f);
 		int sat = solver.getBDD().ref(solver.getBDD().and(knowledge, index)); 
 		boolean isFalse = false;
 

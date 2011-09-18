@@ -10,7 +10,7 @@ import edu.usu.cs.heuristic.stanplangraph.incomplete.FaultyHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.IncompleteBDDConditionalNode;
 import edu.usu.cs.search.PreferredOperatorDeferredEvaluationConditionalSearch;
 import edu.usu.cs.search.Search;
@@ -26,11 +26,12 @@ public PODEBDDConditionalSolver(Domain domain, Problem problem,
 		super(domain, problem, searchStatistics, solverOptions);
 		metricDimension = 2;
 		heuristic = new FaultyHeuristic(problem, domain, this);
-		search = new PreferredOperatorDeferredEvaluationConditionalSearch(
+		search = 
+			new PreferredOperatorDeferredEvaluationConditionalSearch(
 				domain, 
 				problem, 
 				actionInstances, 
-				new RiskSolutionEvaluator(domain, problem, searchStatistics), 
+				new RiskSolutionEvaluator(domain, problem, searchStatistics, solverOptions), 
 				searchStatistics, 
 				this
 				);

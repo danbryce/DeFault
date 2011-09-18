@@ -1,6 +1,8 @@
 package edu.usu.cs.search.pode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -72,12 +74,15 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 	@Override
 	public List<ActionInstance> getPath() {
 		long expanded = 0;
-		while(true) {
+		boolean foundSolution = false;
+		long  startTime = System.currentTimeMillis();
+		long timeLimit = (long) (1*60*1000);
+		while(System.currentTimeMillis() - startTime < timeLimit) {
 			PreferredOperatorDeferredEvaluationNode node;
 
 			// If both queues are empty, there is no solution
 			if(open.size() == 0 && openPreferred.size() == 0) {
-				return null;
+				break;
 			}
 
 			boolean pulledPreferred = true;
@@ -110,17 +115,59 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			if(closed.contains(node)) {
 				continue;
 			}
+			
+			if(foundSolution){
+				StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
+				int c = node.compareTo(bestNode);
+				if(c == 1){
+//					closed.add(node);
+					continue;
+				}
+			}
 
-
+			
 			// Check to see if the solution is found in the node
 			if(solutionEvaluator.isSolution(problem,node)) {
-				//				logger.debug("Found Solution: " + node);
-				searchStatistics.setSolutionNode(node);
-				//				GeneralizedRiskSet crisks = node.getCriticalRisks();
-				//				for(Proposition p : problem.getGoalAction().getPreconditions()){
-				//					crisks.union(node.getPropositions().get(p));
-				//				}
-				return extractSolution(node);
+				//logger.debug("Found Solution: " + node);
+				if(solutionEvaluator.keepSolution(node, solutions)){
+					solutions.add(node);
+					if(!foundSolution){
+						PriorityQueue<StateNode> nop = new PriorityQueue<StateNode>();
+						for(StateNode s : openPreferred){
+							int c = s.compareTo(node);
+							if(c < 1){
+								nop.add(s);
+							}
+						}
+						openPreferred = nop;
+
+						PriorityQueue<StateNode> op = new PriorityQueue<StateNode>();
+						for(StateNode s : open){
+							int c = s.compareTo(node);
+							if(c < 1){
+								op.add(s);
+							}
+						}
+						open = op;
+						foundSolution =true;
+					}
+					
+					
+					searchStatistics.processNode(node);
+					logger.debug(searchStatistics.toString()+" " + expanded);
+					//openPreferred;//. = new PriorityQueue<StateNode>((Collection<? extends StateNode>) Arrays.asList(openPreferred.toArray()));
+					//open = new PriorityQueue<StateNode>((Collection<? extends StateNode>) Arrays.asList(open.toArray()));
+
+				}
+				else{
+					continue;
+				}
+					
+				if(solutionEvaluator.isSolutionSetComplete(solutions)){
+					StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
+					searchStatistics.setSolutionNode(bestNode);				
+					return extractSolution(bestNode);
+				}
 			}
 
 			//			if(((PreferredOperatorDeferredEvaluationNode)node).isHeuristicComputed()){
@@ -205,7 +252,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 					//						cnode.getHeuristicValue();
 
 				}
-				logger.debug(searchStatistics.toString()+" " + expanded);
+				//logger.debug(searchStatistics.toString()+" " + expanded);
 				expanded = 0;
 			}
 
@@ -215,6 +262,13 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			//logger.debug(searchStatistics.toString());
 
 		}
+		if(foundSolution){
+			StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
+			searchStatistics.setSolutionNode(bestNode);				
+			return extractSolution(bestNode);
+		}
+		else
+			return null;
 	}
 
 }

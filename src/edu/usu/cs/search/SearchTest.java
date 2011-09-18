@@ -26,7 +26,7 @@ import edu.usu.cs.planner.PODEFFSolver;
 import edu.usu.cs.planner.PODEPISolver;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -74,47 +74,13 @@ public class SearchTest {
 		try {
 			// Initialize search algorithm
 
-
-//			if (args.length == 3 || args[3].equalsIgnoreCase("frisky")
-//					|| args[3].equalsIgnoreCase("friskyLengthFirst")) {
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args[3].equalsIgnoreCase("friskyRiskFirst")) {
-//				solverOptions.setRiskHeuristicFirst(true);
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args.length == 3 || args[3].equalsIgnoreCase("friskyMS")
-//					|| args[3].equalsIgnoreCase("friskyMSLengthFirst")) {
-//				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args[3].equalsIgnoreCase("friskyMSRiskFirst")) {
-//				solverOptions.setRiskHeuristicFirst(true);
-//				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args.length == 3
-//					|| args[3].equalsIgnoreCase("friskylength")) {
-//				solver = new FFriskyLengthSolver(domain, problem,
-//						searchStatistics, solverOptions);
-//
-//			} else if (args.length == 3
-//					|| args[3].equalsIgnoreCase("friskypsp")) {
-//
-//				solver = new FFRiskyPSPSolver(domain, problem,
-//						searchStatistics, solverOptions);
-//
-//			} else if (args.length == 3
-//					|| args[3].equalsIgnoreCase("friskyEHC")) {
-//
-//				solver = new FFriskyEHCSolver(domain, problem,
-//						searchStatistics, solverOptions);
-//			} else if (args[3].equalsIgnoreCase("uniformcost")
-//					|| args[3].equalsIgnoreCase("uniform")) {
-//				solverOptions.setUCS(true);
-//				solver = new UniformCostFFriskySolver(domain, problem,
-//						searchStatistics, solverOptions);
-//			} else
+			if(args.length > 4 && args[4].equalsIgnoreCase("anytime")){
+				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.ANYTIME);
+			}
+			else{
+				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.FIRST);
+			}
+			
 			if (args[3].equalsIgnoreCase("length")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
@@ -127,28 +93,26 @@ public class SearchTest {
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solverOptions.setRiskArity(Integer.valueOf(args[3].substring(4)));
 				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
-				solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
-//STOP HERE - the length and the pod solver are the ones to focus on for now //////////////////////////
-				
-				
+				solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);		
+
 			} else if (args[3].equalsIgnoreCase("jdd")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
-				RiskCounter.initialize(domain, problem, null);
+				FaultCounter.initialize(domain, problem, null);
 				solver = new PODEBDDSolver(domain, problem, searchStatistics, solverOptions);
-			 
-		} else if (args[3].equalsIgnoreCase("ao")) {
-			solverOptions.setUsePreferredOperators(true);
-			solverOptions.setUseDeferredEvaluation(true);
-			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-			solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
-			solverOptions.setConditional(true);
-			RiskCounter.initialize(domain, problem, null);
-			solver = new PODEBDDConditionalSolver(domain, problem, searchStatistics, solverOptions);
-		}
-			
+
+			} else if (args[3].equalsIgnoreCase("ao")) {
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
+				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
+				solverOptions.setConditional(true);
+				FaultCounter.initialize(domain, problem, null);
+				solver = new PODEBDDConditionalSolver(domain, problem, searchStatistics, solverOptions);
+			}
+
 			else if (args[2].contains(".pddl") && args[3].contains(".pddl")) {
 				// Convert domain and problem files to ppddl.
 				if ("pond".equals(args[4])) {
@@ -199,51 +163,51 @@ public class SearchTest {
 		// logger.debug(risk);
 		// }
 
-//		logger.debug("\nFinal Stats:\n");
-//		logger.debug("Plan length: " + plan.size());
-//		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
-//				+ " milliseconds");
-//		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
-//		if (searchStatistics.getSolutionNode() != null
-//				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
-//			logger.debug("Risk count: "
-//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-//							.getCriticalRisks().size());
-//		}
+		//		logger.debug("\nFinal Stats:\n");
+		//		logger.debug("Plan length: " + plan.size());
+		//		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
+		//				+ " milliseconds");
+		//		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
+		//		if (searchStatistics.getSolutionNode() != null
+		//				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
+		//			logger.debug("Risk count: "
+		//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+		//							.getCriticalRisks().size());
+		//		}
 		logger.debug("\nFinal Stats:\n");
 		logger.debug("Plan length: " + plan.size());
 		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
 				+ " milliseconds");
 		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
-		
+
 		if (searchStatistics.getSolutionNode() != null
 				//&& searchStatistics.getSolutionNode() instanceof FFRiskyNode
-				) {
-//			logger.debug("Risk count: "
-//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-//							.getCriticalRisks().size());
-//			logger.debug(((FFRiskyNode) searchStatistics.getSolutionNode())
-//							.getCriticalRisks());
-			
-			RiskCounter.initialize(domain, problem, plan);
-			BigInteger total =BigInteger.valueOf(1).shiftLeft(RiskCounter.getNumRisks());
-			BigInteger solvable = RiskCounter.getModelCount(domain, problem, plan, solver); 
+		) {
+			//			logger.debug("Risk count: "
+			//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+			//							.getCriticalRisks().size());
+			//			logger.debug(((FFRiskyNode) searchStatistics.getSolutionNode())
+			//							.getCriticalRisks());
+
+			FaultCounter.initialize(domain, problem, plan);
+			BigInteger total =BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
+			BigInteger solvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
 			BigDecimal probability = new BigDecimal(solvable);
 			probability = probability.divide(new BigDecimal(total));
-				
+
 			logger.debug("Solvable Domains: " + solvable);
 			logger.debug("Total Domains: " + total);
 			logger.debug("Probability: " + probability);
-			logger.debug("Incomplete Features: " + RiskCounter.getNumRisks());
+			logger.debug("Incomplete Features: " + FaultCounter.getNumRisks());
 
 		}
 		else if(searchStatistics.getSolutionNode() != null
 				&& searchStatistics.getSolutionNode() instanceof RiskCounterNode) {
 			logger.debug("Risk count: "
 					+ ((RiskCounterNode) searchStatistics.getSolutionNode())
-							.getGValue()[0]);
-			RiskCounter.getBDD().printSet(RiskCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
-							.getActRisks()));			
+					.getGValue()[0]);
+			FaultCounter.getBDD().printSet(FaultCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
+					.getActRisks()));			
 		}
 		try {
 			FileWriter fstream = new FileWriter("Output/" + args[2], true);
@@ -257,16 +221,16 @@ public class SearchTest {
 						+ problemFile.getName()
 						+ "\t"
 						+ args[3]
-						+ "\t"
-						+ plan.size()
-						+ "\t"
-						+ searchStatistics.getElapsedTime()
-						+ "\t"
-						+ searchStatistics.getNodesExpanded()
-//						+ "\t"
-//						+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-//								.getCriticalRisks().size() + "\r\n"
-						);
+						       + "\t"
+						       + plan.size()
+						       + "\t"
+						       + searchStatistics.getElapsedTime()
+						       + "\t"
+						       + searchStatistics.getNodesExpanded()
+						       //						+ "\t"
+						       //						+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+						       //								.getCriticalRisks().size() + "\r\n"
+				);
 
 			} else {
 				out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t"
@@ -276,15 +240,15 @@ public class SearchTest {
 						+ problemFile.getName()
 						+ "\t"
 						+ args[3]
-						+ "\t"
-						+ plan.size()
-						+ "\t"
-						+ searchStatistics.getElapsedTime()
-						+ "\t"
-						+ searchStatistics.getNodesExpanded()
-						+ "\t"
-						+ 0
-						+ "\r\n");
+						       + "\t"
+						       + plan.size()
+						       + "\t"
+						       + searchStatistics.getElapsedTime()
+						       + "\t"
+						       + searchStatistics.getNodesExpanded()
+						       + "\t"
+						       + 0
+						       + "\r\n");
 			}
 			out.close();
 			logger.debug("\ninformation written to Output/" + args[2]);
@@ -295,7 +259,7 @@ public class SearchTest {
 
 	private static void usage() {
 		System.err
-				.println("usage: java GraphSolver <domain-pddl-file> <problem-pddl-file> <output file> <Search type (optional: either frisky(default), length, or uniformcost)>");
+		.println("usage: java GraphSolver <domain-pddl-file> <problem-pddl-file> <output file> <Search type (optional: either frisky(default), length, or uniformcost)>");
 		System.exit(1);
 	}
 }

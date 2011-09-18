@@ -5,11 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import jdd.bdd.BDD;
+
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.PIMetric;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.AbstractStateNode;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
@@ -72,6 +75,7 @@ public class IncompleteBDDNode extends FaultStateNode implements
 	
 	public  IncompleteBDDNode(IncompleteBDDNode incompleteBDDNode) {
 		super(incompleteBDDNode);
+//		criticalRisks = new BDDRiskSet();
 		criticalRisks = new BDDRiskSet((BDDRiskSet) incompleteBDDNode.criticalRisks);
 //		gvalue[0] = new PIMetric((PIRiskSet)this.criticalRisks);
 //		gvalue[1] = new NumericMetric(((NumericMetric)incompleteBDDNode.getGValue()[1]).getValue());
@@ -82,5 +86,14 @@ public class IncompleteBDDNode extends FaultStateNode implements
 		return solver.getHeuristic().getExplanation(this);
 		
 	}
+	public String getFailureExplanationString() {
+		StringBuilder s = new StringBuilder();
+		s.append(this.criticalRisks.toString()).append("\n");
+		//s.append(RiskCounter.getBigUnSolvableDomainCount(this.criticalRisks));
+		//s.append(RiskCounter.getBDD().printSet(this.criticalRisks.getFaults()));
+		return s.toString();
+	}
 
+
+	
 }

@@ -25,6 +25,7 @@ public interface Search {
 	public void setRelevantActions(List<ActionInstance> actions);
 	public Problem getProblem();
 	public SearchStatistics getSearchStatistics();
+	public SolutionEvaluator getSolutionEvaluator();
 	
 	
 }

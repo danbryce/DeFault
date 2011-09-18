@@ -5,7 +5,7 @@ import java.util.*;
 import edu.usu.cs.ka.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 
 
 public class Agent_CL extends Agent 
@@ -71,7 +71,7 @@ public class Agent_CL extends Agent
 		//LO0KAHEAD
 		//bdd.ref(bddRef_KB);
 		//int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, Planner.solver);
-		int failureExplanationSentence_bddRef = RiskCounter.tryThisPFEGenerator(problem, plan, Planner.solver);
+		int failureExplanationSentence_bddRef = FaultCounter.tryThisPFEGenerator(problem, plan, Planner.solver);
 		
 		//If the plan has failed, this will know about it. It's time to replan.
 		if(bdd.toString(failureExplanationSentence_bddRef).contains("TRUE")) 

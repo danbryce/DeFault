@@ -1,41 +1,104 @@
-\documentclass{article}
+ \documentclass{article}
+%% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
 
-\usepackage{aaai}
-\usepackage{amsmath}
-\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+% For citations
+\usepackage{natbib}
 
-\def\und#1{\noindent{\bf #1}:}
-\def\citep#1{\cite{#1}}
-\def\citet#1{\citeauthor{#1} (\citeyear{#1})}
-\def\FFRISKY{{\tt DeFAULT}}
-\def\default{{\tt DeFAULT}}
-\def\goalie{{\tt Goalie}}
-\renewcommand{\baselinestretch}{.98}
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
+% As of 2010, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2011} with
+% \usepackage[nohyperref]{icml2011} above.
+\usepackage{hyperref}
 
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
 
-\newenvironment{packed_enum}{
-\begin{enumerate}
-  \setlength{\itemsep}{1pt}
-  \setlength{\parskip}{0pt}
-  \setlength{\parsep}{0pt}
-}{\end{enumerate}}
-
-\newenvironment{packed_itemize}{
-\begin{itemize}
-  \setlength{\itemsep}{1pt}
-  \setlength{\parskip}{0pt}
-  \setlength{\parsep}{0pt}
-}{\end{itemize}}
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+\usepackage{icml2011} 
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Appearing in''
+% \usepackage[accepted]{icml2011}
 
 
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Submission and Formatting Instructions for ICML 2011}
 
-\title{Goal-Directed Knowledge Acquisition}
-\author{Paper ID: 441}
+\begin{document} 
 
-\begin{document}
-\nocopyright
-\maketitle
+\twocolumn[
+\icmltitle{Submission and Formatting Instructions for the Twenty-Eighth \\ 
+           International Conference on Machine Learning (ICML 2011)}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2011
+% package.
+\icmlauthor{Your Name}{email@yourdomain.edu}
+\icmladdress{Your Fantastic Institute,
+            314159 Pi St., Palo Alto, CA 94306 USA}
+\icmlauthor{Your CoAuthor's Name}{email@coauthordomain.edu}
+\icmladdress{Their Fantastic Institute,
+            27182 Exp St., Toronto, ON M6H 2T1 CANADA}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{boring formatting information, machine learning, ICML}
+
+\vskip 0.3in
+]
+
+
+% \documentclass{article}
+% 
+% \usepackage{aaai}
+% \usepackage{amsmath}
+% \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+% 
+% \def\und#1{\noindent{\bf #1}:}
+% \def\citep#1{\cite{#1}}
+% \def\citet#1{\citeauthor{#1} (\citeyear{#1})}
+% \def\FFRISKY{{\tt DeFAULT}}
+% \def\default{{\tt DeFAULT}}
+% \def\goalie{{\tt Goalie}}
+% \renewcommand{\baselinestretch}{.98}
+% 
+% 
+% 
+% \newenvironment{packed_enum}{
+% \begin{enumerate}
+%   \setlength{\itemsep}{1pt}
+%   \setlength{\parskip}{0pt}
+%   \setlength{\parsep}{0pt}
+% }{\end{enumerate}}
+% 
+% \newenvironment{packed_itemize}{
+% \begin{itemize}
+%   \setlength{\itemsep}{1pt}
+%   \setlength{\parskip}{0pt}
+%   \setlength{\parsep}{0pt}
+% }{\end{itemize}}
+% 
+% 
+% 
+% \title{Goal-Directed Knowledge Acquisition}
+% \author{Paper ID: 441}
+% 
+% \begin{document}
+% \nocopyright
+% \maketitle
 
 \begin{abstract}
 Agents with incomplete knowledge of their actions can either plan around the
@@ -803,6 +866,6 @@ actual plans.
 \footnotesize
 \renewcommand{\baselinestretch}{.75}
 \bibliography{aaai11QA,jared}
-\bibliographystyle{aaai}
+\bibliographystyle{icml2011}
 
 \end{document}

@@ -5,7 +5,7 @@ import java.util.*;
 import edu.usu.cs.ka.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import jdd.bdd.*;
 
 /**
@@ -77,18 +77,18 @@ public abstract class Agent
 		setActions();
 		loadActionsHT();
 		
-		RiskCounter.resetIsInitialized();
-		RiskCounter.initialize(domain, problem);
+		FaultCounter.resetIsInitialized();
+		FaultCounter.initialize(domain, problem);
 		
-		bdd = RiskCounter.getBDD();
+		bdd = FaultCounter.getBDD();
 		bddRef_KB = bdd.ref(bdd.getOne());
 		bdd.ref(bddRef_KB);
 		
-		risks = RiskCounter.getAllRisks();
-		riskToBDD = RiskCounter.getRiskToBDD();
-		bddToRisk = RiskCounter.getBddToRisk();
-		riskToNumVarIndexForCube = RiskCounter.getRiskToNumVarIndexForCube();
-		numVarIndexToRiskForCubeOrMinterm = RiskCounter.getNumVarIndexToRiskForCube();
+		risks = FaultCounter.getAllRisks();
+		riskToBDD = FaultCounter.getRiskToBDD();
+		bddToRisk = FaultCounter.getBddToRisk();
+		riskToNumVarIndexForCube = FaultCounter.getRiskToNumVarIndexForCube();
+		numVarIndexToRiskForCubeOrMinterm = FaultCounter.getNumVarIndexToRiskForCube();
 		
 		failVar = bdd.ref(bdd.createVar());
 		

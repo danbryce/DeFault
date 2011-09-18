@@ -9,7 +9,7 @@ import edu.usu.cs.ka.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -51,8 +51,8 @@ public class Planner
 		if(DomainExpert.getInstance() == null)
 		{
 			setDomainAndProblem();
-			RiskCounter.resetIsInitialized();//assumes one bdd for all tests
-			RiskCounter.initialize(domain, problem);
+			FaultCounter.resetIsInitialized();//assumes one bdd for all tests
+			FaultCounter.initialize(domain, problem);
 		}
 		else
 		{
@@ -60,8 +60,8 @@ public class Planner
 			domain = DomainExpert.getInstance().getDomain();
 		}
 		
-		initialModelCount = RiskCounter.getModelCount(1);
-		initialNumRisks = RiskCounter.getNumRisks();
+		initialModelCount = FaultCounter.getModelCount(1);
+		initialNumRisks = FaultCounter.getNumRisks();
 		
 		numTimesPlannerCalled = 0;
 		
@@ -331,13 +331,13 @@ public class Planner
 	 */
 	public BigInteger getFinalModelCount()
 	{
-		RiskCounter.resetIsInitialized();
-		RiskCounter.initialize(domain, problem);
+		FaultCounter.resetIsInitialized();
+		FaultCounter.initialize(domain, problem);
 		
-		return RiskCounter.getModelCount(1);
+		return FaultCounter.getModelCount(1);
 	}
 	
-	public int getFinalNumRisks() { return RiskCounter.getNumRisks(); }
+	public int getFinalNumRisks() { return FaultCounter.getNumRisks(); }
 	
 	private void startStopwatch(){startTime = System.currentTimeMillis();}
 	

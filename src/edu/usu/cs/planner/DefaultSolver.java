@@ -22,7 +22,7 @@ import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.ffrisky.util.PddlImporter;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
@@ -76,7 +76,7 @@ public class DefaultSolver implements Solver {
 		this.problem = problem;
 		this.solverOptions = solverOptions;
 		this.searchStatistics = searchStatistics;
-		bdd = RiskCounter.getBDD();
+		bdd = FaultCounter.getBDD();
 
 		if(this.problem.getActions() == null)//This is a change created by CW during 8.10
 		{

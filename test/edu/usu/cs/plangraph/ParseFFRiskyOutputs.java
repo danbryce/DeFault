@@ -2,7 +2,7 @@ package edu.usu.cs.plangraph;
 
 import org.junit.Test;
 
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 
 public class ParseFFRiskyOutputs {
 
@@ -36,7 +36,7 @@ public class ParseFFRiskyOutputs {
 							bridgesArgs[3] = bridgesOutputPath + "../stats_bridges.txt";
 							bridgesArgs[4] = Integer.toString(instance);
 							bridgesArgs[5] = prob;
-							RiskCounter.main(bridgesArgs);
+							FaultCounter.main(bridgesArgs);
 						}
 					}
 				}
@@ -190,7 +190,7 @@ public class ParseFFRiskyOutputs {
 					args[3] = blindnavOutputPath + "../stats_blindnav.txt";
 					args[4] = Integer.toString(instance);
 					args[5] = Double.toString(0.5);
-					RiskCounter.main(args);
+					FaultCounter.main(args);
 				}
 			}
 		}
@@ -219,7 +219,7 @@ public class ParseFFRiskyOutputs {
 						args[3] = pathwaysOutputPath + "../stats_pathways.txt";
 						args[4] = Integer.toString(instance);
 						args[5] = prob;
-						RiskCounter.main(args);
+						FaultCounter.main(args);
 					}
 				}
 			}
@@ -245,7 +245,7 @@ public class ParseFFRiskyOutputs {
 					args[3] = parcprinterOutputPath + "../stats_parcprinter.txt";
 					args[4] = Integer.toString(instance);
 					args[5] = "0.5";
-					RiskCounter.main(args);
+					FaultCounter.main(args);
 				}
 			}
 		}
