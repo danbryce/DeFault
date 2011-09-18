@@ -102,4 +102,11 @@ public class FaultyHeuristic implements Heuristic {
 		heuristicSolver.removeIrrelevant(relevant);
 		
 	}
+
+
+	@Override
+	public FaultSet getExplanation(StateNode node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

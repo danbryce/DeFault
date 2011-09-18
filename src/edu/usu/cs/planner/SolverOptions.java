@@ -6,6 +6,8 @@ public class SolverOptions {
 
 	
 	public static enum FAULT_TYPE  { PI_FAULTS, BDD_FAULTS };
+	public static enum SEARCHTYPE  {ANYTIME, FIRST} ;
+
 	
 	private boolean useHelpfulActions = false;
 	private boolean useMultipleSupportersInPlanningGraph = false;
@@ -14,8 +16,9 @@ public class SolverOptions {
 	private boolean riskHeuristicFirst = false;
 	private boolean useJDDGValue = false;
 	private FAULT_TYPE faultType = FAULT_TYPE.PI_FAULTS;
+	private boolean biasRelaxedPlanWithFaults = true;
 	
-	
+
 	public FAULT_TYPE getFaultType() {
 		return faultType;
 	}
@@ -38,6 +41,10 @@ public class SolverOptions {
 	private boolean ucs = false;
 	private int riskArity = 2;
 	private boolean conditional = false;
+	private SEARCHTYPE searchType;
+	public SEARCHTYPE getSearchType() {
+		return searchType;
+	}
 	public boolean isUseHelpfulActions() {
 		return useHelpfulActions;
 	}
@@ -87,5 +94,15 @@ public class SolverOptions {
 	}
 	public boolean getConditional(){
 		return conditional;
+	}
+	public void setBiasRelaxedPlanWithFaults(boolean biasRelaxedPlanWithFaults) {
+		this.biasRelaxedPlanWithFaults = biasRelaxedPlanWithFaults;
+	}
+	public boolean isBiasRelaxedPlanWithFaults() {
+		return biasRelaxedPlanWithFaults;
+	}
+	public void setSearchType(SEARCHTYPE anytime) {
+		searchType = anytime;
+		
 	}
 }

@@ -73,6 +73,12 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 		return false;
 	}
 
+	@Override
+	public boolean getFoundSolution() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 //	@Override
 //	public boolean closedContains(Set<StateNode> closed, StateNode currentNode) {
 //		//TODO need a hash here

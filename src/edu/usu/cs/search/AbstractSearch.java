@@ -149,4 +149,11 @@ public class AbstractSearch implements Search {
 		// TODO Auto-generated method stub
 		return searchStatistics;
 	}
+
+
+	@Override
+	public SolutionEvaluator getSolutionEvaluator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

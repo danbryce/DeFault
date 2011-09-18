@@ -538,11 +538,10 @@ public class IncompleteActionInstance  implements ActionInstance{
 //	public void setActionRisks(int actionRisks) {
 //		this.actionRisks = actionRisks;
 //	}
-
+//
 	public int getActionRisks() {
 		return this.actionRisks;
 	}
-
 
 	public void removeIrrelevant(Set<Integer> set) {
 

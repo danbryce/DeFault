@@ -20,13 +20,15 @@ public interface StateNode extends Comparable<StateNode>{
 //	public Set<Proposition> getState();
 	public List<StateNode> getSubsequentNodes();
 	public List<StateNode> createSubsequentNodes(
+
 			Set<ActionInstance> set, Set<ActionInstance> actionsToIgnore);
 	//public List<ActionInstance> getRelevantActions();
 	StateNode getSuccessorNode(ActionInstance action);
 	public boolean satisfies(Set<Proposition> goal);
 	public Set<Proposition> getState();
 	public boolean equals(StateNode node);
-	public int compareTo(StateNode node);
+	public String getPlanString();
+	public String getFailureExplanationString();
 
 	
 	

@@ -74,61 +74,27 @@ public class SearchTest {
 		try {
 			// Initialize search algorithm
 
-//			if (args.length == 3 || args[3].equalsIgnoreCase("frisky")
-//					|| args[3].equalsIgnoreCase("friskyLengthFirst")) {
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args[3].equalsIgnoreCase("friskyRiskFirst")) {
-//				solverOptions.setRiskHeuristicFirst(true);
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args.length == 3 || args[3].equalsIgnoreCase("friskyMS")
-//					|| args[3].equalsIgnoreCase("friskyMSLengthFirst")) {
-//				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args[3].equalsIgnoreCase("friskyMSRiskFirst")) {
-//				solverOptions.setRiskHeuristicFirst(true);
-//				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
-//				solver = new FFriskySolver(domain, problem, searchStatistics,
-//						solverOptions);
-//			} else if (args.length == 3
-//					|| args[3].equalsIgnoreCase("friskylength")) {
-//				solver = new FFriskyLengthSolver(domain, problem,
-//						searchStatistics, solverOptions);
-//
-//			} else if (args.length == 3
-//					|| args[3].equalsIgnoreCase("friskypsp")) {
-//
-//				solver = new FFRiskyPSPSolver(domain, problem,
-//						searchStatistics, solverOptions);
-//
-//			} else if (args.length == 3
-//					|| args[3].equalsIgnoreCase("friskyEHC")) {
-//
-//				solver = new FFriskyEHCSolver(domain, problem,
-//						searchStatistics, solverOptions);
-//			} else if (args[3].equalsIgnoreCase("uniformcost")
-//					|| args[3].equalsIgnoreCase("uniform")) {
-//				solverOptions.setUCS(true);
-//				solver = new UniformCostFFriskySolver(domain, problem,
-//						searchStatistics, solverOptions);
-//			} else
+			if(args.length > 4 && args[4].equalsIgnoreCase("anytime")){
+				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.ANYTIME);
+			}
+			else{
+				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.FIRST);
+			}
+
 			if (args[3].equalsIgnoreCase("length")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
+
 				solverOptions.setUseMultipleSupportersInPlanningGraph(false);
 				solver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
 			} else if (args[3].length() > 4 && args[3].subSequence(0,4).toString().equalsIgnoreCase("pode")) {
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+				solverOptions.setUseMultipleSupportersInPlanningGraph(true);			
 				solverOptions.setRiskArity(Integer.valueOf(args[3].substring(4)));
 				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
 				solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
-				solverOptions.setRiskArity(Integer.valueOf(args[3].substring(4)));
-				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_FAULTS);
-				solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);
-//STOP HERE - the length and the pod solver are the ones to focus on for now //////////////////////////
-				
-				
+				solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);				
 			} else if (args[3].equalsIgnoreCase("jdd")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);

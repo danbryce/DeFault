@@ -13,6 +13,7 @@ import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.StateNode;
 
 public class StanHeuristic implements Heuristic {
@@ -43,7 +44,7 @@ public class StanHeuristic implements Heuristic {
 		
 		return values;
 	}
-
+	
 //	public double[] getValue(StateNode node) {
 //		double[] values = new double[2];
 //
@@ -76,7 +77,6 @@ public class StanHeuristic implements Heuristic {
 		// TODO Auto-generated method stub
 		return heuristicSolver.getPreferredActions();
 	}
-
 	@Override
 	public Set[] getRelevant() {
 		// TODO Auto-generated method stub
@@ -87,10 +87,26 @@ public class StanHeuristic implements Heuristic {
 		heuristicSolver = null;
 	}
 
+//	@Override
+//	public Set<ActionInstance> getRelevantActions() {
+//		return heuristicSolver.getRelevantActions();
+////		List<ActionHeader> headers = heuristicSolver.getActionSpike().getActionsByRank(heuristicSolver.getActionSpike().getCurrentRank()-1);
+////		List<ActionInstance> returnActions = new ArrayList<ActionInstance>();
+////		for(ActionHeader header: headers){
+////			returnActions.add(header.getAction());
+////		}
+////		return returnActions;
+//	}
+
+
+
+	@Override
+	public FaultSet getExplanation(StateNode node) {
+		return null;
+	}
 	@Override
 	public void removeIrrelevant(Set[] relevant) {
 	heuristicSolver.removeIrrelevant(relevant);	
 	}
-	
 	
 }

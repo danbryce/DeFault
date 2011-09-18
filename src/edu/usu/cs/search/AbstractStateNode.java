@@ -63,6 +63,9 @@ public class AbstractStateNode implements StateNode {
 //		return relevantActions;
 //	}
 
+	//	protected double[] H_WEIGHT = null;
+
+
 	public AbstractStateNode() {
 		// TODO Auto-generated constructor stub
 	}
@@ -125,7 +128,6 @@ public class AbstractStateNode implements StateNode {
 		return newNodes;
 	}
 
-
 	
 	public List<StateNode> getSubsequentNodes() {
 		//return subsequentNodes;
@@ -152,11 +154,11 @@ public class AbstractStateNode implements StateNode {
 
 	@Override
 	public int hashCode() {
-//		if (hashInitialized) {
-//			return hash;
-//		}
-//
-//		hash = Proposition.getNodeHash(this.getState());
+		if (hashInitialized) {
+			return hash;
+		}
+
+		hash = Proposition.getNodeHash(this.getState());
 
 		hashInitialized = true;
 		return hash;
@@ -165,6 +167,10 @@ public class AbstractStateNode implements StateNode {
 	@Override
 	public boolean equals(StateNode o) {
 		return true;
+	}
+	@Override
+	public boolean equals(Object o) {
+		return equals((StateNode)o);
 	}
 
 	@Override
@@ -177,6 +183,18 @@ public class AbstractStateNode implements StateNode {
 	public boolean satisfies(Set<Proposition> goal) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String getPlanString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getFailureExplanationString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

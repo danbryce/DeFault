@@ -13,4 +13,8 @@ public interface SolutionEvaluator {
 	//boolean closedContains(Set<StateNode> closed, StateNode currentNode);
 	//boolean isBetter(StateNode childNode, StateNode parentNode);
 	//Search getFallBackSearch();
+	//boolean closedContains(Set<StateNode> closed, StateNode currentNode);
+	//boolean isBetter(StateNode childNode, StateNode parentNode);
+	//Search getFallBackSearch();
+	boolean getFoundSolution();
 }
