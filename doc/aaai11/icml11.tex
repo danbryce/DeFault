@@ -477,7 +477,7 @@ then $\pi$ {\em will}  fail.
 % literal entailed by $\phi$ indicates if the respective action has the possible
 % feature as a known or impossible feature; all other features remain as possible
 % features. 
-Algorithm \ref{alg:replan} is the strategy used by the Non-QA agent.  The
+ Algorithm  1 is the strategy used by the Non-QA agent.  The
 algorithm involves initializing the agent's knowledge and plan (line 1), and then while
 the plan is non-empty and the goal is not achieved (line 2) the agent proceeds
 as follows.  The agent selects the next action in the plan (line 3) and
@@ -506,7 +506,7 @@ o_1) = \neg del(a, r)$.  The agent must re-plan because $\phi' \models d(\pi)$.
 
 \begin{algorithm}[t]
 \caption{Non-QA$(s, G, {A})$}
-\label{alg:replan}
+\label{replan}
   \begin{algorithmic}[1]
 \STATE $\phi \leftarrow \top$; $\pi \leftarrow {\tt plan}(s, G, {A}, \phi)$;
 \WHILE{$\pi \not= ()$ and $G\not\subseteq s$}
