@@ -10,7 +10,7 @@ import edu.usu.cs.heuristic.stanplangraph.incomplete.FaultyHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.IncompleteBDDConditionalNode;
 import edu.usu.cs.search.PreferredOperatorDeferredEvaluationConditionalSearch;
 import edu.usu.cs.search.Search;

@@ -5,7 +5,7 @@ import java.util.*;
 import edu.usu.cs.ka.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 
 
 public class Agent_CL extends Agent {
@@ -64,7 +64,7 @@ public class Agent_CL extends Agent {
 		{
 			//bdd.ref(bddRef_KB);
 			problem.setInitialState(currState);
-			int failureExplanationSentence_bddRef = RiskCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
+			int failureExplanationSentence_bddRef = FaultCounter.getFailureExplanationSentence_BDDRef(problem, plan, currAction, Planner.solver);
 			if(bdd.and(bddRef_KB, bdd.not(failureExplanationSentence_bddRef)) == 0)
 			{
 				//System.out.print(" &");

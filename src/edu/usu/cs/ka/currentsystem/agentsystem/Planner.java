@@ -8,7 +8,7 @@ import edu.usu.cs.ka.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
 import edu.usu.cs.planner.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -39,10 +39,10 @@ public class Planner
 				
 		setDomainAndProblem();
 
-		RiskCounter.resetIsInitialized();
-		RiskCounter.initialize(domain, problem);
+		FaultCounter.resetIsInitialized();
+		FaultCounter.initialize(domain, problem);
 		
-		initialModelCount = RiskCounter.getModelCount(1);
+		initialModelCount = FaultCounter.getModelCount(1);
 		
 		numTimesPlannerCalled = 0;
 	}
@@ -237,10 +237,10 @@ public class Planner
 	 */
 	public BigInteger getFinalModelCount()
 	{
-		RiskCounter.resetIsInitialized();
-		RiskCounter.initialize(domain, problem);
+		FaultCounter.resetIsInitialized();
+		FaultCounter.initialize(domain, problem);
 		
-		return RiskCounter.getModelCount(1);
+		return FaultCounter.getModelCount(1);
 	}
 	
 	private void startStopwatch(){startTime = System.currentTimeMillis();}

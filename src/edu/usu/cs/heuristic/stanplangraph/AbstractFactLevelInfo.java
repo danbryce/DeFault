@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import edu.usu.cs.planner.Solver;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.incomplete.PIRiskSet;
 
 public class AbstractFactLevelInfo implements FactLevelInfo{

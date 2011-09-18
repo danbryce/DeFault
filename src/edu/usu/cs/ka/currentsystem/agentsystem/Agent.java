@@ -5,7 +5,7 @@ import java.util.*;
 import edu.usu.cs.ka.currentsystem.utilities.*;
 import edu.usu.cs.pddl.domain.*;
 import edu.usu.cs.pddl.domain.incomplete.*;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import jdd.bdd.*;
 
 /**
@@ -56,16 +56,16 @@ public abstract class Agent
 		setActions();
 		loadActionsHT();
 		
-		RiskCounter.resetIsInitialized();//The Fault.StaticHashMaps are also reset in this method
-		RiskCounter.initialize(domain, problem);
+		FaultCounter.resetIsInitialized();//The Fault.StaticHashMaps are also reset in this method
+		FaultCounter.initialize(domain, problem);
 		
-		bdd = RiskCounter.getBDD();
+		bdd = FaultCounter.getBDD();
 		//bddRef_KB = RiskCounter.get_bddRef();
 		bddRef_KB = bdd.ref(bdd.getOne());
 		
-		risks = RiskCounter.getAllRisks();
-		riskToBDD = RiskCounter.getRiskToBDD();
-		bddToRisk = RiskCounter.getBddToRisk();
+		risks = FaultCounter.getAllRisks();
+		riskToBDD = FaultCounter.getRiskToBDD();
+		bddToRisk = FaultCounter.getBddToRisk();
 		
 		failVar = bdd.createVar();
 		

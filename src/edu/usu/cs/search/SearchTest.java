@@ -26,7 +26,7 @@ import edu.usu.cs.planner.PODEFFSolver;
 import edu.usu.cs.planner.PODEPISolver;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -134,7 +134,7 @@ public class SearchTest {
 				solverOptions.setUseDeferredEvaluation(true);
 				solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
-				RiskCounter.initialize(domain, problem, null);
+				FaultCounter.initialize(domain, problem, null);
 				solver = new PODEBDDSolver(domain, problem, searchStatistics, solverOptions);
 			 
 		} else if (args[3].equalsIgnoreCase("ao")) {
@@ -143,7 +143,7 @@ public class SearchTest {
 			solverOptions.setUseMultipleSupportersInPlanningGraph(true);
 			solverOptions.setFaultType(SolverOptions.FAULT_TYPE.BDD_FAULTS);
 			solverOptions.setConditional(true);
-			RiskCounter.initialize(domain, problem, null);
+			FaultCounter.initialize(domain, problem, null);
 			solver = new PODEBDDConditionalSolver(domain, problem, searchStatistics, solverOptions);
 		}
 			
@@ -223,16 +223,16 @@ public class SearchTest {
 //			logger.debug(((FFRiskyNode) searchStatistics.getSolutionNode())
 //							.getCriticalRisks());
 			
-			RiskCounter.initialize(domain, problem, plan);
-			BigInteger total =BigInteger.valueOf(1).shiftLeft(RiskCounter.getNumRisks());
-			BigInteger solvable = RiskCounter.getModelCount(domain, problem, plan, solver); 
+			FaultCounter.initialize(domain, problem, plan);
+			BigInteger total =BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
+			BigInteger solvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
 			BigDecimal probability = new BigDecimal(solvable);
 			probability = probability.divide(new BigDecimal(total));
 				
 			logger.debug("Solvable Domains: " + solvable);
 			logger.debug("Total Domains: " + total);
 			logger.debug("Probability: " + probability);
-			logger.debug("Incomplete Features: " + RiskCounter.getNumRisks());
+			logger.debug("Incomplete Features: " + FaultCounter.getNumRisks());
 
 		}
 		else if(searchStatistics.getSolutionNode() != null
@@ -240,7 +240,7 @@ public class SearchTest {
 			logger.debug("Risk count: "
 					+ ((RiskCounterNode) searchStatistics.getSolutionNode())
 							.getGValue()[0]);
-			RiskCounter.getBDD().printSet(RiskCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
+			FaultCounter.getBDD().printSet(FaultCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
 							.getActRisks()));			
 		}
 		try {

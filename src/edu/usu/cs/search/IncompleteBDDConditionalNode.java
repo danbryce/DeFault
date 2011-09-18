@@ -23,7 +23,7 @@ import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.StateObservation;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.incomplete.PIRiskSet;
 
 public class IncompleteBDDConditionalNode extends IncompleteBDDNode implements
@@ -70,7 +70,7 @@ StateNode {
 
 		if(unsatPossPre.size() > 0){
 			for(Fault f : unsatPossPre){
-				int t = solver.getBDD().ref(solver.getBDD().or(preKnowledge, RiskCounter.getBddFromFault(f)));
+				int t = solver.getBDD().ref(solver.getBDD().or(preKnowledge, FaultCounter.getBddFromFault(f)));
 				solver.getBDD().deref(preKnowledge);
 				preKnowledge = t;
 				solver.getBDD().ref(preKnowledge);
@@ -87,7 +87,7 @@ StateNode {
 		int preKnowledge1 = solver.getBDD().ref(knowledge);
 
 		for(Fault f : unsatPossPre){
-			int t = solver.getBDD().ref(solver.getBDD().and(preKnowledge1, solver.getBDD().not(RiskCounter.getBddFromFault(f))));
+			int t = solver.getBDD().ref(solver.getBDD().and(preKnowledge1, solver.getBDD().not(FaultCounter.getBddFromFault(f))));
 			solver.getBDD().deref(preKnowledge1);
 			preKnowledge1 = t;
 			solver.getBDD().ref(preKnowledge1);
@@ -134,8 +134,8 @@ StateNode {
 			Fault f = possDels.iterator().next();
 			possDels.remove(f);
 
-			int kt = solver.getBDD().ref(solver.getBDD().and(currKnowledge, RiskCounter.getBddFromFault(f)));
-			int kf = solver.getBDD().ref(solver.getBDD().and(currKnowledge, solver.getBDD().not(RiskCounter.getBddFromFault(f))));
+			int kt = solver.getBDD().ref(solver.getBDD().and(currKnowledge, FaultCounter.getBddFromFault(f)));
+			int kf = solver.getBDD().ref(solver.getBDD().and(currKnowledge, solver.getBDD().not(FaultCounter.getBddFromFault(f))));
 			results = getEffectResultsRec(possAdds, possDels, currKnowledge, results,action1);
 			results = getEffectResultsRec(possAdds, possDels, currKnowledge, results,action1);
 			possDels.add(f);			
@@ -146,8 +146,8 @@ StateNode {
 			Fault f = possAdds.iterator().next();
 			possAdds.remove(f);
 
-			int kt = solver.getBDD().ref(solver.getBDD().and(currKnowledge, RiskCounter.getBddFromFault(f)));
-			int kf = solver.getBDD().ref(solver.getBDD().and(currKnowledge, solver.getBDD().not(RiskCounter.getBddFromFault(f))));
+			int kt = solver.getBDD().ref(solver.getBDD().and(currKnowledge, FaultCounter.getBddFromFault(f)));
+			int kf = solver.getBDD().ref(solver.getBDD().and(currKnowledge, solver.getBDD().not(FaultCounter.getBddFromFault(f))));
 
 			results = getEffectResultsRec(possAdds, possDels, kt, results,action1);
 			results =  getEffectResultsRec(possAdds, possDels, kf, results,action1);
@@ -408,7 +408,7 @@ StateNode {
 
 	public Map<Observation, StateNode> getSuccessorNodes(Fault action1) {
 		Map<Observation, StateNode> results = new HashMap<Observation, StateNode>();
-		int fbdd = RiskCounter.getBddFromFault(action1);
+		int fbdd = FaultCounter.getBddFromFault(action1);
 
 		//true case
 		int tknowledge = solver.getBDD().ref(solver.getBDD().and(knowledge, fbdd));
@@ -499,12 +499,12 @@ StateNode {
 	}
 
 	private boolean knownTrue(Fault f){
-		int index = RiskCounter.getBddFromFault(f);
+		int index = FaultCounter.getBddFromFault(f);
 		return entails(knowledge, index);		
 	}
 
 	private boolean knownFalse(Fault f){
-		int index = solver.getBDD().not(RiskCounter.getBddFromFault(f));
+		int index = solver.getBDD().not(FaultCounter.getBddFromFault(f));
 		return entails(knowledge, index);
 	}
 

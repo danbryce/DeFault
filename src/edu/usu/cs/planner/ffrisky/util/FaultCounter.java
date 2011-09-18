@@ -31,7 +31,7 @@ import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.search.FaultSet;
 
-public class RiskCounter {
+public class FaultCounter {
 
 	private static BDD bdd;
 	private static int bddRef;
@@ -40,7 +40,7 @@ public class RiskCounter {
 	private static List<Fault> allRisks;
 	private static boolean isInitialized = false;
 	private static int unusedRisks = 0;//currently unused
-	private static Logger logger = Logger.getLogger(RiskCounter.class.getName());
+	private static Logger logger = Logger.getLogger(FaultCounter.class.getName());
 		
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
 		if (isInitialized) return;
@@ -133,7 +133,7 @@ public class RiskCounter {
 	public static void resetIsInitialized()
 	{
 		isInitialized = false;
-		logger = Logger.getLogger(RiskCounter.class.getName());
+		logger = Logger.getLogger(FaultCounter.class.getName());
 		
 		Fault.resetStaticHashMaps();
 	}
@@ -288,7 +288,7 @@ public class RiskCounter {
 		
 		BigInteger solvableDomains;
 		try{
-			solvableDomains = RiskCounter.bdd.bigSatCount(bdd);
+			solvableDomains = FaultCounter.bdd.bigSatCount(bdd);
 		}catch (Exception e)//Added due to odd negative exponent exception
 		{
 			//System.out.print(" !");
@@ -328,12 +328,12 @@ public class RiskCounter {
 
 	
 	public static BDD 					getBDD() 									{ return bdd; }
-	public static void 					setBdd(BDD bdd) 							{ RiskCounter.bdd = bdd; }
+	public static void 					setBdd(BDD bdd) 							{ FaultCounter.bdd = bdd; }
 	public static int 					get_bddRef()								{ return bddRef; }
 	public static Map<Fault, Integer> 	getRiskToBDD() 								{ return riskToBDD; }
-	public static void 					setRiskToBDD(Map<Fault, Integer> riskToBDD) { RiskCounter.riskToBDD = riskToBDD; }
+	public static void 					setRiskToBDD(Map<Fault, Integer> riskToBDD) { FaultCounter.riskToBDD = riskToBDD; }
 	public static Map<Integer, Fault> 	getBddToRisk() 								{ return bddToRisk; }
-	public static void 					setBddToRisk(Map<Integer, Fault> bddToRisk) { RiskCounter.bddToRisk = bddToRisk; }
+	public static void 					setBddToRisk(Map<Integer, Fault> bddToRisk) { FaultCounter.bddToRisk = bddToRisk; }
 
 	private static List<Fault> getAllRisks(Problem problem) {
 		List<Fault> risks = new ArrayList<Fault>();

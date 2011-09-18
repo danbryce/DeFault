@@ -10,7 +10,7 @@ import edu.usu.cs.heuristic.stanplangraph.FactLevelInfo;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.RiskCounter;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.incomplete.PIRiskSet;
 
 public class ClassicalFactLevelInfo extends AbstractFactLevelInfo{
