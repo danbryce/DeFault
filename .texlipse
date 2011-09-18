@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Sat Sep 17 18:07:25 MDT 2011
+builderNum=6
+outputDir=doc/aaai11/
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=
+mainTexFile=icml11.tex
+outputFile=icml11.pdf
+langSpell=en
+markDer=true
+srcDir=doc/aaai11/
