@@ -22,7 +22,7 @@ public class PODEPISolver extends DefaultSolver implements Solver {
 				domain, 
 				problem, 
 				actionInstances, 
-				new RiskSolutionEvaluator(domain, problem, searchStatistics), 
+				new RiskSolutionEvaluator(domain, problem, searchStatistics, solverOptions), 
 				searchStatistics, 
 				this
 				);

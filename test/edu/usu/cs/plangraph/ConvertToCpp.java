@@ -1,7 +1,8 @@
 package edu.usu.cs.plangraph;
 
 import org.junit.Test;
-import edu.usu.cs.search.SearchTest;
+
+import edu.usu.cs.Default;
 
 public class ConvertToCpp {
 	
@@ -39,7 +40,7 @@ public class ConvertToCpp {
 //						System.out.print(str + " ");
 //					}
 //					System.out.println();
-					SearchTest.main(args);
+					Default.main(args);
 				}
 			}
 		}

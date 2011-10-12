@@ -101,5 +101,9 @@ implements PreferredOperatorDeferredEvaluationNode{
 	}
 
 
+	public String toString(){
+		return getPlanString();
+	}
+
 
 }

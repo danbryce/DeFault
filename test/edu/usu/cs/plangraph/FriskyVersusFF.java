@@ -3,7 +3,7 @@ package edu.usu.cs.plangraph;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
-import edu.usu.cs.search.SearchTest;
+import edu.usu.cs.Default;
 
 
 public class FriskyVersusFF {
@@ -123,7 +123,7 @@ private static Logger logger = Logger.getLogger(FriskyVersusFF.class.getName());
 							logger.debug(arg + " ");
 						}
 						logger.debug("\n");
-						SearchTest.main(args);
+						Default.main(args);
 					}
 				}
 			}
@@ -185,7 +185,7 @@ private static Logger logger = Logger.getLogger(FriskyVersusFF.class.getName());
 				//				if(outputFile.exists()) // do not run same test twice
 				//					continue;
 				//				else 
-				SearchTest.main(args);
+				Default.main(args);
 			}
 		}
 	}

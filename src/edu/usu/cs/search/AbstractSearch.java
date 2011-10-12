@@ -154,6 +154,6 @@ public class AbstractSearch implements Search {
 	@Override
 	public SolutionEvaluator getSolutionEvaluator() {
 		// TODO Auto-generated method stub
-		return null;
+		return solutionEvaluator;
 	}
 }

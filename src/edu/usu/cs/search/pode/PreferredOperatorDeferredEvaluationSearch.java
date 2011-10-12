@@ -76,7 +76,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 		long expanded = 0;
 		boolean foundSolution = false;
 		long  startTime = System.currentTimeMillis();
-		long timeLimit = (long) (1*60*1000);
+		long timeLimit = (long) (1*60*10000);
 		while(System.currentTimeMillis() - startTime < timeLimit) {
 			PreferredOperatorDeferredEvaluationNode node;
 
@@ -128,7 +128,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			
 			// Check to see if the solution is found in the node
 			if(solutionEvaluator.isSolution(problem,node)) {
-				//logger.debug("Found Solution: " + node);
+				logger.debug("Found Solution: ");
 					if(solutionEvaluator.keepSolution(node, solutions)){
 					solutions.add(node);
 					if(!foundSolution){

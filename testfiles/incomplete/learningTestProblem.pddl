@@ -1,5 +1,0 @@
-(define (problem learningTestP1)
- (:domain learningTest)
- (:init )
- (:goal (q))
- )

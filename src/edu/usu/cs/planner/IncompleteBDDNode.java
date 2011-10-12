@@ -80,7 +80,12 @@ public class IncompleteBDDNode extends FaultStateNode implements
 
 	public FaultSet getExplanation() {
 		// TODO Auto-generated method stub
-		return null;
+		return criticalRisks;
 	}
 
+	public String toString(){
+		return getPlanString();
+	}
+
+	
 }

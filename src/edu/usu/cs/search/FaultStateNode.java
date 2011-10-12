@@ -86,7 +86,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			}
 		}
 		//logger.debug("EQ");
-		return true;
+		return criticalRisks == node.getCriticalRisks();
 		
 		
 		//return node.getState().equals(getState());
@@ -245,7 +245,8 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 						new PIRiskSet(actRisks) :
 							new BDDRiskSet(actRisks));
-			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty()){
+			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty() ||
+					solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ){
 				crossProduct.setFaults(1);
 			}
 
@@ -267,9 +268,9 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 		FaultSet actRisks = 
 			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDRiskSet());
-		actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
+					new PIRiskSet(criticalRisks) :
+						new BDDRiskSet(criticalRisks));
+	//	actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
 	//	actRisks.or(getPrecRisks(initialNode, action));
 
 		for (Proposition effect : action.getPossibleAddEffects()) {
@@ -341,15 +342,15 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				//Results in a higher-order interaction risk
 				FaultSet s1 = 
 					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
-								new BDDRiskSet());
-				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
-					s1.setFaults(1);
-				}
+							new PIRiskSet(node.state.get(possPrec)) :
+								new BDDRiskSet(node.state.get(possPrec)));
+//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
+//					s1.setFaults(1);
+//				}
 
 				s1.and(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec
 						.getName()));
-				s1.and(node.state.get(possPrec));
+//				s1.and(node.state.get(possPrec));
 				precOpen.or(s1);
 			}
 		}
@@ -365,13 +366,15 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 		FaultStateNode n1 = (FaultStateNode) (this.isHeuristicComputed() ? this : this.getParent());
 		FaultStateNode n2 = (FaultStateNode)(o.isHeuristicComputed() ? o : o.getParent());
 		
+		boolean foundSolution = solver.getSearch().getSolutionEvaluator().getFoundSolution();
+
 		
 		int diff[] = new int[2];
 
 		for(int i = 0; i < 2; i++){
 			diff[i] = n1.hvalue[i].compareTo(n2.hvalue[i]);
 		}
-		return (diff[1] == 0 ? diff[0] : diff[1]);
+		return (diff[1] == 0 || foundSolution ? diff[0] : diff[1]);
 		//return diff[1];
 	}
 	
@@ -386,5 +389,17 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 		 return 	((Double)((NumericMetric)getHeuristicValue()[1]).getValue()).equals(Double.MAX_VALUE);
 	}
 
+	public FaultSet getCriticalRisks() {
+		// TODO Auto-generated method stub
+		return criticalRisks;
+	}
 
+	@Override
+	public String getStateString() {
+		StringBuilder s = new StringBuilder();
+		for(Proposition p : state.keySet()){
+			s.append(p.getName()).append("\n").append(state.get(p).toString()).append("\n");
+		}
+		return s.toString();
+	}
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import edu.usu.cs.Default;
 import edu.usu.cs.pddl.domain.ActionDef;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -19,7 +20,6 @@ import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.search.SearchTest;
 
 public class TranslationToCPP {
 	private static Logger logger = Logger.getLogger(TranslationToCPP.class);
