@@ -98,5 +98,35 @@ public class BDDRiskSet implements FaultSet {
 	public String toString(){
 		return FaultCounter.getBDD().printSetToString(this.faults);
 	}
+
+	@Override
+	public void and(int possibleDomains) {
+		int tmp = FaultCounter.getBDD().and(possibleDomains, faults);
+		FaultCounter.getBDD().ref(tmp);
+		FaultCounter.getBDD().deref(faults);
+		faults = tmp;
+	}
+
+	@Override
+	public void or(int possibleDomains) {
+		int tmp = FaultCounter.getBDD().or(possibleDomains, faults);
+		FaultCounter.getBDD().ref(tmp);
+		FaultCounter.getBDD().deref(faults);
+		faults = tmp;
+	}
+
+	@Override
+	public void andNot(FaultSet criticalAndGoal) {
+		int tmp = FaultCounter.getBDD().and(FaultCounter.getBDD().not(((BDDRiskSet)criticalAndGoal).getFaults()), faults);
+		FaultCounter.getBDD().ref(tmp);
+		FaultCounter.getBDD().deref(faults);
+		faults = tmp;
+		
+	}
+
+	@Override
+	public void intersect(FaultSet failures) {
+		and((BDDRiskSet)failures);		
+	}
 	
 }

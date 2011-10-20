@@ -18,6 +18,7 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.search.incomplete.PIRiskSet;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationSearch;
@@ -245,8 +246,10 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 						new PIRiskSet(actRisks) :
 							new BDDRiskSet(actRisks));
-			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty() ||
-					solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ){
+			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty() //
+					//||
+					//solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS 
+					){
 				crossProduct.setFaults(1);
 			}
 
@@ -283,9 +286,18 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 							new PIRiskSet(actRisks) :
 								new BDDRiskSet(actRisks));
-				riskSet.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
-						effect.getName()));
-
+				
+				
+				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
+					riskSet.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
+							effect.getName()));
+}
+				else{
+					int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
+					riskSet.or(nadd);
+				}
+				
+				
 				state.put(effect, riskSet);
 				continue;
 			}
@@ -306,9 +318,14 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			}
 			
 			// Also add the UnlistedEffect risk
-			crossProduct.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
-					effect.getName()));
-
+			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
+				crossProduct.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName()));
+			}
+			else{
+				int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
+				crossProduct.or(nadd);
+			}
+			
 			// Intersect these with risks in the proposition to get the new risk
 			// set for the prop.
 			crossProduct.and(initialNode.state.get(effect));

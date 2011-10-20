@@ -6,7 +6,7 @@ public class SolverOptions {
 
 	
 	public static enum FAULT_TYPE  { PI_FAULTS, BDD_FAULTS };
-	public static enum SEARCHTYPE  {ANYTIME, FIRST} ;
+	public static enum SEARCHTYPE  {ANYTIME, FIRST, COVER} ;
 
 	
 	private boolean useHelpfulActions = false;

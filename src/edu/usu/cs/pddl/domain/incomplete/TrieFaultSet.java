@@ -62,4 +62,27 @@ public class TrieFaultSet implements FaultSet {
 
 	}
 
+	@Override
+	public void and(int possibleDomains) {
+		
+	}
+
+	@Override
+	public void or(int nadd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void andNot(FaultSet criticalAndGoal) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void intersect(FaultSet failures) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

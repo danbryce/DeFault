@@ -21,5 +21,7 @@ public interface Heuristic {
 	public void removeIrrelevant(Set[] relevant);
 	public FaultSet getExplanation(StateNode node);
 
+	public void setPossibleDomains(FaultSet uncoveredFaults);
+
 	
 }

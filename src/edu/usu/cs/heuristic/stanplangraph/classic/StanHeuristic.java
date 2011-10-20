@@ -108,5 +108,13 @@ public class StanHeuristic implements Heuristic {
 	public void removeIrrelevant(Set[] relevant) {
 	heuristicSolver.removeIrrelevant(relevant);	
 	}
+
+	@Override
+	public void setPossibleDomains(FaultSet uncoveredFaults) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 }

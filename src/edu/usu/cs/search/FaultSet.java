@@ -1,6 +1,7 @@
 package edu.usu.cs.search;
 
 import edu.usu.cs.pddl.domain.incomplete.Fault;
+import edu.usu.cs.search.incomplete.PIRiskSet;
 
 public interface FaultSet {
 
@@ -21,6 +22,14 @@ public interface FaultSet {
 	boolean equals(FaultSet s);
 
 	void setFaults(int i);
+
+	void and(int possibleDomains);
+
+	void or(int nadd);
+
+	void andNot(FaultSet criticalAndGoal);
+
+	void intersect(FaultSet failures);
 
 
 

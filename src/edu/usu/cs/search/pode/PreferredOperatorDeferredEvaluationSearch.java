@@ -22,6 +22,7 @@ import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.planner.ffrisky.util.FaultCounter;
 import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
 import edu.usu.cs.search.AbstractSearch;
 import edu.usu.cs.search.AbstractStateNode;
@@ -76,7 +77,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 		long expanded = 0;
 		boolean foundSolution = false;
 		long  startTime = System.currentTimeMillis();
-		long timeLimit = (long) (1*60*10000);
+		long timeLimit = (long) (5*60*1000);
 		while(System.currentTimeMillis() - startTime < timeLimit) {
 			PreferredOperatorDeferredEvaluationNode node;
 
@@ -128,27 +129,27 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			
 			// Check to see if the solution is found in the node
 			if(solutionEvaluator.isSolution(problem,node)) {
-				logger.debug("Found Solution: ");
 					if(solutionEvaluator.keepSolution(node, solutions)){
-					solutions.add(node);
+						//logger.debug("Found Solution: ");
+								solutions.add(node);
 					if(!foundSolution){
-						PriorityQueue<StateNode> nop = new PriorityQueue<StateNode>();
-						for(StateNode s : openPreferred){
-							int c = s.compareTo(node);
-							if(c < 1){
-								nop.add(s);
-							}
-						}
-						openPreferred = nop;
+//						PriorityQueue<StateNode> nop = new PriorityQueue<StateNode>();
+//						for(StateNode s : openPreferred){
+//							int c = s.compareTo(node);
+//							if(c < 1){
+//								nop.add(s);
+//							}
+//						}
+//						openPreferred = nop;
 
-						PriorityQueue<StateNode> op = new PriorityQueue<StateNode>();
-						for(StateNode s : open){
-							int c = s.compareTo(node);
-							if(c < 1){
-								op.add(s);
-							}
-						}
-						open = op;
+//						PriorityQueue<StateNode> op = new PriorityQueue<StateNode>();
+//						for(StateNode s : open){
+//							int c = s.compareTo(node);
+//							if(c < 1){
+//								op.add(s);
+//							}
+//						}
+//						open = op;
 						foundSolution =true;
 					}
 					

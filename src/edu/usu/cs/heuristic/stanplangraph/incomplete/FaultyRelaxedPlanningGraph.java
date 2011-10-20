@@ -35,7 +35,7 @@ import edu.usu.cs.search.incomplete.PIRiskSet;
 public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 	protected int levelsPastGoalsMet= 0;
-
+	FaultSet possibleDomains = null;
 
 
 	//	public FFriskyRelaxedPlanningGraph(IncompleteProblem problem) {
@@ -43,8 +43,9 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 	//
 	//	}
 
-	public FaultyRelaxedPlanningGraph(Problem problem, Domain domain, Solver solver) {
+	public FaultyRelaxedPlanningGraph(Problem problem, Domain domain, Solver solver, FaultSet possibleDomains) {
 		super(problem, domain, solver);
+		this.possibleDomains=possibleDomains;
 	}
 
 	protected void initializePlanningGraph(StateNode node) {
@@ -194,7 +195,13 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 				if(fli.getPossibleSupporters().contains(actionHeader)){
 					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, actionHeader.getName(), fact.getName());
 					FaultSet faults = ali.getFaults().copy();
-					faults.or(r);
+					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
+						faults.or(r);
+					}
+					else{
+						int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(r));
+						faults.or(nadd);
+					}
 					actFaults.put(actionHeader, faults);
 				}
 				else{
@@ -220,6 +227,14 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 						FaultSet incumbentFaultSet = null;
 						FaultSet actFaultSet = actFaults.get(a);
+						if(possibleDomains == null){						
+						}
+						else if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS){
+							actFaultSet.and(possibleDomains);
+						}
+						else{
+							actFaultSet.intersect(possibleDomains);
+						}
 						ActionLevelInfo ali = actionSpike.getActionLevelInfo(actionSpike.getCurrentRank()-1, a.getIndex());
 						int incumbentCost = ali.getCost(); 
 
@@ -343,6 +358,14 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 			goalFaults.or(fli.getFaults());
 		}
+		if(possibleDomains == null){						
+		}
+		else if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS){
+			goalFaults.and(possibleDomains);
+		}
+		else{
+			goalFaults.intersect(possibleDomains);
+		}	
 
 		return goalFaults;
 	}
@@ -367,7 +390,23 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 				FaultyFactLevelInfo fliNow = (FaultyFactLevelInfo)factSpike.getFactLevelInfo(factSpike.getCurrentRank()-1, factHeader.getPropositionIndex());
 				FaultyFactLevelInfo fliPrev = (FaultyFactLevelInfo)factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
 				FaultSet faults1 = fliNow.getFaults();
+				if(possibleDomains == null){						
+				}
+				else if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS){
+					faults1.and(possibleDomains);
+				}
+				else{
+					faults1.intersect(possibleDomains);
+				}
 				FaultSet faults2 = fliPrev.getFaults();
+				if(possibleDomains == null){						
+				}
+				else if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS){
+					faults2.and(possibleDomains);
+				}
+				else{
+					faults2.intersect(possibleDomains);
+				}
 				if(!faults1.equals(faults2)) {
 					return false;					
 				}
@@ -387,6 +426,10 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 		str += factSpike.toString();
 		str += actionSpike.toString();
 		return str;
+	}
+
+	public void setPossibleDomains(FaultSet solvableDomains) {
+		possibleDomains = solvableDomains;
 	}
 
 

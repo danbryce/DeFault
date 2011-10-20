@@ -338,6 +338,35 @@ public class PIRiskSet implements FaultSet {
 
 
 
+	@Override
+	public void and(int possibleDomains) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void or(int nadd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void andNot(FaultSet criticalAndGoal) {
+		removeAll((PIRiskSet) criticalAndGoal);
+	}
+
+
+
+	public void intersect(FaultSet failures) {
+		set.retainAll(((PIRiskSet) failures).getSet());
+	}
+
+
+
 
 
 }

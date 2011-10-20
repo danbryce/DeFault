@@ -190,8 +190,10 @@ public class DefaultSolver implements Solver {
 	}
 
 	@Override
-	public List<ActionInstance> run() {
-		return search.getPath();
+	public List<List<ActionInstance>> run() {
+		List<List<ActionInstance>> plans = new ArrayList<List<ActionInstance>>();
+		plans.add(search.getPath());
+		return plans;
 	}
 
 	@Override

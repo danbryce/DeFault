@@ -25,14 +25,14 @@ import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationSearch;
 
 public class RiskSolutionEvaluator implements SolutionEvaluator {
 
-	private static Logger logger = Logger.getLogger(RiskSolutionEvaluator.class.getName());
+	protected static Logger logger = Logger.getLogger(RiskSolutionEvaluator.class.getName());
 	
 	private SearchStatistics searchStatistics = null;
 	private Domain domain;
-	private Problem problem;
-	private FaultStateNode bestSolution;
-	private FaultSet bestFaultSet;
-	private SolverOptions solverOptions;
+	protected Problem problem;
+	protected FaultStateNode bestSolution;
+	protected FaultSet bestFaultSet;
+	protected SolverOptions solverOptions;
 	
 	//private List<ActionInstance> actionInstances;
 	
@@ -70,7 +70,7 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 
 	@Override
 	public boolean isSolutionSetComplete(List<StateNode> solutions) {
-		return solverOptions.getSearchType() == SolverOptions.SEARCHTYPE.FIRST || bestSolution.getCriticalRisks().empty();
+		return solverOptions.getSearchType() != SolverOptions.SEARCHTYPE.ANYTIME || bestSolution.getCriticalRisks().empty();
 		
 		//solutions.size()==1;
 	}

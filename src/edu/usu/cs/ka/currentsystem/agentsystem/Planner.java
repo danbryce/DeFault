@@ -136,7 +136,7 @@ public class Planner
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
 				
 		startStopwatch();
-		List<ActionInstance> plan = null;
+		List<List<ActionInstance>> plan = null;
 		try{ plan = solver.run(); }
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
@@ -144,8 +144,7 @@ public class Planner
 //		System.out.println("!!");
 //		Actions_Utility.printActionInListOfActions(problem.getActions(), "initialize");
 //		System.out.println();
-		
-		return plan;
+		return plan.get(0);
 	}
 	
 	/**
@@ -179,12 +178,12 @@ public class Planner
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
 				
 		startStopwatch();
-		List<ActionInstance> plan = null;
+		List<List<ActionInstance>> plan = null;
 		try{ plan = solver.run(); }
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
 		
-		return plan;	
+		return plan.get(0);	
 	}
 	
 	/**
@@ -219,12 +218,12 @@ public class Planner
 		}catch (IllDefinedProblemException e) {System.out.print("Error: "); e.printStackTrace(); return null;}
 		
 		startStopwatch();
-		List<ActionInstance> plan = null;
+		List<List<ActionInstance>> plan = null;
 		try{ plan = solver.run(); }
 		catch (Exception e){/*System.out.println(e);e.printStackTrace();*/}
 		stopStopwatch();
 
-		return plan;	
+		return plan.get(0);	
 	}
 	
 	/**

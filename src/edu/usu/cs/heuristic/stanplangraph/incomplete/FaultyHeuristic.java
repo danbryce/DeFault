@@ -25,12 +25,21 @@ public class FaultyHeuristic implements Heuristic {
 	protected Domain domain;
 	protected FaultyRelaxedPlanningGraph heuristicSolver;
 	protected Solver solver;
+	FaultSet possibleDomains = null;
+
+	
+	public void setPossibleDomains(FaultSet solvableDomains) {
+		this.possibleDomains = solvableDomains;
+		if(heuristicSolver != null)
+			heuristicSolver.setPossibleDomains(solvableDomains);
+	}
+
 
 	public FaultyHeuristic(Problem problem, Domain domain, Solver solver) {
 		this.problem = problem;
 		this.domain = domain;
 		this.solver = solver;
-		heuristicSolver = new FaultyRelaxedPlanningGraph(problem, domain, solver);
+		heuristicSolver = new FaultyRelaxedPlanningGraph(problem, domain, solver, possibleDomains);
 	}
 
 
@@ -109,4 +118,7 @@ public class FaultyHeuristic implements Heuristic {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	
 }
