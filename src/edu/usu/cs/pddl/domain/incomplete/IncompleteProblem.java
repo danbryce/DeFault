@@ -27,7 +27,7 @@ import edu.usu.cs.pddl.domain.PredicateDef;
 import edu.usu.cs.pddl.domain.PredicateInstance;
 import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.planner.ffrisky.util.PddlImporter;
+import edu.usu.cs.planner.util.PddlImporter;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class IncompleteProblem implements Problem

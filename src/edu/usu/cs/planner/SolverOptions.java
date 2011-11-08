@@ -1,6 +1,6 @@
 package edu.usu.cs.planner;
 
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class SolverOptions {
 

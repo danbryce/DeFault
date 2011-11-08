@@ -2,7 +2,7 @@ package edu.usu.cs.plangraph;
 
 import org.junit.Test;
 
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
+import edu.usu.cs.planner.util.FaultCounter;
 
 public class ParseFFRiskyOutputs {
 

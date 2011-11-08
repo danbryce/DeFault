@@ -15,10 +15,10 @@ import edu.usu.cs.planner.PODEPISolver;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
+import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class FaultyHeuristic implements Heuristic {
 	protected Problem problem;
@@ -53,7 +53,7 @@ public class FaultyHeuristic implements Heuristic {
 		// If goalRiskSet returns null, there is no solution in this path so return infinity
 		if(relaxedPlanLength == Double.MAX_VALUE) {
 			values[0] = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					     new PIMetric((PIRiskSet)goalRiskSet) :
+					     new PIMetric((PIFaultSet)goalRiskSet) :
 					     new BigNumericMetric(FaultCounter.getBigUnSolvableDomainCount(goalRiskSet)));
 			values[1] = new NumericMetric(Double.MAX_VALUE);
 		}
@@ -61,7 +61,7 @@ public class FaultyHeuristic implements Heuristic {
 			// Remove all critical risks that have been added already
 			//goalRiskSet.removeAll(node.getCriticalRisks());
 			values[0] = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					     new PIMetric((PIRiskSet)goalRiskSet) :
+					     new PIMetric((PIFaultSet)goalRiskSet) :
 					     new BigNumericMetric(FaultCounter.getBigUnSolvableDomainCount(goalRiskSet)));
 			values[1] = new NumericMetric(relaxedPlanLength);
 		}

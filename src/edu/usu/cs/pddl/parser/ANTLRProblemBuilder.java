@@ -46,7 +46,7 @@ import edu.usu.cs.pddl.domain.PredicateInstance;
 import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteProblem;
-import edu.usu.cs.planner.ffrisky.util.PddlImporter;
+import edu.usu.cs.planner.util.PddlImporter;
 
 /**
  * Builds a {@link edu.usu.cs.pddl.domain.Domain Domain} object by parsing a

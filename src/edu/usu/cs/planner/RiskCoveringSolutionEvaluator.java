@@ -4,18 +4,18 @@ import java.util.List;
 
 import jdd.bdd.BDD;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDFaultSet;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
-import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
+import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.planner.util.RiskCounterNode;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 import edu.usu.cs.search.incomplete.RiskSolutionEvaluator;
 
 public class RiskCoveringSolutionEvaluator extends RiskSolutionEvaluator
@@ -44,8 +44,8 @@ public FaultSet getFaultsToCover() {
 	public boolean keepSolution(StateNode currentNode, List<StateNode> solutions) {
 		FaultStateNode fcn = ((FaultStateNode)currentNode);
 		FaultSet criticalAndGoal = (solverOptions.getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ? 
-										new BDDRiskSet(fcn.getCriticalRisks()) :
-										new PIRiskSet(fcn.getCriticalRisks()));	
+										new BDDFaultSet(fcn.getCriticalRisks()) :
+										new PIFaultSet(fcn.getCriticalRisks()));	
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
 			criticalAndGoal.or(fcn.getPropositions().get(p));
 		}
@@ -57,8 +57,8 @@ public FaultSet getFaultsToCover() {
 		FaultSet uncoveredFaults = null;
 		if(faultsToCover != null){
 			uncoveredFaults = (solverOptions.getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ? 
-					new BDDRiskSet(faultsToCover) :
-						new PIRiskSet(faultsToCover));
+					new BDDFaultSet(faultsToCover) :
+						new PIFaultSet(faultsToCover));
 			
 			uncoveredFaults.andNot(criticalAndGoal);
 		}
@@ -89,8 +89,8 @@ public FaultSet getFaultsToCover() {
 
 			FaultStateNode fcn = ((FaultStateNode)node);
 			FaultSet criticalAndGoal = (solverOptions.getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ? 
-											new BDDRiskSet(fcn.getCriticalRisks()) :
-											new PIRiskSet(fcn.getCriticalRisks()));	
+											new BDDFaultSet(fcn.getCriticalRisks()) :
+											new PIFaultSet(fcn.getCriticalRisks()));	
 			for(Proposition p : problem.getGoalAction().getPreconditions()){
 				criticalAndGoal.or(fcn.getPropositions().get(p));
 			}
@@ -100,8 +100,8 @@ public FaultSet getFaultsToCover() {
 			FaultSet uncoveredFaults = null;
 			if(faultsToCover != null){
 				uncoveredFaults = (solverOptions.getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ? 
-						new BDDRiskSet(faultsToCover) :
-							new PIRiskSet(faultsToCover));
+						new BDDFaultSet(faultsToCover) :
+							new PIFaultSet(faultsToCover));
 				
 				uncoveredFaults.andNot(criticalAndGoal);
 			}

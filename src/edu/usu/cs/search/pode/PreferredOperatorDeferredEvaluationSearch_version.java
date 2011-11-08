@@ -19,13 +19,13 @@ import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
+import edu.usu.cs.planner.util.RiskCounterNode;
 import edu.usu.cs.search.AbstractSearch;
 import edu.usu.cs.search.Search;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class PreferredOperatorDeferredEvaluationSearch_version extends AbstractSearch implements Search {

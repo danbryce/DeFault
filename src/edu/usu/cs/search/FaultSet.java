@@ -1,7 +1,7 @@
 package edu.usu.cs.search;
 
 import edu.usu.cs.pddl.domain.incomplete.Fault;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public interface FaultSet {
 

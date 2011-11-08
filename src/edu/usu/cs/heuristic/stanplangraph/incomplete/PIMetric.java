@@ -1,13 +1,13 @@
 package edu.usu.cs.heuristic.stanplangraph.incomplete;
 
 import edu.usu.cs.planner.PlanMetric;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class PIMetric implements PlanMetric {
 
-	PIRiskSet risks;
+	PIFaultSet risks;
 	
-	public PIMetric(PIRiskSet grs) {
+	public PIMetric(PIFaultSet grs) {
 		risks = grs;
 	}
 
@@ -15,7 +15,7 @@ public class PIMetric implements PlanMetric {
 	public PlanMetric aggregate(PlanMetric d) {
 		PIMetric pd = (PIMetric)d;
 		if(pd != null){
-			PIRiskSet grs = new PIRiskSet(this.risks);
+			PIFaultSet grs = new PIFaultSet(this.risks);
 			grs.union(pd.risks);
 			return new PIMetric(grs);
 		}

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDFaultSet;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.BigNumericMetric;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.PIMetric;
 import edu.usu.cs.pddl.domain.ActionInstance;
@@ -23,8 +23,8 @@ import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.StateObservation;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class IncompleteBDDConditionalNode extends IncompleteBDDNode implements
 StateNode {
@@ -41,8 +41,8 @@ StateNode {
 			Solver solver, int resultKnowledge) {
 		super(state, null, parent, solver);
 		for(Proposition p : state)
-			this.state.put(p, new BDDRiskSet());
-		criticalRisks = new BDDRiskSet();
+			this.state.put(p, new BDDFaultSet());
+		criticalRisks = new BDDFaultSet();
 		prevAction = action;
 		knowledge = solver.getBDD().ref(resultKnowledge);
 	}
@@ -225,8 +225,8 @@ StateNode {
 	protected  FaultSet getPrecOpen(FaultStateNode node, IncompleteActionInstance action) {
 		FaultSet precOpen = 
 			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDRiskSet());
+					new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
+						new BDDFaultSet());
 		for (Proposition possPrec : action.getPossiblePreconditions()) {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
@@ -244,8 +244,8 @@ StateNode {
 					//Results in a higher-order interaction risk
 					FaultSet s1 = 
 						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-								new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
-									new BDDRiskSet());
+								new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
+									new BDDFaultSet());
 					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
 						s1.setFaults(1);
 					}
@@ -282,8 +282,8 @@ StateNode {
 			else if(unknown(f)){			
 				// Add possible clobbers to the risk set
 				FaultSet riskSet = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-						new PIRiskSet(state.get(p)) :
-							new BDDRiskSet(state.get(p)));
+						new PIFaultSet(state.get(p)) :
+							new BDDFaultSet(state.get(p)));
 				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && riskSet.empty()){
 					riskSet.setFaults(1);
 				}
@@ -299,8 +299,8 @@ StateNode {
 
 		FaultSet actRisks = 
 			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIRiskSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDRiskSet());
+					new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
+						new BDDFaultSet());
 		actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
 		//	actRisks.or(getPrecRisks(initialNode, action));
 
@@ -319,8 +319,8 @@ StateNode {
 					// current action
 					FaultSet riskSet = 
 						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-								new PIRiskSet(actRisks) :
-									new BDDRiskSet(actRisks));
+								new PIFaultSet(actRisks) :
+									new BDDFaultSet(actRisks));
 					riskSet.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
 							effect.getName()));
 
@@ -334,8 +334,8 @@ StateNode {
 					// Get the intersection of the risk sets in propositions in action
 					// precondition.
 					FaultSet crossProduct = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIRiskSet(actRisks) :
-								new BDDRiskSet(actRisks));
+							new PIFaultSet(actRisks) :
+								new BDDFaultSet(actRisks));
 
 					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty()){
 						crossProduct.setFaults(1);
@@ -439,7 +439,7 @@ StateNode {
 		for(Proposition p : getPropositions().keySet()){
 			//solver.getBDD().printSet(knowledge);
 			//solver.getBDD().printSet(((BDDRiskSet)getPropositions().get(p)).getFaults());
-			int b = solver.getBDD().ref(solver.getBDD().and(knowledge, solver.getBDD().not(((BDDRiskSet)getPropositions().get(p)).getFaults())));
+			int b = solver.getBDD().ref(solver.getBDD().and(knowledge, solver.getBDD().not(((BDDFaultSet)getPropositions().get(p)).getFaults())));
 			if(b == solver.getBDD().getZero()){
 				//entailed
 				toRemove.add(p);

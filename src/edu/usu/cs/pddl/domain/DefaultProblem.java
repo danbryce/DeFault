@@ -18,7 +18,7 @@ import java.util.Set;
 
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
-import edu.usu.cs.planner.ffrisky.util.PddlImporter;
+import edu.usu.cs.planner.util.PddlImporter;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class DefaultProblem implements Problem

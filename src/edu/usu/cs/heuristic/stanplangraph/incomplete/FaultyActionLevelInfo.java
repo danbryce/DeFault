@@ -9,9 +9,9 @@ import edu.usu.cs.heuristic.stanplangraph.ActionLevelInfo;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
+import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.FaultSet;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class FaultyActionLevelInfo extends AbstractActionLevelInfo implements ActionLevelInfo {
 
@@ -24,10 +24,10 @@ public class FaultyActionLevelInfo extends AbstractActionLevelInfo implements Ac
 		super(actionHeader, solver2); 
 		
 		if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){
-			faults = new PIRiskSet(solver2.getSolverOptions().getRiskArity());
+			faults = new PIFaultSet(solver2.getSolverOptions().getRiskArity());
 		}
 		else if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS){
-				faults = new BDDRiskSet();
+				faults = new BDDFaultSet();
 			
 
 		}

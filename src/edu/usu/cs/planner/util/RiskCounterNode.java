@@ -1,4 +1,4 @@
-package edu.usu.cs.planner.ffrisky.util;
+package edu.usu.cs.planner.util;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

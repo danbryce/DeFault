@@ -2,7 +2,7 @@ package edu.usu.cs.heuristic.stanplangraph;
 
 import java.util.Set;
 
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public interface FactLevelInfo {
 

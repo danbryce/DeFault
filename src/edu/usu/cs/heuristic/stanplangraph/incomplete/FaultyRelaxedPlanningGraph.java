@@ -26,11 +26,11 @@ import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
+import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
@@ -337,9 +337,9 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 		FaultSet goalFaults = 
 			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS 
 					?
-							new PIRiskSet(solver.getSolverOptions().getRiskArity()) 
+							new PIFaultSet(solver.getSolverOptions().getRiskArity()) 
 			: 
-				new BDDRiskSet());
+				new BDDFaultSet());
 		for(Proposition subgoal : this.getProblem().getGoalAction().getPreconditions()) {
 			FactHeader precHeader = this.getFactSpike().get(subgoal.getIndex());
 
@@ -348,9 +348,9 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 				goalFaults = 
 					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS 
 							?
-									new PIRiskSet(solver.getSolverOptions().getRiskArity()) 
+									new PIFaultSet(solver.getSolverOptions().getRiskArity()) 
 					: 
-						new BDDRiskSet());
+						new BDDFaultSet());
 				break;
 			}
 

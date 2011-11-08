@@ -10,7 +10,7 @@ import java.util.Set;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.search.FaultSet;
 
-public class PIRiskSet implements FaultSet {
+public class PIFaultSet implements FaultSet {
 
 	private Set<Set<Fault>> set;
 	private int maxEltSize;
@@ -19,7 +19,7 @@ public class PIRiskSet implements FaultSet {
 
 	private boolean sizeMapStale;
 	
-	public PIRiskSet(int maxEltSize) {
+	public PIFaultSet(int maxEltSize) {
 		super();
 
 		//this.set = new TreeSet<Set<Risk>>(new SetComparator());
@@ -33,8 +33,8 @@ public class PIRiskSet implements FaultSet {
 
 
 
-	public PIRiskSet(FaultSet arisks) {
-		PIRiskSet risks = (PIRiskSet)arisks;
+	public PIFaultSet(FaultSet arisks) {
+		PIFaultSet risks = (PIFaultSet)arisks;
 		
 		this.maxEltSize = risks.getMaxEltSize();
 		//this.set = new TreeSet<Set<Risk>>(new SetComparator());
@@ -87,7 +87,7 @@ public class PIRiskSet implements FaultSet {
 		return maxEltSize;
 	}
 
-	public void union(PIRiskSet set1){
+	public void union(PIFaultSet set1){
 		//union elements of set and set1 and remove subsumed sets
 		for(Set<Fault> rs1 : set1.getSet()){
 			if(!subsumes(this.set, rs1)){
@@ -118,7 +118,7 @@ public class PIRiskSet implements FaultSet {
 	}
 
 
-	public void crossProduct(PIRiskSet set1){
+	public void crossProduct(PIFaultSet set1){
 		//union all pairs of risk sets, removing those larger than maxEltSize and removing subsumed
 		
 		
@@ -190,8 +190,8 @@ public class PIRiskSet implements FaultSet {
 	}
 
 	public boolean equals(FaultSet set1){
-		if(set1 instanceof PIRiskSet){
-			PIRiskSet set1p = (PIRiskSet)set1;
+		if(set1 instanceof PIFaultSet){
+			PIFaultSet set1p = (PIFaultSet)set1;
 //			
 //			for(Set<Fault> s : set){
 //				if(!set1p.getSet().contains(s))
@@ -221,7 +221,7 @@ public class PIRiskSet implements FaultSet {
 	}
 
 
-	public void removeAll(PIRiskSet risks) {
+	public void removeAll(PIFaultSet risks) {
 		for(Set<Fault> r : risks.getSet()){
 			set.remove(r);
 			this.sizeMapStale = true;
@@ -236,7 +236,7 @@ public class PIRiskSet implements FaultSet {
 		//so compute the symmetric difference of the sets
 		//and compare the number of increasing sized PIs 
 		
-		PIRiskSet grs = (PIRiskSet)o;
+		PIFaultSet grs = (PIFaultSet)o;
 		
 		
 		Map<Integer, Integer> c1 = this.getSizeMap();
@@ -278,7 +278,7 @@ public class PIRiskSet implements FaultSet {
 
 	@Override
 	public void and(Fault riskFromIndex) {
-		PIRiskSet set = new PIRiskSet(this.maxEltSize);
+		PIFaultSet set = new PIFaultSet(this.maxEltSize);
 		set.add(riskFromIndex);
 		this.crossProduct(set);	
 	}
@@ -287,7 +287,7 @@ public class PIRiskSet implements FaultSet {
 
 	@Override
 	public void and(FaultSet riskSet) {
-		this.crossProduct((PIRiskSet)riskSet);			
+		this.crossProduct((PIFaultSet)riskSet);			
 	}
 
 
@@ -297,7 +297,7 @@ public class PIRiskSet implements FaultSet {
 
 	@Override
 	public void or(FaultSet s1) {
-		this.union((PIRiskSet)s1);	
+		this.union((PIFaultSet)s1);	
 	}
 
 
@@ -308,7 +308,7 @@ public class PIRiskSet implements FaultSet {
 	@Override
 	public FaultSet copy() {
 		// TODO Auto-generated method stub
-		return new PIRiskSet(this);
+		return new PIFaultSet(this);
 	}
 
 
@@ -356,13 +356,13 @@ public class PIRiskSet implements FaultSet {
 
 	@Override
 	public void andNot(FaultSet criticalAndGoal) {
-		removeAll((PIRiskSet) criticalAndGoal);
+		removeAll((PIFaultSet) criticalAndGoal);
 	}
 
 
 
 	public void intersect(FaultSet failures) {
-		set.retainAll(((PIRiskSet) failures).getSet());
+		set.retainAll(((PIFaultSet) failures).getSet());
 	}
 
 

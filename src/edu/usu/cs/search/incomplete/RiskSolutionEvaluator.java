@@ -6,14 +6,14 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDFaultSet;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.SolverOptions;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
-import edu.usu.cs.planner.ffrisky.util.RiskCounterNode;
+import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.planner.util.RiskCounterNode;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.Search;
@@ -81,8 +81,8 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 	public boolean keepSolution(StateNode currentNode, List<StateNode> solutions) {
 		FaultStateNode fcn = ((FaultStateNode)currentNode);
 		FaultSet criticalAndGoal = (solverOptions.getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ? 
-										new BDDRiskSet(fcn.getCriticalRisks()) :
-										new PIRiskSet(fcn.getCriticalRisks()));	
+										new BDDFaultSet(fcn.getCriticalRisks()) :
+										new PIFaultSet(fcn.getCriticalRisks()));	
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
 			criticalAndGoal.or(fcn.getPropositions().get(p));
 		}

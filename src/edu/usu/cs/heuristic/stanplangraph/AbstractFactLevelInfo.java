@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import edu.usu.cs.planner.Solver;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class AbstractFactLevelInfo implements FactLevelInfo{
 	Set<ActionHeader> trueSupporters;

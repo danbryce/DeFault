@@ -12,12 +12,12 @@ import edu.usu.cs.heuristic.stanplangraph.incomplete.FaultyHeuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
+import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
 import edu.usu.cs.search.SearchStatistics;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationSearch;
 

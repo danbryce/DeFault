@@ -3,19 +3,19 @@ package edu.usu.cs.heuristic.stanplangraph.incomplete;
 import java.math.BigInteger;
 
 import edu.usu.cs.pddl.domain.incomplete.Fault;
-import edu.usu.cs.planner.ffrisky.util.FaultCounter;
+import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.FaultSet;
 
-public class BDDRiskSet implements FaultSet {
+public class BDDFaultSet implements FaultSet {
 
 	int faults=0;
 	
-	public BDDRiskSet(FaultSet faultSet) {
-		faults = ((BDDRiskSet)faultSet).getFaults();
+	public BDDFaultSet(FaultSet faultSet) {
+		faults = ((BDDFaultSet)faultSet).getFaults();
 		FaultCounter.getBDD().ref(faults);
 	}
 	
-	public BDDRiskSet() {
+	public BDDFaultSet() {
 	}
 
 
@@ -34,7 +34,7 @@ public class BDDRiskSet implements FaultSet {
 
 	@Override
 	public void and(FaultSet riskSet) {
-		int tmp = FaultCounter.getBDD().and(((BDDRiskSet)riskSet).getFaults(), faults);
+		int tmp = FaultCounter.getBDD().and(((BDDFaultSet)riskSet).getFaults(), faults);
 		FaultCounter.getBDD().ref(tmp);
 		FaultCounter.getBDD().deref(faults);
 		faults = tmp;
@@ -43,14 +43,14 @@ public class BDDRiskSet implements FaultSet {
 	@Override
 	public int compareTo(FaultSet faults) {
 		// TODO Auto-generated method stub
-		int i = FaultCounter.getBigUnSolvableDomainCount(this.faults).compareTo(FaultCounter.getBigUnSolvableDomainCount(((BDDRiskSet)faults).getFaults())); 
-		BigInteger j = FaultCounter.getBigUnSolvableDomainCount(this.faults).subtract(FaultCounter.getBigUnSolvableDomainCount(((BDDRiskSet)faults).getFaults()));
+		int i = FaultCounter.getBigUnSolvableDomainCount(this.faults).compareTo(FaultCounter.getBigUnSolvableDomainCount(((BDDFaultSet)faults).getFaults())); 
+		BigInteger j = FaultCounter.getBigUnSolvableDomainCount(this.faults).subtract(FaultCounter.getBigUnSolvableDomainCount(((BDDFaultSet)faults).getFaults()));
 		return i; 
 	}
 
 	@Override
 	public FaultSet copy() {
-		return new BDDRiskSet(this);
+		return new BDDFaultSet(this);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class BDDRiskSet implements FaultSet {
 
 	@Override
 	public void or(FaultSet s1) {
-		int tmp = FaultCounter.getBDD().or(((BDDRiskSet)s1).getFaults(), faults);
+		int tmp = FaultCounter.getBDD().or(((BDDFaultSet)s1).getFaults(), faults);
 		FaultCounter.getBDD().ref(tmp);
 		FaultCounter.getBDD().deref(faults);
 		faults = tmp;
@@ -85,7 +85,7 @@ public class BDDRiskSet implements FaultSet {
 	@Override
 	public boolean equals(FaultSet s) {
 		// TODO Auto-generated method stub
-		return ((BDDRiskSet)s).getFaults() == this.getFaults();
+		return ((BDDFaultSet)s).getFaults() == this.getFaults();
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class BDDRiskSet implements FaultSet {
 
 	@Override
 	public void andNot(FaultSet criticalAndGoal) {
-		int tmp = FaultCounter.getBDD().and(FaultCounter.getBDD().not(((BDDRiskSet)criticalAndGoal).getFaults()), faults);
+		int tmp = FaultCounter.getBDD().and(FaultCounter.getBDD().not(((BDDFaultSet)criticalAndGoal).getFaults()), faults);
 		FaultCounter.getBDD().ref(tmp);
 		FaultCounter.getBDD().deref(faults);
 		faults = tmp;
@@ -126,7 +126,7 @@ public class BDDRiskSet implements FaultSet {
 
 	@Override
 	public void intersect(FaultSet failures) {
-		and((BDDRiskSet)failures);		
+		and((BDDFaultSet)failures);		
 	}
 	
 }

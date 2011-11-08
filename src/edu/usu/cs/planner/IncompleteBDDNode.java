@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDFaultSet;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.PIMetric;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -15,7 +15,7 @@ import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
 import edu.usu.cs.search.StateNode;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 
 public class IncompleteBDDNode extends FaultStateNode implements
@@ -25,8 +25,8 @@ public class IncompleteBDDNode extends FaultStateNode implements
 			Solver solver) {
 		super(action, parent, solver);
 		for(Proposition p : state)
-			this.state.put(p, new BDDRiskSet());
-		criticalRisks = new BDDRiskSet();
+			this.state.put(p, new BDDFaultSet());
+		criticalRisks = new BDDFaultSet();
 		//gvalue[0] = new NumericMetric(faultSet);
 	}
 
@@ -72,7 +72,7 @@ public class IncompleteBDDNode extends FaultStateNode implements
 	
 	public  IncompleteBDDNode(IncompleteBDDNode incompleteBDDNode) {
 		super(incompleteBDDNode);
-		criticalRisks = new BDDRiskSet((BDDRiskSet) incompleteBDDNode.criticalRisks);
+		criticalRisks = new BDDFaultSet((BDDFaultSet) incompleteBDDNode.criticalRisks);
 //		gvalue[0] = new PIMetric((PIRiskSet)this.criticalRisks);
 //		gvalue[1] = new NumericMetric(((NumericMetric)incompleteBDDNode.getGValue()[1]).getValue());
 		//subsequentNodes = new ArrayList<StateNode>();

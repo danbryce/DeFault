@@ -1,4 +1,4 @@
-package edu.usu.cs.planner.ffrisky.util;
+package edu.usu.cs.planner.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 
 import jdd.bdd.BDD;
 
-import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDRiskSet;
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDFaultSet;
 import edu.usu.cs.ka.currentsystem.agentsystem.Planner;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
@@ -32,7 +32,7 @@ import edu.usu.cs.planner.Solver;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class FaultCounter {
 
@@ -304,14 +304,14 @@ public class FaultCounter {
 	}
 
 	public static BigInteger getBigUnSolvableDomainCount(FaultSet faultSet) {
-		return getModelCount(((BDDRiskSet)faultSet).getFaults());
+		return getModelCount(((BDDFaultSet)faultSet).getFaults());
 	}
 
 	public static BigInteger getBigUnSolvableDomainCount(int faultSet) {
 		return getModelCount(faultSet);
 	}
 	public static BigInteger getBigSolvableDomainCount(FaultSet faultSet) {
-		return getModelCount(bdd.not(((BDDRiskSet)faultSet).getFaults()));
+		return getModelCount(bdd.not(((BDDFaultSet)faultSet).getFaults()));
 	}
 	public static BigInteger getBigSolvableDomainCount(int faultSet) {
 		return getModelCount(bdd.not(faultSet));
@@ -614,7 +614,7 @@ public class FaultCounter {
 		if(nodes.get(nodes.size()-1) == null) nodes.remove(nodes.size()-1);
 
 		//Without the removal of the line above, this line returns the Exception
-		FaultSet crs = new PIRiskSet(nodes.get(nodes.size() - 1).getCriticalRisks()); //add critical risks for goals
+		FaultSet crs = new PIFaultSet(nodes.get(nodes.size() - 1).getCriticalRisks()); //add critical risks for goals
 
 
 		for(Proposition p : problem.getGoalAction().getPreconditions())
@@ -631,7 +631,7 @@ public class FaultCounter {
 			List<ActionInstance> plan, 
 			Solver solver) {
 		// TODO Auto-generated method stub
-		FaultSet faults = new BDDRiskSet();
+		FaultSet faults = new BDDFaultSet();
 		faults.or(getFailureExplanationSentence_BDDRef(problem, plan, null, solver));
 		return faults;
 	}

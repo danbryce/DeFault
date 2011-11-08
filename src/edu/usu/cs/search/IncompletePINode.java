@@ -15,7 +15,7 @@ import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
-import edu.usu.cs.search.incomplete.PIRiskSet;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 
 public class IncompletePINode 
@@ -28,15 +28,15 @@ implements PreferredOperatorDeferredEvaluationNode{
 			Solver solver) {
 		super(action, parent, solver);
 		for(Proposition p : state)
-			this.state.put(p, new PIRiskSet(solver.getSolverOptions().getRiskArity()));
-		criticalRisks = new PIRiskSet(solver.getSolverOptions().getRiskArity());
+			this.state.put(p, new PIFaultSet(solver.getSolverOptions().getRiskArity()));
+		criticalRisks = new PIFaultSet(solver.getSolverOptions().getRiskArity());
 		//gvalue[0] = new PIMetric(criticalRisks);
 
 	}
 
 	public IncompletePINode(IncompletePINode incompletePINode) {
 		super(incompletePINode);
-		criticalRisks = new PIRiskSet(incompletePINode.criticalRisks);
+		criticalRisks = new PIFaultSet(incompletePINode.criticalRisks);
 		//		gvalue[0] = new PIMetric((PIRiskSet)this.criticalRisks);
 		//		gvalue[1] = new NumericMetric(((NumericMetric)incompletePINode.getGValue()[1]).getValue());
 		//subsequentNodes = new ArrayList<StateNode>();
