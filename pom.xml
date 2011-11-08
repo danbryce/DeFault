@@ -99,13 +99,13 @@
       <version>${slf4j.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <!-- dependency>
+    <dependency>
       <groupId>org.jdd</groupId>
       <artifactId>jdd</artifactId>
       <version>0</version>
       <scope>system</scope>
       <systemPath>${basedir}/lib/jdd.jar</systemPath>
-    </dependency -->
+    </dependency>
     
   </dependencies>
 
