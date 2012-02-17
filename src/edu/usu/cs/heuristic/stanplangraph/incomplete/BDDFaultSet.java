@@ -128,5 +128,14 @@ public class BDDFaultSet implements FaultSet {
 	public void intersect(FaultSet failures) {
 		and((BDDFaultSet)failures);		
 	}
+
+	@Override
+	public void not() {
+		int tmp = FaultCounter.getBDD().not(faults);
+		FaultCounter.getBDD().ref(tmp);
+		FaultCounter.getBDD().deref(faults);
+		faults = tmp;
+		
+	}
 	
 }

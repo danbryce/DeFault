@@ -6,7 +6,16 @@ public class TrieFaultSet implements FaultSet {
 
 	Trie<Fault> faults;
 	
-	
+	public void not() {
+		try {
+			throw new Exception("not() not implemented for PIs");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 	
 	@Override
 	public void and(Fault riskFromIndex) {

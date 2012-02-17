@@ -367,6 +367,19 @@ public class PIFaultSet implements FaultSet {
 
 
 
+	@Override
+	public void not() {
+		try {
+			throw new Exception("not() not implemented for PIs");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+
+
 
 
 }

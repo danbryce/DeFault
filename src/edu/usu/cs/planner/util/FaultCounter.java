@@ -28,10 +28,12 @@ import edu.usu.cs.pddl.parser.ANTLRDomainBuilder;
 import edu.usu.cs.pddl.parser.ANTLRProblemBuilder;
 import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
+import edu.usu.cs.planner.IncompleteBDDNode;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
+import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class FaultCounter {
@@ -73,7 +75,7 @@ public class FaultCounter {
 			bdd.ref(temp);
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
-			//			logger.debug((i++) + " " + risk);
+			//logger.debug((i++) + " " + risk);
 			//			}
 			//			else{
 			//				unusedRisks++;
@@ -149,10 +151,10 @@ public class FaultCounter {
 		if (!isInitialized) {initialize(domain, problem, plan);}
 
 		// Figure out which risks are true right now
-		List<RiskCounterNode> nodes = new ArrayList<RiskCounterNode>(plan.size() + 1);
+		List<StateNode> nodes = new ArrayList<StateNode>(plan.size() + 1);
 
 		// Add the initial state
-		nodes.add(new RiskCounterNode(problem.getInitialState(), null, null, solver));
+		nodes.add(new IncompleteBDDNode(problem.getInitialState(), null, null, solver));
 
 
 		for (ActionInstance action : plan) 
@@ -168,25 +170,18 @@ public class FaultCounter {
 
 
 		//		//add critical risks for goals
-		int crs = nodes.get(nodes.size() - 1).getActRisks();
-		bdd.ref(crs);
+		FaultSet crs = (!solver.getSolverOptions().isStrictSemantics() ?
+						new BDDFaultSet() :
+						new BDDFaultSet(((FaultStateNode) nodes.get(nodes.size() - 1)).getCriticalRisks()));
+		//logger.debug(crs);
+		//bdd.ref(crs);
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
-			Integer risk = nodes.get(nodes.size() - 1).propositions.get(p);
-			if(risk != null){
-				int tmp = bdd.ref(bdd.or(crs, risk.intValue()));
-				bdd.deref(crs);
-				crs = tmp;
-				bdd.ref(crs);
-			}
-			else{
-				bdd.deref(crs);
-				crs = bdd.getOne();
-				bdd.ref(crs);
-				break;
-			}
+			FaultSet risk = ((FaultStateNode) nodes.get(nodes.size() - 1)).getPropositions().get(p);
+			crs.or(risk);
 		}
 
-
+		logger.debug(crs);
+		
 		//		for (Risk risk : allRisks) {
 		//			System.out.print("(" + risk.toString() + ") ");
 		//		}

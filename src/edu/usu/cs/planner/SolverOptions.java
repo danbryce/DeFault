@@ -17,8 +17,16 @@ public class SolverOptions {
 	private boolean useJDDGValue = false;
 	private FAULT_TYPE faultType = FAULT_TYPE.PI_FAULTS;
 	private boolean biasRelaxedPlanWithFaults = true;
-	
+	private boolean useJDDHeuristic = false;
+	private boolean ucs = false;
+	private int riskArity = 2;
+	private boolean conditional = false;
+	private SEARCHTYPE searchType;
+	private boolean strictSemantics;
 
+	public boolean isStrictSemantics() {
+		return strictSemantics;
+	}
 	public FAULT_TYPE getFaultType() {
 		return faultType;
 	}
@@ -37,11 +45,7 @@ public class SolverOptions {
 	public void setUseJDDHeuristic(boolean useJDDHeuristic) {
 		this.useJDDHeuristic = useJDDHeuristic;
 	}
-	private boolean useJDDHeuristic = false;
-	private boolean ucs = false;
-	private int riskArity = 2;
-	private boolean conditional = false;
-	private SEARCHTYPE searchType;
+
 	public SEARCHTYPE getSearchType() {
 		return searchType;
 	}
@@ -104,5 +108,8 @@ public class SolverOptions {
 	public void setSearchType(SEARCHTYPE anytime) {
 		searchType = anytime;
 		
+	}
+	public void setSemanticsStrict(boolean b) {
+		strictSemantics = b;
 	}
 }

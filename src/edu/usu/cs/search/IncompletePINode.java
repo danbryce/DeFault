@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import edu.usu.cs.heuristic.stanplangraph.incomplete.BDDFaultSet;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.PIMetric;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
@@ -36,7 +37,12 @@ implements PreferredOperatorDeferredEvaluationNode{
 
 	public IncompletePINode(IncompletePINode incompletePINode) {
 		super(incompletePINode);
+		if(solver.getSolverOptions().isStrictSemantics()){ //copy over previous action failures			
 		criticalRisks = new PIFaultSet(incompletePINode.criticalRisks);
+		}
+		else{ //flexible semantics ignores previous failures
+			criticalRisks = new PIFaultSet(solver.getSolverOptions().getRiskArity());
+		}
 		//		gvalue[0] = new PIMetric((PIRiskSet)this.criticalRisks);
 		//		gvalue[1] = new NumericMetric(((NumericMetric)incompletePINode.getGValue()[1]).getValue());
 		//subsequentNodes = new ArrayList<StateNode>();

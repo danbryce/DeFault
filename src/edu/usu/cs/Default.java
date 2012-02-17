@@ -39,7 +39,7 @@ public class Default {
 	private static Logger logger = Logger.getLogger(Default.class);
 
 	public static void main(String[] args) {
-		if (!(args.length == 3 || args.length == 4 || args.length == 5 || args.length == 6)) {
+		if (!(args.length == 3 || args.length == 4 || args.length == 5 || args.length == 6 || args.length == 7)) {
 			usage();
 		}
 		File domainFile = new File(args[0]);
@@ -84,10 +84,20 @@ public class Default {
 			else if(args.length > 4 && args[4].equalsIgnoreCase("cover")){
 				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.COVER);
 			}
-			else{
+			else if(args.length > 4 && args[4].equalsIgnoreCase("first")){
 				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.FIRST);
 			}
 
+			//Set semantics for fault propagation
+			if(args.length > 5 && args[5].equalsIgnoreCase("flexible")){
+				solverOptions.setSemanticsStrict(false);
+			}
+			else { //if(args.length > 6 && args[6].equalsIgnoreCase("strict")){
+				solverOptions.setSemanticsStrict(true);
+			}
+			 
+			//set heuristic and fault computation type
+			
 			if (args[3].equalsIgnoreCase("length")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);

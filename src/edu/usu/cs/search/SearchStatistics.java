@@ -70,7 +70,7 @@ public class SearchStatistics {
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(getTimeSinceStart()/1000.0).append("\t");
-		sb.append(lastBranchingFactor).append("\t");
+//		sb.append(lastBranchingFactor).append("\t");
 		sb.append(nodesExpanded).append("\t");
 //		for(int i = 0; i < lastFValue.length; i++){
 //			sb.append(lastFValue[i]).append("\t");

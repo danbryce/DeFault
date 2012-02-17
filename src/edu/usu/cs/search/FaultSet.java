@@ -31,6 +31,8 @@ public interface FaultSet {
 
 	void intersect(FaultSet failures);
 
+	void not();
+
 
 
 }

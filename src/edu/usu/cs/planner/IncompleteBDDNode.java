@@ -72,7 +72,12 @@ public class IncompleteBDDNode extends FaultStateNode implements
 	
 	public  IncompleteBDDNode(IncompleteBDDNode incompleteBDDNode) {
 		super(incompleteBDDNode);
-		criticalRisks = new BDDFaultSet((BDDFaultSet) incompleteBDDNode.criticalRisks);
+		if(solver.getSolverOptions().isStrictSemantics()){ //copy over previous action failures
+			criticalRisks = new BDDFaultSet((BDDFaultSet) incompleteBDDNode.criticalRisks);
+		}
+		else{ //flexible semantics ignores previous failures
+			criticalRisks = new BDDFaultSet();
+		}
 //		gvalue[0] = new PIMetric((PIRiskSet)this.criticalRisks);
 //		gvalue[1] = new NumericMetric(((NumericMetric)incompleteBDDNode.getGValue()[1]).getValue());
 		//subsequentNodes = new ArrayList<StateNode>();
