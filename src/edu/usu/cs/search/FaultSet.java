@@ -1,17 +1,18 @@
 package edu.usu.cs.search;
 
 import edu.usu.cs.pddl.domain.incomplete.Fault;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public interface FaultSet {
 
-	void and(Fault riskFromIndex);
+	void and(FaultLiteral riskFromIndex);
 
 	void and(FaultSet riskSet);
 
 	void or(FaultSet s1);
 	
-	void or(Fault r);
+	void or(FaultLiteral r);
 
 	boolean empty();
 

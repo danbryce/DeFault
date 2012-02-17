@@ -1,6 +1,7 @@
 package edu.usu.cs.pddl.domain.incomplete;
 
 import edu.usu.cs.search.FaultSet;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 
 public class TrieFaultSet implements FaultSet {
 
@@ -18,7 +19,7 @@ public class TrieFaultSet implements FaultSet {
 
 	
 	@Override
-	public void and(Fault riskFromIndex) {
+	public void and(FaultLiteral riskFromIndex) {
 		// TODO Auto-generated method stub
 
 	}
@@ -60,7 +61,7 @@ public class TrieFaultSet implements FaultSet {
 	}
 
 	@Override
-	public void or(Fault r) {
+	public void or(FaultLiteral r) {
 		// TODO Auto-generated method stub
 
 	}

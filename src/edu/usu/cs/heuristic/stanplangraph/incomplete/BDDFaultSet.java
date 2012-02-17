@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.FaultSet;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 
 public class BDDFaultSet implements FaultSet {
 
@@ -24,8 +25,10 @@ public class BDDFaultSet implements FaultSet {
 	}
 
 	@Override
-	public void and(Fault riskFromIndex) {
-		int fault = FaultCounter.getRiskToBDD().get(riskFromIndex);
+	public void and(FaultLiteral riskFromIndex) {
+		int fault = (riskFromIndex.isTrue() ? 
+					FaultCounter.getRiskToBDD().get(riskFromIndex.getFault()) :
+					FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(riskFromIndex.getFault())));
 		int tmp = FaultCounter.getBDD().and(fault, faults);
 		FaultCounter.getBDD().ref(tmp);
 		FaultCounter.getBDD().deref(faults);
@@ -69,8 +72,11 @@ public class BDDFaultSet implements FaultSet {
 	}
 
 	@Override
-	public void or(Fault r) {
-		int fault = FaultCounter.getRiskToBDD().get(r);
+	public void or(FaultLiteral r) {
+		int fault = (r.isTrue() ? 
+				FaultCounter.getRiskToBDD().get(r.getFault()) :
+				FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(r.getFault())));
+		
 		int tmp = FaultCounter.getBDD().or(fault, faults);
 		FaultCounter.getBDD().ref(tmp);
 		FaultCounter.getBDD().deref(faults);

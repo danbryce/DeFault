@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.usu.cs.search.ConditionalAction;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 
 /*
  * A risk is a potential source of execution failure due to incompleteness of the action model.
@@ -31,6 +32,11 @@ public class Fault implements Comparable, ConditionalAction {
 	private static Map<String, Fault> possibleAdds = new HashMap<String, Fault>();
 	private static Map<Integer, String> faultIndexMap = new HashMap<Integer, String>();
 	private static Set<Fault> faults = new HashSet<Fault>();
+	private static Set<FaultLiteral> trueFaultLiterals = new HashSet<FaultLiteral>();
+	private static Set<FaultLiteral> falseFaultLiterals = new HashSet<FaultLiteral>();
+	private static Map<Fault, FaultLiteral> trueFaultToFaultLiteral = new HashMap<Fault, FaultLiteral>();
+	private static Map<Fault, FaultLiteral> falseFaultToFaultLiteral = new HashMap<Fault, FaultLiteral>();
+
 	//private static Map<Risk, Integer> riskBddMap = new HashMap<Risk, Integer>();
 	
 	private final String riskName;
@@ -54,13 +60,17 @@ public class Fault implements Comparable, ConditionalAction {
 		this.riskName = riskName;
 		this.action = action;
 		this.proposition = proposition;
-		faults.add(this);
+//		faults.add(this);
+
+		
+		
 		// this.id = getNextID();
 	}
 	public static Set<Fault> getFaults(){
 		return faults;
 	}
 
+	
 	public static Fault getRiskFromIndex(String name, String action, String proposition){
 		Map<String, Fault> index = null;
 		if(name.equals(POSSPRE)){
@@ -81,6 +91,12 @@ public class Fault implements Comparable, ConditionalAction {
 			index.put(s, risk);
 			faultIndexMap.put(faultIndexMap.size(), risk.getRiskName());
 			faults.add(risk);
+			FaultLiteral tl = new FaultLiteral(risk, true);
+			trueFaultLiterals.add(tl);
+			trueFaultToFaultLiteral.put(risk, tl);
+			FaultLiteral fl = new FaultLiteral(risk, false);
+			falseFaultLiterals.add(tl);
+			falseFaultToFaultLiteral.put(risk, fl);
 		}
 		return risk;
 	}
@@ -175,5 +191,11 @@ public class Fault implements Comparable, ConditionalAction {
 			return 1;
 		else
 			return 0;
+	}
+
+	public static FaultLiteral getFaultLiteral(
+			Fault r, boolean b) {
+		if(b) return trueFaultToFaultLiteral.get(r);
+		else  return falseFaultToFaultLiteral.get(r);
 	}
 }

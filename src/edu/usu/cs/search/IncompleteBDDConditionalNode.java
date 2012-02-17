@@ -24,6 +24,7 @@ import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.StateObservation;
 import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class IncompleteBDDConditionalNode extends IncompleteBDDNode implements
@@ -236,8 +237,9 @@ StateNode {
 			if(unknown(f)){
 
 				if (!node.state.containsKey(possPrec)) {
-					precOpen.or(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec
-							.getName()));
+					Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
+					FaultLiteral rl = Fault.getFaultLiteral(r, true);			
+					precOpen.or(rl);
 				}
 				else if(node.state.get(possPrec) != null){
 					//The precondition is present, but may have other risks
@@ -250,8 +252,10 @@ StateNode {
 						s1.setFaults(1);
 					}
 
-					s1.and(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec
-							.getName()));
+					Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
+					FaultLiteral rl = Fault.getFaultLiteral(r, true);			
+					
+					s1.and(rl);
 					s1.and(node.state.get(possPrec));
 					precOpen.or(s1);
 				}
@@ -288,7 +292,9 @@ StateNode {
 					riskSet.setFaults(1);
 				}
 
-				riskSet.or(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName()));
+				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName());
+				FaultLiteral rl = Fault.getFaultLiteral(r, true);			
+				riskSet.or(rl);
 				state.put(p, riskSet);
 			}
 		}
@@ -321,8 +327,9 @@ StateNode {
 						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 								new PIFaultSet(actRisks) :
 									new BDDFaultSet(actRisks));
-					riskSet.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
-							effect.getName()));
+					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+					FaultLiteral rl = Fault.getFaultLiteral(r, false);			
+					riskSet.or(rl);
 
 					state.put(effect, riskSet);
 
@@ -343,8 +350,9 @@ StateNode {
 
 
 					// Also add the UnlistedEffect risk
-					crossProduct.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
-							effect.getName()));
+					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+					FaultLiteral rl = Fault.getFaultLiteral(r, false);			
+					crossProduct.or(rl);
 
 					// Intersect these with risks in the proposition to get the new risk
 					// set for the prop.

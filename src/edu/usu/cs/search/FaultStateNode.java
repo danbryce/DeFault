@@ -19,6 +19,7 @@ import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationSearch;
@@ -226,7 +227,10 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 					riskSet.setFaults(1);
 				}
 
-				riskSet.or(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName()));
+				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName());
+				FaultLiteral rl = Fault.getFaultLiteral(r, true);
+				
+				riskSet.or(rl);
 				state.put(effect, riskSet);
 			}
 			else{ //flexible semantics							
@@ -241,7 +245,10 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 						new PIFaultSet(criticalRisks) :
 							new BDDFaultSet(criticalRisks));
 				negActFaults.not();
-				negActFaults.and(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName()));
+				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName());
+				FaultLiteral rl = Fault.getFaultLiteral(r, true);
+					
+				negActFaults.and(rl);
 
 				riskSet.or(negActFaults);
 				state.put(effect, riskSet);
@@ -361,8 +368,10 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 				//if(!solver.getSolverOptions().isStrictSemantics()){
 					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
-						riskSet.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(),
-								effect.getName()));
+						Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+						FaultLiteral rl = Fault.getFaultLiteral(r, false);			
+						
+						riskSet.or(rl);
 					}
 					else{
 						int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
@@ -397,7 +406,9 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 			// Also add the UnlistedEffect risk
 			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
-				crossProduct.or(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName()));
+				Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+				FaultLiteral rl = Fault.getFaultLiteral(r, false);			
+				crossProduct.or(rl);
 			}
 			else{
 				int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
@@ -429,8 +440,9 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
 			if (!node.state.containsKey(possPrec)) {
-				precOpen.or(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec
-						.getName()));
+				Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
+				FaultLiteral rl = Fault.getFaultLiteral(r, true);				
+				precOpen.or(rl);
 			}
 			else if(node.state.get(possPrec) != null){
 				//The precondition is present, but may have other risks
@@ -442,9 +454,9 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
 				//					s1.setFaults(1);
 				//				}
-
-				s1.and(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec
-						.getName()));
+				Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
+				FaultLiteral rl = Fault.getFaultLiteral(r, true);			
+				s1.and(rl);
 				//				s1.and(node.state.get(possPrec));
 				precOpen.or(s1);
 			}

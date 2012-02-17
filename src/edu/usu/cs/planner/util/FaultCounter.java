@@ -30,6 +30,7 @@ import edu.usu.cs.pddl.parser.InvalidPDDLElementException;
 import edu.usu.cs.pddl.parser.PDDLSyntaxException;
 import edu.usu.cs.planner.IncompleteBDDNode;
 import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.SolverOptions.FAULT_TYPE;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
@@ -148,6 +149,12 @@ public class FaultCounter {
 
 	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
+		boolean piFaults = false;
+		if(solver.getSolverOptions().getFaultType() == FAULT_TYPE.PI_FAULTS){
+			solver.getSolverOptions().setFaultType(FAULT_TYPE.BDD_FAULTS);
+			piFaults = true;
+		}
+		
 		if (!isInitialized) {initialize(domain, problem, plan);}
 
 		// Figure out which risks are true right now
@@ -156,6 +163,7 @@ public class FaultCounter {
 		// Add the initial state
 		nodes.add(new IncompleteBDDNode(problem.getInitialState(), null, null, solver));
 
+		
 
 		for (ActionInstance action : plan) 
 		{
@@ -194,6 +202,10 @@ public class FaultCounter {
 		BigInteger solvableDomains = getBigSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.ref(solvableDomains);
 
+		if(piFaults){
+			solver.getSolverOptions().setFaultType(FAULT_TYPE.PI_FAULTS);
+		}
+		
 		return solvableDomains;
 	}
 

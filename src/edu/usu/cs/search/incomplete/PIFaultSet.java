@@ -12,42 +12,42 @@ import edu.usu.cs.search.FaultSet;
 
 public class PIFaultSet implements FaultSet {
 
-	private Set<Set<Fault>> set;
+	private Set<Set<FaultLiteral>> set;
 	private int maxEltSize;
 	private Map<Integer, Integer> sizeMap;
 	private boolean onlyEmpty;
 
 	private boolean sizeMapStale;
-	
+
 	public PIFaultSet(int maxEltSize) {
 		super();
 
 		//this.set = new TreeSet<Set<Risk>>(new SetComparator());
-		this.set = new HashSet<Set<Fault>>();
+		this.set = new HashSet<Set<FaultLiteral>>();
 		this.maxEltSize = maxEltSize;
 		this.sizeMap = new HashMap<Integer, Integer>();
 		this.sizeMapStale = false;
 		this.onlyEmpty = true;
-//		this.updateSizeMap();
+		//		this.updateSizeMap();
 	}
 
 
 
 	public PIFaultSet(FaultSet arisks) {
 		PIFaultSet risks = (PIFaultSet)arisks;
-		
+
 		this.maxEltSize = risks.getMaxEltSize();
 		//this.set = new TreeSet<Set<Risk>>(new SetComparator());
-		this.set = new HashSet<Set<Fault>>();
+		this.set = new HashSet<Set<FaultLiteral>>();
 		this.sizeMap = new HashMap<Integer, Integer>();
-		
-		for(Set<Fault> r : risks.getSet()){
-			set.add(new TreeSet<Fault>(r));
+
+		for(Set<FaultLiteral> r : risks.getSet()){
+			set.add(new TreeSet<FaultLiteral>(r));
 			//set.add(new HashSet<Risk>(r));
 		}
 		this.sizeMapStale = true;
-//		this.onlyEmpty = risks.onlyEmpty();
-//		this.updateSizeMap();
+		//		this.onlyEmpty = risks.onlyEmpty();
+		//		this.updateSizeMap();
 	}
 
 
@@ -73,13 +73,13 @@ public class PIFaultSet implements FaultSet {
 		for(int i = 0; i <= maxEltSize; i++){
 			this.sizeMap.put(i, 0);
 		}
-		for(Set<Fault> r : set){
+		for(Set<FaultLiteral> r : set){
 			this.sizeMap.put(r.size(), this.sizeMap.get(r.size())+1);
 		}
 		this.sizeMapStale = false;
 	}
-	
-	public Set<Set<Fault>> getSet() {
+
+	public Set<Set<FaultLiteral>> getSet() {
 		return set;
 	}
 
@@ -89,7 +89,7 @@ public class PIFaultSet implements FaultSet {
 
 	public void union(PIFaultSet set1){
 		//union elements of set and set1 and remove subsumed sets
-		for(Set<Fault> rs1 : set1.getSet()){
+		for(Set<FaultLiteral> rs1 : set1.getSet()){
 			if(!subsumes(this.set, rs1)){
 				//remove sets from set that are subsumed by rs1
 				removeSetsSubsumedBy(this.set, rs1);
@@ -102,36 +102,36 @@ public class PIFaultSet implements FaultSet {
 		}	
 	}
 
-	
 
-	private void removeSetsSubsumedBy(Set<Set<Fault>> mset, Set<Fault> rs1) {
+
+	private void removeSetsSubsumedBy(Set<Set<FaultLiteral>> mset, Set<FaultLiteral> rs1) {
 		//Set<Set<Risk>> toRemove = new TreeSet<Set<Risk>>(new SetComparator());
-		Set<Set<Fault>> toRemove = new HashSet<Set<Fault>>();
-		
-		for(Set<Fault> rs : set){
+		Set<Set<FaultLiteral>> toRemove = new HashSet<Set<FaultLiteral>>();
+
+		for(Set<FaultLiteral> rs : set){
 			if(rs.size() >= rs1.size() && rs.containsAll(rs1)){
 				toRemove.add(rs);
 			}
 		}
 		mset.removeAll(toRemove);		
-		
+
 	}
 
 
 	public void crossProduct(PIFaultSet set1){
 		//union all pairs of risk sets, removing those larger than maxEltSize and removing subsumed
-		
-		
 
-		
+
+
+
 		//Set<Set<Risk>> newRiskSet = new TreeSet<Set<Risk>>(new SetComparator());
-		Set<Set<Fault>> newRiskSet = new HashSet<Set<Fault>>();
-		
-		
-		
-		for(Set<Fault> rs1 : set1.getSet()){
-			for(Set<Fault> rs : set){
-				Set<Fault> rs2 = new TreeSet<Fault>();
+		Set<Set<FaultLiteral>> newRiskSet = new HashSet<Set<FaultLiteral>>();
+
+
+
+		for(Set<FaultLiteral> rs1 : set1.getSet()){
+			for(Set<FaultLiteral> rs : set){
+				Set<FaultLiteral> rs2 = new TreeSet<FaultLiteral>();
 				//Set<Risk> rs2 = new HashSet<Risk>();
 				rs2.addAll(rs1);
 				rs2.addAll(rs);
@@ -149,8 +149,8 @@ public class PIFaultSet implements FaultSet {
 	}
 
 
-	private boolean subsumes(Set<Set<Fault>> mset, Set<Fault> rs1) {
-		for(Set<Fault> rs : mset){
+	private boolean subsumes(Set<Set<FaultLiteral>> mset, Set<FaultLiteral> rs1) {
+		for(Set<FaultLiteral> rs : mset){
 			if(rs1.size() >= rs.size() && rs.size() > 0 && rs1.containsAll(rs)){
 				return true;
 			}
@@ -177,7 +177,7 @@ public class PIFaultSet implements FaultSet {
 		 */
 		for(int i = 0; i  <= maxEltSize; i++){
 			b.append(i +":");
-			for(Set<Fault> rs : set){
+			for(Set<FaultLiteral> rs : set){
 				if(rs.size() == i){
 					b.append(rs.toString() + " ");
 				}
@@ -192,25 +192,25 @@ public class PIFaultSet implements FaultSet {
 	public boolean equals(FaultSet set1){
 		if(set1 instanceof PIFaultSet){
 			PIFaultSet set1p = (PIFaultSet)set1;
-//			
-//			for(Set<Fault> s : set){
-//				if(!set1p.getSet().contains(s))
-//					return false;
-//			}
-//			
-//			return true;
+			//			
+			//			for(Set<Fault> s : set){
+			//				if(!set1p.getSet().contains(s))
+			//					return false;
+			//			}
+			//			
+			//			return true;
 			return set.equals(set1p.getSet());
 		}
 		return false;
 	}
 
 
-	public void add(Fault risk) {
-		
+	public void add(FaultLiteral risk) {
+
 		if(maxEltSize == 0)
 			return;
-		
-		Set<Fault> s = new TreeSet<Fault>();
+
+		Set<FaultLiteral> s = new TreeSet<FaultLiteral>();
 		//Set<Risk> s = new HashSet<Risk>();
 		s.add(risk);
 		removeSetsSubsumedBy(this.set, s);
@@ -222,39 +222,39 @@ public class PIFaultSet implements FaultSet {
 
 
 	public void removeAll(PIFaultSet risks) {
-		for(Set<Fault> r : risks.getSet()){
+		for(Set<FaultLiteral> r : risks.getSet()){
 			set.remove(r);
 			this.sizeMapStale = true;
 		}
 	}
 
-	
+
 	@Override
 	public int compareTo(FaultSet o) {
 		//compare based on the number of models of each.
 		//model counting of prime implicants is NP-Hard, 
 		//so compute the symmetric difference of the sets
 		//and compare the number of increasing sized PIs 
-		
+
 		PIFaultSet grs = (PIFaultSet)o;
-		
-		
+
+
 		Map<Integer, Integer> c1 = this.getSizeMap();
 		Map<Integer, Integer> c2 = grs.getSizeMap();
-		
+
 		Set<Integer> sizes =  new TreeSet<Integer>();
-//		sizes.addAll(c1.keySet());
-//		sizes.addAll(c2.keySet());
+		//		sizes.addAll(c1.keySet());
+		//		sizes.addAll(c2.keySet());
 		sizes.add(1);
-		
+
 		for(Integer i : sizes){
 			Integer i1 = c1.get(i);
 			Integer i2 = c2.get(i);
-			
+
 			if(i1 == null) i1 = 0;
 			if(i2 == null) i2 = 0;
-			
-			
+
+
 			int diff = i1 - i2;
 			if(diff == 0){
 				continue;
@@ -266,10 +266,10 @@ public class PIFaultSet implements FaultSet {
 	}
 
 
-//	public void addEmpty() {
-//		set.add(new TreeSet<Fault>());
-//		
-//	}
+	//	public void addEmpty() {
+	//		set.add(new TreeSet<Fault>());
+	//		
+	//	}
 
 
 
@@ -277,7 +277,7 @@ public class PIFaultSet implements FaultSet {
 
 
 	@Override
-	public void and(Fault riskFromIndex) {
+	public void and(FaultLiteral riskFromIndex) {
 		PIFaultSet set = new PIFaultSet(this.maxEltSize);
 		set.add(riskFromIndex);
 		this.crossProduct(set);	
@@ -292,7 +292,7 @@ public class PIFaultSet implements FaultSet {
 
 
 
-	
+
 
 
 	@Override
@@ -322,9 +322,9 @@ public class PIFaultSet implements FaultSet {
 
 
 	@Override
-	public void or(Fault r) {
+	public void or(FaultLiteral r) {
 		this.add(r);
-		
+
 	}
 
 
@@ -332,7 +332,7 @@ public class PIFaultSet implements FaultSet {
 	@Override
 	public void setFaults(int i) {
 		if(i == 1){
-			set.add(new HashSet<Fault>());
+			set.add(new HashSet<FaultLiteral>());
 		}
 	}
 
@@ -341,7 +341,7 @@ public class PIFaultSet implements FaultSet {
 	@Override
 	public void and(int possibleDomains) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -349,7 +349,7 @@ public class PIFaultSet implements FaultSet {
 	@Override
 	public void or(int nadd) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -369,20 +369,53 @@ public class PIFaultSet implements FaultSet {
 
 	@Override
 	public void not() {
-		try {
-			throw new Exception("not() not implemented for PIs");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//Negate a DNF 
+		//1. negate every literal of every term, terms become clauses
+		//2. Distribute or's over ands
+
+		Set<Set<FaultLiteral>> resultSet = new HashSet<Set<FaultLiteral>>();
+		Set<Set<FaultLiteral>> tmpResultSet;
 		
+		for(Set<FaultLiteral> clause : set){
+			if(resultSet.size() == 0){
+				//first clause
+				for(FaultLiteral l : clause){
+					//negate literal and start new term
+					FaultLiteral nl = Fault.getFaultLiteral(l.getFault(), !l.isTrue());
+					Set<FaultLiteral> term = new HashSet<FaultLiteral>();
+					term.add(nl);
+					resultSet.add(term);
+				}
+			}
+			else{
+				
+				//extend each term with negated literals in clause
+				
+				tmpResultSet = new HashSet<Set<FaultLiteral>>();
+				for(FaultLiteral l : clause){
+					FaultLiteral nl = Fault.getFaultLiteral(l.getFault(), !l.isTrue());
+					for(Set<FaultLiteral> term : resultSet){
+						Set<FaultLiteral> extendedTerm = new HashSet<FaultLiteral>(term);
+						extendedTerm.add(nl);						
+						if(extendedTerm.size() <= maxEltSize && !subsumes(tmpResultSet, extendedTerm))
+								tmpResultSet.add(extendedTerm);
+					}
+				}
+				resultSet = tmpResultSet;
+			}
+		}
+		set = resultSet;
+		updateSizeMap();
 	}
 
 
-
-
-
 }
+
+
+
+
+
+
 
 
 //

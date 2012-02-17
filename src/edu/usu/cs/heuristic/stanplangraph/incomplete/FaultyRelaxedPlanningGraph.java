@@ -30,6 +30,7 @@ import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
@@ -123,7 +124,8 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 					if(factHeader == null){
 						//If precondition is not present, then incur a fault
 						Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre.getName());
-						actionFaults.or(r);
+						FaultLiteral rl = Fault.getFaultLiteral(r, true);
+						actionFaults.or(rl);
 					}
 					else { 
 						//precondition is present,
@@ -131,8 +133,9 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 						//else if precondition is at fault, there is a higher order interaction
 						if(!fli.getFaults().empty()){
 							Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre.getName());
+							FaultLiteral rl = Fault.getFaultLiteral(r, true);
 							FaultSet factFaults = fli.getFaults().copy();							
-							factFaults.and(r);							
+							factFaults.and(rl);							
 							actionFaults.or(factFaults);
 						}
 						ali.getSupportingFacts().add(factHeader);
@@ -194,9 +197,10 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 				if(fli.getPossibleSupporters().contains(actionHeader)){
 					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, actionHeader.getName(), fact.getName());
+					FaultLiteral rl = Fault.getFaultLiteral(r, false);
 					FaultSet faults = ali.getFaults().copy();
 					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
-						faults.or(r);
+						faults.or(rl);
 					}
 					else{
 						int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(r));
