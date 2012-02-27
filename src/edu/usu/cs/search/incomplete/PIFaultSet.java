@@ -7,10 +7,13 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.Set;
 
+import edu.usu.cs.heuristic.stanplangraph.incomplete.PIMetric;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
+import edu.usu.cs.planner.PlanMetric;
+import edu.usu.cs.search.DefaultFaultSet;
 import edu.usu.cs.search.FaultSet;
 
-public class PIFaultSet implements FaultSet {
+public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 
 	private Set<Set<FaultLiteral>> set;
 	private int maxEltSize;
@@ -28,6 +31,7 @@ public class PIFaultSet implements FaultSet {
 		this.sizeMap = new HashMap<Integer, Integer>();
 		this.sizeMapStale = false;
 		this.onlyEmpty = true;
+		set.add(new HashSet<FaultLiteral>()); //single empty term signifies logical true
 		//		this.updateSizeMap();
 	}
 
@@ -189,6 +193,10 @@ public class PIFaultSet implements FaultSet {
 		return b.toString();
 	}
 
+	public boolean equals(Object set1){
+		return equals((FaultSet)set1);
+	}
+		
 	public boolean equals(FaultSet set1){
 		if(set1 instanceof PIFaultSet){
 			PIFaultSet set1p = (PIFaultSet)set1;
@@ -199,7 +207,8 @@ public class PIFaultSet implements FaultSet {
 			//			}
 			//			
 			//			return true;
-			return set.equals(set1p.getSet());
+			boolean eq =  set.equals(set1p.getSet());
+			return eq;
 		}
 		return false;
 	}
@@ -313,11 +322,11 @@ public class PIFaultSet implements FaultSet {
 
 
 
-	@Override
-	public boolean empty() {
-		// TODO Auto-generated method stub
-		return this.set.size()==0;
-	}
+//	@Override
+//	public boolean empty() {
+//		// TODO Auto-generated method stub
+//		return this.set.size()==0;
+//	}
 
 
 
@@ -328,32 +337,32 @@ public class PIFaultSet implements FaultSet {
 	}
 
 
-
-	@Override
-	public void setFaults(int i) {
-		if(i == 1){
-			set.add(new HashSet<FaultLiteral>());
-		}
-	}
-
-
-
-	@Override
-	public void and(int possibleDomains) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-	@Override
-	public void or(int nadd) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
+//
+//	@Override
+//	public void setFaults(int i) {
+//		if(i == 1){
+//			set.add(new HashSet<FaultLiteral>());
+//		}
+//	}
+//
+//
+//
+//	@Override
+//	public void and(int possibleDomains) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//
+//
+//	@Override
+//	public void or(int nadd) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//
+//
 	@Override
 	public void andNot(FaultSet criticalAndGoal) {
 		removeAll((PIFaultSet) criticalAndGoal);
@@ -365,7 +374,9 @@ public class PIFaultSet implements FaultSet {
 		set.retainAll(((PIFaultSet) failures).getSet());
 	}
 
-
+	public boolean isFalse(){
+		return set.size() == 0;
+	}
 
 	@Override
 	public void not() {
@@ -373,6 +384,12 @@ public class PIFaultSet implements FaultSet {
 		//1. negate every literal of every term, terms become clauses
 		//2. Distribute or's over ands
 
+		if(set.size() == 0){
+			//it is false
+			set.add(new HashSet<FaultLiteral>()); //signifies true
+		}
+		
+		
 		Set<Set<FaultLiteral>> resultSet = new HashSet<Set<FaultLiteral>>();
 		Set<Set<FaultLiteral>> tmpResultSet;
 		
@@ -405,9 +422,13 @@ public class PIFaultSet implements FaultSet {
 			}
 		}
 		set = resultSet;
-		updateSizeMap();
+		//updateSizeMap();
 	}
 
+	public PlanMetric getFaultPlanMetric(){
+		return new PIMetric(this);
+	}
+	
 
 }
 

@@ -1,13 +1,15 @@
 package edu.usu.cs.heuristic.stanplangraph.incomplete;
 
+import edu.usu.cs.pddl.domain.incomplete.TrieFaultSet;
 import edu.usu.cs.planner.PlanMetric;
+import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class PIMetric implements PlanMetric {
 
-	PIFaultSet risks;
+	FaultSet risks;
 	
-	public PIMetric(PIFaultSet grs) {
+	public PIMetric(FaultSet grs) {
 		risks = grs;
 	}
 
@@ -16,7 +18,7 @@ public class PIMetric implements PlanMetric {
 		PIMetric pd = (PIMetric)d;
 		if(pd != null){
 			PIFaultSet grs = new PIFaultSet(this.risks);
-			grs.union(pd.risks);
+			grs.or(pd.risks);
 			return new PIMetric(grs);
 		}
 		return null;
@@ -38,7 +40,13 @@ public class PIMetric implements PlanMetric {
 	}
 	
 	public String toString(){
-		return Integer.toString(risks.getSet().size());
+		if(risks instanceof PIFaultSet){
+			return Integer.toString(((PIFaultSet)risks).getSet().size());
+		}
+		else if (risks instanceof TrieFaultSet){
+			return Integer.toString(((TrieFaultSet)risks).getSize());
+		}
+		return "";
 	}
 
 }

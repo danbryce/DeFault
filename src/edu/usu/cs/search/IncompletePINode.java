@@ -29,8 +29,8 @@ implements PreferredOperatorDeferredEvaluationNode{
 			Solver solver) {
 		super(action, parent, solver);
 		for(Proposition p : state)
-			this.state.put(p, new PIFaultSet(solver.getSolverOptions().getRiskArity()));
-		criticalRisks = new PIFaultSet(solver.getSolverOptions().getRiskArity());
+			this.state.put(p,DefaultFaultSet.makeNew(solver.getSolverOptions()));
+		criticalRisks = DefaultFaultSet.makeNew(solver.getSolverOptions());
 		//gvalue[0] = new PIMetric(criticalRisks);
 
 	}
@@ -38,10 +38,10 @@ implements PreferredOperatorDeferredEvaluationNode{
 	public IncompletePINode(IncompletePINode incompletePINode) {
 		super(incompletePINode);
 		if(solver.getSolverOptions().isStrictSemantics()){ //copy over previous action failures			
-		criticalRisks = new PIFaultSet(incompletePINode.criticalRisks);
+		criticalRisks =  DefaultFaultSet.makeNew(incompletePINode.criticalRisks, solver.getSolverOptions());
 		}
 		else{ //flexible semantics ignores previous failures
-			criticalRisks = new PIFaultSet(solver.getSolverOptions().getRiskArity());
+			criticalRisks = DefaultFaultSet.makeNew(solver.getSolverOptions());
 		}
 		//		gvalue[0] = new PIMetric((PIRiskSet)this.criticalRisks);
 		//		gvalue[1] = new NumericMetric(((NumericMetric)incompletePINode.getGValue()[1]).getValue());
@@ -75,7 +75,7 @@ implements PreferredOperatorDeferredEvaluationNode{
 			heuristicComputed = true;
 			hvalue = solver.getHeuristic().getValue(this);
 			preferredOperators = solver.getHeuristic().getPreferredOperators( );
-			if(parent == null){
+			if(false && parent == null){
 
 				Set[] relevant = solver.getHeuristic().getRelevant();
 				if(relevant[0] != null){

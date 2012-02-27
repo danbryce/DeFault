@@ -9,6 +9,7 @@ import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.Search;
+import edu.usu.cs.search.SolutionEvaluator;
 
 public interface Solver {
 	public Search getSearch();

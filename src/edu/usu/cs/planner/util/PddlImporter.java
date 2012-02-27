@@ -58,7 +58,7 @@ public class PddlImporter {
 		for (LiteralInstance literal : resultSet) {
 			preconditions.add(new Proposition(literal));
 		}
-		return new IncompleteActionInstance("goal", preconditions, null, null, null, null, null, 0);
+		return new IncompleteActionInstance("goal", preconditions, null, null, null, null, null, null, 0);
 	}
 
 	public static List<ActionInstance> createActionInstances(

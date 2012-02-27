@@ -114,6 +114,16 @@ public class Default {
 					solver = new PICoveringSolver(domain, problem, searchStatistics, solverOptions); 
 				else
 					solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);				
+			} else if (args[3].length() > 4 && args[3].subSequence(0,4).toString().equalsIgnoreCase("trie")) {
+				solverOptions.setUsePreferredOperators(true);
+				solverOptions.setUseDeferredEvaluation(true);
+				solverOptions.setUseMultipleSupportersInPlanningGraph(true);			
+				solverOptions.setRiskArity(Integer.valueOf(args[3].substring(4)));
+				solverOptions.setFaultType(SolverOptions.FAULT_TYPE.PI_TRIE_FAULTS);
+				if(solverOptions.getSearchType().equals(SolverOptions.SEARCHTYPE.COVER))
+					solver = new PICoveringSolver(domain, problem, searchStatistics, solverOptions); 
+				else
+					solver = new PODEPISolver(domain, problem, searchStatistics, solverOptions);				
 			} else if (args[3].equalsIgnoreCase("jdd")) {
 				solverOptions.setUsePreferredOperators(true);
 				solverOptions.setUseDeferredEvaluation(true);
@@ -152,139 +162,147 @@ public class Default {
 			e.printStackTrace();
 		}
 
+		
 		List<List<ActionInstance>> plans = solver.run();
 		// getPlan(search);
 
-		if (plans == null) {
-			logger.debug("\nNo plan found");
-			return;
-		}
-		logger.debug("Elapsed time: \t\t" + searchStatistics.getElapsedTime()
-				+ " milliseconds");
-		if(solverOptions.getSearchType().equals(SolverOptions.SEARCHTYPE.COVER))
-			return;
-		for(List<ActionInstance> plan: plans){
-			logger.debug("\nPlan found");
-			for (ActionInstance action : plan) {
-				logger.debug(action.getName());
-			}
-
-			// // Output the state sequence and actions in the plan
-			// logger.debug("\n*********************************\n*** State Transition Sequence ***\n*********************************");
-			// Node node = problem.getInitialNode();
-			// for (Action action : plan) {
-			// logger.debug(node);
-			// logger.debug(action);
-			// node = NodeUtilities.getSuccessorNode(node, action);
-			// }
-			// logger.debug(node);
-			// logger.debug(problem.getGoal());
-			// node = NodeUtilities.getSuccessorNode(node, problem.getGoal());
-			// logger.debug(node);
-			// logger.debug("*********************************\n*********************************");
-
-			// // Output the risks
-			// logger.debug("\nRisks: " +
-			// finalNode.getCriticalRisks().size());
-			// for (Risk risk : finalNode.getCriticalRisks()) {
-			// logger.debug(risk);
-			// }
-
-			//		logger.debug("\nFinal Stats:\n");
-			//		logger.debug("Plan length: " + plan.size());
-			//		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
-			//				+ " milliseconds");
-			//		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
-			//		if (searchStatistics.getSolutionNode() != null
-			//				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
-			//			logger.debug("Risk count: "
-			//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-			//							.getCriticalRisks().size());
-			//		}
-			logger.debug("\nFinal Stats:\n");
-			logger.debug("Plan length: " + plan.size());
-			
-			logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
-
-			if (searchStatistics.getSolutionNode() != null
-					//&& searchStatistics.getSolutionNode() instanceof FFRiskyNode
-			) {
-				//			logger.debug("Risk count: "
-				//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-				//							.getCriticalRisks().size());
-				//			logger.debug(((FFRiskyNode) searchStatistics.getSolutionNode())
-				//							.getCriticalRisks());
-
-				FaultCounter.initialize(domain, problem, plan);
-				BigInteger total =BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
-				BigInteger solvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
-				BigDecimal probability = new BigDecimal(solvable);
-				probability = probability.divide(new BigDecimal(total));
-
-				logger.debug("Solvable Domains: " + solvable);
-				logger.debug("Total Domains: " + total);
-				logger.debug("Probability: " + probability);
-				logger.debug("Incomplete Features: " + FaultCounter.getNumRisks());
-
-			}
-			else if(searchStatistics.getSolutionNode() != null
-					&& searchStatistics.getSolutionNode() instanceof RiskCounterNode) {
-				logger.debug("Risk count: "
-						+ ((RiskCounterNode) searchStatistics.getSolutionNode())
-						.getGValue()[0]);
-				FaultCounter.getBDD().printSet(FaultCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
-						.getActRisks()));			
-			}
-
-			try {
-				FileWriter fstream = new FileWriter("Output/" + args[2], true);
-				BufferedWriter out = new BufferedWriter(fstream);
-				if (searchStatistics.getSolutionNode() != null
-						&& searchStatistics.getSolutionNode() instanceof FaultStateNode) {
-					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t"
-							: "")
-							+ domainFile.getName()
-							+ "\t"
-							+ problemFile.getName()
-							+ "\t"
-							+ args[3]
-							       + "\t"
-							       + plan.size()
-							       + "\t"
-							       + searchStatistics.getElapsedTime()
-							       + "\t"
-							       + searchStatistics.getNodesExpanded()
-							       //						+ "\t"
-							       //						+ ((FFRiskyNode) searchStatistics.getSolutionNode())
-							       //								.getCriticalRisks().size() + "\r\n"
-					);
-
-				} else {
-					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t"
-							: "")
-							+ domainFile.getName()
-							+ "\t"
-							+ problemFile.getName()
-							+ "\t"
-							+ args[3]
-							       + "\t"
-							       + plan.size()
-							       + "\t"
-							       + searchStatistics.getElapsedTime()
-							       + "\t"
-							       + searchStatistics.getNodesExpanded()
-							       + "\t"
-							       + 0
-							       + "\r\n");
-				}
-
-				out.close();
-				logger.debug("\ninformation written to Output/" + args[2]);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		logger.debug("Incomplete Features: " + FaultCounter.getNumRisks());
+		logger.debug("Solution Evaluation Time (s): " + solver.getSearch().getSolutionEvaluator().getSolutionEvaluationTime()/1000.0);
+		logger.debug("Model Counting Time (s): " + (FaultCounter.totalCountTime)/1000.0);
+		logger.debug("Nodes Expanded: " + searchStatistics.getNodesExpanded());
 		
+//		if (plans == null) {
+//			logger.debug("\nNo plan found");
+//			return;
+//		}
+//		logger.debug("Elapsed time: \t\t" + searchStatistics.getElapsedTime()
+//				+ " milliseconds");
+//		if(solverOptions.getSearchType().equals(SolverOptions.SEARCHTYPE.COVER))
+//			return;
+//		for(List<ActionInstance> plan: plans){
+//			if(plan == null)
+//				continue;
+//			logger.debug("\nPlan found");
+//			for (ActionInstance action : plan) {
+//				logger.debug(action.getName());
+//			}
+//
+//			// // Output the state sequence and actions in the plan
+//			// logger.debug("\n*********************************\n*** State Transition Sequence ***\n*********************************");
+//			// Node node = problem.getInitialNode();
+//			// for (Action action : plan) {
+//			// logger.debug(node);
+//			// logger.debug(action);
+//			// node = NodeUtilities.getSuccessorNode(node, action);
+//			// }
+//			// logger.debug(node);
+//			// logger.debug(problem.getGoal());
+//			// node = NodeUtilities.getSuccessorNode(node, problem.getGoal());
+//			// logger.debug(node);
+//			// logger.debug("*********************************\n*********************************");
+//
+//			// // Output the risks
+//			// logger.debug("\nRisks: " +
+//			// finalNode.getCriticalRisks().size());
+//			// for (Risk risk : finalNode.getCriticalRisks()) {
+//			// logger.debug(risk);
+//			// }
+//
+//			//		logger.debug("\nFinal Stats:\n");
+//			//		logger.debug("Plan length: " + plan.size());
+//			//		logger.debug("Elapsed time: " + searchStatistics.getElapsedTime()
+//			//				+ " milliseconds");
+//			//		logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
+//			//		if (searchStatistics.getSolutionNode() != null
+//			//				&& searchStatistics.getSolutionNode() instanceof FFRiskyNode) {
+//			//			logger.debug("Risk count: "
+//			//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+//			//							.getCriticalRisks().size());
+//			//		}
+//			logger.debug("\nFinal Stats:\n");
+//			logger.debug("Plan length: " + plan.size());
+//			
+//			logger.debug("Nodes expanded: " + searchStatistics.getNodesExpanded());
+//
+//			if (searchStatistics.getSolutionNode() != null
+//					//&& searchStatistics.getSolutionNode() instanceof FFRiskyNode
+//			) {
+//				//			logger.debug("Risk count: "
+//				//					+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+//				//							.getCriticalRisks().size());
+//				//			logger.debug(((FFRiskyNode) searchStatistics.getSolutionNode())
+//				//							.getCriticalRisks());
+//
+//				FaultCounter.initialize(domain, problem, plan);
+//				BigInteger total =BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
+//				BigInteger solvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
+//				BigDecimal probability = new BigDecimal(solvable);
+//				probability = probability.divide(new BigDecimal(total));
+//
+//				logger.debug("Solvable Domains: " + solvable);
+//				logger.debug("Total Domains: " + total);
+//				logger.debug("Probability: " + probability);
+//				logger.debug("Incomplete Features: " + FaultCounter.getNumRisks());
+//
+//			}
+//			else if(searchStatistics.getSolutionNode() != null
+//					&& searchStatistics.getSolutionNode() instanceof RiskCounterNode) {
+//				logger.debug("Risk count: "
+//						+ ((RiskCounterNode) searchStatistics.getSolutionNode())
+//						.getGValue()[0]);
+//				FaultCounter.getBDD().printSet(FaultCounter.getBDD().not(((RiskCounterNode) searchStatistics.getSolutionNode())
+//						.getActRisks()));			
+//			}
+
+//			try {
+//				FileWriter fstream = new FileWriter("Output/" + args[2], true);
+//				BufferedWriter out = new BufferedWriter(fstream);
+//				if (searchStatistics.getSolutionNode() != null
+//						&& searchStatistics.getSolutionNode() instanceof FaultStateNode) {
+//					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t"
+//							: "")
+//							+ domainFile.getName()
+//							+ "\t"
+//							+ problemFile.getName()
+//							+ "\t"
+//							+ args[3]
+//							       + "\t"
+//							       + plan.size()
+//							       + "\t"
+//							       + searchStatistics.getElapsedTime()
+//							       + "\t"
+//							       + searchStatistics.getNodesExpanded()
+//							       //						+ "\t"
+//							       //						+ ((FFRiskyNode) searchStatistics.getSolutionNode())
+//							       //								.getCriticalRisks().size() + "\r\n"
+//					);
+//
+//				} else {
+//					out.append((args.length == 6 ? args[5] + "\t" + args[4] + "\t"
+//							: "")
+//							+ domainFile.getName()
+//							+ "\t"
+//							+ problemFile.getName()
+//							+ "\t"
+//							+ args[3]
+//							       + "\t"
+//							       + plan.size()
+//							       + "\t"
+//							       + searchStatistics.getElapsedTime()
+//							       + "\t"
+//							       + searchStatistics.getNodesExpanded()
+//							       + "\t"
+//							       + 0
+//							       + "\r\n");
+//				}
+//
+//				out.close();
+//				logger.debug("\ninformation written to Output/" + args[2]);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
 	}
 
 	private static void usage() {

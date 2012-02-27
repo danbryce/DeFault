@@ -8,6 +8,7 @@ import java.util.Set;
 import edu.usu.cs.heuristic.Heuristic;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
@@ -120,7 +121,7 @@ public class AbstractStateNode implements StateNode {
 				continue;
 			}
 			StateNode node = getSuccessorNode(act);
-			if(node != null && !node.equals(this) && (node.getParent() == null || node.getParent().getParent() == null || !node.getParent().getParent().equals(node)) ){
+			if(node != null ){//&& !node.equals(this) && (node.getParent() == null || node.getParent().getParent() == null || !node.getParent().getParent().equals(node)) ){
 				newNodes.add(node);
 				//subsequentNodes.add(node);
 			}
@@ -215,5 +216,15 @@ public class AbstractStateNode implements StateNode {
 		return null;
 	}
 
-	
+	public List<ActionInstance> getPlan(){
+		List<ActionInstance> actionsToGoal = new ArrayList<ActionInstance>();
+		StateNode node = this;
+		while(node != null && node.getAction() != null) {
+			actionsToGoal.add(0, node.getAction());
+			node = node.getParent();
+//			System.out.println(node.getAction() + "\n" + ((FFRiskyNode)node).getCriticalRisks());
+		}
+		
+		return actionsToGoal;
+	}
 }

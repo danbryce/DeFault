@@ -48,6 +48,9 @@ public class FaultCounter {
 	private static int unusedRisks = 0;//currently unused
 	private static Logger logger = Logger.getLogger(FaultCounter.class.getName());
 
+	public static long startCountTime, endCountTime, totalCountTime = 0;
+	
+	
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
 		if (isInitialized) return;
 
@@ -76,7 +79,7 @@ public class FaultCounter {
 			bdd.ref(temp);
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
-			//logger.debug((i++) + " " + risk);
+		//	logger.debug((i++) + " " + risk);
 			//			}
 			//			else{
 			//				unusedRisks++;
@@ -149,11 +152,8 @@ public class FaultCounter {
 
 	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
-		boolean piFaults = false;
-		if(solver.getSolverOptions().getFaultType() == FAULT_TYPE.PI_FAULTS){
-			solver.getSolverOptions().setFaultType(FAULT_TYPE.BDD_FAULTS);
-			piFaults = true;
-		}
+		FAULT_TYPE oldFaults = solver.getSolverOptions().getFaultType();
+		solver.getSolverOptions().setFaultType(FAULT_TYPE.BDD_FAULTS);
 		
 		if (!isInitialized) {initialize(domain, problem, plan);}
 
@@ -188,7 +188,7 @@ public class FaultCounter {
 			crs.or(risk);
 		}
 
-		logger.debug(crs);
+		//logger.debug(crs);
 		
 		//		for (Risk risk : allRisks) {
 		//			System.out.print("(" + risk.toString() + ") ");
@@ -202,9 +202,7 @@ public class FaultCounter {
 		BigInteger solvableDomains = getBigSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.ref(solvableDomains);
 
-		if(piFaults){
-			solver.getSolverOptions().setFaultType(FAULT_TYPE.PI_FAULTS);
-		}
+		solver.getSolverOptions().setFaultType(oldFaults);
 		
 		return solvableDomains;
 	}
@@ -291,6 +289,9 @@ public class FaultCounter {
 
 	public static BigInteger getModelCount(int bdd) 
 	{
+		
+		startCountTime = System.currentTimeMillis();
+		
 		//System.out.println("\n bdd: " + bdd);
 		if(bdd == 1)
 			return BigInteger.valueOf(2).pow(allRisks.size());
@@ -304,9 +305,13 @@ public class FaultCounter {
 		{
 			//System.out.print(" !");
 			//e.printStackTrace();
-			return BigInteger.valueOf(2).pow(allRisks.size());
+			solvableDomains = BigInteger.valueOf(2).pow(allRisks.size());
 		}
 
+		endCountTime = System.currentTimeMillis();
+		
+		totalCountTime += endCountTime - startCountTime;
+		
 		return solvableDomains;
 	}
 
@@ -365,6 +370,10 @@ public class FaultCounter {
 			// Poss-add
 			for (Proposition possadd : action.getPossibleAddEffects()) {
 				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd.getName()));
+			}
+			for (Proposition possadd : action.getPossibleAddsDeletes()) {
+				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), possadd.getName()));
 			}
 		}
 
@@ -639,7 +648,7 @@ public class FaultCounter {
 			Solver solver) {
 		// TODO Auto-generated method stub
 		FaultSet faults = new BDDFaultSet();
-		faults.or(getFailureExplanationSentence_BDDRef(problem, plan, null, solver));
+		((BDDFaultSet)faults).setFaults(getFailureExplanationSentence_BDDRef(problem, plan, null, solver));
 		return faults;
 	}
 }

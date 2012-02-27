@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.search.DefaultFaultSet;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 
@@ -20,14 +21,7 @@ public class FaultyFactLevelInfo  extends AbstractFactLevelInfo {
 
 	public FaultyFactLevelInfo(FactHeader fact, Solver solver) {
 		super(fact, solver);
-		if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){
-			faults = new PIFaultSet(solver.getSolverOptions().getRiskArity());
-		}
-		else if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS){
-			faults = new BDDFaultSet();
-
-
-		}
+		faults = DefaultFaultSet.makeNew(solver.getSolverOptions());
 	}
 
 	public FaultSet getFaults() {

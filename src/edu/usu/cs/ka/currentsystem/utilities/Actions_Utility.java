@@ -201,9 +201,10 @@ public class Actions_Utility
 		HashSet<Proposition> possPres = new HashSet<Proposition>(a.getPossiblePreconditions());
 		HashSet<Proposition> possAdds = new HashSet<Proposition>(a.getPossibleAddEffects());
 		HashSet<Proposition> possDels = new HashSet<Proposition>(a.getPossibleDeleteEffects());
+		HashSet<Proposition> possAddsDels = new HashSet<Proposition>(a.getPossibleDeleteEffects());
 
 		IncompleteActionInstance newAction = new IncompleteActionInstance(
-				a.getName(), pres, adds, dels, possPres, possAdds, possDels, a.getIndex());
+				a.getName(), pres, adds, dels, possPres, possAdds, possDels, possAddsDels, a.getIndex());
 
 		return newAction;
 	}

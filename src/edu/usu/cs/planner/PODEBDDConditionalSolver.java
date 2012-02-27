@@ -30,7 +30,7 @@ public PODEBDDConditionalSolver(Domain domain, Problem problem,
 				domain, 
 				problem, 
 				actionInstances, 
-				new RiskSolutionEvaluator(domain, problem, searchStatistics, solverOptions), 
+				new RiskSolutionEvaluator(domain, problem, searchStatistics, this), 
 				searchStatistics, 
 				this
 				);

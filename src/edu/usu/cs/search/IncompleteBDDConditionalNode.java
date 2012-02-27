@@ -224,10 +224,7 @@ StateNode {
 
 
 	protected  FaultSet getPrecOpen(FaultStateNode node, IncompleteActionInstance action) {
-		FaultSet precOpen = 
-			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDFaultSet());
+		FaultSet precOpen = DefaultFaultSet.makeNew(solver.getSolverOptions());
 		for (Proposition possPrec : action.getPossiblePreconditions()) {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
@@ -244,13 +241,10 @@ StateNode {
 				else if(node.state.get(possPrec) != null){
 					//The precondition is present, but may have other risks
 					//Results in a higher-order interaction risk
-					FaultSet s1 = 
-						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-								new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-									new BDDFaultSet());
-					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
-						s1.setFaults(1);
-					}
+					FaultSet s1 = DefaultFaultSet.makeNew(solver.getSolverOptions());
+//					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
+//						s1.setFaults(1);
+//					}
 
 					Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
 					FaultLiteral rl = Fault.getFaultLiteral(r, true);			
@@ -285,12 +279,10 @@ StateNode {
 			}
 			else if(unknown(f)){			
 				// Add possible clobbers to the risk set
-				FaultSet riskSet = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-						new PIFaultSet(state.get(p)) :
-							new BDDFaultSet(state.get(p)));
-				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && riskSet.empty()){
-					riskSet.setFaults(1);
-				}
+				FaultSet riskSet = DefaultFaultSet.makeNew(state.get(p), solver.getSolverOptions());
+//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && riskSet.empty()){
+//					riskSet.setFaults(1);
+//				}
 
 				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName());
 				FaultLiteral rl = Fault.getFaultLiteral(r, true);			
@@ -303,10 +295,7 @@ StateNode {
 	// Apply possible add effects
 	protected void applyPossibleAddEffects(FaultStateNode node, IncompleteActionInstance action){
 
-		FaultSet actRisks = 
-			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDFaultSet());
+		FaultSet actRisks = DefaultFaultSet.makeNew(solver.getSolverOptions());
 		actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
 		//	actRisks.or(getPrecRisks(initialNode, action));
 
@@ -323,10 +312,10 @@ StateNode {
 
 					// If it was false before, risk set consists of any risk to the
 					// current action
-					FaultSet riskSet = 
-						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-								new PIFaultSet(actRisks) :
-									new BDDFaultSet(actRisks));
+					FaultSet riskSet = DefaultFaultSet.makeNew(actRisks, solver.getSolverOptions());
+//						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
+//								new PIFaultSet(actRisks) :
+//									new BDDFaultSet(actRisks));
 					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
 					FaultLiteral rl = Fault.getFaultLiteral(r, false);			
 					riskSet.or(rl);
@@ -334,19 +323,16 @@ StateNode {
 					state.put(effect, riskSet);
 
 				}
-				else if (!node.state.get(effect).empty()){
+				else if (!node.state.get(effect).isFalse()){
 					// If the proposition is not absolutely true, then must label
 
 
 					// Get the intersection of the risk sets in propositions in action
 					// precondition.
-					FaultSet crossProduct = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIFaultSet(actRisks) :
-								new BDDFaultSet(actRisks));
-
-					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty()){
-						crossProduct.setFaults(1);
-					}
+					FaultSet crossProduct = DefaultFaultSet.makeNew(actRisks, solver.getSolverOptions());
+//					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty()){
+//						crossProduct.setFaults(1);
+//					}
 
 
 					// Also add the UnlistedEffect risk

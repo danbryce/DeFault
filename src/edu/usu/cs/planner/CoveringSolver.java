@@ -32,7 +32,7 @@ public class CoveringSolver extends DefaultSolver implements Solver {
 		super(domain, problem, searchStatistics, solverOptions);
 		metricDimension = 2;
 		heuristic = new FaultyHeuristic(problem, domain, this);
-		rcse = new RiskCoveringSolutionEvaluator(domain, problem, searchStatistics, solverOptions); 
+		rcse = new RiskCoveringSolutionEvaluator(domain, problem, searchStatistics, this); 
 		search = new PreferredOperatorDeferredEvaluationSearch(
 				domain, 
 				problem, 

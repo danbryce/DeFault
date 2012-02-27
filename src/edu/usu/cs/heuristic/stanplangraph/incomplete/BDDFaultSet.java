@@ -3,11 +3,15 @@ package edu.usu.cs.heuristic.stanplangraph.incomplete;
 import java.math.BigInteger;
 
 import edu.usu.cs.pddl.domain.incomplete.Fault;
+import edu.usu.cs.planner.PlanMetric;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.util.FaultCounter;
+import edu.usu.cs.search.DefaultFaultSet;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.incomplete.FaultLiteral;
+import edu.usu.cs.search.incomplete.PIFaultSet;
 
-public class BDDFaultSet implements FaultSet {
+public class BDDFaultSet extends DefaultFaultSet implements FaultSet {
 
 	int faults=0;
 	
@@ -26,6 +30,7 @@ public class BDDFaultSet implements FaultSet {
 
 	@Override
 	public void and(FaultLiteral riskFromIndex) {
+		
 		int fault = (riskFromIndex.isTrue() ? 
 					FaultCounter.getRiskToBDD().get(riskFromIndex.getFault()) :
 					FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(riskFromIndex.getFault())));
@@ -56,11 +61,11 @@ public class BDDFaultSet implements FaultSet {
 		return new BDDFaultSet(this);
 	}
 
-	@Override
-	public boolean empty() {
-		// TODO Auto-generated method stub
-		return faults == 0;
-	}
+//	@Override
+//	public boolean empty() {
+//		// TODO Auto-generated method stub
+//		return faults == 0;
+//	}
 
 	@Override
 	public void or(FaultSet s1) {
@@ -88,38 +93,42 @@ public class BDDFaultSet implements FaultSet {
 		return faults;
 	}
 
-	@Override
+	public boolean equals(Object set1){
+		return equals((FaultSet)set1);
+	}
+	
+	
 	public boolean equals(FaultSet s) {
 		// TODO Auto-generated method stub
 		return ((BDDFaultSet)s).getFaults() == this.getFaults();
 	}
-
-	@Override
-	public void setFaults(int i) {
-		FaultCounter.getBDD().deref(faults);
-		faults = i;
-		FaultCounter.getBDD().ref(faults);
-	}
+//
+//	@Override
+//	public void setFaults(int i) {
+//		FaultCounter.getBDD().deref(faults);
+//		faults = i;
+//		FaultCounter.getBDD().ref(faults);
+//	}
 
 	public String toString(){
 		return FaultCounter.getBDD().printSetToString(this.faults);
 	}
 
-	@Override
-	public void and(int possibleDomains) {
-		int tmp = FaultCounter.getBDD().and(possibleDomains, faults);
-		FaultCounter.getBDD().ref(tmp);
-		FaultCounter.getBDD().deref(faults);
-		faults = tmp;
-	}
-
-	@Override
-	public void or(int possibleDomains) {
-		int tmp = FaultCounter.getBDD().or(possibleDomains, faults);
-		FaultCounter.getBDD().ref(tmp);
-		FaultCounter.getBDD().deref(faults);
-		faults = tmp;
-	}
+//	@Override
+//	public void and(int possibleDomains) {
+//		int tmp = FaultCounter.getBDD().and(possibleDomains, faults);
+//		FaultCounter.getBDD().ref(tmp);
+//		FaultCounter.getBDD().deref(faults);
+//		faults = tmp;
+//	}
+//
+//	@Override
+//	public void or(int possibleDomains) {
+//		int tmp = FaultCounter.getBDD().or(possibleDomains, faults);
+//		FaultCounter.getBDD().ref(tmp);
+//		FaultCounter.getBDD().deref(faults);
+//		faults = tmp;
+//	}
 
 	@Override
 	public void andNot(FaultSet criticalAndGoal) {
@@ -129,11 +138,11 @@ public class BDDFaultSet implements FaultSet {
 		faults = tmp;
 		
 	}
-
-	@Override
-	public void intersect(FaultSet failures) {
-		and((BDDFaultSet)failures);		
-	}
+//
+//	@Override
+//	public void intersect(FaultSet failures) {
+//		and((BDDFaultSet)failures);		
+//	}
 
 	@Override
 	public void not() {
@@ -142,6 +151,24 @@ public class BDDFaultSet implements FaultSet {
 		FaultCounter.getBDD().deref(faults);
 		faults = tmp;
 		
+	}
+
+	@Override
+	public boolean isFalse() {
+		// TODO Auto-generated method stub
+		return faults == 0;
+	}
+
+	public void setFaults(int failureExplanationSentence_BDDRef) {
+		FaultCounter.getBDD().deref(faults);
+		faults = failureExplanationSentence_BDDRef;
+		FaultCounter.getBDD().ref(faults);
+		
+	}
+
+	public PlanMetric getFaultPlanMetric() {
+		   return  new BigNumericMetric(FaultCounter.getBigUnSolvableDomainCount(faults));
+
 	}
 	
 }

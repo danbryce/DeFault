@@ -50,19 +50,12 @@ public class FaultyHeuristic implements Heuristic {
 		FaultSet goalRiskSet = heuristicSolver.getGoalRiskSet();
 		double relaxedPlanLength = heuristicSolver.getRelaxedPlanLength();
 
+		values[0] = goalRiskSet.getFaultPlanMetric();
 		// If goalRiskSet returns null, there is no solution in this path so return infinity
 		if(relaxedPlanLength == Double.MAX_VALUE) {
-			values[0] = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					     new PIMetric((PIFaultSet)goalRiskSet) :
-					     new BigNumericMetric(FaultCounter.getBigUnSolvableDomainCount(goalRiskSet)));
 			values[1] = new NumericMetric(Double.MAX_VALUE);
 		}
 		else{
-			// Remove all critical risks that have been added already
-			//goalRiskSet.removeAll(node.getCriticalRisks());
-			values[0] = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					     new PIMetric((PIFaultSet)goalRiskSet) :
-					     new BigNumericMetric(FaultCounter.getBigUnSolvableDomainCount(goalRiskSet)));
 			values[1] = new NumericMetric(relaxedPlanLength);
 		}
 		//System.out.println("\t\t" + values[0] + " " + values[1] );

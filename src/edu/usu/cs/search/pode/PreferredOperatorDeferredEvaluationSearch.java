@@ -76,8 +76,15 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 	public List<ActionInstance> getPath() {
 		long expanded = 0;
 		boolean foundSolution = false;
+//		try {
+//			Thread.sleep((long) (0.25*60*1000));
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		long  startTime = System.currentTimeMillis();
-		long timeLimit = (long) (5*60*1000);
+		long timeLimit = (long) (1*60*1000);
+		
 		while(System.currentTimeMillis() - startTime < timeLimit) {
 			PreferredOperatorDeferredEvaluationNode node;
 
@@ -117,11 +124,11 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 				continue;
 			}
 
-			if(foundSolution){
+			if(foundSolution && solver.getSolverOptions().isStrictSemantics()){ //cannot discard partial solutions in flexible semantics
 				StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
 				int c = node.compareTo(bestNode);
 				if(c == 1){
-//					closed.add(node);
+					closed.add(node);
 					continue;
 				}
 			}
@@ -155,7 +162,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 					
 					
 					searchStatistics.processNode(node);
-					logger.debug(searchStatistics.toString()+" " + expanded);
+					//logger.debug(searchStatistics.toString()+" " + expanded);
 					//openPreferred;//. = new PriorityQueue<StateNode>((Collection<? extends StateNode>) Arrays.asList(openPreferred.toArray()));
 					//open = new PriorityQueue<StateNode>((Collection<? extends StateNode>) Arrays.asList(open.toArray()));
 
@@ -218,7 +225,9 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			}
 			// Add the notPreferredOperator children to open
 			List<StateNode> notPreferredNodes = node.createSubsequentNodes(
-					solver.getRelevantActions(), node.getPreferredOperators());
+					//solver.getRelevantActions(),
+					solver.getActionInstances(),
+					node.getPreferredOperators());
 
 			open.addAll(notPreferredNodes);
 
@@ -249,7 +258,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 					//						cnode.getHeuristicValue();
 
 				}
-				logger.debug(searchStatistics.toString()+" " + expanded);
+				//logger.debug(searchStatistics.toString()+" " + expanded);
 				expanded = 0;
 			}
 

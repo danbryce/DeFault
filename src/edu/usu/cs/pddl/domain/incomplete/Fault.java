@@ -95,7 +95,7 @@ public class Fault implements Comparable, ConditionalAction {
 			trueFaultLiterals.add(tl);
 			trueFaultToFaultLiteral.put(risk, tl);
 			FaultLiteral fl = new FaultLiteral(risk, false);
-			falseFaultLiterals.add(tl);
+			falseFaultLiterals.add(fl);
 			falseFaultToFaultLiteral.put(risk, fl);
 		}
 		return risk;

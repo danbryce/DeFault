@@ -3,6 +3,7 @@ package edu.usu.cs.planner;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.FaultyHeuristic;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.IncompletePINode;
 import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.incomplete.RiskSolutionEvaluator;
@@ -21,7 +22,7 @@ public class PODEBDDSolver extends DefaultSolver implements Solver {
 				domain, 
 				problem, 
 				actionInstances, 
-				new RiskSolutionEvaluator(domain, problem, searchStatistics, solverOptions), 
+				new RiskSolutionEvaluator(domain, problem, searchStatistics, this), 
 				searchStatistics, 
 				this
 				);
@@ -29,7 +30,7 @@ public class PODEBDDSolver extends DefaultSolver implements Solver {
 //		startNode.
 		IncompleteBDDNode startNode = new IncompleteBDDNode(problem.getInitialState(), null, null, this);
 		search.initialize(startNode);
-		
+		FaultCounter.initialize(domain, problem);
 	}
 
 

@@ -38,6 +38,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 	protected final Set<Proposition> possiblePreconditions;
 	protected final Set<Proposition> possibleAddEffects;
 	protected final Set<Proposition> possibleDeleteEffects;
+	protected final Set<Proposition> possibleAddDeleteEffects;
 	protected int hash;
 	protected int index;
 	protected int actionRisks;
@@ -51,6 +52,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 
 	private boolean hashInitialized = false;
 
+
 	//	private static int numActions = 0;
 
 	public IncompleteActionInstance(String name, Set<Proposition> preconditions,
@@ -58,6 +60,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 			Set<Proposition> possiblePreconditions,
 			Set<Proposition> possiblePositiveEffects,
 			Set<Proposition> possibleNegativeEffects,
+			Set<Proposition> possibleAddDeleteEffects,
 			int index) {
 		this.name = name;
 		this.index = index; //numActions++;
@@ -73,6 +76,8 @@ public class IncompleteActionInstance  implements ActionInstance{
 				: possiblePositiveEffects;
 		this.possibleDeleteEffects = possibleNegativeEffects == null ? new HashSet<Proposition>()
 				: possibleNegativeEffects;
+		this.possibleAddDeleteEffects = possibleAddDeleteEffects == null ? new HashSet<Proposition>()
+				: possibleAddDeleteEffects;
 	}
 
 	/**
@@ -141,12 +146,36 @@ public class IncompleteActionInstance  implements ActionInstance{
 		// If posseffects aren't a conjunctionEffect, just continue
 		this.possibleAddEffects = new HashSet<Proposition>();
 		this.possibleDeleteEffects = new HashSet<Proposition>();
+		this.possibleAddDeleteEffects = new HashSet<Proposition>();
 		if (actionInstance.getPossEffect() instanceof ConjunctionEffect) {
 			ConjunctionEffect possibleEffects = (ConjunctionEffect) actionInstance
 			.getPossEffect();
 			List<PredicateEffect> possibleSubEffects = possibleEffects
 			.getSubEffectsAsPredicateEffects();
 			for (PredicateEffect effect : possibleSubEffects) {
+				boolean foundOne = false;
+				for (PredicateEffect effect1 : possibleSubEffects) {
+					if(effect != effect1 &&
+							effect.isTrue() != effect1.isTrue()){
+						Set<LiteralInstance> results = new HashSet<LiteralInstance>();
+						effect.getLiteralsUsed(results);
+						Set<LiteralInstance> results1 = new HashSet<LiteralInstance>();
+						effect1.getLiteralsUsed(results1);
+						results.retainAll(results1);
+						if(results.size() > 0){
+							for (LiteralInstance result : results) {
+								this.possibleAddDeleteEffects.add(new Proposition(result));
+							}
+							foundOne = true;
+							break;
+						}
+					}
+					if(foundOne)
+						break;
+				}
+				if(foundOne)
+					continue;
+
 				if (effect.isTrue()) {
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
 					effect.getLiteralsUsed(results);
@@ -172,7 +201,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 	public IncompleteActionInstance(String name, List<Set<Proposition>> actionProps, int index) {
 
 		this(name, actionProps.get(0), actionProps.get(1), actionProps.get(2),
-				actionProps.get(3), actionProps.get(4), actionProps.get(5), index);
+				actionProps.get(3), actionProps.get(4), actionProps.get(5), actionProps.get(6), index);
 
 	}
 
@@ -293,12 +322,36 @@ public class IncompleteActionInstance  implements ActionInstance{
 		// Add the possible adds and deletes
 		// If posseffects aren't a conjunctionEffect, just continue
 		this.possibleAddEffects = new HashSet<Proposition>();
+		this.possibleAddDeleteEffects = new HashSet<Proposition>();
 		this.possibleDeleteEffects = new HashSet<Proposition>();
 		if (action.getPossEffect() instanceof ConjunctionEffect) {
 			ConjunctionEffect possibleEffects  = (ConjunctionEffect) action.getPossEffect().instantiate(this.argMapping, allObjects);
 			List<PredicateEffect> possibleSubEffects = possibleEffects
 			.getSubEffectsAsPredicateEffects();
 			for (PredicateEffect effect : possibleSubEffects) {
+
+				boolean foundOne = false;
+				for (PredicateEffect effect1 : possibleSubEffects) {
+					if(effect != effect1 &&
+							effect.isTrue() != effect1.isTrue()){
+						Set<LiteralInstance> results = new HashSet<LiteralInstance>();
+						effect.getLiteralsUsed(results);
+						Set<LiteralInstance> results1 = new HashSet<LiteralInstance>();
+						effect1.getLiteralsUsed(results1);
+						results.retainAll(results1);
+						if(results.size() > 0){
+							for (LiteralInstance result : results) {
+								this.possibleAddDeleteEffects.add(new Proposition(result));
+							}
+							foundOne = true;
+							break;
+						}
+					}
+					if(foundOne)
+						break;
+				}
+				if(foundOne)
+					continue;
 				if (effect.isTrue()) {
 					Set<LiteralInstance> results = new HashSet<LiteralInstance>();
 					effect.getLiteralsUsed(results);
@@ -535,10 +588,10 @@ public class IncompleteActionInstance  implements ActionInstance{
 		// TODO Auto-generated method stub
 		return definition;
 	}
-//	public void setActionRisks(int actionRisks) {
-//		this.actionRisks = actionRisks;
-//	}
-//
+	//	public void setActionRisks(int actionRisks) {
+	//		this.actionRisks = actionRisks;
+	//	}
+	//
 	public int getActionRisks() {
 		return this.actionRisks;
 	}
@@ -553,9 +606,9 @@ public class IncompleteActionInstance  implements ActionInstance{
 		elements[4] = deleteEffects;
 		elements[5] = possibleDeleteEffects;
 		List<Proposition> toRemove = new ArrayList<Proposition>();
-		
+
 		for(int i = 0; i < 6; i++){
-			
+
 			for(Proposition p : (Set<Proposition>)elements[i]){
 				if(!set.contains(p.getIndex()))
 					toRemove.add(p);
@@ -563,5 +616,10 @@ public class IncompleteActionInstance  implements ActionInstance{
 			elements[i].removeAll(toRemove);
 			toRemove.clear();
 		}
+	}
+
+	public Set<Proposition> getPossibleAddsDeletes() {
+		// TODO Auto-generated method stub
+		return possibleAddDeleteEffects;
 	}
 }

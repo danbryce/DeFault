@@ -196,7 +196,7 @@ public class DomainExpert
 			//String name, Set<Proposition> pres, Set<Proposition> adds, Set<Proposition> dels,
 			//Set<Proposition> possPres, Set<Proposition> possAdds, Set<Proposition> possDels, int index)
 			IncompleteActionInstance newIA = new IncompleteActionInstance(ia.getName(), newPresSet,
-					newAddsSet, newDelsSet, newEmptySet, newEmptySet, newEmptySet, ia.getIndex());
+					newAddsSet, newDelsSet, newEmptySet, newEmptySet, newEmptySet,newEmptySet, ia.getIndex());
 			
 			actionsCV.add(newIA);
 		}

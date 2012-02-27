@@ -1,5 +1,7 @@
 package edu.usu.cs.search.incomplete;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -11,9 +13,11 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.planner.Solver;
 import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.planner.util.RiskCounterNode;
+import edu.usu.cs.search.DefaultFaultSet;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.Search;
@@ -32,23 +36,28 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 	protected Problem problem;
 	protected FaultStateNode bestSolution;
 	protected FaultSet bestFaultSet;
-	protected SolverOptions solverOptions;
+	protected Solver solver;
+	protected long solutionEvaluationTime = 0;
 	
 	//private List<ActionInstance> actionInstances;
 	
 	
+	public long getSolutionEvaluationTime() {
+		return solutionEvaluationTime;
+	}
+
 	public RiskSolutionEvaluator(Domain domain,
 									Problem problem,
 									//List<ActionInstance> actionInstances,									
 									SearchStatistics searchStatistics,
-									SolverOptions solverOptions) {
+									Solver solver) {
 		this.domain = domain;
 		this.problem = problem;
 //		this.actionInstances = actionInstances;
 //		this.incompleteProblem = incompleteProblem;
 		this.searchStatistics  = searchStatistics;
 		this.bestSolution = null;
-		this.solverOptions = solverOptions;
+		this.solver = solver;
 	}
 	
 	@Override
@@ -70,7 +79,7 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 
 	@Override
 	public boolean isSolutionSetComplete(List<StateNode> solutions) {
-		return solverOptions.getSearchType() != SolverOptions.SEARCHTYPE.ANYTIME || bestSolution.getCriticalRisks().empty();
+		return solver.getSolverOptions().getSearchType() != SolverOptions.SEARCHTYPE.ANYTIME || bestSolution.getCriticalRisks().isFalse();
 		
 		//solutions.size()==1;
 	}
@@ -80,21 +89,54 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 	@Override
 	public boolean keepSolution(StateNode currentNode, List<StateNode> solutions) {
 		FaultStateNode fcn = ((FaultStateNode)currentNode);
-		FaultSet criticalAndGoal = (solverOptions.getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS ? 
-										new BDDFaultSet(fcn.getCriticalRisks()) :
-										new PIFaultSet(fcn.getCriticalRisks()));	
+		
+		FaultSet criticalAndGoal;
+		if(solver.getSolverOptions().isStrictSemantics()){
+			criticalAndGoal = DefaultFaultSet.makeNew(fcn.getCriticalRisks(), solver.getSolverOptions());
+		}
+		else{
+			criticalAndGoal = DefaultFaultSet.makeNew(solver.getSolverOptions());
+		}
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
 			criticalAndGoal.or(fcn.getPropositions().get(p));
 		}
+		
+		
 		int cmp = (bestSolution == null ? -1 : criticalAndGoal.compareTo(bestFaultSet));
 		if(  cmp == -1 
 				//|| (cmp ==0 && fcn.getGValue()[0].strictlyBetter(bestSolution.getGValue()[0]))
 				){
-			logger.debug("Found Better Solution");//((PIRiskSet)criticalAndGoal).getSet().size());
-//			logger.debug(currentNode.getPlanString());
+			//logger.debug("Found Better Solution");//((PIRiskSet)criticalAndGoal).getSet().size());
+			//logger.debug(currentNode.getPlanString());
 //			logger.debug("# Fail Models: " + RiskCounter.getBigUnSolvableDomainCount(criticalAndGoal));
+			
+			
+			searchStatistics.pauseTime();
+			long startEvalTime = System.currentTimeMillis();
+			
+			List<ActionInstance> plan = currentNode.getPlan();
+			BigInteger total =BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
+			BigInteger solvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
+			BigDecimal probability = new BigDecimal(solvable);
+			probability = probability.divide(new BigDecimal(total));
+			
+			
+			solutionEvaluationTime += System.currentTimeMillis() - startEvalTime;
+			
+			StringBuilder b = new StringBuilder();
+			b.append(searchStatistics.getElapsedTime()/1000.0).append("\t");
+			b.append(searchStatistics.getNodesExpanded()).append("\t");
+			b.append(plan.size()).append("\t");
+			b.append(probability).append("\t");
+			b.append(solutionEvaluationTime/1000.0).append("\t");
+			//b.append("\n");
+			logger.debug(b.toString());
 			bestSolution = fcn;
 			bestFaultSet = criticalAndGoal;
+			
+			
+			searchStatistics.resumeTime();
+			
 		return true;
 		}
 		else{
@@ -152,7 +194,7 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 //	@Override
 //	public Search getFallBackSearch() {
 //		try {
-//			return new FriskySearch(domain, problem, actionInstances, this, searchStatistics, new SolverOptions());
+//			return new FriskySearch(domain, problem, actionInstances, this, searchStatistics, new solver.getSolverOptions()());
 //		} catch (IllDefinedProblemException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();

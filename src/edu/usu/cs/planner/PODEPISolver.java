@@ -4,6 +4,7 @@ import edu.usu.cs.heuristic.stanplangraph.classic.StanHeuristic;
 import edu.usu.cs.heuristic.stanplangraph.incomplete.FaultyHeuristic;
 import edu.usu.cs.pddl.domain.Domain;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.planner.util.FaultCounter;
 import edu.usu.cs.search.ClassicalSolutionEvaluator;
 import edu.usu.cs.search.IncompletePINode;
 import edu.usu.cs.search.SearchStatistics;
@@ -22,7 +23,7 @@ public class PODEPISolver extends DefaultSolver implements Solver {
 				domain, 
 				problem, 
 				actionInstances, 
-				new RiskSolutionEvaluator(domain, problem, searchStatistics, solverOptions), 
+				new RiskSolutionEvaluator(domain, problem, searchStatistics, this), 
 				searchStatistics, 
 				this
 				);
@@ -30,7 +31,7 @@ public class PODEPISolver extends DefaultSolver implements Solver {
 //		startNode.
 		IncompletePINode startNode = new IncompletePINode(problem.getInitialState(), null, null, this);
 		search.initialize(startNode);
-		
+		FaultCounter.initialize(domain, problem);	
 	}
 
 

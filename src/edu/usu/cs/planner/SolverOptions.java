@@ -5,7 +5,7 @@ import edu.usu.cs.search.incomplete.PIFaultSet;
 public class SolverOptions {
 
 	
-	public static enum FAULT_TYPE  { PI_FAULTS, BDD_FAULTS };
+	public static enum FAULT_TYPE  { PI_FAULTS, BDD_FAULTS, PI_TRIE_FAULTS };
 	public static enum SEARCHTYPE  {ANYTIME, FIRST, COVER} ;
 
 	

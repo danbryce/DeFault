@@ -34,7 +34,7 @@ public class PICoveringSolver extends DefaultSolver implements Solver {
 		super(domain, problem, searchStatistics, solverOptions);
 		metricDimension = 2;
 		heuristic = new FaultyHeuristic(problem, domain, this);
-		rcse = new RiskCoveringSolutionEvaluator(domain, problem, searchStatistics, solverOptions);
+		rcse = new RiskCoveringSolutionEvaluator(domain, problem, searchStatistics, this);
 		uncoveredFaults = null;
 		search = new PreferredOperatorDeferredEvaluationSearch(
 				domain, 
@@ -53,7 +53,7 @@ public class PICoveringSolver extends DefaultSolver implements Solver {
 	@Override
 	public List<List<ActionInstance>> run() {
 		List<List<ActionInstance>> plans = new ArrayList<List<ActionInstance>>();
-		while( uncoveredFaults == null || !uncoveredFaults.empty()){
+		while( uncoveredFaults == null || !uncoveredFaults.isFalse()){
 			List<ActionInstance> plan = search.getPath();	
 			if(plan == null)
 				break;
@@ -63,7 +63,7 @@ public class PICoveringSolver extends DefaultSolver implements Solver {
 			if(uncoveredFaults == null)
 				uncoveredFaults = failures;
 			else
-				uncoveredFaults.intersect(failures); //faults remaining after finding plan
+				uncoveredFaults.and(failures); //faults remaining after finding plan
 			rcse.setFaultsToCover(uncoveredFaults);
 			heuristic.setPossibleDomains(uncoveredFaults);
 			plans.add(plan);

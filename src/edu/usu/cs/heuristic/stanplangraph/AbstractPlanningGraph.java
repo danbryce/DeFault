@@ -312,6 +312,7 @@ public class AbstractPlanningGraph {
 		mList.add(new HashSet<Proposition>());
 		mList.add(new HashSet<Proposition>());
 		mList.add(new HashSet<Proposition>());
+		mList.add(new HashSet<Proposition>());
 		IncompleteActionInstance noopAction = new IncompleteActionInstance(
 				factHeader.getName(), mList, problem.getActions().size()+factHeader.getPropositionIndex()+1);
 
@@ -682,11 +683,11 @@ public class AbstractPlanningGraph {
 				ActionLevelInfo ali = actionSpike.getActionLevelInfo(this.getFactSpike().getCurrentRank()-2, actionHeader.getIndex());
 				subGoalsToBeAdded.addAll(ali.getSupportingFacts());
 				//if(!(solver instanceof PODEFFSolver)){
-					for(int i = ali.getActionHeader().getPossPreconditions().nextSetBit(0);
-					i >= 0 && i < globalFactHeaders.size();
-					i = ali.getActionHeader().getPossPreconditions().nextSetBit(i+1)){
-						subGoalsToBeAdded.add(globalFactHeaders.get(i));
-					}
+				for(int i = ali.getActionHeader().getPossPreconditions().nextSetBit(0);
+				i >= 0 && i < globalFactHeaders.size();
+				i = ali.getActionHeader().getPossPreconditions().nextSetBit(i+1)){
+					subGoalsToBeAdded.add(globalFactHeaders.get(i));
+				}
 				//}
 				//System.out.println("# crisks: " + ali.getCriticalRisks().size());
 			}

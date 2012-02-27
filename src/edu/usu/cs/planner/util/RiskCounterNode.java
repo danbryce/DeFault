@@ -303,18 +303,18 @@ public class RiskCounterNode extends AbstractStateNode {
 		return this.gvalue;
 	}
 
-	private List<IncompleteActionInstance> getPlan() {
-		StateNode currentNode = this;
-
-		List<IncompleteActionInstance> actionsToGoal = new ArrayList<IncompleteActionInstance>();
-
-		while(currentNode != null && currentNode.getAction() != null) {
-			actionsToGoal.add(0, (IncompleteActionInstance)currentNode.getAction());
-			currentNode = currentNode.getParent();
-		}
-
-		return actionsToGoal;
-	}
+//	private List<IncompleteActionInstance> getPlan() {
+//		StateNode currentNode = this;
+//
+//		List<IncompleteActionInstance> actionsToGoal = new ArrayList<IncompleteActionInstance>();
+//
+//		while(currentNode != null && currentNode.getAction() != null) {
+//			actionsToGoal.add(0, (IncompleteActionInstance)currentNode.getAction());
+//			currentNode = currentNode.getParent();
+//		}
+//
+//		return actionsToGoal;
+//	}
 
 	@Override
 	public String toString() {

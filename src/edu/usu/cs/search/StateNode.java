@@ -29,6 +29,7 @@ public interface StateNode extends Comparable<StateNode>{
 	public boolean equals(StateNode node);
 	public String getPlanString();
 	public String getFailureExplanationString();
+	public List<ActionInstance> getPlan();
 
 	
 	

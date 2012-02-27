@@ -124,6 +124,8 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 		// Apply possible add effects
 		node.applyPossibleAddEffects(this, action);
+		
+		node.applyPossibleAddOrDeleteEffects(this, action);
 
 		// addCriticalRisks(node, action);
 
@@ -132,6 +134,57 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 
 		return node;
+	}
+
+	private void applyPossibleAddOrDeleteEffects(FaultStateNode faultStateNode,
+			IncompleteActionInstance action) {
+
+		if(action.getPossibleAddsDeletes().size() == 0) return;
+		
+		FaultSet dat = null;
+		FaultSet ndat = null;
+		if(!solver.getSolverOptions().isStrictSemantics()){
+			dat = DefaultFaultSet.makeNew(criticalRisks, solver.getSolverOptions());			
+			ndat =  DefaultFaultSet.makeNew(dat, solver.getSolverOptions());
+			ndat.not();
+		}
+		
+		for(Proposition effect : action.getPossibleAddsDeletes()){
+			
+			FaultSet dpt = null;
+			if( this.state.get(effect) == null){
+				dpt = DefaultFaultSet.makeNew(solver.getSolverOptions());
+				dpt.not();
+			}
+			else{
+				dpt = DefaultFaultSet.makeNew(this.state.get(effect), solver.getSolverOptions());
+			}
+			Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+			FaultLiteral rl = Fault.getFaultLiteral(r, false);		
+			Fault r1 = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName());
+			FaultLiteral r1l = Fault.getFaultLiteral(r1, true);	
+			
+			if(solver.getSolverOptions().isStrictSemantics()){
+				dpt.or(r1l);
+				dpt.and(rl);			
+			}
+			else{
+				FaultSet dpt1 =	DefaultFaultSet.makeNew(dpt, solver.getSolverOptions());
+							
+				FaultSet ndatc = DefaultFaultSet.makeNew(ndat, solver.getSolverOptions());
+				
+				dpt.and(dat);
+				dpt1.and(rl);
+				dpt.or(dpt1);
+				
+				ndatc.and(r1l);
+				ndatc.and(rl);				
+				dpt.or(ndatc);			
+			}
+			
+			state.put(effect, dpt);
+			
+		}
 	}
 
 	protected FaultStateNode copy() {
@@ -159,10 +212,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 	 * @return
 	 */
 	private  FaultSet getPrecRisks(FaultStateNode node, IncompleteActionInstance action) {
-		FaultSet precRisks = 
-			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDFaultSet());
+		FaultSet precRisks = DefaultFaultSet.makeNew(solver.getSolverOptions());
 
 		for (Proposition prec : action.getPreconditions()) {
 			precRisks.or(node.state.get(prec));
@@ -183,17 +233,12 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			}
 			else{//flexible: set faults to d(p_t) \vee \neg d(a_t)
 				FaultSet prevProp = ((FaultStateNode)parent).getPropositions().get(effect);
-				FaultSet negActFaults = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-						new PIFaultSet(criticalRisks) :
-							new BDDFaultSet(criticalRisks));
+				FaultSet negActFaults = DefaultFaultSet.makeNew(criticalRisks, solver.getSolverOptions());
 				negActFaults.not();
-				FaultSet newProp = 
-					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIFaultSet(prevProp) :
-								new BDDFaultSet(prevProp));
-				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && newProp.empty()){
-					newProp.setFaults(1);
-				}
+				FaultSet newProp = DefaultFaultSet.makeNew(prevProp, solver.getSolverOptions()); 
+//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && newProp.empty()){
+//					newProp.setFaults(1);
+//				}
 
 				newProp.or(negActFaults);
 				state.put(effect, newProp);
@@ -220,12 +265,10 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 			if(solver.getSolverOptions().isStrictSemantics()){
 				// Add possible clobbers to the risk set
-				FaultSet riskSet = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-						new PIFaultSet(state.get(effect)) :
-							new BDDFaultSet(state.get(effect)));
-				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && riskSet.empty()){
-					riskSet.setFaults(1);
-				}
+				FaultSet riskSet = DefaultFaultSet.makeNew(state.get(effect), solver.getSolverOptions());
+//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && riskSet.empty()){
+//					riskSet.setFaults(1);
+//				}
 
 				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName());
 				FaultLiteral rl = Fault.getFaultLiteral(r, true);
@@ -235,15 +278,11 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			}
 			else{ //flexible semantics							
 				// Add possible clobbers to the risk set
-				FaultSet riskSet = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-						new PIFaultSet(state.get(effect)) :
-							new BDDFaultSet(state.get(effect)));
-				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && riskSet.empty()){
-					riskSet.setFaults(1);
-				}
-				FaultSet negActFaults = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-						new PIFaultSet(criticalRisks) :
-							new BDDFaultSet(criticalRisks));
+				FaultSet riskSet = DefaultFaultSet.makeNew(state.get(effect), solver.getSolverOptions());
+//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && riskSet.empty()){
+//					riskSet.setFaults(1);
+//				}
+				FaultSet negActFaults = DefaultFaultSet.makeNew(criticalRisks, solver.getSolverOptions());
 				negActFaults.not();
 				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), effect.getName());
 				FaultLiteral rl = Fault.getFaultLiteral(r, true);
@@ -263,10 +302,8 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 	 */
 	protected  void applyAddEffects(FaultStateNode initialNode, IncompleteActionInstance action) {
 
-		FaultSet actRisks = (solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-				new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-					new BDDFaultSet());
-		actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
+		FaultSet actRisks = DefaultFaultSet.makeNew(criticalRisks, solver.getSolverOptions());
+		//actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
 		//actRisks.or(getPrecRisks(initialNode, action));
 
 		for (Proposition effect : action.getAddEffects()) {
@@ -274,14 +311,11 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 			if(solver.getSolverOptions().isStrictSemantics()){ //perp
 				// If the proposition is absolutely true, just continue
-				if (initialNode.state.get(effect) != null && initialNode.state.get(effect).empty()) {
+				if (initialNode.state.get(effect) != null && initialNode.state.get(effect).isFalse()) {
 					continue;
 				}
 				else{
-					FaultSet newDiagnosis = 
-						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-								new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-									new BDDFaultSet());
+					FaultSet newDiagnosis = DefaultFaultSet.makeNew(solver.getSolverOptions());
 					state.put(effect, newDiagnosis);
 				}
 			}
@@ -298,29 +332,26 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 				}
 
 				// If the proposition is absolutely true, just continue
-				if (initialNode.state.get(effect).empty()) {
+				if (initialNode.state.get(effect).isFalse()) {
 					continue;
 				}
 
 				// Get the intersection of the risk sets in propositions in action
 				// precondition.
-				FaultSet crossProduct = 
-					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIFaultSet(actRisks) :
-								new BDDFaultSet(actRisks));
-				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty() //
-						//||
-						//solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS 
-				){
-					crossProduct.setFaults(1);
-				}
+				FaultSet faults = DefaultFaultSet.makeNew(actRisks, solver.getSolverOptions());
+//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty() //
+//						//||
+//						//solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.BDD_FAULTS 
+//				){
+//					crossProduct.setFaults(1);
+//				}
 
 				// Intersect these with risks in the proposition to get the new risk
 				// set for the prop.
-				crossProduct.and(initialNode.state.get(effect));
+				faults.and(initialNode.state.get(effect));
 
 				// Set the intersection as the new risk set for the proposition
-				state.put(effect, crossProduct);
+				state.put(effect, faults);
 
 
 			}
@@ -337,10 +368,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			IncompleteActionInstance action) {
 
 
-		FaultSet actRisks = 
-			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIFaultSet(criticalRisks) :
-						new BDDFaultSet(criticalRisks));
+		FaultSet actRisks = DefaultFaultSet.makeNew(criticalRisks, solver.getSolverOptions());
 		//	actRisks.or(criticalRisks);//getPrecOpen(initialNode, action));
 		//	actRisks.or(getPrecRisks(initialNode, action));
 
@@ -357,26 +385,22 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 
 				// If it was false before, risk set consists of any risk to the
 				// current action
-				FaultSet riskSet = (solver.getSolverOptions().isStrictSemantics() ?
-						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-								new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-									new BDDFaultSet()):
-										(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-												new PIFaultSet(actRisks) :
-													new BDDFaultSet(actRisks)));			
+				FaultSet riskSet = (solver.getSolverOptions().isStrictSemantics() ?						
+								DefaultFaultSet.makeNew(solver.getSolverOptions()):
+								DefaultFaultSet.makeNew(actRisks, solver.getSolverOptions()));			
 
 
 				//if(!solver.getSolverOptions().isStrictSemantics()){
-					if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
+					//if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
 						Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
 						FaultLiteral rl = Fault.getFaultLiteral(r, false);			
 						
 						riskSet.or(rl);
-					}
-					else{
-						int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
-						riskSet.or(nadd);
-					}
+//					}
+//					else{
+//						int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
+//						riskSet.or(nadd);
+//					}
 				//}
 
 
@@ -385,42 +409,38 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			}
 
 			// If the proposition is absolutely true, just continue
-			if (initialNode.state.get(effect).empty()) {
+			if (initialNode.state.get(effect).isFalse()) {
 				continue;
 			}
 
 			// Get the intersection of the risk sets in propositions in action
 			// precondition.
-			FaultSet crossProduct = (solver.getSolverOptions().isStrictSemantics() ?
-					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-								new BDDFaultSet()):
-									(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIFaultSet(actRisks) :
-						new BDDFaultSet(actRisks)));
+			FaultSet faults = (solver.getSolverOptions().isStrictSemantics() ?
+									DefaultFaultSet.makeNew(solver.getSolverOptions()):
+									DefaultFaultSet.makeNew(actRisks, solver.getSolverOptions()));
 
-			if(!solver.getSolverOptions().isStrictSemantics() &&
-				solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty()){
-				crossProduct.setFaults(1);
-			}
+//			if(!solver.getSolverOptions().isStrictSemantics() &&
+//				solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && actRisks.empty()){
+//				crossProduct.setFaults(1);
+//			}
 
 			// Also add the UnlistedEffect risk
-			if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
+			//if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
 				Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
 				FaultLiteral rl = Fault.getFaultLiteral(r, false);			
-				crossProduct.or(rl);
-			}
-			else{
-				int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
-				crossProduct.or(nadd);
-			}
+				faults.or(rl);
+//			}
+//			else{
+//				int nadd = FaultCounter.getBDD().not(FaultCounter.getRiskToBDD().get(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName())));
+//				faults.or(nadd);
+//			}
 
 			// Intersect these with risks in the proposition to get the new risk
 			// set for the prop.
-			crossProduct.and(initialNode.state.get(effect));
+			faults.and(initialNode.state.get(effect));
 
 			// Set the intersection as the new risk set for the proposition
-			state.put(effect, crossProduct);
+			state.put(effect, faults);
 		}
 	}
 	/**
@@ -432,10 +452,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 	 * @return
 	 */
 	protected  FaultSet getPrecOpen(FaultStateNode node, IncompleteActionInstance action) {
-		FaultSet precOpen = 
-			(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-					new PIFaultSet(solver.getSolverOptions().getRiskArity()) :
-						new BDDFaultSet());
+		FaultSet precOpen = DefaultFaultSet.makeNew(solver.getSolverOptions());
 		for (Proposition possPrec : action.getPossiblePreconditions()) {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
@@ -447,10 +464,8 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			else if(node.state.get(possPrec) != null){
 				//The precondition is present, but may have other risks
 				//Results in a higher-order interaction risk
-				FaultSet s1 = 
-					(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
-							new PIFaultSet(node.state.get(possPrec)) :
-								new BDDFaultSet(node.state.get(possPrec)));
+				FaultSet s1 = DefaultFaultSet.makeNew(node.state.get(possPrec), solver.getSolverOptions());
+				
 				//				if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS && s1.empty()){
 				//					s1.setFaults(1);
 				//				}

@@ -8,6 +8,7 @@ public class SearchStatistics {
 	private int nodesExpanded = 0;
 	private Long startTime = null;
 	private Long elapsedTime = null;
+	private Long pauseTime = null;
 	private PlanMetric[] lastGValue = null;
 	private PlanMetric[] lastHValue = null;
 	private PlanMetric[] lastFValue = null;
@@ -31,7 +32,14 @@ public class SearchStatistics {
 		startTime = System.currentTimeMillis();
 	}
 	
+	public void pauseTime(){
+		pauseTime = System.currentTimeMillis();
+	}
 	
+	public void resumeTime(){
+		startTime += System.currentTimeMillis() - pauseTime;
+	}
+
 	
 	public Long getElapsedTime() {
 		if(elapsedTime == null){

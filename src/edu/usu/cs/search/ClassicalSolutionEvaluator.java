@@ -37,6 +37,12 @@ public class ClassicalSolutionEvaluator implements SolutionEvaluator {
 		return false;
 	}
 
+	@Override
+	public long getSolutionEvaluationTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 //	@Override
 //	public boolean closedContains(Set<StateNode> closed, StateNode currentNode) {
 //		for(StateNode node : closed){

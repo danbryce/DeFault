@@ -17,4 +17,5 @@ public interface SolutionEvaluator {
 	//boolean isBetter(StateNode childNode, StateNode parentNode);
 	//Search getFallBackSearch();
 	boolean getFoundSolution();
+	long getSolutionEvaluationTime();
 }
