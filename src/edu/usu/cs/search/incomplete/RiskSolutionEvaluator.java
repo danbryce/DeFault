@@ -25,6 +25,7 @@ import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
+import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationSearch;
 
 public class RiskSolutionEvaluator implements SolutionEvaluator {
@@ -96,14 +97,16 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 		}
 		else{
 			criticalAndGoal = DefaultFaultSet.makeNew(solver.getSolverOptions());
+			criticalAndGoal.not();
 		}
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
-			criticalAndGoal.or(fcn.getPropositions().get(p));
+			FaultSet propFaults = fcn.getPropositions().get(p); 
+			criticalAndGoal.or(propFaults);
 		}
 		
 		
 		int cmp = (bestSolution == null ? -1 : criticalAndGoal.compareTo(bestFaultSet));
-		if(  cmp == -1 
+		if(  cmp < 0 
 				//|| (cmp ==0 && fcn.getGValue()[0].strictlyBetter(bestSolution.getGValue()[0]))
 				){
 			//logger.debug("Found Better Solution");//((PIRiskSet)criticalAndGoal).getSet().size());
@@ -116,14 +119,27 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 			
 			List<ActionInstance> plan = currentNode.getPlan();
 			BigInteger total =BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
-			BigInteger solvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
-			BigDecimal probability = new BigDecimal(solvable);
+			BigInteger unsolvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
+			BigDecimal probability = new BigDecimal(unsolvable);
 			probability = probability.divide(new BigDecimal(total));
 			
 			
 			solutionEvaluationTime += System.currentTimeMillis() - startEvalTime;
 			
+			
+			
+			
 			StringBuilder b = new StringBuilder();
+			
+			if(bestSolution == null){
+				b.append("time\t");
+				b.append("nodes\t");
+				b.append("len\t");
+				b.append("fail pr\t");
+				b.append("eval time\t");
+				b.append("\n");
+			}
+			
 			b.append(searchStatistics.getElapsedTime()/1000.0).append("\t");
 			b.append(searchStatistics.getNodesExpanded()).append("\t");
 			b.append(plan.size()).append("\t");
@@ -155,6 +171,27 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 			return ((RiskCounterNode)node).isActionApplicable(problem.getGoalAction());
 		}
 		return false;
+	}
+
+	@Override
+	public boolean keepPartialSolution(
+			PreferredOperatorDeferredEvaluationNode currentNode) {
+		FaultStateNode fcn = ((FaultStateNode)currentNode);
+		
+		FaultSet criticalAndGoal;
+		if(solver.getSolverOptions().isStrictSemantics()){
+			criticalAndGoal = DefaultFaultSet.makeNew(fcn.getCriticalRisks(), solver.getSolverOptions());
+		}
+		else{
+			criticalAndGoal = DefaultFaultSet.makeNew(solver.getSolverOptions());
+		}
+//		for(Proposition p : problem.getGoalAction().getPreconditions()){
+//			criticalAndGoal.or(fcn.getPropositions().get(p));
+//		}
+		
+		
+		int cmp = (bestSolution == null ? -1 : criticalAndGoal.compareTo(bestFaultSet));
+		return  cmp < 0; 
 	}
 
 	

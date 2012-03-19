@@ -70,10 +70,13 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 	}
 
-
-
 	@Override
 	public List<ActionInstance> getPath() {
+		return getPath(null);
+	}
+
+	@Override
+	public List<ActionInstance> getPath(StateNode priorNode) {
 		long expanded = 0;
 		boolean foundSolution = false;
 //		try {
@@ -82,11 +85,18 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		long  startTime = System.currentTimeMillis();
-		long timeLimit = (long) (1*60*1000);
+	//	long  startTime = System.currentTimeMillis();
+		long timeLimit = (long) (20*60*1000);
 		
-		while(System.currentTimeMillis() - startTime < timeLimit) {
-			PreferredOperatorDeferredEvaluationNode node;
+		if(priorNode != null && solutionEvaluator.keepSolution(priorNode, solutions)){
+			solutions.add(priorNode);
+			foundSolution = true;
+		}
+		
+		while(searchStatistics.getElapsedTime() < timeLimit
+//				System.currentTimeMillis() - startTime < timeLimit
+				) {
+			PreferredOperatorDeferredEvaluationNode node = null;
 
 			// If both queues are empty, there is no solution
 			if(open.size() == 0 && openPreferred.size() == 0) {
@@ -116,7 +126,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 				notPreferredPriority--;
 				pulledPreferred = false;
 			}
-
+			
 			// Check to see if this is a duplicate node
 			//logger.debug("Check CLosed" + ((FaultStateNode)node).getPropositions().keySet());
 			//			PreferredOperatorDeferredEvaluationNode node = closed.remove(node);
@@ -126,13 +136,18 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 			if(foundSolution && solver.getSolverOptions().isStrictSemantics()){ //cannot discard partial solutions in flexible semantics
 				StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
-				int c = node.compareTo(bestNode);
-				if(c == 1){
+				if(node.getParent() == null) //init state h-value not calculated yet
+					node.getHeuristicValue();
+				
+				
+				if(!solutionEvaluator.keepPartialSolution(node)){
 					closed.add(node);
 					continue;
 				}
 			}
 
+			
+			
 			
 			// Check to see if the solution is found in the node
 			if(solutionEvaluator.isSolution(problem,node)) {
@@ -278,6 +293,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 	}
 
 
+	
 
 
 

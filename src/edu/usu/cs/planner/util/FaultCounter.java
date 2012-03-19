@@ -150,44 +150,81 @@ public class FaultCounter {
 	public static int getNumRisks(){ return allRisks.size(); }
 	public static List<Fault> getAllRisks(){ return allRisks;}
 
+	
+	
 	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
-		FAULT_TYPE oldFaults = solver.getSolverOptions().getFaultType();
-		solver.getSolverOptions().setFaultType(FAULT_TYPE.BDD_FAULTS);
 		
+
+		FaultSet crs = getFaultSet(domain, problem, plan, solver, FAULT_TYPE.BDD_FAULTS);
+		
+		BigInteger solvableDomains = getBigSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
+		//bdd.ref(solvableDomains);
+
+	
+		return solvableDomains;
+
+	}
+	
+	public static StateNode getGoalNode(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver, FAULT_TYPE faultType) {
+		FAULT_TYPE oldFaults = solver.getSolverOptions().getFaultType();
+		solver.getSolverOptions().setFaultType(faultType);
+
+	if (!isInitialized) {initialize(domain, problem, plan);}
+
+	// Figure out which risks are true right now
+	List<StateNode> nodes = new ArrayList<StateNode>(plan.size() + 1);
+
+	// Add the initial state
+	nodes.add(faultType == FAULT_TYPE.BDD_FAULTS ?
+					new IncompleteBDDNode(problem.getInitialState(), null, null, solver) :
+						new IncompletePINode(problem.getInitialState(), null, null, solver)		);
+
+	
+
+	for (ActionInstance action : plan) 
+	{
+		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
+		//bdd.printSet(nodes.get(nodes.size()-1).getActRisks());
+		//bdd.printCubes(nodes.get(nodes.size()-1).getActRisks());
+		//bdd.print(nodes.get(nodes.size()-1).getActRisks());
+		//bdd.support(bdd)
+
+		//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
+	}
+	solver.getSolverOptions().setFaultType(oldFaults);
+
+	return  nodes.get(nodes.size() - 1);	
+	
+	
+
+	}
+		
+	
+	public static FaultSet getFaultSet(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver, FAULT_TYPE faultType) {
+		
+			FAULT_TYPE oldFaults = solver.getSolverOptions().getFaultType();
+			solver.getSolverOptions().setFaultType(faultType);
+
 		if (!isInitialized) {initialize(domain, problem, plan);}
 
-		// Figure out which risks are true right now
-		List<StateNode> nodes = new ArrayList<StateNode>(plan.size() + 1);
-
-		// Add the initial state
-		nodes.add(new IncompleteBDDNode(problem.getInitialState(), null, null, solver));
-
-		
-
-		for (ActionInstance action : plan) 
-		{
-			nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
-			//bdd.printSet(nodes.get(nodes.size()-1).getActRisks());
-			//bdd.printCubes(nodes.get(nodes.size()-1).getActRisks());
-			//bdd.print(nodes.get(nodes.size()-1).getActRisks());
-			//bdd.support(bdd)
-
-			//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
-		}
-
+		StateNode node = getGoalNode(domain, problem, plan, solver, faultType);
 
 		//		//add critical risks for goals
 		FaultSet crs = (!solver.getSolverOptions().isStrictSemantics() ?
 						new BDDFaultSet() :
-						new BDDFaultSet(((FaultStateNode) nodes.get(nodes.size() - 1)).getCriticalRisks()));
+						new BDDFaultSet(((FaultStateNode) node).getCriticalRisks()));
+		crs.not();
 		//logger.debug(crs);
 		//bdd.ref(crs);
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
-			FaultSet risk = ((FaultStateNode) nodes.get(nodes.size() - 1)).getPropositions().get(p);
+			FaultSet risk = ((FaultStateNode) node).getPropositions().get(p);
 			crs.or(risk);
 		}
 
+		solver.getSolverOptions().setFaultType(oldFaults);
+		
+		
 		//logger.debug(crs);
 		
 		//		for (Risk risk : allRisks) {
@@ -198,14 +235,8 @@ public class FaultCounter {
 
 		//	bdd.printSet(nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.printSet(bdd.not(crs));
-
-		BigInteger solvableDomains = getBigSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
-		//bdd.ref(solvableDomains);
-
-		solver.getSolverOptions().setFaultType(oldFaults);
-		
-		return solvableDomains;
-	}
+		return crs;
+		}
 
 	/**
 	 * This method is altered from the above method getmodelCount for use by the ka.Agent.

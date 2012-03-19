@@ -156,4 +156,11 @@ public class AbstractSearch implements Search {
 		// TODO Auto-generated method stub
 		return solutionEvaluator;
 	}
+
+
+	@Override
+	public List<ActionInstance> getPath(StateNode priorNode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

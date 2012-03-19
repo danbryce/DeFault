@@ -13,7 +13,7 @@ import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class BDDFaultSet extends DefaultFaultSet implements FaultSet {
 
-	int faults=0;
+	int faults=1;
 	
 	public BDDFaultSet(FaultSet faultSet) {
 		faults = ((BDDFaultSet)faultSet).getFaults();
@@ -170,5 +170,9 @@ public class BDDFaultSet extends DefaultFaultSet implements FaultSet {
 		   return  new BigNumericMetric(FaultCounter.getBigUnSolvableDomainCount(faults));
 
 	}
-	
+	@Override
+	public boolean isTrue() {
+		// TODO Auto-generated method stub
+		return faults == 1;
+	}
 }

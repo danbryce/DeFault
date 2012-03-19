@@ -27,10 +27,8 @@ implements PreferredOperatorDeferredEvaluationNode{
 
 	public IncompletePINode(Set<Proposition> state, ActionInstance action, StateNode parent,
 			Solver solver) {
-		super(action, parent, solver);
-		for(Proposition p : state)
-			this.state.put(p,DefaultFaultSet.makeNew(solver.getSolverOptions()));
-		criticalRisks = DefaultFaultSet.makeNew(solver.getSolverOptions());
+		super(state, action, parent, solver);
+		
 		//gvalue[0] = new PIMetric(criticalRisks);
 
 	}

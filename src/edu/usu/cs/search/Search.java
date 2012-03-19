@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.planner.SolverOptions;
+import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 
 public interface Search {
 //	public Node getNextNode();
@@ -26,6 +27,7 @@ public interface Search {
 	public Problem getProblem();
 	public SearchStatistics getSearchStatistics();
 	public SolutionEvaluator getSolutionEvaluator();
+	public List<ActionInstance> getPath(StateNode priorNode);
 	
 	
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
+import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 
 public class ClassicalSolutionEvaluator implements SolutionEvaluator {
 
@@ -41,6 +42,13 @@ public class ClassicalSolutionEvaluator implements SolutionEvaluator {
 	public long getSolutionEvaluationTime() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean keepPartialSolution(
+			PreferredOperatorDeferredEvaluationNode node) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 //	@Override

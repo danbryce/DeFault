@@ -195,17 +195,21 @@ StateNode {
 
 		node.knowledge = solver.getBDD().ref(currKnowledge);
 
-		// Add all risks associated with the new node
-		node.addCriticalRisks(action, this);
-
-		// Remove any absolute delete effect from node
-		node.applyDeleteEffects(this, action);
+		node.setActionFaults(action, this);
+		node.setPlanFaults(this);
+		node.setPropositionFaults(this, action);
+//
+//		// Add all risks associated with the new node
+//		node.addCriticalRisks(action, this);
+//
+//		// Remove any absolute delete effect from node
+//		node.applyDeleteEffects(this, action);
 
 		// Apply possible delete effects
 		node.applyPossibleDeleteEffects(this, action);
-
-		// Apply absolute add effects
-		node.applyAddEffects(this, action);
+//
+//		// Apply absolute add effects
+//		node.applyAddEffects(this, action);
 
 		// Apply possible add effects
 		node.applyPossibleAddEffects(this, action);

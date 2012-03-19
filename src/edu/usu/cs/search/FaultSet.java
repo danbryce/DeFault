@@ -34,5 +34,6 @@ public interface FaultSet {
 	boolean isFalse();
 
 	public PlanMetric getFaultPlanMetric();
+	boolean isTrue();
 
 }

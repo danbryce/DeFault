@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 
 public interface SolutionEvaluator {
 	boolean isSolution(Problem problem, StateNode node);
@@ -18,4 +19,5 @@ public interface SolutionEvaluator {
 	//Search getFallBackSearch();
 	boolean getFoundSolution();
 	long getSolutionEvaluationTime();
+	boolean keepPartialSolution(PreferredOperatorDeferredEvaluationNode node);
 }

@@ -122,7 +122,7 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 	}
 
 
-	public void crossProduct(PIFaultSet set1){
+	public void and(PIFaultSet set1){
 		//union all pairs of risk sets, removing those larger than maxEltSize and removing subsumed
 
 
@@ -131,7 +131,7 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 		//Set<Set<Risk>> newRiskSet = new TreeSet<Set<Risk>>(new SetComparator());
 		Set<Set<FaultLiteral>> newRiskSet = new HashSet<Set<FaultLiteral>>();
 
-
+		boolean addedEmpty = false;
 
 		for(Set<FaultLiteral> rs1 : set1.getSet()){
 			for(Set<FaultLiteral> rs : set){
@@ -141,12 +141,22 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 				rs2.addAll(rs);
 
 				if(rs2.size() <= maxEltSize && !subsumes(newRiskSet, rs2)){
+					
+					if(rs2.size() == 0){
+						addedEmpty = true;
+					}
+					else{
 					removeSetsSubsumedBy(newRiskSet, rs2);
 					newRiskSet.add(rs2);
 					onlyEmpty = false;
+					}
 				}
 			}
 		}
+		if(addedEmpty && newRiskSet.size() == 0){
+			newRiskSet.add(new TreeSet<FaultLiteral>());
+		}
+		
 		set = newRiskSet;			
 		this.sizeMapStale = true;
 
@@ -289,14 +299,14 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 	public void and(FaultLiteral riskFromIndex) {
 		PIFaultSet set = new PIFaultSet(this.maxEltSize);
 		set.add(riskFromIndex);
-		this.crossProduct(set);	
+		this.and(set);	
 	}
 
 
 
 	@Override
 	public void and(FaultSet riskSet) {
-		this.crossProduct((PIFaultSet)riskSet);			
+		this.and((PIFaultSet)riskSet);			
 	}
 
 
@@ -310,7 +320,10 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 	}
 
 
-
+	@Override
+	public boolean isTrue() {
+		return set.size()==1 && set.iterator().next().size()==0;
+	}
 
 
 
@@ -387,6 +400,7 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 		if(set.size() == 0){
 			//it is false
 			set.add(new HashSet<FaultLiteral>()); //signifies true
+			return;
 		}
 		
 		

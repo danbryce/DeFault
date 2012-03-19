@@ -11,6 +11,7 @@ import edu.usu.cs.pddl.domain.ActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.IncompleteActionInstance;
 import edu.usu.cs.pddl.domain.incomplete.Proposition;
 import edu.usu.cs.search.AbstractStateNode;
+import edu.usu.cs.search.DefaultFaultSet;
 import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
@@ -23,10 +24,13 @@ public class IncompleteBDDNode extends FaultStateNode implements
 
 	public IncompleteBDDNode(Set<Proposition> state, ActionInstance action, StateNode parent,
 			Solver solver) {
-		super(action, parent, solver);
-		for(Proposition p : state)
-			this.state.put(p, new BDDFaultSet());
-		criticalRisks = new BDDFaultSet();
+		super(state, action, parent, solver);
+//		for(Proposition p : state){
+//			FaultSet s = DefaultFaultSet.makeNew(solver.getSolverOptions());
+//			s.not();
+//			this.state.put(p, s);
+//		}
+//		criticalRisks = new BDDFaultSet();
 		//gvalue[0] = new NumericMetric(faultSet);
 	}
 

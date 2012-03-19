@@ -42,9 +42,9 @@ public class SearchStatistics {
 
 	
 	public Long getElapsedTime() {
-		if(elapsedTime == null){
+		//if(elapsedTime == null){
 			elapsedTime = System.currentTimeMillis() - startTime;
-		}
+		//}
 		return elapsedTime;
 	}
 
