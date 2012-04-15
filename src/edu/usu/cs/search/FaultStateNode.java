@@ -83,7 +83,7 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 	public boolean equals(FaultStateNode node){
 		//logger.debug("Compare "+  this.getPropositions().keySet() + " " +  ((FaultStateNode)node).getPropositions().keySet());
 
-		Map<Proposition, FaultSet> nState = ((FaultStateNode)node).getPropositions();
+		Map<Proposition, FaultSet> nState = node.getPropositions();
 		if(state.size() != nState.size()){
 			return false;
 		}
@@ -94,13 +94,15 @@ PreferredOperatorDeferredEvaluationNode, StateNode {
 			for(Proposition p : state.keySet()){
 				FaultSet f = state.get(p);
 				FaultSet nf = nState.get(p);
-				if(!f.equals(nf)){
+				//if(!f.equals(nf)){
+				if(f.compareTo(nf) != 0){
 					return false;
 				}
 			}
 		}
 		//logger.debug("EQ");
-		return criticalRisks == node.getCriticalRisks();
+		//return criticalRisks.equals(node.getCriticalRisks());
+		return criticalRisks.compareTo(node.getCriticalRisks()) == 0;
 
 
 		//return node.getState().equals(getState());

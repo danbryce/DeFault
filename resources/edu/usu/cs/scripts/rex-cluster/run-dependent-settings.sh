@@ -1,16 +1,15 @@
 #!/bin/bash
 
-graphplanner=~/Documents/workspace/DeFault
-outputdir="out"
 
 algorithm=$1
 sem=$2
+levoff=$3
 
 runBridges(){
 
 name=bridges
-domaindir="$graphplanner/testfiles/incomplete/"$name
-problemdir="$graphplanner/testfiles/incomplete/"$name
+domaindir="$DEFAULT_HOME/testfiles/incomplete/"$name
+problemdir="$DEFAULT_HOME/testfiles/incomplete/"$name
 
 
 for (( p = 2; p <= 32; p*=2 ))
@@ -31,12 +30,12 @@ for (( p = 2; p <= 32; p*=2 ))
 		        		problemFile=$problemdir"/"$name"_problem.pddl"
 		        		if [ -f $problemFile ]
 		        			then
-		            		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem".txt"
+		            		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem"_"$levoff".txt"
 		            		if [ -f $outputFile ]
 			        			then
 			        			echo $domainFile" already created - skipping"
 		            		else
-								./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v
+								./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v $levoff
 		            		fi
 		        		fi
 	            	fi
@@ -51,8 +50,8 @@ done
 
 runHobonav(){
 name=hobonav
-domaindir="$graphplanner/testfiles/incomplete/"$name
-problemdir="$graphplanner/testfiles/incomplete/"$name
+domaindir="$DEFAULT_HOME/testfiles/incomplete/"$name
+problemdir="$DEFAULT_HOME/testfiles/incomplete/"$name
 
 for (( p = 2; p <= 64; p*=2 ))
 	do
@@ -72,12 +71,12 @@ for (( p = 2; p <= 64; p*=2 ))
 		        		problemFile=$problemdir"/"$name"_problem.pddl"
 		        		if [ -f $problemFile ]
 		        			then
-		            		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem".txt"
+		            		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem"_"$levoff".txt"
 		            		if [ -f $outputFile ]
 			        			then
 			        			echo $domainFile" already created - skipping"
 		            		else
-								./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v
+								./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v $levoff
 		            		fi
 		        		fi
 	            	fi
@@ -92,10 +91,10 @@ done
 
 runParcprinter(){
 name=parcprinter
-domaindir="$graphplanner/testfiles/incomplete/"$name
-problemdir="$graphplanner/testfiles/incomplete/"$name
+domaindir="$DEFAULT_HOME/testfiles/incomplete/"$name
+problemdir="$DEFAULT_HOME/testfiles/incomplete/"$name
 
-v=""
+v="-"
 
 for p in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
 	do
@@ -115,12 +114,12 @@ for p in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
 		        		problemFile=$problemdir"/p"$p"_"$k"_"$j"-problem-incomplete.pddl"
 		        		if [ -f $problemFile ]
 		        			then
-		            		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem".txt"
+		            		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem"_"$levoff".txt"
 		            		if [ -f $outputFile ]
 			        			then
 			        			echo $domainFile" already created - skipping"
 		            		else
-								./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v
+								./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v $levoff
 		            		fi
 		        		fi
 	            	fi
@@ -134,37 +133,35 @@ done
 
 runGripper(){
 name=gripper
-domaindir="$graphplanner/testfiles/incomplete/"$name
-problemdir="$graphplanner/testfiles/incomplete/"$name
-v=""
-j=""
+domaindir="$DEFAULT_HOME/testfiles/incomplete/"$name
+problemdir="$DEFAULT_HOME/testfiles/incomplete/"$name
+v="-"
+j="-"
+k="-"
 
 for p in 2 4 6 8 10 12 20 
 	do
-   		for (( k = 1; k <= 10; k++ ))
-        	do
-       		domainFile=$domaindir"/gripper-domain.pddl"
-       		if [ -f $domainFile ]
-        		then
-        		problemFile=$problemdir"/gripper-"$p".pddl"
-        		if [ -f $problemFile ]
-        			then
-            		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem".txt"
-            		if [ -f $outputFile ]
-	        			then
-	        			echo $domainFile" already created - skipping"
-            		else
-						./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v
-            		fi
-        		fi
-           	fi
-		done
+    domainFile=$domaindir"/gripper-domain.pddl"
+    if [ -f $domainFile ]
+  		then
+   		problemFile=$problemdir"/gripper-"$p".pddl"
+   		if [ -f $problemFile ]
+  			then
+       		outputFile=$outputdir"/"$name"_"$v"_"$algorithm"_"$p"_"$j"_"$sem"_"$levoff".txt"
+       		if [ -f $outputFile ]
+      			then
+       			echo $domainFile" already created - skipping"
+       		else
+				./run-instance.sh $algorithm $sem $domainFile $problemFile $outputFile $name $p $k $j $v $levoff
+       		fi
+   		fi
+   	fi
 done
 
 }
 
 
-#runBridges $algorithm $sem $inst
-runParcprinter $algorithm $sem $inst
-#runHobonav $algorithm $sem $inst
-#runGripper $algorithm $sem $inst
+#runBridges $algorithm $sem 
+#runParcprinter $algorithm $sem 
+#runHobonav $algorithm $sem 
+runGripper $algorithm $sem 

@@ -377,7 +377,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 		//fixed point if: goalsMet and labels static or goalsMet and 5 after
 
-		if(levelsPastGoalsMet >= 1) {
+		if(levelsPastGoalsMet >= solver.getSolverOptions().getLevoff()) {
 			return true;
 		}
 		else if(goalsMet){	

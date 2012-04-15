@@ -23,7 +23,11 @@ public class SolverOptions {
 	private boolean conditional = false;
 	private SEARCHTYPE searchType;
 	private boolean strictSemantics;
+	private Integer levoff = 0;
 
+	public Integer getLevoff() {
+		return levoff;
+	}
 	public boolean isStrictSemantics() {
 		return strictSemantics;
 	}
@@ -111,5 +115,9 @@ public class SolverOptions {
 	}
 	public void setSemanticsStrict(boolean b) {
 		strictSemantics = b;
+	}
+	public void setLevOff(Integer valueOf) {
+		levoff  = valueOf;
+		
 	}
 }

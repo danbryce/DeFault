@@ -79,23 +79,23 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 	public List<ActionInstance> getPath(StateNode priorNode) {
 		long expanded = 0;
 		boolean foundSolution = false;
-//		try {
-//			Thread.sleep((long) (0.25*60*1000));
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	//	long  startTime = System.currentTimeMillis();
+		//		try {
+		//			Thread.sleep((long) (0.25*60*1000));
+		//		} catch (InterruptedException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+		//	long  startTime = System.currentTimeMillis();
 		long timeLimit = (long) (20*60*1000);
-		
+
 		if(priorNode != null && solutionEvaluator.keepSolution(priorNode, solutions)){
 			solutions.add(priorNode);
 			foundSolution = true;
 		}
-		
+
 		while(searchStatistics.getElapsedTime() < timeLimit
-//				System.currentTimeMillis() - startTime < timeLimit
-				) {
+				//				System.currentTimeMillis() - startTime < timeLimit
+		) {
 			PreferredOperatorDeferredEvaluationNode node = null;
 
 			// If both queues are empty, there is no solution
@@ -126,7 +126,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 				notPreferredPriority--;
 				pulledPreferred = false;
 			}
-			
+
 			// Check to see if this is a duplicate node
 			//logger.debug("Check CLosed" + ((FaultStateNode)node).getPropositions().keySet());
 			//			PreferredOperatorDeferredEvaluationNode node = closed.remove(node);
@@ -138,44 +138,44 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 				StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
 				if(node.getParent() == null) //init state h-value not calculated yet
 					node.getHeuristicValue();
-				
-				
+
+
 				if(!solutionEvaluator.keepPartialSolution(node)){
 					closed.add(node);
 					continue;
 				}
 			}
 
-			
-			
-			
+
+
+
 			// Check to see if the solution is found in the node
 			if(solutionEvaluator.isSolution(problem,node)) {
-					if(solutionEvaluator.keepSolution(node, solutions)){
-						//logger.debug("Found Solution: ");
-								solutions.add(node);
+				if(solutionEvaluator.keepSolution(node, solutions)){
+					//logger.debug("Found Solution: ");
+					solutions.add(node);
 					if(!foundSolution){
-//						PriorityQueue<StateNode> nop = new PriorityQueue<StateNode>();
-//						for(StateNode s : openPreferred){
-//							int c = s.compareTo(node);
-//							if(c < 1){
-//								nop.add(s);
-//							}
-//						}
-//						openPreferred = nop;
+						//						PriorityQueue<StateNode> nop = new PriorityQueue<StateNode>();
+						//						for(StateNode s : openPreferred){
+						//							int c = s.compareTo(node);
+						//							if(c < 1){
+						//								nop.add(s);
+						//							}
+						//						}
+						//						openPreferred = nop;
 
-//						PriorityQueue<StateNode> op = new PriorityQueue<StateNode>();
-//						for(StateNode s : open){
-//							int c = s.compareTo(node);
-//							if(c < 1){
-//								op.add(s);
-//							}
-//						}
-//						open = op;
+						//						PriorityQueue<StateNode> op = new PriorityQueue<StateNode>();
+						//						for(StateNode s : open){
+						//							int c = s.compareTo(node);
+						//							if(c < 1){
+						//								op.add(s);
+						//							}
+						//						}
+						//						open = op;
 						foundSolution =true;
 					}
-					
-					
+
+
 					searchStatistics.processNode(node);
 					//logger.debug(searchStatistics.toString()+" " + expanded);
 					//openPreferred;//. = new PriorityQueue<StateNode>((Collection<? extends StateNode>) Arrays.asList(openPreferred.toArray()));
@@ -185,7 +185,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 				else{
 					continue;
 				}
-					
+
 				if(solutionEvaluator.isSolutionSetComplete(solutions)){
 					StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
 					searchStatistics.setSolutionNode(bestNode);				
@@ -233,7 +233,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			// Compute node's H value
 			node.getHeuristicValue();
 			searchStatistics.processNode(node);
-//			logger.debug(((FaultStateNode) node).getPropositions().keySet());
+			//			logger.debug(((FaultStateNode) node).getPropositions().keySet());
 			if(node.deadEnd()){
 				closed.add( node);
 				continue;
@@ -253,7 +253,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			openPreferred.addAll(preferredNodes);
 			closed.add(   node);
 
-		searchStatistics.processNode( node);
+			searchStatistics.processNode( node);
 			expanded++;
 
 			// If the new h value is better than the current h value, add 1000 to 
@@ -262,9 +262,9 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 					node.compareTo(bestNode) < 0 ) {
 				bestNode = node;
 				if(pulledPreferred){
-//										for(StateNode cnode : preferredNodes)
-//											cnode.getHeuristicValue();
-					
+					//										for(StateNode cnode : preferredNodes)
+					//											cnode.getHeuristicValue();
+
 
 					preferredPriority += 5*preferredNodes.size();
 				}
@@ -282,18 +282,18 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 			//logger.debug(searchStatistics.toString());
 
 		}
-			if(foundSolution){
+		if(foundSolution){
 			StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
 			searchStatistics.setSolutionNode(bestNode);				
 			return extractSolution(bestNode);
 		}
 		else
 			return null;
-	
+
 	}
 
 
-	
+
 
 
 

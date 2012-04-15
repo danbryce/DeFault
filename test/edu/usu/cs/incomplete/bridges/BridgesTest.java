@@ -6,10 +6,14 @@ import edu.usu.cs.Default;
 
 public class BridgesTest 
 {
-	private final int numFiles = 10;
+	private final static  int numFiles = 10;
 
+	public static void main(String[] args){
+		CreateBridges();
+	}
+	
 	@Test
-	public void CreateBridges() 
+	public static void CreateBridges() 
 	{
 		//The possclob should be .5 or 0
 		//The possadd  should be .5 or 0

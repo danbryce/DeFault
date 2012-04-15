@@ -96,6 +96,15 @@ public class Default {
 				solverOptions.setSemanticsStrict(true);
 			}
 			 
+			//set levoff 
+			if(args.length > 6){
+				if(args[6].equalsIgnoreCase("inf"))
+				solverOptions.setLevOff(Integer.MAX_VALUE);
+				else
+					solverOptions.setLevOff(Integer.valueOf(args[6]));
+			}
+				
+			
 			//set heuristic and fault computation type
 			
 			if (args[3].equalsIgnoreCase("length")) {
@@ -170,6 +179,7 @@ public class Default {
 		logger.debug("Solution Evaluation Time (s): " + solver.getSearch().getSolutionEvaluator().getSolutionEvaluationTime()/1000.0);
 		logger.debug("Model Counting Time (s): " + (FaultCounter.totalCountTime)/1000.0);
 		logger.debug("Nodes Expanded: " + searchStatistics.getNodesExpanded());
+		logger.debug("Total Time (s): " + searchStatistics.getTimeSinceStart()/1000.0);
 		
 //		if (plans == null) {
 //			logger.debug("\nNo plan found");
@@ -179,13 +189,14 @@ public class Default {
 //				+ " milliseconds");
 //		if(solverOptions.getSearchType().equals(SolverOptions.SEARCHTYPE.COVER))
 //			return;
-//		for(List<ActionInstance> plan: plans){
-//			if(plan == null)
-//				continue;
-//			logger.debug("\nPlan found");
-//			for (ActionInstance action : plan) {
-//				logger.debug(action.getName());
-//			}
+		for(List<ActionInstance> plan: plans){
+			if(plan == null)
+				continue;
+			logger.debug("\nPlan found");
+			for (ActionInstance action : plan) {
+				logger.debug(action.getName());
+			}
+		}
 //
 //			// // Output the state sequence and actions in the plan
 //			// logger.debug("\n*********************************\n*** State Transition Sequence ***\n*********************************");

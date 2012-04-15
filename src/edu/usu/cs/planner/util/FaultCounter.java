@@ -158,11 +158,11 @@ public class FaultCounter {
 
 		FaultSet crs = getFaultSet(domain, problem, plan, solver, FAULT_TYPE.BDD_FAULTS);
 		
-		BigInteger solvableDomains = getBigSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
+		BigInteger unsolvableDomains = getBigUnSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.ref(solvableDomains);
 
 	
-		return solvableDomains;
+		return unsolvableDomains;
 
 	}
 	

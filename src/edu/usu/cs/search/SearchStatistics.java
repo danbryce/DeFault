@@ -6,7 +6,7 @@ import edu.usu.cs.planner.PlanMetric;
 
 public class SearchStatistics {
 	private int nodesExpanded = 0;
-	private Long startTime = null;
+	private Long startTime = null, realStartTime = null;
 	private Long elapsedTime = null;
 	private Long pauseTime = null;
 	private PlanMetric[] lastGValue = null;
@@ -30,6 +30,7 @@ public class SearchStatistics {
 
 	public SearchStatistics() {
 		startTime = System.currentTimeMillis();
+		realStartTime = startTime;
 	}
 	
 	public void pauseTime(){
@@ -54,8 +55,7 @@ public class SearchStatistics {
 
 
 	public Long getTimeSinceStart(){
-		Date currentTime = new Date();
-		return currentTime.getTime() - startTime;
+		return System.currentTimeMillis() - realStartTime;
 
 	}
 

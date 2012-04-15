@@ -44,6 +44,8 @@ public class BridgesDomainCreator {
 		bridgePredicates = new HashSet<String>();
 				
 		for(int fileIndex = 1; fileIndex <= fileCount; fileIndex++) {
+			if(fileIndex == 2 && bridgeDensity == 1.0)
+				break;
 			
 			// Create the bridges
 			bridgePredicates.clear();
@@ -307,7 +309,7 @@ public class BridgesDomainCreator {
 		StringBuilder output = new StringBuilder("(define (problem bridges)\n");
 		output.append("    (:domain Bridges)\n\n");
 		output.append("    (:init (at_x0) (at_y0))\n\n");
-		output.append("    (:goal\n     (and\n      (at_x0) (at_y0)\n      (holding_treasure_1)\n      (holding_treasure_2)\n      (holding_treasure_3)\n     )\n    )\n");
+		output.append("    (:goal\n     (and\n      (holding_treasure_1)\n      (holding_treasure_2)\n      (holding_treasure_3)\n     )\n    )\n");
 		output.append(")");
 		
 //		logger.debug(output);
