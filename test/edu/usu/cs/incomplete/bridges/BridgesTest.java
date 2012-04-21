@@ -27,10 +27,10 @@ public class BridgesTest
 		//v3 is all                    => args[3] && args[4] == .5
 
 		String outputFileLocation = "testfiles/incomplete/bridges";
-		int maxGridSize = 2;
+		int maxGridSize = 32;
 		// Create Bridges
 
-		for (int v = 3; v <=3; v++){
+		for (int v = 1; v <=3; v++){
 
 			String[] args = new String[6];
 			//args[0] = Integer.toString(gridSize);
@@ -50,7 +50,7 @@ public class BridgesTest
 			args[5] = Integer.toString(numFiles);
 			for(int gs = 2; gs <= maxGridSize; gs *= 2) 
 			{
-				for(double bridgeDensity = 1.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) 
+				for(double bridgeDensity = 0.0; bridgeDensity <= 1.0; bridgeDensity += 0.25) 
 				{
 					args[0] = Integer.toString(gs);
 					args[2] = Double.toString(bridgeDensity);
