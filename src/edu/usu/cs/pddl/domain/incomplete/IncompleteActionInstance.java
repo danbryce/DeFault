@@ -20,6 +20,7 @@ import edu.usu.cs.pddl.domain.LiteralInstance;
 import edu.usu.cs.pddl.domain.PDDLObject;
 import edu.usu.cs.pddl.domain.PredicateDef;
 import edu.usu.cs.pddl.domain.PredicateInstance;
+import edu.usu.cs.pddl.domain.Problem;
 import edu.usu.cs.pddl.goalseffects.ConjunctionEffect;
 import edu.usu.cs.pddl.goalseffects.ConjunctionGoalDesc;
 import edu.usu.cs.pddl.goalseffects.NotGoalDesc;
@@ -206,7 +207,7 @@ public class IncompleteActionInstance  implements ActionInstance{
 	}
 
 	public IncompleteActionInstance(ActionDef action,
-			List<PDDLObject> actualArgs, Set<PDDLObject> allObjects, Domain domain, int index, ConsistentLiteralSet startState) throws Exception {
+			List<PDDLObject> actualArgs, Set<PDDLObject> allObjects, Domain domain, int index, ConsistentLiteralSet startState, Problem problem) throws Exception {
 
 		StringBuilder name = new StringBuilder();
 		name.append(action.getName());
@@ -370,6 +371,24 @@ public class IncompleteActionInstance  implements ActionInstance{
 					}
 				}
 			}
+		}
+		
+		//add unknown propositions that are not locally closed
+		for(Proposition p : problem.getUnknownPropositions()){
+			if(!problem.getDomain().getClosedPreconditions().contains(this.getDefinition())){
+				this.possiblePreconditions.add(p);
+			}
+			if(!problem.getDomain().getClosedAddEffects().contains(this.getDefinition()) && 
+			   !problem.getDomain().getClosedDeleteEffects().contains(this.getDefinition())){
+				this.possibleAddDeleteEffects.add(p);
+			}
+			else if(!problem.getDomain().getClosedDeleteEffects().contains(this.getDefinition())){
+				this.possibleDeleteEffects.add(p);
+			}
+			else if(!problem.getDomain().getClosedAddEffects().contains(this.getDefinition())){
+				this.possibleAddEffects.add(p);
+			}
+
 		}
 	}
 

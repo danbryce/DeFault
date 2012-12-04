@@ -78,6 +78,10 @@ public class IncompleteBDDNode extends FaultStateNode implements
 		super(incompleteBDDNode);
 		if(solver.getSolverOptions().isStrictSemantics()){ //copy over previous action failures
 			criticalRisks = new BDDFaultSet((BDDFaultSet) incompleteBDDNode.criticalRisks);
+			if(solver.getSolverOptions().isStrictExponentCount()){
+				criticalRisksStrictUnknown = DefaultFaultSet.makeNew(incompleteBDDNode.criticalRisksStrictUnknown, solver.getSolverOptions());
+			}
+
 		}
 		else{ //flexible semantics ignores previous failures
 			criticalRisks = new BDDFaultSet();

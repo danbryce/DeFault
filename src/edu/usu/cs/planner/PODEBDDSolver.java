@@ -39,7 +39,12 @@ public class PODEBDDSolver extends DefaultSolver implements Solver {
 	}
 
 public List<List<ActionInstance>> run() {
-		
+	List<ActionInstance> priorPlan = null;
+
+	StateNode priorNode = null;
+
+	if(solverOptions.getSearchType() == SolverOptions.SEARCHTYPE.ANYTIME){
+
 		Solver classicalSolver = null;
 		try {
 			classicalSolver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
@@ -47,10 +52,11 @@ public List<List<ActionInstance>> run() {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		List<List<ActionInstance>> classicalPlans = new ArrayList<List<ActionInstance>>();
-		classicalPlans = classicalSolver.run();	
+		List<List<ActionInstance>>  classicalPlans = classicalSolver.run();	
+		priorPlan = classicalPlans.get(0);
+		 priorNode = FaultCounter.getGoalNode(domain, problem, priorPlan, this, solverOptions.getFaultType());
+	}		
 		
-		StateNode priorNode = FaultCounter.getGoalNode(domain, problem, classicalPlans.get(0), this, solverOptions.getFaultType());
 		
 		
 		

@@ -168,7 +168,7 @@ StateNode {
 	private boolean knownPossPreSat(ActionInstance action) {
 		
 		for(Proposition p : ((IncompleteActionInstance)action).getPossiblePreconditions()){
-			Fault f = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), p.getName());
+			Fault f = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), p);
 			if(knownTrue(f) && !state.keySet().contains(p))
 				return false;
 		}
@@ -233,12 +233,12 @@ StateNode {
 			// If the node doesn't contain the proposition then it is an open
 			// precondition risk
 
-			Fault f = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
+			Fault f = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec);
 
 			if(unknown(f)){
 
 				if (!node.state.containsKey(possPrec)) {
-					Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
+					Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec);
 					FaultLiteral rl = Fault.getFaultLiteral(r, true);			
 					precOpen.or(rl);
 				}
@@ -250,7 +250,7 @@ StateNode {
 //						s1.setFaults(1);
 //					}
 
-					Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec.getName());
+					Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possPrec);
 					FaultLiteral rl = Fault.getFaultLiteral(r, true);			
 					
 					s1.and(rl);
@@ -276,7 +276,7 @@ StateNode {
 			if (!node.state.containsKey(p)){
 				continue;
 			}
-			Fault f = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName());
+			Fault f = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p);
 
 			if( knownTrue(f) ) { //an observed delete 
 				state.remove(p);
@@ -288,7 +288,7 @@ StateNode {
 //					riskSet.setFaults(1);
 //				}
 
-				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName());
+				Fault r = Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p);
 				FaultLiteral rl = Fault.getFaultLiteral(r, true);			
 				riskSet.or(rl);
 				state.put(p, riskSet);
@@ -304,7 +304,7 @@ StateNode {
 		//	actRisks.or(getPrecRisks(initialNode, action));
 
 		for (Proposition effect : action.getPossibleAddEffects()) {
-			Fault f = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+			Fault f = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect);
 
 			if(knownTrue(f)){
 				state.put(effect, actRisks);
@@ -320,7 +320,7 @@ StateNode {
 //						(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS ?
 //								new PIFaultSet(actRisks) :
 //									new BDDFaultSet(actRisks));
-					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect);
 					FaultLiteral rl = Fault.getFaultLiteral(r, false);			
 					riskSet.or(rl);
 
@@ -340,7 +340,7 @@ StateNode {
 
 
 					// Also add the UnlistedEffect risk
-					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect.getName());
+					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), effect);
 					FaultLiteral rl = Fault.getFaultLiteral(r, false);			
 					crossProduct.or(rl);
 
@@ -361,7 +361,7 @@ StateNode {
 
 		for(Proposition p : action1.getPossibleDeleteEffects()){
 			if(state.containsKey(p)){
-				Fault pf = Fault.getRiskFromIndex(Fault.POSSDEL, action1.getName(), p.getName());
+				Fault pf = Fault.getRiskFromIndex(Fault.POSSDEL, action1.getName(), p);
 				if(unknown(pf)){
 					dels.add(pf);
 				}
@@ -378,7 +378,7 @@ StateNode {
 
 		for(Proposition p : action1.getPossibleAddEffects()){
 			if(!state.containsKey(p)){
-				Fault pf = Fault.getRiskFromIndex(Fault.POSSADD, action1.getName(), p.getName());
+				Fault pf = Fault.getRiskFromIndex(Fault.POSSADD, action1.getName(), p);
 				if(unknown(pf)){
 					adds.add(pf);
 				}
@@ -394,7 +394,7 @@ StateNode {
 
 		for(Proposition p : action1.getPossiblePreconditions()){
 			if(!state.containsKey(p)){
-				Fault pf = Fault.getRiskFromIndex(Fault.POSSPRE, action1.getName(), p.getName());
+				Fault pf = Fault.getRiskFromIndex(Fault.POSSPRE, action1.getName(), p);
 				if(unknown(pf)){
 					pres.add(pf);
 				}

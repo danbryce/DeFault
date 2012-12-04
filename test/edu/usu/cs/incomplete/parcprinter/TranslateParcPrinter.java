@@ -4,8 +4,8 @@ import org.junit.Test;
 
 public class TranslateParcPrinter {
 
-	@Test
-	public void TranslateToIncomplete() {
+	
+	public static void main(String[] args1) {
 
 		final int domainCount = 30;
 		final int instanceCount = 10; // Make instanceCount versions of the problem

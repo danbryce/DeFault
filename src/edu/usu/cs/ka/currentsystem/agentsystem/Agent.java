@@ -166,27 +166,27 @@ public abstract class Agent
 		{
 			if(!prevState.contains(p)) 
 			{	
-				successSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p.getName(), successSentence, false, true); //AND: -possPre, -pre	
-				failureSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p.getName(), failureSentence, true, false); //OR: might be pre 
+				successSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p, successSentence, false, true); //AND: -possPre, -pre	
+				failureSentence = addPropToSentence(Fault.POSSPRE, a.getName(), p, failureSentence, true, false); //OR: might be pre 
 			}
 		}
 		
 		for(Proposition p : a.getPossibleAddEffects())
 		{			
 			if(!prevState.contains(p) && currState.contains(p)) //-possAdd, add
-				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p.getName(), successSentence, true, true);
+				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p, successSentence, true, true);
 			
 			if(!prevState.contains(p) && !currState.contains(p)) //-possAdd, -add
-				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p.getName(), successSentence, false, true);
+				successSentence = addPropToSentence(Fault.POSSADD, a.getName(), p, successSentence, false, true);
 		}
 		
 		for(Proposition p : a.getPossibleDeleteEffects())
 		{
 			if(prevState.contains(p) && !currState.contains(p)) //-possDel, del
-				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p.getName(), successSentence, true, true);
+				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p, successSentence, true, true);
 			
 			if(prevState.contains(p) && currState.contains(p)) //-possDel, -del
-				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p.getName(), successSentence, false, true);
+				successSentence = addPropToSentence(Fault.POSSDEL, a.getName(), p, successSentence, false, true);
 		}
 //		System.out.println("");
 //		bdd.printSet(failureSentence);
@@ -215,7 +215,7 @@ public abstract class Agent
 	 * @param isAND 		- is the prop to be and'd or or'd to the sentence
 	 * @return - int 		- the reference to the newly expanded sentence
 	 */
-	private int addPropToSentence(String faultType, String actionName, String propName, int bddRefSF, boolean isTrue, boolean isAND) 
+	private int addPropToSentence(String faultType, String actionName, Proposition propName, int bddRefSF, boolean isTrue, boolean isAND) 
 	{	
 		Fault riskLearned = Fault.getRiskFromIndex(faultType, actionName, propName);	
 		Integer ref = riskToBDD.get(riskLearned);
@@ -387,7 +387,7 @@ public abstract class Agent
 		{
 			if(!currState.contains(p))
 			{
-				Fault risk = Fault.getRiskFromIndex(Fault.POSSPRE, currAction.getName(), p.getName());
+				Fault risk = Fault.getRiskFromIndex(Fault.POSSPRE, currAction.getName(), p);
 				int tmp = bdd.ref(bdd.or(posspres, riskToBDD.get(risk)));
 				bdd.deref(posspres);
 				posspres = tmp;

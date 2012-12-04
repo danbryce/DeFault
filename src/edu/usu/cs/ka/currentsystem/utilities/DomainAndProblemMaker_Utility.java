@@ -39,7 +39,7 @@ public class DomainAndProblemMaker_Utility
 		problem = null;
 		try {
 			ANTLRDomainBuilder domBuilder = new ANTLRDomainBuilder(domainFile);
-			domain = domBuilder.buildDomain();
+			domain = domBuilder.buildDomain(0);
 			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain, problemFile);
 			problem = probBuilder.buildProblem();
 

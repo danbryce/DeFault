@@ -78,7 +78,7 @@ public class GraphSolver
                 
         try {
             ANTLRDomainBuilder domBuilder = new ANTLRDomainBuilder(domainFile);
-            Domain domain = domBuilder.buildDomain();
+            Domain domain = domBuilder.buildDomain(0);
             ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain, problemFile);
             Problem problem = probBuilder.buildProblem();
             

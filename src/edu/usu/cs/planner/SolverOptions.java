@@ -6,7 +6,7 @@ public class SolverOptions {
 
 	
 	public static enum FAULT_TYPE  { PI_FAULTS, BDD_FAULTS, PI_TRIE_FAULTS };
-	public static enum SEARCHTYPE  {ANYTIME, FIRST, COVER} ;
+	public static enum SEARCHTYPE  {ANYTIME, FIRST, COVER, ANYTIME_NOFF} ;
 
 	
 	private boolean useHelpfulActions = false;
@@ -24,6 +24,8 @@ public class SolverOptions {
 	private SEARCHTYPE searchType;
 	private boolean strictSemantics;
 	private Integer levoff = 0;
+	private boolean strictExponentCount = false;
+	private Integer maxUnknownPropositions = 0;
 
 	public Integer getLevoff() {
 		return levoff;
@@ -119,5 +121,19 @@ public class SolverOptions {
 	public void setLevOff(Integer valueOf) {
 		levoff  = valueOf;
 		
+	}
+	public void setStrictExponentCount(boolean b) {
+		 strictExponentCount = b;
+		
+	}
+	public boolean isStrictExponentCount() {
+		return strictExponentCount;
+	}
+	public void setMaxUnknownPropositions(Integer valueOf) {
+		maxUnknownPropositions   = valueOf;
+		
+	}
+	public int getMaxUnknownPropositions() {
+		return maxUnknownPropositions;
 	}
 }

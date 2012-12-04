@@ -41,7 +41,7 @@ public class IncompleteToConformantProbabilistic {
 
 		try {
 			ANTLRDomainBuilder domBuilder = new ANTLRDomainBuilder(new File(domainFileOut));
-			Domain domain = domBuilder.buildDomain();
+			Domain domain = domBuilder.buildDomain(0);
 
 			Domain translatedDomain = translate(domain);
 			
@@ -96,7 +96,8 @@ public class IncompleteToConformantProbabilistic {
 											 domain.getFunctions(),
 											 domain.getConstants(),
 											 translatedPredicates,
-											 translatedActions);
+											 translatedActions,
+											 domain.getMaxUnknownPropositions());
 		
 		return translatedDomain;
 	}

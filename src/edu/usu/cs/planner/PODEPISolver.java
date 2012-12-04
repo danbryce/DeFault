@@ -33,9 +33,9 @@ public class PODEPISolver extends DefaultSolver implements Solver {
 				new RiskSolutionEvaluator(domain, problem, searchStatistics, this), 
 				searchStatistics, 
 				this
-				);
-//		IncompletePINode startNode = new IncompletePINode(problem.getInitialState(), null, null, this);
-//		startNode.
+		);
+		//		IncompletePINode startNode = new IncompletePINode(problem.getInitialState(), null, null, this);
+		//		startNode.
 		IncompletePINode startNode = new IncompletePINode(problem.getInitialState(), null, null, this);
 		search.initialize(startNode);
 		FaultCounter.initialize(domain, problem);	
@@ -43,25 +43,32 @@ public class PODEPISolver extends DefaultSolver implements Solver {
 
 
 	public List<List<ActionInstance>> run() {
+
+		List<ActionInstance> priorPlan = null;
+		StateNode priorNode = null;
+		if(solverOptions.getSearchType() == SolverOptions.SEARCHTYPE.ANYTIME){
+			Solver classicalSolver = null;
+			try {
+				classicalSolver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
+			} catch (IllDefinedProblemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			List<List<ActionInstance>> classicalPlans = classicalSolver.run();
+			priorPlan = classicalPlans.get(0);
+			 priorNode = FaultCounter.getGoalNode(domain, problem, priorPlan, this, solverOptions.getFaultType());
+		}
+
 		
-		Solver classicalSolver = null;
-		try {
-			classicalSolver = new PODEFFSolver(domain, problem, searchStatistics, solverOptions);
-		} catch (IllDefinedProblemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		List<List<ActionInstance>> classicalPlans = new ArrayList<List<ActionInstance>>();
-		classicalPlans = classicalSolver.run();	
-		
-		StateNode priorNode = FaultCounter.getGoalNode(domain, problem, classicalPlans.get(0), this, solverOptions.getFaultType());
 		
 		
-		
+
+
+
 		List<List<ActionInstance>> plans = new ArrayList<List<ActionInstance>>();
 		plans.add(search.getPath(priorNode));
-		
-		
+
+
 		return plans;
 	}
 

@@ -16,6 +16,7 @@ import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.planner.NumericMetric;
 import edu.usu.cs.planner.PlanMetric;
 import edu.usu.cs.planner.Solver;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 import edu.usu.cs.search.pode.PreferredOperatorDeferredEvaluationNode;
 
@@ -28,7 +29,7 @@ implements PreferredOperatorDeferredEvaluationNode{
 	public IncompletePINode(Set<Proposition> state, ActionInstance action, StateNode parent,
 			Solver solver) {
 		super(state, action, parent, solver);
-		
+
 		//gvalue[0] = new PIMetric(criticalRisks);
 
 	}
@@ -36,7 +37,10 @@ implements PreferredOperatorDeferredEvaluationNode{
 	public IncompletePINode(IncompletePINode incompletePINode) {
 		super(incompletePINode);
 		if(solver.getSolverOptions().isStrictSemantics()){ //copy over previous action failures			
-		criticalRisks =  DefaultFaultSet.makeNew(incompletePINode.criticalRisks, solver.getSolverOptions());
+			criticalRisks =  DefaultFaultSet.makeNew(incompletePINode.criticalRisks, solver.getSolverOptions());
+			if(solver.getSolverOptions().isStrictExponentCount()){
+				criticalRisksStrictUnknown = DefaultFaultSet.makeNew(incompletePINode.criticalRisksStrictUnknown, solver.getSolverOptions());
+			}
 		}
 		else{ //flexible semantics ignores previous failures
 			criticalRisks = DefaultFaultSet.makeNew(solver.getSolverOptions());
@@ -55,18 +59,18 @@ implements PreferredOperatorDeferredEvaluationNode{
 
 
 
-//	@Override
-//	public boolean equals(StateNode o){
-//		return super.equals(o);
-//	}
-	
-//
-//	
-//	public boolean equals(IncompletePINode o){
-//		return super.equals(o);
-//	}
+	//	@Override
+	//	public boolean equals(StateNode o){
+	//		return super.equals(o);
+	//	}
 
-	
+	//
+	//	
+	//	public boolean equals(IncompletePINode o){
+	//		return super.equals(o);
+	//	}
+
+
 	@Override
 	public PlanMetric[] getHeuristicValue() {
 		if(!heuristicComputed){

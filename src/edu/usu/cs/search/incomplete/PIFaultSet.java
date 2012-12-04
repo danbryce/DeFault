@@ -97,6 +97,11 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 			if(!subsumes(this.set, rs1)){
 				//remove sets from set that are subsumed by rs1
 				removeSetsSubsumedBy(this.set, rs1);
+				if(checkTautology(this.set, rs1)){
+					set.clear();
+					set.add(new HashSet<FaultLiteral>());
+					return;
+				}
 				//add rs1 to set
 				set.add(rs1);
 				if(rs1.size()>0)
@@ -104,6 +109,40 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 				this.sizeMapStale = true;
 			}
 		}	
+		
+		
+		
+	}
+
+
+
+	private boolean checkTautology(Set<Set<FaultLiteral>> set2,
+			Set<FaultLiteral> rs1) {
+		//check if the logical "or" of rs1 and set2 is a tautology
+		//currently works for unit literals
+		
+		if(rs1.size() == 0){
+			//rs1 is logical true
+			return true;
+		}
+		
+		for(Set<FaultLiteral> s1 : set2){
+			if(s1.size()==0){
+				//s1 is logical true
+				return true;
+			}
+			if(rs1.size() == 1 && s1.size() == 1){
+				FaultLiteral f1 = s1.iterator().next();
+				FaultLiteral f2 = rs1.iterator().next();
+				if(f1.getFault().equals(f2.getFault()) &&
+					f1.isTrue() != f2.isTrue())
+					return true;
+			}
+			   
+		
+		}
+		
+		return false;
 	}
 
 
@@ -135,11 +174,14 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 
 		for(Set<FaultLiteral> rs1 : set1.getSet()){
 			for(Set<FaultLiteral> rs : set){
+				if(isContradiction(rs1, rs))
+					continue;
 				Set<FaultLiteral> rs2 = new TreeSet<FaultLiteral>();
 				//Set<Risk> rs2 = new HashSet<Risk>();
 				rs2.addAll(rs1);
 				rs2.addAll(rs);
 
+				
 				if(rs2.size() <= maxEltSize && !subsumes(newRiskSet, rs2)){
 					
 					if(rs2.size() == 0){
@@ -161,6 +203,20 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 		this.sizeMapStale = true;
 
 	}
+
+
+	private boolean isContradiction(Set<FaultLiteral> rs1, Set<FaultLiteral> rs) {
+		//check if the logical "and" is contradiction
+		for(FaultLiteral l1 : rs1){
+			for(FaultLiteral l : rs){
+				if(l1.getFault().equals(l.getFault()) && l1.isTrue() != l.isTrue())
+					return true;
+			}
+		}
+		
+		return false;
+	}
+
 
 
 	private boolean subsumes(Set<Set<FaultLiteral>> mset, Set<FaultLiteral> rs1) {

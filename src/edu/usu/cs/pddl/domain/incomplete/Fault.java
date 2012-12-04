@@ -41,7 +41,7 @@ public class Fault implements Comparable, ConditionalAction {
 	
 	private final String riskName;
 	private final String action;
-	private final String proposition;
+	private final Proposition proposition;
 	int hash;
 	boolean hashInitialized = false;
 	
@@ -56,7 +56,7 @@ public class Fault implements Comparable, ConditionalAction {
 	
 	// private int id;
 
-	public Fault(String riskName, String action, String proposition) {
+	public Fault(String riskName, String action, Proposition proposition) {
 		this.riskName = riskName;
 		this.action = action;
 		this.proposition = proposition;
@@ -71,7 +71,7 @@ public class Fault implements Comparable, ConditionalAction {
 	}
 
 	
-	public static Fault getRiskFromIndex(String name, String action, String proposition){
+	public static Fault getRiskFromIndex(String name, String action, Proposition proposition){
 		Map<String, Fault> index = null;
 		if(name.equals(POSSPRE)){
 			index = possiblePreconditions;
@@ -109,7 +109,7 @@ public class Fault implements Comparable, ConditionalAction {
 		return action;
 	}
 
-	public String getPropositionName() {
+	public Proposition getPropositionName() {
 		return proposition;
 	}
 

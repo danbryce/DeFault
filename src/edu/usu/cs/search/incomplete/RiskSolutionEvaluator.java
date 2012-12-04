@@ -80,7 +80,26 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 
 	@Override
 	public boolean isSolutionSetComplete(List<StateNode> solutions) {
-		return solver.getSolverOptions().getSearchType() != SolverOptions.SEARCHTYPE.ANYTIME || bestSolution.getCriticalRisks().isFalse();
+		if(solver.getSolverOptions().getSearchType() != SolverOptions.SEARCHTYPE.ANYTIME && 
+				solver.getSolverOptions().getSearchType() != SolverOptions.SEARCHTYPE.ANYTIME_NOFF)
+			return true;
+		
+		
+		FaultSet criticalAndGoal;
+		if(solver.getSolverOptions().isStrictSemantics()){
+			criticalAndGoal = DefaultFaultSet.makeNew(bestSolution.getCriticalRisks(), solver.getSolverOptions());
+		}
+		else{
+			criticalAndGoal = DefaultFaultSet.makeNew(solver.getSolverOptions());
+			criticalAndGoal.not();
+		}
+		for(Proposition p : problem.getGoalAction().getPreconditions()){
+			FaultSet propFaults = bestSolution.getPropositions().get(p); 
+			criticalAndGoal.or(propFaults);
+		}
+
+		
+		return criticalAndGoal.isFalse();
 		
 		//solutions.size()==1;
 	}
@@ -113,12 +132,20 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 			//logger.debug(currentNode.getPlanString());
 //			logger.debug("# Fail Models: " + RiskCounter.getBigUnSolvableDomainCount(criticalAndGoal));
 			
-			
+			//logger.debug(searchStatistics.getElapsedTime()/1000.0);
 			searchStatistics.pauseTime();
 			long startEvalTime = System.currentTimeMillis();
 			
 			List<ActionInstance> plan = currentNode.getPlan();
-			BigInteger total =BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
+			BigInteger total;
+			if(solver.getSolverOptions().isStrictExponentCount()){
+				int numFaults = (int) (FaultCounter.getNumRisks()-FaultCounter.getNumUnknownRisks());
+				numFaults += FaultCounter.getNumUnknownRisks()*domain.getMaxUnknownPropositions();
+				total = BigInteger.valueOf(1).shiftLeft(numFaults);
+			}
+			else{
+				total = BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
+			}
 			BigInteger unsolvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
 			BigDecimal probability = new BigDecimal(unsolvable);
 			probability = probability.divide(new BigDecimal(total));
@@ -139,7 +166,8 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 				b.append("eval time\t");
 				b.append("\n");
 			}
-			
+			searchStatistics.resumeTime();
+
 			b.append(searchStatistics.getElapsedTime()/1000.0).append("\t");
 			b.append(searchStatistics.getNodesExpanded()).append("\t");
 			b.append(plan.size()).append("\t");
@@ -151,7 +179,6 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 			bestFaultSet = criticalAndGoal;
 			
 			
-			searchStatistics.resumeTime();
 			
 		return true;
 		}

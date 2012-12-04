@@ -3,6 +3,7 @@ import org.junit.Test;
 import edu.usu.cs.pddl.domain.incomplete.DefaultTrieNode;
 import edu.usu.cs.pddl.domain.incomplete.Fault;
 import edu.usu.cs.pddl.domain.incomplete.FaultLiteralTrieNode;
+import edu.usu.cs.pddl.domain.incomplete.Proposition;
 
 
 
@@ -16,7 +17,7 @@ public class DefaultTrieTest {
 		Fault[] faults = new Fault[num];
 		DefaultTrieNode[] nodes = new DefaultTrieNode[num];
 		for(int i = 0; i < num; i++){
-			faults[i] =  new Fault(Fault.POSSADD, "a"+i, "p"+i);
+			faults[i] =  new Fault(Fault.POSSADD, "a"+i, Proposition.getPropositionFromIndex("p"+i));
 			nodes[i] = new FaultLiteralTrieNode(faults[i]);
 		}
 		
@@ -27,8 +28,8 @@ public class DefaultTrieTest {
 	
 	@Test
 	public void orTest(){
-		Fault f1 = new Fault(Fault.POSSADD, "a1", "p1");
-		Fault f2 = new Fault(Fault.POSSADD, "a2", "p2");
+		Fault f1 = new Fault(Fault.POSSADD, "a1", Proposition.getPropositionFromIndex("p1"));
+		Fault f2 = new Fault(Fault.POSSADD, "a2", Proposition.getPropositionFromIndex("p2"));
 
 		FaultLiteralTrieNode f1n = new FaultLiteralTrieNode(f1, DefaultTrieNode.trueNode, DefaultTrieNode.falseNode, DefaultTrieNode.falseNode);
 		FaultLiteralTrieNode f2n = new FaultLiteralTrieNode(f2, DefaultTrieNode.trueNode, DefaultTrieNode.falseNode, DefaultTrieNode.falseNode);
@@ -45,7 +46,7 @@ public class DefaultTrieTest {
 		Fault[] faults = new Fault[num];
 		DefaultTrieNode[] nodes = new DefaultTrieNode[num];
 		for(int i = 0; i < num; i++){
-			faults[i] =  new Fault(Fault.POSSADD, "a"+i, "p"+i);
+			faults[i] =  new Fault(Fault.POSSADD, "a"+i, Proposition.getPropositionFromIndex("p"+i));
 			nodes[i] = new FaultLiteralTrieNode(faults[i]);
 		}
 		
@@ -63,7 +64,7 @@ public class DefaultTrieTest {
 		Fault[] faults = new Fault[num];
 		DefaultTrieNode[] nodes = new DefaultTrieNode[num];
 		for(int i = 0; i < num; i++){
-			faults[i] =  new Fault(Fault.POSSADD, "a"+i, "p"+i);
+			faults[i] =  new Fault(Fault.POSSADD, "a"+i, Proposition.getPropositionFromIndex("p"+i));
 			nodes[i] = new FaultLiteralTrieNode(faults[i]);
 		}
 		
@@ -95,7 +96,7 @@ public class DefaultTrieTest {
 		Fault[] faults = new Fault[num];
 		DefaultTrieNode[] nodes = new DefaultTrieNode[num];
 		for(int i = 0; i < num; i++){
-			faults[i] =  new Fault(Fault.POSSADD, "a"+i, "p"+i);
+			faults[i] =  new Fault(Fault.POSSADD, "a"+i, Proposition.getPropositionFromIndex("p"+i));
 			nodes[i] = new FaultLiteralTrieNode(faults[i]);
 		}
 		

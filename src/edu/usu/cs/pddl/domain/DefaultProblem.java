@@ -213,5 +213,11 @@ public class DefaultProblem implements Problem
 	public void setInitialState(Set<Proposition> initialState){
 		this.initialState = initialState;
 	}
+
+	@Override
+	public Set<Proposition> getUnknownPropositions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }

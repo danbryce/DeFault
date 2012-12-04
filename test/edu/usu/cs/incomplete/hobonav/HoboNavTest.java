@@ -6,8 +6,8 @@ import edu.usu.cs.Default;
 
 public class HoboNavTest {
 
-	@Test
-	public void CreateHoboNavDomainsTest() {
+	
+	public static void main(String[] args1) {
 		// testfiles/incomplete/hobonav/hobodo.pddl [Domain Output File]
 		// testfiles/incomplete/hobonav/hobopro.pddl [Problem Output File]
 		// 2 [Grid Size]
@@ -19,9 +19,10 @@ public class HoboNavTest {
 		String domainDir = "testfiles/incomplete/hobonav/";
 		String problemDir = "testfiles/incomplete/hobonav/";
 		String extension = ".pddl";
-		int[] gridSizes = { 2, 4, 6, 8, 16 };
+//		int[] gridSizes = { 2, 4, 6, 8, 16 };
+		int[] gridSizes = { 2 };
 		//int[] gridSizes = {2};
-		int[] itemCounts = { 1, 2, 4 };
+		int[] itemCounts = { 1, 2, 4, 8, 16, 32, 64, 128 };
 		//int[] itemCounts = { 4 };
 		double[] tollDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
 		double[] gambleDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together

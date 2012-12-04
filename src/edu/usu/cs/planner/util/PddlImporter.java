@@ -83,7 +83,7 @@ public class PddlImporter {
 				for(ActionDef stripsAction : stripsActions){
 
 					try {
-						instance = new IncompleteActionInstance(stripsAction, actualArgs, allObjects, domain, actIndex++, problem.getStartState());
+						instance = new IncompleteActionInstance(stripsAction, actualArgs, allObjects, domain, actIndex++, problem.getStartState(), problem);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

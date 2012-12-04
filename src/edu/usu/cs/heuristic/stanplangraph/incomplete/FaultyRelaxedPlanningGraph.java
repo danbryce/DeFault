@@ -124,7 +124,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 					}
 					if(factHeader == null){
 						//If precondition is not present, then incur a fault
-						Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre.getName());
+						Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre);
 						FaultLiteral rl = Fault.getFaultLiteral(r, true);
 						actionFaults.or(rl);
 					}
@@ -133,7 +133,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 						//if no possible faults for precondition, then add no faults
 						//else if precondition is at fault, there is a higher order interaction
 						//if(!fli.getFaults().isFalse()){
-							Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre.getName());
+							Fault r = Fault.getRiskFromIndex(Fault.POSSPRE, actionHeader.getName(), possPre);
 							FaultLiteral rl = Fault.getFaultLiteral(r, true);
 							FaultSet factFaults = fli.getFaults().copy();							
 							factFaults.and(rl);							
@@ -197,7 +197,7 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 
 				if(fli.getPossibleSupporters().contains(actionHeader)){
-					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, actionHeader.getName(), fact.getName());
+					Fault r = Fault.getRiskFromIndex(Fault.POSSADD, actionHeader.getName(), Proposition.getPropositionFromIndex(fact.getPropositionIndex()));
 					FaultLiteral rl = Fault.getFaultLiteral(r, false);
 					FaultSet faults = ali.getFaults().copy();
 					//if(solver.getSolverOptions().getFaultType() == SolverOptions.FAULT_TYPE.PI_FAULTS){ //should be a not possadd, but don't represent negatives here
@@ -377,11 +377,13 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 
 		//fixed point if: goalsMet and labels static or goalsMet and 5 after
 
-		if(levelsPastGoalsMet >= solver.getSolverOptions().getLevoff()) {
+		if(goalsMet && levelsPastGoalsMet >= solver.getSolverOptions().getLevoff()) {
 			return true;
 		}
-		else if(goalsMet){	
-			levelsPastGoalsMet++;
+		else {
+			if(goalsMet)	{	
+				levelsPastGoalsMet++;
+			}
 			for(FactHeader factHeader : this.getFactSpike().getFactsByRank(this.getFactSpike().getCurrentRank() - 1)) {
 				FaultyFactLevelInfo fliNow = (FaultyFactLevelInfo)factSpike.getFactLevelInfo(factSpike.getCurrentRank()-1, factHeader.getPropositionIndex());
 				FaultyFactLevelInfo fliPrev = (FaultyFactLevelInfo)factSpike.getFactLevelInfo(factSpike.getCurrentRank()-2, factHeader.getPropositionIndex());
@@ -407,9 +409,9 @@ public class FaultyRelaxedPlanningGraph extends AbstractPlanningGraph {
 					return false;					
 				}
 			}
-			return true;
+			return !addedLevel;
 		}
-		return !addedLevel;
+//		return !addedLevel;
 	}
 
 

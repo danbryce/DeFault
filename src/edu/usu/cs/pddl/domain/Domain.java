@@ -9,9 +9,11 @@
 package edu.usu.cs.pddl.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,19 +41,44 @@ public class Domain
     private final List<PredicateDef> predicates;
     private final List<ActionDef> actions;
     private Set<PredicateDef> dynamicPredicates;
-    
+    private Set<ActionDef> closedPreconditions, closedAddEffects, closedDeleteEffects; //actions that are locally closed
+    public Set<ActionDef> getClosedPreconditions() {
+		return closedPreconditions;
+	}
+
+	public Set<ActionDef> getClosedAddEffects() {
+		return closedAddEffects;
+	}
+
+	public Set<ActionDef> getClosedDeleteEffects() {
+		return closedDeleteEffects;
+	}
+
+	private int maxUnknownPropositions;
     
     private final Map<String, FunctionDef> funcsByName;
     private final Map<String, PredicateDef> predsByName;
+
+	private boolean strictSemantics;
+	private boolean strictExponentCount;
     
 
-    public Domain(final String name, 
+    public void setStrictSemantics(boolean strictSemantics) {
+		this.strictSemantics = strictSemantics;
+	}
+
+	public void setStrictExponentCount(boolean strictExponentCount) {
+		this.strictExponentCount = strictExponentCount;
+	}
+
+	public Domain(final String name, 
                   final List<String> requirements, 
                        List<PDDLType> types, 
                        List<FunctionDef> functions, 
                   final List<PDDLObject> constants,
                   final List<PredicateDef> predicates, 
-                  final List<ActionDef> actions) {
+                  final List<ActionDef> actions,
+                  int maxUnknownPropositions) {
         super();
         if (functions == null) {
             functions = Collections.emptyList();
@@ -64,6 +91,12 @@ public class Domain
         this.constants = constants;
         this.predicates = predicates;
         this.actions = actions;
+        this.maxUnknownPropositions = maxUnknownPropositions;
+        this.strictSemantics = true;
+        this.strictExponentCount = true;
+        this.closedAddEffects = new HashSet<ActionDef>();
+        this.closedDeleteEffects = new HashSet<ActionDef>();
+        this.closedPreconditions = new HashSet<ActionDef>();
         
         // Make sure the implicit type 'object' is present
         if (types != null && !types.isEmpty()) {
@@ -129,6 +162,19 @@ public class Domain
         return predicates;
     }
     
+    public boolean isClosedPrecondition(ActionDef act){
+    	return closedPreconditions.contains(act);
+    }
+    
+
+    public boolean isClosedAddEffect(ActionDef act){
+    	return closedAddEffects.contains(act);
+    }
+    public boolean isClosedDeleteEffect(ActionDef act){
+    	return closedDeleteEffects.contains(act);
+    }
+
+    
     //Added in order to check what changes in a domain... cw 7/1/10
     public Set <PredicateDef> getDynamicPredicates() {
         return dynamicPredicates;
@@ -149,5 +195,20 @@ public class Domain
     public boolean isDynamic(PredicateDef p){
     	return dynamicPredicates.contains(p);
     }
+
+	public int getMaxUnknownPropositions() {
+		// TODO Auto-generated method stub
+		return maxUnknownPropositions;
+	}
+
+	public boolean isStrictSemantics() {
+		// TODO Auto-generated method stub
+		return strictSemantics;
+	}
+
+	public boolean isStrictExponentCount() {
+		// TODO Auto-generated method stub
+		return strictExponentCount;
+	}
     
 }

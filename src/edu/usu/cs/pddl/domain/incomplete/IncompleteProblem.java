@@ -27,6 +27,7 @@ import edu.usu.cs.pddl.domain.PredicateDef;
 import edu.usu.cs.pddl.domain.PredicateInstance;
 import edu.usu.cs.pddl.domain.PredicateLiteral;
 import edu.usu.cs.pddl.domain.Problem;
+import edu.usu.cs.planner.SolverOptions;
 import edu.usu.cs.planner.util.PddlImporter;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
@@ -41,9 +42,14 @@ public class IncompleteProblem implements Problem
 	private List<GoalDesc> goals = null;
 	IncompleteActionInstance goalAction = null;
 	private List<ActionInstance> actionInstances = null;
+	private Set<Proposition> unknownPropositions = null;
 
 	//	private Map<PredicateDef, PredicateInstance> dynamicPredicates = null;
 	//	private Map<PredicateDef, PredicateInstance> staticPredicates = null;
+
+	public Set<Proposition> getUnknownPropositions() {
+		return unknownPropositions;
+	}
 
 	public IncompleteProblem(){}
 
@@ -60,6 +66,7 @@ public class IncompleteProblem implements Problem
 		this.startState = startState;
 		this.goals = new ArrayList<GoalDesc>();
 		this.goals.add(goal);
+		this.unknownPropositions = new HashSet<Proposition>();
 
 
 		Collection<PredicateLiteral> literals = startState.getPredicateLiterals();
@@ -72,6 +79,18 @@ public class IncompleteProblem implements Problem
 				}
 			}
 		}
+		//make unknown propositions
+		//if strict semantics and using exponentiated counting, then make just one; otherwise make k
+		if(domain.getMaxUnknownPropositions() > 0 && 
+				domain.isStrictSemantics() && domain.isStrictExponentCount()){
+			unknownPropositions.add(new Proposition("skolem_0"));
+		}
+		else{
+			for(int i = 0; i < domain.getMaxUnknownPropositions(); i++){
+				unknownPropositions.add(new Proposition("skolem_"+i));
+			}
+		}
+
 	}
 
 	public IncompleteProblem(final String name,
@@ -85,12 +104,12 @@ public class IncompleteProblem implements Problem
 		this.startState = startState;
 		this.goals = goals;
 	}
-	
+
 	//Should all be deep copies, but...
 	public IncompleteProblem(Problem incP)
 	{
 		IncompleteProblem ip = (IncompleteProblem) incP;
-		
+
 		this.name = ip.name;
 		this.domain = ip.domain;
 		this.objects = ip.objects;
@@ -149,36 +168,36 @@ public class IncompleteProblem implements Problem
 		return true;
 	}
 
-//	private boolean checkDynamicPredicate(PredicateInstance p) {
-//		//static (not dynamic) if 
-//		// 1) it is either not given as an effect, or
-//		// 2) it is the effect of an action whose precondition
-//		//    will never be satisfied, or
-//		// 3) it is given as an effect but doesn't change its value
-//
-//		if(!isAnEffect(p) || 
-//				isAnEffectOfUnexecutableAction(p) ||
-//				isAnEffectButNeverChangesValue(p)){
-//			return false;
-//		}
-//		return true;	
-//	}
-//
-//	private boolean isAnEffectButNeverChangesValue(PredicateInstance p) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	private boolean isAnEffectOfUnexecutableAction(PredicateInstance p) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	private boolean isAnEffect(PredicateInstance p) {
-//
-//
-//		return false;
-//	}
+	//	private boolean checkDynamicPredicate(PredicateInstance p) {
+	//		//static (not dynamic) if 
+	//		// 1) it is either not given as an effect, or
+	//		// 2) it is the effect of an action whose precondition
+	//		//    will never be satisfied, or
+	//		// 3) it is given as an effect but doesn't change its value
+	//
+	//		if(!isAnEffect(p) || 
+	//				isAnEffectOfUnexecutableAction(p) ||
+	//				isAnEffectButNeverChangesValue(p)){
+	//			return false;
+	//		}
+	//		return true;	
+	//	}
+	//
+	//	private boolean isAnEffectButNeverChangesValue(PredicateInstance p) {
+	//		// TODO Auto-generated method stub
+	//		return false;
+	//	}
+	//
+	//	private boolean isAnEffectOfUnexecutableAction(PredicateInstance p) {
+	//		// TODO Auto-generated method stub
+	//		return false;
+	//	}
+	//
+	//	private boolean isAnEffect(PredicateInstance p) {
+	//
+	//
+	//		return false;
+	//	}
 
 	public String toString(){
 		StringWriter sw = new StringWriter();
@@ -186,9 +205,9 @@ public class IncompleteProblem implements Problem
 		sw.append("(define (problem "); sw.append(name); sw.append(")\n");
 		sw.append(" (:domain "); sw.append(domain.getName()); sw.append(")\n");
 		sw.append("(:objects \n");
-		
+
 		Map<PDDLType, Set<PDDLObject>> typeMap = new HashMap<PDDLType, Set<PDDLObject>>();
-		
+
 		for(PDDLObject o : objects){
 			PDDLType oType = o.getType();
 			Set<PDDLObject> oset = typeMap.get(oType);
@@ -205,11 +224,11 @@ public class IncompleteProblem implements Problem
 				sw.append(o.toString()).append(" ");	
 			}
 			if(t != null)
-			sw.append("- ").append(t.toString()).append("\n");
+				sw.append("- ").append(t.toString()).append("\n");
 			else
 				sw.append("- ").append("object").append("\n");
 		}
-					
+
 		sw.append(" )\n");
 		sw.append("(:init \n");
 		boolean partial = false;
@@ -270,7 +289,7 @@ public class IncompleteProblem implements Problem
 	{
 		this.actionInstances = actionInstances;
 	}
-	
+
 	//Added by cw 7/1/10
 	public void setInitialState(Set<Proposition> initialState) 
 	{

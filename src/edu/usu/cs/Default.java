@@ -39,7 +39,7 @@ public class Default {
 	private static Logger logger = Logger.getLogger(Default.class);
 
 	public static void main(String[] args) {
-		if (!(args.length == 3 || args.length == 4 || args.length == 5 || args.length == 6 || args.length == 7)) {
+		if (!(args.length >= 3 || args.length <= 8)) {
 			usage();
 		}
 		File domainFile = new File(args[0]);
@@ -55,9 +55,36 @@ public class Default {
 
 		Domain domain = null;
 		Problem problem = null;
+		Solver solver = null;
+		SearchStatistics searchStatistics = new SearchStatistics();
+		SolverOptions solverOptions = new SolverOptions();
+
 		try {
+			
+			//Set semantics for fault propagation
+			if(args.length > 5 && args[5].equalsIgnoreCase("flexible")){
+				solverOptions.setSemanticsStrict(false);
+			}
+			else { //if(args.length > 6 && args[6].equalsIgnoreCase("strict")){
+				solverOptions.setSemanticsStrict(true);
+				
+				if(args.length > 5 && args[5].equalsIgnoreCase("strict-exp")){
+					solverOptions.setStrictExponentCount(true);
+				}
+			}
+
+			//set levoff 
+			
+			if(args.length > 7){
+				solverOptions.setMaxUnknownPropositions(Integer.valueOf(args[7]));
+			}
+	
+			
+			
 			ANTLRDomainBuilder domBuilder = new ANTLRDomainBuilder(domainFile);
-			domain = domBuilder.buildDomain();
+			domain = domBuilder.buildDomain(solverOptions.getMaxUnknownPropositions());
+			domain.setStrictSemantics(solverOptions.isStrictSemantics());
+			domain.setStrictExponentCount(solverOptions.isStrictExponentCount());
 			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain,
 					problemFile);
 			problem = probBuilder.buildProblem();
@@ -72,14 +99,14 @@ public class Default {
 			e.printStackTrace();
 		}
 
-		Solver solver = null;
-		SearchStatistics searchStatistics = new SearchStatistics();
-		SolverOptions solverOptions = new SolverOptions();
 		try {
 			// Initialize search algorithm
 
 			if(args.length > 4 && args[4].equalsIgnoreCase("anytime")){
 				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.ANYTIME);
+			}
+			else if(args.length > 4 && args[4].equalsIgnoreCase("anytime-noff")){
+				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.ANYTIME_NOFF);
 			}
 			else if(args.length > 4 && args[4].equalsIgnoreCase("cover")){
 				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.COVER);
@@ -88,13 +115,6 @@ public class Default {
 				solverOptions.setSearchType(SolverOptions.SEARCHTYPE.FIRST);
 			}
 
-			//Set semantics for fault propagation
-			if(args.length > 5 && args[5].equalsIgnoreCase("flexible")){
-				solverOptions.setSemanticsStrict(false);
-			}
-			else { //if(args.length > 6 && args[6].equalsIgnoreCase("strict")){
-				solverOptions.setSemanticsStrict(true);
-			}
 			 
 			//set levoff 
 			if(args.length > 6){

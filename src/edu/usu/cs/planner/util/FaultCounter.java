@@ -35,6 +35,7 @@ import edu.usu.cs.search.FaultSet;
 import edu.usu.cs.search.FaultStateNode;
 import edu.usu.cs.search.IncompletePINode;
 import edu.usu.cs.search.StateNode;
+import edu.usu.cs.search.incomplete.FaultLiteral;
 import edu.usu.cs.search.incomplete.PIFaultSet;
 
 public class FaultCounter {
@@ -44,18 +45,20 @@ public class FaultCounter {
 	private static Map<Fault, Integer> riskToBDD;
 	private static Map<Integer, Fault> bddToRisk;
 	private static List<Fault> allRisks;
+	private static List<Fault> unknownRisks;
 	private static boolean isInitialized = false;
 	private static int unusedRisks = 0;//currently unused
 	private static Logger logger = Logger.getLogger(FaultCounter.class.getName());
 
 	public static long startCountTime, endCountTime, totalCountTime = 0;
-	
-	
+
+
 	public static void initialize(Domain domain, Problem problem, List<ActionInstance> plan) {
 		if (isInitialized) return;
 
 		allRisks = getAllRisks(problem);
-
+		unknownRisks = new ArrayList<Fault>();
+		
 		bdd = new BDD(10000, 10000);
 
 		riskToBDD = new HashMap<Fault, Integer>();
@@ -79,11 +82,16 @@ public class FaultCounter {
 			bdd.ref(temp);
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
-		//	logger.debug((i++) + " " + risk);
+			//	logger.debug((i++) + " " + risk);
 			//			}
 			//			else{
 			//				unusedRisks++;
 			//			}
+			
+			if(problem.getUnknownPropositions().contains(risk.getPropositionName())){
+				unknownRisks.add(risk);
+			}
+			
 		}
 
 
@@ -107,18 +115,24 @@ public class FaultCounter {
 		Fault.resetStaticHashMaps();
 
 		allRisks = getAllRisks(problem);
-
+		unknownRisks = new ArrayList<Fault>();
+		
 		bdd = new BDD(10000, 10000);
 		bddRef = bdd.ref(bdd.getOne());
 
 		riskToBDD = new HashMap<Fault, Integer>();
 		bddToRisk = new HashMap<Integer, Fault>();
 
-		for (Fault risk : allRisks) 
+		int i  =0;
+	for (Fault risk : allRisks) 
 		{
 			int temp = bdd.createVar();
 			riskToBDD.put(risk, temp);
 			bddToRisk.put(temp, risk);
+			//logger.debug((i++) + " " + risk);
+			if(problem.getUnknownPropositions().contains(risk.getPropositionName())){
+				unknownRisks.add(risk);
+			}
 		}
 
 		isInitialized = true;
@@ -150,71 +164,104 @@ public class FaultCounter {
 	public static int getNumRisks(){ return allRisks.size(); }
 	public static List<Fault> getAllRisks(){ return allRisks;}
 
-	
-	
+
+
 	public static BigInteger getModelCount(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver) {
 
+		//M(a & b1 & ... & bk) = M(a)M(b)^k 
+		//                     = (2^F0 - M(-a))(2^F1 - M(-b))^k
+		//M(-a V -b1 V ... V -bk) = 2^{F0+kF1} - M(a & b1 & ... & bk)
+		//                        = 2^{F0+kF1} - (2^F0 - M(-a))(2^F1 - M(-b))^k
+		
 		
 
-		FaultSet crs = getFaultSet(domain, problem, plan, solver, FAULT_TYPE.BDD_FAULTS);
-		
-		BigInteger unsolvableDomains = getBigUnSolvableDomainCount(crs);//nodes.get(nodes.size() - 1).getCriticalRisks());
-		//bdd.ref(solvableDomains);
+		FaultSet[] crs = getFaultSet(domain, problem, plan, solver, FAULT_TYPE.BDD_FAULTS);
 
+		BigInteger unsolvableDomains = getBigUnSolvableDomainCount(crs[0]);
+
+		if(solver.getSolverOptions().isStrictExponentCount()){
+			BigInteger totalDoms = BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks()-FaultCounter.getNumUnknownRisks()+(FaultCounter.getNumUnknownRisks()*domain.getMaxUnknownPropositions()));
+			BigInteger totalFDoms = BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks()-FaultCounter.getNumUnknownRisks());
+			BigInteger totalFkDoms = BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumUnknownRisks());
+			BigInteger unknownUnsolvable =  getBigUnSolvableDomainCount(crs[1]);	
+			
+			BigInteger solvableDoms = totalFDoms.subtract(unsolvableDomains);
+			BigInteger solvableExtensions = totalFkDoms.subtract(unknownUnsolvable).pow(domain.getMaxUnknownPropositions());
+			
+			unsolvableDomains = totalDoms.subtract(solvableDoms.multiply(solvableExtensions));  
+			
+		}
 	
+
+
+
 		return unsolvableDomains;
 
 	}
-	
+
 	public static StateNode getGoalNode(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver, FAULT_TYPE faultType) {
 		FAULT_TYPE oldFaults = solver.getSolverOptions().getFaultType();
 		solver.getSolverOptions().setFaultType(faultType);
 
-	if (!isInitialized) {initialize(domain, problem, plan);}
+		if (!isInitialized) {initialize(domain, problem, plan);}
 
-	// Figure out which risks are true right now
-	List<StateNode> nodes = new ArrayList<StateNode>(plan.size() + 1);
+		// Figure out which risks are true right now
+		List<StateNode> nodes = new ArrayList<StateNode>(plan.size() + 1);
 
-	// Add the initial state
-	nodes.add(faultType == FAULT_TYPE.BDD_FAULTS ?
-					new IncompleteBDDNode(problem.getInitialState(), null, null, solver) :
-						new IncompletePINode(problem.getInitialState(), null, null, solver)		);
+		// Add the initial state
+		nodes.add(faultType == FAULT_TYPE.BDD_FAULTS ?
+				new IncompleteBDDNode(problem.getInitialState(), null, null, solver) :
+					new IncompletePINode(problem.getInitialState(), null, null, solver)		);
 
-	
 
-	for (ActionInstance action : plan) 
-	{
-		nodes.add(nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action));
-		//bdd.printSet(nodes.get(nodes.size()-1).getActRisks());
-		//bdd.printCubes(nodes.get(nodes.size()-1).getActRisks());
-		//bdd.print(nodes.get(nodes.size()-1).getActRisks());
-		//bdd.support(bdd)
 
-		//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
+		for (ActionInstance action : plan) 
+		{
+			StateNode nextNode = nodes.get(nodes.size() - 1).getSuccessorNode((IncompleteActionInstance)action);
+			if(nextNode == null){
+				solver.getSolverOptions().setFaultType(oldFaults);
+				return null;
+			}
+			nodes.add(nextNode);
+			//bdd.printSet(nodes.get(nodes.size()-1).getActRisks());
+			//bdd.printCubes(nodes.get(nodes.size()-1).getActRisks());
+			//bdd.print(nodes.get(nodes.size()-1).getActRisks());
+			//bdd.support(bdd)
+
+			//			bdd.printSet(bdd.not(nodes.get(nodes.size()-1).getCriticalRisks()));
+		}
+		solver.getSolverOptions().setFaultType(oldFaults);
+
+		return  nodes.get(nodes.size() - 1);	
+
+
+
 	}
-	solver.getSolverOptions().setFaultType(oldFaults);
 
-	return  nodes.get(nodes.size() - 1);	
-	
-	
 
-	}
-		
-	
-	public static FaultSet getFaultSet(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver, FAULT_TYPE faultType) {
-		
-			FAULT_TYPE oldFaults = solver.getSolverOptions().getFaultType();
-			solver.getSolverOptions().setFaultType(faultType);
+	public static FaultSet[] getFaultSet(Domain domain, Problem problem, List<ActionInstance> plan, Solver solver, FAULT_TYPE faultType) {
+
+		FAULT_TYPE oldFaults = solver.getSolverOptions().getFaultType();
+		solver.getSolverOptions().setFaultType(faultType);
+
+		FaultSet[] returnFaults = new FaultSet[3];
 
 		if (!isInitialized) {initialize(domain, problem, plan);}
 
 		StateNode node = getGoalNode(domain, problem, plan, solver, faultType);
 
+		if(node == null){
+			solver.getSolverOptions().setFaultType(oldFaults);
+			returnFaults[0] =new BDDFaultSet(); 
+			return returnFaults;
+		}
+
 		//		//add critical risks for goals
 		FaultSet crs = (!solver.getSolverOptions().isStrictSemantics() ?
-						new BDDFaultSet() :
-						new BDDFaultSet(((FaultStateNode) node).getCriticalRisks()));
-		crs.not();
+				new BDDFaultSet() :
+					new BDDFaultSet(((FaultStateNode) node).getCriticalRisks()));
+		if(!solver.getSolverOptions().isStrictSemantics())
+			crs.not();
 		//logger.debug(crs);
 		//bdd.ref(crs);
 		for(Proposition p : problem.getGoalAction().getPreconditions()){
@@ -222,11 +269,44 @@ public class FaultCounter {
 			crs.or(risk);
 		}
 
+	
+		
+		FaultSet crss = null;
+		if(solver.getSolverOptions().isStrictExponentCount()){
+			crss = new BDDFaultSet(((FaultStateNode) node).getCriticalRisksStrictUnknown());
+			FaultSet all = new BDDFaultSet(crs);
+			all.or(crss);
+			returnFaults[2]=all;
+			//set easiest domain equal to true to get right model count
+			for (Fault risk : allRisks) 
+			{
+				if(!problem.getUnknownPropositions().contains(risk.getPropositionName())){
+					boolean isTrue = risk.getRiskName().equals(Fault.POSSADD);
+					FaultLiteral f = new FaultLiteral(risk, isTrue);
+					//FaultSet r = new BDDFaultSet();
+					//r.and(f);
+					crss.and(f);
+				}
+				else{
+					//blank out from crs
+					FaultLiteral f = new FaultLiteral(risk, false);
+					crs.and(f);
+				}
+			}
+
+
+			//			for(Proposition p : problem.getGoalAction().getPreconditions()){				
+			//				FaultSet risk = ((FaultStateNode) node).getPropositions().get(p);
+			//				crs.or(risk);
+			//			}
+		}
+
+
 		solver.getSolverOptions().setFaultType(oldFaults);
-		
-		
+
+
 		//logger.debug(crs);
-		
+
 		//		for (Risk risk : allRisks) {
 		//			System.out.print("(" + risk.toString() + ") ");
 		//		}
@@ -235,8 +315,12 @@ public class FaultCounter {
 
 		//	bdd.printSet(nodes.get(nodes.size() - 1).getCriticalRisks());
 		//bdd.printSet(bdd.not(crs));
-		return crs;
+		returnFaults[0] = crs;
+		if(solver.getSolverOptions().isStrictExponentCount()){
+			returnFaults[1] = crss;
 		}
+		return returnFaults;
+	}
 
 	/**
 	 * This method is altered from the above method getmodelCount for use by the ka.Agent.
@@ -320,9 +404,9 @@ public class FaultCounter {
 
 	public static BigInteger getModelCount(int bdd) 
 	{
-		
+
 		startCountTime = System.currentTimeMillis();
-		
+
 		//System.out.println("\n bdd: " + bdd);
 		if(bdd == 1)
 			return BigInteger.valueOf(2).pow(allRisks.size());
@@ -332,7 +416,10 @@ public class FaultCounter {
 		BigInteger solvableDomains;
 		try{
 			solvableDomains = FaultCounter.bdd.bigSatCount(bdd);
+			//solvableDomains = FaultCounter.bdd.bigSatCountExp(bdd);
+
 		}catch (Exception e)//Added due to odd negative exponent exception
+
 		{
 			//System.out.print(" !");
 			//e.printStackTrace();
@@ -340,9 +427,9 @@ public class FaultCounter {
 		}
 
 		endCountTime = System.currentTimeMillis();
-		
+
 		totalCountTime += endCountTime - startCountTime;
-		
+
 		return solvableDomains;
 	}
 
@@ -390,22 +477,36 @@ public class FaultCounter {
 
 			// Poss-prec
 			for (Proposition possprec : action.getPossiblePreconditions()) {
-				risks.add(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possprec.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), possprec));
 			}
 
 			// Poss-del
 			for (Proposition possdel : action.getPossibleDeleteEffects()) {
-				risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), possdel.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), possdel));
 			}
 
 			// Poss-add
 			for (Proposition possadd : action.getPossibleAddEffects()) {
-				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd));
 			}
 			for (Proposition possadd : action.getPossibleAddsDeletes()) {
-				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd.getName()));
-				risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), possadd.getName()));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), possadd));
+				risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), possadd));
 			}
+
+			//			//unknown propositions that are not locally closed
+			//			for(Proposition p : problem.getUnknownPropositions()){
+			//				if(!problem.getDomain().getClosedPreconditions().contains(a.getDefinition())){
+			//					risks.add(Fault.getRiskFromIndex(Fault.POSSPRE, action.getName(), p.getName()));
+			//				}
+			//				if(!problem.getDomain().getClosedAddEffects().contains(a.getDefinition())){
+			//					risks.add(Fault.getRiskFromIndex(Fault.POSSADD, action.getName(), p.getName()));
+			//				}
+			//				if(!problem.getDomain().getClosedDeleteEffects().contains(a.getDefinition())){
+			//					risks.add(Fault.getRiskFromIndex(Fault.POSSDEL, action.getName(), p.getName()));
+			//				}
+			//			}
+
 		}
 
 		return risks;
@@ -434,7 +535,7 @@ public class FaultCounter {
 		Problem problem = null;
 		try {
 			ANTLRDomainBuilder domBuilder = new ANTLRDomainBuilder(domainFile);
-			domain = domBuilder.buildDomain();
+			domain = domBuilder.buildDomain(0);
 			ANTLRProblemBuilder probBuilder = new ANTLRProblemBuilder(domain,
 					problemFile);
 			problem = probBuilder.buildProblem();
@@ -681,5 +782,11 @@ public class FaultCounter {
 		FaultSet faults = new BDDFaultSet();
 		((BDDFaultSet)faults).setFaults(getFailureExplanationSentence_BDDRef(problem, plan, null, solver));
 		return faults;
+	}
+
+
+	public static int getNumUnknownRisks() {
+		// TODO Auto-generated method stub
+		return unknownRisks.size();
 	}
 }

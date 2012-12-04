@@ -69,7 +69,9 @@ public class BDDFaultSet extends DefaultFaultSet implements FaultSet {
 
 	@Override
 	public void or(FaultSet s1) {
-		int tmp = FaultCounter.getBDD().or(((BDDFaultSet)s1).getFaults(), faults);
+		int tmp = (s1 == null ?
+					1 :	
+					FaultCounter.getBDD().or(((BDDFaultSet)s1).getFaults(), faults));
 		FaultCounter.getBDD().ref(tmp);
 		FaultCounter.getBDD().deref(faults);
 		faults = tmp;

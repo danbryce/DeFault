@@ -69,6 +69,7 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
     private Map<String, FormalArgument> constants = new HashMap<String, FormalArgument>();
     private Map<String, PredicateDef> predicates = new HashMap<String, PredicateDef>();
     private List<ActionDef> actions = new ArrayList<ActionDef>();
+   
     
     private class ActionLookup implements ExpressionContext
     {
@@ -135,12 +136,12 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
         parseDocument();
     }
     
-    public Domain buildDomain() throws InvalidPDDLElementException
+    public Domain buildDomain(int maxUnknownPropositions) throws InvalidPDDLElementException
     {
         if (domain == null) {
             int type = docRoot.getType();
             if (type == DOMAIN) {
-                domain = buildPDDLDomain(docRoot);
+                domain = buildPDDLDomain(docRoot, maxUnknownPropositions);
             } else {
                 throw new InvalidPDDLElementException("The file " + pddlFile + " does not contain a PDDL domain");
             }
@@ -148,7 +149,7 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
         return domain;
     }
 
-    private Domain buildPDDLDomain(Tree domainNode) throws InvalidPDDLElementException
+    private Domain buildPDDLDomain(Tree domainNode, int maxUnknownPropositions) throws InvalidPDDLElementException
     {
         logger.fine("Building a PDDL Domain");
         
@@ -198,7 +199,8 @@ public class ANTLRDomainBuilder extends ANTLRBuilder
                           new ArrayList<FunctionDef>(functions.values()),
                           consts,
                           new ArrayList<PredicateDef>(predicates.values()),
-                          actions);
+                          actions,
+                          maxUnknownPropositions);
     }
 
     private void addTypes(Tree typeNodes) throws InvalidPDDLElementException

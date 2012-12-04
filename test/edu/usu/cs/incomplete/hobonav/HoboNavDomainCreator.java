@@ -29,6 +29,36 @@ public class HoboNavDomainCreator {
 		"mulligan_stew", 		// a type of community stew, created by several hobos combining whatever food they have or can collect
 		"gump",					// a scrap of meat
 		"crumbs",				// lice
+		"crumbs1",				// lice
+		"crumbs2",				// lice
+		"crumbs3",				// lice
+		"crumbs4",				// lice
+		"crumbs5",				// lice
+		"crumbs6",				// lice
+		"crumbs7",				// lice
+		"crumbs8",				// lice
+		"crumbs9",				// lice
+		"crumbs10",				// lice
+		"crumbs11",				// lice
+		"crumbs12",				// lice
+		"crumbs13",				// lice
+		"crumbs14",				// lice
+		"crumbs15",				// lice
+		"crumbs16",				// lice
+		"crumbs17",				// lice
+		"crumbs18",				// lice
+		"crumbs19",				// lice
+		"crumbs20",				// lice
+		"crumbs21",				// lice
+		"crumbs22",				// lice
+		"crumbs23",				// lice
+		"crumbs24",				// lice
+		"crumbs25",				// lice
+		"crumbs26",				// lice
+		"crumbs27",				// lice
+		"crumbs28",				// lice
+		"crumbs29",				// lice
+		"crumbs30",				// lice
 		};
 	
 	public static void main(String[] args) {
@@ -64,7 +94,7 @@ public class HoboNavDomainCreator {
 		//}
 		
 		for (int i = 0; i < itemCount; i++) {
-			havePredicates.add("(have_" + items[i] + ")");
+			havePredicates.add("(have_item" + i + ")");
 			output.append(" " + havePredicates.get(havePredicates.size() - 1));
 		}
 		
@@ -80,7 +110,7 @@ public class HoboNavDomainCreator {
 					List<String> possPrecs = new ArrayList<String>();
 					for (int i = 0; i < itemCount; i++) {
 						if (random.nextDouble() < tollDensity) {
-							possPrecs.add(items[i]);
+							possPrecs.add("item" + i);
 						}
 					}
 					output.append(getMoveAction(x, y, x + 1, y, possPrecs));
@@ -88,7 +118,7 @@ public class HoboNavDomainCreator {
 					possPrecs.clear();
 					for (int i = 0; i < itemCount; i++) {
 						if (random.nextDouble() < tollDensity) {
-							possPrecs.add(items[i]);
+							possPrecs.add("item" + i);
 						}
 					}
 					output.append(getMoveAction(x + 1, y, x, y, possPrecs));
@@ -100,7 +130,7 @@ public class HoboNavDomainCreator {
 					List<String> possPrecs = new ArrayList<String>();
 					for (int i = 0; i < itemCount; i++) {
 						if (random.nextDouble() < tollDensity) {
-							possPrecs.add(items[i]);
+							possPrecs.add("item" + i);
 						}
 					}
 					output.append(getMoveAction(x, y, x, y + 1, possPrecs));
@@ -108,7 +138,7 @@ public class HoboNavDomainCreator {
 					possPrecs = new ArrayList<String>();
 					for (int i = 0; i < itemCount; i++) {
 						if (random.nextDouble() < tollDensity) {
-							possPrecs.add(items[i]);
+							possPrecs.add("item" + i);
 						}
 					}
 					output.append(getMoveAction(x, y + 1, x, y, possPrecs));
@@ -121,7 +151,7 @@ public class HoboNavDomainCreator {
 			for (int y = 0; y < gridSize; y++) {
 				for (int item = 0; item < itemCount; item++) {
 					if (random.nextDouble() < gambleDensity) {
-						output.append(getGambleAction(x, y, items[item]));
+						output.append(getGambleAction(x, y, "item" + item));
 					}
 				}
 			}
@@ -132,7 +162,7 @@ public class HoboNavDomainCreator {
 			for (int y = 0; y < gridSize; y++) {
 				for (int item = 0; item < itemCount; item++) {
 					if (random.nextDouble() < easyMarkDensity) {
-						output.append(getEasyMarkAction(x, y, items[item]));
+						output.append(getEasyMarkAction(x, y, "item" + item));
 					}
 				}
 			}

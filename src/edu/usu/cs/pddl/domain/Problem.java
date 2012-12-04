@@ -70,5 +70,7 @@ public interface Problem
 	//Added 7/1/10 cw - for calling the planner multiple times from different states
 	public void setInitialState(
 			Set<Proposition> initialState);
+
+	public Set<Proposition> getUnknownPropositions();
     
 }
