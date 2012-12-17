@@ -19,14 +19,18 @@ public class HoboNavTest {
 		String domainDir = "testfiles/incomplete/hobonav/";
 		String problemDir = "testfiles/incomplete/hobonav/";
 		String extension = ".pddl";
-//		int[] gridSizes = { 2, 4, 6, 8, 16 };
-		int[] gridSizes = { 2 };
+		int[] gridSizes = { 2, 4, 6, 8, 16 };
+	//	int[] gridSizes = { 2 };
 		//int[] gridSizes = {2};
 		int[] itemCounts = { 1, 2, 4, 8, 16, 32, 64, 128 };
 		//int[] itemCounts = { 4 };
-		double[] tollDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
-		double[] gambleDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
-		double[] easyMarkDensities = { 0.0, 0.1, 0.1, 0.1, 0.1 }; // The densities are all incremented together
+//		double[] tollDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
+//		double[] gambleDensities = { 0.0, 0.25, 0.5, 0.75, 1.0 }; // The densities are all incremented together
+//		double[] easyMarkDensities = { 0.0, 0.1, 0.1, 0.1, 0.1 }; // The densities are all incremented together
+		double[] tollDensities = { 1.0 }; // The densities are all incremented together
+		double[] gambleDensities = { 1.0 }; // The densities are all incremented together
+		double[] easyMarkDensities = {  0.1 }; // The densities are all incremented together
+
 		int instanceCount = 10;
 		
 		String[] args = new String[7];

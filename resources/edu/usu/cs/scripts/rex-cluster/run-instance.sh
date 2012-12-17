@@ -1,30 +1,35 @@
 #!/bin/bash
 
+ulimit -t 4200
 
 #DEFAULT_HOME=~/Documents/workspace/DeFault
 searchtest=$DEFAULT_HOME/default.jar
 export CLASSPATH=$searchtest:.:$DEFAULT_HOME/resources
 javaopts="-Xmx2048M -Xms256M"
 
-algorithm=$1
-sem=$2
-domainFile=$3
-problemFile=$4
-outputFile=$5
+ar=("$@")
+algorithm=${ar[0]}
+sem=${ar[1]}
+domainFile=${ar[2]}
+problemFile=${ar[3]}
+outputFile=${ar[4]}
 
 
 #domain name
-d=$6
+d=${ar[5]}
 #problem name
-p=$7
+p=${ar[6]}
 #random instance
-k=$8
+k=${ar[7]}
 #incompleteness density
-j=$9
-shift 10
+j=${ar[8]}
+#shift 10
 #version of domain
-v=$1
-levoff=$2
+v=${ar[9]}
+levoff=${ar[10]}
+planner=${ar[11]}
+
+
 
 if [ -d "scripts" ]
 	then
@@ -33,13 +38,18 @@ else
 	mkdir scripts
 fi
 
-script=$d"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem"_"$levoff".sh"
-args=$domainFile" "$problemFile" out/output_bridges.txt "$algorithm" anytime "$sem $levoff
+script=$d"_"$v"_"$algorithm"_"$p"_"$j"_"$k"_"$sem"_"$levoff"_"$planner".sh"
+args=$domainFile" "$problemFile" out/output_bridges.txt "$algorithm" "$planner" "$sem" "$levoff
 #echo "cd `pwd`" > scripts/${script}.sh
 #echo "$javapath $javaopts -cp `pwd` -jar $searchtest $args 2>&1 | tee $outputFile" >> scripts/${script}.sh
 #qsub -q mpi_small -lnodes=1:ppn=2,mem=2gb,walltime=3600 -o `pwd`/scripts scripts/${script}.sh
 
 #$javapath $javaopts "-cp "$DEFAULT_HOME  -jar $searchtest $args
+
+if [ -f $outputFile ] ; then
+ echo ""
+else
 echo $args 
-$javapath $javaopts  -cp $DEFAULT_HOME/resources -jar $searchtest $args
+ java $javaopts  -cp default.jar edu/usu/cs/Default $args 2>&1 | tee $outputFile
+fi 
 #echo $args" "$outputFile $script
