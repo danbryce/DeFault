@@ -338,7 +338,7 @@ public class Default {
 
 	private static void usage() {
 		System.err
-		.println("usage: java GraphSolver <domain-pddl-file> <problem-pddl-file> <output file> <Search type (optional: either frisky(default), length, or uniformcost)>");
+		.println("usage: java GraphSolver <domain-pddl-file> <problem-pddl-file> <output file> <Search type (optional: either podeX (where X is >= 1, length, or uniformcost)> <anytime|first|cover> <flexible|strict> <levoff>" );
 		System.exit(1);
 	}
 }
