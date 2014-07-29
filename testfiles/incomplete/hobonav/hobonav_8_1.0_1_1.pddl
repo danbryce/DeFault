@@ -2246,27 +2246,45 @@
  :poss-effect (and (have_item0))
 )
 
-(:action easymark_item0_0_4
+(:action easymark_item0_1_0
  :parameters ()
- :precondition (and (at_x0) (at_y4))
+ :precondition (and (at_x1) (at_y0))
  :effect (and (have_item0))
 )
 
-(:action easymark_item0_1_1
+(:action easymark_item0_2_2
  :parameters ()
- :precondition (and (at_x1) (at_y1))
+ :precondition (and (at_x2) (at_y2))
  :effect (and (have_item0))
 )
 
-(:action easymark_item0_1_6
+(:action easymark_item0_4_2
  :parameters ()
- :precondition (and (at_x1) (at_y6))
+ :precondition (and (at_x4) (at_y2))
  :effect (and (have_item0))
 )
 
 (:action easymark_item0_5_6
  :parameters ()
  :precondition (and (at_x5) (at_y6))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item0_6_1
+ :parameters ()
+ :precondition (and (at_x6) (at_y1))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item0_7_6
+ :parameters ()
+ :precondition (and (at_x7) (at_y6))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item0_7_7
+ :parameters ()
+ :precondition (and (at_x7) (at_y7))
  :effect (and (have_item0))
 )
 )

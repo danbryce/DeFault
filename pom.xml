@@ -30,7 +30,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.1</version>
         <configuration>
           <fork>true</fork>
           <source>1.6</source>
@@ -43,13 +43,13 @@
         <artifactId>antlr3-maven-plugin</artifactId>
         <version>${antlr.version}</version>
         
-        <executions>
+        <!-- executions>
          <execution>
             <goals>
               <goal>antlr</goal>
             </goals>
           </execution>
-        </executions>
+        </executions -->
         <configuration>
          <sourceDirectory>grammar</sourceDirectory>         
         </configuration>
@@ -127,11 +127,11 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.jdd</groupId>
+      <groupId>jdd</groupId>
       <artifactId>jdd</artifactId>
       <version>0</version>
-      <scope>compile</scope>
-      <!-- systemPath>${basedir}/lib/jdd.jar</systemPath -->
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/jdd.jar</systemPath>
     </dependency>
     
   </dependencies>

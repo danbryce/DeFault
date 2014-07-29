@@ -182,21 +182,15 @@
  :poss-effect (and (have_item3))
 )
 
-(:action easymark_item0_0_0
+(:action easymark_item1_1_0
  :parameters ()
- :precondition (and (at_x0) (at_y0))
- :effect (and (have_item0))
+ :precondition (and (at_x1) (at_y0))
+ :effect (and (have_item1))
 )
 
-(:action easymark_item2_0_0
+(:action easymark_item3_1_1
  :parameters ()
- :precondition (and (at_x0) (at_y0))
- :effect (and (have_item2))
-)
-
-(:action easymark_item3_0_0
- :parameters ()
- :precondition (and (at_x0) (at_y0))
+ :precondition (and (at_x1) (at_y1))
  :effect (and (have_item3))
 )
 )

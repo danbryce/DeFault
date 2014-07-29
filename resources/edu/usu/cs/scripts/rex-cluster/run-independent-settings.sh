@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export javapath=/usr/bin/java
-export DEFAULT_HOME=~/JAIR12_Experiments/default
+export DEFAULT_HOME=~/Documents/workspace/DeFault
 export outputdir="out"
 
 
@@ -9,7 +9,7 @@ for sem in strict flexible
   do
   for algorithm in "pode1" "pode2" "pode3" "jdd"
     do
-    for levoff  in 0 5 inf    
+    for levoff  in 5 #0 5 inf    
       do
       for planner in "anytime" "anytime-noff"
 	do

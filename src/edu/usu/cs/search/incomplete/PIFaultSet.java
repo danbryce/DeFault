@@ -100,6 +100,7 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 				if(checkTautology(this.set, rs1)){
 					set.clear();
 					set.add(new HashSet<FaultLiteral>());
+					onlyEmpty = true;
 					return;
 				}
 				//add rs1 to set
@@ -318,10 +319,11 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 		Map<Integer, Integer> c2 = grs.getSizeMap();
 
 		Set<Integer> sizes =  new TreeSet<Integer>();
-		//		sizes.addAll(c1.keySet());
-		//		sizes.addAll(c2.keySet());
-		sizes.add(1);
+		sizes.addAll(c1.keySet());
+		sizes.addAll(c2.keySet());
+		//sizes.add(1);
 
+		
 		for(Integer i : sizes){
 			Integer i1 = c1.get(i);
 			Integer i2 = c2.get(i);
@@ -329,6 +331,10 @@ public class PIFaultSet extends DefaultFaultSet implements FaultSet {
 			if(i1 == null) i1 = 0;
 			if(i2 == null) i2 = 0;
 
+			if(i == 0 && (i1 > 0 || i2 > 0)){
+				//if either set has an empty element, then the set respresents true
+				return i1 - i2;
+			}
 
 			int diff = i1 - i2;
 			if(diff == 0){

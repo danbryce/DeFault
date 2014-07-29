@@ -22022,28 +22022,46 @@
  :poss-effect (and (have_item7))
 )
 
-(:action easymark_item5_0_0
+(:action easymark_item0_0_0
  :parameters ()
  :precondition (and (at_x0) (at_y0))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item6_0_1
+ :parameters ()
+ :precondition (and (at_x0) (at_y1))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item1_0_2
+ :parameters ()
+ :precondition (and (at_x0) (at_y2))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item5_0_2
+ :parameters ()
+ :precondition (and (at_x0) (at_y2))
  :effect (and (have_item5))
 )
 
-(:action easymark_item4_0_2
+(:action easymark_item1_0_3
  :parameters ()
- :precondition (and (at_x0) (at_y2))
+ :precondition (and (at_x0) (at_y3))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item2_0_3
+ :parameters ()
+ :precondition (and (at_x0) (at_y3))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item4_0_3
+ :parameters ()
+ :precondition (and (at_x0) (at_y3))
  :effect (and (have_item4))
-)
-
-(:action easymark_item2_0_7
- :parameters ()
- :precondition (and (at_x0) (at_y7))
- :effect (and (have_item2))
-)
-
-(:action easymark_item2_0_8
- :parameters ()
- :precondition (and (at_x0) (at_y8))
- :effect (and (have_item2))
 )
 
 (:action easymark_item5_0_8
@@ -22052,46 +22070,58 @@
  :effect (and (have_item5))
 )
 
-(:action easymark_item0_0_10
+(:action easymark_item6_0_8
+ :parameters ()
+ :precondition (and (at_x0) (at_y8))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item7_0_9
+ :parameters ()
+ :precondition (and (at_x0) (at_y9))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item5_0_10
  :parameters ()
  :precondition (and (at_x0) (at_y10))
- :effect (and (have_item0))
+ :effect (and (have_item5))
 )
 
-(:action easymark_item3_0_10
+(:action easymark_item6_0_10
  :parameters ()
  :precondition (and (at_x0) (at_y10))
- :effect (and (have_item3))
+ :effect (and (have_item6))
 )
 
-(:action easymark_item3_0_13
+(:action easymark_item4_0_11
  :parameters ()
- :precondition (and (at_x0) (at_y13))
- :effect (and (have_item3))
-)
-
-(:action easymark_item4_0_13
- :parameters ()
- :precondition (and (at_x0) (at_y13))
+ :precondition (and (at_x0) (at_y11))
  :effect (and (have_item4))
 )
 
-(:action easymark_item1_0_14
+(:action easymark_item1_0_12
  :parameters ()
- :precondition (and (at_x0) (at_y14))
+ :precondition (and (at_x0) (at_y12))
  :effect (and (have_item1))
 )
 
-(:action easymark_item3_0_15
+(:action easymark_item0_0_13
  :parameters ()
- :precondition (and (at_x0) (at_y15))
- :effect (and (have_item3))
+ :precondition (and (at_x0) (at_y13))
+ :effect (and (have_item0))
 )
 
-(:action easymark_item0_1_0
+(:action easymark_item4_0_15
  :parameters ()
- :precondition (and (at_x1) (at_y0))
- :effect (and (have_item0))
+ :precondition (and (at_x0) (at_y15))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item5_0_15
+ :parameters ()
+ :precondition (and (at_x0) (at_y15))
+ :effect (and (have_item5))
 )
 
 (:action easymark_item4_1_1
@@ -22100,10 +22130,28 @@
  :effect (and (have_item4))
 )
 
-(:action easymark_item1_1_6
+(:action easymark_item0_1_4
  :parameters ()
- :precondition (and (at_x1) (at_y6))
- :effect (and (have_item1))
+ :precondition (and (at_x1) (at_y4))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item2_1_4
+ :parameters ()
+ :precondition (and (at_x1) (at_y4))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item4_1_4
+ :parameters ()
+ :precondition (and (at_x1) (at_y4))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item7_1_5
+ :parameters ()
+ :precondition (and (at_x1) (at_y5))
+ :effect (and (have_item7))
 )
 
 (:action easymark_item4_1_6
@@ -22112,21 +22160,15 @@
  :effect (and (have_item4))
 )
 
-(:action easymark_item6_1_6
+(:action easymark_item5_1_6
  :parameters ()
  :precondition (and (at_x1) (at_y6))
- :effect (and (have_item6))
+ :effect (and (have_item5))
 )
 
-(:action easymark_item2_1_7
+(:action easymark_item5_1_7
  :parameters ()
  :precondition (and (at_x1) (at_y7))
- :effect (and (have_item2))
-)
-
-(:action easymark_item5_1_9
- :parameters ()
- :precondition (and (at_x1) (at_y9))
  :effect (and (have_item5))
 )
 
@@ -22136,58 +22178,88 @@
  :effect (and (have_item7))
 )
 
-(:action easymark_item0_1_11
+(:action easymark_item3_1_11
  :parameters ()
  :precondition (and (at_x1) (at_y11))
- :effect (and (have_item0))
+ :effect (and (have_item3))
 )
 
-(:action easymark_item4_1_11
+(:action easymark_item2_1_12
  :parameters ()
- :precondition (and (at_x1) (at_y11))
- :effect (and (have_item4))
-)
-
-(:action easymark_item0_1_13
- :parameters ()
- :precondition (and (at_x1) (at_y13))
- :effect (and (have_item0))
-)
-
-(:action easymark_item6_1_13
- :parameters ()
- :precondition (and (at_x1) (at_y13))
- :effect (and (have_item6))
-)
-
-(:action easymark_item4_1_15
- :parameters ()
- :precondition (and (at_x1) (at_y15))
- :effect (and (have_item4))
-)
-
-(:action easymark_item0_2_3
- :parameters ()
- :precondition (and (at_x2) (at_y3))
- :effect (and (have_item0))
-)
-
-(:action easymark_item2_2_3
- :parameters ()
- :precondition (and (at_x2) (at_y3))
+ :precondition (and (at_x1) (at_y12))
  :effect (and (have_item2))
 )
 
-(:action easymark_item7_2_9
+(:action easymark_item7_1_12
  :parameters ()
- :precondition (and (at_x2) (at_y9))
+ :precondition (and (at_x1) (at_y12))
  :effect (and (have_item7))
 )
 
-(:action easymark_item7_2_10
+(:action easymark_item0_1_14
  :parameters ()
- :precondition (and (at_x2) (at_y10))
- :effect (and (have_item7))
+ :precondition (and (at_x1) (at_y14))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item3_1_15
+ :parameters ()
+ :precondition (and (at_x1) (at_y15))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item3_2_1
+ :parameters ()
+ :precondition (and (at_x2) (at_y1))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item4_2_1
+ :parameters ()
+ :precondition (and (at_x2) (at_y1))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item6_2_1
+ :parameters ()
+ :precondition (and (at_x2) (at_y1))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item5_2_3
+ :parameters ()
+ :precondition (and (at_x2) (at_y3))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item1_2_4
+ :parameters ()
+ :precondition (and (at_x2) (at_y4))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item3_2_4
+ :parameters ()
+ :precondition (and (at_x2) (at_y4))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item6_2_5
+ :parameters ()
+ :precondition (and (at_x2) (at_y5))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item2_2_8
+ :parameters ()
+ :precondition (and (at_x2) (at_y8))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item0_2_12
+ :parameters ()
+ :precondition (and (at_x2) (at_y12))
+ :effect (and (have_item0))
 )
 
 (:action easymark_item3_2_12
@@ -22196,39 +22268,51 @@
  :effect (and (have_item3))
 )
 
-(:action easymark_item4_2_12
+(:action easymark_item4_2_14
  :parameters ()
- :precondition (and (at_x2) (at_y12))
+ :precondition (and (at_x2) (at_y14))
  :effect (and (have_item4))
 )
 
-(:action easymark_item0_2_13
+(:action easymark_item6_2_14
  :parameters ()
- :precondition (and (at_x2) (at_y13))
+ :precondition (and (at_x2) (at_y14))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item2_2_15
+ :parameters ()
+ :precondition (and (at_x2) (at_y15))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item5_3_1
+ :parameters ()
+ :precondition (and (at_x3) (at_y1))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item0_3_3
+ :parameters ()
+ :precondition (and (at_x3) (at_y3))
  :effect (and (have_item0))
 )
 
-(:action easymark_item4_2_13
+(:action easymark_item3_3_3
  :parameters ()
- :precondition (and (at_x2) (at_y13))
- :effect (and (have_item4))
-)
-
-(:action easymark_item3_2_15
- :parameters ()
- :precondition (and (at_x2) (at_y15))
+ :precondition (and (at_x3) (at_y3))
  :effect (and (have_item3))
 )
 
-(:action easymark_item3_3_0
+(:action easymark_item5_3_3
  :parameters ()
- :precondition (and (at_x3) (at_y0))
- :effect (and (have_item3))
+ :precondition (and (at_x3) (at_y3))
+ :effect (and (have_item5))
 )
 
-(:action easymark_item1_3_4
+(:action easymark_item1_3_5
  :parameters ()
- :precondition (and (at_x3) (at_y4))
+ :precondition (and (at_x3) (at_y5))
  :effect (and (have_item1))
 )
 
@@ -22238,88 +22322,88 @@
  :effect (and (have_item6))
 )
 
-(:action easymark_item4_3_7
+(:action easymark_item1_3_9
  :parameters ()
- :precondition (and (at_x3) (at_y7))
- :effect (and (have_item4))
+ :precondition (and (at_x3) (at_y9))
+ :effect (and (have_item1))
 )
 
-(:action easymark_item5_3_10
+(:action easymark_item4_3_10
  :parameters ()
  :precondition (and (at_x3) (at_y10))
- :effect (and (have_item5))
-)
-
-(:action easymark_item4_3_11
- :parameters ()
- :precondition (and (at_x3) (at_y11))
  :effect (and (have_item4))
 )
 
-(:action easymark_item7_3_13
+(:action easymark_item6_3_10
  :parameters ()
- :precondition (and (at_x3) (at_y13))
- :effect (and (have_item7))
-)
-
-(:action easymark_item2_4_0
- :parameters ()
- :precondition (and (at_x4) (at_y0))
- :effect (and (have_item2))
-)
-
-(:action easymark_item2_4_2
- :parameters ()
- :precondition (and (at_x4) (at_y2))
- :effect (and (have_item2))
-)
-
-(:action easymark_item4_4_3
- :parameters ()
- :precondition (and (at_x4) (at_y3))
- :effect (and (have_item4))
-)
-
-(:action easymark_item7_4_4
- :parameters ()
- :precondition (and (at_x4) (at_y4))
- :effect (and (have_item7))
-)
-
-(:action easymark_item0_4_7
- :parameters ()
- :precondition (and (at_x4) (at_y7))
- :effect (and (have_item0))
-)
-
-(:action easymark_item3_4_7
- :parameters ()
- :precondition (and (at_x4) (at_y7))
- :effect (and (have_item3))
-)
-
-(:action easymark_item6_4_7
- :parameters ()
- :precondition (and (at_x4) (at_y7))
+ :precondition (and (at_x3) (at_y10))
  :effect (and (have_item6))
 )
 
-(:action easymark_item0_4_8
+(:action easymark_item0_3_11
  :parameters ()
- :precondition (and (at_x4) (at_y8))
+ :precondition (and (at_x3) (at_y11))
  :effect (and (have_item0))
 )
 
-(:action easymark_item0_4_9
+(:action easymark_item6_3_11
  :parameters ()
- :precondition (and (at_x4) (at_y9))
+ :precondition (and (at_x3) (at_y11))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item5_3_12
+ :parameters ()
+ :precondition (and (at_x3) (at_y12))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item0_4_1
+ :parameters ()
+ :precondition (and (at_x4) (at_y1))
  :effect (and (have_item0))
 )
 
-(:action easymark_item0_4_10
+(:action easymark_item1_4_1
  :parameters ()
- :precondition (and (at_x4) (at_y10))
- :effect (and (have_item0))
+ :precondition (and (at_x4) (at_y1))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item6_4_3
+ :parameters ()
+ :precondition (and (at_x4) (at_y3))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item7_4_3
+ :parameters ()
+ :precondition (and (at_x4) (at_y3))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item2_4_4
+ :parameters ()
+ :precondition (and (at_x4) (at_y4))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item5_4_4
+ :parameters ()
+ :precondition (and (at_x4) (at_y4))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item3_4_6
+ :parameters ()
+ :precondition (and (at_x4) (at_y6))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item1_4_7
+ :parameters ()
+ :precondition (and (at_x4) (at_y7))
+ :effect (and (have_item1))
 )
 
 (:action easymark_item5_4_10
@@ -22328,64 +22412,58 @@
  :effect (and (have_item5))
 )
 
-(:action easymark_item6_4_10
- :parameters ()
- :precondition (and (at_x4) (at_y10))
- :effect (and (have_item6))
-)
-
-(:action easymark_item0_4_12
- :parameters ()
- :precondition (and (at_x4) (at_y12))
- :effect (and (have_item0))
-)
-
-(:action easymark_item7_4_13
+(:action easymark_item6_4_13
  :parameters ()
  :precondition (and (at_x4) (at_y13))
- :effect (and (have_item7))
-)
-
-(:action easymark_item4_4_14
- :parameters ()
- :precondition (and (at_x4) (at_y14))
- :effect (and (have_item4))
-)
-
-(:action easymark_item6_4_14
- :parameters ()
- :precondition (and (at_x4) (at_y14))
  :effect (and (have_item6))
 )
 
-(:action easymark_item5_4_15
+(:action easymark_item1_4_14
  :parameters ()
- :precondition (and (at_x4) (at_y15))
+ :precondition (and (at_x4) (at_y14))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item5_4_14
+ :parameters ()
+ :precondition (and (at_x4) (at_y14))
  :effect (and (have_item5))
 )
 
-(:action easymark_item7_4_15
+(:action easymark_item3_5_0
  :parameters ()
- :precondition (and (at_x4) (at_y15))
- :effect (and (have_item7))
+ :precondition (and (at_x5) (at_y0))
+ :effect (and (have_item3))
 )
 
-(:action easymark_item4_5_1
+(:action easymark_item5_5_0
+ :parameters ()
+ :precondition (and (at_x5) (at_y0))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item2_5_1
  :parameters ()
  :precondition (and (at_x5) (at_y1))
- :effect (and (have_item4))
+ :effect (and (have_item2))
 )
 
-(:action easymark_item7_5_1
+(:action easymark_item5_5_1
  :parameters ()
  :precondition (and (at_x5) (at_y1))
- :effect (and (have_item7))
+ :effect (and (have_item5))
 )
 
-(:action easymark_item3_5_2
+(:action easymark_item2_5_2
  :parameters ()
  :precondition (and (at_x5) (at_y2))
- :effect (and (have_item3))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item7_5_2
+ :parameters ()
+ :precondition (and (at_x5) (at_y2))
+ :effect (and (have_item7))
 )
 
 (:action easymark_item0_5_3
@@ -22394,16 +22472,10 @@
  :effect (and (have_item0))
 )
 
-(:action easymark_item1_5_4
+(:action easymark_item5_5_6
  :parameters ()
- :precondition (and (at_x5) (at_y4))
- :effect (and (have_item1))
-)
-
-(:action easymark_item3_5_5
- :parameters ()
- :precondition (and (at_x5) (at_y5))
- :effect (and (have_item3))
+ :precondition (and (at_x5) (at_y6))
+ :effect (and (have_item5))
 )
 
 (:action easymark_item6_5_7
@@ -22412,52 +22484,70 @@
  :effect (and (have_item6))
 )
 
-(:action easymark_item1_5_8
+(:action easymark_item0_5_8
  :parameters ()
  :precondition (and (at_x5) (at_y8))
- :effect (and (have_item1))
+ :effect (and (have_item0))
 )
 
-(:action easymark_item1_5_9
+(:action easymark_item2_5_9
  :parameters ()
  :precondition (and (at_x5) (at_y9))
- :effect (and (have_item1))
+ :effect (and (have_item2))
 )
 
-(:action easymark_item4_5_9
+(:action easymark_item5_5_10
  :parameters ()
- :precondition (and (at_x5) (at_y9))
+ :precondition (and (at_x5) (at_y10))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item6_5_12
+ :parameters ()
+ :precondition (and (at_x5) (at_y12))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item4_5_15
+ :parameters ()
+ :precondition (and (at_x5) (at_y15))
  :effect (and (have_item4))
 )
 
-(:action easymark_item2_5_13
+(:action easymark_item1_6_0
  :parameters ()
- :precondition (and (at_x5) (at_y13))
- :effect (and (have_item2))
-)
-
-(:action easymark_item2_5_15
- :parameters ()
- :precondition (and (at_x5) (at_y15))
- :effect (and (have_item2))
-)
-
-(:action easymark_item7_6_2
- :parameters ()
- :precondition (and (at_x6) (at_y2))
- :effect (and (have_item7))
-)
-
-(:action easymark_item1_6_3
- :parameters ()
- :precondition (and (at_x6) (at_y3))
+ :precondition (and (at_x6) (at_y0))
  :effect (and (have_item1))
 )
 
-(:action easymark_item5_6_5
+(:action easymark_item6_6_0
  :parameters ()
- :precondition (and (at_x6) (at_y5))
- :effect (and (have_item5))
+ :precondition (and (at_x6) (at_y0))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item1_6_4
+ :parameters ()
+ :precondition (and (at_x6) (at_y4))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item3_6_4
+ :parameters ()
+ :precondition (and (at_x6) (at_y4))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item4_6_6
+ :parameters ()
+ :precondition (and (at_x6) (at_y6))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item6_6_6
+ :parameters ()
+ :precondition (and (at_x6) (at_y6))
+ :effect (and (have_item6))
 )
 
 (:action easymark_item2_6_8
@@ -22466,28 +22556,28 @@
  :effect (and (have_item2))
 )
 
-(:action easymark_item3_6_11
+(:action easymark_item4_6_8
  :parameters ()
- :precondition (and (at_x6) (at_y11))
- :effect (and (have_item3))
+ :precondition (and (at_x6) (at_y8))
+ :effect (and (have_item4))
 )
 
-(:action easymark_item0_6_13
+(:action easymark_item7_6_8
  :parameters ()
- :precondition (and (at_x6) (at_y13))
- :effect (and (have_item0))
+ :precondition (and (at_x6) (at_y8))
+ :effect (and (have_item7))
 )
 
-(:action easymark_item1_6_13
+(:action easymark_item1_6_9
  :parameters ()
- :precondition (and (at_x6) (at_y13))
+ :precondition (and (at_x6) (at_y9))
  :effect (and (have_item1))
 )
 
-(:action easymark_item7_6_13
+(:action easymark_item6_6_10
  :parameters ()
- :precondition (and (at_x6) (at_y13))
- :effect (and (have_item7))
+ :precondition (and (at_x6) (at_y10))
+ :effect (and (have_item6))
 )
 
 (:action easymark_item4_6_14
@@ -22496,34 +22586,22 @@
  :effect (and (have_item4))
 )
 
-(:action easymark_item7_6_14
- :parameters ()
- :precondition (and (at_x6) (at_y14))
- :effect (and (have_item7))
-)
-
 (:action easymark_item5_6_15
  :parameters ()
  :precondition (and (at_x6) (at_y15))
  :effect (and (have_item5))
 )
 
-(:action easymark_item0_7_2
+(:action easymark_item0_7_1
  :parameters ()
- :precondition (and (at_x7) (at_y2))
+ :precondition (and (at_x7) (at_y1))
  :effect (and (have_item0))
 )
 
-(:action easymark_item7_7_2
+(:action easymark_item4_7_1
  :parameters ()
- :precondition (and (at_x7) (at_y2))
- :effect (and (have_item7))
-)
-
-(:action easymark_item0_7_3
- :parameters ()
- :precondition (and (at_x7) (at_y3))
- :effect (and (have_item0))
+ :precondition (and (at_x7) (at_y1))
+ :effect (and (have_item4))
 )
 
 (:action easymark_item7_7_3
@@ -22532,70 +22610,64 @@
  :effect (and (have_item7))
 )
 
-(:action easymark_item6_7_6
+(:action easymark_item4_7_5
  :parameters ()
- :precondition (and (at_x7) (at_y6))
- :effect (and (have_item6))
+ :precondition (and (at_x7) (at_y5))
+ :effect (and (have_item4))
 )
 
-(:action easymark_item1_7_7
+(:action easymark_item5_7_5
+ :parameters ()
+ :precondition (and (at_x7) (at_y5))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item5_7_7
  :parameters ()
  :precondition (and (at_x7) (at_y7))
- :effect (and (have_item1))
+ :effect (and (have_item5))
 )
 
-(:action easymark_item1_7_12
+(:action easymark_item4_7_8
  :parameters ()
- :precondition (and (at_x7) (at_y12))
- :effect (and (have_item1))
+ :precondition (and (at_x7) (at_y8))
+ :effect (and (have_item4))
 )
 
-(:action easymark_item0_7_13
+(:action easymark_item6_7_8
  :parameters ()
- :precondition (and (at_x7) (at_y13))
- :effect (and (have_item0))
-)
-
-(:action easymark_item2_7_13
- :parameters ()
- :precondition (and (at_x7) (at_y13))
- :effect (and (have_item2))
-)
-
-(:action easymark_item6_7_13
- :parameters ()
- :precondition (and (at_x7) (at_y13))
+ :precondition (and (at_x7) (at_y8))
  :effect (and (have_item6))
 )
 
-(:action easymark_item2_7_14
+(:action easymark_item1_7_9
  :parameters ()
- :precondition (and (at_x7) (at_y14))
- :effect (and (have_item2))
-)
-
-(:action easymark_item1_8_0
- :parameters ()
- :precondition (and (at_x8) (at_y0))
+ :precondition (and (at_x7) (at_y9))
  :effect (and (have_item1))
 )
 
-(:action easymark_item0_8_1
+(:action easymark_item2_7_11
  :parameters ()
- :precondition (and (at_x8) (at_y1))
- :effect (and (have_item0))
-)
-
-(:action easymark_item2_8_1
- :parameters ()
- :precondition (and (at_x8) (at_y1))
+ :precondition (and (at_x7) (at_y11))
  :effect (and (have_item2))
 )
 
-(:action easymark_item0_8_2
+(:action easymark_item5_7_14
  :parameters ()
- :precondition (and (at_x8) (at_y2))
- :effect (and (have_item0))
+ :precondition (and (at_x7) (at_y14))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item1_7_15
+ :parameters ()
+ :precondition (and (at_x7) (at_y15))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item6_8_0
+ :parameters ()
+ :precondition (and (at_x8) (at_y0))
+ :effect (and (have_item6))
 )
 
 (:action easymark_item5_8_2
@@ -22604,22 +22676,16 @@
  :effect (and (have_item5))
 )
 
-(:action easymark_item4_8_4
+(:action easymark_item6_8_3
  :parameters ()
- :precondition (and (at_x8) (at_y4))
- :effect (and (have_item4))
-)
-
-(:action easymark_item6_8_5
- :parameters ()
- :precondition (and (at_x8) (at_y5))
+ :precondition (and (at_x8) (at_y3))
  :effect (and (have_item6))
 )
 
-(:action easymark_item3_8_6
+(:action easymark_item6_8_6
  :parameters ()
  :precondition (and (at_x8) (at_y6))
- :effect (and (have_item3))
+ :effect (and (have_item6))
 )
 
 (:action easymark_item2_8_7
@@ -22628,70 +22694,58 @@
  :effect (and (have_item2))
 )
 
-(:action easymark_item4_8_7
- :parameters ()
- :precondition (and (at_x8) (at_y7))
- :effect (and (have_item4))
-)
-
-(:action easymark_item5_8_8
+(:action easymark_item2_8_8
  :parameters ()
  :precondition (and (at_x8) (at_y8))
- :effect (and (have_item5))
-)
-
-(:action easymark_item1_8_9
- :parameters ()
- :precondition (and (at_x8) (at_y9))
- :effect (and (have_item1))
-)
-
-(:action easymark_item3_8_12
- :parameters ()
- :precondition (and (at_x8) (at_y12))
- :effect (and (have_item3))
-)
-
-(:action easymark_item4_8_13
- :parameters ()
- :precondition (and (at_x8) (at_y13))
- :effect (and (have_item4))
-)
-
-(:action easymark_item7_8_13
- :parameters ()
- :precondition (and (at_x8) (at_y13))
- :effect (and (have_item7))
-)
-
-(:action easymark_item1_9_2
- :parameters ()
- :precondition (and (at_x9) (at_y2))
- :effect (and (have_item1))
-)
-
-(:action easymark_item4_9_3
- :parameters ()
- :precondition (and (at_x9) (at_y3))
- :effect (and (have_item4))
-)
-
-(:action easymark_item2_9_5
- :parameters ()
- :precondition (and (at_x9) (at_y5))
  :effect (and (have_item2))
 )
 
-(:action easymark_item3_9_5
+(:action easymark_item4_8_8
  :parameters ()
- :precondition (and (at_x9) (at_y5))
- :effect (and (have_item3))
+ :precondition (and (at_x8) (at_y8))
+ :effect (and (have_item4))
 )
 
-(:action easymark_item6_9_6
+(:action easymark_item4_8_9
+ :parameters ()
+ :precondition (and (at_x8) (at_y9))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item7_8_10
+ :parameters ()
+ :precondition (and (at_x8) (at_y10))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item0_8_12
+ :parameters ()
+ :precondition (and (at_x8) (at_y12))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item4_8_12
+ :parameters ()
+ :precondition (and (at_x8) (at_y12))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item5_8_15
+ :parameters ()
+ :precondition (and (at_x8) (at_y15))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item6_9_1
+ :parameters ()
+ :precondition (and (at_x9) (at_y1))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item5_9_6
  :parameters ()
  :precondition (and (at_x9) (at_y6))
- :effect (and (have_item6))
+ :effect (and (have_item5))
 )
 
 (:action easymark_item1_9_7
@@ -22700,64 +22754,64 @@
  :effect (and (have_item1))
 )
 
-(:action easymark_item3_9_7
+(:action easymark_item2_9_7
  :parameters ()
  :precondition (and (at_x9) (at_y7))
- :effect (and (have_item3))
-)
-
-(:action easymark_item1_9_8
- :parameters ()
- :precondition (and (at_x9) (at_y8))
- :effect (and (have_item1))
-)
-
-(:action easymark_item4_9_8
- :parameters ()
- :precondition (and (at_x9) (at_y8))
- :effect (and (have_item4))
-)
-
-(:action easymark_item3_9_9
- :parameters ()
- :precondition (and (at_x9) (at_y9))
- :effect (and (have_item3))
-)
-
-(:action easymark_item6_9_9
- :parameters ()
- :precondition (and (at_x9) (at_y9))
- :effect (and (have_item6))
-)
-
-(:action easymark_item2_9_10
- :parameters ()
- :precondition (and (at_x9) (at_y10))
  :effect (and (have_item2))
 )
 
-(:action easymark_item0_9_11
+(:action easymark_item4_9_7
  :parameters ()
- :precondition (and (at_x9) (at_y11))
+ :precondition (and (at_x9) (at_y7))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item6_9_7
+ :parameters ()
+ :precondition (and (at_x9) (at_y7))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item0_9_8
+ :parameters ()
+ :precondition (and (at_x9) (at_y8))
  :effect (and (have_item0))
 )
 
-(:action easymark_item6_9_11
+(:action easymark_item3_9_8
+ :parameters ()
+ :precondition (and (at_x9) (at_y8))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item7_9_8
+ :parameters ()
+ :precondition (and (at_x9) (at_y8))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item5_9_11
  :parameters ()
  :precondition (and (at_x9) (at_y11))
- :effect (and (have_item6))
+ :effect (and (have_item5))
 )
 
-(:action easymark_item6_9_12
+(:action easymark_item0_9_13
  :parameters ()
- :precondition (and (at_x9) (at_y12))
+ :precondition (and (at_x9) (at_y13))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item6_9_13
+ :parameters ()
+ :precondition (and (at_x9) (at_y13))
  :effect (and (have_item6))
 )
 
-(:action easymark_item0_9_14
+(:action easymark_item3_9_14
  :parameters ()
  :precondition (and (at_x9) (at_y14))
- :effect (and (have_item0))
+ :effect (and (have_item3))
 )
 
 (:action easymark_item4_9_14
@@ -22766,69 +22820,21 @@
  :effect (and (have_item4))
 )
 
-(:action easymark_item6_9_14
+(:action easymark_item1_10_0
  :parameters ()
- :precondition (and (at_x9) (at_y14))
- :effect (and (have_item6))
+ :precondition (and (at_x10) (at_y0))
+ :effect (and (have_item1))
 )
 
-(:action easymark_item3_9_15
+(:action easymark_item3_10_2
  :parameters ()
- :precondition (and (at_x9) (at_y15))
+ :precondition (and (at_x10) (at_y2))
  :effect (and (have_item3))
 )
 
-(:action easymark_item5_10_2
+(:action easymark_item2_10_12
  :parameters ()
- :precondition (and (at_x10) (at_y2))
- :effect (and (have_item5))
-)
-
-(:action easymark_item6_10_2
- :parameters ()
- :precondition (and (at_x10) (at_y2))
- :effect (and (have_item6))
-)
-
-(:action easymark_item1_10_4
- :parameters ()
- :precondition (and (at_x10) (at_y4))
- :effect (and (have_item1))
-)
-
-(:action easymark_item4_10_4
- :parameters ()
- :precondition (and (at_x10) (at_y4))
- :effect (and (have_item4))
-)
-
-(:action easymark_item7_10_5
- :parameters ()
- :precondition (and (at_x10) (at_y5))
- :effect (and (have_item7))
-)
-
-(:action easymark_item1_10_8
- :parameters ()
- :precondition (and (at_x10) (at_y8))
- :effect (and (have_item1))
-)
-
-(:action easymark_item2_10_10
- :parameters ()
- :precondition (and (at_x10) (at_y10))
- :effect (and (have_item2))
-)
-
-(:action easymark_item5_10_10
- :parameters ()
- :precondition (and (at_x10) (at_y10))
- :effect (and (have_item5))
-)
-
-(:action easymark_item2_10_14
- :parameters ()
- :precondition (and (at_x10) (at_y14))
+ :precondition (and (at_x10) (at_y12))
  :effect (and (have_item2))
 )
 
@@ -22838,136 +22844,178 @@
  :effect (and (have_item3))
 )
 
-(:action easymark_item7_10_14
+(:action easymark_item6_10_14
  :parameters ()
  :precondition (and (at_x10) (at_y14))
- :effect (and (have_item7))
-)
-
-(:action easymark_item7_11_0
- :parameters ()
- :precondition (and (at_x11) (at_y0))
- :effect (and (have_item7))
-)
-
-(:action easymark_item1_11_3
- :parameters ()
- :precondition (and (at_x11) (at_y3))
- :effect (and (have_item1))
-)
-
-(:action easymark_item4_11_5
- :parameters ()
- :precondition (and (at_x11) (at_y5))
- :effect (and (have_item4))
-)
-
-(:action easymark_item5_11_5
- :parameters ()
- :precondition (and (at_x11) (at_y5))
- :effect (and (have_item5))
-)
-
-(:action easymark_item4_11_7
- :parameters ()
- :precondition (and (at_x11) (at_y7))
- :effect (and (have_item4))
-)
-
-(:action easymark_item0_11_8
- :parameters ()
- :precondition (and (at_x11) (at_y8))
- :effect (and (have_item0))
-)
-
-(:action easymark_item2_11_8
- :parameters ()
- :precondition (and (at_x11) (at_y8))
- :effect (and (have_item2))
-)
-
-(:action easymark_item5_11_8
- :parameters ()
- :precondition (and (at_x11) (at_y8))
- :effect (and (have_item5))
-)
-
-(:action easymark_item3_11_10
- :parameters ()
- :precondition (and (at_x11) (at_y10))
- :effect (and (have_item3))
-)
-
-(:action easymark_item6_11_13
- :parameters ()
- :precondition (and (at_x11) (at_y13))
  :effect (and (have_item6))
 )
 
-(:action easymark_item7_11_13
+(:action easymark_item0_11_0
  :parameters ()
- :precondition (and (at_x11) (at_y13))
- :effect (and (have_item7))
+ :precondition (and (at_x11) (at_y0))
+ :effect (and (have_item0))
 )
 
-(:action easymark_item1_12_2
+(:action easymark_item6_11_0
  :parameters ()
- :precondition (and (at_x12) (at_y2))
+ :precondition (and (at_x11) (at_y0))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item0_11_1
+ :parameters ()
+ :precondition (and (at_x11) (at_y1))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item1_11_1
+ :parameters ()
+ :precondition (and (at_x11) (at_y1))
  :effect (and (have_item1))
 )
 
-(:action easymark_item2_12_2
+(:action easymark_item5_11_1
  :parameters ()
- :precondition (and (at_x12) (at_y2))
- :effect (and (have_item2))
-)
-
-(:action easymark_item5_12_5
- :parameters ()
- :precondition (and (at_x12) (at_y5))
+ :precondition (and (at_x11) (at_y1))
  :effect (and (have_item5))
 )
 
-(:action easymark_item7_12_5
+(:action easymark_item6_11_5
  :parameters ()
- :precondition (and (at_x12) (at_y5))
+ :precondition (and (at_x11) (at_y5))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item5_11_7
+ :parameters ()
+ :precondition (and (at_x11) (at_y7))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item7_11_8
+ :parameters ()
+ :precondition (and (at_x11) (at_y8))
  :effect (and (have_item7))
 )
 
-(:action easymark_item3_12_8
+(:action easymark_item6_11_9
  :parameters ()
- :precondition (and (at_x12) (at_y8))
- :effect (and (have_item3))
+ :precondition (and (at_x11) (at_y9))
+ :effect (and (have_item6))
 )
 
-(:action easymark_item7_12_9
+(:action easymark_item1_11_10
  :parameters ()
- :precondition (and (at_x12) (at_y9))
- :effect (and (have_item7))
+ :precondition (and (at_x11) (at_y10))
+ :effect (and (have_item1))
 )
 
-(:action easymark_item2_12_10
+(:action easymark_item4_11_10
  :parameters ()
- :precondition (and (at_x12) (at_y10))
- :effect (and (have_item2))
-)
-
-(:action easymark_item4_12_11
- :parameters ()
- :precondition (and (at_x12) (at_y11))
+ :precondition (and (at_x11) (at_y10))
  :effect (and (have_item4))
 )
 
-(:action easymark_item2_12_12
+(:action easymark_item4_11_12
  :parameters ()
- :precondition (and (at_x12) (at_y12))
+ :precondition (and (at_x11) (at_y12))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item0_11_15
+ :parameters ()
+ :precondition (and (at_x11) (at_y15))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item3_11_15
+ :parameters ()
+ :precondition (and (at_x11) (at_y15))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item6_12_0
+ :parameters ()
+ :precondition (and (at_x12) (at_y0))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item7_12_0
+ :parameters ()
+ :precondition (and (at_x12) (at_y0))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item4_12_2
+ :parameters ()
+ :precondition (and (at_x12) (at_y2))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item7_12_3
+ :parameters ()
+ :precondition (and (at_x12) (at_y3))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item6_12_4
+ :parameters ()
+ :precondition (and (at_x12) (at_y4))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item7_12_4
+ :parameters ()
+ :precondition (and (at_x12) (at_y4))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item2_12_8
+ :parameters ()
+ :precondition (and (at_x12) (at_y8))
  :effect (and (have_item2))
 )
 
-(:action easymark_item0_12_13
+(:action easymark_item3_12_9
+ :parameters ()
+ :precondition (and (at_x12) (at_y9))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item4_12_9
+ :parameters ()
+ :precondition (and (at_x12) (at_y9))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item6_12_9
+ :parameters ()
+ :precondition (and (at_x12) (at_y9))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item0_12_10
+ :parameters ()
+ :precondition (and (at_x12) (at_y10))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item5_12_12
+ :parameters ()
+ :precondition (and (at_x12) (at_y12))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item4_12_13
  :parameters ()
  :precondition (and (at_x12) (at_y13))
- :effect (and (have_item0))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item6_12_13
+ :parameters ()
+ :precondition (and (at_x12) (at_y13))
+ :effect (and (have_item6))
 )
 
 (:action easymark_item4_12_14
@@ -22976,34 +23024,40 @@
  :effect (and (have_item4))
 )
 
-(:action easymark_item7_12_14
- :parameters ()
- :precondition (and (at_x12) (at_y14))
- :effect (and (have_item7))
-)
-
-(:action easymark_item3_12_15
+(:action easymark_item2_12_15
  :parameters ()
  :precondition (and (at_x12) (at_y15))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item6_12_15
+ :parameters ()
+ :precondition (and (at_x12) (at_y15))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item2_13_0
+ :parameters ()
+ :precondition (and (at_x13) (at_y0))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item6_13_0
+ :parameters ()
+ :precondition (and (at_x13) (at_y0))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item3_13_1
+ :parameters ()
+ :precondition (and (at_x13) (at_y1))
  :effect (and (have_item3))
 )
 
-(:action easymark_item5_13_0
+(:action easymark_item3_13_2
  :parameters ()
- :precondition (and (at_x13) (at_y0))
- :effect (and (have_item5))
-)
-
-(:action easymark_item7_13_0
- :parameters ()
- :precondition (and (at_x13) (at_y0))
- :effect (and (have_item7))
-)
-
-(:action easymark_item5_13_3
- :parameters ()
- :precondition (and (at_x13) (at_y3))
- :effect (and (have_item5))
+ :precondition (and (at_x13) (at_y2))
+ :effect (and (have_item3))
 )
 
 (:action easymark_item7_13_3
@@ -23012,214 +23066,202 @@
  :effect (and (have_item7))
 )
 
-(:action easymark_item2_13_5
+(:action easymark_item6_13_6
  :parameters ()
- :precondition (and (at_x13) (at_y5))
- :effect (and (have_item2))
-)
-
-(:action easymark_item6_13_5
- :parameters ()
- :precondition (and (at_x13) (at_y5))
+ :precondition (and (at_x13) (at_y6))
  :effect (and (have_item6))
 )
 
-(:action easymark_item0_13_6
+(:action easymark_item0_13_9
  :parameters ()
- :precondition (and (at_x13) (at_y6))
+ :precondition (and (at_x13) (at_y9))
  :effect (and (have_item0))
 )
 
-(:action easymark_item4_13_6
+(:action easymark_item6_13_9
  :parameters ()
- :precondition (and (at_x13) (at_y6))
- :effect (and (have_item4))
-)
-
-(:action easymark_item5_13_6
- :parameters ()
- :precondition (and (at_x13) (at_y6))
- :effect (and (have_item5))
-)
-
-(:action easymark_item7_13_6
- :parameters ()
- :precondition (and (at_x13) (at_y6))
- :effect (and (have_item7))
-)
-
-(:action easymark_item3_13_8
- :parameters ()
- :precondition (and (at_x13) (at_y8))
- :effect (and (have_item3))
-)
-
-(:action easymark_item4_13_11
- :parameters ()
- :precondition (and (at_x13) (at_y11))
- :effect (and (have_item4))
-)
-
-(:action easymark_item5_13_11
- :parameters ()
- :precondition (and (at_x13) (at_y11))
- :effect (and (have_item5))
-)
-
-(:action easymark_item4_13_12
- :parameters ()
- :precondition (and (at_x13) (at_y12))
- :effect (and (have_item4))
-)
-
-(:action easymark_item5_13_12
- :parameters ()
- :precondition (and (at_x13) (at_y12))
- :effect (and (have_item5))
-)
-
-(:action easymark_item7_13_12
- :parameters ()
- :precondition (and (at_x13) (at_y12))
- :effect (and (have_item7))
-)
-
-(:action easymark_item6_13_14
- :parameters ()
- :precondition (and (at_x13) (at_y14))
+ :precondition (and (at_x13) (at_y9))
  :effect (and (have_item6))
 )
 
-(:action easymark_item4_13_15
+(:action easymark_item0_13_11
+ :parameters ()
+ :precondition (and (at_x13) (at_y11))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item1_13_13
+ :parameters ()
+ :precondition (and (at_x13) (at_y13))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item5_13_15
  :parameters ()
  :precondition (and (at_x13) (at_y15))
- :effect (and (have_item4))
-)
-
-(:action easymark_item0_14_1
- :parameters ()
- :precondition (and (at_x14) (at_y1))
- :effect (and (have_item0))
-)
-
-(:action easymark_item1_14_1
- :parameters ()
- :precondition (and (at_x14) (at_y1))
- :effect (and (have_item1))
-)
-
-(:action easymark_item4_14_3
- :parameters ()
- :precondition (and (at_x14) (at_y3))
- :effect (and (have_item4))
-)
-
-(:action easymark_item7_14_3
- :parameters ()
- :precondition (and (at_x14) (at_y3))
- :effect (and (have_item7))
-)
-
-(:action easymark_item3_14_5
- :parameters ()
- :precondition (and (at_x14) (at_y5))
- :effect (and (have_item3))
-)
-
-(:action easymark_item5_14_6
- :parameters ()
- :precondition (and (at_x14) (at_y6))
  :effect (and (have_item5))
 )
 
-(:action easymark_item3_14_7
+(:action easymark_item6_13_15
  :parameters ()
- :precondition (and (at_x14) (at_y7))
- :effect (and (have_item3))
-)
-
-(:action easymark_item1_14_8
- :parameters ()
- :precondition (and (at_x14) (at_y8))
- :effect (and (have_item1))
-)
-
-(:action easymark_item7_14_9
- :parameters ()
- :precondition (and (at_x14) (at_y9))
- :effect (and (have_item7))
-)
-
-(:action easymark_item2_14_10
- :parameters ()
- :precondition (and (at_x14) (at_y10))
- :effect (and (have_item2))
-)
-
-(:action easymark_item5_14_15
- :parameters ()
- :precondition (and (at_x14) (at_y15))
- :effect (and (have_item5))
-)
-
-(:action easymark_item1_15_0
- :parameters ()
- :precondition (and (at_x15) (at_y0))
- :effect (and (have_item1))
-)
-
-(:action easymark_item6_15_0
- :parameters ()
- :precondition (and (at_x15) (at_y0))
+ :precondition (and (at_x13) (at_y15))
  :effect (and (have_item6))
 )
 
-(:action easymark_item2_15_1
+(:action easymark_item7_13_15
  :parameters ()
- :precondition (and (at_x15) (at_y1))
- :effect (and (have_item2))
-)
-
-(:action easymark_item0_15_4
- :parameters ()
- :precondition (and (at_x15) (at_y4))
- :effect (and (have_item0))
-)
-
-(:action easymark_item5_15_5
- :parameters ()
- :precondition (and (at_x15) (at_y5))
- :effect (and (have_item5))
-)
-
-(:action easymark_item7_15_6
- :parameters ()
- :precondition (and (at_x15) (at_y6))
+ :precondition (and (at_x13) (at_y15))
  :effect (and (have_item7))
 )
 
-(:action easymark_item2_15_7
+(:action easymark_item1_14_0
  :parameters ()
- :precondition (and (at_x15) (at_y7))
- :effect (and (have_item2))
+ :precondition (and (at_x14) (at_y0))
+ :effect (and (have_item1))
 )
 
-(:action easymark_item4_15_8
+(:action easymark_item3_14_2
  :parameters ()
- :precondition (and (at_x15) (at_y8))
+ :precondition (and (at_x14) (at_y2))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item4_14_4
+ :parameters ()
+ :precondition (and (at_x14) (at_y4))
  :effect (and (have_item4))
 )
 
-(:action easymark_item5_15_8
+(:action easymark_item3_14_6
  :parameters ()
- :precondition (and (at_x15) (at_y8))
+ :precondition (and (at_x14) (at_y6))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item0_14_7
+ :parameters ()
+ :precondition (and (at_x14) (at_y7))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item1_14_7
+ :parameters ()
+ :precondition (and (at_x14) (at_y7))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item2_14_7
+ :parameters ()
+ :precondition (and (at_x14) (at_y7))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item7_14_8
+ :parameters ()
+ :precondition (and (at_x14) (at_y8))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item4_14_10
+ :parameters ()
+ :precondition (and (at_x14) (at_y10))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item7_14_11
+ :parameters ()
+ :precondition (and (at_x14) (at_y11))
+ :effect (and (have_item7))
+)
+
+(:action easymark_item1_14_12
+ :parameters ()
+ :precondition (and (at_x14) (at_y12))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item5_14_12
+ :parameters ()
+ :precondition (and (at_x14) (at_y12))
  :effect (and (have_item5))
 )
 
-(:action easymark_item0_15_9
+(:action easymark_item0_14_15
  :parameters ()
- :precondition (and (at_x15) (at_y9))
+ :precondition (and (at_x14) (at_y15))
  :effect (and (have_item0))
+)
+
+(:action easymark_item3_15_0
+ :parameters ()
+ :precondition (and (at_x15) (at_y0))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item4_15_1
+ :parameters ()
+ :precondition (and (at_x15) (at_y1))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item0_15_3
+ :parameters ()
+ :precondition (and (at_x15) (at_y3))
+ :effect (and (have_item0))
+)
+
+(:action easymark_item4_15_3
+ :parameters ()
+ :precondition (and (at_x15) (at_y3))
+ :effect (and (have_item4))
+)
+
+(:action easymark_item5_15_3
+ :parameters ()
+ :precondition (and (at_x15) (at_y3))
+ :effect (and (have_item5))
+)
+
+(:action easymark_item3_15_5
+ :parameters ()
+ :precondition (and (at_x15) (at_y5))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item1_15_6
+ :parameters ()
+ :precondition (and (at_x15) (at_y6))
+ :effect (and (have_item1))
+)
+
+(:action easymark_item2_15_6
+ :parameters ()
+ :precondition (and (at_x15) (at_y6))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item6_15_6
+ :parameters ()
+ :precondition (and (at_x15) (at_y6))
+ :effect (and (have_item6))
+)
+
+(:action easymark_item2_15_10
+ :parameters ()
+ :precondition (and (at_x15) (at_y10))
+ :effect (and (have_item2))
+)
+
+(:action easymark_item3_15_11
+ :parameters ()
+ :precondition (and (at_x15) (at_y11))
+ :effect (and (have_item3))
+)
+
+(:action easymark_item4_15_11
+ :parameters ()
+ :precondition (and (at_x15) (at_y11))
+ :effect (and (have_item4))
 )
 
 (:action easymark_item1_15_12
@@ -23228,15 +23270,15 @@
  :effect (and (have_item1))
 )
 
-(:action easymark_item5_15_12
+(:action easymark_item4_15_14
  :parameters ()
- :precondition (and (at_x15) (at_y12))
- :effect (and (have_item5))
+ :precondition (and (at_x15) (at_y14))
+ :effect (and (have_item4))
 )
 
-(:action easymark_item0_15_13
+(:action easymark_item5_15_14
  :parameters ()
- :precondition (and (at_x15) (at_y13))
- :effect (and (have_item0))
+ :precondition (and (at_x15) (at_y14))
+ :effect (and (have_item5))
 )
 )

@@ -2,7 +2,8 @@
 
 
 #DEFAULT_HOME=~/Documents/workspace/DeFault
-searchtest=$DEFAULT_HOME/default.jar
+searchtest=~/.m2/repository/edu/usu/cs/default/1.0.0/default-1.0.0.jar
+#$DEFAULT_HOME/default.jar
 export CLASSPATH=$searchtest:.:$DEFAULT_HOME/resources
 javaopts="-Xmx2048M -Xms256M"
 

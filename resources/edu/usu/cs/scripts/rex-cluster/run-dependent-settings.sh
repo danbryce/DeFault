@@ -59,12 +59,12 @@ name=hobonav
 domaindir=$DEFAULT_HOME"/testfiles/incomplete/"$name
 problemdir=$DEFAULT_HOME"/testfiles/incomplete/"$name
 
-for (( p = 2; p <= 64; p*=2 ))
+for (( p = 2; p <= 16; p*=2 ))
   do
 #  for j in 0.0 0.25 0.5 0.75 1.0
   for j in  1.0
     do
-    for v in 1 2 4 8 16 32 128
+    for v in 1 2 3 4 
       do
       for (( k = 1; k <= 10; k++ ))
 	do
@@ -190,7 +190,7 @@ done
 }
 
 
-runBridges $algorithm $sem 
-runParcprinter $algorithm $sem 
+#runBridges $algorithm $sem 
+#runParcprinter $algorithm $sem 
 runHobonav $algorithm $sem 
-runGripper $algorithm $sem 
+#runGripper $algorithm $sem 

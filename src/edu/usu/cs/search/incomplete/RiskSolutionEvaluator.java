@@ -104,7 +104,23 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 		//solutions.size()==1;
 	}
 
-	
+	public BigDecimal calculateRiskCount(List<ActionInstance> plan){
+		
+		BigInteger total;
+		if(solver.getSolverOptions().isStrictExponentCount()){
+			int numFaults = (int) (FaultCounter.getNumRisks()-FaultCounter.getNumUnknownRisks());
+			numFaults += FaultCounter.getNumUnknownRisks()*domain.getMaxUnknownPropositions();
+			total = BigInteger.valueOf(1).shiftLeft(numFaults);
+		}
+		else{
+			total = BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
+		}
+		 BigInteger unsolvable = //BigInteger.valueOf(1);//
+				FaultCounter.getModelCount(domain, problem, plan, solver); 
+		BigDecimal probability = new BigDecimal(unsolvable);
+		probability = probability.divide(new BigDecimal(total));
+		return probability;
+	}
 
 	@Override
 	public boolean keepSolution(StateNode currentNode, List<StateNode> solutions) {
@@ -135,27 +151,17 @@ public class RiskSolutionEvaluator implements SolutionEvaluator {
 			//logger.debug(searchStatistics.getElapsedTime()/1000.0);
 			searchStatistics.pauseTime();
 			long startEvalTime = System.currentTimeMillis();
-			
 			List<ActionInstance> plan = currentNode.getPlan();
-			BigInteger total;
-			if(solver.getSolverOptions().isStrictExponentCount()){
-				int numFaults = (int) (FaultCounter.getNumRisks()-FaultCounter.getNumUnknownRisks());
-				numFaults += FaultCounter.getNumUnknownRisks()*domain.getMaxUnknownPropositions();
-				total = BigInteger.valueOf(1).shiftLeft(numFaults);
-			}
-			else{
-				total = BigInteger.valueOf(1).shiftLeft(FaultCounter.getNumRisks());
-			}
-			BigInteger unsolvable = FaultCounter.getModelCount(domain, problem, plan, solver); 
-			BigDecimal probability = new BigDecimal(unsolvable);
-			probability = probability.divide(new BigDecimal(total));
+			BigDecimal probability = //BigDecimal.valueOf(1.0);//
+					calculateRiskCount(plan);
 			
 			
 			solutionEvaluationTime += System.currentTimeMillis() - startEvalTime;
 			
 			
-			
-			
+			//687.043	81	13	0.9999999999916067139338338165543973445892333984375	129.05	
+
+		
 			StringBuilder b = new StringBuilder();
 			
 			if(bestSolution == null){

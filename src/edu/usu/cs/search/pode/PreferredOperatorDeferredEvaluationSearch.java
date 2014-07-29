@@ -33,6 +33,7 @@ import edu.usu.cs.search.SearchStatistics;
 import edu.usu.cs.search.SolutionEvaluator;
 import edu.usu.cs.search.StateNode;
 import edu.usu.cs.search.incomplete.PIFaultSet;
+import edu.usu.cs.search.incomplete.RiskSolutionEvaluator;
 import edu.usu.cs.search.plangraph.IllDefinedProblemException;
 
 public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch implements Search {
@@ -100,6 +101,7 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 			// If both queues are empty, there is no solution
 			if(open.size() == 0 && openPreferred.size() == 0) {
+				
 				break;
 			}
 
@@ -188,8 +190,13 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 
 				if(solutionEvaluator.isSolutionSetComplete(solutions)){
 					StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
-					searchStatistics.setSolutionNode(bestNode);				
-					return extractSolution(bestNode);
+					searchStatistics.setSolutionNode(bestNode);		
+					List<ActionInstance> plan = extractSolution(bestNode);
+//					if(solutionEvaluator instanceof RiskSolutionEvaluator){
+//						System.out.println("Evaluating Final Plan");
+//						System.out.println(((RiskSolutionEvaluator) solutionEvaluator).calculateRiskCount(plan));
+//					}
+					return plan;
 				}
 			}
 
@@ -284,8 +291,13 @@ public class PreferredOperatorDeferredEvaluationSearch extends AbstractSearch im
 		}
 		if(foundSolution){
 			StateNode bestNode = solutionEvaluator.getBestSolution(solutions);
-			searchStatistics.setSolutionNode(bestNode);				
-			return extractSolution(bestNode);
+			searchStatistics.setSolutionNode(bestNode);	
+			List<ActionInstance> plan = extractSolution(bestNode);
+//			if(solutionEvaluator instanceof RiskSolutionEvaluator){
+//				System.out.println("Evaluating Final Plan");
+//				System.out.println(((RiskSolutionEvaluator) solutionEvaluator).calculateRiskCount(plan));
+//			}
+			return plan;
 		}
 		else
 			return null;
